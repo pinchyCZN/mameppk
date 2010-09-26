@@ -1,0 +1,820 @@
+# osd/winui/mameui.rc: 177
+&Kaillera Client Options...
+&Kaillera 客户端选项...
+
+# osd/winui/mameui.rc: 1732
+&Start when MAME32 starts
+自动随MAME32启动(&S)
+
+# osd/winui/winui.c: 10775
+2 times
+2倍
+
+# osd/winui/winui.c: 10774
+3 times
+3倍
+
+# osd/winui/mameui.rc: 1129
+32 bit depth
+32 位颜色质量
+
+# osd/winui/winui.c: 10773
+4 times
+4倍
+
+# osd/winui/winui.c: 10570
+All members' Synchronization is perfect
+全员同步正常
+
+# osd/winui/mameui.rc: 1631
+All players quit game
+所有玩家退出游戏
+
+# osd/winui/mameui.rc: 1132
+Auto detect FPS
+自动检测帧速
+
+# osd/winui/mameui.rc: 1633
+Auto end
+自动终止
+
+# osd/winui/mameui.rc: 1636
+Auto-save time interval
+自动保存游戏进度间隔
+
+# osd/winui/mameui.rc: 1700
+Average
+普通
+
+# osd/winui/mameui.rc: 1698
+Bad
+很差
+
+# osd/winui/mameui.rc: 1119
+Blending
+混色
+
+# osd/winui/mameui.rc: 1149
+Caching
+缓存
+
+# osd/winui/mameui.rc: 1686
+Connection Type:
+连接类型:
+
+# osd/winui/mameui.rc: 1696
+Connection restriction:
+连接限制:
+
+# osd/winui/mameui.rc: 1123
+Create GPU window
+创建插件窗口
+
+# osd/winui/winui.c: 1001
+Default Game Options
+默认游戏选项
+
+# osd/winui/mameui.rc: 149, 1697
+Disabled
+禁用
+
+# osd/winui/mameui.rc: 1651
+Display system messages
+显示系统消息
+
+# osd/winui/mameui.rc: 1136
+Dithering
+抖动
+
+# osd/winui/mameui.rc: 1734
+E&xit when MAME32 exits
+自动随MAME32退出(&X)
+
+# osd/winui/mameui.rc: 1702
+Excellent
+极好
+
+# osd/winui/mameui.rc: 1134
+FPS limit
+帧速限制
+
+# osd/winui/mameui.rc: 1143
+Filtering
+过滤
+
+# osd/winui/mameui.rc: 1131
+Frame rate control
+帧速控制
+
+# osd/winui/mameui.rc: 1127
+Full screen
+全屏幕
+
+# osd/winui/mameui.rc: 1122
+GPU configuration
+图形处理器插件配置
+
+# osd/winui/mameui.rc: 1701
+Good
+良好
+
+# osd/winui/mameui.rc: 1655
+Hide main window
+隐藏主窗口
+
+# osd/winui/mameui.rc: 1688
+Internet
+互联网
+
+# osd/winui/mameui.rc: 75, 243
+Kaillera &NetPlay...
+Kaillera 联网游戏(&N)...
+
+# osd/winui/mameui.rc: 181
+Kaillera &Server Options...
+Kaillera 服务器选项(&S)...
+
+# osd/winui/mameui.rc: 1617
+Kaillera Options
+Kaillera 选项
+
+# osd/winui/mameui.rc: 1665
+Kaillera Server Configuration:
+Kaillera 服务器配置
+
+# osd/winui/mameui.rc: 1723
+Kaillera Server current status:
+Kaillera 服务器当前状态:
+
+# osd/winui/mameui.rc: 1724 osd/winui/winui.c: 12479
+Kaillera Server is not running.
+Kaillera 服务器未运行。
+
+# osd/winui/winui.c: 12481
+Kaillera Server is running...
+Kaillera 服务器正在运行...
+
+# osd/winui/mameui.rc: 1644
+Kaillera record input
+网络录制输入指令
+
+# osd/winui/mameui.rc: 1687, 1703
+LAN
+局域网
+
+# osd/winui/mameui.rc: 1706
+Line 1:
+第1行:
+
+# osd/winui/mameui.rc: 1707
+Line 2:
+第2行:
+
+# osd/winui/mameui.rc: 1708
+Line 3:
+第3行:
+
+# osd/winui/mameui.rc: 1709
+Line 4:
+第4行:
+
+# osd/winui/mameui.rc: 1710
+Line 5:
+第5行:
+
+# osd/winui/mameui.rc: 1711
+Line 6:
+第6行:
+
+# osd/winui/mameui.rc: 1712
+Line 7:
+第7行:
+
+# osd/winui/mameui.rc: 1713
+Line 8:
+第8行:
+
+# osd/winui/mameui.rc: 1646
+Local record input
+本地录制输入指令
+
+# osd/winui/mameui.rc: 1653
+Lock main window
+锁定主窗口
+
+# osd/winui/mameui.rc: 1623
+Lost connection action
+连接断开时操作
+
+# osd/winui/mameui.rc: 1699
+Low
+低速
+
+# osd/winui/properties.c: 587
+Maximum
+最大
+
+# osd/winui/mameui.rc: 1690
+Message Limit:
+消息限制:
+
+# osd/winui/properties.c: 585
+Minimum
+最小
+
+# osd/winui/properties.c: 547, 586 osd/winui/winui.c: 10776
+Normal
+正常
+
+# osd/winui/mameui.rc: 1098
+PSX Plugins
+PSX 插件
+
+# osd/winui/mameui.rc: 2065
+Play game over Kaillera
+Kaillera 联网游戏
+
+# osd/winui/mameui.rc: 1146
+Quality
+质量
+
+# osd/winui/mameui.rc: 1629
+Quit game
+退出游戏
+
+# osd/winui/winui.c: 10400
+Receiving %d percent
+接收中 %d
+
+# osd/winui/winui.c: 999
+Refresh
+刷新
+
+# osd/winui/mameui.rc: 1736
+S&how command-line console
+显示命令行控制台(&H)
+
+# osd/winui/mameui.rc: 1157
+SPU configuration
+声音处理器插件配置
+
+# osd/winui/mameui.rc: 1116
+Scanlines
+扫描线
+
+# osd/winui/winui.c: 10198, 10385
+Sending %d percent
+发送中 %d
+
+# osd/winui/mameui.rc: 1640
+Sending speed for save file
+游戏进度文件发送速度
+
+# osd/winui/mameui.rc: 1674
+Server IP:
+服务器 IP:
+
+# osd/winui/mameui.rc: 1670
+Server Location:
+服务器位置:
+
+# osd/winui/mameui.rc: 1669
+Server Name:
+服务器名:
+
+# osd/winui/mameui.rc: 1673
+Server Port:
+服务器端口:
+
+# osd/winui/mameui.rc: 1125
+Show FPS
+显示帧速
+
+# osd/winui/winui.c: 2935, 6154
+Start Kaillera Server Succeeded!
+成功开启 Kaillera 服务器!
+
+# osd/winui/winui.c: 10568
+Sync Check End
+同步检查结束
+
+# osd/winui/winui.c: 10274, 10516
+Sync Check Failure
+同步检查失败
+
+# osd/winui/mameui.rc: 1142
+Texture
+纹理
+
+# osd/winui/properties.c: 4943, 4988
+This plugin does not contains configuration function!
+本插件未包含配置功能!
+
+# osd/winui/winui.c: 5981
+Unable to load DLL: %s
+无法载入 DLL: %s
+
+# osd/winui/properties.c: 4935
+Unable to load GPU plugin '%s'!
+无法载入图形处理器插件 '%s'!
+
+# osd/winui/properties.c: 4979
+Unable to load SPU plugin '%s'!
+无法载入声音处理器插件 '%s'!
+
+# osd/winui/mameui.rc: 1106
+Use GPU(3D Graphics) plugins
+使用3D图形处理器插件
+
+# osd/winui/winui.c: 1003
+Use IME in chat
+聊天时使用 IME (输入法编辑器)
+
+# osd/winui/mameui.rc: 1620
+Use Kaillera client DLL
+使用 Kaillera 客户端动态链接库
+
+# osd/winui/mameui.rc: 1153
+Use SPU(Sound) plugins
+使用声音处理器插件
+
+# osd/winui/mameui.rc: 1671
+Web site:
+网站:
+
+# osd/winui/winui.c: 10931
+kailleraclient.dll  (not found)
+kailleraclient.dll  (未找到)
+
+# osd/winui/mameui.rc: 1639
+sec
+秒
+
+# osd/winui/winui.c: 10117
+%c-slot is selected
+
+
+# osd/winui/ui_temp.c: 150
+%dp Position %s %s
+
+
+# osd/winui/ui_temp.c: 286
+%dp Position %s [%s]
+
+
+# osd/winui/mameui.rc: 1727
+&Allow Web Access
+
+
+# osd/winui/mameui.rc: 224
+&Frequently Asked Questions
+
+
+# osd/winui/mameui.rc: 89, 262
+&View Information at MAWS
+
+
+# osd/winui/winui.c: 10444
+* Player %i (%s) dropped from the current game.
+
+
+# osd/winui/layout.c: 110
+80s Games
+
+
+# osd/winui/mameui.rc: 1482
+AVI RECORD
+
+
+# osd/winui/winui.c: 10214
+All members' save data matched
+
+
+# osd/winui/winui.c: 10619
+All the members' save data was coincidenced
+
+
+# osd/winui/properties.c: 536
+Bright
+
+
+# osd/winui/winui.c: 10144
+CPUs Overclocked %d %%
+
+
+# osd/winui/layout.c: 101
+Capcom CPS
+
+
+# osd/winui/winui.c: 3212
+Close KailleraClient Window
+
+
+# osd/winui/mameui.rc: 1566
+Color Option
+
+
+# osd/winui/mameui.rc: 1543
+Config as TV
+
+
+# osd/winui/mameui.rc: 1497
+Convert 16bit to 24bit 
+
+
+# osd/winui/mameui.rc: 1495
+Convert 16bit to 8bit 
+
+
+# osd/winui/winui.c: 8010
+Could not open '%s' as a valid trace file.
+
+
+# osd/winui/winui.c: 11985, 12206
+Could not open '%s' as a valid wave file.
+
+
+# osd/winui/properties.c: 535
+Dark
+
+
+# osd/winui/winui.c: 10485
+Dipswitches Changed
+
+
+# osd/winui/ui_temp.c: 923
+Disconnected, Because there was no response %ums
+
+
+# osd/winui/winui.c: 11342
+Do not record sound
+
+
+# osd/winui/winui.c: 11192
+Draw every frame  @
+
+
+# osd/winui/mameui.rc: 1753
+Export &all list
+
+
+# osd/winui/mameui.rc: 1755
+Export &current folder list
+
+
+# osd/winui/mameui.rc: 1759
+Export &game detail list
+
+
+# osd/winui/mameui.rc: 1757
+Export &rom name
+
+
+# osd/winui/mameui.rc: 1749
+Export List Options
+
+
+# osd/winui/winui.c: 5348
+Export a roms list file
+
+
+# osd/winui/winui.c: 5307
+Export all game list file
+
+
+# osd/winui/winui.c: 5337
+Export current folder game list file
+
+
+# osd/winui/winui.c: 5359
+Export detail list file
+
+
+# osd/winui/mameui.rc: 1731
+Extra Settings:
+
+
+# osd/winui/mameui.rc: 1568
+File Partition
+
+
+# osd/winui/mameui.rc: 1544
+Frame Compose
+
+
+# osd/winui/properties.c: 2753
+Framerate setting out of range(0-1000), default to 60.
+
+
+# osd/winui/mameui.rc: 1485
+Frames
+
+
+# osd/winui/properties.c: 4954
+GPU plugin returned error code:%ld
+
+
+# osd/winui/mameui.rc: 2110
+Go to MAME Development site
+
+
+# osd/winui/winui.c: 6634
+Go to MAME Development site?
+
+
+# osd/winui/mameui.rc: 2110
+Go to MAME FAQ site
+
+
+# osd/winui/winui.c: 6646
+Go to MAME FAQ site?
+
+
+# osd/winui/mameui.rc: 2110
+Go to MAWS information site
+
+
+# osd/winui/winui.c: 6663
+Go to MAWS site?
+
+
+# osd/winui/mameui.rc: 1601, 1606
+Height:
+
+
+# osd/winui/mameui.rc: 1550
+Interlaced
+
+
+# osd/winui/mameui.rc: 1648
+Kaillera Client Changes to Japanese
+
+
+# osd/winui/winui.c: 3225, 6169
+Kaillera Server Terminated!
+
+
+# osd/winui/winui.c: 2910
+Kaillera Server running detected!
+
+
+# osd/winui/layout.c: 106
+Konami GX&OLDs
+
+
+# osd/winui/mameui.rc: 1564
+M
+
+
+# osd/winui/mameui.rc: 223
+MAME &Development site
+
+
+# osd/winui/winui.c: 1004
+MAME Homepage
+
+
+# osd/winui/mameui.rc: 1569
+MByte Partition
+
+
+# osd/winui/layout.c: 111
+Mahjong&Puzzle
+
+
+# osd/winui/mameui.rc: 1672
+Maximum users:
+
+
+# osd/winui/winui.c: 10089
+Maybe Desync
+
+
+# osd/winui/winui.c: 10562
+Maybe Desync %s
+
+
+# osd/winui/mameui.rc: 1705
+Message of the day:
+
+
+# osd/winui/layout.c: 104
+Namco S1&S2
+
+
+# osd/winui/mameui.rc: 1552
+Odd Frame
+
+
+# osd/winui/layout.c: 109
+Old Games
+
+
+# osd/winui/layout.c: 114
+PSXGame
+
+
+# osd/winui/mameui.rc: 1501
+Pause as Partition
+
+
+# osd/winui/mameui.rc: 2106
+Play game with save video in specified avi file
+
+
+# osd/winui/winui.c: 1002
+Play network game with favorite
+
+
+# osd/winui/mameui.rc: 54, 237
+Play to AVI Record...
+
+
+# osd/winui/winui.c: 10420
+Reception completed. %s-%c.sta successfully saved.
+
+
+# osd/winui/mameui.rc: 1575
+Record Option
+
+
+# osd/winui/mameui.rc: 1503
+Record Range
+
+
+# osd/winui/mameui.rc: 1524
+Record Time limit
+
+
+# osd/winui/winui.c: 11343
+Record as WAV file
+
+
+# osd/winui/winui.c: 11344
+Record to AVI
+
+
+# osd/winui/mameui.rc: 1574
+Record to AVI File
+
+
+# osd/winui/mameui.rc: 1565, 1793
+S
+
+
+# osd/winui/winui.c: 8909
+S&tart Kaillera Server
+
+
+# osd/winui/winui.c: 8911
+S&top Kaillera Server
+
+
+# osd/winui/layout.c: 100
+SNK Neo-Geo
+
+
+# osd/winui/properties.c: 5000
+SPU plugin returned error code:%ld
+
+
+# osd/winui/mameui.rc: 2106
+Save video in specified avi file
+
+
+# osd/winui/mameui.rc: 1561
+Screen Beginning Position
+
+
+# osd/winui/mameui.rc: 1593
+Screen Position and Size in Movie
+
+
+# osd/winui/mameui.rc: 1602
+Screen Size
+
+
+# osd/winui/properties.c: 2718
+Screen X setting out of range(0-2048), default to 800.
+
+
+# osd/winui/properties.c: 2735
+Screen Y setting out of range(0-2048), default to 600.
+
+
+# osd/winui/layout.c: 107
+Sega S16&S32
+
+
+# osd/winui/mameui.rc: 1752
+Select Export Content:
+
+
+# osd/winui/mameui.rc: 2079
+Set kaillera client options
+
+
+# osd/winui/mameui.rc: 2079
+Set kaillera server options
+
+
+# osd/winui/mameui.rc: 1542
+Show To Center
+
+
+# osd/winui/winui.c: 8020
+Since environment differs from the time of creation, it may not reappear well.\nIs replay reproduction carried out?\ntrcversion %d\nmame version %s\nPlay Count %d\n
+
+
+# osd/winui/winui.c: 11191
+Skip %d of 12 frames
+
+
+# osd/winui/mameui.rc: 1492
+Skip Frame
+
+
+# osd/winui/mameui.rc: 1540
+Smooth (Length)
+
+
+# osd/winui/mameui.rc: 1538
+Smooth (Width)
+
+
+# osd/winui/mameui.rc: 2065
+Start/Stop Kaillera server
+
+
+# osd/winui/mameui.rc: 1554
+T/B Flip (Reverse Top and Bottom)
+
+
+# osd/winui/layout.c: 105
+Taito F2&F3
+
+
+# osd/winui/winui.c: 3223, 6167
+Terminate Kaillera Server ERROR!!!
+
+
+# osd/winui/winui.c: 10331
+The time regulation level was set as %d
+
+
+# osd/winui/mameui.rc: 1563
+Time
+
+
+# osd/winui/layout.c: 108
+Toa&Cave&BP
+
+
+# osd/winui/mameui.rc: 1592
+Total Movie Size:
+
+
+# osd/winui/winui.c: 12033, 12255
+Use 'Record AVI' key to toggle start/stop AVI recording.
+
+
+# osd/winui/mameui.rc: 1600, 1605
+Width:
+
+
+# osd/winui/KailleraChat.c: 797
+\t- CHAT LOG -\n
+
+
+# osd/winui/mameui.rc: 1559, 1595
+left
+
+
+# osd/winui/mameui.rc: 1546
+little
+
+
+# osd/winui/mameui.rc: 1548
+little(Speed)
+
+
+# osd/winui/mameui.rc: 1693
+messages in
+
+
+# osd/winui/mameui.rc: 64
+replay(inp) to AVI Record...
+
+
+# osd/winui/mameui.rc: 1694
+seconds.
+
+
+# osd/winui/mameui.rc: 1560, 1596
+top
+
+
+# osd/winui/winui.c: 8015
+trc file version is different\ntrc version %d\nmame version %s\nPlay Count %d\n
+
+

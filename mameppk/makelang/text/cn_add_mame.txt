@@ -1,0 +1,212 @@
+# emu/inptport.c: 3384
+%s timeout
+%s 超时
+
+# emu/inptport.c: 2941
+Auto-save Start
+开始自动保存
+
+# emu/inptport.c: 2935
+Auto-save Stop
+停止自动保存
+
+# emu/inptport.c: 3372
+Data reception timeout
+数据接收超时
+
+# emu/inpttype.h: 663
+Kaillera Overclock
+Kaillera 超频
+
+# emu/inpttype.h: 665
+Kaillera Sync Check
+Kaillera 同步检查
+
+# emu/inpttype.h: 657
+Kaillera Version Check
+Kaillera 版本检查
+
+# emu/inptport.c: 3002
+Start Sync Check
+开始同步检查
+
+# emu/inptport.c: 2970, 2983
+Sync Check
+同步检查
+
+# emu/inptport.c: 3247
+Transmission completed
+传送完成
+
+# emu/inptport.c: 2902
+Transmission failed
+传送失败
+
+# emu/inptport.c: 2860
+%s-%c.sta is Nothing
+
+
+# emu/emuopts.c: 237
+AVI RECORD OPTIONS
+
+
+# emu/inpttype.h: 683
+AVI Record
+
+
+# emu/inptport.c: 3441, 3504
+Advancement
+
+
+# emu/inptport.c: 6169
+Autofire Off
+
+
+# emu/inptport.c: 6169
+Autofire On
+
+
+# emu/inptport.c: 3417, 3478 mame/drivers/csk.c: 381 mame/drivers/limenko.c: 586
+Change
+
+
+# emu/inpttype.h: 676
+Clear Chat Log
+
+
+# emu/inptport.c: 2819
+Dipswitch Nothing
+
+
+# emu/inptport.c: 3349
+Duplicate position disabled
+
+
+# emu/inptport.c: 3348
+Duplicate position enabled
+
+
+# emu/inpttype.h: 649
+Kaiilera Player Shift Up
+
+
+# emu/inpttype.h: 655
+Kaillera Auto-save
+
+
+# emu/inpttype.h: 679
+Kaillera Chat Change Draw Mode
+
+
+# emu/inpttype.h: 678
+Kaillera Chat Open
+
+
+# emu/inpttype.h: 680
+Kaillera Chat Show Chat Log
+
+
+# emu/inpttype.h: 653
+Kaillera Duplicate Position
+
+
+# emu/inpttype.h: 650
+Kaillera Player Shift Down
+
+
+# emu/inpttype.h: 658
+Kaillera Send Dipswitches
+
+
+# emu/inpttype.h: 656
+Kaillera time level change
+
+
+# emu/inpttype.h: 659
+Killera Select Save Slot
+
+
+# emu/inpttype.h: 661
+Killera Send Save Data
+
+
+# emu/inptport.c: 3337, 3724
+Load from %s-%c.sta
+
+
+# emu/inptport.c: 3287
+Machine Reset
+
+
+# emu/inptport.c: 2971
+Now Sync Checking
+
+
+# emu/inptport.c: 2973
+Other Player Sync Checking
+
+
+# emu/ui.c: 1974
+Overclock
+
+
+# emu/inptport.c: 6169 emu/uimenu.c: 3320
+P%d %s
+
+
+# emu/emuopts.c: 285
+PSX PLUGIN OPTIONS
+
+
+# emu/inptport.c: 2725, 3662
+Play Game With Record Input Log As %s
+
+
+# emu/ui.c: 1991
+Please press the [Y] key, for ending
+
+
+# emu/inptport.c: 3429, 3491
+Retreat
+
+
+# emu/inptport.c: 2809, 3708
+Saved Name As %c
+
+
+# emu/inptport.c: 3363
+Savestate check timeout
+
+
+# emu/ui.c: 1942
+Select Slot
+
+
+# emu/ui.c: 1920
+Select position (0-9, A-Z) to save to
+
+
+# emu/inptport.c: 2831
+Send Dipswitch
+
+
+# emu/inptport.c: 2879
+Send status file
+
+
+# emu/uimenu.c: 1593
+Special Controls
+
+
+# emu/inptport.c: 2888
+There is no other party
+
+
+# emu/inptport.c: 2976
+There is no other party for Sync Check
+
+
+# emu/inptport.c: 2821
+Too many Dipswitches
+
+
