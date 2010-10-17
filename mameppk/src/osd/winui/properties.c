@@ -264,7 +264,7 @@ static BOOL ResetDebugscript(HWND hWnd);
 static void BuildDataMap(void);
 static void ResetDataMap(HWND hWnd);
 
-#if 1 //mamep
+#if 1 //mamep: for coloring of changed elements
 static BOOL IsControlOptionValue(HWND hDlg, HWND hwnd_ctrl, core_options *opts, core_options *ref);
 #endif
 
@@ -617,16 +617,9 @@ static PROPSHEETPAGE *CreatePropSheetPages(HINSTANCE hInst, BOOL bOnlyDefault,
 
 	for (; g_propSheets[i].pfnDlgProc; i++)
 	{
-		if ((gamedrv != NULL) || g_propSheets[i].bOnDefaultPage)
+		if (!gamedrv)
 		{
-			machine_config *config = NULL;
-
-			/* Allocate machine config */
-			if (gamedrv != NULL)
-			{
-				config = global_alloc(machine_config(gamedrv->machine_config));
-			}
-			if (!gamedrv || !g_propSheets[i].pfnFilterProc || g_propSheets[i].pfnFilterProc(config, gamedrv))
+			if (g_propSheets[i].bOnDefaultPage)
 			{
 				pspages[maxPropSheets].dwSize      = sizeof(PROPSHEETPAGE);
 				pspages[maxPropSheets].dwFlags     = 0;
@@ -637,10 +630,22 @@ static PROPSHEETPAGE *CreatePropSheetPages(HINSTANCE hInst, BOOL bOnlyDefault,
 				pspages[maxPropSheets].pfnDlgProc  = g_propSheets[i].pfnDlgProc;
 				maxPropSheets++;
 			}
-			if (config != NULL)
+		}
+		else
+		if ((gamedrv != NULL) || g_propSheets[i].bOnDefaultPage)
+		{
+			machine_config config(*gamedrv);
+
+			if (!gamedrv || !g_propSheets[i].pfnFilterProc || g_propSheets[i].pfnFilterProc(&config, gamedrv))
 			{
-				/* Free the structure */
-				global_free(config);
+				pspages[maxPropSheets].dwSize      = sizeof(PROPSHEETPAGE);
+				pspages[maxPropSheets].dwFlags     = 0;
+				pspages[maxPropSheets].hInstance   = hInst;
+				pspages[maxPropSheets].pszTemplate = MAKEINTRESOURCE(g_propSheets[i].dwDlgID);
+				pspages[maxPropSheets].pfnCallback = NULL;
+				pspages[maxPropSheets].lParam      = 0;
+				pspages[maxPropSheets].pfnDlgProc  = g_propSheets[i].pfnDlgProc;
+				maxPropSheets++;
 			}
 		}
 	}
@@ -858,12 +863,12 @@ void InitPropertyPageToPage(HINSTANCE hInst, HWND hWnd, HICON hIcon, OPTIONS_TYP
 static LPCWSTR GameInfoCPU(UINT nIndex)
 {
 	static WCHAR buf[1024];
-	machine_config *config = global_alloc(machine_config(drivers[nIndex]->machine_config));
+	machine_config config(*drivers[nIndex]);
 	const device_config_execute_interface *cpu;
 
 	ZeroMemory(buf, sizeof(buf));
 
-	bool gotone = config->m_devicelist.first(cpu);
+	bool gotone = config.m_devicelist.first(cpu);
 	while (gotone)
 	{
 		if (cpu->devconfig().clock() >= 1000000)
@@ -886,9 +891,6 @@ static LPCWSTR GameInfoCPU(UINT nIndex)
 		gotone = cpu->next(cpu);
 	}
 
-	/* Free the structure */
-	global_free(config);
-
 	return buf;
 }
 
@@ -899,11 +901,11 @@ static LPCWSTR GameInfoSound(UINT nIndex)
 
 	buf[0] = 0;
 	
-	machine_config *config = global_alloc(machine_config(drivers[nIndex]->machine_config));
+	machine_config config(*drivers[nIndex]);
 
 	/* iterate over sound chips */
 	const device_config_sound_interface *sound = NULL;
-	bool gotone = config->m_devicelist.first(sound);
+	bool gotone = config.m_devicelist.first(sound);
 	while(gotone)
 	{
 		int clock,count;
@@ -951,9 +953,6 @@ static LPCWSTR GameInfoSound(UINT nIndex)
 
 		wcscat(buf, TEXT("\n"));
 	}
-	/* Free the structure */
-	global_free(config);
-
 	return buf;
 }
 
@@ -962,26 +961,26 @@ static LPCWSTR GameInfoSound(UINT nIndex)
 static LPCWSTR GameInfoScreen(UINT nIndex)
 {
 	static WCHAR buf[1024];
-	machine_config *config = global_alloc(machine_config(drivers[nIndex]->machine_config));
+	machine_config config(*drivers[nIndex]);
 	memset(buf, '\0', 1024);
 
-	if (isDriverVector(config))
+	if (isDriverVector(&config))
 	{
-		const screen_device_config *screen = screen_first(*config);
+		const screen_device_config *screen = screen_first(config);
 		if (drivers[nIndex]->flags & ORIENTATION_SWAP_XY)
 		{
 			swprintf(buf, _UIW(TEXT("Vector (V) %f Hz (%d colors)")),
-					screen->refresh(), config->m_total_colors);
+					screen->refresh(), config.m_total_colors);
 		}
 		else
 		{
 			swprintf(buf, _UIW(TEXT("Vector (H) %f Hz (%d colors)")),
-					screen->refresh(), config->m_total_colors);
+					screen->refresh(), config.m_total_colors);
 		}
 	}
 	else
 	{
-		const screen_device_config *screen = screen_first(*config);
+		const screen_device_config *screen = screen_first(config);
 		if (screen == NULL) {
 			wcscpy(buf, _UIW(TEXT("Screenless Game"))); 
 		}
@@ -995,20 +994,17 @@ static LPCWSTR GameInfoScreen(UINT nIndex)
 					swprintf(tmpbuf, _UIW(TEXT("%d x %d (V) %f Hz (%d colors)\n")),
 							visarea.max_y - visarea.min_y + 1,
 							visarea.max_x - visarea.min_x + 1,
-							ATTOSECONDS_TO_HZ(screen->refresh()), config->m_total_colors);
+							ATTOSECONDS_TO_HZ(screen->refresh()), config.m_total_colors);
 				} else {
 					swprintf(tmpbuf, _UIW(TEXT("%d x %d (H) %f Hz (%d colors)\n")),
 							visarea.max_x - visarea.min_x + 1,
 							visarea.max_y - visarea.min_y + 1,
-							ATTOSECONDS_TO_HZ(screen->refresh()), config->m_total_colors);
+							ATTOSECONDS_TO_HZ(screen->refresh()), config.m_total_colors);
 				}
-					wcscat(buf, tmpbuf);
+				wcscat(buf, tmpbuf);
 			}
 		}
 	}
-	/* Free the structure */
-	global_free(config);
-
 	return buf;
 }
 
@@ -1050,7 +1046,6 @@ static LPCWSTR GameInfoInput(int nIndex)
 			wcscpy(control, _UIW(name[i]));
 		}
 	}
-
 	if (nplayer<1)
 		wcscpy(buf, _UIW(TEXT("Unknown")));
 	else
@@ -1074,6 +1069,7 @@ static LPCWSTR GameInfoInput(int nIndex)
 	return buf;
 }
 
+/* Build save status string */
 static LPCWSTR GameInfoSaveState(int driver_index)
 {
 	if (drivers[driver_index]->flags & GAME_SUPPORTS_SAVE)
@@ -1086,11 +1082,10 @@ static LPCWSTR GameInfoSaveState(int driver_index)
 static LPCWSTR GameInfoColors(UINT nIndex)
 {
 	static WCHAR buf[1024];
-	machine_config *config = global_alloc(machine_config(drivers[nIndex]->machine_config));
+	machine_config config(*drivers[nIndex]);
 
 	ZeroMemory(buf, sizeof(buf));
-	swprintf(buf, _UIW(TEXT("%d colors ")), config->m_total_colors);
-	global_free(config);
+	swprintf(buf, _UIW(TEXT("%d colors ")), config.m_total_colors);
 
 	return buf;
 }
@@ -1310,31 +1305,29 @@ LPWSTR GameInfoTitle(OPTIONS_TYPE opt_type, UINT nIndex)
 		return _UIW(TEXT("Global game options\nDefault options used by all games"));
 
 	if (OPTIONS_VECTOR == opt_type)
-		return _UIW(TEXT("Global vector options\nCustom options used by all games in the Vector"));
+		return _UIW(TEXT("Vector options\nCustom options used by all games in the Vector"));
 
 	if (OPTIONS_VERTICAL == opt_type)
-		return _UIW(TEXT("Global vertical options\nCustom options used by all games in the Vertical"));
+		return _UIW(TEXT("Vertical options\nCustom options used by all games in the Vertical"));
 
 	if (OPTIONS_HORIZONTAL == opt_type)
-		return _UIW(TEXT("Global horizontal options\nCustom options used by all games in the Horizontal"));
+		return _UIW(TEXT("Horizontal options\nCustom options used by all games in the Horizontal"));
 
 	if (OPTIONS_SOURCE == opt_type)
 	{
 		LPTREEFOLDER folder = GetFolderByID(g_nFolder);
 
-		swprintf(info, _UIW(TEXT("Global driver options\nCustom options used by all games in the %s")), folder->m_lpTitle);
+		swprintf(info, _UIW(TEXT("Driver options\nCustom options used by all games in the %s")), folder->m_lpTitle);
 		return info;
 	}
 
 	swprintf(desc, TEXT("%s [%s]"),
-	        UseLangList() ? _LSTW(driversw[nIndex]->description) :
-        	                driversw[nIndex]->modify_the,
-		driversw[nIndex]->name);
+	        UseLangList() ? _LSTW(driversw[nIndex]->description) : driversw[nIndex]->modify_the, driversw[nIndex]->name);
 
 	if (!DriverIsBios(nIndex))
 		return desc;
 
-	swprintf(info, _UIW(TEXT("Global BIOS options\nCustom options used by all games in the %s")), desc);
+	swprintf(info, _UIW(TEXT("BIOS options\nCustom options used by all games in the %s")), desc);
 	return info;
 }
 
@@ -1839,8 +1832,6 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 	case WM_CTLCOLORSTATIC :
 	case WM_CTLCOLOREDIT :
 		{
-			RECT rc;
-
 			//Set the Coloring of the elements
 			if (GetWindowLong((HWND)lParam, GWL_ID) < 0)
 				return 0;
@@ -1908,6 +1899,7 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 			{
 				if (SafeIsAppThemed())
 				{
+					RECT rc;
 					HWND hWnd = PropSheet_GetTabControl(GetParent(hDlg));
 					// Set the background mode to transparent
 					SetBkMode((HDC)wParam, TRANSPARENT);
@@ -2423,7 +2415,7 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 {
 	HWND hCtrl;
 	HWND hCtrl2;
-	WCHAR buf[100];
+	TCHAR buf[100];
 	int  n = 0;
 	int  d = 0;
 	int  width = 0;
@@ -2431,7 +2423,6 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 
 	/* video */
 
-#if 0 //mamep
 	/* Setup refresh list based on depth. */
 	datamap_update_control(properties_datamap, hWnd, pCurrentOpts, IDC_REFRESH);
 	/* Setup Select screen*/
@@ -2442,7 +2433,6 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 	{
 		Button_SetCheck(hCtrl, g_bAutoAspect[GetSelectedScreen(hWnd)] )	;
 	}
-#endif
 
 	hCtrl = GetDlgItem(hWnd, IDC_SNAPSIZE);
 	if (hCtrl)
@@ -2517,11 +2507,6 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 			Button_SetCheck(GetDlgItem(hWnd, drivers_table[i].ctrl), enabled & (1 << i));
 	}
 #endif /* DRIVER_SWITCH */
-
-	/* Setup refresh list based on depth. */
-	datamap_update_control(properties_datamap, hWnd, pCurrentOpts, IDC_REFRESH);
-	/* Setup Select screen*/
-	UpdateSelectScreenUI(hWnd );
 
 	hCtrl = GetDlgItem(hWnd, IDC_ASPECT);
 	if (hCtrl)
@@ -2691,15 +2676,14 @@ static void SetPropEnabledControls(HWND hWnd)
 	BOOL ddraw = FALSE;
 	BOOL d3d = FALSE;
 	BOOL gdi = FALSE;
-	BOOL useart = TRUE;
+	//BOOL useart = TRUE;
 	int joystick_attached = 0;
 	int in_window = 0;
 
 	nIndex = g_nGame;
 
 	d3d = !mame_stricmp(options_get_string(pCurrentOpts, WINOPTION_VIDEO), "d3d");
-	//mamep: ddraw is FALSE if d3d is selected
-	ddraw = !d3d && !mame_stricmp(options_get_string(pCurrentOpts, WINOPTION_VIDEO), "ddraw");
+	ddraw = !mame_stricmp(options_get_string(pCurrentOpts, WINOPTION_VIDEO), "ddraw");
 	gdi = !d3d && !ddraw;
 
 	in_window = options_get_bool(pCurrentOpts, WINOPTION_WINDOW);
@@ -2718,13 +2702,12 @@ static void SetPropEnabledControls(HWND hWnd)
 	EnableWindow(GetDlgItem(hWnd, IDC_SWITCHRES),              !in_window && !gdi);
 	//mamep: disable -syncrefresh option if gdi
 	EnableWindow(GetDlgItem(hWnd, IDC_SYNCREFRESH),            !gdi);
-	//mamep: always enable refresh rate
-	//EnableWindow(GetDlgItem(hWnd, IDC_REFRESH),                !in_window && !gdi);
-	//EnableWindow(GetDlgItem(hWnd, IDC_REFRESHTEXT),            !in_window && !gdi);
-	//mamep: disable -full_screen_gamma option if gdi
-	EnableWindow(GetDlgItem(hWnd, IDC_FSGAMMA),                !in_window && !gdi);
-	EnableWindow(GetDlgItem(hWnd, IDC_FSGAMMATEXT),            !in_window && !gdi);
-	EnableWindow(GetDlgItem(hWnd, IDC_FSGAMMADISP),            !in_window && !gdi);
+	//mamep: unneeded
+	//EnableWindow(GetDlgItem(hWnd, IDC_REFRESH),                !in_window);
+	//EnableWindow(GetDlgItem(hWnd, IDC_REFRESHTEXT),            !in_window);
+	EnableWindow(GetDlgItem(hWnd, IDC_FSGAMMA),                !in_window);
+	EnableWindow(GetDlgItem(hWnd, IDC_FSGAMMATEXT),            !in_window);
+	EnableWindow(GetDlgItem(hWnd, IDC_FSGAMMADISP),            !in_window);
 	EnableWindow(GetDlgItem(hWnd, IDC_FSBRIGHTNESS),           !in_window);
 	EnableWindow(GetDlgItem(hWnd, IDC_FSBRIGHTNESSTEXT),       !in_window);
 	EnableWindow(GetDlgItem(hWnd, IDC_FSBRIGHTNESSDISP),       !in_window);
@@ -2736,6 +2719,7 @@ static void SetPropEnabledControls(HWND hWnd)
 	EnableWindow(GetDlgItem(hWnd, IDC_ASPECTRATION),           !g_bAutoAspect[GetSelectedScreen(hWnd)]);
 	EnableWindow(GetDlgItem(hWnd, IDC_ASPECTRATIOD),           !g_bAutoAspect[GetSelectedScreen(hWnd)]);
 
+	//mamep: unneeded
 	//EnableWindow(GetDlgItem(hWnd, IDC_SNAPSIZETEXT), !g_bAutoSnapSize);
 	EnableWindow(GetDlgItem(hWnd, IDC_SNAPSIZEHEIGHT), !g_bAutoSnapSize);
 	EnableWindow(GetDlgItem(hWnd, IDC_SNAPSIZEWIDTH), !g_bAutoSnapSize);
@@ -2752,6 +2736,7 @@ static void SetPropEnabledControls(HWND hWnd)
 	EnableWindow(GetDlgItem(hWnd, IDC_SCREENSELECT),               (ddraw || d3d));
 	EnableWindow(GetDlgItem(hWnd, IDC_SCREENSELECTTEXT),           (ddraw || d3d));
 
+	//mamep: unneeded
 	EnableWindow(GetDlgItem(hWnd, IDC_ARTWORK_CROP),	useart);
 	EnableWindow(GetDlgItem(hWnd, IDC_BACKDROPS),		useart);
 	EnableWindow(GetDlgItem(hWnd, IDC_BEZELS),			useart);
@@ -2813,10 +2798,10 @@ static void SetPropEnabledControls(HWND hWnd)
 	}
 #endif /* JOYSTICK_ID */
 
-	/* Mouse options */
-	useart = Button_GetCheck(GetDlgItem(hWnd, IDC_USE_MOUSE));
-	//mamep: handle -multimouse option
-	EnableWindow(GetDlgItem(hWnd, IDC_MULTIMOUSE),             useart);
+	//mamep: -multimouse
+	BOOL use_mouse;
+	use_mouse = Button_GetCheck(GetDlgItem(hWnd,IDC_USE_MOUSE));
+	EnableWindow(GetDlgItem(hWnd,IDC_MULTIMOUSE),use_mouse);
 
 	/* Trackball / Mouse options */
 	if (nIndex <= -1 || DriverUsesTrackball(nIndex) || DriverUsesLightGun(nIndex))
@@ -2824,7 +2809,7 @@ static void SetPropEnabledControls(HWND hWnd)
 	else
 		Button_Enable(GetDlgItem(hWnd,IDC_USE_MOUSE),FALSE);
 
-	if (nIndex <= -1 || DriverUsesLightGun(nIndex))
+	if (/* !in_window && */(nIndex <= -1 || DriverUsesLightGun(nIndex)))
 	{
 		// on WinXP the Lightgun and Dual Lightgun switches are no longer supported use mouse instead
 		OSVERSIONINFOEX osvi;
@@ -2844,21 +2829,18 @@ static void SetPropEnabledControls(HWND hWnd)
 		if( bOsVersionInfoEx && (osvi.dwPlatformId == VER_PLATFORM_WIN32_NT) && (osvi.dwMajorVersion >= 5) )
 		{
 			BOOL use_lightgun;
-			BOOL mouse;
 			//XP and above...
-			Button_Enable(GetDlgItem(hWnd,IDC_LIGHTGUN), TRUE);
-			Button_Enable(GetDlgItem(hWnd,IDC_USE_MOUSE), TRUE);
+			//mamep: -dual_lightgun, -offscreen_reload
+			Button_Enable(GetDlgItem(hWnd,IDC_LIGHTGUN),TRUE);
 			use_lightgun = Button_GetCheck(GetDlgItem(hWnd,IDC_LIGHTGUN));
-			mouse = Button_GetCheck(GetDlgItem(hWnd,IDC_USE_MOUSE));
-			Button_Enable(GetDlgItem(hWnd,IDC_LIGHTGUN), !mouse);
-			Button_Enable(GetDlgItem(hWnd,IDC_DUAL_LIGHTGUN),use_lightgun || mouse);
-			Button_Enable(GetDlgItem(hWnd,IDC_RELOAD),use_lightgun || mouse);
+			Button_Enable(GetDlgItem(hWnd,IDC_DUAL_LIGHTGUN),use_lightgun || use_mouse);
+			Button_Enable(GetDlgItem(hWnd,IDC_RELOAD),use_lightgun || use_mouse);
 		}
 		else
 		{
 			BOOL use_lightgun;
 			// Older than XP 
-			Button_Enable(GetDlgItem(hWnd,IDC_LIGHTGUN), TRUE);
+			Button_Enable(GetDlgItem(hWnd,IDC_LIGHTGUN),TRUE);
 			use_lightgun = Button_GetCheck(GetDlgItem(hWnd,IDC_LIGHTGUN));
 			Button_Enable(GetDlgItem(hWnd,IDC_DUAL_LIGHTGUN),use_lightgun);
 			Button_Enable(GetDlgItem(hWnd,IDC_RELOAD),use_lightgun);
@@ -2886,10 +2868,14 @@ static void SetPropEnabledControls(HWND hWnd)
 		EnableWindow(GetDlgItem(hWnd,IDC_AUDIO_LATENCY),sound);
 		EnableWindow(GetDlgItem(hWnd,IDC_AUDIO_LATENCY_DISP),sound);
 		EnableWindow(GetDlgItem(hWnd,IDC_AUDIO_LATENCY_TEXT),sound);
-#ifdef USE_VOLUME_AUTO_ADJUST
-		EnableWindow(GetDlgItem(hWnd,IDC_VOLUME_ADJUST),sound);
-#endif /* USE_VOLUME_AUTO_ADJUST */
-		SetSamplesEnabled(hWnd, nIndex, sound);
+#ifdef USE_AUDIO_SYNC
+		EnableWindow(GetDlgItem(hWnd,IDC_AUDIO_SYNC),sound);
+#endif /* USE_AUDIO_SYNC */
+		//mamep: allow in GLOBAL_OPTIONS set IDC_SAMPLES
+		if (g_nGame != GLOBAL_OPTIONS)
+			SetSamplesEnabled(hWnd, nIndex, sound);
+		else
+			EnableWindow(GetDlgItem(hWnd,IDC_SAMPLES),sound);
 	}
 
 	if (Button_GetCheck(GetDlgItem(hWnd, IDC_AUTOFRAMESKIP)))
@@ -2897,28 +2883,23 @@ static void SetPropEnabledControls(HWND hWnd)
 	else
 		EnableWindow(GetDlgItem(hWnd, IDC_FRAMESKIP), TRUE);
 
-	// misc
-	if (g_nPropertyMode == OPTIONS_GAME)
+	//mamep: added IDC_BIOSTEXT
+	if ((g_nGame != GLOBAL_OPTIONS) && DriverHasOptionalBIOS(nIndex))
 	{
-		BOOL has_bios = DriverHasOptionalBIOS(nIndex);
-
-		ShowWindow(GetDlgItem(hWnd, IDC_BIOS), has_bios ? SW_SHOW : SW_HIDE);
-		ShowWindow(GetDlgItem(hWnd, IDC_BIOSTEXT), has_bios ? SW_SHOW : SW_HIDE);
+		EnableWindow(GetDlgItem(hWnd, IDC_BIOSTEXT),TRUE);
+		EnableWindow(GetDlgItem(hWnd, IDC_BIOS),TRUE);
 	}
 	else
 	{
-		ShowWindow(GetDlgItem(hWnd, IDC_BIOS), SW_HIDE);
-		ShowWindow(GetDlgItem(hWnd, IDC_BIOSTEXT), SW_HIDE);
+		EnableWindow(GetDlgItem(hWnd, IDC_BIOSTEXT),FALSE);
+		EnableWindow(GetDlgItem(hWnd, IDC_BIOS),FALSE);
 	}
 
+	//mamep: -autosave (only if GAME_SUPPORTS_SAVE)
 	if (g_nPropertyMode != OPTIONS_GAME || DriverSupportsSaveState(nIndex))
-	{
 		Button_Enable(GetDlgItem(hWnd,IDC_ENABLE_AUTOSAVE),TRUE);
-	}
 	else
-	{
 		Button_Enable(GetDlgItem(hWnd,IDC_ENABLE_AUTOSAVE),FALSE);
-	}
 
 #ifdef USE_PSXPLUGIN
 	{
@@ -3557,7 +3538,7 @@ static void BuildDataMap(void)
 	properties_datamap = datamap_create();
 
 	// core state options
-	datamap_add(properties_datamap, IDC_ENABLE_AUTOSAVE,		DM_BOOL,	OPTION_AUTOSAVE);
+	datamap_add(properties_datamap, IDC_ENABLE_AUTOSAVE,			DM_BOOL,	OPTION_AUTOSAVE);
 	datamap_add(properties_datamap, IDC_SNAPVIEW,				DM_STRING,	OPTION_SNAPVIEW);
 	datamap_add(properties_datamap, IDC_SNAPSIZEWIDTH,			DM_STRING,	NULL);
 	datamap_add(properties_datamap, IDC_SNAPSIZEHEIGHT,			DM_STRING,	NULL);
@@ -3566,38 +3547,38 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_AUTOFRAMESKIP,			DM_BOOL,	OPTION_AUTOFRAMESKIP);
 	datamap_add(properties_datamap, IDC_FRAMESKIP,				DM_INT,		OPTION_FRAMESKIP);
 	datamap_add(properties_datamap, IDC_SECONDSTORUN,			DM_INT,		OPTION_SECONDS_TO_RUN);
-	datamap_add(properties_datamap, IDC_SECONDSTORUNDISP,		DM_INT,		OPTION_SECONDS_TO_RUN);
+	datamap_add(properties_datamap, IDC_SECONDSTORUNDISP,			DM_INT,		OPTION_SECONDS_TO_RUN);
 	datamap_add(properties_datamap, IDC_THROTTLE,				DM_BOOL,	OPTION_THROTTLE);
-	datamap_add(properties_datamap, IDC_SLEEP,					DM_BOOL,	OPTION_SLEEP);
-	datamap_add(properties_datamap, IDC_SPEED,				    DM_FLOAT,	OPTION_SPEED);
+	datamap_add(properties_datamap, IDC_SLEEP,				DM_BOOL,	OPTION_SLEEP);
+	datamap_add(properties_datamap, IDC_SPEED,				DM_FLOAT,	OPTION_SPEED);
 	datamap_add(properties_datamap, IDC_SPEEDDISP,				DM_FLOAT,	OPTION_SPEED);
 	datamap_add(properties_datamap, IDC_REFRESHSPEED,			DM_BOOL,	OPTION_REFRESHSPEED);
 
 	// core retation options
-	datamap_add(properties_datamap, IDC_ROTATE,					DM_INT,		NULL);
+	datamap_add(properties_datamap, IDC_ROTATE,				DM_INT,		NULL);
 	// ror, rol, autoror, autorol handled by callback
-	datamap_add(properties_datamap, IDC_FLIPX,					DM_BOOL,	OPTION_FLIPX);
-	datamap_add(properties_datamap, IDC_FLIPY,					DM_BOOL,	OPTION_FLIPY);
+	datamap_add(properties_datamap, IDC_FLIPX,				DM_BOOL,	OPTION_FLIPX);
+	datamap_add(properties_datamap, IDC_FLIPY,				DM_BOOL,	OPTION_FLIPY);
 
 	// core artwork options
 	datamap_add(properties_datamap, IDC_ARTWORK_CROP,			DM_BOOL,	OPTION_ARTWORK_CROP);
 	datamap_add(properties_datamap, IDC_BACKDROPS,				DM_BOOL,	OPTION_USE_BACKDROPS);
 	datamap_add(properties_datamap, IDC_OVERLAYS,				DM_BOOL,	OPTION_USE_OVERLAYS);
-	datamap_add(properties_datamap, IDC_BEZELS,					DM_BOOL,	OPTION_USE_BEZELS);
+	datamap_add(properties_datamap, IDC_BEZELS,				DM_BOOL,	OPTION_USE_BEZELS);
 
 	// core screen options
 	datamap_add(properties_datamap, IDC_BRIGHTCORRECT,			DM_FLOAT,	OPTION_BRIGHTNESS);
-	datamap_add(properties_datamap, IDC_BRIGHTCORRECTDISP,		DM_FLOAT,	OPTION_BRIGHTNESS);
+	datamap_add(properties_datamap, IDC_BRIGHTCORRECTDISP,			DM_FLOAT,	OPTION_BRIGHTNESS);
 	datamap_add(properties_datamap, IDC_CONTRAST,				DM_FLOAT,	OPTION_CONTRAST);
 	datamap_add(properties_datamap, IDC_CONTRASTDISP,			DM_FLOAT,	OPTION_CONTRAST);
-	datamap_add(properties_datamap, IDC_GAMMA,					DM_FLOAT,	OPTION_GAMMA);
+	datamap_add(properties_datamap, IDC_GAMMA,				DM_FLOAT,	OPTION_GAMMA);
 	datamap_add(properties_datamap, IDC_GAMMADISP,				DM_FLOAT,	OPTION_GAMMA);
 	datamap_add(properties_datamap, IDC_PAUSEBRIGHT,			DM_FLOAT,	OPTION_PAUSE_BRIGHTNESS);
-	datamap_add(properties_datamap, IDC_PAUSEBRIGHTDISP,		DM_FLOAT,	OPTION_PAUSE_BRIGHTNESS);
+	datamap_add(properties_datamap, IDC_PAUSEBRIGHTDISP,			DM_FLOAT,	OPTION_PAUSE_BRIGHTNESS);
 
 	// core vector options
 	datamap_add(properties_datamap, IDC_ANTIALIAS,				DM_BOOL,	OPTION_ANTIALIAS);
-	datamap_add(properties_datamap, IDC_BEAM,					DM_FLOAT,	OPTION_BEAM);
+	datamap_add(properties_datamap, IDC_BEAM,				DM_FLOAT,	OPTION_BEAM);
 	datamap_add(properties_datamap, IDC_BEAMDISP,				DM_FLOAT,	OPTION_BEAM);
 	datamap_add(properties_datamap, IDC_FLICKER,				DM_FLOAT,	OPTION_FLICKER);
 	datamap_add(properties_datamap, IDC_FLICKERDISP,			DM_FLOAT,	OPTION_FLICKER);
@@ -3606,11 +3587,11 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_SAMPLERATE,				DM_INT,		OPTION_SAMPLERATE);
 	datamap_add(properties_datamap, IDC_SAMPLES,				DM_BOOL,	OPTION_SAMPLES);
 	datamap_add(properties_datamap, IDC_USE_SOUND,				DM_BOOL,	OPTION_SOUND);
-	datamap_add(properties_datamap, IDC_VOLUME,					DM_INT,		OPTION_VOLUME);
+	datamap_add(properties_datamap, IDC_VOLUME,				DM_INT,		OPTION_VOLUME);
 	datamap_add(properties_datamap, IDC_VOLUMEDISP,				DM_INT,		OPTION_VOLUME);
-#ifdef USE_VOLUME_AUTO_ADJUST
-	datamap_add(properties_datamap, IDC_VOLUME_ADJUST,			DM_BOOL,	OPTION_VOLUME_ADJUST);
-#endif /* USE_VOLUME_AUTO_ADJUST */
+#ifdef USE_AUDIO_SYNC
+	datamap_add(properties_datamap, IDC_AUDIO_SYNC,				DM_BOOL,	WINOPTION_AUDIO_SYNC);
+#endif /* USE_AUDIO_SYNC */
 
 	// core input options 
 	datamap_add(properties_datamap, IDC_COINLOCKOUT,			DM_BOOL,	OPTION_COIN_LOCKOUT);
@@ -3621,38 +3602,38 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_STEADYKEY,				DM_BOOL,	OPTION_STEADYKEY);
 	datamap_add(properties_datamap, IDC_MULTIKEYBOARD,			DM_BOOL,	OPTION_MULTIKEYBOARD);
 	datamap_add(properties_datamap, IDC_MULTIMOUSE,				DM_BOOL,	OPTION_MULTIMOUSE);
-	datamap_add(properties_datamap, IDC_RELOAD,					DM_BOOL,	OPTION_OFFSCREEN_RELOAD);
+	datamap_add(properties_datamap, IDC_RELOAD,				DM_BOOL,	OPTION_OFFSCREEN_RELOAD);
 
-	datamap_add(properties_datamap, IDC_JDZ,					DM_FLOAT,	OPTION_JOYSTICK_DEADZONE);
+	datamap_add(properties_datamap, IDC_JDZ,				DM_FLOAT,	OPTION_JOYSTICK_DEADZONE);
 	datamap_add(properties_datamap, IDC_JDZDISP,				DM_FLOAT,	OPTION_JOYSTICK_DEADZONE);
-	datamap_add(properties_datamap, IDC_JSAT,					DM_FLOAT,	OPTION_JOYSTICK_SATURATION);
+	datamap_add(properties_datamap, IDC_JSAT,				DM_FLOAT,	OPTION_JOYSTICK_SATURATION);
 	datamap_add(properties_datamap, IDC_JSATDISP,				DM_FLOAT,	OPTION_JOYSTICK_SATURATION);
 	datamap_add(properties_datamap, IDC_JOYSTICKMAP,			DM_STRING,	OPTION_JOYSTICK_MAP);
 
 	// core input automatic enable options
-	datamap_add(properties_datamap, IDC_PADDLE,					DM_STRING,	OPTION_PADDLE_DEVICE);
+	datamap_add(properties_datamap, IDC_PADDLE,				DM_STRING,	OPTION_PADDLE_DEVICE);
 	datamap_add(properties_datamap, IDC_ADSTICK,				DM_STRING,	OPTION_ADSTICK_DEVICE);
-	datamap_add(properties_datamap, IDC_PEDAL,					DM_STRING,	OPTION_PEDAL_DEVICE);
-	datamap_add(properties_datamap, IDC_DIAL,					DM_STRING,	OPTION_DIAL_DEVICE);
+	datamap_add(properties_datamap, IDC_PEDAL,				DM_STRING,	OPTION_PEDAL_DEVICE);
+	datamap_add(properties_datamap, IDC_DIAL,				DM_STRING,	OPTION_DIAL_DEVICE);
 	datamap_add(properties_datamap, IDC_TRACKBALL,				DM_STRING,	OPTION_TRACKBALL_DEVICE);
 	datamap_add(properties_datamap, IDC_LIGHTGUNDEVICE,			DM_STRING,	OPTION_LIGHTGUN_DEVICE);
-	datamap_add(properties_datamap, IDC_POSITIONAL,					DM_STRING,	OPTION_POSITIONAL_DEVICE);
-	datamap_add(properties_datamap, IDC_MOUSE,					DM_STRING,	OPTION_MOUSE_DEVICE);
+	datamap_add(properties_datamap, IDC_POSITIONAL,				DM_STRING,	OPTION_POSITIONAL_DEVICE);
+	datamap_add(properties_datamap, IDC_MOUSE,				DM_STRING,	OPTION_MOUSE_DEVICE);
 
 	// windows debugging options
-	datamap_add(properties_datamap, IDC_OSLOG,					DM_BOOL,	WINOPTION_OSLOG);
+	datamap_add(properties_datamap, IDC_OSLOG,				DM_BOOL,	WINOPTION_OSLOG);
 	// watchdog missing
 
 	// core debugging options
-	datamap_add(properties_datamap, IDC_LOG,					DM_BOOL,	OPTION_LOG);
-	datamap_add(properties_datamap, IDC_DEBUG,					DM_BOOL,	OPTION_DEBUG);
+	datamap_add(properties_datamap, IDC_LOG,				DM_BOOL,	OPTION_LOG);
+	datamap_add(properties_datamap, IDC_DEBUG,				DM_BOOL,	OPTION_DEBUG);
 	datamap_add(properties_datamap, IDC_VERBOSE,				DM_BOOL,	OPTION_VERBOSE);
 	datamap_add(properties_datamap, IDC_UPDATEINPAUSE,			DM_BOOL,	OPTION_UPDATEINPAUSE);
 	datamap_add(properties_datamap, IDC_DEBUGSCRIPT,			DM_STRING,	OPTION_DEBUGSCRIPT);
 
 	// core misc options
-	datamap_add(properties_datamap, IDC_BIOS,					DM_STRING,	OPTION_BIOS);
-	datamap_add(properties_datamap, IDC_CHEAT,					DM_BOOL,	OPTION_CHEAT);
+	datamap_add(properties_datamap, IDC_BIOS,				DM_STRING,	OPTION_BIOS);
+	datamap_add(properties_datamap, IDC_CHEAT,				DM_BOOL,	OPTION_CHEAT);
 	datamap_add(properties_datamap, IDC_SKIP_GAME_INFO,			DM_BOOL,	OPTION_SKIP_GAMEINFO);
 #ifdef CONFIRM_QUIT
 	datamap_add(properties_datamap, IDC_CONFIRM_QUIT,			DM_BOOL,	OPTION_CONFIRM_QUIT);
@@ -3690,10 +3671,11 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_COMBO_SPUPLUGIN,		DM_STRING,	"spu_plugin_name");
 #endif /* USE_PSXPLUGIN */
 
+
 	// windows performance options
 	datamap_add(properties_datamap, IDC_HIGH_PRIORITY,			DM_INT,		WINOPTION_PRIORITY);
-	datamap_add(properties_datamap, IDC_HIGH_PRIORITYTXT,		DM_INT,		WINOPTION_PRIORITY);
-	datamap_add(properties_datamap, IDC_MULTITHREAD_RENDERING,	DM_BOOL,	WINOPTION_MULTITHREADING);
+	datamap_add(properties_datamap, IDC_HIGH_PRIORITYTXT,			DM_INT,		WINOPTION_PRIORITY);
+	datamap_add(properties_datamap, IDC_MULTITHREAD_RENDERING,		DM_BOOL,	WINOPTION_MULTITHREADING);
 
 	// windows video options
 	datamap_add(properties_datamap, IDC_VIDEO_MODE,				DM_STRING,	WINOPTION_VIDEO);
@@ -3720,19 +3702,19 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_D3D_FILTER,				DM_BOOL,	WINOPTION_FILTER);
 
 	// per window video options
-	datamap_add(properties_datamap, IDC_SCREEN,					DM_STRING,	NULL);
+	datamap_add(properties_datamap, IDC_SCREEN,				DM_STRING,	NULL);
 	datamap_add(properties_datamap, IDC_SCREENSELECT,			DM_STRING,	NULL);
-	datamap_add(properties_datamap, IDC_VIEW,					DM_STRING,	NULL);
-	datamap_add(properties_datamap, IDC_ASPECTRATIOD,			DM_STRING,  NULL);
-	datamap_add(properties_datamap, IDC_ASPECTRATION,			DM_STRING,  NULL);
-	datamap_add(properties_datamap, IDC_REFRESH,				DM_STRING,  NULL);
-	datamap_add(properties_datamap, IDC_SIZES,					DM_STRING,  NULL);
+	datamap_add(properties_datamap, IDC_VIEW,				DM_STRING,	NULL);
+	datamap_add(properties_datamap, IDC_ASPECTRATIOD,			DM_STRING,  	NULL);
+	datamap_add(properties_datamap, IDC_ASPECTRATION,			DM_STRING,  	NULL);
+	datamap_add(properties_datamap, IDC_REFRESH,				DM_STRING,  	NULL);
+	datamap_add(properties_datamap, IDC_SIZES,				DM_STRING,  	NULL);
 
 	// full screen options
 	datamap_add(properties_datamap, IDC_TRIPLE_BUFFER,			DM_BOOL,	WINOPTION_TRIPLEBUFFER);
 	datamap_add(properties_datamap, IDC_SWITCHRES,				DM_BOOL,	WINOPTION_SWITCHRES);
 	datamap_add(properties_datamap, IDC_FSBRIGHTNESS,			DM_FLOAT,	WINOPTION_FULLSCREENBRIGHTNESS);
-	datamap_add(properties_datamap, IDC_FSBRIGHTNESSDISP,		DM_FLOAT,	WINOPTION_FULLSCREENBRIGHTNESS);
+	datamap_add(properties_datamap, IDC_FSBRIGHTNESSDISP,			DM_FLOAT,	WINOPTION_FULLSCREENBRIGHTNESS);
 	datamap_add(properties_datamap, IDC_FSCONTRAST,				DM_FLOAT,	WINOPTION_FULLLSCREENCONTRAST);
 	datamap_add(properties_datamap, IDC_FSCONTRASTDISP,			DM_FLOAT,	WINOPTION_FULLLSCREENCONTRAST);
 	datamap_add(properties_datamap, IDC_FSGAMMA,				DM_FLOAT,	WINOPTION_FULLSCREENGAMMA);
@@ -3740,7 +3722,7 @@ static void BuildDataMap(void)
 
 	// windows sound options
 	datamap_add(properties_datamap, IDC_AUDIO_LATENCY,			DM_INT,		WINOPTION_AUDIO_LATENCY);
-	datamap_add(properties_datamap, IDC_AUDIO_LATENCY_DISP,		DM_INT,		WINOPTION_AUDIO_LATENCY);
+	datamap_add(properties_datamap, IDC_AUDIO_LATENCY_DISP,			DM_INT,		WINOPTION_AUDIO_LATENCY);
 
 	// input device options
 	datamap_add(properties_datamap, IDC_DUAL_LIGHTGUN,			DM_BOOL,	WINOPTION_DUAL_LIGHTGUN);
@@ -3765,18 +3747,18 @@ static void BuildDataMap(void)
 #endif /* DRIVER_SWITCH */
 
 	// set up callbacks
-	datamap_set_callback(properties_datamap, IDC_ROTATE,		DCT_READ_CONTROL,		RotateReadControl);
-	datamap_set_callback(properties_datamap, IDC_ROTATE,		DCT_POPULATE_CONTROL,	RotatePopulateControl);
-	datamap_set_callback(properties_datamap, IDC_SCREEN,		DCT_READ_CONTROL,		ScreenReadControl);
-	datamap_set_callback(properties_datamap, IDC_SCREEN,		DCT_POPULATE_CONTROL,	ScreenPopulateControl);
+	datamap_set_callback(properties_datamap, IDC_ROTATE,			DCT_READ_CONTROL,	RotateReadControl);
+	datamap_set_callback(properties_datamap, IDC_ROTATE,			DCT_POPULATE_CONTROL,	RotatePopulateControl);
+	datamap_set_callback(properties_datamap, IDC_SCREEN,			DCT_READ_CONTROL,	ScreenReadControl);
+	datamap_set_callback(properties_datamap, IDC_SCREEN,			DCT_POPULATE_CONTROL,	ScreenPopulateControl);
 	datamap_set_callback(properties_datamap, IDC_VIEW,			DCT_POPULATE_CONTROL,	ViewPopulateControl);
-	datamap_set_callback(properties_datamap, IDC_REFRESH,		DCT_READ_CONTROL,		ResolutionReadControl);
-	datamap_set_callback(properties_datamap, IDC_REFRESH,		DCT_POPULATE_CONTROL,	ResolutionPopulateControl);
-	datamap_set_callback(properties_datamap, IDC_SIZES,			DCT_READ_CONTROL,		ResolutionReadControl);
+	datamap_set_callback(properties_datamap, IDC_REFRESH,			DCT_READ_CONTROL,	ResolutionReadControl);
+	datamap_set_callback(properties_datamap, IDC_REFRESH,			DCT_POPULATE_CONTROL,	ResolutionPopulateControl);
+	datamap_set_callback(properties_datamap, IDC_SIZES,			DCT_READ_CONTROL,	ResolutionReadControl);
 	datamap_set_callback(properties_datamap, IDC_SIZES,			DCT_POPULATE_CONTROL,	ResolutionPopulateControl);
-	datamap_set_callback(properties_datamap, IDC_DEFAULT_INPUT,	DCT_READ_CONTROL,		DefaultInputReadControl);	
-	datamap_set_callback(properties_datamap, IDC_DEFAULT_INPUT,	DCT_POPULATE_CONTROL,	DefaultInputPopulateControl);
-	datamap_set_callback(properties_datamap, IDC_SNAPVIEW,		DCT_POPULATE_CONTROL,	SnapViewPopulateControl);
+	datamap_set_callback(properties_datamap, IDC_DEFAULT_INPUT,		DCT_READ_CONTROL,	DefaultInputReadControl);	
+	datamap_set_callback(properties_datamap, IDC_DEFAULT_INPUT,		DCT_POPULATE_CONTROL,	DefaultInputPopulateControl);
+	datamap_set_callback(properties_datamap, IDC_SNAPVIEW,			DCT_POPULATE_CONTROL,	SnapViewPopulateControl);
 
 #ifdef DRIVER_SWITCH
 	{
@@ -3798,20 +3780,20 @@ static void BuildDataMap(void)
 
 
 	// formats
-	datamap_set_int_format(properties_datamap, IDC_VOLUMEDISP,			"%ddB");
+	datamap_set_int_format(properties_datamap, IDC_VOLUMEDISP,		"%ddB");
 	datamap_set_int_format(properties_datamap, IDC_AUDIO_LATENCY_DISP,	"%d/5");
-	datamap_set_float_format(properties_datamap, IDC_BEAMDISP,			"%03.2f");
+	datamap_set_float_format(properties_datamap, IDC_BEAMDISP,		"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_FLICKERDISP,		"%03.2f");
-	datamap_set_float_format(properties_datamap, IDC_GAMMADISP,			"%03.2f");
+	datamap_set_float_format(properties_datamap, IDC_GAMMADISP,		"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_BRIGHTCORRECTDISP,	"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_CONTRASTDISP,		"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_PAUSEBRIGHTDISP,	"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_FSGAMMADISP,		"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_FSBRIGHTNESSDISP,	"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_FSCONTRASTDISP,	"%03.2f");
-	datamap_set_float_format(properties_datamap, IDC_JDZDISP,			"%03.2f");
-	datamap_set_float_format(properties_datamap, IDC_JSATDISP,			"%03.2f");
-	datamap_set_float_format(properties_datamap, IDC_SPEEDDISP,			"%03.2f");
+	datamap_set_float_format(properties_datamap, IDC_JDZDISP,		"%03.2f");
+	datamap_set_float_format(properties_datamap, IDC_JSATDISP,		"%03.2f");
+	datamap_set_float_format(properties_datamap, IDC_SPEEDDISP,		"%03.2f");
 
 	// trackbar ranges
 	datamap_set_trackbar_range(properties_datamap, IDC_PRESCALE,    1, 10, 1);
@@ -3831,7 +3813,7 @@ static void BuildDataMap(void)
 #endif // MESS
 }
 
-#if 1 //mamep
+#if 1 //mamep: for coloring of changed elements
 static BOOL IsControlOptionValue(HWND hDlg, HWND hwnd_ctrl, core_options *opts, core_options *ref)
 {
 	const char *option_name;
@@ -3859,36 +3841,28 @@ static BOOL IsControlOptionValue(HWND hDlg, HWND hwnd_ctrl, core_options *opts, 
 
 static void SetSamplesEnabled(HWND hWnd, int nIndex, BOOL bSoundEnabled)
 {
-	machine_config *config = NULL;
 	BOOL enabled = FALSE;
 	HWND hCtrl;
 
 	hCtrl = GetDlgItem(hWnd, IDC_SAMPLES);
 
-	if ( nIndex > -1 ) {
-		config = global_alloc(machine_config(drivers[nIndex]->machine_config));
-	}
 	
 	if (hCtrl)
 	{
 		const device_config_sound_interface *sound;
-		if (config != NULL)
-		{
-			for (bool gotone = config->m_devicelist.first(sound); gotone; gotone = sound->next(sound))
+		if ( nIndex > -1 ) {
+			machine_config config(*drivers[nIndex]);
+		
+			for (bool gotone = config.m_devicelist.first(sound); gotone; gotone = sound->next(sound))
 				{
-				if (sound->devconfig().type() == SOUND_SAMPLES ||
-					sound->devconfig().type() == SOUND_VLM5030) {
+				if (sound->devconfig().type() == SAMPLES ||
+					sound->devconfig().type() == VLM5030) {
 					enabled = TRUE;
 				}
 			}
 		}
-
 		enabled = enabled && bSoundEnabled;
 		EnableWindow(hCtrl, enabled);
-	}
-	if (config != NULL)
-	{
-		global_free(config);
 	}
 }
 
@@ -4232,7 +4206,7 @@ static void InitializeBIOSUI(HWND hwnd)
 
 		if (g_nGame == GLOBAL_OPTIONS)
 		{
-			(void)ComboBox_InsertString(hCtrl, i, TEXT("None"));
+			(void)ComboBox_InsertString(hCtrl, i, _UIW(TEXT("None")));
 			(void)ComboBox_SetItemData( hCtrl, i++, "");
 			return;
 		}
@@ -4241,7 +4215,7 @@ static void InitializeBIOSUI(HWND hwnd)
 			gamedrv = drivers[g_nFolderGame];
 			if (DriverHasOptionalBIOS(g_nFolderGame) == FALSE)
 			{
-				(void)ComboBox_InsertString(hCtrl, i, TEXT("None"));
+				(void)ComboBox_InsertString(hCtrl, i, _UIW(TEXT("None")));
 				(void)ComboBox_SetItemData( hCtrl, i++, "");
 				return;
 			}
@@ -4270,7 +4244,7 @@ static void InitializeBIOSUI(HWND hwnd)
 
 		if (DriverHasOptionalBIOS(g_nGame) == FALSE)
 		{
-			(void)ComboBox_InsertString(hCtrl, i, TEXT("None"));
+			(void)ComboBox_InsertString(hCtrl, i, _UIW(TEXT("None")));
 			(void)ComboBox_SetItemData( hCtrl, i++, "");
 			return;
 		}

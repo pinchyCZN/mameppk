@@ -304,6 +304,7 @@
 #define IDC_VOLUMEDISP                  1122
 #define IDC_HISTORY                     1124
 #define IDC_SAMPLES                     1125
+#define IDC_AUDIO_SYNC                  1126 // USE_AUDIO_SYNC
 #define IDC_TRIPLE_BUFFER               1127
 #define IDC_LOAD_ROMNAME                0    // N/A
 #define IDC_DEFAULT_INPUT               1129
@@ -428,9 +429,8 @@
 
 #define IDC_CONFIRM_QUIT                1301 // USE_CONFIRM_QUIT
 #define IDC_PLAYBACK_END_PAUSE          1302 // USE_PLAYBACK_END_PAUSE
-#define IDC_VOLUME_ADJUST               1303 // USE_VOLUME_AUTO_ADJUST
-#define IDC_BROKEN_ICON                 1304 // use not working icon
-#define IDC_EDIT_BROKEN_COLOR           1305 // set not working color
+#define IDC_BROKEN_ICON                 1303 // use not working icon
+#define IDC_EDIT_BROKEN_COLOR           1304 // set not working color
 
 #define IDC_JOYID1                      1311 // JOYSTICK_ID
 #define IDC_JOYID2                      1312 // JOYSTICK_ID
@@ -667,7 +667,7 @@
 #define ID_OPTIONS_HISTORY              40101
 
 #define ID_OPTIONS_STORY                40111 // STORY_DATAFILE
-#define ID_BIOS_PROPERTIES		40112 // BIOSSet properties
+#define ID_BIOS_PROPERTIES		40112 // menu: Properties for BIOS
 #define ID_VIEW_MAWS                    40105
 
 #define ID_VIEW_BYGAME                  40151 // sort items

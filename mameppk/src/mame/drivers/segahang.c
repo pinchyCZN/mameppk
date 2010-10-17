@@ -285,7 +285,7 @@ static WRITE16_HANDLER( sharrier_io_w )
 static WRITE8_DEVICE_HANDLER( sound_latch_w )
 {
 	segas1x_state *state = device->machine->driver_data<segas1x_state>();
-	const address_space *space = cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM);
 	soundlatch_w(space, offset, data);
 }
 
@@ -913,10 +913,7 @@ GFXDECODE_END
  *
  *************************************/
 
-static MACHINE_DRIVER_START( hangon_base )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(segas1x_state)
+static MACHINE_CONFIG_START( hangon_base, segas1x_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M68000, MASTER_CLOCK_25MHz/4)
@@ -942,11 +939,10 @@ static MACHINE_DRIVER_START( hangon_base )
 
 	MDRV_VIDEO_START(hangon)
 	MDRV_VIDEO_UPDATE(hangon)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( sharrier_base )
-	MDRV_IMPORT_FROM(hangon_base)
+static MACHINE_CONFIG_DERIVED( sharrier_base, hangon_base )
 
 	/* basic machine hardware */
 	MDRV_CPU_MODIFY("maincpu")
@@ -959,10 +955,10 @@ static MACHINE_DRIVER_START( sharrier_base )
 
 	/* video hardware */
 	MDRV_VIDEO_START(sharrier)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( sound_board_2203 )
+static MACHINE_CONFIG_FRAGMENT( sound_board_2203 )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("soundcpu", Z80, MASTER_CLOCK_8MHz/2)
@@ -987,10 +983,10 @@ static MACHINE_DRIVER_START( sound_board_2203 )
 	MDRV_SOUND_CONFIG(segapcm_interface)
 	MDRV_SOUND_ROUTE(0, "lspeaker", 1.0)
 	MDRV_SOUND_ROUTE(1, "rspeaker", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( sound_board_2203x2 )
+static MACHINE_CONFIG_FRAGMENT( sound_board_2203x2 )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("soundcpu", Z80, MASTER_CLOCK_8MHz/2)
@@ -1025,10 +1021,10 @@ static MACHINE_DRIVER_START( sound_board_2203x2 )
 	MDRV_SOUND_CONFIG(segapcm_interface)
 	MDRV_SOUND_ROUTE(0, "lspeaker", 1.0)
 	MDRV_SOUND_ROUTE(1, "rspeaker", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( sound_board_2151 )
+static MACHINE_CONFIG_FRAGMENT( sound_board_2151 )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("soundcpu", Z80, MASTER_CLOCK_8MHz/2)
@@ -1047,7 +1043,7 @@ static MACHINE_DRIVER_START( sound_board_2151 )
 	MDRV_SOUND_CONFIG(segapcm_interface)
 	MDRV_SOUND_ROUTE(0, "lspeaker", 1.0)
 	MDRV_SOUND_ROUTE(1, "rspeaker", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 
@@ -1057,17 +1053,15 @@ MACHINE_DRIVER_END
  *
  *************************************/
 
-static MACHINE_DRIVER_START( hangon )
-	MDRV_IMPORT_FROM(hangon_base)
-	MDRV_IMPORT_FROM(sound_board_2203)
+static MACHINE_CONFIG_DERIVED( hangon, hangon_base )
+	MDRV_FRAGMENT_ADD(sound_board_2203)
 
 	MDRV_SEGA16SP_ADD_HANGON("segaspr1")
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( shangupb )
-	MDRV_IMPORT_FROM(hangon_base)
-	MDRV_IMPORT_FROM(sound_board_2151)
+static MACHINE_CONFIG_DERIVED( shangupb, hangon_base )
+	MDRV_FRAGMENT_ADD(sound_board_2151)
 
 	/* not sure about these speeds, but at 6MHz, the road is not updated fast enough */
 	MDRV_CPU_MODIFY("maincpu")
@@ -1076,43 +1070,39 @@ static MACHINE_DRIVER_START( shangupb )
 	MDRV_CPU_CLOCK(10000000)
 
 	MDRV_SEGA16SP_ADD_HANGON("segaspr1")
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( sharrier )
-	MDRV_IMPORT_FROM(sharrier_base)
-	MDRV_IMPORT_FROM(sound_board_2203)
+static MACHINE_CONFIG_DERIVED( sharrier, sharrier_base )
+	MDRV_FRAGMENT_ADD(sound_board_2203)
 
 	MDRV_CPU_ADD("mcu", I8751, 8000000)
 	MDRV_CPU_IO_MAP(mcu_io_map)
 	MDRV_CPU_VBLANK_INT("screen", irq0_line_pulse)
 
 	MDRV_SEGA16SP_ADD_SHARRIER("segaspr1")
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( enduror )
-	MDRV_IMPORT_FROM(sharrier_base)
-	MDRV_IMPORT_FROM(sound_board_2151)
-
-	MDRV_SEGA16SP_ADD_SHARRIER("segaspr1")
-MACHINE_DRIVER_END
-
-
-static MACHINE_DRIVER_START( enduror1 )
-	MDRV_IMPORT_FROM(sharrier_base)
-	MDRV_IMPORT_FROM(sound_board_2203)
+static MACHINE_CONFIG_DERIVED( enduror, sharrier_base )
+	MDRV_FRAGMENT_ADD(sound_board_2151)
 
 	MDRV_SEGA16SP_ADD_SHARRIER("segaspr1")
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( endurob2 )
-	MDRV_IMPORT_FROM(sharrier_base)
-	MDRV_IMPORT_FROM(sound_board_2203x2)
+static MACHINE_CONFIG_DERIVED( enduror1, sharrier_base )
+	MDRV_FRAGMENT_ADD(sound_board_2203)
 
 	MDRV_SEGA16SP_ADD_SHARRIER("segaspr1")
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
+
+
+static MACHINE_CONFIG_DERIVED( endurob2, sharrier_base )
+	MDRV_FRAGMENT_ADD(sound_board_2203x2)
+
+	MDRV_SEGA16SP_ADD_SHARRIER("segaspr1")
+MACHINE_CONFIG_END
 
 
 
@@ -1866,12 +1856,12 @@ static DRIVER_INIT( enduror )
 
 static DRIVER_INIT( endurobl )
 {
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	UINT16 *rom = (UINT16 *)memory_region(machine, "maincpu");
 	UINT16 *decrypt = auto_alloc_array(machine, UINT16, 0x40000/2);
 
 	hangon_generic_init(machine);
-	memory_set_decrypted_region(space, 0x000000, 0x03ffff, decrypt);
+	space->set_decrypted_region(0x000000, 0x03ffff, decrypt);
 
 	memcpy(decrypt + 0x00000/2, rom + 0x30000/2, 0x10000);
 	memcpy(decrypt + 0x10000/2, rom + 0x10000/2, 0x20000);
@@ -1880,12 +1870,12 @@ static DRIVER_INIT( endurobl )
 
 static DRIVER_INIT( endurob2 )
 {
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	UINT16 *rom = (UINT16 *)memory_region(machine, "maincpu");
 	UINT16 *decrypt = auto_alloc_array(machine, UINT16, 0x40000/2);
 
 	hangon_generic_init(machine);
-	memory_set_decrypted_region(space, 0x000000, 0x03ffff, decrypt);
+	space->set_decrypted_region(0x000000, 0x03ffff, decrypt);
 
 	memcpy(decrypt, rom, 0x30000);
 	/* missing data ROM */

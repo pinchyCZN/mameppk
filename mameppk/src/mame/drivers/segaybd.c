@@ -27,6 +27,7 @@ Known games currently not dumped:
 #include "includes/segas16.h"
 #include "cpu/m68000/m68000.h"
 #include "machine/segaic16.h"
+#include "machine/nvram.h"
 #include "sound/2151intf.h"
 #include "sound/segapcm.h"
 #include "video/segaic16.h"
@@ -47,8 +48,6 @@ Known games currently not dumped:
  *  Statics
  *
  *************************************/
-
-static UINT16 *backupram;
 
 /* callbacks to handle output */
 typedef void (*yboard_output_callback)(UINT16 data);
@@ -236,7 +235,7 @@ static void sound_cpu_irq(running_device *device, int state)
 static TIMER_CALLBACK( delayed_sound_data_w )
 {
 	segas1x_state *state = machine->driver_data<segas1x_state>();
-	const address_space *space = cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM);
 
 	soundlatch_w(space, 0, param);
 	cpu_set_input_line(state->soundcpu, INPUT_LINE_NMI, ASSERT_LINE);
@@ -412,22 +411,6 @@ static WRITE16_HANDLER( analog_w )
 
 /*************************************
  *
- *  Capacitor-backed RAM
- *
- *************************************/
-
-static NVRAM_HANDLER( yboard )
-{
-	if (read_or_write)
-		mame_fwrite(file, backupram, 0x4000);
-	else if (file)
-		mame_fread(file, backupram, 0x4000);
-}
-
-
-
-/*************************************
- *
  *  Main CPU memory handlers
  *
  *************************************/
@@ -463,7 +446,7 @@ static ADDRESS_MAP_START( subx_map, ADDRESS_SPACE_PROGRAM, 16 )
 	AM_RANGE(0x0c0000, 0x0cffff) AM_RAM AM_SHARE("share1")
 	AM_RANGE(0x180000, 0x18ffff) AM_RAM AM_BASE(&segaic16_spriteram_1)
 	AM_RANGE(0x1f8000, 0x1fbfff) AM_RAM
-	AM_RANGE(0x1fc000, 0x1fffff) AM_RAM AM_BASE(&backupram)
+	AM_RANGE(0x1fc000, 0x1fffff) AM_RAM AM_SHARE("backupram")
 ADDRESS_MAP_END
 
 
@@ -1003,10 +986,7 @@ static const sega_pcm_interface segapcm_interface =
  *
  *************************************/
 
-static MACHINE_DRIVER_START( yboard )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(segas1x_state)
+static MACHINE_CONFIG_START( yboard, segas1x_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M68000, MASTER_CLOCK/4)
@@ -1024,7 +1004,7 @@ static MACHINE_DRIVER_START( yboard )
 
 	MDRV_MACHINE_START(yboard)
 	MDRV_MACHINE_RESET(yboard)
-	MDRV_NVRAM_HANDLER(yboard)
+	MDRV_NVRAM_ADD_0FILL("backupram")
 	MDRV_QUANTUM_TIME(HZ(6000))
 
 	MDRV_TIMER_ADD("int_timer", scanline_callback)
@@ -1063,7 +1043,7 @@ static MACHINE_DRIVER_START( yboard )
 	MDRV_SOUND_CONFIG(segapcm_interface)
 	MDRV_SOUND_ROUTE(0, "lspeaker", 1.0)
 	MDRV_SOUND_ROUTE(1, "rspeaker", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 

@@ -27,13 +27,11 @@
 #include "machine/pxa255.h"
 #include "sound/dmadac.h"
 
-class _39in1_state : public driver_data_t
+class _39in1_state : public driver_device
 {
 public:
-	static driver_data_t *alloc(running_machine &machine) { return auto_alloc_clear(&machine, _39in1_state(machine)); }
-
-	_39in1_state(running_machine &machine)
-		: driver_data_t(machine) { }
+	_39in1_state(running_machine &machine, const driver_device_config_base &config)
+		: driver_device(machine, config) { }
 
 	UINT32 seed;
 	UINT32 magic;
@@ -79,7 +77,7 @@ static WRITE32_HANDLER( pxa255_intc_w );
 static READ32_HANDLER( pxa255_gpio_r );
 static WRITE32_HANDLER( pxa255_gpio_w );
 
-static void pxa255_lcd_load_dma_descriptor(const address_space* space, UINT32 address, int channel);
+static void pxa255_lcd_load_dma_descriptor(address_space* space, UINT32 address, int channel);
 static void pxa255_lcd_irq_check(running_machine* machine);
 static void pxa255_lcd_dma_kickoff(running_machine* machine, int channel);
 static void pxa255_lcd_check_load_next_branch(running_machine* machine, int channel);
@@ -262,10 +260,11 @@ static void pxa255_dma_load_descriptor_and_start(running_machine* machine, int c
 
 	// Load the next descriptor
 
-	dma_regs->dsadr[channel] = memory_read_dword_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), dma_regs->ddadr[channel] + 0x4);
-	dma_regs->dtadr[channel] = memory_read_dword_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), dma_regs->ddadr[channel] + 0x8);
-	dma_regs->dcmd[channel]  = memory_read_dword_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), dma_regs->ddadr[channel] + 0xc);
-	dma_regs->ddadr[channel] = memory_read_dword_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), dma_regs->ddadr[channel]);
+	address_space *space = machine->device<pxa255_device>("maincpu")->space(AS_PROGRAM);
+	dma_regs->dsadr[channel] = space->read_dword(dma_regs->ddadr[channel] + 0x4);
+	dma_regs->dtadr[channel] = space->read_dword(dma_regs->ddadr[channel] + 0x8);
+	dma_regs->dcmd[channel]  = space->read_dword(dma_regs->ddadr[channel] + 0xc);
+	dma_regs->ddadr[channel] = space->read_dword(dma_regs->ddadr[channel]);
 
 	// Start our end-of-transfer timer
 	switch(channel)
@@ -301,12 +300,13 @@ static TIMER_CALLBACK( pxa255_dma_dma_end )
 	UINT16 temp16;
 	UINT32 temp32;
 
+	address_space *space = machine->device<pxa255_device>("maincpu")->space(AS_PROGRAM);
 	switch(param)
 	{
 		case 3:
 			for(index = 0; index < count; index += 4)
 			{
-				state->words[index >> 2] = memory_read_dword_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), sadr);
+				state->words[index >> 2] = space->read_dword(sadr);
 				state->samples[(index >> 1) + 0] = (INT16)(state->words[index >> 2] >> 16);
 				state->samples[(index >> 1) + 1] = (INT16)(state->words[index >> 2] & 0xffff);
 				sadr += 4;
@@ -319,18 +319,18 @@ static TIMER_CALLBACK( pxa255_dma_dma_end )
 				switch(dma_regs->dcmd[param] & PXA255_DCMD_SIZE)
 				{
 					case PXA255_DCMD_SIZE_8:
-						temp8 = memory_read_byte_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), sadr);
-						memory_write_byte_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), tadr, temp8);
+						temp8 = space->read_byte(sadr);
+						space->write_byte(tadr, temp8);
 						index++;
 						break;
 					case PXA255_DCMD_SIZE_16:
-						temp16 = memory_read_word_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), sadr);
-						memory_write_word_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), tadr, temp16);
+						temp16 = space->read_word(sadr);
+						space->write_word(tadr, temp16);
 						index += 2;
 						break;
 					case PXA255_DCMD_SIZE_32:
-						temp32 = memory_read_dword_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), sadr);
-						memory_write_dword_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), tadr, temp32);
+						temp32 = space->read_dword(sadr);
+						space->write_dword(tadr, temp32);
 						index += 4;
 						break;
 					default:
@@ -1048,15 +1048,15 @@ static WRITE32_HANDLER( pxa255_gpio_w )
 
 */
 
-static void pxa255_lcd_load_dma_descriptor(const address_space* space, UINT32 address, int channel)
+static void pxa255_lcd_load_dma_descriptor(address_space* space, UINT32 address, int channel)
 {
 	_39in1_state *state = space->machine->driver_data<_39in1_state>();
 	PXA255_LCD_Regs *lcd_regs = &state->lcd_regs;
 
-	lcd_regs->dma[channel].fdadr = memory_read_dword_32le(space, address);
-	lcd_regs->dma[channel].fsadr = memory_read_dword_32le(space, address + 0x04);
-	lcd_regs->dma[channel].fidr  = memory_read_dword_32le(space, address + 0x08);
-	lcd_regs->dma[channel].ldcmd = memory_read_dword_32le(space, address + 0x0c);
+	lcd_regs->dma[channel].fdadr = space->read_dword(address);
+	lcd_regs->dma[channel].fsadr = space->read_dword(address + 0x04);
+	lcd_regs->dma[channel].fidr  = space->read_dword(address + 0x08);
+	lcd_regs->dma[channel].ldcmd = space->read_dword(address + 0x0c);
 	verboselog( space->machine, 4, "pxa255_lcd_load_dma_descriptor, address = %08x, channel = %d\n", address, channel);
 	verboselog( space->machine, 4, "    DMA Frame Descriptor: %08x\n", lcd_regs->dma[channel].fdadr );
 	verboselog( space->machine, 4, "    DMA Frame Source Address: %08x\n", lcd_regs->dma[channel].fsadr );
@@ -1101,22 +1101,24 @@ static void pxa255_lcd_dma_kickoff(running_machine* machine, int channel)
 
 		if(lcd_regs->dma[channel].ldcmd & PXA255_LDCMD_PAL)
 		{
+			address_space *space = machine->device<pxa255_device>("maincpu")->space(AS_PROGRAM);
 			int length = lcd_regs->dma[channel].ldcmd & 0x000fffff;
 			int index = 0;
 			for(index = 0; index < length; index += 2)
 			{
-				UINT16 color = memory_read_word_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), (lcd_regs->dma[channel].fsadr &~ 1) + index);
+				UINT16 color = space->read_word((lcd_regs->dma[channel].fsadr &~ 1) + index);
 				state->pxa255_lcd_palette[index >> 1] = (((((color >> 11) & 0x1f) << 3) | (color >> 13)) << 16) | (((((color >> 5) & 0x3f) << 2) | ((color >> 9) & 0x3)) << 8) | (((color & 0x1f) << 3) | ((color >> 2) & 0x7));
 				palette_set_color_rgb(machine, index >> 1, (((color >> 11) & 0x1f) << 3) | (color >> 13), (((color >> 5) & 0x3f) << 2) | ((color >> 9) & 0x3), ((color & 0x1f) << 3) | ((color >> 2) & 0x7));
 			}
 		}
 		else
 		{
+			address_space *space = machine->device<pxa255_device>("maincpu")->space(AS_PROGRAM);
 			int length = lcd_regs->dma[channel].ldcmd & 0x000fffff;
 			int index = 0;
 			for(index = 0; index < length; index++)
 			{
-				state->pxa255_lcd_framebuffer[index] = memory_read_byte_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), lcd_regs->dma[channel].fsadr + index);
+				state->pxa255_lcd_framebuffer[index] = space->read_byte(lcd_regs->dma[channel].fsadr + index);
 			}
 		}
 	}
@@ -1131,10 +1133,11 @@ static void pxa255_lcd_check_load_next_branch(running_machine* machine, int chan
 	{
 		verboselog( machine, 4, "pxa255_lcd_check_load_next_branch: Taking branch\n" );
 		lcd_regs->fbr[channel] &= ~1;
-		//lcd_regs->fbr[channel] = (memory_read_dword_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), lcd_regs->fbr[channel] & 0xfffffff0) & 0xfffffff0) | (lcd_regs->fbr[channel] & 0x00000003);
+		address_space *space = machine->device<pxa255_device>("maincpu")->space(AS_PROGRAM);
+		//lcd_regs->fbr[channel] = (space->read_dword(lcd_regs->fbr[channel] & 0xfffffff0) & 0xfffffff0) | (lcd_regs->fbr[channel] & 0x00000003);
 		//printf( "%08x\n", lcd_regs->fbr[channel] );
-		pxa255_lcd_load_dma_descriptor(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), lcd_regs->fbr[channel] & 0xfffffff0, 0);
-		lcd_regs->fbr[channel] = (memory_read_dword_32le(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), lcd_regs->fbr[channel] & 0xfffffff0) & 0xfffffff0) | (lcd_regs->fbr[channel] & 0x00000003);
+		pxa255_lcd_load_dma_descriptor(space, lcd_regs->fbr[channel] & 0xfffffff0, 0);
+		lcd_regs->fbr[channel] = (space->read_dword(lcd_regs->fbr[channel] & 0xfffffff0) & 0xfffffff0) | (lcd_regs->fbr[channel] & 0x00000003);
 		pxa255_lcd_dma_kickoff(machine, 0);
 		if(lcd_regs->fbr[channel] & 2)
 		{
@@ -1430,7 +1433,7 @@ static WRITE32_HANDLER( cpld_w )
 	if (cpu_get_pc(space->cpu) == 0x2874)
 	{
 		state->state = 2;
-		state->magic = memory_read_byte_32le(space, 0x2d4ff0);
+		state->magic = space->read_byte(0x2d4ff0);
 	}
 	else if (offset == 0xa)
 	{
@@ -1456,7 +1459,8 @@ static DRIVER_INIT( 39in1 )
 	state->dmadac[1] = machine->device<dmadac_sound_device>("dac2");
 	state->eeprom = machine->device<eeprom_device>("eeprom");
 
-	memory_install_read32_handler (cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0xa0151648, 0xa015164b, 0, 0, prot_cheater_r);
+	address_space *space = machine->device<pxa255_device>("maincpu")->space(AS_PROGRAM);
+	memory_install_read32_handler (space, 0xa0151648, 0xa015164b, 0, 0, prot_cheater_r);
 }
 
 static ADDRESS_MAP_START( 39in1_map, ADDRESS_SPACE_PROGRAM, 32 )
@@ -1578,9 +1582,7 @@ static MACHINE_START(39in1)
 	pxa255_start(machine);
 }
 
-static MACHINE_DRIVER_START( 39in1 )
-
-	MDRV_DRIVER_DATA( _39in1_state )
+static MACHINE_CONFIG_START( 39in1, _39in1_state )
 
 	MDRV_CPU_ADD("maincpu", PXA255, 200000000)
 	MDRV_CPU_PROGRAM_MAP(39in1_map)
@@ -1607,7 +1609,7 @@ static MACHINE_DRIVER_START( 39in1 )
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "lspeaker", 1.0)
 	MDRV_SOUND_ADD("dac2", DMADAC, 0)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "rspeaker", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 ROM_START( 39in1 )
 	// main program, encrypted

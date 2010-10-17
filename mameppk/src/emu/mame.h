@@ -101,6 +101,9 @@ int mame_execute(core_options *options);
 /* accesses the core_options for the currently running emulation */
 core_options *mame_options(void);
 
+/* set mame options, used by validate option */
+void set_mame_options(core_options *options);
+
 /* return true if the given machine is valid */
 int mame_is_valid_machine(running_machine *machine);
 
@@ -135,9 +138,6 @@ void mame_printf_debug(const char *format, ...) ATTR_PRINTF(1,2);
 /* parse the configured INI files */
 void mame_parse_ini_files(core_options *options, const game_driver *driver);
 
-//mamep: moved from mame.c
-/* required for using -listxml with -driver_config */
-int parse_ini_file(core_options *options, const char *name, int priority);
 
 // pop-up a user visible message
 void CLIB_DECL popmessage(const char *format,...) ATTR_PRINTF(1,2);

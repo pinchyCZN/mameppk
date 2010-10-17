@@ -319,26 +319,26 @@ static READ16_HANDLER( dsp56k_bootload_r )
 	return 0x7fff;
 }
 
-static DIRECT_UPDATE_HANDLER( plygonet_dsp56k_direct_handler )
+DIRECT_UPDATE_HANDLER( plygonet_dsp56k_direct_handler )
 {
-	polygonet_state *state = space->machine->driver_data<polygonet_state>();
+	polygonet_state *state = machine->driver_data<polygonet_state>();
 
 	/* Call the dsp's update handler first */
-	if (state->dsp56k_update_handler != NULL)
+	if (!state->dsp56k_update_handler.isnull())
 	{
-		if ((*state->dsp56k_update_handler)(space, address, direct) == ~0)
+		if (state->dsp56k_update_handler(direct, address) == ~0)
 			return ~0;
 	}
 
 	/* If the requested region wasn't in there, see if it needs to be caught driver-side */
 	if (address >= (0x7000<<1) && address <= (0x7fff<<1))
 	{
-		direct->raw = direct->decrypted = (UINT8*)(state->dsp56k_p_mirror) - (0x7000<<1);
+		direct.explicit_configure(0x7000<<1, 0x7fff<<1, 0xfff<<1, state->dsp56k_p_mirror);
 		return ~0;
 	}
 	else if (address >= (0x8000<<1) && address <= (0x87ff<<1))
 	{
-		direct->raw = direct->decrypted = (UINT8*)(state->dsp56k_p_8000) - (0x8000<<1);
+		direct.explicit_configure(0x8000<<1, 0x87ff<<1, 0x7ff<<1, state->dsp56k_p_8000);
 		return ~0;
 	}
 
@@ -636,9 +636,7 @@ static const k053936_interface polygonet_k053936_intf =
 	0, 0, 0	/* wrap, xoff, yoff */
 };
 
-static MACHINE_DRIVER_START( plygonet )
-
-	MDRV_DRIVER_DATA( polygonet_state )
+static MACHINE_CONFIG_START( plygonet, polygonet_state )
 
 	MDRV_CPU_ADD("maincpu", M68EC020, 16000000)	/* 16 MHz (xtal is 32.0 MHz) */
 	MDRV_CPU_PROGRAM_MAP(main_map)
@@ -688,7 +686,7 @@ static MACHINE_DRIVER_START( plygonet )
 	MDRV_SOUND_CONFIG(k054539_config)
 	MDRV_SOUND_ROUTE(0, "lspeaker", 0.75)
 	MDRV_SOUND_ROUTE(1, "rspeaker", 0.75)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 /**********************************************************************************/
@@ -764,7 +762,8 @@ static DRIVER_INIT(polygonet)
 	state->dsp56k_bank04_ram    = auto_alloc_array_clear(machine, UINT16, 2 * 8 * dsp56k_bank04_size);
 
 	/* The dsp56k occasionally executes out of mapped memory */
-	state->dsp56k_update_handler = memory_set_direct_update_handler(cputag_get_address_space(machine, "dsp", ADDRESS_SPACE_PROGRAM), plygonet_dsp56k_direct_handler);
+	address_space *space = machine->device<dsp56k_device>("dsp")->space(AS_PROGRAM);
+	state->dsp56k_update_handler = space->set_direct_update_handler(direct_update_delegate_create_static(plygonet_dsp56k_direct_handler, *machine));
 
     /* save states */
 	state_save_register_global_pointer(machine, state->dsp56k_bank00_ram,    2 * 8 * dsp56k_bank00_size);

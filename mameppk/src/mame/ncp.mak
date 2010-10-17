@@ -39,6 +39,7 @@ DEFS += -DNCP
 
 CPUS += Z80
 CPUS += I386
+CPUS += MCS48
 CPUS += M680X0
 CPUS += ARM7
 CPUS += SH2
@@ -53,7 +54,7 @@ SOUNDS += YM2151
 SOUNDS += YM2203
 SOUNDS += YM2608
 SOUNDS += YM2610
-ifdef WINUI
+ifneq ($(WINUI),)
 SOUNDS += VLM5030
 endif
 SOUNDS += MSM5205
@@ -72,15 +73,26 @@ DRVLIBS = \
 	$(MAMEOBJ)/mamedriv.o \
 
 ifneq ($(USE_DRIVER_SWITCH),)
-DRVLIBS += $(MAMEOBJ)/mameplusdriv.o \
-            $(MAMEOBJ)/mamehbdriv.o \
-            $(MAMEOBJ)/mamedecrypteddriv.o
+DRVLIBS += \
+	$(MAMEOBJ)/mameplusdriv.o \
+	$(MAMEOBJ)/mamehbdriv.o \
+	$(MAMEOBJ)/mamedecrypteddriv.o
 endif
 
 DRVLIBS += \
 	$(MAMEOBJ)/capcom.a \
 	$(MAMEOBJ)/igs.a \
 	$(MAMEOBJ)/neogeo.a \
+
+
+
+#-------------------------------------------------
+# emulator core objects
+#-------------------------------------------------
+
+DRVLIBS += \
+	$(EMUOBJ)/machine/ldpr8210.o \
+	$(EMUOBJ)/machine/ldvp931.o \
 
 
 

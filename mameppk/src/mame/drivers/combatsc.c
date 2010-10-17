@@ -167,12 +167,6 @@ static READ8_HANDLER( combatscb_io_r )
 static WRITE8_HANDLER( combatscb_priority_w )
 {
 	combatsc_state *state = space->machine->driver_data<combatsc_state>();
-	state->priority = data & 0x20;
-}
-
-static WRITE8_HANDLER( combatsc_bankselect_w )
-{
-	combatsc_state *state = space->machine->driver_data<combatsc_state>();
 
 	if (data & 0x40)
 	{
@@ -188,6 +182,26 @@ static WRITE8_HANDLER( combatsc_bankselect_w )
 	}
 
 	state->priority = data & 0x20;
+}
+
+static WRITE8_HANDLER( combatsc_bankselect_w )
+{
+	combatsc_state *state = space->machine->driver_data<combatsc_state>();
+
+	state->priority = data & 0x20;
+
+	if (data & 0x40)
+	{
+		state->video_circuit = 1;
+		state->videoram = state->page[1];
+		state->scrollram = state->scrollram1;
+	}
+	else
+	{
+		state->video_circuit = 0;
+		state->videoram = state->page[0];
+		state->scrollram = state->scrollram0;
+	}
 
 	if (data & 0x10)
 		memory_set_bank(space->machine, "bank1", (data & 0x0e) >> 1);
@@ -697,7 +711,7 @@ static MACHINE_START( combatsc )
 static MACHINE_RESET( combatsc )
 {
 	combatsc_state *state = machine->driver_data<combatsc_state>();
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	int i;
 
 	memset(state->io_ram,  0x00, 0x4000);
@@ -720,10 +734,7 @@ static MACHINE_RESET( combatsc )
 }
 
 /* combat school (original) */
-static MACHINE_DRIVER_START( combatsc )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(combatsc_state)
+static MACHINE_CONFIG_START( combatsc, combatsc_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", HD6309, 3000000*4)	/* 3 MHz? */
@@ -765,13 +776,10 @@ static MACHINE_DRIVER_START( combatsc )
 
 	MDRV_SOUND_ADD("upd", UPD7759, UPD7759_STANDARD_CLOCK)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.70)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 /* combat school (bootleg on different hardware) */
-static MACHINE_DRIVER_START( combatscb )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(combatsc_state)
+static MACHINE_CONFIG_START( combatscb, combatsc_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", HD6309, 3000000*4)	/* 3 MHz? */
@@ -810,7 +818,7 @@ static MACHINE_DRIVER_START( combatscb )
 
 	MDRV_SOUND_ADD("upd", UPD7759, UPD7759_STANDARD_CLOCK)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.70)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 

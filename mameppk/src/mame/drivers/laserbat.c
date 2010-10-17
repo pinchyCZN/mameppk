@@ -685,21 +685,24 @@ static const s2636_interface s2636_1_config =
 {
 	"screen",
 	0x100,
-	0, -19
+	0, -19,
+	NULL
 };
 
 static const s2636_interface s2636_2_config =
 {
 	"screen",
 	0x100,
-	0, -19
+	0, -19,
+	NULL
 };
 
 static const s2636_interface s2636_3_config =
 {
 	"screen",
 	0x100,
-	0, -19
+	0, -19,
+	NULL
 };
 
 static MACHINE_START( laserbat )
@@ -765,10 +768,7 @@ static MACHINE_RESET( laserbat )
 	state->bit14 = 0;
 }
 
-static MACHINE_DRIVER_START( laserbat )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(laserbat_state)
+static MACHINE_CONFIG_START( laserbat, laserbat_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", S2650, 14318180/4) // ???
@@ -808,12 +808,9 @@ static MACHINE_DRIVER_START( laserbat )
 
 	MDRV_SOUND_ADD("tms2", TMS3615, 4000000/8) // 500 kHz
 	MDRV_SOUND_ROUTE(TMS3615_FOOTAGE_8, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( catnmous )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(laserbat_state)
+static MACHINE_CONFIG_START( catnmous, laserbat_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", S2650, 14318000/4)	/* ? */
@@ -857,7 +854,7 @@ static MACHINE_DRIVER_START( catnmous )
 
 	MDRV_SOUND_ADD("ay2", AY8910, 3580000/2) // ?
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 /*

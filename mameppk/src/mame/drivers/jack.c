@@ -817,10 +817,7 @@ static MACHINE_RESET( jack )
 		state->remap_address[i] = 0;
 }
 
-static MACHINE_DRIVER_START( jack )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(jack_state)
+static MACHINE_CONFIG_START( jack, jack_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z80, 18000000/6)	/* 3 MHz */
@@ -854,15 +851,14 @@ static MACHINE_DRIVER_START( jack )
 	MDRV_SOUND_ADD("aysnd", AY8910, 18000000/12)
 	MDRV_SOUND_CONFIG(ay8910_config)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( tripool )
+static MACHINE_CONFIG_DERIVED( tripool, jack )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(jack)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_VBLANK_INT_HACK(irq0_line_hold,2) /* tripool needs 2 or the palette is broken */
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 static INTERRUPT_GEN( joinem_interrupts )
 {
@@ -875,10 +871,9 @@ static INTERRUPT_GEN( joinem_interrupts )
 	}
 }
 
-static MACHINE_DRIVER_START( joinem )
+static MACHINE_CONFIG_DERIVED( joinem, jack )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(jack)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_PROGRAM_MAP(joinem_map)
 	MDRV_CPU_VBLANK_INT_HACK(joinem_interrupts,3)
@@ -892,13 +887,12 @@ static MACHINE_DRIVER_START( joinem )
 	MDRV_PALETTE_INIT(joinem)
 	MDRV_VIDEO_START(joinem)
 	MDRV_VIDEO_UPDATE(joinem)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( loverboy )
+static MACHINE_CONFIG_DERIVED( loverboy, jack )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(jack)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_PROGRAM_MAP(joinem_map)
 	MDRV_CPU_VBLANK_INT("screen", nmi_line_pulse)
@@ -912,7 +906,7 @@ static MACHINE_DRIVER_START( loverboy )
 	MDRV_PALETTE_INIT(joinem)
 	MDRV_VIDEO_START(joinem)
 	MDRV_VIDEO_UPDATE(joinem)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 /*************************************
  *
@@ -1312,12 +1306,12 @@ ROM_END
 static void treahunt_decode( running_machine *machine )
 {
 	int A;
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	UINT8 *rom = memory_region(machine, "maincpu");
 	UINT8 *decrypt = auto_alloc_array(machine, UINT8, 0x4000);
 	int data;
 
-	memory_set_decrypted_region(space, 0x0000, 0x3fff, decrypt);
+	space->set_decrypted_region(0x0000, 0x3fff, decrypt);
 
 	/* Thanks to Mike Balfour for helping out with the decryption */
 	for (A = 0; A < 0x4000; A++)

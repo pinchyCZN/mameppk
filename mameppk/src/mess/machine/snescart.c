@@ -504,7 +504,7 @@ static UINT32 snes_find_hilo_mode( device_image_interface &image, UINT8 *buffer,
 static int snes_find_addon_chip( running_machine *machine )
 {
 	snes_state *state = machine->driver_data<snes_state>();
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	int supported_type = 1;
 
 	/* Info mostly taken from http://snesemu.black-ship.net/misc/-from%20nsrt.edgeemu.com-chipinfo.htm */
@@ -630,7 +630,7 @@ static int snes_find_addon_chip( running_machine *machine )
 static void snes_cart_log_info( running_machine *machine, int total_blocks, int supported )
 {
 	snes_state *state = machine->driver_data<snes_state>();
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	char title[21], rom_id[4], company_id[2];
 	int i, company, has_ram = 0, has_sram = 0;
 
@@ -707,7 +707,7 @@ static DEVICE_IMAGE_LOAD( snes_cart )
 	int supported_type = 1, i, j;
 	running_machine *machine = image.device().machine;
 	snes_state *state = machine->driver_data<snes_state>();
-	const address_space *space = cputag_get_address_space( machine, "maincpu", ADDRESS_SPACE_PROGRAM );
+	address_space *space = cputag_get_address_space( machine, "maincpu", ADDRESS_SPACE_PROGRAM );
 	int total_blocks, read_blocks, has_bsx_slot = 0, st_bios = 0;
 	UINT32 offset, int_header_offs;
 	UINT8 *ROM = memory_region(image.device().machine, "cart");
@@ -1329,18 +1329,18 @@ static DEVICE_IMAGE_LOAD( bsx2slot_cart )
 	return IMAGE_INIT_PASS;
 }
 
-MACHINE_DRIVER_START( snes_cartslot )
+MACHINE_CONFIG_FRAGMENT( snes_cartslot )
 	MDRV_CARTSLOT_ADD("cart")
 	MDRV_CARTSLOT_EXTENSION_LIST("sfc,smc,fig,swc,bin")
 	MDRV_CARTSLOT_NOT_MANDATORY
 	MDRV_CARTSLOT_INTERFACE("snes_cart")
 	MDRV_CARTSLOT_LOAD(snes_cart)
 	MDRV_SOFTWARE_LIST_ADD("cart_list","snes")
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 // This (hackily) emulates a SNES unit with a Sufami Turbo Unit cart inserted:
 // hence, the user can mount two data cart in the two slots available on the ST Unit
-MACHINE_DRIVER_START( sufami_cartslot )
+MACHINE_CONFIG_FRAGMENT( sufami_cartslot )
 	MDRV_CARTSLOT_ADD("slot_a")
 	MDRV_CARTSLOT_EXTENSION_LIST("st,sfc")
 	MDRV_CARTSLOT_NOT_MANDATORY
@@ -1354,13 +1354,13 @@ MACHINE_DRIVER_START( sufami_cartslot )
 	MDRV_CARTSLOT_LOAD(sufami_cart)
 
 //  MDRV_SOFTWARE_LIST_ADD("cart_list","snes")
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 // This (hackily) emulates a SNES unit where you want to load a BS-X compatible cart:
 // hence, the user can mount a SNES cart in the first slot (either a BS-X BIOS cart, or a
 // BS-X compatible one, e.g. Same Game), and there is a second slot for the 8M data pack
 // (in a real SNES this would have been inserted in the smaller slot on the cart itself)
-MACHINE_DRIVER_START( bsx_cartslot )
+MACHINE_CONFIG_FRAGMENT( bsx_cartslot )
 	MDRV_CARTSLOT_ADD("cart")
 	MDRV_CARTSLOT_EXTENSION_LIST("sfc,smc,fig,swc,bin")
 	MDRV_CARTSLOT_NOT_MANDATORY
@@ -1374,7 +1374,7 @@ MACHINE_DRIVER_START( bsx_cartslot )
 	MDRV_CARTSLOT_LOAD(bsx2slot_cart)
 
 //  MDRV_SOFTWARE_LIST_ADD("cart_list","snes")
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 DRIVER_INIT( snes_mess )
 {

@@ -625,10 +625,7 @@ static MACHINE_RESET( fromanc2 )
 	state->datalatch_2l = 0;
 }
 
-static MACHINE_DRIVER_START( fromanc2 )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(fromanc2_state)
+static MACHINE_CONFIG_START( fromanc2, fromanc2_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M68000,32000000/2)		/* 16.00 MHz */
@@ -678,12 +675,9 @@ static MACHINE_DRIVER_START( fromanc2 )
 	MDRV_SOUND_ROUTE(0, "mono", 0.50)
 	MDRV_SOUND_ROUTE(1, "mono", 0.75)
 	MDRV_SOUND_ROUTE(2, "mono", 0.75)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( fromancr )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(fromanc2_state)
+static MACHINE_CONFIG_START( fromancr, fromanc2_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M68000,32000000/2)		/* 16.00 MHz */
@@ -733,12 +727,9 @@ static MACHINE_DRIVER_START( fromancr )
 	MDRV_SOUND_ROUTE(0, "mono", 0.50)
 	MDRV_SOUND_ROUTE(1, "mono", 0.75)
 	MDRV_SOUND_ROUTE(2, "mono", 0.75)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( fromanc4 )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(fromanc2_state)
+static MACHINE_CONFIG_START( fromanc4, fromanc2_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M68000,32000000/2)		/* 16.00 MHz */
@@ -785,7 +776,7 @@ static MACHINE_DRIVER_START( fromanc4 )
 	MDRV_SOUND_ROUTE(0, "mono", 0.50)
 	MDRV_SOUND_ROUTE(1, "mono", 0.75)
 	MDRV_SOUND_ROUTE(2, "mono", 0.75)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 #ifdef KAILLERA
 static MACHINE_DRIVER_START( fromanc2_k )

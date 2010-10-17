@@ -984,21 +984,24 @@ static const s2636_interface s2636_0_config =
 {
 	"screen",
 	0x100,
-	CVS_S2636_Y_OFFSET, CVS_S2636_X_OFFSET
+	CVS_S2636_Y_OFFSET, CVS_S2636_X_OFFSET,
+	NULL
 };
 
 static const s2636_interface s2636_1_config =
 {
 	"screen",
 	0x100,
-	CVS_S2636_Y_OFFSET, CVS_S2636_X_OFFSET
+	CVS_S2636_Y_OFFSET, CVS_S2636_X_OFFSET,
+	NULL
 };
 
 static const s2636_interface s2636_2_config =
 {
 	"screen",
 	0x100,
-	CVS_S2636_Y_OFFSET, CVS_S2636_X_OFFSET
+	CVS_S2636_Y_OFFSET, CVS_S2636_X_OFFSET,
+	NULL
 };
 
 
@@ -1058,10 +1061,7 @@ MACHINE_RESET( cvs )
 }
 
 
-static MACHINE_DRIVER_START( cvs )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(cvs_state)
+static MACHINE_CONFIG_START( cvs, cvs_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", S2650, 894886.25)
@@ -1118,7 +1118,7 @@ static MACHINE_DRIVER_START( cvs )
 	MDRV_SOUND_ADD("tms", TMS5100, 640000)
 	MDRV_SOUND_CONFIG(tms5100_interface)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 

@@ -45,6 +45,7 @@ EMUOBJS = \
 	$(EMUOBJ)/config.o \
 	$(EMUOBJ)/crsshair.o \
 	$(EMUOBJ)/debugger.o \
+	$(EMUOBJ)/delegate.o \
 	$(EMUOBJ)/devcb.o \
 	$(EMUOBJ)/devcpu.o \
 	$(EMUOBJ)/devimage.o \
@@ -98,7 +99,6 @@ EMUOBJS = \
 	$(EMUOBJ)/video.o \
 	$(EMUOBJ)/watchdog.o \
 	$(EMUOBJ)/debug/debugcmd.o \
-	$(EMUOBJ)/debug/debugcmt.o \
 	$(EMUOBJ)/debug/debugcon.o \
 	$(EMUOBJ)/debug/debugcpu.o \
 	$(EMUOBJ)/debug/debughlp.o \
@@ -110,26 +110,22 @@ EMUOBJS = \
 	$(EMUOBJ)/debug/express.o \
 	$(EMUOBJ)/debug/textbuf.o \
 	$(EMUOBJ)/debugint/debugint.o \
+	$(EMUOBJ)/profiler.o \
 	$(EMUOBJ)/uilang.o
 
-ifdef USE_CMD_LIST
+ifneq ($(USE_CMD_LIST),)
 EMUOBJS += \
 	$(EMUOBJ)/cmddata.o
 endif
 
-ifdef USE_IPS
+ifneq ($(USE_IPS),)
 EMUOBJS += \
 	$(EMUOBJ)/ips.o
 endif
 
-ifdef USE_HISCORE
+ifneq ($(USE_HISCORE),)
 EMUOBJS += \
 	$(EMUOBJ)/hiscore.o
-endif
-
-ifdef PROFILER
-EMUOBJS += \
-	$(EMUOBJ)/profiler.o
 endif
 
 EMUSOUNDOBJS = \
@@ -172,6 +168,7 @@ EMUMACHINEOBJS = \
 	$(EMUMACHINE)/ds2401.o \
 	$(EMUMACHINE)/ds2404.o \
 	$(EMUMACHINE)/eeprom.o \
+	$(EMUMACHINE)/er2055.o \
 	$(EMUMACHINE)/f3853.o \
 	$(EMUMACHINE)/generic.o \
 	$(EMUMACHINE)/i8243.o \
@@ -194,6 +191,7 @@ EMUMACHINEOBJS = \
 	$(EMUMACHINE)/mc146818.o \
 	$(EMUMACHINE)/microtch.o \
 	$(EMUMACHINE)/msm6242.o \
+	$(EMUMACHINE)/nvram.o \
 	$(EMUMACHINE)/pc16552d.o \
 	$(EMUMACHINE)/pci.o \
 	$(EMUMACHINE)/pic8259.o \
@@ -274,7 +272,7 @@ $(LIBSOUND): $(SOUNDOBJS)
 # additional dependencies
 #-------------------------------------------------
 
-$(EMUOBJ)/rendfont.o:		$(EMUOBJ)/uismall11.fh $(EMUOBJ)/uismall14.fh $(EMUOBJ)/uicmd11.fh $(EMUOBJ)/uicmd14.fh
+$(EMUOBJ)/rendfont.o:	$(EMUOBJ)/uismall11.fh $(EMUOBJ)/uismall14.fh $(EMUOBJ)/uicmd11.fh $(EMUOBJ)/uicmd14.fh
 
 $(EMUOBJ)/video.o:	$(EMUSRC)/rendersw.c
 $(EMUVIDEO)/v9938.o:	$(EMUSRC)/video/v9938mod.c

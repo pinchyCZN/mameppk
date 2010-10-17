@@ -56,13 +56,11 @@ $842f = lives
 #include "sound/ay8910.h"
 
 
-class ddayjlc_state : public driver_data_t
+class ddayjlc_state : public driver_device
 {
 public:
-	static driver_data_t *alloc(running_machine &machine) { return auto_alloc_clear(&machine, ddayjlc_state(machine)); }
-
-	ddayjlc_state(running_machine &machine)
-		: driver_data_t(machine) { }
+	ddayjlc_state(running_machine &machine, const driver_device_config_base &config)
+		: driver_device(machine, config) { }
 
 	/* memory pointers */
 	UINT8 *  bgram;
@@ -232,7 +230,7 @@ static WRITE8_HANDLER( i8257_LMSR_w )
 
 		for(i = 0; i < size; i++)
 		{
-			memory_write_byte(space, dst++, memory_read_byte(space, src++));
+			space->write_byte(dst++, space->read_byte(src++));
 		}
 
 		state->e00x_l[0] = 0;
@@ -508,10 +506,7 @@ static PALETTE_INIT( ddayjlc )
 	}
 }
 
-static MACHINE_DRIVER_START( ddayjlc )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(ddayjlc_state)
+static MACHINE_CONFIG_START( ddayjlc, ddayjlc_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z80,12000000/3)
@@ -550,7 +545,7 @@ static MACHINE_DRIVER_START( ddayjlc )
 
 	MDRV_SOUND_ADD("ay2", AY8910, 12000000/6)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 ROM_START( ddayjlc )

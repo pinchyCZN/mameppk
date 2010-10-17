@@ -78,9 +78,9 @@ struct _namco_sound
 INLINE namco_sound *get_safe_token(running_device *device)
 {
 	assert(device != NULL);
-	assert(device->type() == SOUND_NAMCO ||
-		   device->type() == SOUND_NAMCO_15XX ||
-		   device->type() == SOUND_NAMCO_CUS30);
+	assert(device->type() == NAMCO ||
+		   device->type() == NAMCO_15XX ||
+		   device->type() == NAMCO_CUS30);
 	return (namco_sound *)downcast<legacy_device_base *>(device)->token();
 }
 
@@ -397,6 +397,11 @@ static DEVICE_START( namco )
 	chip->sound_enable = 1;
 
 	/* register with the save state system */
+	state_save_register_device_item_pointer(device, 0, chip->soundregs, 0x400);
+
+	if (device->region() == NULL)
+		state_save_register_device_item_pointer(device, 0, chip->wavedata, 0x400);
+
 	state_save_register_device_item(device, 0, chip->num_voices);
 	state_save_register_device_item(device, 0, chip->sound_enable);
 	state_save_register_device_item_pointer(device, 0, chip->waveform[0],

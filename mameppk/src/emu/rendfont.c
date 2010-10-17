@@ -74,6 +74,7 @@ struct _render_font_char
 /*typedef struct _render_font render_font; -- defined in rendfont.h */
 struct _render_font
 {
+	running_machine *	machine;
 	int					format;				/* format of font data */
 	int					height;				/* height of the font, from ascent to descent */
 	int					yoffs;				/* y offset from baseline to descent */
@@ -174,10 +175,15 @@ INLINE render_font_char *get_char(render_font *font, unicode_char chnum)
 			ch->bmheight = (int)(glyph_ch->bmheight * scale + 0.5f);
 
 			ch->bitmap = global_alloc(bitmap_t(ch->bmwidth, ch->bmheight, BITMAP_FORMAT_ARGB32));
-			render_texture_hq_scale(ch->bitmap, glyph_ch->bitmap, NULL, NULL);
+			rectangle clip;
+			clip.min_x = clip.min_y = 0;
+			clip.max_x = ch->bitmap->width - 1;
+			clip.max_y = ch->bitmap->height - 1;
+			render_texture::hq_scale(*ch->bitmap, *glyph_ch->bitmap, clip, NULL);
 
-			ch->texture = render_texture_alloc(render_texture_hq_scale, NULL);
-			render_texture_set_bitmap(ch->texture, ch->bitmap, NULL, TEXFORMAT_ARGB32, NULL);
+			/* wrap a texture around the bitmap */
+			ch->texture = font->machine->render().texture_alloc(render_texture::hq_scale);
+			ch->texture->set_bitmap(ch->bitmap, NULL, TEXFORMAT_ARGB32);
 		}
 		else
 			render_font_char_expand(font, ch);
@@ -194,7 +200,7 @@ INLINE render_font_char *get_char(render_font *font, unicode_char chnum)
 ***************************************************************************/
 
 //mamep: allocate command glyph font
-static render_font *render_font_alloc_command_glyph(int height)
+static render_font *render_font_alloc_command_glyph(running_machine &machine, int height)
 {
 	file_error filerr;
 	mame_file *ramfile;
@@ -202,6 +208,7 @@ static render_font *render_font_alloc_command_glyph(int height)
 
 	/* allocate and clear memory */
 	font = global_alloc_clear(render_font);
+	font->machine = &machine;
 
 	if (height >= 14)
 		filerr = mame_fopen_ram(font_uicmd14, sizeof(font_uicmd14), OPEN_FLAG_READ, &ramfile);
@@ -217,12 +224,13 @@ static render_font *render_font_alloc_command_glyph(int height)
 	return font;
 }
 
+
 /*-------------------------------------------------
     render_font_alloc - allocate a new font
     and load the BDF file
 -------------------------------------------------*/
 
-render_font *render_font_alloc(const char *filename)
+render_font *render_font_alloc(running_machine &machine, const char *filename)
 {
 	file_error filerr;
 	mame_file *ramfile;
@@ -230,6 +238,7 @@ render_font *render_font_alloc(const char *filename)
 
 	/* allocate and clear memory */
 	font = global_alloc_clear(render_font);
+	font->machine = &machine;
 
 	/* attempt to load the cached version of the font first */
 	if (filename != NULL)
@@ -245,6 +254,7 @@ render_font *render_font_alloc(const char *filename)
 			/* if we failed, clean up and realloc */
 			render_font_free(font);
 			font = global_alloc_clear(render_font);
+			font->machine = &machine;
 
 			if (render_font_load_cached_bdf(font, filename) == 0)
 				loaded++;
@@ -253,7 +263,7 @@ render_font *render_font_alloc(const char *filename)
 		if (loaded)
 		{
 			//mamep: allocate command glyph font
-			font->cmd = render_font_alloc_command_glyph(font->height);
+			font->cmd = render_font_alloc_command_glyph(machine, font->height);
 			return font;
 		}
 	}
@@ -261,6 +271,7 @@ render_font *render_font_alloc(const char *filename)
 	/* if we failed, clean up and realloc */
 	render_font_free(font);
 	font = global_alloc_clear(render_font);
+	font->machine = &machine;
 
 	/* load the raw data instead */
 	//mamep: embedded CJK font
@@ -284,7 +295,7 @@ render_font *render_font_alloc(const char *filename)
 	}
 
 	//mamep: allocate command glyph font
-	font->cmd = render_font_alloc_command_glyph(font->height);
+	font->cmd = render_font_alloc_command_glyph(machine, font->height);
 	return font;
 }
 
@@ -315,8 +326,7 @@ void render_font_free(render_font *font)
 			for (charnum = 0; charnum < 256; charnum++)
 			{
 				render_font_char *ch = &font->chars[tablenum][charnum];
-				if (ch->texture != NULL)
-					render_texture_free(ch->texture);
+				font->machine->render().texture_free(ch->texture);
 				global_free(ch->bitmap);
 			}
 
@@ -413,8 +423,8 @@ static void render_font_char_expand(render_font *font, render_font_char *ch)
 	}
 
 	/* wrap a texture around the bitmap */
-	ch->texture = render_texture_alloc(render_texture_hq_scale, NULL);
-	render_texture_set_bitmap(ch->texture, ch->bitmap, NULL, TEXFORMAT_ARGB32, NULL);
+	ch->texture = font->machine->render().texture_alloc(render_texture::hq_scale);
+	ch->texture->set_bitmap(ch->bitmap, NULL, TEXFORMAT_ARGB32);
 }
 
 
@@ -482,7 +492,11 @@ void render_font_get_scaled_bitmap_and_bounds(render_font *font, bitmap_t *dest,
 	origheight = dest->height;
 	dest->width = bounds->max_x - bounds->min_x;
 	dest->height = bounds->max_y - bounds->min_y;
-	render_texture_hq_scale(dest, ch->bitmap, NULL, NULL);
+	rectangle clip;
+	clip.min_x = clip.min_y = 0;
+	clip.max_x = ch->bitmap->width - 1;
+	clip.max_y = ch->bitmap->height - 1;
+	render_texture::hq_scale(*dest, *ch->bitmap, clip, NULL);
 	dest->width = origwidth;
 	dest->height = origheight;
 }
@@ -957,8 +971,7 @@ static int render_font_save_cached(render_font *font, const char *filename, UINT
 					goto error;
 
 				/* free the bitmap and texture */
-				if (ch->texture != NULL)
-					render_texture_free(ch->texture);
+				font->machine->render().texture_free(ch->texture);
 				ch->texture = NULL;
 				global_free(ch->bitmap);
 				ch->bitmap = NULL;

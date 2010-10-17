@@ -31,6 +31,7 @@ YM2151:
 #include "cpu/z80/z80.h"
 #include "audio/seibu.h"	// for seibu_sound_decrypt on the MAIN cpu (not sound)
 #include "audio/t5182.h"
+#include "includes/mustache.h"
 
 #define XTAL1  14318180
 #define XTAL2  18432000
@@ -39,14 +40,6 @@ YM2151:
 #define CPU_CLOCK   (XTAL3/2)
 #define T5182_CLOCK (XTAL1/4)
 #define YM_CLOCK    (XTAL1/4)
-
-
-WRITE8_HANDLER( mustache_videoram_w );
-WRITE8_HANDLER( mustache_scroll_w );
-WRITE8_HANDLER ( mustache_video_control_w);
-VIDEO_START( mustache );
-VIDEO_UPDATE( mustache );
-PALETTE_INIT( mustache );
 
 
 static READ8_HANDLER(t5182shared_r)
@@ -63,7 +56,7 @@ static WRITE8_HANDLER(t5182shared_w)
 static ADDRESS_MAP_START( memmap, ADDRESS_SPACE_PROGRAM, 8 )
 	AM_RANGE(0x0000, 0x7fff) AM_ROM
 	AM_RANGE(0x8000, 0xbfff) AM_ROM
-	AM_RANGE(0xc000, 0xcfff) AM_RAM_WRITE(mustache_videoram_w) AM_BASE_GENERIC(videoram)
+	AM_RANGE(0xc000, 0xcfff) AM_RAM_WRITE(mustache_videoram_w) AM_BASE_MEMBER(mustache_state, videoram)
 	AM_RANGE(0xd000, 0xd000) AM_WRITE(t5182_sound_irq_w)
 	AM_RANGE(0xd001, 0xd001) AM_READ(t5182_sharedram_semaphore_snd_r)
 	AM_RANGE(0xd002, 0xd002) AM_WRITE(t5182_sharedram_semaphore_main_acquire_w)
@@ -182,8 +175,9 @@ static TIMER_CALLBACK( clear_irq_cb )
 
 static INTERRUPT_GEN( assert_irq )
 {
+	mustache_state *state = device->machine->driver_data<mustache_state>();
 	cpu_set_input_line(device, 0, ASSERT_LINE);
-	timer_set(device->machine, downcast<cpu_device *>(device)->cycles_to_attotime(14288), NULL, 0, clear_irq_cb);
+    timer_adjust_oneshot(state->clear_irq_timer, downcast<cpu_device *>(device)->cycles_to_attotime(14288), 0);
        /* Timing here is an educated GUESS, Z80 /INT must stay high so the irq
           fires no less than TWICE per frame, else game doesn't work right.
       6000000 / 56.747 = 105732.4616 cycles per frame, we'll call it A
@@ -195,7 +189,13 @@ static INTERRUPT_GEN( assert_irq )
        */
 }
 
-static MACHINE_DRIVER_START( mustache )
+static MACHINE_START( mustache )
+{
+	mustache_state *state = machine->driver_data<mustache_state>();
+	state->clear_irq_timer = timer_alloc(machine, clear_irq_cb, 0);
+}
+
+static MACHINE_CONFIG_START( mustache, mustache_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z80, CPU_CLOCK)
@@ -205,6 +205,8 @@ static MACHINE_DRIVER_START( mustache )
 	MDRV_CPU_ADD(CPUTAG_T5182,Z80, T5182_CLOCK)
 	MDRV_CPU_PROGRAM_MAP(t5182_map)
 	MDRV_CPU_IO_MAP(t5182_io)
+
+	MDRV_MACHINE_START(mustache)
 
 	/* video hardware */
 	MDRV_SCREEN_ADD("screen", RASTER)
@@ -228,7 +230,7 @@ static MACHINE_DRIVER_START( mustache )
 	MDRV_SOUND_CONFIG(t5182_ym2151_interface)
 	MDRV_SOUND_ROUTE(0, "mono", 1.0)
 	MDRV_SOUND_ROUTE(1, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 ROM_START( mustache )
 	ROM_REGION( 0x20000, "maincpu", 0 )

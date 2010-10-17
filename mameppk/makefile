@@ -356,8 +356,12 @@ endif
 
 # fullname is prefix+name+suffix+suffix64+suffixdebug
 FULLNAME = $(PREFIX)$(PREFIXSDL)$(NAME)$(SUFFIX)$(SUFFIX64)$(SUFFIXDEBUG)$(SUFFIXPROFILE)
-ifdef WINUI
+ifneq ($(WINUI),)
+ifeq ($(TARGET),$(SUBTARGET))
 MAMEUINAME = $(NAME)
+else
+MAMEUINAME = $(TARGET)$(EXTRA_SUFFIX)$(SUBTARGET)ui
+endif
 MAMEUIEXE = $(PREFIX)$(PREFIXSDL)$(MAMEUINAME)$(SUFFIX)$(SUFFIX64)$(SUFFIXDEBUG)$(SUFFIXPROFILE)$(EXE)
 BUILD += $(MAMEUIEXE)
 EMULATOR =
@@ -461,8 +465,8 @@ ifneq ($(USE_SHOW_INPUT_LOG),)
 DEFS += -DUSE_SHOW_INPUT_LOG
 endif
 
-ifneq ($(USE_VOLUME_AUTO_ADJUST),)
-DEFS += -DUSE_VOLUME_AUTO_ADJUST
+ifneq ($(USE_AUDIO_SYNC),)
+DEFS += -DUSE_AUDIO_SYNC
 endif
 
 ifneq ($(USE_IPS),)
@@ -596,7 +600,7 @@ COBJFLAGS += \
 #-------------------------------------------------
 
 # add core include paths
-CCOMFLAGS += \
+INCPATH += \
 	-I$(SRC)/$(TARGET) \
 	-I$(OBJ)/$(TARGET)/layout \
 	-I$(SRC)/emu \
@@ -606,6 +610,7 @@ CCOMFLAGS += \
 	-I$(SRC)/osd \
 	-I$(SRC)/osd/winui \
 	-I$(SRC)/osd/$(OSD) \
+
 
 
 #-------------------------------------------------
@@ -693,7 +698,7 @@ LIBS =
 
 # add expat XML library
 ifeq ($(BUILD_EXPAT),1)
-CCOMFLAGS += -I$(SRC)/lib/expat
+INCPATH += -I$(SRC)/lib/expat
 EXPAT = $(OBJ)/libexpat.a
 else
 LIBS += -lexpat
@@ -702,7 +707,7 @@ endif
 
 # add ZLIB compression library
 ifeq ($(BUILD_ZLIB),1)
-CCOMFLAGS += -I$(SRC)/lib/zlib
+INCPATH += -I$(SRC)/lib/zlib
 ZLIB = $(OBJ)/libz.a
 else
 LIBS += -lz
@@ -767,11 +772,12 @@ include $(SRC)/lib/lib.mak
 include $(SRC)/build/build.mak
 -include $(SRC)/osd/$(CROSS_BUILD_OSD)/build.mak
 include $(SRC)/tools/tools.mak
-ifdef MAMEMESS
+ifneq ($(MAMEMESS),)
 include $(SRC)/mess/mess.mak
 endif
 
 # combine the various definitions to one
+CCOMFLAGS += $(INCPATH)
 CDEFS = $(DEFS)
 
 
@@ -783,6 +789,22 @@ CDEFS = $(DEFS)
 emulator: maketree $(BUILD) $(EMULATOR)
 
 buildtools: maketree $(BUILD)
+
+# In order to keep dependencies reasonable, we exclude objects in the base of
+# $(SRC)/emu, as well as all the OSD objects and anything in the $(OBJ) tree
+depend: maketree $(MAKEDEP_TARGET)
+	@echo Rebuilding depend.mak...
+	$(MAKEDEP) -I. $(INCPATH) -X$(SRC)/emu -X$(SRC)/osd/... -X$(OBJ)/... src/$(TARGET) > depend.mak
+
+INCPATH += \
+	-I$(SRC)/$(TARGET) \
+	-I$(OBJ)/$(TARGET)/layout \
+	-I$(SRC)/emu \
+	-I$(OBJ)/emu \
+	-I$(OBJ)/emu/layout \
+	-I$(SRC)/lib/util \
+	-I$(SRC)/osd \
+	-I$(SRC)/osd/$(OSD) \
 
 tools: maketree $(TOOLS)
 
@@ -829,7 +851,7 @@ $(EMULATOR): $(VERSIONOBJ) $(DRVLIBS) $(LIBOSD) $(LIBCPU) $(LIBEMU) $(LIBDASM) $
 	@echo Linking $@...
 	$(LD) $(LDFLAGS) $(LDFLAGSEMULATOR) -mconsole $^ $(LIBS) -o $@
 
-ifdef WINUI
+ifneq ($(WINUI),)
 $(MAMEUIEXE): $(VERSIONOBJ) $(DRVLIBS) $(LIBOSD) $(LIBCPU) $(LIBEMU) $(LIBDASM) $(LIBSOUND) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(ZLIB) $(LIBOCORE_NOMAIN) $(RESFILE) $(GUIRESFILE)
 	@echo Linking $@...
 	$(LD) $(LDFLAGS) $(LDFLAGSEMULATOR) -mwindows $^ $(LIBS) -o $@
@@ -849,7 +871,7 @@ endif
 # generic rules
 #-------------------------------------------------
 
-ifdef MAMEMESS
+ifneq ($(MAMEMESS),)
 $(OBJ)/mess/%.o: $(SRC)/mess/%.c | $(OSPREBUILD)
 	@echo Compiling $<...
 	$(CC) $(CDEFS) -DMESS $(CFLAGS) -c $< -o $@
@@ -879,11 +901,11 @@ $(OBJ)/%.s: $(SRC)/%.c | $(OSPREBUILD)
 	@echo Compiling $<...
 	$(CC) $(CDEFS) $(CFLAGS) -S $< -o $@
 
-$(OBJ)/%.lh: $(SRC)/%.lay $(FILE2STR)
+$(OBJ)/%.lh: $(SRC)/%.lay $(FILE2STR_TARGET)
 	@echo Converting $<...
 	@$(FILE2STR) $< $@ layout_$(basename $(notdir $<))
 
-$(OBJ)/%.fh: $(OBJ)/%.bdc $(FILE2STR)
+$(OBJ)/%.fh: $(OBJ)/%.bdc $(FILE2STR_TARGET)
 	@echo Converting $<...
 	@$(FILE2STR) $< $@ font_$(basename $(notdir $<)) UINT8
 
@@ -904,13 +926,13 @@ endif
 # embedded font
 #-------------------------------------------------
 
-$(EMUOBJ)/uismall11.bdc: $(PNG2BDC) \
+$(EMUOBJ)/uismall11.bdc: $(PNG2BDC_TARGET) \
 		$(SRC)/emu/font/uismall.png \
 		$(SRC)/emu/font/cp1250.png
 	@echo Generating $@...
 	@$^ $@
 
-$(EMUOBJ)/uismall14.bdc: $(PNG2BDC) \
+$(EMUOBJ)/uismall14.bdc: $(PNG2BDC_TARGET) \
 		$(SRC)/emu/font/cp1252.png \
 		$(SRC)/emu/font/cp932.png \
 		$(SRC)/emu/font/cp932hw.png \
@@ -920,11 +942,18 @@ $(EMUOBJ)/uismall14.bdc: $(PNG2BDC) \
 	@echo Generating $@...
 	@$^ $@
 
-$(EMUOBJ)/uicmd11.bdc: $(PNG2BDC) $(SRC)/emu/font/cmd11.png
+$(EMUOBJ)/uicmd11.bdc: $(PNG2BDC_TARGET) $(SRC)/emu/font/cmd11.png
 	@echo Generating $@...
 	@$^ $@
 
-$(EMUOBJ)/uicmd14.bdc: $(PNG2BDC) $(SRC)/emu/font/cmd14.png
+$(EMUOBJ)/uicmd14.bdc: $(PNG2BDC_TARGET) $(SRC)/emu/font/cmd14.png
 	@echo Generating $@...
 	@$^ $@
 
+
+
+#-------------------------------------------------
+# optional dependencies file
+#-------------------------------------------------
+
+-include depend.mak

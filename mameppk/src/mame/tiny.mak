@@ -38,7 +38,7 @@ DEFS += -DTINY_BUILD
 CPUS += Z80
 CPUS += M6502
 CPUS += I386
-#CPUS += MCS48
+CPUS += MCS48
 CPUS += MCS51
 CPUS += M6800
 CPUS += M6809
@@ -65,7 +65,7 @@ SOUNDS += YMF278B
 SOUNDS += YMZ280B
 SOUNDS += ASTROCADE
 SOUNDS += TMS5220
-ifdef WINUI
+ifneq ($(WINUI),)
 SOUNDS += VLM5030
 endif
 SOUNDS += OKIM6295
@@ -102,6 +102,16 @@ DRVLIBS += \
 	$(MAMEOBJ)/psikyo.a \
 	$(MAMEOBJ)/misc.a \
 	$(MAMEOBJ)/shared.a \
+
+
+
+#-------------------------------------------------
+# emulator core objects
+#-------------------------------------------------
+
+DRVLIBS += \
+	$(EMUOBJ)/machine/ldpr8210.o \
+	$(EMUOBJ)/machine/ldvp931.o \
 
 
 

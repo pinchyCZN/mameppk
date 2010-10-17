@@ -773,10 +773,7 @@ static MACHINE_RESET( sraider )
 		state->weird_value[i] = 0;
 }
 
-static MACHINE_DRIVER_START( ladybug )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(ladybug_state)
+static MACHINE_CONFIG_START( ladybug, ladybug_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z80, 4000000)	/* 4 MHz */
@@ -807,13 +804,10 @@ static MACHINE_DRIVER_START( ladybug )
 
 	MDRV_SOUND_ADD("sn2", SN76489, 4000000)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( sraider )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(ladybug_state)
+static MACHINE_CONFIG_START( sraider, ladybug_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z80, 4000000)	/* 4 MHz */
@@ -861,7 +855,7 @@ static MACHINE_DRIVER_START( sraider )
 
 	MDRV_SOUND_ADD("sn5", SN76489, 4000000)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 /***************************************************************************
@@ -1068,12 +1062,12 @@ static DRIVER_INIT( dorodon )
 	/* decode the opcodes */
 
 	offs_t i;
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	UINT8 *decrypted = auto_alloc_array(machine, UINT8, 0x6000);
 	UINT8 *rom = memory_region(machine, "maincpu");
 	UINT8 *table = memory_region(machine, "user1");
 
-	memory_set_decrypted_region(space, 0x0000, 0x5fff, decrypted);
+	space->set_decrypted_region(0x0000, 0x5fff, decrypted);
 
 	for (i = 0; i < 0x6000; i++)
 		decrypted[i] = table[rom[i]];

@@ -826,9 +826,7 @@ static MACHINE_RESET( liberate )
 	state->bank = 0;
 }
 
-static MACHINE_DRIVER_START( liberate )
-
-	MDRV_DRIVER_DATA(liberate_state)
+static MACHINE_CONFIG_START( liberate, liberate_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu",DECO16, 2000000)
@@ -868,27 +866,23 @@ static MACHINE_DRIVER_START( liberate )
 
 	MDRV_SOUND_ADD("ay2", AY8910, 1500000)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.50)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( liberatb )
-	MDRV_IMPORT_FROM(liberate)
+static MACHINE_CONFIG_DERIVED( liberatb, liberate )
 
 	/* basic machine hardware */
 	MDRV_CPU_REPLACE("maincpu", M6502, 2000000)
 	MDRV_CPU_PROGRAM_MAP(liberatb_map)
 	MDRV_CPU_VBLANK_INT("screen", deco16_interrupt)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( boomrang )
-	MDRV_IMPORT_FROM(liberate)
+static MACHINE_CONFIG_DERIVED( boomrang, liberate )
 
 	MDRV_VIDEO_START(boomrang)
 	MDRV_VIDEO_UPDATE(boomrang)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( prosoccr )
-
-	MDRV_IMPORT_FROM(liberate)
+static MACHINE_CONFIG_DERIVED( prosoccr, liberate )
 
 	/* basic machine hardware */
 	MDRV_CPU_MODIFY("maincpu")
@@ -909,11 +903,9 @@ static MACHINE_DRIVER_START( prosoccr )
 
 	MDRV_VIDEO_START(prosoccr)
 	MDRV_VIDEO_UPDATE(prosoccr)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( prosport )
-
-	MDRV_DRIVER_DATA(liberate_state)
+static MACHINE_CONFIG_START( prosport, liberate_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", DECO16, 2000000)
@@ -952,7 +944,7 @@ static MACHINE_DRIVER_START( prosport )
 
 	MDRV_SOUND_ADD("ay2", AY8910, 1500000)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.50)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 /*************************************
@@ -1364,7 +1356,7 @@ ROM_END
 
 static void sound_cpu_decrypt(running_machine *machine)
 {
-	const address_space *space = cputag_get_address_space(machine, "audiocpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "audiocpu", ADDRESS_SPACE_PROGRAM);
 	UINT8 *decrypted = auto_alloc_array(machine, UINT8, 0x4000);
 	UINT8 *rom = memory_region(machine, "audiocpu");
 	int i;
@@ -1373,7 +1365,7 @@ static void sound_cpu_decrypt(running_machine *machine)
 	for (i = 0xc000; i < 0x10000; i++)
 		decrypted[i - 0xc000] = ((rom[i] & 0x20) << 1) | ((rom[i] & 0x40) >> 1) | (rom[i] & 0x9f);
 
-	memory_set_decrypted_region(space, 0xc000, 0xffff, decrypted);
+	space->set_decrypted_region(0xc000, 0xffff, decrypted);
 }
 
 static DRIVER_INIT( prosport )
@@ -1398,11 +1390,11 @@ static DRIVER_INIT( yellowcb )
 static DRIVER_INIT( liberate )
 {
 	int A;
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	UINT8 *decrypted = auto_alloc_array(machine, UINT8, 0x10000);
 	UINT8 *ROM = memory_region(machine, "maincpu");
 
-	memory_set_decrypted_region(space, 0x0000, 0xffff, decrypted);
+	space->set_decrypted_region(0x0000, 0xffff, decrypted);
 
 	/* Swap bits for opcodes only, not data */
 	for (A = 0; A < 0x10000; A++) {

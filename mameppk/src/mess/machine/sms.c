@@ -12,9 +12,10 @@
 #define CF_CODEMASTERS_MAPPER    0x01
 #define CF_KOREAN_MAPPER         0x02
 #define CF_KOREAN_ZEMINA_MAPPER  0x04
-#define CF_93C46_EEPROM          0x08
-#define CF_ONCART_RAM            0x10
-#define CF_GG_SMS_MODE           0x20
+#define CF_KOREAN_NOBANK_MAPPER  0x08
+#define CF_93C46_EEPROM          0x10
+#define CF_ONCART_RAM            0x20
+#define CF_GG_SMS_MODE           0x40
 
 #define MAX_CARTRIDGES        16
 
@@ -28,10 +29,10 @@ struct _sms_driver_data {
 	UINT8 *BIOS;
 	UINT8 *mapper_ram;
 	UINT8 mapper[4];
-	// we are going to use 1-6, same as bank numbers. Notice, though, that most mappers 
-	// only work on 16K banks and, hence, banks 4-6 are not always directly set 
+	// we are going to use 1-6, same as bank numbers. Notice, though, that most mappers
+	// only work on 16K banks and, hence, banks 4-6 are not always directly set
 	// (they often use bank3 + 0x2000 and bank5 + 0x2000)
-	UINT8 *banking_bios[7]; 
+	UINT8 *banking_bios[7];
 	UINT8 *banking_cart[7];
 	UINT8 *banking_none[7];
 	UINT8 gg_sio[5];
@@ -97,7 +98,7 @@ struct _sms_driver_data {
 static sms_driver_data sms_state;
 
 
-static void setup_rom(const address_space *space);
+static void setup_rom(address_space *space);
 
 
 static TIMER_CALLBACK( rapid_fire_callback )
@@ -264,7 +265,7 @@ static int lphaser_sensor_is_on( running_machine *machine, const char *tag_x, co
 }
 
 
-static void sms_get_inputs( const address_space *space )
+static void sms_get_inputs( address_space *space )
 {
 	UINT8 data = 0x00;
 	UINT32 cpu_cycles = downcast<cpu_device *>(space->cpu)->total_cycles();
@@ -769,10 +770,10 @@ static WRITE8_HANDLER( sms_korean_zemina_banksw_w )
 	{
 		UINT8 rom_page_count = sms_state.cartridge[sms_state.current_cartridge].size / 0x2000;
 		int page = (rom_page_count > 0) ? data % rom_page_count : 0;
-		
+
 		if (!sms_state.cartridge[sms_state.current_cartridge].ROM)
 			return;
-		
+
 		switch (offset & 3)
 		{
 			case 0:
@@ -830,6 +831,73 @@ static WRITE8_HANDLER( sms_codemasters_page1_w )
 	}
 }
 
+static READ8_HANDLER( sms_kor_nobank_r )
+{
+//  printf("read %x\n", offset);
+	return space->read_byte(0xdffc + offset);
+}
+
+static WRITE8_HANDLER( sms_kor_nobank_w )
+{
+	UINT8 *SOURCE_BIOS;
+	UINT8 *SOURCE = NULL;
+
+	space->write_byte(0xdffc + offset, data);
+	sms_state.mapper[offset] = data;
+
+	// FIXME: the code below (which only handles the BIOS bankswitch at start) should be cleaned up
+	// currently, it's just a stripped down version of sms_mapper_w
+	if (sms_state.BIOS)
+		SOURCE_BIOS = sms_state.BIOS + ((sms_state.bios_page_count > 0) ? data % sms_state.bios_page_count : 0) * 0x4000;
+	else
+		SOURCE_BIOS = sms_state.banking_none[1];
+
+	if (sms_state.bios_port & IO_BIOS_ROM || (sms_state.is_gamegear && sms_state.BIOS == NULL))
+		return;
+	else
+	{
+		if (!sms_state.BIOS)
+			return;
+		SOURCE = SOURCE_BIOS;
+	}
+
+//  printf("write %x, %x\n", offset, data);
+
+	switch (offset)
+	{
+		case 0: /* Control */
+			if (!(data & 0x08)) /* it's not ram */
+			{
+				if (!(sms_state.bios_port & IO_BIOS_ROM) && sms_state.has_bios)
+				{
+					SOURCE = sms_state.banking_bios[5];
+					memory_set_bankptr(space->machine, "bank5", SOURCE);
+					memory_set_bankptr(space->machine, "bank6", SOURCE + 0x2000);
+				}
+			}
+			break;
+
+		case 1: /* Select 16k ROM bank for 0400-3FFF */
+			sms_state.banking_bios[2] = SOURCE_BIOS + 0x0400;
+			memory_set_bankptr(space->machine, "bank2", SOURCE + 0x0400);
+			break;
+
+		case 2: /* Select 16k ROM bank for 4000-7FFF */
+			sms_state.banking_bios[3] = SOURCE_BIOS;
+			memory_set_bankptr(space->machine, "bank3", SOURCE);
+			memory_set_bankptr(space->machine, "bank4", SOURCE + 0x2000);
+			break;
+
+		case 3: /* Select 16k ROM bank for 8000-BFFF */
+			sms_state.banking_bios[5] = SOURCE_BIOS;
+			if (!(sms_state.mapper[0] & 0x08)) /* is RAM disabled? */
+			{
+				memory_set_bankptr(space->machine, "bank5", SOURCE);
+				memory_set_bankptr(space->machine, "bank6", SOURCE + 0x2000);
+			}
+			break;
+	}
+}
 
 WRITE8_HANDLER( sms_bios_w )
 {
@@ -978,7 +1046,7 @@ static void sms_machine_stop( running_machine &machine )
 }
 
 
-static void setup_rom( const address_space *space )
+static void setup_rom( address_space *space )
 {
 	running_machine *machine = space->machine;
 
@@ -1111,8 +1179,8 @@ static int sms_verify_cart( UINT8 *magic, int size )
 }
 
 #ifdef UNUSED_FUNCTION
-// For the moment we switch to a different detection routine which allows to detect 
-// in a single run Codemasters mapper, Korean mapper (including Jang Pung 3 which 
+// For the moment we switch to a different detection routine which allows to detect
+// in a single run Codemasters mapper, Korean mapper (including Jang Pung 3 which
 // uses a diff signature then the one below here) and Zemina mapper (used by Wonsiin, etc.).
 // I leave these here to document alt. detection routines and in the case these functions
 // can be updated
@@ -1283,6 +1351,8 @@ DEVICE_IMAGE_LOAD( sms_cart )
 	if (strcmp(image.device().tag(), "cart16") == 0)
 		index = 15;
 
+	sms_state.cartridge[index].features = 0;
+
 	if (image.software_entry() == NULL)
 	{
 		size = image.length();
@@ -1320,7 +1390,17 @@ DEVICE_IMAGE_LOAD( sms_cart )
 			return IMAGE_INIT_FAIL;
 	}
 	else
+	{
 		memcpy(sms_state.cartridge[index].ROM, image.get_software_region("rom") + offset, size);
+
+		// check for mapper feature (currently only KOREAN_NOBANK, but eventually we will add the other mappers as well)
+		if (image.get_feature("pcb") != NULL)
+		{
+			const char *mapper = image.get_feature("pcb");
+			if (!strcmp(mapper, "korean_nobank"))
+				sms_state.cartridge[index].features |= CF_KOREAN_NOBANK_MAPPER;
+		}
+	}
 
 	/* check the image */
 	if (!sms_state.has_bios)
@@ -1330,8 +1410,6 @@ DEVICE_IMAGE_LOAD( sms_cart )
 			logerror("Warning loading image: sms_verify_cart failed\n");
 		}
 	}
-
-	sms_state.cartridge[index].features = 0;
 
 	/* Detect special features from the extrainfo field */
 	if (extrainfo)
@@ -1382,9 +1460,9 @@ DEVICE_IMAGE_LOAD( sms_cart )
 					{ i += 2; cA000++; continue; }
 				}
 			}
-			
+
 			LOG(("Mapper test: c002 = %d, c8000 = %d, cA000 = %d, cFFFF = %d\n", c0002, c8000, cA000, cFFFF));
-			
+
 			// 2 is a security measure, although tests on existing ROM showed it was not needed
 			if (c0002 > cFFFF + 2 || (c0002 > 0 && cFFFF == 0))
 				sms_state.cartridge[index].features |= CF_KOREAN_ZEMINA_MAPPER;
@@ -1392,9 +1470,9 @@ DEVICE_IMAGE_LOAD( sms_cart )
 				sms_state.cartridge[index].features |= CF_CODEMASTERS_MAPPER;
 			else if (cA000 > cFFFF + 2 || (cA000 > 0 && cFFFF == 0))
 				sms_state.cartridge[index].features |= CF_KOREAN_MAPPER;
-			
+
 		}
-		
+
 		/* Check for special SMS Compatibility mode gamegear cartridges */
 		if (sms_state.is_gamegear && image.software_entry() == NULL)	// not sure about how to handle this with softlists
 		{
@@ -1417,11 +1495,20 @@ DEVICE_IMAGE_LOAD( sms_cart )
 	/* Terebi Oekaki (TV Draw) is a SG1000 game with special input device which is compatible with SG1000 Mark III */
 	if ((detect_tvdraw(sms_state.cartridge[index].ROM)) && sms_state.is_region_japan)
 	{
-		const address_space *program = cputag_get_address_space(image.device().machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+		address_space *program = cputag_get_address_space(image.device().machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 		memory_install_write8_handler(program, 0x6000, 0x6000, 0, 0, &sms_tvdraw_axis_w);
 		memory_install_read8_handler(program, 0x8000, 0x8000, 0, 0, &sms_tvdraw_status_r);
 		memory_install_read8_handler(program, 0xa000, 0xa000, 0, 0, &sms_tvdraw_data_r);
 		memory_nop_write(program, 0xa000, 0xa000, 0, 0);
+	}
+
+	if (sms_state.cartridge[index].features & CF_KOREAN_NOBANK_MAPPER)
+	{
+		// FIXME: we should have by default FFFD-FFFF to be only a mirror for DFFD-DFFF (with no bankswitch logic)
+		// and then the handlers should be installed here for all but the KOREAN_NOBANK carts
+		// However, to avoid memory map breakage, we currently go the other way around
+		address_space *program = cputag_get_address_space(image.device().machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+		memory_install_readwrite8_handler(program, 0xfffc, 0xffff, 0, 0, &sms_kor_nobank_r, &sms_kor_nobank_w);
 	}
 
 	LOG(("Cart Features: %x\n", sms_state.cartridge[index].features));
@@ -1502,14 +1589,14 @@ MACHINE_START( sms )
 
 MACHINE_RESET( sms_mess )
 {
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	running_device *smsvdp = machine->device("sms_vdp");
 
 	sms_state.ctrl_reg = 0xff;
 	if (sms_state.has_fm)
 		sms_state.fm_detect = 0x01;
 
-	sms_state.mapper_ram = (UINT8*)memory_get_write_ptr(space, 0xdffc);
+	sms_state.mapper_ram = (UINT8*)space->get_write_ptr(0xdffc);
 
 	sms_state.bios_port = 0;
 
@@ -1522,7 +1609,7 @@ MACHINE_RESET( sms_mess )
 
 	if (sms_state.cartridge[sms_state.current_cartridge].features & CF_KOREAN_ZEMINA_MAPPER)
 		memory_install_write8_handler(space, 0x0000, 0x0003, 0, 0, sms_korean_zemina_banksw_w);
-	
+
 	if (sms_state.cartridge[sms_state.current_cartridge].features & CF_GG_SMS_MODE)
 		sms_vdp_set_ggsmsmode(smsvdp, 1);
 

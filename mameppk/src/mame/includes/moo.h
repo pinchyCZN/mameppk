@@ -4,13 +4,11 @@
 
 *************************************************************************/
 
-class moo_state : public driver_data_t
+class moo_state : public driver_device
 {
 public:
-	static driver_data_t *alloc(running_machine &machine) { return auto_alloc_clear(&machine, moo_state(machine)); }
-
-	moo_state(running_machine &machine)
-		: driver_data_t(machine) { }
+	moo_state(running_machine &machine, const driver_device_config_base &config)
+		: driver_device(machine, config) { }
 
 	/* memory pointers */
 	UINT16 *    workram;
@@ -35,6 +33,8 @@ public:
 	running_device *k053251;
 	running_device *k056832;
 	running_device *k054338;
+
+    emu_timer *dmaend_timer;
 };
 
 

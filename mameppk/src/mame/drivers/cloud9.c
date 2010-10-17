@@ -106,15 +106,6 @@
 
 /*************************************
  *
- *  Globals
- *
- *************************************/
-
-static UINT8 *nvram_stage;
-
-
-/*************************************
- *
  *  VBLANK and IRQ generation
  *
  *************************************/
@@ -170,7 +161,6 @@ static MACHINE_START( cloud9 )
 	rectangle visarea;
 
 	/* initialize globals */
-	state->maincpu = machine->device("maincpu");
 	state->syncprom = memory_region(machine, "proms") + 0x000;
 
 	/* find the start of VBLANK in the SYNC PROM */
@@ -200,12 +190,8 @@ static MACHINE_START( cloud9 )
 	state->irq_state = 0;
 	schedule_next_irq(machine, 0-64);
 
-	/* allocate backing memory for the NVRAM */
-	machine->generic.nvram.u8 = auto_alloc_array(machine, UINT8, machine->generic.nvram_size);
-
 	/* setup for save states */
 	state_save_register_global(machine, state->irq_state);
-	state_save_register_global_pointer(machine, machine->generic.nvram.u8, machine->generic.nvram_size);
 }
 
 
@@ -260,37 +246,21 @@ static READ8_HANDLER( leta_r )
  *
  *************************************/
 
-static NVRAM_HANDLER( cloud9 )
-{
-	if (read_or_write)
-	{
-		/* on power down, the EAROM is implicitly stored */
-		memcpy(machine->generic.nvram.v, nvram_stage, machine->generic.nvram_size);
-		mame_fwrite(file, machine->generic.nvram.v, machine->generic.nvram_size);
-	}
-	else if (file)
-		mame_fread(file, machine->generic.nvram.v, machine->generic.nvram_size);
-	else
-		memset(machine->generic.nvram.v, 0, machine->generic.nvram_size);
-}
-
-
 static WRITE8_HANDLER( nvram_recall_w )
 {
-	memcpy(nvram_stage, space->machine->generic.nvram.v, space->machine->generic.nvram_size);
+	cloud9_state *state = space->machine->driver_data<cloud9_state>();
+	state->nvram->recall(0);
+	state->nvram->recall(1);
+	state->nvram->recall(0);
 }
 
 
 static WRITE8_HANDLER( nvram_store_w )
 {
-	memcpy(space->machine->generic.nvram.v, nvram_stage, space->machine->generic.nvram_size);
-}
-
-
-static READ8_HANDLER( nvram_r )
-{
-	/* only a single XD2212 for 4 bits of NVRAM */
-	return nvram_stage[offset] | 0xf0;
+	cloud9_state *state = space->machine->driver_data<cloud9_state>();
+	state->nvram->store(0);
+	state->nvram->store(1);
+	state->nvram->store(0);
 }
 
 
@@ -319,7 +289,7 @@ static ADDRESS_MAP_START( cloud9_map, ADDRESS_SPACE_PROGRAM, 8 )
 	AM_RANGE(0x5900, 0x5903) AM_MIRROR(0x007c) AM_READ(leta_r)
 	AM_RANGE(0x5a00, 0x5a0f) AM_MIRROR(0x00f0) AM_DEVREADWRITE("pokey1", pokey_r, pokey_w)
 	AM_RANGE(0x5b00, 0x5b0f) AM_MIRROR(0x00f0) AM_DEVREADWRITE("pokey2", pokey_r, pokey_w)
-	AM_RANGE(0x5c00, 0x5cff) AM_MIRROR(0x0300) AM_RAM_READ(nvram_r) AM_BASE(&nvram_stage) AM_SIZE_GENERIC(nvram)
+	AM_RANGE(0x5c00, 0x5cff) AM_MIRROR(0x0300) AM_DEVREADWRITE_MODERN("nvram", x2212_device, read, write)
 	AM_RANGE(0x6000, 0xffff) AM_ROM
 ADDRESS_MAP_END
 
@@ -456,10 +426,7 @@ static const pokey_interface pokey_config =
  *
  *************************************/
 
-static MACHINE_DRIVER_START( cloud9 )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(cloud9_state)
+static MACHINE_CONFIG_START( cloud9, cloud9_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M6502, MASTER_CLOCK/8)
@@ -467,8 +434,9 @@ static MACHINE_DRIVER_START( cloud9 )
 
 	MDRV_MACHINE_START(cloud9)
 	MDRV_MACHINE_RESET(cloud9)
-	MDRV_NVRAM_HANDLER(cloud9)
 	MDRV_WATCHDOG_VBLANK_INIT(8)
+
+	MDRV_X2212_ADD_AUTOSAVE("nvram")
 
 	/* video hardware */
 	MDRV_GFXDECODE(cloud9)
@@ -493,7 +461,7 @@ static MACHINE_DRIVER_START( cloud9 )
 	MDRV_SOUND_ADD("pokey2", POKEY, MASTER_CLOCK/8)
 	MDRV_SOUND_CONFIG(pokey_config)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.50)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 

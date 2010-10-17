@@ -233,6 +233,7 @@ static INT32 slider_crossoffset(running_machine *machine, void *arg, astring *st
 static void build_bgtexture(running_machine *machine);
 static void free_bgtexture(running_machine &machine);
 
+
 /***************************************************************************
     INLINE FUNCTIONS
 ***************************************************************************/
@@ -391,7 +392,7 @@ static void setup_palette(void)
 	if (ui_transparency < 0 || ui_transparency > 255)
 	{
 		mame_printf_error(_("Illegal value for %s = %s\n"), OPTION_UI_TRANSPARENCY, options_get_string(mame_options(), OPTION_UI_TRANSPARENCY));
-		ui_transparency = 224;
+		ui_transparency = 215;
 	}
 #endif /* TRANS_UI */
 
@@ -457,7 +458,7 @@ int ui_init(running_machine *machine)
 	ui_bgcolor = UI_BACKGROUND_COLOR;
 
 	/* allocate the font and messagebox string */
-	ui_font = render_font_alloc("ui.bdf");
+	ui_font = render_font_alloc(*machine, "ui.bdf");
 
 	/* initialize the other UI bits */
 	ui_menu_init(machine);
@@ -612,7 +613,7 @@ void ui_update_and_render(running_machine *machine, render_container *container)
 #endif /* MAME_AVI */
 
 	/* always start clean */
-	render_container_empty(container);
+	container->empty();
 
 	/* if we're paused, dim the whole screen */
 	if (machine->phase() >= MACHINE_PHASE_RESET && (single_step || machine->paused()))
@@ -623,7 +624,7 @@ void ui_update_and_render(running_machine *machine, render_container *container)
 		if (alpha > 255)
 			alpha = 255;
 		if (alpha >= 0)
-			render_container_add_rect(container, 0.0f, 0.0f, 1.0f, 1.0f, MAKE_ARGB(alpha,0x00,0x00,0x00), PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+			container->add_rect(0.0f, 0.0f, 1.0f, 1.0f, MAKE_ARGB(alpha,0x00,0x00,0x00), PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
 	}
 
 	/* render any cheat stuff at the bottom */
@@ -664,16 +665,13 @@ render_font *ui_get_font(void)
     of a line
 -------------------------------------------------*/
 
-float ui_get_line_height(void)
+float ui_get_line_height(running_machine &machine)
 {
 	INT32 raw_font_pixel_height = render_font_get_pixel_height(ui_font);
-	INT32 target_pixel_width, target_pixel_height;
+	render_target &ui_target = machine.render().ui_target();
+	INT32 target_pixel_height = ui_target.height();
 	float one_to_one_line_height;
-	float target_aspect;
 	float scale_factor;
-
-	/* get info about the UI target */
-	render_target_get_bounds(render_get_ui_target(), &target_pixel_width, &target_pixel_height, &target_aspect);
 
 	/* mamep: to avoid division by zero */
 	if (target_pixel_height == 0)
@@ -716,20 +714,20 @@ float ui_get_line_height(void)
     single character
 -------------------------------------------------*/
 
-float ui_get_char_width(unicode_char ch)
+float ui_get_char_width(running_machine &machine, unicode_char ch)
 {
-	return render_font_get_char_width(ui_font, ui_get_line_height(), render_get_ui_aspect(), ch);
+	return render_font_get_char_width(ui_font, ui_get_line_height(machine), machine.render().ui_aspect(), ch);
 }
 
 
 //mamep: to render as fixed-width font
-float ui_get_char_width_no_margin(unicode_char ch)
+float ui_get_char_width_no_margin(running_machine &machine, unicode_char ch)
 {
-	return render_font_get_char_width_no_margin(ui_font, ui_get_line_height(), render_get_ui_aspect(), ch);
+	return render_font_get_char_width_no_margin(ui_font, ui_get_line_height(machine), machine.render().ui_aspect(), ch);
 }
 
 
-float ui_get_char_fixed_width(unicode_char uchar, double halfwidth, double fullwidth)
+float ui_get_char_fixed_width(running_machine &machine, unicode_char uchar, double halfwidth, double fullwidth)
 {
 	float chwidth;
 
@@ -739,7 +737,7 @@ float ui_get_char_fixed_width(unicode_char uchar, double halfwidth, double fullw
 		return halfwidth;
 
 	case CHAR_WIDTH_UNKNOWN:
-		chwidth = ui_get_char_width_no_margin(uchar);
+		chwidth = ui_get_char_width_no_margin(machine, uchar);
 		if (chwidth <= halfwidth)
 			return halfwidth;
 	}
@@ -753,9 +751,9 @@ float ui_get_char_fixed_width(unicode_char uchar, double halfwidth, double fullw
     character string
 -------------------------------------------------*/
 
-float ui_get_string_width(const char *s)
+float ui_get_string_width(running_machine &machine, const char *s)
 {
-	return render_font_get_utf8string_width(ui_font, ui_get_line_height(), render_get_ui_aspect(), s);
+	return render_font_get_utf8string_width(ui_font, ui_get_line_height(machine), machine.render().ui_aspect(), s);
 }
 
 
@@ -772,10 +770,10 @@ static void ui_draw_box(render_container *container, float x0, float y0, float x
 {
 #ifdef UI_COLOR_DISPLAY
 	if (backcolor == UI_BACKGROUND_COLOR)
-		render_container_add_quad(container, x0, y0, x1, y1, MAKE_ARGB(0xff, 0xff, 0xff, 0xff), bgtexture, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+		container->add_quad(x0, y0, x1, y1, MAKE_ARGB(0xff, 0xff, 0xff, 0xff), bgtexture, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
 	else
 #endif /* UI_COLOR_DISPLAY */
-		render_container_add_rect(container, x0, y0, x1, y1, backcolor, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+		container->add_rect(x0, y0, x1, y1, backcolor, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
 }
 
 
@@ -788,10 +786,10 @@ static void ui_draw_box(render_container *container, float x0, float y0, float x
 void ui_draw_outlined_box(render_container *container, float x0, float y0, float x1, float y1, rgb_t backcolor)
 {
 	ui_draw_box(container, x0, y0, x1, y1, backcolor);
-	render_container_add_line(container, x0, y0, x1, y0, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
-	render_container_add_line(container, x1, y0, x1, y1, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
-	render_container_add_line(container, x1, y1, x0, y1, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
-	render_container_add_line(container, x0, y1, x0, y0, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+	container->add_line(x0, y0, x1, y0, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+	container->add_line(x1, y0, x1, y1, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+	container->add_line(x1, y1, x0, y1, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+	container->add_line(x0, y1, x0, y0, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
 }
 
 
@@ -879,7 +877,8 @@ void ui_draw_chattext(render_container *container, const char *buf, float x, flo
 
 void ui_draw_text_full(render_container *container, const char *origs, float x, float y, float origwrapwidth, int justify, int wrap, int draw, rgb_t fgcolor, rgb_t bgcolor, float *totalwidth, float *totalheight)
 {
-	float lineheight = ui_get_line_height();
+	running_machine &machine = container->manager().machine();
+	float lineheight = ui_get_line_height(machine);
 	const char *ends = origs + strlen(origs);
 	float wrapwidth = origwrapwidth;
 	const char *s = origs;
@@ -912,7 +911,7 @@ void ui_draw_text_full(render_container *container, const char *origs, float x, 
 			if (scharcount == -1)
 				break;
 
-			scharwidth = ui_get_char_width_no_margin(schar);
+			scharwidth = ui_get_char_width_no_margin(machine, schar);
 			if (is_fullwidth_char(schar))
 			{
 				if (fontwidth_fullwidth < scharwidth)
@@ -985,10 +984,10 @@ void ui_draw_text_full(render_container *container, const char *origs, float x, 
 
 			//mamep: render as fixed-width font
 			if (draw_text_fixed_mode)
-				chwidth = ui_get_char_fixed_width(schar, fontwidth_halfwidth, fontwidth_fullwidth);
+				chwidth = ui_get_char_fixed_width(machine, schar, fontwidth_halfwidth, fontwidth_fullwidth);
 			else
 				/* get the width of this character */
-				chwidth = ui_get_char_width(schar);
+			chwidth = ui_get_char_width(machine, schar);
 
 			/* if we hit a space, remember the location and width *without* the space */
 			if (schar == ' ')
@@ -1034,9 +1033,9 @@ void ui_draw_text_full(render_container *container, const char *origs, float x, 
 
 					//mamep: render as fixed-width font
 					if (draw_text_fixed_mode)
-						curwidth -= ui_get_char_fixed_width(schar, fontwidth_halfwidth, fontwidth_fullwidth);
+						curwidth -= ui_get_char_fixed_width(machine, schar, fontwidth_halfwidth, fontwidth_fullwidth);
 					else
-						curwidth -= ui_get_char_width(schar);
+						curwidth -= ui_get_char_width(machine, schar);
 				}
 			}
 
@@ -1044,7 +1043,7 @@ void ui_draw_text_full(render_container *container, const char *origs, float x, 
 			else if (wrap == WRAP_TRUNCATE)
 			{
 				/* add in the width of the ... */
-				curwidth += 3.0f * ui_get_char_width('.');
+				curwidth += 3.0f * ui_get_char_width(machine, '.');
 
 				/* while we are above the wrap width, back up one character */
 				while (curwidth > wrapwidth && s > linestart)
@@ -1055,7 +1054,7 @@ void ui_draw_text_full(render_container *container, const char *origs, float x, 
 					if (scharcount == -1)
 						break;
 
-					curwidth -= ui_get_char_width(schar);
+					curwidth -= ui_get_char_width(machine, schar);
 				}
 			}
 		}
@@ -1070,7 +1069,7 @@ void ui_draw_text_full(render_container *container, const char *origs, float x, 
 			else
 				linestart = down_arrow;
 
-			curwidth = ui_get_string_width(linestart);
+			curwidth = ui_get_string_width(machine, linestart);
 			ends = linestart + strlen(linestart);
 			s_temp = ends;
 			line_justify = JUSTIFY_CENTER;
@@ -1108,16 +1107,16 @@ void ui_draw_text_full(render_container *container, const char *origs, float x, 
 				//mamep: render as fixed-width font
 				if (draw_text_fixed_mode)
 				{
-					float width = ui_get_char_fixed_width(linechar, fontwidth_halfwidth, fontwidth_fullwidth);
-					float xmargin = (width - ui_get_char_width(linechar)) / 2.0f;
+					float width = ui_get_char_fixed_width(machine, linechar, fontwidth_halfwidth, fontwidth_fullwidth);
+					float xmargin = (width - ui_get_char_width(machine, linechar)) / 2.0f;
 
-					render_container_add_char(container, curx + xmargin, cury, lineheight, render_get_ui_aspect(), fgcolor, ui_font, linechar);
+					container->add_char(curx + xmargin, cury, lineheight, machine.render().ui_aspect(), fgcolor, *ui_font, linechar);
 					curx += width;
 				}
 				else
 				{
-					render_container_add_char(container, curx, cury, lineheight, render_get_ui_aspect(), fgcolor, ui_font, linechar);
-					curx += ui_get_char_width(linechar);
+					container->add_char(curx, cury, lineheight, machine.render().ui_aspect(), fgcolor, *ui_font, linechar);
+					curx += ui_get_char_width(machine, linechar);
 				}
 			}
 			linestart += linecharcount;
@@ -1126,12 +1125,12 @@ void ui_draw_text_full(render_container *container, const char *origs, float x, 
 		/* append ellipses if needed */
 		if (wrap == WRAP_TRUNCATE && *s != 0 && draw != DRAW_NONE)
 		{
-			render_container_add_char(container, curx, cury, lineheight, render_get_ui_aspect(), fgcolor, ui_font, '.');
-			curx += ui_get_char_width('.');
-			render_container_add_char(container, curx, cury, lineheight, render_get_ui_aspect(), fgcolor, ui_font, '.');
-			curx += ui_get_char_width('.');
-			render_container_add_char(container, curx, cury, lineheight, render_get_ui_aspect(), fgcolor, ui_font, '.');
-			curx += ui_get_char_width('.');
+			container->add_char(curx, cury, lineheight, machine.render().ui_aspect(), fgcolor, *ui_font, '.');
+			curx += ui_get_char_width(machine, '.');
+			container->add_char(curx, cury, lineheight, machine.render().ui_aspect(), fgcolor, *ui_font, '.');
+			curx += ui_get_char_width(machine, '.');
+			container->add_char(curx, cury, lineheight, machine.render().ui_aspect(), fgcolor, *ui_font, '.');
+			curx += ui_get_char_width(machine, '.');
 		}
 
 		/* if we're not word-wrapping, we're done */
@@ -1224,10 +1223,10 @@ void ui_draw_text_box_scroll(render_container *container, const char *text, int 
 	ui_draw_text_full(container, text, 0, 0, 1.0f - 2.0f * UI_BOX_LR_BORDER,
 				justify, WRAP_WORD, DRAW_NONE, ARGB_WHITE, ARGB_BLACK, &target_width, &target_height);
 
-	multiline_text_box_target_lines = (int)(target_height / ui_get_line_height() + 0.5f);
+	multiline_text_box_target_lines = (int)(target_height / ui_get_line_height(container->manager().machine()) + 0.5f);
 	if (target_height > 1.0f - 2.0f * UI_BOX_TB_BORDER)
-		target_height = floor((1.0f - 2.0f * UI_BOX_TB_BORDER) / ui_get_line_height()) * ui_get_line_height();
-	multiline_text_box_visible_lines = (int)(target_height / ui_get_line_height() + 0.5f);
+		target_height = floor((1.0f - 2.0f * UI_BOX_TB_BORDER) / ui_get_line_height(container->manager().machine())) * ui_get_line_height(container->manager().machine());
+	multiline_text_box_visible_lines = (int)(target_height / ui_get_line_height(container->manager().machine()) + 0.5f);
 
 	/* determine the target location */
 	target_x = xpos - 0.5f * target_width;
@@ -1468,16 +1467,8 @@ int ui_get_show_fps(void)
 
 void ui_set_show_profiler(int show)
 {
-	if (show)
-	{
-		show_profiler = TRUE;
-		profiler_start();
-	}
-	else
-	{
-		show_profiler = FALSE;
-		profiler_stop();
-	}
+	show_profiler = show;
+	g_profiler.enable(show);
 }
 
 
@@ -1559,7 +1550,7 @@ static astring &warnings_string(running_machine *machine, astring &string)
 	/* add a warning if any ROMs were loaded with warnings */
 	if (rom_load_warnings(machine) > 0)
 	{
-		string.cat(_("One or more ROMs/CHDs for this game are incorrect. The game may not run correctly.\n"));
+		string.cat(_("One or more ROMs/CHDs for this game are incorrect. The " GAMENOUN " may not run correctly.\n"));
 		if (machine->gamedrv->flags & WARNING_FLAGS)
 			string.cat("\n");
 	}
@@ -1567,7 +1558,7 @@ static astring &warnings_string(running_machine *machine, astring &string)
 	/* if we have at least one warning flag, print the general header */
 	if (machine->gamedrv->flags & WARNING_FLAGS)
 	{
-		string.cat(_("There are known problems with this game\n\n"));
+		string.cat(_("There are known problems with this " GAMENOUN "\n\n"));
 
 		/* add one line per warning flag */
 		if (input_machine_has_keyboard(machine))
@@ -1600,7 +1591,7 @@ static astring &warnings_string(running_machine *machine, astring &string)
 			if (machine->gamedrv->flags & GAME_UNEMULATED_PROTECTION)
 				string.cat(_("The game has protection which isn't fully emulated.\n"));
 			if (machine->gamedrv->flags & GAME_NOT_WORKING)
-				string.cat(_("THIS GAME DOESN'T WORK. The emulation for this game is not yet complete. "
+				string.cat(_("THIS " CAPGAMENOUN " DOESN'T WORK. The emulation for this game is not yet complete. "
 									 "There is nothing you can do to fix this problem except wait for the developers to improve the emulation.\n"));
 
 			/* find the parent of this driver */
@@ -1669,17 +1660,17 @@ static void display_input_log(running_machine *machine, render_container *contai
 	// find position to start display
 	curx = 1.0f - UI_LINE_WIDTH;
 	for (i = 0; command_buffer[i].code; i++)
-		curx -= ui_get_char_width(command_buffer[i].code);
+		curx -= ui_get_char_width(*machine, command_buffer[i].code);
 
 	for (i = 0; command_buffer[i].code; i++)
 	{
 		if (curx >= UI_LINE_WIDTH)
 			break;
 
-		curx += ui_get_char_width(command_buffer[i].code);
+		curx += ui_get_char_width(*machine, command_buffer[i].code);
 	}
 
-	ui_draw_box(container, 0.0f, 1.0f - ui_get_line_height(), 1.0f, 1.0f, UI_BACKGROUND_COLOR);
+	ui_draw_box(container, 0.0f, 1.0f - ui_get_line_height(*machine), 1.0f, 1.0f, UI_BACKGROUND_COLOR);
 
 	for (; command_buffer[i].code; i++)
 	{
@@ -1695,9 +1686,9 @@ static void display_input_log(running_machine *machine, render_container *contai
 
 			fgcolor = MAKE_ARGB(255, level, level, level);
 
-			render_container_add_char(container, curx, 1.0f - ui_get_line_height(), ui_get_line_height(), render_get_ui_aspect(), fgcolor, ui_font, command_buffer[i].code);
+			container->add_char(curx, 1.0f - ui_get_line_height(*machine), ui_get_line_height(*machine), machine->render().ui_aspect(), fgcolor, *ui_font, command_buffer[i].code);
 		}
-		curx += ui_get_char_width(command_buffer[i].code);
+		curx += ui_get_char_width(*machine, command_buffer[i].code);
 	}
 }
 #endif /* USE_SHOW_INPUT_LOG */
@@ -2141,7 +2132,7 @@ static UINT32 handler_ingame(running_machine *machine, render_container *contain
 	if (show_profiler)
 	{
 		astring profilertext;
-		profiler_get_text(machine, profilertext);
+		g_profiler.text(*machine, profilertext);
 		ui_draw_text_full(container, profilertext, 0.0f, 0.0f, 1.0f, JUSTIFY_LEFT, WRAP_WORD, DRAW_OPAQUE, ARGB_WHITE, ui_bgcolor, NULL, NULL);
 	}
 
@@ -2827,18 +2818,17 @@ static INT32 slider_refresh(running_machine *machine, void *arg, astring *string
 static INT32 slider_brightness(running_machine *machine, void *arg, astring *string, INT32 newval)
 {
 	screen_device *screen = reinterpret_cast<screen_device *>(arg);
-	render_container *container = render_container_get_screen(screen);
-	render_container_user_settings settings;
+	render_container::user_settings settings;
 
-	render_container_get_user_settings(container, &settings);
+	screen->container().get_user_settings(settings);
 	if (newval != SLIDER_NOCHANGE)
 	{
-		settings.brightness = (float)newval * 0.001f;
-		render_container_set_user_settings(container, &settings);
+		settings.m_brightness = (float)newval * 0.001f;
+		screen->container().set_user_settings(settings);
 	}
 	if (string != NULL)
-		string->printf("%.3f", settings.brightness);
-	return floor(settings.brightness * 1000.0f + 0.5f);
+		string->printf("%.3f", settings.m_brightness);
+	return floor(settings.m_brightness * 1000.0f + 0.5f);
 }
 
 
@@ -2850,18 +2840,17 @@ static INT32 slider_brightness(running_machine *machine, void *arg, astring *str
 static INT32 slider_contrast(running_machine *machine, void *arg, astring *string, INT32 newval)
 {
 	screen_device *screen = reinterpret_cast<screen_device *>(arg);
-	render_container *container = render_container_get_screen(screen);
-	render_container_user_settings settings;
+	render_container::user_settings settings;
 
-	render_container_get_user_settings(container, &settings);
+	screen->container().get_user_settings(settings);
 	if (newval != SLIDER_NOCHANGE)
 	{
-		settings.contrast = (float)newval * 0.001f;
-		render_container_set_user_settings(container, &settings);
+		settings.m_contrast = (float)newval * 0.001f;
+		screen->container().set_user_settings(settings);
 	}
 	if (string != NULL)
-		string->printf("%.3f", settings.contrast);
-	return floor(settings.contrast * 1000.0f + 0.5f);
+		string->printf("%.3f", settings.m_contrast);
+	return floor(settings.m_contrast * 1000.0f + 0.5f);
 }
 
 
@@ -2872,18 +2861,17 @@ static INT32 slider_contrast(running_machine *machine, void *arg, astring *strin
 static INT32 slider_gamma(running_machine *machine, void *arg, astring *string, INT32 newval)
 {
 	screen_device *screen = reinterpret_cast<screen_device *>(arg);
-	render_container *container = render_container_get_screen(screen);
-	render_container_user_settings settings;
+	render_container::user_settings settings;
 
-	render_container_get_user_settings(container, &settings);
+	screen->container().get_user_settings(settings);
 	if (newval != SLIDER_NOCHANGE)
 	{
-		settings.gamma = (float)newval * 0.001f;
-		render_container_set_user_settings(container, &settings);
+		settings.m_gamma = (float)newval * 0.001f;
+		screen->container().set_user_settings(settings);
 	}
 	if (string != NULL)
-		string->printf("%.3f", settings.gamma);
-	return floor(settings.gamma * 1000.0f + 0.5f);
+		string->printf("%.3f", settings.m_gamma);
+	return floor(settings.m_gamma * 1000.0f + 0.5f);
 }
 
 
@@ -2895,18 +2883,17 @@ static INT32 slider_gamma(running_machine *machine, void *arg, astring *string, 
 static INT32 slider_xscale(running_machine *machine, void *arg, astring *string, INT32 newval)
 {
 	screen_device *screen = reinterpret_cast<screen_device *>(arg);
-	render_container *container = render_container_get_screen(screen);
-	render_container_user_settings settings;
+	render_container::user_settings settings;
 
-	render_container_get_user_settings(container, &settings);
+	screen->container().get_user_settings(settings);
 	if (newval != SLIDER_NOCHANGE)
 	{
-		settings.xscale = (float)newval * 0.001f;
-		render_container_set_user_settings(container, &settings);
+		settings.m_xscale = (float)newval * 0.001f;
+		screen->container().set_user_settings(settings);
 	}
 	if (string != NULL)
-		string->printf("%.3f", settings.xscale);
-	return floor(settings.xscale * 1000.0f + 0.5f);
+		string->printf("%.3f", settings.m_xscale);
+	return floor(settings.m_xscale * 1000.0f + 0.5f);
 }
 
 
@@ -2918,18 +2905,17 @@ static INT32 slider_xscale(running_machine *machine, void *arg, astring *string,
 static INT32 slider_yscale(running_machine *machine, void *arg, astring *string, INT32 newval)
 {
 	screen_device *screen = reinterpret_cast<screen_device *>(arg);
-	render_container *container = render_container_get_screen(screen);
-	render_container_user_settings settings;
+	render_container::user_settings settings;
 
-	render_container_get_user_settings(container, &settings);
+	screen->container().get_user_settings(settings);
 	if (newval != SLIDER_NOCHANGE)
 	{
-		settings.yscale = (float)newval * 0.001f;
-		render_container_set_user_settings(container, &settings);
+		settings.m_yscale = (float)newval * 0.001f;
+		screen->container().set_user_settings(settings);
 	}
 	if (string != NULL)
-		string->printf("%.3f", settings.yscale);
-	return floor(settings.yscale * 1000.0f + 0.5f);
+		string->printf("%.3f", settings.m_yscale);
+	return floor(settings.m_yscale * 1000.0f + 0.5f);
 }
 
 
@@ -2941,18 +2927,17 @@ static INT32 slider_yscale(running_machine *machine, void *arg, astring *string,
 static INT32 slider_xoffset(running_machine *machine, void *arg, astring *string, INT32 newval)
 {
 	screen_device *screen = reinterpret_cast<screen_device *>(arg);
-	render_container *container = render_container_get_screen(screen);
-	render_container_user_settings settings;
+	render_container::user_settings settings;
 
-	render_container_get_user_settings(container, &settings);
+	screen->container().get_user_settings(settings);
 	if (newval != SLIDER_NOCHANGE)
 	{
-		settings.xoffset = (float)newval * 0.001f;
-		render_container_set_user_settings(container, &settings);
+		settings.m_xoffset = (float)newval * 0.001f;
+		screen->container().set_user_settings(settings);
 	}
 	if (string != NULL)
-		string->printf("%.3f", settings.xoffset);
-	return floor(settings.xoffset * 1000.0f + 0.5f);
+		string->printf("%.3f", settings.m_xoffset);
+	return floor(settings.m_xoffset * 1000.0f + 0.5f);
 }
 
 
@@ -2964,18 +2949,17 @@ static INT32 slider_xoffset(running_machine *machine, void *arg, astring *string
 static INT32 slider_yoffset(running_machine *machine, void *arg, astring *string, INT32 newval)
 {
 	screen_device *screen = reinterpret_cast<screen_device *>(arg);
-	render_container *container = render_container_get_screen(screen);
-	render_container_user_settings settings;
+	render_container::user_settings settings;
 
-	render_container_get_user_settings(container, &settings);
+	screen->container().get_user_settings(settings);
 	if (newval != SLIDER_NOCHANGE)
 	{
-		settings.yoffset = (float)newval * 0.001f;
-		render_container_set_user_settings(container, &settings);
+		settings.m_yoffset = (float)newval * 0.001f;
+		screen->container().set_user_settings(settings);
 	}
 	if (string != NULL)
-		string->printf("%.3f", settings.yoffset);
-	return floor(settings.yoffset * 1000.0f + 0.5f);
+		string->printf("%.3f", settings.m_yoffset);
+	return floor(settings.m_yoffset * 1000.0f + 0.5f);
 }
 
 
@@ -3232,8 +3216,8 @@ static void build_bgtexture(running_machine *machine)
 		*BITMAP_ADDR32(bgbitmap, i, 0) = MAKE_ARGB(a, (UINT8)(r * gradual), (UINT8)(g * gradual), (UINT8)(b * gradual));
 	}
 
-	bgtexture = render_texture_alloc(render_texture_hq_scale, NULL);
-	render_texture_set_bitmap(bgtexture, bgbitmap, NULL, TEXFORMAT_ARGB32, NULL);
+	bgtexture = machine->render().texture_alloc(render_texture::hq_scale);
+	bgtexture->set_bitmap(bgbitmap, NULL, TEXFORMAT_ARGB32, NULL);
 	machine->add_notifier(MACHINE_NOTIFY_EXIT, free_bgtexture);
 }
 
@@ -3242,7 +3226,7 @@ static void free_bgtexture(running_machine &machine)
 {
 	global_free(bgbitmap);
 	bgbitmap = NULL;
-	render_texture_free(bgtexture);
+	machine.render().texture_free(bgtexture);
 	bgtexture = NULL;
 }
 

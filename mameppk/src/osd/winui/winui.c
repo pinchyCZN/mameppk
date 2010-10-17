@@ -24,10 +24,6 @@
   Nov/Dec 1998 - Mike Haaland
 
 ***************************************************************************/
-#ifdef _MSC_VER
-#undef NONAMELESSUNION
-#define NONAMELESSUNION
-#endif
 
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
@@ -2326,9 +2322,9 @@ static void SetMainTitle(void)
 
 	sscanf(build_version,"%s",version);
 #if defined(KAILLERA) || defined(MAMEUIPLUSPLUS)
-	swprintf(buffer, TEXT("%s Plus! Plus! %s"), TEXT(MAMENAME), _Unicode(version));
+	swprintf(buffer, TEXT("%s Plus! Plus! %s"), TEXT(MAMENAME), _Unicode(GetVersionString()));
 #else
-	swprintf(buffer, TEXT("%s Plus! %s"), TEXT(MAMENAME), _Unicode(version));
+	swprintf(buffer, TEXT("%s Plus! %s"), TEXT(MAMENAME), _Unicode(GetVersionString()));
 #endif
 
 	SetWindowText(hMain, buffer);
@@ -2490,7 +2486,7 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	/* USE LANGUAGE LIST */
 	build_sort_readings();
 
-	g_mame32_message = RegisterWindowMessage(TEXT_MAMEUINAME);
+	g_mame32_message = RegisterWindowMessage(TEXT(MAMEUINAME));
 	g_bDoBroadcast = GetBroadcast();
 
 	HelpInit();
@@ -6926,14 +6922,13 @@ static const TCHAR *GamePicker_GetItemString(HWND hwndPicker, int nItem, int nCo
 
 		case COLUMN_TYPE:
 			{
-				machine_config *config = global_alloc(machine_config(drivers[nItem]->machine_config));
+				machine_config config(*drivers[nItem]);
 				/* Vector/Raster */
-				if (isDriverVector(config))
+				if (isDriverVector(&config))
 					s = _UIW(TEXT("Vector"));
 				else
 					s = _UIW(TEXT("Raster"));
 
-				global_free(config);
 			}
 			break;
 
@@ -7432,13 +7427,10 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 
 	case COLUMN_TYPE:
 		{
-			machine_config *config1 = global_alloc(machine_config(drivers[index1]->machine_config));
-			machine_config *config2 = global_alloc(machine_config(drivers[index2]->machine_config));
+			machine_config config1(*drivers[index1]);
+			machine_config config2(*drivers[index2]);
 
-			value = isDriverVector(config1) - isDriverVector(config2);
-
-			global_free(config1);
-			global_free(config2);
+			value = isDriverVector(&config1) - isDriverVector(&config2);
 		}
 		break;
 
@@ -7747,7 +7739,7 @@ static void CLIB_DECL MameMessageBoxUTF8(const char *fmt, ...)
 
 	va_start(va, fmt);
 	vsprintf(buf, fmt, va);
-	MessageBox(GetMainWindow(), _UTF8Unicode(buf), TEXT_MAMEUINAME, MB_OK | MB_ICONERROR);
+	MessageBox(GetMainWindow(), _UTF8Unicode(buf), TEXT(MAMEUINAME), MB_OK | MB_ICONERROR);
 	va_end(va);
 }
 
@@ -7870,9 +7862,9 @@ static void CLIB_DECL MameMessageBox(LPCTSTR fmt, ...)
 	va_start(va, fmt);
 	_vstprintf(buf, fmt, va);
 #ifdef KAILLERA
-	MessageBox(GetMainWindow(), buf, TEXT_MAMEUINAME TEXT("++"), MB_OK | MB_ICONERROR);
+	MessageBox(GetMainWindow(), buf, TEXT(MAMEUINAME "++"), MB_OK | MB_ICONERROR);
 #else
-	MessageBox(GetMainWindow(), buf, TEXT_MAMEUINAME, MB_OK | MB_ICONERROR);
+	MessageBox(GetMainWindow(), buf, TEXT(MAMEUINAME), MB_OK | MB_ICONERROR);
 #endif /* KAILLERA */
 	va_end(va);
 }
@@ -9243,7 +9235,7 @@ static void RemoveGameCustomFolder(int driver_index)
 			return;
 		}
 	}
-	MessageBox(GetMainWindow(), _UIW(TEXT("Error searching for custom folder")), TEXT_MAMEUINAME, MB_OK | MB_ICONERROR);
+	MessageBox(GetMainWindow(), _UIW(TEXT("Error searching for custom folder")), TEXT(MAMEUINAME), MB_OK | MB_ICONERROR);
 
 }
 

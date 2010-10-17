@@ -206,7 +206,7 @@ INLINE UINT8 swap_bits_5_6(UINT8 data)
 }
 
 
-static void btime_decrypt( const address_space *space )
+static void btime_decrypt( address_space *space )
 {
 	btime_state *state = space->machine->driver_data<btime_state>();
 	UINT8 *src, *src1;
@@ -1487,10 +1487,7 @@ static MACHINE_RESET( mmonkey )
 	state->protection_ret = 0;
 }
 
-static MACHINE_DRIVER_START( btime )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(btime_state)
+static MACHINE_CONFIG_START( btime, btime_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M6502, HCLK2)	/* seletable between H2/H4 via jumper */
@@ -1533,13 +1530,12 @@ static MACHINE_DRIVER_START( btime )
 	MDRV_SOUND_ADD("discrete", DISCRETE, 0)
 	MDRV_SOUND_CONFIG_DISCRETE(btime_sound)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( cookrace )
+static MACHINE_CONFIG_DERIVED( cookrace, btime )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(btime)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_PROGRAM_MAP(cookrace_map)
 
@@ -1551,13 +1547,12 @@ static MACHINE_DRIVER_START( cookrace )
 	MDRV_PALETTE_LENGTH(16)
 
 	MDRV_VIDEO_UPDATE(cookrace)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( lnc )
+static MACHINE_CONFIG_DERIVED( lnc, btime )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(btime)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_PROGRAM_MAP(lnc_map)
 
@@ -1569,34 +1564,31 @@ static MACHINE_DRIVER_START( lnc )
 
 	MDRV_PALETTE_INIT(lnc)
 	MDRV_VIDEO_UPDATE(lnc)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( wtennis )
+static MACHINE_CONFIG_DERIVED( wtennis, lnc )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(lnc)
 
 	/* video hardware */
 	MDRV_VIDEO_UPDATE(eggs)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( mmonkey )
+static MACHINE_CONFIG_DERIVED( mmonkey, wtennis )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(wtennis)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_PROGRAM_MAP(mmonkey_map)
 
 	MDRV_MACHINE_START(mmonkey)
 	MDRV_MACHINE_RESET(mmonkey)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( sdtennis )
+static MACHINE_CONFIG_DERIVED( sdtennis, btime )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(btime)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_CLOCK(HCLK4)
 	MDRV_CPU_PROGRAM_MAP(bnj_map)
@@ -1607,24 +1599,22 @@ static MACHINE_DRIVER_START( sdtennis )
 
 	MDRV_VIDEO_START(bnj)
 	MDRV_VIDEO_UPDATE(bnj)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( bnj )
+static MACHINE_CONFIG_DERIVED( bnj, sdtennis )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(sdtennis)
 
 	/* video hardware */
 	MDRV_DEVICE_MODIFY("screen")
 	MDRV_SCREEN_VISIBLE_AREA(0*8, 32*8-1, 1*8, 31*8-1) // 256 * 240, confirmed
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( zoar )
+static MACHINE_CONFIG_DERIVED( zoar, btime )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(btime)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_PROGRAM_MAP(zoar_map)
 
@@ -1643,13 +1633,12 @@ static MACHINE_DRIVER_START( zoar )
 
 	MDRV_SOUND_REPLACE("ay2", AY8910, HCLK1)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.23)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( disco )
+static MACHINE_CONFIG_DERIVED( disco, btime )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(btime)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_CLOCK(HCLK4)
 	MDRV_CPU_PROGRAM_MAP(disco_map)
@@ -1662,19 +1651,18 @@ static MACHINE_DRIVER_START( disco )
 	MDRV_PALETTE_LENGTH(32)
 
 	MDRV_VIDEO_UPDATE(disco)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( tisland )
+static MACHINE_CONFIG_DERIVED( tisland, btime )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(btime)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_PROGRAM_MAP(tisland_map)
 
 	/* video hardware */
 	MDRV_GFXDECODE(zoar)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 /***************************************************************************
@@ -2077,12 +2065,12 @@ ROM_END
 
 static void decrypt_C10707_cpu(running_machine *machine, const char *cputag)
 {
-	const address_space *space = cputag_get_address_space(machine, cputag, ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, cputag, ADDRESS_SPACE_PROGRAM);
 	UINT8 *decrypt = auto_alloc_array(machine, UINT8, 0x10000);
 	UINT8 *rom = memory_region(machine, cputag);
 	offs_t addr;
 
-	memory_set_decrypted_region(space, 0x0000, 0xffff, decrypt);
+	space->set_decrypted_region(0x0000, 0xffff, decrypt);
 
 	/* Swap bits 5 & 6 for opcodes */
 	for (addr = 0; addr < 0x10000; addr++)
@@ -2107,11 +2095,11 @@ static READ8_HANDLER( wtennis_reset_hack_r )
 
 static void init_rom1(running_machine *machine)
 {
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	UINT8 *rom = memory_region(machine, "maincpu");
 
 	decrypted = auto_alloc_array(machine, UINT8, 0x10000);
-	memory_set_decrypted_region(space, 0x0000, 0xffff, decrypted);
+	space->set_decrypted_region(0x0000, 0xffff, decrypted);
 
 	/* For now, just copy the RAM array over to ROM. Decryption will happen */
 	/* at run time, since the CPU applies the decryption only if the previous */

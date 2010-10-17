@@ -157,11 +157,8 @@ static READ16_HANDLER( extrarom2_r )
 
 static WRITE8_HANDLER( crshrace_sh_bankswitch_w )
 {
-	UINT8 *rom = memory_region(space->machine, "audiocpu") + 0x10000;
-
-	memory_set_bankptr(space->machine, "bank1",rom + (data & 0x03) * 0x8000);
+	memory_set_bank(space->machine, "bank1", data & 0x03);
 }
-
 
 static WRITE16_HANDLER( sound_command_w )
 {
@@ -449,6 +446,8 @@ static MACHINE_START( crshrace )
 {
 	crshrace_state *state = machine->driver_data<crshrace_state>();
 
+	memory_configure_bank(machine, "bank1", 0, 4, memory_region(machine, "audiocpu") + 0x10000, 0x8000);
+
 	state->audiocpu = machine->device("audiocpu");
 	state->k053936 = machine->device("k053936");
 
@@ -468,10 +467,7 @@ static MACHINE_RESET( crshrace )
 	state->pending_command = 0;
 }
 
-static MACHINE_DRIVER_START( crshrace )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(crshrace_state)
+static MACHINE_CONFIG_START( crshrace, crshrace_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M68000,16000000)	/* 16 MHz ??? */
@@ -512,7 +508,7 @@ static MACHINE_DRIVER_START( crshrace )
 	MDRV_SOUND_ROUTE(0, "rspeaker", 0.25)
 	MDRV_SOUND_ROUTE(1, "lspeaker",  1.0)
 	MDRV_SOUND_ROUTE(2, "rspeaker", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 ROM_START( crshrace )

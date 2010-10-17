@@ -330,9 +330,7 @@ static MACHINE_RESET( 20pacgal )
 	state->game_selected = 0;
 }
 
-static MACHINE_DRIVER_START( 20pacgal )
-
-	MDRV_DRIVER_DATA(_20pacgal_state)
+static MACHINE_CONFIG_START( 20pacgal, _20pacgal_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z180, MAIN_CPU_CLOCK)
@@ -346,7 +344,7 @@ static MACHINE_DRIVER_START( 20pacgal )
 	MDRV_EEPROM_ADD("eeprom", _20pacgal_eeprom_intf)
 
 	/* video hardware */
-	MDRV_IMPORT_FROM(20pacgal_video)
+	MDRV_FRAGMENT_ADD(20pacgal_video)
 
 	/* sound hardware */
 	MDRV_SPEAKER_STANDARD_MONO("mono")
@@ -357,7 +355,7 @@ static MACHINE_DRIVER_START( 20pacgal )
 
 	MDRV_SOUND_ADD("dac", DAC, 0)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 
@@ -455,7 +453,7 @@ static DRIVER_INIT(25pacman)
  *
  *************************************/
 
-GAME( 2005, 25pacman,          0, 20pacgal, 25pacman, 25pacman, ROT90, "Namco", "Pacman - 25th Anniversary Edition (Rev 2.00)", GAME_IMPERFECT_GRAPHICS | GAME_SUPPORTS_SAVE)
+GAME( 2005, 25pacman,          0, 20pacgal, 25pacman, 25pacman, ROT90, "Namco", "Pac-Man - 25th Anniversary Edition (Rev 2.00)", GAME_IMPERFECT_GRAPHICS | GAME_SUPPORTS_SAVE)
 
 GAME( 2000, 20pacgal,          0, 20pacgal, 20pacgal, 20pacgal, ROT90, "Namco", "Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.08)", GAME_IMPERFECT_GRAPHICS | GAME_SUPPORTS_SAVE)
 GAME( 2000, 20pacgalr4, 20pacgal, 20pacgal, 20pacgal, 20pacgal, ROT90, "Namco", "Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.04)", GAME_IMPERFECT_GRAPHICS | GAME_SUPPORTS_SAVE)

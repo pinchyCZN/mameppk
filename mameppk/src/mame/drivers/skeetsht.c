@@ -17,13 +17,11 @@
  *
  *************************************/
 
-class skeetsht_state : public driver_data_t
+class skeetsht_state : public driver_device
 {
 public:
-	static driver_data_t *alloc(running_machine &machine) { return auto_alloc_clear(&machine, skeetsht_state(machine)); }
-
-	skeetsht_state(running_machine &machine)
-		: driver_data_t(machine) { }
+	skeetsht_state(running_machine &machine, const driver_device_config_base &config)
+		: driver_device(machine, config) { }
 
 	UINT16 *tms_vram;
 	UINT8 porta_latch;
@@ -47,9 +45,6 @@ static MACHINE_RESET( skeetsht )
 
 	state->ay = machine->device("aysnd");
 	state->tms = machine->device("tms");
-
-	/* Setup the Bt476 VGA RAMDAC palette chip */
-	tlc34076_reset(6);
 }
 
 
@@ -66,7 +61,7 @@ static VIDEO_START ( skeetsht )
 static void skeetsht_scanline_update(screen_device &screen, bitmap_t *bitmap, int scanline, const tms34010_display_params *params)
 {
 	skeetsht_state *state = screen.machine->driver_data<skeetsht_state>();
-	const rgb_t *const pens = tlc34076_get_pens();
+	const rgb_t *const pens = tlc34076_get_pens(screen.machine->device("tlc34076"));
 	UINT16 *vram = &state->tms_vram[(params->rowaddr << 8) & 0x3ff00];
 	UINT32 *dest = BITMAP_ADDR32(bitmap, scanline, 0);
 	int coladdr = params->coladdr;
@@ -87,7 +82,7 @@ static READ16_HANDLER( ramdac_r )
 	if (offset & 8)
 		offset = (offset & ~8) | 4;
 
-	return tlc34076_r(space, offset);
+	return tlc34076_r(space->machine->device("tlc34076"), offset);
 }
 
 static WRITE16_HANDLER( ramdac_w )
@@ -97,7 +92,7 @@ static WRITE16_HANDLER( ramdac_w )
 	if (offset & 8)
 		offset = (offset & ~8) | 4;
 
-	tlc34076_w(space, offset, data);
+	tlc34076_w(space->machine->device("tlc34076"), offset, data);
 }
 
 
@@ -243,15 +238,14 @@ static const tms34010_config tms_config =
 };
 
 
+
 /*************************************
  *
  *  Machine driver
  *
  *************************************/
 
-static MACHINE_DRIVER_START( skeetsht )
-
-	MDRV_DRIVER_DATA( skeetsht_state )
+static MACHINE_CONFIG_START( skeetsht, skeetsht_state )
 
 	MDRV_CPU_ADD("68hc11", MC68HC11, 4000000) // ?
 	MDRV_CPU_PROGRAM_MAP(hc11_pgm_map)
@@ -264,6 +258,8 @@ static MACHINE_DRIVER_START( skeetsht )
 
 	MDRV_MACHINE_RESET(skeetsht)
 
+	MDRV_TLC34076_ADD("tlc34076", TLC34076_6_BIT)
+
 	MDRV_SCREEN_ADD("screen", RASTER)
 	MDRV_SCREEN_FORMAT(BITMAP_FORMAT_RGB32)
 	MDRV_SCREEN_RAW_PARAMS(48000000 / 8, 156*4, 0, 100*4, 328, 0, 300) // FIXME
@@ -275,7 +271,7 @@ static MACHINE_DRIVER_START( skeetsht )
 
 	MDRV_SOUND_ADD("aysnd", AY8910, 2000000) // ?
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.50)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 /*************************************

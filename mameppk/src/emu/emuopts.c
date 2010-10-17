@@ -14,6 +14,10 @@
 
 #include <ctype.h>
 
+#ifdef MAMEMESS
+#define MESS
+#endif /* MAMEMESS */
+
 
 
 /***************************************************************************
@@ -28,7 +32,7 @@ const options_entry mame_core_options[] =
 	/* config options */
 	{ NULL,                          NULL,        OPTION_HEADER,     "CORE CONFIGURATION OPTIONS" },
 	{ "readconfig;rc",               "1",         OPTION_BOOLEAN,    "enable loading of configuration files" },
-#ifdef MESS
+#if 0 //def MESS
 	{ "writeconfig;wc",				 "1",		  OPTION_BOOLEAN,	 "writes configuration to (driver).ini on exit" },
 #else
 	{ "writeconfig;wc",				 "0",		  OPTION_BOOLEAN,	 "writes configuration to (driver).ini on exit" },
@@ -149,9 +153,6 @@ const options_entry mame_core_options[] =
 	{ "samplerate;sr(1000-1000000)", "48000",     0,                 "set sound output sample rate" },
 	{ "samples",                     "1",         OPTION_BOOLEAN,    "enable the use of external samples if available" },
 	{ "volume;vol",                  "0",         0,                 "sound volume in decibels (-32 min, 0 max)" },
-#ifdef USE_VOLUME_AUTO_ADJUST
-	{ "volume_adjust",               "0",         OPTION_BOOLEAN,    "enable/disable volume auto adjust" },
-#endif /* USE_VOLUME_AUTO_ADJUST */
 
 	/* input options */
 	{ NULL,                          NULL,        OPTION_HEADER,     "CORE INPUT OPTIONS" },
@@ -387,15 +388,14 @@ const char *image_get_device_option(device_image_interface *image)
 void image_add_device_options(core_options *opts, const game_driver *driver)
 {
 	int index = 0;
-	machine_config *config;
 	const device_config_image_interface *image = NULL;
 
 	/* create the configuration */
-	config = global_alloc(machine_config(driver->machine_config));
+	machine_config config(*driver);
 
 	/* enumerate our callback for every device */
 	/* loop on each device instance */
-	for (bool gotone = config->m_devicelist.first(image); gotone; gotone = image->next(image))
+	for (bool gotone = config.m_devicelist.first(image); gotone; gotone = image->next(image))
 	{
 		options_entry entry[2];
 		astring dev_full_name;
@@ -422,9 +422,6 @@ void image_add_device_options(core_options *opts, const game_driver *driver)
 
 	/* record that we've added device options */
 	options_set_bool(opts, OPTION_ADDED_DEVICE_OPTIONS, TRUE, OPTION_PRIORITY_CMDLINE);
-
-	/* free the configuration */
-	global_free(config);
 }
 
 /*-------------------------------------------------
@@ -470,7 +467,7 @@ core_options *mame_options_init(const options_entry *entries)
 	/* we need to dynamically add options when the device name is parsed */
 	options_set_option_callback(opts, OPTION_GAMENAME, image_driver_name_callback);
 
-#ifdef MAMEMESS
+#ifdef MESS
 	mess_options_init(opts);
 #endif /* MESS */
 

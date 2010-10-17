@@ -303,6 +303,8 @@ static void init_savestate(running_machine *machine)
 
 VIDEO_UPDATE( astrocde )
 {
+	astrocde_state *state = screen->machine->driver_data<astrocde_state>();
+	UINT8 *videoram = state->videoram;
 	int xystep = 2 - video_mode;
 	UINT32 sparklebase = 0;
 	int y;
@@ -341,7 +343,7 @@ VIDEO_UPDATE( astrocde )
 			int xx;
 
 			/* select either video data or background data */
-			data = (effx >= 0 && effx < 80 && effy >= 0 && effy < vblank) ? screen->machine->generic.videoram.u8[offset++] : bgdata;
+			data = (effx >= 0 && effx < 80 && effy >= 0 && effy < vblank) ? videoram[offset++] : bgdata;
 
 			/* iterate over the 4 pixels */
 			for (xx = 0; xx < 4; xx++)
@@ -727,7 +729,7 @@ WRITE8_HANDLER( astrocade_funcgen_w )
 	/* OR/XOR */
 	if (funcgen_control & 0x30)
 	{
-		UINT8 olddata = memory_read_byte(space, 0x4000 + offset);
+		UINT8 olddata = space->read_byte(0x4000 + offset);
 
 		/* compute any intercepts */
 		funcgen_intercept &= 0x0f;
@@ -748,7 +750,7 @@ WRITE8_HANDLER( astrocade_funcgen_w )
 	}
 
 	/* write the result */
-	memory_write_byte(space, 0x4000 + offset, data);
+	space->write_byte(0x4000 + offset, data);
 }
 
 
@@ -788,7 +790,7 @@ INLINE void increment_dest(UINT8 curwidth)
 }
 
 
-static void execute_blit(const address_space *space)
+static void execute_blit(address_space *space)
 {
 	/*
         pattern_source = counter set U7/U16/U25/U34
@@ -842,7 +844,7 @@ static void execute_blit(const address_space *space)
 			if (curwidth == 0 && (pattern_mode & 0x08) != 0)
 				busdata = 0;
 			else
-				busdata = memory_read_byte(space, busaddr);
+				busdata = space->read_byte(busaddr);
 
 			/* increment the appropriate address */
 			if ((pattern_mode & 0x01) == 0)
@@ -854,7 +856,7 @@ static void execute_blit(const address_space *space)
 
 			/* address is selected between source/dest based on mode.d0 */
 			busaddr = ((pattern_mode & 0x01) != 0) ? pattern_source : pattern_dest;
-			memory_write_byte(space, busaddr, busdata);
+			space->write_byte(busaddr, busdata);
 
 			/* increment the appropriate address */
 			if ((pattern_mode & 0x01) == 0)

@@ -130,9 +130,8 @@ const char mame_disclaimer[] =
     FUNCTION PROTOTYPES
 ***************************************************************************/
 
-#if 0 //mamep: moved to mame.h
-static int parse_ini_file(core_options *options, const char *name, int priority);
-#endif
+//mamep: required for using -listxml to parse -driver_config
+int parse_ini_file(core_options *options, const char *name, int priority);
 
 
 
@@ -197,10 +196,10 @@ int mame_execute(core_options *options)
 		}
 
 		// create the machine configuration
-		const machine_config *config = global_alloc(machine_config(driver->machine_config));
+		const machine_config *config = global_alloc(machine_config(*driver));
 
 		// create the machine structure and driver
-		running_machine *machine = global_alloc(running_machine(*driver, *config, *options, started_empty));
+		running_machine *machine = global_alloc(running_machine(*config, *options, started_empty));
 #ifdef KAILLERA
 		k_machine = machine;
 #endif /* KAILLERA */
@@ -246,6 +245,17 @@ core_options *mame_options(void)
 	return mame_opts;
 }
 
+
+
+/*-------------------------------------------------
+    set_mame_options - set mame options, used by
+    validate option
+-------------------------------------------------*/
+
+void set_mame_options(core_options *options)
+{
+	mame_opts = options;
+}
 
 
 /***************************************************************************
@@ -520,7 +530,6 @@ void mame_parse_ini_files(core_options *options, const game_driver *driver)
 #ifndef MESS
 		const game_driver *parent = driver_get_clone(driver);
 		const game_driver *gparent = (parent != NULL) ? driver_get_clone(parent) : NULL;
-		machine_config *config;
 
 		/* parse "vertical.ini" or "horizont.ini" */
 		if (driver->flags & ORIENTATION_SWAP_XY)
@@ -529,14 +538,15 @@ void mame_parse_ini_files(core_options *options, const game_driver *driver)
 			parse_ini_file(options, "horizont", OPTION_PRIORITY_ORIENTATION_INI);
 
 		/* parse "vector.ini" for vector games */
-		config = global_alloc(machine_config(driver->machine_config));
-		for (const screen_device_config *devconfig = screen_first(*config); devconfig != NULL; devconfig = screen_next(devconfig))
-			if (devconfig->screen_type() == SCREEN_TYPE_VECTOR)
-			{
-				parse_ini_file(options, "vector", OPTION_PRIORITY_VECTOR_INI);
-				break;
-			}
-		global_free(config);
+		{
+			machine_config config(*driver);
+			for (const screen_device_config *devconfig = screen_first(config); devconfig != NULL; devconfig = screen_next(devconfig))
+				if (devconfig->screen_type() == SCREEN_TYPE_VECTOR)
+				{
+					parse_ini_file(options, "vector", OPTION_PRIORITY_VECTOR_INI);
+					break;
+				}
+		}
 
 		/* next parse "source/<sourcefile>.ini"; if that doesn't exist, try <sourcefile>.ini */
 		astring sourcename;
@@ -555,7 +565,7 @@ void mame_parse_ini_files(core_options *options, const game_driver *driver)
 #endif	/* MESS */
 
 #ifdef USE_IPS
-		// mamep: hack, DO NOT INHERIT IPS CONFIGURATION
+		//mamep: hack, DO NOT INHERIT IPS CONFIGURATION
 		options_set_string(options, OPTION_IPS, NULL, OPTION_PRIORITY_INI);
 #endif /* USE_IPS */		
 
@@ -568,6 +578,7 @@ void mame_parse_ini_files(core_options *options, const game_driver *driver)
     parse_ini_file - parse a single INI file
 -------------------------------------------------*/
 
+//mamep: required for using -listxml to parse -driver_config
 int parse_ini_file(core_options *options, const char *name, int priority)
 {
 	file_error filerr;

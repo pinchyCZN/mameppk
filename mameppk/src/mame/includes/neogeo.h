@@ -31,15 +31,11 @@
 void neogeo_init_driver(void);
 #endif /* KAILLERA */
 
-
-
-class neogeo_state : public driver_data_t
+class neogeo_state : public driver_device
 {
 public:
-	static driver_data_t *alloc(running_machine &machine) { return auto_alloc_clear(&machine, neogeo_state(machine)); }
-
-	neogeo_state(running_machine &machine)
-		: driver_data_t(machine) { }
+	neogeo_state(running_machine &machine, const driver_device_config_base &config)
+		: driver_device(machine, config) { }
 
 	/* memory pointers */
 //  UINT8      *memcard_data;   // this currently uses generic handlers
@@ -121,10 +117,10 @@ public:
 /*----------- defined in drivers/neogeo.c -----------*/
 
 void neogeo_set_display_position_interrupt_control(running_machine *machine, UINT16 data);
-void neogeo_set_display_counter_msb(const address_space *space, UINT16 data);
-void neogeo_set_display_counter_lsb(const address_space *space, UINT16 data);
+void neogeo_set_display_counter_msb(address_space *space, UINT16 data);
+void neogeo_set_display_counter_lsb(address_space *space, UINT16 data);
 void neogeo_acknowledge_interrupt(running_machine *machine, UINT16 data);
-void neogeo_set_main_cpu_bank_address(const address_space *space, UINT32 bank_address);
+void neogeo_set_main_cpu_bank_address(address_space *space, UINT32 bank_address);
 READ16_HANDLER( neogeo_unmapped_r );
 
 

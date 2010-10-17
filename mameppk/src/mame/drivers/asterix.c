@@ -107,8 +107,8 @@ static WRITE16_HANDLER( protection_w )
 		{
 		case 0x64:
 			{
-			UINT32 param1 = (memory_read_word(space, cmd & 0xffffff) << 16) | memory_read_word(space, (cmd & 0xffffff) + 2);
-			UINT32 param2 = (memory_read_word(space, (cmd & 0xffffff) + 4) << 16) | memory_read_word(space, (cmd & 0xffffff) + 6);
+			UINT32 param1 = (space->read_word(cmd & 0xffffff) << 16) | space->read_word((cmd & 0xffffff) + 2);
+			UINT32 param2 = (space->read_word((cmd & 0xffffff) + 4) << 16) | space->read_word((cmd & 0xffffff) + 6);
 
 			switch (param1 >> 24)
 			{
@@ -119,7 +119,7 @@ static WRITE16_HANDLER( protection_w )
 					param2 &= 0xffffff;
 					while(size >= 0)
 					{
-						memory_write_word(space, param2, memory_read_word(space, param1));
+						space->write_word(param2, space->read_word(param1));
 						param1 += 2;
 						param2 += 2;
 						size--;
@@ -147,10 +147,10 @@ static WRITE16_HANDLER( protection_w )
 		{
 		case 0x64:
 		{
-			UINT32 param1 = (memory_read_word(space, cmd & 0xffffff) << 16)
-				| memory_read_word(space, (cmd & 0xffffff) + 2);
-			UINT32 param2 = (memory_read_word(space, (cmd & 0xffffff) + 4) << 16)
-				| memory_read_word(space, (cmd & 0xffffff) + 6);
+			UINT32 param1 = (space->read_word(cmd & 0xffffff) << 16)
+				| space->read_word((cmd & 0xffffff) + 2);
+			UINT32 param2 = (space->read_word((cmd & 0xffffff) + 4) << 16)
+				| space->read_word((cmd & 0xffffff) + 6);
 
 			switch (param1 >> 24)
 			{
@@ -161,7 +161,7 @@ static WRITE16_HANDLER( protection_w )
 				param2 &= 0xffffff;
 				while(size >= 0)
 				{
-					memory_write_word(space, param2, memory_read_word(space, param1));
+					space->write_word(param2, space->read_word(param1));
 					param1 += 2;
 					param2 += 2;
 					size--;
@@ -294,10 +294,7 @@ static MACHINE_RESET( asterix )
 	}
 }
 
-static MACHINE_DRIVER_START( asterix )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(asterix_state)
+static MACHINE_CONFIG_START( asterix, asterix_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M68000, 12000000)
@@ -339,7 +336,7 @@ static MACHINE_DRIVER_START( asterix )
 	MDRV_SOUND_ADD("k053260", K053260, 4000000)
 	MDRV_SOUND_ROUTE(0, "lspeaker", 0.75)
 	MDRV_SOUND_ROUTE(1, "rspeaker", 0.75)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 ROM_START( asterix )

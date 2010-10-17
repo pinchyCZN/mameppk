@@ -145,7 +145,7 @@ static WRITE8_DEVICE_HANDLER( ic8j2_output_changed )
 	ttl74123_a_w(state->ic8j1, 0, data);
 }
 
-static const ttl74123_config ic8j1_intf =
+static const ttl74123_interface ic8j1_intf =
 {
 	/* completely illegible */
 	TTL74123_NOT_GROUNDED_DIODE,	/* the hook up type */
@@ -157,7 +157,7 @@ static const ttl74123_config ic8j1_intf =
 	ic8j1_output_changed
 };
 
-static const ttl74123_config ic8j2_intf =
+static const ttl74123_interface ic8j2_intf =
 {
 	TTL74123_NOT_GROUNDED_DIODE,	/* the hook up type */
 	/* 10k + 20k variable resistor */
@@ -833,9 +833,7 @@ static const samples_interface m10_samples_interface =
  *
  *************************************/
 
-static MACHINE_DRIVER_START( m10 )
-
-	MDRV_DRIVER_DATA(m10_state)
+static MACHINE_CONFIG_START( m10, m10_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M6502,IREMM10_CPU_CLOCK)
@@ -870,24 +868,19 @@ static MACHINE_DRIVER_START( m10 )
 	MDRV_SOUND_CONFIG(m10_samples_interface)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
 
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( m11 )
-
-	MDRV_DRIVER_DATA(m10_state)
+static MACHINE_CONFIG_DERIVED( m11, m10 )
 
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(m10)
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_PROGRAM_MAP(m11_main)
 	//MDRV_CPU_VBLANK_INT("screen", m11_interrupt)
 
 	/* sound hardware */
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( m15 )
-
-	MDRV_DRIVER_DATA(m10_state)
+static MACHINE_CONFIG_START( m15, m10_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M6502,IREMM15_CPU_CLOCK)
@@ -916,14 +909,13 @@ static MACHINE_DRIVER_START( m15 )
 	MDRV_SOUND_CONFIG(m10_samples_interface)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
 
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( headoni )
-	MDRV_IMPORT_FROM(m15)
+static MACHINE_CONFIG_DERIVED( headoni, m15 )
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_CLOCK(11730000/16)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 /*************************************
  *

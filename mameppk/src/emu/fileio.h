@@ -14,7 +14,6 @@
 #ifndef __FILEIO_H__
 #define __FILEIO_H__
 
-#include <stdarg.h>
 #include "corefile.h"
 
 
@@ -24,13 +23,13 @@
 ***************************************************************************/
 
 /* search paths */
-#define SEARCHPATH_RAW			NULL
-#define SEARCHPATH_LANGUAGE		NULL
-#define SEARCHPATH_DEBUGLOG		NULL
+#define SEARCHPATH_RAW             NULL
+#define SEARCHPATH_LANGUAGE        NULL
+#define SEARCHPATH_DEBUGLOG        NULL
 
 #define SEARCHPATH_ROM             OPTION_ROMPATH
-#ifdef MESS
-#define SEARCHPATH_IMAGE           NULL
+#ifdef MAMEMESS
+#define SEARCHPATH_IMAGE           OPTION_ROMPATH
 #define SEARCHPATH_HASH            OPTION_HASHPATH
 #else
 #define SEARCHPATH_IMAGE           OPTION_ROMPATH

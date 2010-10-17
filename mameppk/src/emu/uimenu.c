@@ -97,8 +97,13 @@ enum
 enum
 {
 	VIDEO_ITEM_ROTATE = 0x80000000,
+	VIDEO_ITEM_BACKDROPS,
+	VIDEO_ITEM_OVERLAYS,
+	VIDEO_ITEM_BEZELS,
+	VIDEO_ITEM_ZOOM,
 	VIDEO_ITEM_VIEW
 };
+
 
 enum
 {
@@ -331,7 +336,7 @@ static void menu_select_game_build_driver_list(ui_menu *menu, select_game_state 
 static void menu_select_game_custom_render(running_machine *machine, ui_menu *menu, void *state, void *selectedref, float top, float bottom, float x, float y, float x2, float y2);
 
 /* menu helpers */
-static void menu_render_triangle(bitmap_t *dest, const bitmap_t *source, const rectangle *sbounds, void *param);
+static void menu_render_triangle(bitmap_t &dest, const bitmap_t &source, const rectangle &sbounds, void *param);
 static void menu_settings_custom_render_one(render_container *container, float x1, float y1, float x2, float y2, const dip_descriptor *dip, UINT32 selectedmask);
 static void menu_settings_custom_render(running_machine *machine, ui_menu *menu, void *state, void *selectedref, float top, float bottom, float x, float y, float x2, float y2);
 
@@ -425,11 +430,11 @@ void ui_menu_init(running_machine *machine)
 		if (x > 256 - 25) alpha = 0xff * (255 - x) / 25;
 		*BITMAP_ADDR32(hilight_bitmap, 0, x) = MAKE_ARGB(alpha,0xff,0xff,0xff);
 	}
-	hilight_texture = render_texture_alloc(NULL, NULL);
-	render_texture_set_bitmap(hilight_texture, hilight_bitmap, NULL, TEXFORMAT_ARGB32, NULL);
+	hilight_texture = machine->render().texture_alloc();
+	hilight_texture->set_bitmap(hilight_bitmap, NULL, TEXFORMAT_ARGB32);
 
 	/* create a texture for arrow icons */
-	arrow_texture = render_texture_alloc(menu_render_triangle, NULL);
+	arrow_texture = machine->render().texture_alloc(menu_render_triangle);
 
 	/* add an exit callback to free memory */
 	machine->add_notifier(MACHINE_NOTIFY_EXIT, ui_menu_exit);
@@ -447,8 +452,8 @@ static void ui_menu_exit(running_machine &machine)
 	ui_menu_clear_free_list(&machine);
 
 	/* free textures */
-	render_texture_free(hilight_texture);
-	render_texture_free(arrow_texture);
+	machine.render().texture_free(hilight_texture);
+	machine.render().texture_free(arrow_texture);
 }
 
 
@@ -766,9 +771,9 @@ void ui_menu_set_selection(ui_menu *menu, void *selected_itemref)
 
 static void ui_menu_draw(running_machine *machine, ui_menu *menu, int customonly)
 {
-	float line_height = ui_get_line_height();
-	float lr_arrow_width = 0.4f * line_height * render_get_ui_aspect();
-	float ud_arrow_width = line_height * render_get_ui_aspect();
+	float line_height = ui_get_line_height(*machine);
+	float lr_arrow_width = 0.4f * line_height * machine->render().ui_aspect();
+	float ud_arrow_width = line_height * machine->render().ui_aspect();
 	float gutter_width = lr_arrow_width * 1.3f;
 	float x1, y1, x2, y2;
 
@@ -794,11 +799,11 @@ static void ui_menu_draw(running_machine *machine, ui_menu *menu, int customonly
 		float total_width;
 
 		/* compute width of left hand side */
-		total_width = gutter_width + ui_get_string_width(item->text) + gutter_width;
+		total_width = gutter_width + ui_get_string_width(*machine, item->text) + gutter_width;
 
 		/* add in width of right hand side */
 		if (item->subtext)
-			total_width += 2.0f * gutter_width + ui_get_string_width(item->subtext);
+			total_width += 2.0f * gutter_width + ui_get_string_width(*machine, item->subtext);
 
 		/* track the maximum */
 		if (total_width > visible_width)
@@ -859,7 +864,7 @@ static void ui_menu_draw(running_machine *machine, ui_menu *menu, int customonly
 	{
 		mouse_target = ui_input_find_mouse(machine, &mouse_target_x, &mouse_target_y, &mouse_button);
 		if (mouse_target != NULL)
-			if (render_target_map_point_container(mouse_target, mouse_target_x, mouse_target_y, menu->container, &mouse_x, &mouse_y))
+			if (mouse_target->map_point_container(mouse_target_x, mouse_target_y, *menu->container, mouse_x, mouse_y))
 				mouse_hit = TRUE;
 	}
 
@@ -919,13 +924,13 @@ static void ui_menu_draw(running_machine *machine, ui_menu *menu, int customonly
 
 			/* if we have some background hilighting to do, add a quad behind everything else */
 			if (bgcolor != UI_TEXT_BG_COLOR)
-				render_container_add_quad(menu->container, line_x0, line_y0, line_x1, line_y1, bgcolor, hilight_texture,
+				menu->container->add_quad(line_x0, line_y0, line_x1, line_y1, bgcolor, hilight_texture,
 									PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA) | PRIMFLAG_TEXWRAP(TRUE));
 
 			/* if we're on the top line, display the up arrow */
 			if (linenum == 0 && top_line != 0)
 			{
-				render_container_add_quad(	menu->container,
+				menu->container->add_quad(
 						            0.5f * (x1 + x2) - 0.5f * ud_arrow_width,
 									line_y + 0.25f * line_height,
 									0.5f * (x1 + x2) + 0.5f * ud_arrow_width,
@@ -940,7 +945,7 @@ static void ui_menu_draw(running_machine *machine, ui_menu *menu, int customonly
 			/* if we're on the bottom line, display the down arrow */
 			else if (linenum == visible_lines - 1 && itemnum != menu->numitems - 1)
 			{
-				render_container_add_quad(	menu->container,
+				menu->container->add_quad(
 									0.5f * (x1 + x2) - 0.5f * ud_arrow_width,
 									line_y + 0.25f * line_height,
 									0.5f * (x1 + x2) + 0.5f * ud_arrow_width,
@@ -954,7 +959,7 @@ static void ui_menu_draw(running_machine *machine, ui_menu *menu, int customonly
 
 			/* if we're just a divider, draw a line */
 			else if (strcmp(itemtext, MENU_SEPARATOR_ITEM) == 0)
-				render_container_add_line(menu->container, visible_left, line_y + 0.5f * line_height, visible_left + visible_width, line_y + 0.5f * line_height, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+				menu->container->add_line(visible_left, line_y + 0.5f * line_height, visible_left + visible_width, line_y + 0.5f * line_height, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
 
 			/* if we don't have a subitem, just draw the string centered */
 			else if (item->subtext == NULL)
@@ -976,7 +981,7 @@ static void ui_menu_draw(running_machine *machine, ui_menu *menu, int customonly
 				item_width += 2.0f * gutter_width;
 
 				/* if the subitem doesn't fit here, display dots */
-				if (ui_get_string_width(subitem_text) > effective_width - item_width)
+				if (ui_get_string_width(*machine, subitem_text) > effective_width - item_width)
 				{
 					subitem_text = "...";
 					if (itemnum == menu->selected)
@@ -990,7 +995,7 @@ static void ui_menu_draw(running_machine *machine, ui_menu *menu, int customonly
 				/* apply arrows */
 				if (itemnum == menu->selected && (item->flags & MENU_FLAG_LEFT_ARROW))
 				{
-					render_container_add_quad(	menu->container,
+					menu->container->add_quad(
 										effective_left + effective_width - subitem_width - gutter_width,
 										line_y + 0.1f * line_height,
 										effective_left + effective_width - subitem_width - gutter_width + lr_arrow_width,
@@ -1001,7 +1006,7 @@ static void ui_menu_draw(running_machine *machine, ui_menu *menu, int customonly
 				}
 				if (itemnum == menu->selected && (item->flags & MENU_FLAG_RIGHT_ARROW))
 				{
-					render_container_add_quad(	menu->container,
+					menu->container->add_quad(
 										effective_left + effective_width + gutter_width - lr_arrow_width,
 										line_y + 0.1f * line_height,
 										effective_left + effective_width + gutter_width,
@@ -1064,8 +1069,8 @@ static void ui_menu_draw_text_box(ui_menu *menu)
 {
 	const char *text = menu->item[0].text;
 	const char *backtext = menu->item[1].text;
-	float line_height = ui_get_line_height();
-	float lr_arrow_width = 0.4f * line_height * render_get_ui_aspect();
+	float line_height = ui_get_line_height(*menu->machine);
+	float lr_arrow_width = 0.4f * line_height * menu->machine->render().ui_aspect();
 	float gutter_width = lr_arrow_width;
 	float target_width, target_height, prior_width;
 	float target_x, target_y;
@@ -1078,7 +1083,7 @@ static void ui_menu_draw_text_box(ui_menu *menu)
 		target_height = floor((1.0f - 2.0f * UI_BOX_TB_BORDER) / line_height) * line_height;
 
 	/* maximum against "return to prior menu" text */
-	prior_width = ui_get_string_width(backtext) + 2.0f * gutter_width;
+	prior_width = ui_get_string_width(*menu->machine, backtext) + 2.0f * gutter_width;
 	target_width = MAX(target_width, prior_width);
 
 	/* determine the target location */
@@ -1104,7 +1109,7 @@ static void ui_menu_draw_text_box(ui_menu *menu)
 				JUSTIFY_LEFT, WRAP_WORD, DRAW_NORMAL, UI_TEXT_COLOR, UI_TEXT_BG_COLOR, NULL, NULL);
 
 	/* draw the "return to prior menu" text with a hilight behind it */
-	render_container_add_quad(menu->container,
+	menu->container->add_quad(
 						target_x + 0.5f * UI_LINE_WIDTH,
 						target_y + target_height - line_height,
 						target_x + target_width - 0.5f * UI_LINE_WIDTH,
@@ -1597,8 +1602,8 @@ static void menu_main_populate(running_machine *machine, ui_menu *menu, void *st
 		/* add file manager menu */
 		ui_menu_item_append(menu, _("File Manager"), NULL, 0, (void*)ui_image_menu_file_manager);
 	#ifdef MESS
-	/* add MESS-specific menus */
-	ui_mess_main_menu_populate(machine, menu);
+		/* add MESS-specific menus */
+		ui_mess_main_menu_populate(machine, menu);
 	#endif /* MESS */
 	}
 	/* add keyboard mode menu */
@@ -1612,7 +1617,7 @@ static void menu_main_populate(running_machine *machine, ui_menu *menu, void *st
 	ui_menu_item_append(menu, _("Slider Controls"), NULL, 0, (void *)menu_sliders);
 
 	/* add video options menu */
-	ui_menu_item_append(menu, _("Video Options"), NULL, 0, (render_target_get_indexed(1) != NULL) ? (void *)menu_video_targets : (void *)menu_video_options);
+	ui_menu_item_append(menu, _("Video Options"), NULL, 0, (machine->render().target_by_index(1) != NULL) ? (void *)menu_video_targets : (void *)menu_video_options);
 
 #ifdef USE_SCALE_EFFECTS
 #ifdef KAILLERA
@@ -1641,6 +1646,7 @@ static void menu_main_populate(running_machine *machine, ui_menu *menu, void *st
 		ui_menu_item_append(menu, _("Memory Card"), NULL, 0, (void *)menu_memory_card);
 
 #ifdef CMD_LIST
+	/* add command list menu */
 	ui_menu_item_append(menu, _("Show Command List"), NULL, 0, (void *)menu_command);
 #endif /* CMD_LIST */
 
@@ -2256,8 +2262,8 @@ static void menu_settings_custom_render(running_machine *machine, ui_menu *menu,
 
 static void menu_settings_custom_render_one(render_container *container, float x1, float y1, float x2, float y2, const dip_descriptor *dip, UINT32 selectedmask)
 {
-	float switch_field_width = SINGLE_TOGGLE_SWITCH_FIELD_WIDTH * render_get_ui_aspect();
-	float switch_width = SINGLE_TOGGLE_SWITCH_WIDTH * render_get_ui_aspect();
+	float switch_field_width = SINGLE_TOGGLE_SWITCH_FIELD_WIDTH * container->manager().ui_aspect();
+	float switch_width = SINGLE_TOGGLE_SWITCH_WIDTH * container->manager().ui_aspect();
 	int numtoggles, toggle;
 	float switch_toggle_gap;
 	float y1_off, y1_on;
@@ -2273,7 +2279,7 @@ static void menu_settings_custom_render_one(render_container *container, float x
 						dip->name,
 						0,
 						y1 + (DIP_SWITCH_HEIGHT - UI_TARGET_FONT_HEIGHT) / 2,
-						x1 - ui_get_string_width(" "),
+						x1 - ui_get_string_width(container->manager().machine(), " "),
 						JUSTIFY_RIGHT,
 						WRAP_NEVER,
 						DRAW_NORMAL,
@@ -2302,13 +2308,13 @@ static void menu_settings_custom_render_one(render_container *container, float x
 		if (dip->mask & (1 << toggle))
 		{
 			float innery1 = (dip->state & (1 << toggle)) ? y1_on : y1_off;
-			render_container_add_rect(container, innerx1, innery1, innerx1 + switch_width, innery1 + SINGLE_TOGGLE_SWITCH_HEIGHT,
+			container->add_rect(innerx1, innery1, innerx1 + switch_width, innery1 + SINGLE_TOGGLE_SWITCH_HEIGHT,
 							   (selectedmask & (1 << toggle)) ? UI_DIPSW_COLOR : UI_TEXT_COLOR,
 							   PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
 		}
 		else
 		{
-			render_container_add_rect(container, innerx1, y1_off, innerx1 + switch_width, y1_on + SINGLE_TOGGLE_SWITCH_HEIGHT,
+			container->add_rect(innerx1, y1_off, innerx1 + switch_width, y1_on + SINGLE_TOGGLE_SWITCH_HEIGHT,
 							   UI_UNAVAILABLE_COLOR,
 							   PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
 		}
@@ -2720,7 +2726,7 @@ static void menu_cheat(running_machine *machine, ui_menu *menu, void *parameter,
 				case IPT_UI_DISPLAY_COMMENT:
 				case IPT_UI_UP:
 				case IPT_UI_DOWN:
-					if (cheat_get_comment(event->itemref).len() != 0)
+					if (cheat_get_comment(event->itemref))
 						popmessage(_("Cheat Comment:\n%s"), cheat_get_comment(event->itemref).cstr());
 					break;
 			}
@@ -3014,7 +3020,7 @@ static void menu_sliders_populate(running_machine *machine, ui_menu *menu, int m
 			break;
 	}
 
-	ui_menu_set_custom_render(menu, menu_sliders_custom_render, 0.0f, 2.0f * ui_get_line_height() + 2.0f * UI_BOX_TB_BORDER);
+	ui_menu_set_custom_render(menu, menu_sliders_custom_render, 0.0f, 2.0f * ui_get_line_height(*machine) + 2.0f * UI_BOX_TB_BORDER);
 }
 
 
@@ -3029,7 +3035,7 @@ static void menu_sliders_custom_render(running_machine *machine, ui_menu *menu, 
 	if (curslider != NULL)
 	{
 		float bar_left, bar_area_top, bar_width, bar_area_height, bar_top, bar_bottom, default_x, current_x;
-		float line_height = ui_get_line_height();
+		float line_height = ui_get_line_height(*machine);
 		float percentage, default_percentage;
 		astring tempstring;
 		float text_height;
@@ -3072,15 +3078,15 @@ static void menu_sliders_custom_render(running_machine *machine, ui_menu *menu, 
 		current_x = bar_left + bar_width * percentage;
 
 		/* fill in the percentage */
-		render_container_add_rect(menu->container, bar_left, bar_top, current_x, bar_bottom, UI_SLIDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+		menu->container->add_rect(bar_left, bar_top, current_x, bar_bottom, UI_SLIDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
 
 		/* draw the top and bottom lines */
-		render_container_add_line(menu->container, bar_left, bar_top, bar_left + bar_width, bar_top, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
-		render_container_add_line(menu->container, bar_left, bar_bottom, bar_left + bar_width, bar_bottom, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+		menu->container->add_line(bar_left, bar_top, bar_left + bar_width, bar_top, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+		menu->container->add_line(bar_left, bar_bottom, bar_left + bar_width, bar_bottom, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
 
 		/* draw default marker */
-		render_container_add_line(menu->container, default_x, bar_area_top, default_x, bar_top, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
-		render_container_add_line(menu->container, default_x, bar_bottom, default_x, bar_area_top + bar_area_height, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+		menu->container->add_line(default_x, bar_area_top, default_x, bar_top, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
+		menu->container->add_line(default_x, bar_bottom, default_x, bar_area_top + bar_area_height, UI_LINE_WIDTH, UI_BORDER_COLOR, PRIMFLAG_BLENDMODE(BLENDMODE_ALPHA));
 
 		/* draw the actual text */
 		ui_draw_text_full(menu->container, tempstring, x1 + UI_BOX_LR_BORDER, y1 + line_height, x2 - x1 - 2.0f * UI_BOX_LR_BORDER,
@@ -3121,7 +3127,7 @@ static void menu_video_targets_populate(running_machine *machine, ui_menu *menu)
 	/* find the targets */
 	for (targetnum = 0; ; targetnum++)
 	{
-		render_target *target = render_target_get_indexed(targetnum);
+		render_target *target = machine->render().target_by_index(targetnum);
 		char buffer[40];
 
 		/* stop when we run out */
@@ -3142,7 +3148,7 @@ static void menu_video_targets_populate(running_machine *machine, ui_menu *menu)
 
 static void menu_video_options(running_machine *machine, ui_menu *menu, void *parameter, void *state)
 {
-	render_target *target = (parameter != NULL) ? (render_target *)parameter : render_target_get_indexed(0);
+	render_target *target = (parameter != NULL) ? (render_target *)parameter : machine->render().first_target();
 	const ui_menu_event *event;
 	int changed = FALSE;
 
@@ -3161,26 +3167,47 @@ static void menu_video_options(running_machine *machine, ui_menu *menu, void *pa
 				if (event->iptkey == IPT_UI_LEFT || event->iptkey == IPT_UI_RIGHT)
 				{
 					int delta = (event->iptkey == IPT_UI_LEFT) ? ROT270 : ROT90;
-					render_target_set_orientation(target, orientation_add(delta, render_target_get_orientation(target)));
-					if (target == render_get_ui_target())
+					target->set_orientation(orientation_add(delta, target->orientation()));
+					if (target->is_ui_target())
 					{
-						render_container_user_settings settings;
-						render_container_get_user_settings(menu->container, &settings);
-						settings.orientation = orientation_add(delta ^ ROT180, settings.orientation);
-						render_container_set_user_settings(menu->container, &settings);
+						render_container::user_settings settings;
+						menu->container->get_user_settings(settings);
+						settings.m_orientation = orientation_add(delta ^ ROT180, settings.m_orientation);
+						menu->container->set_user_settings(settings);
 					}
 					changed = TRUE;
 				}
 				break;
 
 			/* layer config bitmasks handle left/right keys the same (toggle) */
-			case LAYER_CONFIG_ENABLE_BACKDROP:
-			case LAYER_CONFIG_ENABLE_OVERLAY:
-			case LAYER_CONFIG_ENABLE_BEZEL:
-			case LAYER_CONFIG_ZOOM_TO_SCREEN:
+			case VIDEO_ITEM_BACKDROPS:
 				if (event->iptkey == IPT_UI_LEFT || event->iptkey == IPT_UI_RIGHT)
 				{
-					render_target_set_layer_config(target, render_target_get_layer_config(target) ^ (FPTR)event->itemref);
+					target->set_backdrops_enabled(!target->backdrops_enabled());
+					changed = TRUE;
+				}
+				break;
+
+			case VIDEO_ITEM_OVERLAYS:
+				if (event->iptkey == IPT_UI_LEFT || event->iptkey == IPT_UI_RIGHT)
+				{
+					target->set_overlays_enabled(!target->overlays_enabled());
+					changed = TRUE;
+				}
+				break;
+
+			case VIDEO_ITEM_BEZELS:
+				if (event->iptkey == IPT_UI_LEFT || event->iptkey == IPT_UI_RIGHT)
+				{
+					target->set_bezels_enabled(!target->bezels_enabled());
+					changed = TRUE;
+				}
+				break;
+
+			case VIDEO_ITEM_ZOOM:
+				if (event->iptkey == IPT_UI_LEFT || event->iptkey == IPT_UI_RIGHT)
+				{
+					target->set_zoom_to_screen(!target->zoom_to_screen());
 					changed = TRUE;
 				}
 				break;
@@ -3189,7 +3216,7 @@ static void menu_video_options(running_machine *machine, ui_menu *menu, void *pa
 			default:
 				if (event->iptkey == IPT_UI_SELECT && (int)(FPTR)event->itemref >= VIDEO_ITEM_VIEW)
 				{
-					render_target_set_view(target, (FPTR)event->itemref - VIDEO_ITEM_VIEW);
+					target->set_view((FPTR)event->itemref - VIDEO_ITEM_VIEW);
 					changed = TRUE;
 				}
 				break;
@@ -3209,7 +3236,6 @@ static void menu_video_options(running_machine *machine, ui_menu *menu, void *pa
 
 static void menu_video_options_populate(running_machine *machine, ui_menu *menu, render_target *target)
 {
-	int layermask = render_target_get_layer_config(target);
 	const char *subtext = "";
 	astring tempstring;
 	int viewnum;
@@ -3218,7 +3244,8 @@ static void menu_video_options_populate(running_machine *machine, ui_menu *menu,
 	/* add items for each view */
 	for (viewnum = 0; ; viewnum++)
 	{
-		const char *name = render_target_get_translated_view_name(target, viewnum);
+		// mamep: return the localized name of the indexed view
+		const char *name = target->translated_view_name(viewnum);
 		if (name == NULL)
 			break;
 
@@ -3231,7 +3258,7 @@ static void menu_video_options_populate(running_machine *machine, ui_menu *menu,
 	ui_menu_item_append(menu, MENU_SEPARATOR_ITEM, NULL, 0, NULL);
 
 	/* add a rotate item */
-	switch (render_target_get_orientation(target))
+	switch (target->orientation())
 	{
 		case ROT0:		subtext = _("None");					break;
 		case ROT90:		subtext = _("CW 90" UTF8_DEGREES); 	break;
@@ -3241,20 +3268,20 @@ static void menu_video_options_populate(running_machine *machine, ui_menu *menu,
 	ui_menu_item_append(menu, _("Rotate"), subtext, MENU_FLAG_LEFT_ARROW | MENU_FLAG_RIGHT_ARROW, (void *)VIDEO_ITEM_ROTATE);
 
 	/* backdrop item */
-	enabled = layermask & LAYER_CONFIG_ENABLE_BACKDROP;
-	ui_menu_item_append(menu, _("Backdrops"), enabled ? _("Enabled") : _("Disabled"), enabled ? MENU_FLAG_LEFT_ARROW : MENU_FLAG_RIGHT_ARROW, (void *)LAYER_CONFIG_ENABLE_BACKDROP);
+	enabled = target->backdrops_enabled();
+	ui_menu_item_append(menu, _("Backdrops"), enabled ? _("Enabled") : _("Disabled"), enabled ? MENU_FLAG_LEFT_ARROW : MENU_FLAG_RIGHT_ARROW, (void *)VIDEO_ITEM_BACKDROPS);
 
 	/* overlay item */
-	enabled = layermask & LAYER_CONFIG_ENABLE_OVERLAY;
-	ui_menu_item_append(menu, _("Overlays"), enabled ? _("Enabled") : _("Disabled"), enabled ? MENU_FLAG_LEFT_ARROW : MENU_FLAG_RIGHT_ARROW, (void *)LAYER_CONFIG_ENABLE_OVERLAY);
+	enabled = target->overlays_enabled();
+	ui_menu_item_append(menu, _("Overlays"), enabled ? _("Enabled") : _("Disabled"), enabled ? MENU_FLAG_LEFT_ARROW : MENU_FLAG_RIGHT_ARROW, (void *)VIDEO_ITEM_OVERLAYS);
 
 	/* bezel item */
-	enabled = layermask & LAYER_CONFIG_ENABLE_BEZEL;
-	ui_menu_item_append(menu, _("Bezels"), enabled ? _("Enabled") : _("Disabled"), enabled ? MENU_FLAG_LEFT_ARROW : MENU_FLAG_RIGHT_ARROW, (void *)LAYER_CONFIG_ENABLE_BEZEL);
+	enabled = target->bezels_enabled();
+	ui_menu_item_append(menu, _("Bezels"), enabled ? _("Enabled") : _("Disabled"), enabled ? MENU_FLAG_LEFT_ARROW : MENU_FLAG_RIGHT_ARROW, (void *)VIDEO_ITEM_BEZELS);
 
 	/* cropping */
-	enabled = layermask & LAYER_CONFIG_ZOOM_TO_SCREEN;
-	ui_menu_item_append(menu, _("View"), enabled ? _("Cropped") : _("Full"), enabled ? MENU_FLAG_RIGHT_ARROW : MENU_FLAG_LEFT_ARROW, (void *)LAYER_CONFIG_ZOOM_TO_SCREEN);
+	enabled = target->zoom_to_screen();
+	ui_menu_item_append(menu, _("View"), enabled ? _("Cropped") : _("Full"), enabled ? MENU_FLAG_RIGHT_ARROW : MENU_FLAG_LEFT_ARROW, (void *)VIDEO_ITEM_ZOOM);
 }
 
 
@@ -4012,7 +4039,7 @@ static void menu_select_game_populate(running_machine *machine, ui_menu *menu, s
 	}
 
 	/* configure the custom rendering */
-	ui_menu_set_custom_render(menu, menu_select_game_custom_render, ui_get_line_height() + 3.0f * UI_BOX_TB_BORDER, 4.0f * ui_get_line_height() + 3.0f * UI_BOX_TB_BORDER);
+	ui_menu_set_custom_render(menu, menu_select_game_custom_render, ui_get_line_height(*machine) + 3.0f * UI_BOX_TB_BORDER, 4.0f * ui_get_line_height(*machine) + 3.0f * UI_BOX_TB_BORDER);
 }
 
 
@@ -4243,7 +4270,7 @@ static void menu_select_game_custom_render(running_machine *machine, ui_menu *me
 	{
 		ui_draw_text_full(menu->container, &tempbuf[line][0], x1, y1, x2 - x1, JUSTIFY_CENTER, WRAP_TRUNCATE,
 						  DRAW_NORMAL, UI_TEXT_COLOR, UI_TEXT_BG_COLOR, NULL, NULL);
-		y1 += ui_get_line_height();
+		y1 += ui_get_line_height(*machine);
 	}
 }
 
@@ -4259,23 +4286,23 @@ static void menu_select_game_custom_render(running_machine *machine, ui_menu *me
     indicators
 -------------------------------------------------*/
 
-static void menu_render_triangle(bitmap_t *dest, const bitmap_t *source, const rectangle *sbounds, void *param)
+static void menu_render_triangle(bitmap_t &dest, const bitmap_t &source, const rectangle &sbounds, void *param)
 {
-	int halfwidth = dest->width / 2;
-	int height = dest->height;
+	int halfwidth = dest.width / 2;
+	int height = dest.height;
 	int x, y;
 
 	/* start with all-transparent */
-	bitmap_fill(dest, NULL, MAKE_ARGB(0x00,0x00,0x00,0x00));
+	bitmap_fill(&dest, NULL, MAKE_ARGB(0x00,0x00,0x00,0x00));
 
 	/* render from the tip to the bottom */
 	for (y = 0; y < height; y++)
 	{
 		int linewidth = (y * (halfwidth - 1) + (height / 2)) * 255 * 2 / height;
-		UINT32 *target = BITMAP_ADDR32(dest, y, halfwidth);
+		UINT32 *target = BITMAP_ADDR32(&dest, y, halfwidth);
 
 		/* don't antialias if height < 12 */
-		if (dest->height < 12)
+		if (dest.height < 12)
 		{
 			int pixels = (linewidth + 254) / 255;
 			if (pixels % 2 == 0) pixels++;

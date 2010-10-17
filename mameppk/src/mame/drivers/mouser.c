@@ -190,10 +190,7 @@ static MACHINE_RESET( mouser )
 	state->nmi_enable = 0;
 }
 
-static MACHINE_DRIVER_START( mouser )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(mouser_state)
+static MACHINE_CONFIG_START( mouser, mouser_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z80, 4000000)	/* 4 MHz ? */
@@ -230,7 +227,7 @@ static MACHINE_DRIVER_START( mouser )
 
 	MDRV_SOUND_ADD("ay2", AY8910, 4000000/2)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.50)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 ROM_START( mouser )
@@ -286,12 +283,12 @@ static DRIVER_INIT( mouser )
 	/* Decode the opcodes */
 
 	offs_t i;
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	UINT8 *rom = memory_region(machine, "maincpu");
 	UINT8 *decrypted = auto_alloc_array(machine, UINT8, 0x6000);
 	UINT8 *table = memory_region(machine, "user1");
 
-	memory_set_decrypted_region(space, 0x0000, 0x5fff, decrypted);
+	space->set_decrypted_region(0x0000, 0x5fff, decrypted);
 
 	for (i = 0; i < 0x6000; i++)
 	{

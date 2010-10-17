@@ -33,6 +33,7 @@
 #include "cpu/mcs51/mcs51.h"
 #include "deprecat.h"
 #include "machine/segaic16.h"
+#include "machine/nvram.h"
 #include "includes/segas16.h"
 #include "includes/genesis.h"
 #include "sound/2612intf.h"
@@ -139,7 +140,7 @@ static const segaic16_memory_map_entry *const region_info_list[] =
 static void sound_w(running_machine *machine, UINT8 data)
 {
 	segas1x_state *state = machine->driver_data<segas1x_state>();
-	const address_space *space = cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM);
 
 	soundlatch_w(space, 0, data & 0xff);
 	cpu_set_input_line(state->soundcpu, INPUT_LINE_NMI, PULSE_LINE);
@@ -178,6 +179,8 @@ static void system18_generic_init(running_machine *machine, int _rom_board)
 	state->maincpu = machine->device("maincpu");
 	state->soundcpu = machine->device("soundcpu");
 	state->mcu = machine->device("mcu");
+
+	machine->device<nvram_device>("nvram")->set_base(workram, 0x4000);
 
 	state_save_register_global(machine, state->mcu_data);
 	state_save_register_global(machine, state->lghost_value);
@@ -593,22 +596,6 @@ static WRITE8_HANDLER( mcu_data_w )
 	segas1x_state *state = space->machine->driver_data<segas1x_state>();
 	state->mcu_data = data;
 	cpu_set_input_line(state->mcu, MCS51_INT1_LINE, HOLD_LINE);
-}
-
-
-
-/*************************************
- *
- *  Capacitor-backed RAM
- *
- *************************************/
-
-static NVRAM_HANDLER( system18 )
-{
-	if (read_or_write)
-		mame_fwrite(file, workram, 0x4000);
-	else if (file)
-		mame_fread(file, workram, 0x4000);
 }
 
 
@@ -1288,10 +1275,7 @@ GFXDECODE_END
  *
  *************************************/
 
-static MACHINE_DRIVER_START( system18 )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(segas1x_state)
+static MACHINE_CONFIG_START( system18, segas1x_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M68000, 10000000)
@@ -1303,7 +1287,7 @@ static MACHINE_DRIVER_START( system18 )
 	MDRV_CPU_IO_MAP(sound_portmap)
 
 	MDRV_MACHINE_RESET(system18)
-	MDRV_NVRAM_HANDLER(system18)
+	MDRV_NVRAM_ADD_0FILL("nvram")
 
 	/* video hardware */
 	MDRV_SCREEN_ADD("screen", RASTER)
@@ -1331,18 +1315,17 @@ static MACHINE_DRIVER_START( system18 )
 
 	MDRV_SOUND_ADD("rfsnd", RF5C68, 10000000)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( system18_8751 )
-	MDRV_IMPORT_FROM(system18)
+static MACHINE_CONFIG_DERIVED( system18_8751, system18 )
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_VBLANK_INT_HACK(NULL,0)
 
 	MDRV_CPU_ADD("mcu", I8751, 8000000)
 	MDRV_CPU_IO_MAP(mcu_io_map)
 	MDRV_CPU_VBLANK_INT("screen", irq0_line_hold)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 

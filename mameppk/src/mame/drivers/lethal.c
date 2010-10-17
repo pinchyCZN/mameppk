@@ -158,8 +158,6 @@ guns might be slightly off center
 
 'external' rowscroll not hooked up correctly (1st attract level, highscores)
 
-can't find the flip bits used for the tiles.. (p2 start screen, reload indicator)
-
 maybe some priority issues / sprite placement issues..
 
 ***************************************************************************/
@@ -275,6 +273,15 @@ static READ8_HANDLER( le_4800_r )
 				case 0x44:
 				case 0x45:
 				case 0x46:
+				case 0x47:
+				case 0x48:
+				case 0x49:
+				case 0x4a:
+				case 0x4b:
+				case 0x4c:
+				case 0x4d:
+				case 0x4e:
+				case 0x4f:
 					return k053244_r(state->k053244, offset - 0x40);
 
 				case 0x80:
@@ -359,6 +366,15 @@ static WRITE8_HANDLER( le_4800_w )
 				case 0x44:
 				case 0x45:
 				case 0x46:
+				case 0x47:
+				case 0x48:
+				case 0x49:
+				case 0x4a:
+				case 0x4b:
+				case 0x4c:
+				case 0x4d:
+				case 0x4e:
+				case 0x4f:
 					k053244_w(state->k053244, offset - 0x40, data);
 					break;
 
@@ -645,10 +661,7 @@ static const k05324x_interface lethalej_k05324x_intf =
 	lethalen_sprite_callback
 };
 
-static MACHINE_DRIVER_START( lethalen )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(lethal_state)
+static MACHINE_CONFIG_START( lethalen, lethal_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", HD6309, MAIN_CLOCK/2)    /* verified on pcb */
@@ -692,17 +705,16 @@ static MACHINE_DRIVER_START( lethalen )
 	MDRV_SOUND_CONFIG(k054539_config)
 	MDRV_SOUND_ROUTE(0, "lspeaker", 1.0)
 	MDRV_SOUND_ROUTE(1, "rspeaker", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( lethalej )
-	MDRV_IMPORT_FROM(lethalen)
+static MACHINE_CONFIG_DERIVED( lethalej, lethalen )
 
 	MDRV_SCREEN_MODIFY("screen")
 	MDRV_SCREEN_VISIBLE_AREA(224, 512-1, 16, 240-1)
 
 	MDRV_DEVICE_REMOVE("k053244")
 	MDRV_K053244_ADD("k053244", lethalej_k05324x_intf)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 ROM_START( lethalen )	// US version UAE
 	ROM_REGION( 0x50000, "maincpu", 0 )

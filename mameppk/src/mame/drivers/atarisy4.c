@@ -694,7 +694,7 @@ INPUT_PORTS_END
  *
  *************************************/
 
-static MACHINE_DRIVER_START( atarisy4 )
+static MACHINE_CONFIG_START( atarisy4, driver_device )
 	MDRV_CPU_ADD("maincpu", M68000, 8000000)
 	MDRV_CPU_PROGRAM_MAP(main_map)
 	MDRV_CPU_VBLANK_INT("screen", vblank_int)
@@ -714,17 +714,16 @@ static MACHINE_DRIVER_START( atarisy4 )
 
 	MDRV_VIDEO_START(atarisy4)
 	MDRV_VIDEO_UPDATE(atarisy4)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( airrace )
-	MDRV_IMPORT_FROM(atarisy4)
+static MACHINE_CONFIG_DERIVED( airrace, atarisy4 )
 
 	MDRV_CPU_ADD("dsp1", TMS32010, 16000000)
 	MDRV_CPU_PROGRAM_MAP(dsp1_map)
 	MDRV_CPU_IO_MAP(dsp1_io_map)
 
 	MDRV_MACHINE_RESET(airrace)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 /*************************************
@@ -776,7 +775,7 @@ static inline UINT8 hex_to_ascii(UINT8 in)
 		return in;
 }
 
-void load_ldafile(const address_space *space, const UINT8 *file)
+void load_ldafile(address_space *space, const UINT8 *file)
 {
 #define READ_CHAR()		file[i++]
 	int i = 0;
@@ -819,7 +818,7 @@ void load_ldafile(const address_space *space, const UINT8 *file)
 		{
 			UINT8 data = READ_CHAR();
 			sum += data;
-			memory_write_byte(space, addr++, data);
+			space->write_byte(addr++, data);
 		} while (--len);
 
 		sum += READ_CHAR();
@@ -830,7 +829,7 @@ void load_ldafile(const address_space *space, const UINT8 *file)
 }
 
 /* Load memory space with data from a Tektronix-Extended HEX file */
-void load_hexfile(const address_space *space, const UINT8 *file)
+void load_hexfile(address_space *space, const UINT8 *file)
 {
 #define READ_HEX_CHAR()		hex_to_ascii(file[i++])
 
@@ -914,7 +913,7 @@ void load_hexfile(const address_space *space, const UINT8 *file)
 			sum += data & 0xf;
 
 			if (record == 6)
-				memory_write_byte(space, addr++, data);
+				space->write_byte(addr++, data);
 
 			len -= 2;
 		}
@@ -935,7 +934,7 @@ next_line:
 
 static DRIVER_INIT( laststar )
 {
-	const address_space *main = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *main = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 
 	/* Allocate 16kB of shared RAM */
 	shared_ram[0] = auto_alloc_array_clear(machine, UINT16, 0x2000);

@@ -110,7 +110,7 @@ void __cdecl ErrorMsg(const char* fmt, ...)
 
 	vsprintf(buf, fmt, va);
 
-	MessageBox(GetActiveWindow(), _Unicode(buf), TEXT_MAMEUINAME, MB_OK | MB_ICONERROR);
+	MessageBox(GetActiveWindow(), _Unicode(buf), TEXT(MAMEUINAME), MB_OK | MB_ICONERROR);
 
 	strcpy(buf2, MAMEUINAME ": ");
 	strcat(buf2,buf);
@@ -541,21 +541,18 @@ static struct DriversInfo* GetDriversInfo(int driver_index)
 			const game_driver *gamedrv = drivers[ndriver];
 			struct DriversInfo *gameinfo = &drivers_info[ndriver];
 			const rom_entry *region, *rom;
-			machine_config *config;
+			machine_config config(*gamedrv);
 			const rom_source *source;
 			int num_speakers;
-
-			/* Allocate machine config */
-			config = global_alloc(machine_config(gamedrv->machine_config));
 
 			gameinfo->isClone = (GetParentRomSetIndex(gamedrv) != -1);
 			gameinfo->isBroken = ((gamedrv->flags & GAME_NOT_WORKING) != 0);
 			gameinfo->supportsSaveState = ((gamedrv->flags & GAME_SUPPORTS_SAVE) != 0);
 			gameinfo->isHarddisk = FALSE;
 			gameinfo->isVertical = (gamedrv->flags & ORIENTATION_SWAP_XY) ? TRUE : FALSE;
-			for (source = rom_first_source(gamedrv, config); source != NULL; source = rom_next_source(gamedrv, config, source))
+			for (source = rom_first_source(config); source != NULL; source = rom_next_source(*source))
 			{
-				for (region = rom_first_region(gamedrv, source); region; region = rom_next_region(region))
+				for (region = rom_first_region(*source); region; region = rom_next_region(region))
 				{
 					if (ROMREGION_ISDISKDATA(region))
 						gameinfo->isHarddisk = TRUE;
@@ -587,15 +584,15 @@ static struct DriversInfo* GetDriversInfo(int driver_index)
 			}
 #endif /*USE_PSXPLUGIN*/
 
-			num_speakers = numberOfSpeakers(config);
+			num_speakers = numberOfSpeakers(&config);
 
 			gameinfo->isStereo = (num_speakers > 1);
-			gameinfo->screenCount = numberOfScreens(config);
-			gameinfo->isVector = isDriverVector(config); // ((drv.video_attributes & VIDEO_TYPE_VECTOR) != 0);
+			gameinfo->screenCount = numberOfScreens(&config);
+			gameinfo->isVector = isDriverVector(&config); // ((drv.video_attributes & VIDEO_TYPE_VECTOR) != 0);
 			gameinfo->usesRoms = FALSE;
-			for (source = rom_first_source(gamedrv, config); source != NULL; source = rom_next_source(gamedrv, config, source))
+			for (source = rom_first_source(config); source != NULL; source = rom_next_source(*source))
 			{
-				for (region = rom_first_region(gamedrv, source); region; region = rom_next_region(region))
+				for (region = rom_first_region(*source); region; region = rom_next_region(region))
 				{
 					for (rom = rom_first_file(region); rom; rom = rom_next_file(rom))
 					{
@@ -607,10 +604,10 @@ static struct DriversInfo* GetDriversInfo(int driver_index)
 			gameinfo->usesSamples = FALSE;
 			
 			{
-				const device_config_sound_interface *sound;
+				const device_config_sound_interface *sound = NULL;
 				const char * const * samplenames = NULL;
-				for (bool gotone = config->m_devicelist.first(sound); gotone; gotone = sound->next(sound)) {
-					if (sound->devconfig().type() == SOUND_SAMPLES)
+				for (bool gotone = config.m_devicelist.first(sound); gotone; gotone = sound->next(sound)) {
+					if (sound->devconfig().type() == SAMPLES)
 					{
 						const samples_interface *intf = (const samples_interface *)sound->devconfig().static_config();
 						samplenames = intf->samplenames;
@@ -692,8 +689,6 @@ static struct DriversInfo* GetDriversInfo(int driver_index)
 					}
 				}
 			}
-			/* Free the structure */
-			global_free(config);
 
 			gameinfo->usesTrackball = FALSE;
 			gameinfo->usesLightGun = FALSE;

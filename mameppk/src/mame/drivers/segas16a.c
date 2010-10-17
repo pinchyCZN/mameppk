@@ -152,6 +152,7 @@ Tetris         -         -         -         -         EPR12169  EPR12170  -    
 #include "machine/segacrp2.h"
 #include "machine/fd1089.h"
 #include "machine/i8243.h"
+#include "machine/nvram.h"
 #include "cpu/mcs48/mcs48.h"
 #include "sound/dac.h"
 #include "sound/2151intf.h"
@@ -597,7 +598,7 @@ static void dumpmtmt_i8751_sim(running_machine *machine)
 static void quartet_i8751_sim(running_machine *machine)
 {
 	segas1x_state *state = machine->driver_data<segas1x_state>();
-	const address_space *space = cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM);
 
 	/* signal a VBLANK to the main CPU */
 	cpu_set_input_line(state->maincpu, 4, HOLD_LINE);
@@ -858,14 +859,14 @@ static void sjryuko_lamp_changed_w(running_machine *machine, UINT8 changed, UINT
 INLINE UINT8 maincpu_byte_r(running_machine *machine, offs_t offset)
 {
 	segas1x_state *state = machine->driver_data<segas1x_state>();
-	return memory_read_byte(cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM), offset);
+	return downcast<cpu_device *>(state->maincpu)->space(AS_PROGRAM)->read_byte(offset);
 }
 
 
 INLINE void maincpu_byte_w(running_machine *machine, offs_t offset, UINT8 data)
 {
 	segas1x_state *state = machine->driver_data<segas1x_state>();
-	memory_write_byte(cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM), offset, data);
+	downcast<cpu_device *>(state->maincpu)->space(AS_PROGRAM)->write_byte(offset, data);
 }
 
 
@@ -997,22 +998,6 @@ static INTERRUPT_GEN( mcu_irq_assert )
 
 /*************************************
  *
- *  Capacitor-backed RAM
- *
- *************************************/
-
-static NVRAM_HANDLER( system16a )
-{
-	if (read_or_write)
-		mame_fwrite(file, workram, 0x4000);
-	else if (file)
-		mame_fread(file, workram, 0x4000);
-}
-
-
-
-/*************************************
- *
  *  Main CPU memory handlers
  *
  *************************************/
@@ -1026,7 +1011,7 @@ static ADDRESS_MAP_START( system16a_map, ADDRESS_SPACE_PROGRAM, 16 )
 	AM_RANGE(0x840000, 0x840fff) AM_MIRROR(0x3bf000) AM_RAM_WRITE(segaic16_paletteram_w) AM_BASE(&segaic16_paletteram)
 	AM_RANGE(0xc40000, 0xc43fff) AM_MIRROR(0x39c000) AM_READWRITE(misc_io_r, misc_io_w)
 	AM_RANGE(0xc60000, 0xc6ffff) AM_READ(watchdog_reset16_r)
-	AM_RANGE(0xc70000, 0xc73fff) AM_MIRROR(0x38c000) AM_RAM AM_BASE(&workram)
+	AM_RANGE(0xc70000, 0xc73fff) AM_MIRROR(0x38c000) AM_RAM AM_BASE(&workram) AM_SHARE("nvram")
 ADDRESS_MAP_END
 
 
@@ -1956,10 +1941,7 @@ GFXDECODE_END
  *
  *************************************/
 
-static MACHINE_DRIVER_START( system16a )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(segas1x_state)
+static MACHINE_CONFIG_START( system16a, segas1x_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", M68000, 10000000)
@@ -1977,7 +1959,7 @@ static MACHINE_DRIVER_START( system16a )
 
 	MDRV_MACHINE_START(system16a)
 	MDRV_MACHINE_RESET(system16a)
-	MDRV_NVRAM_HANDLER(system16a)
+	MDRV_NVRAM_ADD_0FILL("nvram")
 
 	MDRV_PPI8255_ADD( "ppi8255", single_ppi_intf )
 
@@ -2005,28 +1987,26 @@ static MACHINE_DRIVER_START( system16a )
 
 	MDRV_SOUND_ADD("dac", DAC, 0)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.80)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( system16a_no7751 )
-	MDRV_IMPORT_FROM(system16a)
+static MACHINE_CONFIG_DERIVED( system16a_no7751, system16a )
 	MDRV_DEVICE_REMOVE("n7751")
 	MDRV_DEVICE_REMOVE("dac")
 
 	MDRV_SOUND_REPLACE("ymsnd", YM2151, 4000000)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( system16a_8751 )
-	MDRV_IMPORT_FROM(system16a)
+static MACHINE_CONFIG_DERIVED( system16a_8751, system16a )
 	MDRV_CPU_MODIFY("maincpu")
 	MDRV_CPU_VBLANK_INT("screen", i8751_main_cpu_vblank)
 
 	MDRV_CPU_ADD("mcu", I8751, 8000000)
 	MDRV_CPU_IO_MAP(mcu_io_map)
 	MDRV_CPU_VBLANK_INT("screen", mcu_irq_assert)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 

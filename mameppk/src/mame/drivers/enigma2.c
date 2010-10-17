@@ -57,13 +57,11 @@ TODO:
 #define NUM_PENS	(8)
 
 
-class enigma2_state : public driver_data_t
+class enigma2_state : public driver_device
 {
 public:
-	static driver_data_t *alloc(running_machine &machine) { return auto_alloc_clear(&machine, enigma2_state(machine)); }
-
-	enigma2_state(running_machine &machine)
-		: driver_data_t(machine) { }
+	enigma2_state(running_machine &machine, const driver_device_config_base &config)
+		: driver_device(machine, config) { }
 
 	/* memory pointers */
 	UINT8 *  videoram;
@@ -173,7 +171,6 @@ static MACHINE_RESET( enigma2 )
 	cputag_set_input_line(machine, "audiocpu", INPUT_LINE_NMI, CLEAR_LINE);
 
 	state->last_sound_data = 0;
-	state->protection_data = 0;
 	state->flip_screen = 0;
 	state->sound_latch = 0;
 	state->blink_count = 0;
@@ -359,6 +356,8 @@ static READ8_HANDLER( dip_switch_r )
 	switch (offset)
 	{
 	case 0x01:
+		/* For the DIP switches to be read, protection_data must be
+           0xff on reset. The AY8910 reset ensures this. */
 		if (state->protection_data != 0xff)
 			ret = state->protection_data ^ 0x88;
 		else
@@ -602,10 +601,7 @@ static INPUT_PORTS_START( enigma2a )
 INPUT_PORTS_END
 
 
-static MACHINE_DRIVER_START( enigma2 )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(enigma2_state)
+static MACHINE_CONFIG_START( enigma2, enigma2_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z80, CPU_CLOCK)
@@ -631,13 +627,10 @@ static MACHINE_DRIVER_START( enigma2 )
 	MDRV_SOUND_ADD("aysnd", AY8910, AY8910_CLOCK)
 	MDRV_SOUND_CONFIG(ay8910_config)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
-static MACHINE_DRIVER_START( enigma2a )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(enigma2_state)
+static MACHINE_CONFIG_START( enigma2a, enigma2_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", I8080, CPU_CLOCK)
@@ -664,7 +657,7 @@ static MACHINE_DRIVER_START( enigma2a )
 	MDRV_SOUND_ADD("aysnd", AY8910, AY8910_CLOCK)
 	MDRV_SOUND_CONFIG(ay8910_config)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 

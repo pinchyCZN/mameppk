@@ -81,6 +81,13 @@ MACHINE_START( balsente )
 	balsente_state *state = machine->driver_data<balsente_state>();
 	int i;
 
+	state->cem_device[0] = state->m_cem1;
+	state->cem_device[1] = state->m_cem2;
+	state->cem_device[2] = state->m_cem3;
+	state->cem_device[3] = state->m_cem4;
+	state->cem_device[4] = state->m_cem5;
+	state->cem_device[5] = state->m_cem6;
+
 	/* create the polynomial tables */
 	poly17_init(machine);
 
@@ -132,7 +139,7 @@ MACHINE_START( balsente )
 
 MACHINE_RESET( balsente )
 {
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 	balsente_state *state = machine->driver_data<balsente_state>();
 	int numbanks;
 

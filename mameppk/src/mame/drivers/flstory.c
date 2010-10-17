@@ -126,7 +126,7 @@ ADDRESS_MAP_END
 static CUSTOM_INPUT( victnine_mcu_status_bit01_r )
 {
 	flstory_state *state = field->port->machine->driver_data<flstory_state>();
-	const address_space *space = cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = cpu_get_address_space(state->maincpu, ADDRESS_SPACE_PROGRAM);
 
 	return (victnine_mcu_status_r(space, 0) & 3);
 }
@@ -731,10 +731,7 @@ static MACHINE_RESET( flstory )
 	state->mcu_select = 0;
 }
 
-static MACHINE_DRIVER_START( flstory )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(flstory_state)
+static MACHINE_CONFIG_START( flstory, flstory_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z80,XTAL_10_733MHz/2) /* verified on pcb */
@@ -791,12 +788,9 @@ static MACHINE_DRIVER_START( flstory )
 
 	MDRV_SOUND_ADD("dac", DAC, 0)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.20)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( onna34ro )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(flstory_state)
+static MACHINE_CONFIG_START( onna34ro, flstory_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z80,10733000/2)		/* ??? */
@@ -852,12 +846,9 @@ static MACHINE_DRIVER_START( onna34ro )
 
 	MDRV_SOUND_ADD("dac", DAC, 0)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.20)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( victnine )
-
-	/* driver data */
-	MDRV_DRIVER_DATA(flstory_state)
+static MACHINE_CONFIG_START( victnine, flstory_state )
 
 	/* basic machine hardware */
 	MDRV_CPU_ADD("maincpu", Z80,8000000/2)		/* 4 MHz */
@@ -913,7 +904,7 @@ static MACHINE_DRIVER_START( victnine )
 
 	MDRV_SOUND_ADD("dac", DAC, 0)
 	MDRV_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.20)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 
 /***************************************************************************

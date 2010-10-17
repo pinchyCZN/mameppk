@@ -3070,7 +3070,7 @@ static void frame_update(running_machine *machine)
 	int perform_ui_dat = 0;
 #endif /* KAILLERA */
 
-profiler_mark_start(PROFILER_INPUT);
+g_profiler.start(PROFILER_INPUT);
 
 	/* record/playback information about the current frame */
 	playback_frame(machine, curtime);
@@ -3092,7 +3092,8 @@ profiler_mark_start(PROFILER_INPUT);
 	{
 		const char *tag = NULL;
 		input_port_value mask;
-		if (render_target_map_point_input(mouse_target, mouse_target_x, mouse_target_y, &tag, &mask, NULL, NULL))
+		float x, y;
+		if (mouse_target->map_point_input(mouse_target_x, mouse_target_y, tag, mask, x, y))
 			mouse_field = input_field_by_tag_and_mask(machine->m_portlist, tag, mask);
 	}
 
@@ -3111,6 +3112,7 @@ profiler_mark_start(PROFILER_INPUT);
 		for (field = port->fieldlist; field != NULL; field = field->next)
 			if (input_condition_true(port->machine, &field->condition))
 			{
+
 #ifdef USE_CUSTOM_BUTTON
 				/* update autofire status */
 				if (field->type >= IPT_CUSTOM1 && field->type < IPT_CUSTOM1 + MAX_CUSTOM_BUTTONS)
@@ -4226,7 +4228,7 @@ profiler_mark_start(PROFILER_INPUT);
 		make_input_log(machine);
 #endif /* USE_SHOW_INPUT_LOG */
 
-profiler_mark_end();
+g_profiler.stop();
 }
 
 
@@ -6007,6 +6009,7 @@ static void save_game_inputs(running_machine *machine, xml_data_node *parentnode
 							    custom_button[field->player][field->type - IPT_CUSTOM1])
 								xml_set_attribute_int(portnode, "custom", custom_button[field->player][field->type - IPT_CUSTOM1]);
 #endif /* USE_CUSTOM_BUTTON */
+
 						}
 
 						/* write out analog changes */
@@ -6146,7 +6149,7 @@ static time_t playback_init(running_machine *machine)
 
 	/* open the playback file */
 	filerr = mame_fopen(SEARCHPATH_INPUTLOG, filename, OPEN_FLAG_READ, &portdata->playback_file);
-	assert_always(filerr == FILERR_NONE, "Failed to open file for playback");
+	assert_always(filerr == FILERR_NONE, _("Failed to open file for playback"));
 
 	/* read the header and verify that it is a modern version; if not, print an error */
 	if (mame_fread(portdata->playback_file, header, sizeof(header)) != sizeof(header))
@@ -6166,7 +6169,7 @@ static time_t playback_init(running_machine *machine)
 
 	/* verify the header against the current game */
 	if (memcmp(machine->gamedrv->name, header + 0x14, strlen(machine->gamedrv->name) + 1) != 0)
-		fatalerror(_("Input file is for " GAMENOUN " '%s', not for current " GAMENOUN " '%s'\n"), header + 0x14, machine->gamedrv->name);
+		mame_printf_info(_("Input file is for " GAMENOUN " '%s', not for current " GAMENOUN " '%s'\n"), header + 0x14, machine->gamedrv->name);
 
 #ifdef INP_CAPTION
 	if (strlen(filename) > 4)

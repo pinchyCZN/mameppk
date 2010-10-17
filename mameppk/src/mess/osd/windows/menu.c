@@ -1351,7 +1351,7 @@ static void prepare_menus(HWND wnd)
 
 	frameskip = video_get_frameskip();
 
-	orientation = render_target_get_orientation(window->target);
+	orientation = window->target->orientation();
 
 	speed = video_get_throttle() ? video_get_speed_factor() : 0;
 
@@ -1443,8 +1443,9 @@ static void prepare_menus(HWND wnd)
 	}
 	while(_tcscmp(t_buf, TEXT("-")));
 	i = 0;
-	view_index = render_target_get_view(window->target);
-	while((view_name = render_target_get_translated_view_name(window->target, i)) != NULL)
+	view_index = window->target->view();
+	// mamep: return the localized name of the indexed view
+	while((view_name = window->target->translated_view_name(i)) != NULL)
 	{
 		TCHAR *t_view_name = tstring_from_utf8(view_name);
 		InsertMenu(video_menu, i, MF_BYPOSITION | (i == view_index ? MF_CHECKED : 0),
@@ -1512,8 +1513,13 @@ static void prepare_menus(HWND wnd)
 static void set_speed(int speed)
 {
 	if (speed != 0)
+	{
 		video_set_speed_factor(speed);
+		options_set_int(mame_options(), OPTION_SPEED, speed / 100, OPTION_PRIORITY_CMDLINE);
+	}
+
 	video_set_throttle(speed != 0);
+	options_set_bool(mame_options(), OPTION_THROTTLE, (speed != 0), OPTION_PRIORITY_CMDLINE);
 }
 
 
@@ -1717,13 +1723,13 @@ static device_image_interface *decode_deviceoption(running_machine *machine, int
 
 static void set_window_orientation(win_window_info *window, int orientation)
 {
-	render_target_set_orientation(window->target, orientation);
-	if (window->target == render_get_ui_target())
+	window->target->set_orientation(orientation);
+	if (window->target->is_ui_target())
 	{
-		render_container_user_settings settings;
-		render_container_get_user_settings(render_container_get_ui(), &settings);
-		settings.orientation = orientation;
-		render_container_set_user_settings(render_container_get_ui(), &settings);
+		render_container::user_settings settings;
+		window->machine->render().ui_container().get_user_settings(settings);
+		settings.m_orientation = orientation;
+		window->machine->render().ui_container().set_user_settings(settings);
 	}
 	winwindow_video_window_update(window);
 }
@@ -1881,6 +1887,7 @@ static int invoke_command(HWND wnd, UINT command)
 
 		case ID_FRAMESKIP_AUTO:
 			video_set_frameskip(-1);
+			options_set_bool(mame_options(), OPTION_AUTOFRAMESKIP, 1, OPTION_PRIORITY_CMDLINE);
 			break;
 
 		case ID_HELP_ABOUT_NEWUI:
@@ -1920,6 +1927,8 @@ static int invoke_command(HWND wnd, UINT command)
 			{
 				// change frameskip
 				video_set_frameskip(command - ID_FRAMESKIP_0);
+				options_set_bool(mame_options(), OPTION_AUTOFRAMESKIP, 0, OPTION_PRIORITY_CMDLINE);
+				options_set_int(mame_options(), OPTION_FRAMESKIP, command - ID_FRAMESKIP_0, OPTION_PRIORITY_CMDLINE);
 			}
 			else if ((command >= ID_DEVICE_0) && (command < ID_DEVICE_0 + (IO_COUNT*DEVOPTION_MAX)))
 			{
@@ -1935,7 +1944,7 @@ static int invoke_command(HWND wnd, UINT command)
 			else if ((command >= ID_VIDEO_VIEW_0) && (command < ID_VIDEO_VIEW_0 + 1000))
 			{
 				// render views
-				render_target_set_view(window->target, command - ID_VIDEO_VIEW_0);
+				window->target->set_view(command - ID_VIDEO_VIEW_0);
 			}
 			else if (input_item_from_serial_number(window->machine, command - ID_INPUT_0, NULL, &field, &setting))
 			{
