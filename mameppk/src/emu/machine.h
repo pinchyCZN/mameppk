@@ -362,7 +362,11 @@ public:
 	device_scheduler &scheduler() { return m_scheduler; }
 
 	// immediate operations
+#ifdef KAILLERA
+	int run(running_machine &machine, bool firstrun);
+#else /* KAILLERA */
 	int run(bool firstrun);
+#endif /* KAILLERA */
 	void pause();
 	void resume();
 	void add_notifier(machine_notification event, notify_callback callback);

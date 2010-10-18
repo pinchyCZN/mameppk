@@ -2034,7 +2034,7 @@ static UINT32 handler_ingame(running_machine *machine, render_container *contain
 
 			dat[0] = KailleraChatdataPreparationcheck.nmb;
 			dat[1] = file;
-			kailleraChatSend(kChatData(&dat[0], 8));//チャットで全員に伝える。
+			kailleraChatSend(kChatData(&dat[0], 8));//チ?ットで全員に伝える。
 			Kaillera_StateSave_SelectFile = 0;
 			return 0;
 		}
@@ -2066,7 +2066,7 @@ static UINT32 handler_ingame(running_machine *machine, render_container *contain
 
 			dat[0] = KailleraChatdataPreparationcheck.nmb;
 			dat[1] = rate;
-			kailleraChatSend(kChatData(&dat[0], 8));//チャットで全員に伝える。
+			kailleraChatSend(kChatData(&dat[0], 8));//チ?ットで全員に伝える。
 			Kaillera_Overclock_Flags = 0;
 			return 0;
 		}
@@ -2086,7 +2086,7 @@ static UINT32 handler_ingame(running_machine *machine, render_container *contain
 				KailleraPlayerOption.max > 1) {
 				long dat[64];
 				dat[0] = 12;
-				dat[1] = 0xffffffff;	//全員ゲーム終了
+				dat[1] = 0xffffffff;	//全員ゲー?終了
 				kailleraChatSend(kChatData(&dat[0], 8));
 
 				return 0;
@@ -3235,7 +3235,7 @@ int get_single_step(void) { return single_step; }
 
 int usrintrf_message_ok_cancel(running_machine *machine, const char *str)
 {
-	render_container *container = render_container_get_screen(machine->primary_screen);
+	render_container *container = &machine->primary_screen->container();
 	int ret = FALSE;
 	machine->pause();
 

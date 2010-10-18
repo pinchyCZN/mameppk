@@ -1538,7 +1538,7 @@ void avi_info_view(running_machine *machine)
 {
 	#define ARGB_RED				MAKE_ARGB(0x80,0xff,0x00,0x00)
 	const screen_device_config *screen = (const screen_device_config *)downcast<const legacy_device_config_base &>(machine->primary_screen->baseconfig()).inline_config();
-	render_container *container = render_container_get_screen(machine->primary_screen);
+	render_container *container = &machine->primary_screen->container();
 
 	{	/* INFO VIEW */
 		static int counter = 59;
@@ -1581,9 +1581,9 @@ void avi_info_view(running_machine *machine)
 				DWORD RemainingTime = (DWORD)((double)nAviFrameCountStart / ATTOSECONDS_TO_HZ(screen->refresh()) * scale);
 				LapsedTime		/= 1000;
 				sprintf(bf, "TotalTime: %lu:%.2lu:%.2lu", RemainingTime/(60*60),RemainingTime/60%60,RemainingTime%60);
-				ui_draw_text2(container, bf, 0, ui_get_line_height()*1, ARGB_RED);
+				ui_draw_text2(container, bf, 0, ui_get_line_height(*machine)*1, ARGB_RED);
 				sprintf(bf, "Elapsed  : %lu:%.2lu:%.2lu", LapsedTime/(60*60),LapsedTime/60%60,LapsedTime%60);
-				ui_draw_text2(container, bf, 0, ui_get_line_height()*2, ARGB_RED);
+				ui_draw_text2(container, bf, 0, ui_get_line_height(*machine)*2, ARGB_RED);
 
 			}
 		}

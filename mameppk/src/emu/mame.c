@@ -208,7 +208,11 @@ int mame_execute(core_options *options)
 		global_machine = machine;
 
 		// run the machine
+#ifdef KAILLERA
+		error = machine->run(*machine, firstrun);
+#else /* KAILLERA */
 		error = machine->run(firstrun);
+#endif /* KAILLERA */
 		firstrun = false;
 
 		// check the state of the machine

@@ -40,7 +40,9 @@
 #define CACHED_HEADER_SIZE		16
 #define CACHED_BDF_HASH_SIZE	1024
 
-//mamep: command.dat color symbols
+//mamep: command.dat symbols assigned to Unicode PUA U+E000
+#define COMMAND_UNICODE	(0xe000)
+#define MAX_GLYPH_FONT	(150)
 
 #ifdef UI_COLOR_DISPLAY
 //mamep: for color glyph
@@ -177,8 +179,8 @@ INLINE render_font_char *get_char(render_font *font, unicode_char chnum)
 			ch->bitmap = global_alloc(bitmap_t(ch->bmwidth, ch->bmheight, BITMAP_FORMAT_ARGB32));
 			rectangle clip;
 			clip.min_x = clip.min_y = 0;
-			clip.max_x = ch->bitmap->width - 1;
-			clip.max_y = ch->bitmap->height - 1;
+			clip.max_x = glyph_ch->bitmap->width - 1;
+			clip.max_y = glyph_ch->bitmap->height - 1;
 			render_texture::hq_scale(*ch->bitmap, *glyph_ch->bitmap, clip, NULL);
 
 			/* wrap a texture around the bitmap */

@@ -366,12 +366,9 @@ static void video_exit(running_machine &machine)
 {
 	int i;
 
-//mamep: 0.139u3 disabled this code to avert scale_effect crash
-#if 0
-	{
-		screen_device *screen = screen_first(machine);
+#if USE_SCALE_EFFECTS
+	for (screen_device *screen = screen_first(machine); screen != NULL; screen = screen_next(screen))
 		screen->video_exit_scale_effect();
-	}
 #endif /* USE_SCALE_EFFECTS */
 
 	/* stop recording any movie */
@@ -615,8 +612,10 @@ const char *video_get_speed_text(running_machine *machine)
 	/* validate */
 	assert(machine != NULL);
 
+#ifdef INP_CAPTION
 	*dest = '\0';
 	dest += sprintf(dest, _("frame:%ld "), (long)machine->primary_screen->frame_number());
+#endif /* INP_CAPTION */
 
 	/* if we're paused, just display Paused */
 	if (paused)
@@ -1334,6 +1333,8 @@ int avi_nextfile(running_machine *machine)
 }
 #endif /* MAME_AVI */
 
+
+
 /***************************************************************************
     MNG MOVIE RECORDING
 ***************************************************************************/
@@ -1467,9 +1468,9 @@ void screen_device::avi_record_frame()
 	extern int avi_write_handler(running_machine *machine, mame_file *dummy, bitmap_t *bitmap);
 	bitmap_t *bitmap = m_bitmap[1 - m_curbitmap];
 
-	profiler_mark_start(PROFILER_MOVIE_REC);
+	g_profiler.start(PROFILER_MOVIE_REC);
 	avi_write_handler(machine, NULL, bitmap);
-	profiler_mark_end();
+	g_profiler.stop();
 }
 
 void toggle_record_avi(void)
@@ -1919,6 +1920,7 @@ void screen_device::texture_set_scale_bitmap(const rectangle *visarea, UINT32 pa
 	m_texture[curbank]->set_bitmap(dst, &fixedvis, (scale_depth == 32) ? TEXFORMAT_RGB32 : TEXFORMAT_RGB15, NULL);
 }
 #endif /* USE_SCALE_EFFECTS */
+
 
 
 /***************************************************************************

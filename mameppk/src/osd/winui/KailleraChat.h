@@ -17,9 +17,9 @@
 #include <windows.h>
 #endif
 
-void KailleraChatInit(void);
+void KailleraChatInit(running_machine &machine);
 void KailleraChatExit(void);
-void KailleraChatReInit(void);
+void KailleraChatReInit(running_machine &machine);
 void KailleraChatUpdate(running_machine *machine, render_container *container);
 void KailleraChateReceive(char *szText);
 int  KailleraChatIsActive(void);

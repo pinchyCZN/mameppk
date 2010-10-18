@@ -806,10 +806,9 @@ void psx_video_exit(running_machine &machine)
 
 VIDEO_START( psx_type1 )
 {
-	m_n_gputype = 1;
 #ifdef USE_PSXPLUGIN
 	{ 
-		psx_extgpu_init(machine);
+		psx_extgpu_init(machine, 1);
 		if( _psxGPULib.bIsLoaded != FALSE ) {
 			machine->add_notifier(MACHINE_NOTIFY_EXIT, psx_video_exit);
 			return;
@@ -821,10 +820,9 @@ VIDEO_START( psx_type1 )
 
 VIDEO_START( psx_type2 )
 {
-	m_n_gputype = 2;
 #ifdef USE_PSXPLUGIN
 	{ 
-		psx_extgpu_init(machine);
+		psx_extgpu_init(machine, 2);
 		if( _psxGPULib.bIsLoaded != FALSE ) {
 			machine->add_notifier(MACHINE_NOTIFY_EXIT, psx_video_exit);
 			return;

@@ -812,24 +812,24 @@ static MACHINE_CONFIG_DERIVED( ps4small, ps4big )
 MACHINE_CONFIG_END
 
 #ifdef KAILLERA
-static MACHINE_DRIVER_START( ps4big_k )
+static MACHINE_CONFIG_DERIVED( ps4big_k, ps4big )
+
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(ps4big)
 
 	MDRV_DEVICE_REMOVE("rscreen")
 
 	MDRV_SCREEN_MODIFY("lscreen")
 	MDRV_SCREEN_SIZE(40*8, 32*8)
 	MDRV_SCREEN_VISIBLE_AREA(0*8, 40*8-1, 0*8, 28*8-1)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( ps4small_k )
+static MACHINE_CONFIG_DERIVED( ps4small_k, ps4big_k )
+
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(ps4big_k)
 
 	MDRV_SCREEN_MODIFY("lscreen")
 	MDRV_SCREEN_VISIBLE_AREA(0*8, 40*8-1, 0*8, 30*8-1)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
 static const UINT8 loderndf_k_default_eeprom[256] =
 {
@@ -871,23 +871,23 @@ static const UINT8 loderndf_vs_default_eeprom[256] =
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
-static MACHINE_DRIVER_START( loderndf_k )
+static MACHINE_CONFIG_DERIVED( loderndf_k, ps4small_k )
+
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(ps4small_k)
 
 	MDRV_DEVICE_REMOVE("eeprom")
 	MDRV_EEPROM_93C46_ADD("eeprom")
 	MDRV_EEPROM_DATA(loderndf_k_default_eeprom, 256)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 
-static MACHINE_DRIVER_START( loderndf_vs )
+static MACHINE_CONFIG_DERIVED( loderndf_vs, ps4small_k )
+
 	/* basic machine hardware */
-	MDRV_IMPORT_FROM(ps4small_k)
 
 	MDRV_DEVICE_REMOVE("eeprom")
 	MDRV_EEPROM_93C46_ADD("eeprom")
 	MDRV_EEPROM_DATA(loderndf_vs_default_eeprom, 256)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 #endif /* KAILLERA */
 
 

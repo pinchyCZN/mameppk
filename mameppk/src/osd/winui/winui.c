@@ -6535,7 +6535,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 	case ID_MAME_HOMEPAGE:
 		{
 			if (MessageBoxW(GetMainWindow(), _UIW(TEXT("Go to MAME Development site?")),
-				TEXT_MAMEUINAME, MB_ICONQUESTION | MB_YESNO) == IDYES)
+				TEXT(MAMEUINAME), MB_ICONQUESTION | MB_YESNO) == IDYES)
 			{
 				ShellExecuteW(GetMainWindow(), NULL, TEXT("http://mamedev.org"),
 							 NULL, NULL, SW_SHOWNORMAL);
@@ -6547,7 +6547,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 	case ID_MAME_FAQ:
 		{
 			if (MessageBox(GetMainWindow(), _UIW(TEXT("Go to MAME FAQ site?")),
-				TEXT_MAMEUINAME, MB_ICONQUESTION | MB_YESNO) == IDYES)
+				TEXT(MAMEUINAME), MB_ICONQUESTION | MB_YESNO) == IDYES)
 			{
 				ShellExecuteW(GetMainWindow(), NULL, TEXT("http://mamedev.org/devwiki/index.php/Frequently_Asked_Questions"),
 							 NULL, NULL, SW_SHOWNORMAL);
@@ -6564,7 +6564,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 			strcpy(address, "http://maws.mameworld.info/maws/romset/");
 			strcat(address, drivers[nGame]->name);
 			if (MessageBoxW(GetMainWindow(), _UIW(TEXT("Go to MAWS site?")),
-				TEXT_MAMEUINAME, MB_ICONQUESTION | MB_YESNO) == IDYES)
+				TEXT(MAMEUINAME), MB_ICONQUESTION | MB_YESNO) == IDYES)
 			{
 				ShellExecuteW(GetMainWindow(), NULL, _Unicode(address), NULL, NULL, SW_SHOWNORMAL);
 				return TRUE;
@@ -7753,7 +7753,7 @@ static void CopyTrctempStateSaveFile(const WCHAR *fname, inpsub_header *inpsub_h
 	char *stemp;
 	void *buf;
 	int fsize,i;
-	// 使用するstateファイルをtrctempにコピー
+	// 使用するstateファイ?をtrctempにコピー
 	MKInpDir();
 	//_splitpath(Trace_filename, NULL, NULL, fname, NULL);
 	trctemp_statesave_file_size = 0;
@@ -7796,7 +7796,7 @@ static void DeleteTrctempStateSaveFile(const WCHAR *fname)
 {
 	WCHAR name[_MAX_PATH];
 	int          i;
-	// trctempにコピーしたstateファイルを削除。
+	// trctempにコピーしたstateファイ?を削?。
 	for(i=0; i<trctemp_statesave_file_size; i++)
 	{
 		char fex[2];
@@ -7843,7 +7843,7 @@ ext:
 		case 3:
 			wsprintf(buf,   _UIW(TEXT("Since environment differs from the time of creation, it may not reappear well.\nIs replay reproduction carried out?\ntrcversion %d\nmame version %s\nPlay Count %d\n"))
 							, (int)inpsub_header->trcversion, _Unicode(inpsub_header->version), (int)inpsub_header->playcount+1);
-			if( MessageBox(hMain, buf, TEXT_MAMEUINAME TEXT("++"), MB_OKCANCEL | MB_ICONEXCLAMATION) == IDCANCEL)
+			if( MessageBox(hMain, buf, TEXT(MAMEUINAME "++"), MB_OKCANCEL | MB_ICONEXCLAMATION) == IDCANCEL)
 			{
 				return 0;
 			}
@@ -7877,9 +7877,9 @@ static void CLIB_DECL MameMessageBoxI(LPCTSTR fmt, ...)
 	va_start(va, fmt);
 	_vstprintf(buf, fmt, va);
 #ifdef KAILLERA
-	MessageBox(GetMainWindow(), buf, TEXT_MAMEUINAME TEXT("++"), MB_OK | MB_ICONINFORMATION);
+	MessageBox(GetMainWindow(), buf, TEXT(MAMEUINAME "++"), MB_OK | MB_ICONINFORMATION);
 #else
-	MessageBox(GetMainWindow(), buf, TEXT_MAMEUINAME, MB_OK | MB_ICONINFORMATION);
+	MessageBox(GetMainWindow(), buf, TEXT(MAMEUINAME), MB_OK | MB_ICONINFORMATION);
 #endif /* KAILLERA */
 	va_end(va);
 }
@@ -9917,7 +9917,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 
 		switch ( KAILLERA_CHATDATA_GET_COMMAND( kChatDataBuf[0] ) )
 		{
-		case 1: // ステートセーブのCRCが送られてきた。
+		case 1: // ステートセーブのCRCが?られてきた。
 			if(Kaillera_StateSave_Count <= 0) break;
 
 			if( (UINT32)Kaillera_StateSave_CRC != (UINT32)kChatDataBuf[1] ) {
@@ -9947,7 +9947,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 				Kaillera_StateSave_Retry = 0;
 			}
 			break;
-		case 2: // ステートセーブ、ロードで使用する拡張子の変更（初期値は'a'  (.sta)）
+		case 2: // ステートセーブ、?ードで使用する拡張子の変更（?期値は'a'  (.sta)）
 			Kaillera_StateSave_file = kChatDataBuf[1];
 			popmessageW(_UIW(TEXT("%c-slot is selected")), Kaillera_StateSave_file);
 
@@ -9955,12 +9955,12 @@ void WINAPI kChatCallback(char *nick, char *text)
 			dat[1] = 0x00000002;
 			kailleraChatSend(kChatData(&dat[0], 8));
 			break;
-		case 5: // mameのバージョンチェック
+		case 5: // mameのバージ??チェック
 			{
 				kailleraChatSend(kailleraGame_mameVer);
 			}
 			break;
-		case 6: // mameのバージョンを受信
+		case 6: // mameのバージ??を受信
 			break;
 		case 7:
 			{
@@ -10027,9 +10027,9 @@ void WINAPI kChatCallback(char *nick, char *text)
 				kailleraChatSend(kChatData(&dat[0], 8));
 			}
 			break;
-		case 9: // ファイル受信開始。
+		case 9: // ファイ?受信開始。
 			if( KailleraStartOption.player == 1 ) {
-//				if( Kaillera_Send_Flags &= 0x1 ) popmessage("送信状況 %d％", (int)((double)kChatDataBuf[1]/(double)Kaillera_Send_Len * 100));
+//				if( Kaillera_Send_Flags &= 0x1 ) popmessage("?信状況 %d?", (int)((double)kChatDataBuf[1]/(double)Kaillera_Send_Len * 100));
 				if( Kaillera_Send_Flags & 0x1 ) popmessageW(_UIW(TEXT("Sending %d percent")), (int)((double)kChatDataBuf[1]/(double)Kaillera_Send_Len * 100));
 			} else {
 				//unsigned long syslen = 8;
@@ -10041,7 +10041,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 				if( Kaillera_Send_Flags & 0x2 )
 				{
 					if( Kaillera_Send_Len == 0 )
-					{	//	転送中止
+					{	//	転??止
 						Kaillera_Send_Flags &= ~0x2;
 						Kaillera_Send_SleepTime = 0;
 						if( lpkChatDatabit )	free( lpkChatDatabit );
@@ -10050,7 +10050,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 					}
 					break;
 				}
-				// データ受信準備
+				// データ受信?備
 				
 				Kaillera_Send_DecompressLen	= kChatDataBuf[3];
 				Kaillera_Send_Pos			= 0;
@@ -10086,7 +10086,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 			break;
 		case 10:
 			break;
-		case 11:	// 同期ズレチェック
+		case 11:	// 同期ズ?チェック
 			{
 				if ( KAILLERA_CHATDATA_GET_PLAYERNMB( kChatDataBuf[0] ) == KailleraStartOption.player)
 					break;
@@ -10131,7 +10131,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 
 			}
 			break;
-		case 12:	// ゲーム強制終了
+		case 12:	// ゲー?強制終了
 			{
 				//extern int quiting;
 
@@ -10144,7 +10144,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 				}
 			}
 			break;
-		case 13:	// 時間調整レベル変更
+		case 13:	// ?間調整?ベ?変更
 			{
 				extern void KailleraThrottleChange(int mode);
 				int wtm = KailleraPlayerOption.waittimemode;
@@ -10184,7 +10184,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 
 			KailleraChatdataPreparationcheck.count--;
 
-			if( kChatDataBuf[2] & 0x80000000) { //中止
+			if( kChatDataBuf[2] & 0x80000000) { //?止
 				KailleraChatdataPreparationcheck.flag |= 0x80000000;
 				(*KailleraChatdataPreparationcheck.Callback_Update)( 0x80000000, &kChatDataBuf[0] );
 				
@@ -10216,7 +10216,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 		
 		if( KailleraStartOption.player == 1 )
 		{
-			//if( Kaillera_Send_Flags &= 0x1 ) popmessage("送信状況 %d％", (int)((double)Kaillera_Send_Pos/(double)Kaillera_Send_Len * 100));
+			//if( Kaillera_Send_Flags &= 0x1 ) popmessage("?信状況 %d?", (int)((double)Kaillera_Send_Pos/(double)Kaillera_Send_Len * 100));
 			if( Kaillera_Send_Flags & 0x1 ) popmessageW(_UIW(TEXT("Sending %d percent")), (int)((double)Kaillera_Send_Pos/(double)Kaillera_Send_Len * 100));
 			return;
 		}
@@ -10352,7 +10352,7 @@ void __cdecl SendSyncCheck(int flag)
 		return;
 	}
 
-	if(flag == 1) {	//タイムアウト
+	if(flag == 1) {	//タイ?アウト
 		return;
 	}
 
@@ -10412,7 +10412,7 @@ void __cdecl SendSyncCheck(int flag)
 void __cdecl SendSyncCheck_Update(int flag, unsigned long *data)
 {
 	const int player = KAILLERA_CHATDATA_GET_PLAYERNMB( data[0] );
-	if(flag == 0x80000000) {	//中止
+	if(flag == 0x80000000) {	//?止
 
 		if (data[3] > KailleraPlayerOption.chatsend_timelag)
 			KailleraPlayerOption.chatsend_timelag = data[3];
@@ -10435,7 +10435,7 @@ void __cdecl SendStateSaveFile(int flag)
 		return;
 	}
 
-	if (~Kaillera_Send_Flags & 0x4)	//全員staファイルのCRCが一致。
+	if (~Kaillera_Send_Flags & 0x4)	//全員staファイ?のCRCが一致。
 	{
 		int dat[64];
 		dat[0] = KailleraChatdataPreparationcheck.nmb;
@@ -11585,14 +11585,13 @@ static void SetupAviStatus(int nGame)
 {
 	extern int neogeo_check_lower_resolution( const char *name );
 	struct MAME_AVI_STATUS *OldAviStatus;	//kt
-	machine_config *config;
+	machine_config config(*drivers[nGame]);
 	const device_config *screen;
 	const screen_device_config *scrconfig;
 	core_options *o = load_options(OPTIONS_GAME, nGame);
 
-	config = global_alloc(machine_config(drivers[nGame]->machine_config));
-	screen = screen_first(*config);
-	scrconfig = downcast<const screen_device_config *>(screen_first(*config));
+	screen = screen_first(config);
+	scrconfig = downcast<const screen_device_config *>(screen_first(config));
 
 	AviStatus.source_file = (char*)drivers[nGame]->source_file;
 	AviStatus.index = nGame + 1;
@@ -11601,7 +11600,7 @@ static void SetupAviStatus(int nGame)
 	AviStatus.fps     = AviStatus.def_fps;
 	AviStatus.depth   = 16; //playing_game_options.depth;	// (auto/16bit/32bit)
 	AviStatus.flags   = drivers[nGame]->flags;
-    AviStatus.orientation = AviStatus.flags & ORIENTATION_MASK;
+	AviStatus.orientation = AviStatus.flags & ORIENTATION_MASK;
 
 	if (options_get_bool(o, OPTION_ROR))
 	{
@@ -11757,7 +11756,6 @@ static void SetupAviStatus(int nGame)
 
 	SetAviStatus(&AviStatus);
 	options_free(o);
-	global_free(config);
 }
 
 void get_autofilename(int nGame, WCHAR *avidir, WCHAR *avifilename, WCHAR *ext)
@@ -11866,7 +11864,7 @@ static void MamePlayGameAVI(void)
 			play_options playopts;
 			WCHAR buf[1024];
 			wsprintf(buf, _UIW(TEXT("Use 'Record AVI' key to toggle start/stop AVI recording.")));
-			MessageBox(hMain, buf, TEXT_MAMEUINAME, MB_OK | MB_ICONEXCLAMATION );
+			MessageBox(hMain, buf, TEXT(MAMEUINAME), MB_OK | MB_ICONEXCLAMATION );
 
 			memset(&playopts, 0, sizeof(playopts));
 			playopts.aviwrite2 = filename_avi;
@@ -12086,7 +12084,7 @@ static void MamePlayBackGameAVI()
 				
 				WCHAR buf[1024];
 				wsprintf(buf, _UIW(TEXT("Use 'Record AVI' key to toggle start/stop AVI recording.")));
-				MessageBox(hMain, buf, TEXT_MAMEUINAME, MB_OK | MB_ICONEXCLAMATION );
+				MessageBox(hMain, buf, TEXT(MAMEUINAME), MB_OK | MB_ICONEXCLAMATION );
 
 				playopts.playback = fname;
 				playopts.aviwrite2 = filename_avi;

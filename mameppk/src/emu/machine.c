@@ -126,7 +126,6 @@
 #include "KailleraChat.h"
 #include "ui_temp.h"
 #include "extmem.h"
-//extern int RePlay;
 extern int kPlay;
 char Trace_filename[_MAX_PATH];
 #endif /* KAILLERA */
@@ -398,7 +397,11 @@ void running_machine::start()
 //  run - execute the machine
 //-------------------------------------------------
 
+#ifdef KAILLERA
+int running_machine::run(running_machine &machine, bool firstrun)
+#else /* KAILLERA */
 int running_machine::run(bool firstrun)
+#endif /* KAILLERA */
 {
 	int error = MAMERR_NONE;
 
@@ -435,7 +438,7 @@ int running_machine::run(bool firstrun)
 
 #ifdef KAILLERA
 		if (kPlay)
-			KailleraChatInit();
+			KailleraChatInit(machine);
 #endif /* KAILLERA */
 
 		while ((!m_hard_reset_pending && !m_exit_pending) || m_saveload_schedule != SLS_NONE)
@@ -825,11 +828,6 @@ void running_machine::call_notifiers(machine_notification which)
 //  or load
 //-------------------------------------------------
 
-//FIXME: 0.138u3
-#ifdef KAILLERA
-running_machine *machine;
-#endif /* KAILLERA */
-
 void running_machine::handle_saveload()
 {
 	UINT32 openflags = (m_saveload_schedule == SLS_LOAD) ? OPEN_FLAG_READ : (OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
@@ -856,34 +854,6 @@ void running_machine::handle_saveload()
 
 	// open the file
 	mame_file *file;
-
-//FIXME: 0.138u3
-#ifdef KAILLERA
-	if (has_playback_sub_file(machine))
-	{
-		char fname[_MAX_FNAME];
-		char dstname[_MAX_PATH];
-		char path_old[_MAX_PATH] = "inp";
-		char path_new[_MAX_PATH];
-		char namesub[2];
-		_splitpath(m_saveload_pending_file, NULL, NULL, fname, NULL);
-		strcpy(namesub, &fname[strlen(fname)-1]);
-		if(namesub[0] == '@' && kPlay)	namesub[0] = Kaillera_StateSave_file;
-		_splitpath(Trace_filename, NULL, NULL, fname, NULL);
-		sprintf(dstname, "%s-%s.sta", fname, namesub);
-#if 0
-		if (options_get_string(mame_options(), SEARCHPATH_INPUTLOG))
-			strcpy(path_old, options_get_string(mame_options(), SEARCHPATH_INPUTLOG));
-#endif
-		sprintf(path_new, "%s\\trctemp", path_old);
-		options_set_string(mame_options(), SEARCHPATH_INPUTLOG, path_new, OPTION_PRIORITY_INI);
-		filerr = mame_fopen(m_saveload_searchpath, dstname, OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS, &file);
-		options_set_string(mame_options(), SEARCHPATH_INPUTLOG, path_old, OPTION_PRIORITY_INI);
-
-		trctemp_statesave_file[trctemp_statesave_file_size++] = namesub[0];
-		if (trctemp_statesave_file_size>256) trctemp_statesave_file_size = 256;
-	} else
-#endif /* KAILLERA */
 	filerr = mame_fopen(m_saveload_searchpath, m_saveload_pending_file, openflags, &file);
 	if (filerr == FILERR_NONE)
 	{
@@ -891,60 +861,6 @@ void running_machine::handle_saveload()
 
 		// read/write the save state
 		state_save_error staterr = (m_saveload_schedule == SLS_LOAD) ? state_save_read_file(this, file) : state_save_write_file(this, file);
-
-#ifdef KAILLERA
-		(*(MemoryHackFunction.StateLoad))();
-
-		if (has_record_sub_file(machine))
-		{
-			extern char Trace_filename[_MAX_PATH];
-			file_error filerr;
-			mame_file *file_inp;
-			char fname[_MAX_FNAME];
-			char dstname[_MAX_FNAME];
-			char path_old[_MAX_PATH] = "inp";
-			char path_new[_MAX_PATH];
-			char namesub[2];
-			int i;
-			void *buf;
-			int fsize = mame_fsize(file);
-			_splitpath(m_saveload_pending_file, NULL, NULL, fname, NULL);
-			strcpy(namesub, &fname[strlen(fname)-1]);
-#if 0
-			if (options_get_string(SEARCHPATH_INPUTLOG))
-				strcpy(path_old, options_get_string(SEARCHPATH_INPUTLOG));
-#endif
-			sprintf(path_new, "%s\\trctemp", path_old);
-			_splitpath(Trace_filename, NULL, NULL, fname, NULL);
-			sprintf(dstname, "%s-%s.sta", fname, namesub);
-
-			for(i=0; i<perform_ui_statesave_file_size+1; i++)
-			{
-				if(perform_ui_statesave_file[i] == namesub[0]) { i=65535; break;}
-			}
-			if( i<65535 )
-			{
-				int fp = mame_ftell(handle_record_sub_file(machine));
-				inpsub_header ih;
-				perform_ui_statesave_file[perform_ui_statesave_file_size++] = namesub[0];
-				if(perform_ui_statesave_file_size > 255) perform_ui_statesave_file_size=255;
-
-				mame_fseek(handle_record_sub_file(machine), ((int)&ih.usestate[0]) - ((int)&ih) + perform_ui_statesave_file_fp++, SEEK_SET);
-				mame_fwrite(handle_record_sub_file(machine), namesub, 1);
-				mame_fseek(handle_record_sub_file(machine), fp, SEEK_SET);
-				if(perform_ui_statesave_file_fp > 255) perform_ui_statesave_file_fp = 255;
-
-
-				filerr = mame_fopen(SEARCHPATH_INPUTLOG, dstname, OPEN_FLAG_WRITE | OPEN_FLAG_CREATE, &file_inp);
-				buf = malloc(fsize);
-				mame_fseek(file, 0, SEEK_SET);
-				mame_fread(file, buf, fsize);
-				mame_fwrite(file_inp, buf, fsize);
-				free(buf);
-				mame_fclose(file_inp);
-			}
-		}
-#endif /* KAILLERA */
 
 		// handle the result
 		switch (staterr)
@@ -966,17 +882,10 @@ void running_machine::handle_saveload()
 				break;
 
 			case STATERR_NONE:
-#ifdef KAILLERA
-				if (!kPlay && !has_playback_sub_file(machine))
-				{
-#endif /* KAILLERA */
 				if (!(m_game.flags & GAME_SUPPORTS_SAVE))
 					popmessage(_("State successfully %s.\nWarning: Save states are not officially supported for this game."), opnamed);
 				else
 					popmessage(_("State successfully %s."), opnamed);
-#ifdef KAILLERA
-				}
-#endif /* KAILLERA */
 				break;
 
 			default:

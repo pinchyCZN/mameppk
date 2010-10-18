@@ -2259,7 +2259,7 @@ static MACHINE_CONFIG_DERIVED( system32_v25_ga2j4p, system32_v25 )
 	MDRV_DEVICE_REMOVE("eeprom")
 	MDRV_EEPROM_93C46_ADD("eeprom")
 	MDRV_EEPROM_DATA(ga2j4p_default_eeprom, 128)
-MACHINE_DRIVER_END
+MACHINE_CONFIG_END
 #endif /* KAILLERA */
 
 
