@@ -102,9 +102,9 @@ extern const FOLDERDATA g_folderData[] =
 	{TEXT("Old Games"),       "others",            FOLDER_OTHERS1,      IDI_FOLDER_OLDS,          0,             0,            CreateOTHERS1Folders },
 	{TEXT("80s Games"),       "others2",           FOLDER_OTHERS2,      IDI_FOLDER_80S,           0,             0,            CreateOTHERS2Folders },
 	{TEXT("Mahjong&Puzzle"),  "others4",           FOLDER_OTHERS4,      IDI_FOLDER_MAHJONG,       0,             0,            CreateOTHERS4Folders },
-#endif /* NCP */
+#endif /* !NCP */
 #ifdef USE_PSXPLUGIN
-	{TEXT("PSXGame"),        "psxgame",            FOLDER_PSXGAME,      IDI_FOLDER_PSXGAME,       0,             F_AVAILABLE,  NULL,                       DriverUsesPSXCpu,  TRUE },
+	{TEXT("PSX Games"),       "psxgame",           FOLDER_PSXGAME,      IDI_FOLDER_PSXGAME,       0,             F_AVAILABLE,  NULL,                       DriverUsesPSXCpu,  TRUE },
 #endif /* USE_PSXPLUGIN */
 	{ NULL }
 };

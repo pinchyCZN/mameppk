@@ -136,9 +136,9 @@ static const int fdata[ 5 ][ 2 ] =
 
 /*
 --------------------------------------------------------------
-VAG »ùÇÃ ±×·ì (Sony PlayStation compressed ADPCM sound format)
+VAG »ùÇÃ ±×·E(Sony PlayStation compressed ADPCM sound format)
 
-»ùÇÃ ±×·ìÀº 16¹ÙÀÌÆ®´ÜÀ§·Î ÀÌ·ç¾îÁü
+»ùÇÃ ±×·Eº 16¹ÙÀÌÆ®´ÜÀ§·Î ÀÌ·ç¾ûÝ
 
 typedef struct {
     unsigned char pack_info;
@@ -151,11 +151,11 @@ pack_info:
  ÇÏÀ§4ºñÆ®:Shiftfactor 
 
 flags: 
- 0x07: »ùÇÃ Á¾·á
+ 0x07: »ùÇÃ Á¾·
  0x02: ¹Ýº¹ ±¸°£¿¡ ¼ÓÇÏ´Â »ùÇÃ
  0x06: ¹Ýº¹ ½ÃÀÛ
  0x04: ¹Ýº¹ À§Ä¡(Repeat Point)
- 0x03: »ùÇÃ Á¾·á, ¹Ýº¹ À§Ä¡ºÎÅÍ ½ÃÀÛ
+ 0x03: »ùÇÃ Á¾·E ¹Ýº¹ À§Ä¡ºÎÅÍ ½ÃÀÛ
 --------------------------------------------------------------
 */
 
@@ -214,7 +214,7 @@ void CALLBACK psx_qsound_callback(unsigned char *pSpuBuffer,long *XAPlay, long l
 				n_predict = ( chip->m_p_n_spuram[ blkaddr ] >> 4 ) & 0x0f;
 				n_flags   = ( chip->m_p_n_spuram[ blkaddr ] >> 8 ) & 0xff;
 
-				// Á¤»óÀûÀÎ VAGºí·°¿¡¼­´Â n_predict°¡ 4º¸´Ù Å« °æ¿ì°¡ Àý´ë ÀÏ¾î³ªÁö ¾ÊÀ½ 
+				// Á¤»óÀûÀÎ VAGºúÓ°¿¡¼­´Â n_predict°¡ 4º¸´Ù Å« °æ¿E¡ Àý´EÀÏ¾ûÏªÁE¾ÊÀ½ 
 				if( n_predict > 4 ) n_predict = 0;
 
 				//if( n_flags == 0x04 )
@@ -316,7 +316,7 @@ static void psx_extspu_read( UINT32 n_address, INT32 n_size )
 	//verboselog( 1, "spu_read( %08x, %08x )\n", n_address, n_size );
 	while( n_size > 0 )
 	{
-		chip->g_p_n_psxram[ n_address / 4 ] = 
+		chip->m_p_n_psxram[ n_address / 4 ] = 
 			( chip->m_p_n_spuram[ chip->m_n_spuoffset + 0 ] << 0 ) |
 			( chip->m_p_n_spuram[ chip->m_n_spuoffset + 1 ] << 16 );
 		//verboselog( 2, "%08x > %04x\n", m_n_spuoffset + 0, m_p_n_spuram[ m_n_spuoffset + 0 ] );
@@ -334,8 +334,8 @@ static void psx_extspu_write( UINT32 n_address, INT32 n_size )
 	//verboselog( 1, "spu_write( %08x, %08x )\n", n_address, n_size );
 	while( n_size > 0 )
 	{
-		chip->m_p_n_spuram[ chip->m_n_spuoffset + 0 ] = ( chip->g_p_n_psxram[ n_address / 4 ] >> 0 );
-		chip->m_p_n_spuram[ chip->m_n_spuoffset + 1 ] = ( chip->g_p_n_psxram[ n_address / 4 ] >> 16 );
+		chip->m_p_n_spuram[ chip->m_n_spuoffset + 0 ] = ( chip->m_p_n_psxram[ n_address / 4 ] >> 0 );
+		chip->m_p_n_spuram[ chip->m_n_spuoffset + 1 ] = ( chip->m_p_n_psxram[ n_address / 4 ] >> 16 );
 		//verboselog( 2, "%08x < %04x\n", m_n_spuoffset + 0, m_p_n_spuram[ m_n_spuoffset + 0 ] );
 		//verboselog( 2, "%08x < %04x\n", m_n_spuoffset + 1, m_p_n_spuram[ m_n_spuoffset + 1 ] );
 		chip->m_n_spuoffset += 2;

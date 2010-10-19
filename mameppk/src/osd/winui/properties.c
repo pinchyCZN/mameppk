@@ -348,14 +348,14 @@ BOOL PropSheetFilter_Vector(const machine_config *drv, const game_driver *gamedr
 }
 
 #ifdef USE_PSXPLUGIN
-static BOOL isDriverPSX(const machine_config *config)
+static BOOL isDriverPSX(const game_driver *gamedrv)
 {
-	const device_config *devconfig;
+	machine_config config(*gamedrv);
+	const device_config_execute_interface *device = NULL;
 
-	for (devconfig = cpu_first(config); devconfig != NULL; devconfig = cpu_next(devconfig))
+	for (bool gotone = config.m_devicelist.first(device); gotone; gotone = device->next(device))
 	{
-		const cpu_config *cpuconfig = (const cpu_config *)devconfig->inline_config;
-		if (cpuconfig->type == CPU_PSXCPU) return TRUE;
+		if (device->devconfig().type() == PSXCPU) return TRUE;
 	}
 	return FALSE;
 }
@@ -370,7 +370,7 @@ BOOL PropSheetFilter_PSXPLUGIN(const machine_config *drv, const game_driver *gam
 		return FolderHasPSXCpu(folder);
 	}
 
-	return isDriverPSX(drv);
+	return isDriverPSX(gamedrv);
 }
 #endif /* USE_PSXPLUGIN */
 
@@ -2906,7 +2906,7 @@ static void SetPropEnabledControls(HWND hWnd)
 		BOOL bGpuEnabled = FALSE;
 		BOOL bSpuEnabled = FALSE;
 	
-		if( (g_nPropertyMode == OPTIONS_GAME && DriverUsesPSXCpu(nIndex)) ||
+		if( (g_nPropertyMode == OPTIONS_GLOBAL) || (g_nPropertyMode == OPTIONS_GAME && DriverUsesPSXCpu(nIndex)) ||
 			g_nPropertyMode == OPTIONS_SOURCE ) 
 		{
 			EnableWindow(GetDlgItem(hWnd, IDC_USE_GPUPLUGIN),	TRUE );
@@ -3497,7 +3497,6 @@ static BOOL PsxSPUReadControl(datamap *map, HWND dialog, HWND control_, core_opt
 	if (!(g_nPropertyMode == OPTIONS_GLOBAL) && Button_GetCheck(control_))
 	{
 		options_set_bool(opts, option_name, TRUE, OPTION_PRIORITY_CMDLINE);
-		options_set_bool(opts, OPTION_VOLUME_ADJUST, FALSE, OPTION_PRIORITY_CMDLINE);
 	}
 	else
 	{

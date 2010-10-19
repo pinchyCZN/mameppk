@@ -85,6 +85,8 @@ static TREEICON treeIconNames[] =
 	{ IDI_FOLDER_UNAVAILABLE,  "hfoldunav" },
 	{ IDI_FOLDER_YEAR,         "hfoldyear" },
 	{ IDI_FOLDER_SOURCE,       "hfoldsrc" },
+	{ IDI_FOLDER_HORIZONTAL,   "horz" },
+	{ IDI_FOLDER_VERTICAL,     "vert" },
 	{ IDI_MANUFACTURER,        "hmanufact" },
 	{ IDI_WORKING,             "hworking" },
 	{ IDI_NONWORKING,          "hnonwork" },

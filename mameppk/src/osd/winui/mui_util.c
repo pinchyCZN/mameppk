@@ -573,13 +573,12 @@ static struct DriversInfo* GetDriversInfo(int driver_index)
 
 #ifdef USE_PSXPLUGIN
 			{
-				const device_config *devconfig;
+				const device_config_execute_interface *device = NULL;
 
 				gameinfo->usesPSXCpu = FALSE;
-				for (devconfig = cpu_first(config); devconfig != NULL; devconfig = cpu_next(devconfig))
+				for (bool gotone = config.m_devicelist.first(device); gotone; gotone = device->next(device))
 				{
-					const cpu_config *cpuconfig = (const cpu_config *)devconfig->inline_config;
-					if (cpuconfig->type == CPU_PSXCPU) gameinfo->usesPSXCpu = TRUE;
+					if (device->devconfig().type() == PSXCPU) gameinfo->usesPSXCpu = TRUE;
 				}
 			}
 #endif /*USE_PSXPLUGIN*/

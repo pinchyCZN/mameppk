@@ -461,8 +461,9 @@ HWND psx_create_gpu_video_window(running_machine *machine, int iFullScreenMode)
 extern void win_shutdown_joystick(void);
 extern void win_init_joystick(HWND hWnd, LPVOID ref);
 
-static int psx_extgpu_init( running_machine *machine )
+static int psx_extgpu_init( running_machine *machine, int n_gputype )
 {
+	psx_gpu *p_psxgpu = auto_alloc_clear(machine, psx_gpu);
 	int		n_level;
 	GPUConfiguration_t cfg;
 
@@ -565,13 +566,13 @@ static int psx_extgpu_init( running_machine *machine )
 	igpuWriteCounter	= 0;
 	igpuReadCounter		= 0;
 
-	m_b_reverseflag		= 0;
-	m_n_displaystartx	= 0;
-	m_n_displaystarty	= 0;
-	m_n_screenwidth		= 256;
-	m_n_screenheight	= 240;
-	m_n_vert_disstart	= 0x010;
-	m_n_vert_disend		= 0x100;
+	p_psxgpu->b_reverseflag		= 0;
+	p_psxgpu->n_displaystartx	= 0;
+	p_psxgpu->n_displaystarty	= 0;
+	p_psxgpu->n_screenwidth		= 256;
+	p_psxgpu->n_screenheight	= 240;
+	p_psxgpu->n_vert_disstart	= 0x010;
+	p_psxgpu->n_vert_disend		= 0x100;
 	bIsInterlaced	    = 0;
 	bDisplayEnabled		= 1;
 	bVblankSignal		= 0;
@@ -583,10 +584,10 @@ static int psx_extgpu_init( running_machine *machine )
 	for( n_level = 0; n_level < 0x10000; n_level++ )
 	{
 		/* 24bit to 15 bit conversion */
-		m_p_n_g0r0[ n_level ] = ( ( ( n_level >> 11 ) & ( MAX_LEVEL - 1 ) ) << 5 ) | ( ( ( n_level >> 3 ) & ( MAX_LEVEL - 1 ) ) << 0 );
-		m_p_n_b0  [ n_level ] = ( ( n_level >> 3 ) & ( MAX_LEVEL - 1 ) ) << 10;
-		m_p_n_r1  [ n_level ] = ( ( n_level >> 11 ) & ( MAX_LEVEL - 1 ) ) << 0;
-		m_p_n_b1g1[ n_level ] = ( ( ( n_level >> 11 ) & ( MAX_LEVEL - 1 ) ) << 10 ) | ( ( ( n_level >> 3 ) & ( MAX_LEVEL - 1 ) ) << 5 );
+		p_psxgpu->p_n_g0r0[ n_level ] = ( ( ( n_level >> 11 ) & ( MAX_LEVEL - 1 ) ) << 5 ) | ( ( ( n_level >> 3 ) & ( MAX_LEVEL - 1 ) ) << 0 );
+		p_psxgpu->p_n_b0  [ n_level ] = ( ( n_level >> 3 ) & ( MAX_LEVEL - 1 ) ) << 10;
+		p_psxgpu->p_n_r1  [ n_level ] = ( ( n_level >> 11 ) & ( MAX_LEVEL - 1 ) ) << 0;
+		p_psxgpu->p_n_b1g1[ n_level ] = ( ( ( n_level >> 11 ) & ( MAX_LEVEL - 1 ) ) << 10 ) | ( ( ( n_level >> 3 ) & ( MAX_LEVEL - 1 ) ) << 5 );
 	}
 
 	return 0;
@@ -646,7 +647,7 @@ VIDEO_UPDATE( psx_extgpu )
 	}
 	bVblankSignal = 0;
 
-	//set_visible_area( 0, m_n_screenwidth - 1, 0, m_n_screenheight - 1 );
+	//set_visible_area( 0, p_psxgpu->n_screenwidth - 1, 0, p_psxgpu->n_screenheight - 1 );
 
 	/*
 	UINT32 gpustatus;
@@ -665,7 +666,7 @@ VIDEO_UPDATE( psx_extgpu )
 
 	gpustatus = _gpuPF.ulStatus;
 
-	set_visible_area( 0, m_n_screenwidth - 1, 0, m_n_screenheight - 1 );
+	set_visible_area( 0, p_psxgpu->n_screenwidth - 1, 0, p_psxgpu->n_screenheight - 1 );
 	
 	if( ( gpustatus & ( 1 << 0x17 ) ) != 0 )
 	{
@@ -675,18 +676,18 @@ VIDEO_UPDATE( psx_extgpu )
 	else
 	{
 		// todo: clear border
-		if( m_b_reverseflag )
+		if( p_psxgpu->b_reverseflag )
 		{
-			n_x = ( 1023 - m_n_displaystartx );
+			n_x = ( 1023 - p_psxgpu->n_displaystartx );
 			// todo: make this flip the screen, in the meantime.. 
-			n_x -= ( m_n_screenwidth - 1 );
+			n_x -= ( p_psxgpu->n_screenwidth - 1 );
 		}
 		else
 		{
-			n_x = m_n_displaystartx;
+			n_x = p_psxgpu->n_displaystartx;
 		}
 
-		n_top = m_n_vert_disstart - OVERSCAN_TOP;
+		n_top = p_psxgpu->n_vert_disstart - OVERSCAN_TOP;
 		if( n_top < 0 )
 		{
 			n_y = -n_top;
@@ -697,19 +698,19 @@ VIDEO_UPDATE( psx_extgpu )
 		{
 			n_y = 0;
 		}
-		n_lines = ( m_n_vert_disend - OVERSCAN_TOP ) - n_top;
+		n_lines = ( p_psxgpu->n_vert_disend - OVERSCAN_TOP ) - n_top;
 		if( ( gpustatus & ( 1 << 0x16 ) ) != 0 )
 		{
 			// interlaced
 			n_lines *= 2;
 		}
-		if( n_lines < m_n_screenheight - n_y )
+		if( n_lines < p_psxgpu->n_screenheight - n_y )
 		{
 			// todo: draw bottom border
 		}
 		else
 		{
-			n_lines = m_n_screenheight - n_y;
+			n_lines = p_psxgpu->n_screenheight - n_y;
 		}
 
 		if( ( gpustatus & ( 1 << 0x15 ) ) != 0 )
@@ -721,19 +722,19 @@ VIDEO_UPDATE( psx_extgpu )
 			// 24bit
 			while( n_y < n_lines )
 			{
-				offs = 1024 * (n_y + m_n_displaystarty) * 2; // 2048: bytes per line
+				offs = 1024 * (n_y + p_psxgpu->n_displaystarty) * 2; // 2048: bytes per line
 
 				p_n_src  = (data16_t *)&_gpuPF.psxVRam[ offs ];
 				p_n_dest = &( (data16_t *)bitmap->line[ n_y + n_top ] )[ 0 ];
 
-				for( n_x = 0; n_x < m_n_screenwidth / 2; n_x++ )
+				for( n_x = 0; n_x < p_psxgpu->n_screenwidth / 2; n_x++ )
 				{
 					data32_t n_g0r0 = *( p_n_src++ );
 					data32_t n_r1b0 = *( p_n_src++ );
 					data32_t n_b1g1 = *( p_n_src++ );
 
-					*( p_n_dest++ ) = m_p_n_g0r0[ n_g0r0 ] | m_p_n_b0[ n_r1b0 ];
-					*( p_n_dest++ ) = m_p_n_r1[ n_r1b0 ] | m_p_n_b1g1[ n_b1g1 ];
+					*( p_n_dest++ ) = p_psxgpu->p_n_g0r0[ n_g0r0 ] | p_psxgpu->p_n_b0[ n_r1b0 ];
+					*( p_n_dest++ ) = p_psxgpu->p_n_r1[ n_r1b0 ] | p_psxgpu->p_n_b1g1[ n_b1g1 ];
 				}
 				n_y++;
 			}
@@ -743,13 +744,13 @@ VIDEO_UPDATE( psx_extgpu )
 			UINT32 offs;
 			data16_t *p_n_src;
 
-			offs = 1024 * (n_y + m_n_displaystarty) * 2; // 2048: bytes per line
+			offs = 1024 * (n_y + p_psxgpu->n_displaystarty) * 2; // 2048: bytes per line
 			p_n_src  = (data16_t *)&_gpuPF.psxVRam[ offs ];
 
 			// 15bit
 			while( n_y < n_lines )
 			{
-				draw_scanline16( bitmap, 0, n_y + n_top, m_n_screenwidth, p_n_src + n_x, Machine->pens, -1 );
+				draw_scanline16( bitmap, 0, n_y + n_top, p_psxgpu->n_screenwidth, p_n_src + n_x, Machine->pens, -1 );
 				n_y++;
 			}
 		}
@@ -841,6 +842,7 @@ static void set_refresh_rate(running_machine *machine, int scrnum, double val)
 
 WRITE32_HANDLER( psx_extgpu_w )
 {
+	psx_gpu *p_psxgpu = space->machine->driver_data<psx_state>()->p_psxgpu;
 	if( _psxGPULib.bIsLoaded == FALSE ) return;
 
 	// flush stacked dmaChain data if exist.
@@ -857,12 +859,12 @@ WRITE32_HANDLER( psx_extgpu_w )
 		switch( data >> 24 )
 		{
 		case 0x00:	// reset
-			m_n_displaystartx = 0;
-			m_n_displaystarty = 0;
-			m_n_vert_disstart = 0x010;
-			m_n_vert_disend	  = 0x100;
-			m_n_screenwidth   = 256;
-			m_n_screenheight  = 240;
+			p_psxgpu->n_displaystartx = 0;
+			p_psxgpu->n_displaystarty = 0;
+			p_psxgpu->n_vert_disstart = 0x010;
+			p_psxgpu->n_vert_disend	  = 0x100;
+			p_psxgpu->n_screenwidth   = 256;
+			p_psxgpu->n_screenheight  = 240;
 			bIsInterlaced	  = 0;
 			bDisplayEnabled   = 1;
 			bVblankSignal	  = 0;
@@ -881,21 +883,21 @@ WRITE32_HANDLER( psx_extgpu_w )
 				//while(bIsInterlaced && !(gpuStatus & 0x80000000)) gpuStatus = _psxGPULib.lpfnGPUreadStatus();
 			}
 		case 0x05:
-			m_n_displaystartx = data & 1023;
-			if( m_n_gputype == 2 )
-				m_n_displaystarty = ( data >> 10 ) & 1023;
+			p_psxgpu->n_displaystartx = data & 1023;
+			if( p_psxgpu->n_gputype == 2 )
+				p_psxgpu->n_displaystarty = ( data >> 10 ) & 1023;
 			else
-				m_n_displaystarty = ( data >> 12 ) & 1023;
-			//verboselog( 1, "start of display area %d %d\n", m_n_displaystartx, m_n_displaystarty );
+				p_psxgpu->n_displaystarty = ( data >> 12 ) & 1023;
+			//verboselog( 1, "start of display area %d %d\n", p_psxgpu->n_displaystartx, p_psxgpu->n_displaystarty );
 			break;
 		case 0x07:
-			m_n_vert_disstart = data & 1023;
-			m_n_vert_disend   = ( data >> 10 ) & 2047;
-			//verboselog( 1, "vertical display range %d %d\n", m_n_vert_disstart, m_n_vert_disend );
+			p_psxgpu->n_vert_disstart = data & 1023;
+			p_psxgpu->n_vert_disend   = ( data >> 10 ) & 2047;
+			//verboselog( 1, "vertical display range %d %d\n", p_psxgpu->n_vert_disstart, p_psxgpu->n_vert_disend );
 			break;
 		case 0x08:
 			//verboselog( 1, "display mode %02x\n", data & 0xff );
-			m_b_reverseflag = ( data >> 7 ) & 1;
+			p_psxgpu->b_reverseflag = ( data >> 7 ) & 1;
 			bIsInterlaced	= ( data >> 5 ) & 1;
 
 			// Check Video Mode (PAL/NTSC)
@@ -905,8 +907,8 @@ WRITE32_HANDLER( psx_extgpu_w )
 				set_refresh_rate( space->machine, 0, 50.0 );
 				switch( (data >> 2) & 1 )	// Check 'Height' Bits (Double or not)
 				{
-				case 0:	m_n_screenheight = 256;	break;
-				case 1:	m_n_screenheight = 512;	break;
+				case 0:	p_psxgpu->n_screenheight = 256;	break;
+				case 1:	p_psxgpu->n_screenheight = 512;	break;
 				}
 			}
 			else
@@ -915,8 +917,8 @@ WRITE32_HANDLER( psx_extgpu_w )
 				set_refresh_rate( space->machine, 0, 60.0 );
 				switch( (data >> 2) & 1 )	// Check 'Height' Bits (Double or not)
 				{
-				case 0:	m_n_screenheight = 240;	break;
-				case 1:	m_n_screenheight = 480;	break;
+				case 0:	p_psxgpu->n_screenheight = 240;	break;
+				case 1:	p_psxgpu->n_screenheight = 480;	break;
 				}
 			}
 
@@ -926,19 +928,19 @@ WRITE32_HANDLER( psx_extgpu_w )
 			case 0:
 				switch((data >> 6) & 1)	// Check 'Width 1' bit
 				{
-				case 0:	m_n_screenwidth = 256;	break;
-				case 1:	m_n_screenwidth = 368;	break;
+				case 0:	p_psxgpu->n_screenwidth = 256;	break;
+				case 1:	p_psxgpu->n_screenwidth = 368;	break;
 				}
 				break;
 			case 1:
 				switch((data >> 6) & 1)	// Check 'Width 1' bit
 				{
-				case 0:	m_n_screenwidth = 320;	break;
-				case 1:	m_n_screenwidth = 384;	break;
+				case 0:	p_psxgpu->n_screenwidth = 320;	break;
+				case 1:	p_psxgpu->n_screenwidth = 384;	break;
 				}
 				break;
-			case 2:	m_n_screenwidth = 512;	break;
-			case 3:	m_n_screenwidth = 640;	break;
+			case 2:	p_psxgpu->n_screenwidth = 512;	break;
+			case 3:	p_psxgpu->n_screenwidth = 640;	break;
 			}
 			break;
 		default:
@@ -999,7 +1001,7 @@ INTERRUPT_GEN( psx_extgpu_vblank )
 
 void psx_extgpu_reset( running_machine *machine )
 {
-	const address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
+	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 
 	psx_extgpu_w( space, 1, 0, 0 );
 }

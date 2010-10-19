@@ -80,7 +80,7 @@ typedef BOOL (WINAPI *ime_proc)(HWND hWnd, BOOL bflag);
 #define UI_COLOR_INVERSE		1		/* black on white text */
 #define UI_COLOR_TRANS			0x02	/* white text only */
 #define UI_COLOR_ATTRIBUTE		0x04	/* for IME */
-#define UI_COLOR_BLEND			0x05	/* 半透明 Back  できなければ? */
+#define UI_COLOR_BLEND			0x05	/* 半透明 Back  できなければ黒 */
 #define UI_COLOR_BACKBLACK		0x06	/* white on black text */
 #define UI_COLOR_MESH			0x07
 #define UI_COLOR_SHADOW			0x08
@@ -164,9 +164,9 @@ static char            szIMEStateStrPrev[16];
 static char            *szIMEStateStr_utf8[6];
 static char            *szIMEStateStr_mb[6]={
 (char *)"ｺｰﾄﾞ",
-(char *)"?",
+(char *)"あ",
 (char *)"カ",
-(char *)"?",
+(char *)"ｶ ",
 (char *)"Ａ",
 (char *)"A "
 };
@@ -311,7 +311,7 @@ void KailleraChatInit(running_machine &machine)
         }
         else
 #if 0
-        if (!_tcscmp(szIMEName, TEXT("Microsoft IME 98 日本語入力システ?")))
+        if (!_tcscmp(szIMEName, TEXT("Microsoft IME 98 日本語入力システム")))
         {
             nIMEType = MSIME_OLD;
             bCloseCompositionWindow = FALSE;
@@ -330,7 +330,7 @@ void KailleraChatInit(running_machine &machine)
         }
 
         /* WINNLSEnableIMEは、海外だと使用できないので、存在するかどうかチェック */
-        /* 本?はImmDisableIME()を使用したいところだけど */
+        /* 本当はImmDisableIME()を使用したいところだけど */
         error_mode = SetErrorMode(0);
         hUser32DLL = LoadLibrary(TEXT("user32.dll"));
         SetErrorMode(error_mode);
@@ -471,7 +471,7 @@ void KailleraChatReInit(running_machine &machine)
         }
         else
 #if 0
-        if (!_tcscmp(szIMEName, TEXT("Microsoft IME 98 日本語入力システ?")))
+        if (!_tcscmp(szIMEName, TEXT("Microsoft IME 98 日本語入力システム")))
         {
             nIMEType = MSIME_OLD;
             bCloseCompositionWindow = FALSE;
@@ -490,7 +490,7 @@ void KailleraChatReInit(running_machine &machine)
         }
 
         /* WINNLSEnableIMEは、海外だと使用できないので、存在するかどうかチェック */
-        /* 本?はImmDisableIME()を使用したいところだけど */
+        /* 本当はImmDisableIME()を使用したいところだけど */
         error_mode = SetErrorMode(0);
         hUser32DLL = LoadLibrary(TEXT("user32.dll"));
         SetErrorMode(error_mode);
@@ -552,7 +552,7 @@ void KailleraChatUpdate(running_machine *machine, render_container *container)
     {
         if (bUseIME && bChatActive)
         {
-            /* IMEのデフォ?トのウイ?ドウが?ったら有無を言わさず閉じる */
+            /* IMEのデフォルトのウインドウがあったら有無を言わさず閉じる */
             HWND hIME = ImmGetDefaultIMEWnd(hChat);
             if (hIME != NULL)
                 SendMessage(hIME, WM_CLOSE, 0, 0);
@@ -838,7 +838,7 @@ int *KailleraChatGetStrClause(void)
 
 static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam)
 {
-    /* チ?ットアクティブ?のみ、MAME32のウイ?ドウをフック */
+    /* チャットアクティブ時のみ、MAME32のウインドウをフック */
     if (bChatActive)
     {
         HIMC  hImc;
@@ -896,7 +896,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
                 switch (wParam)
                 {
                 case VK_RETURN:
-					ui_input_pressed(k_machine, IPT_UI_SELECT); /* IPT_UI_SELECTの?下フ?グをク?ア */
+					ui_input_pressed(k_machine, IPT_UI_SELECT); /* IPT_UI_SELECTの押下フラグをクリア */
                     if (szInputBuf[0] == '\0')
 					{
 						KailleraChatCloseChat(); //kt
@@ -908,7 +908,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 
                 case VK_ESCAPE:
                     KailleraChatCloseChat();
-                    ui_input_pressed(k_machine, IPT_UI_CANCEL); /* IPT_UI_CANCELの?下フ?グをク?ア */
+                    ui_input_pressed(k_machine, IPT_UI_CANCEL); /* IPT_UI_CANCELの押下フラグをクリア */
                     return TRUE;
                 
 				case VK_HOME:
@@ -1018,10 +1018,10 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
             if (lParam & GCS_RESULTSTR)
             {
                 /*
-                 変換?果の取得
-                 変換?果が返りますが、UOMAME32jではWM_CHARで拾っている
+                 変換結果の取得
+                 変換結果が返りますが、UOMAME32jではWM_CHARで拾っている
                  ので、変換が終わったかどうかの判断のみに使用しています。
-                 使用するので?れば、以下のような感じでしょうか。
+                 使用するのであれば、以下のような感じでしょうか。
 
                  unsigned char szTemp[KC_BUFFER_MAX];
 
@@ -1040,8 +1040,8 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
             if (lParam & GCS_COMPSTR)
             {
                 /*
-                 変換?の文章の取得
-                 変換?の文章そのものが返ります。
+                 変換中の文章の取得
+                 変換中の文章そのものが返ります。
                 */
 
                 ZeroMemory(szConvStrBuf, KC_BUFFER_MAX);
@@ -1059,12 +1059,12 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
                 char szTemp[KC_BUFFER_MAX];
 
                 /*
-                 文?属性の取得
+                 文字属性の取得
                  取得したデータは 以下のような感じだと思う
-                  0x00 : 未確定文?         MS-IME2000では破線
+                  0x00 : 未確定文字         MS-IME2000では破線
                   0x01 : 変換対象の文節     MS-IME2000では太い下線
                   0x02 : 未確定の文節       MS-IME2000では下線
-                  0x03 : 変換範囲の変更?分 MS-IME2000では反転
+                  0x03 : 変換範囲の変更部分 MS-IME2000では反転
                   0x04 : 確定した文節       MS-IME2000では下線
                 */
                 len = strlen(szConvStrBuf);
@@ -1094,10 +1094,10 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 
                 /* 
                  文節情報の取得
-                 取得したデータは たとえば、今日は|良い|天気|です で?れば
+                 取得したデータは たとえば、今日は|良い|天気|です であれば
                  00000006|0000000a|0000000d|000000012 のように、32bit値で
                  文節の終わりの位置が入っています。
-                 ゲー?では無?して取得する必要はないかも。
+                 ゲームでは無理して取得する必要はないかも。
                 */
                 len = strlen(szConvStrBuf);
                 ImmGetCompositionString(hImc, GCS_COMPCLAUSE, (unsigned char *)&pTemp, len * sizeof(int));
@@ -1110,7 +1110,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
             break;
 
         case WM_IME_ENDCOMPOSITION:
-            /* コ?ポジシ??ウィ?ドウが閉じられた */
+            /* コンポジションウィンドウが閉じられた */
             ZeroMemory(szConvStrBuf, KC_BUFFER_MAX);
 			if (szConvStrBuf_utf8)
 			{
@@ -1122,16 +1122,16 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
         case WM_IME_NOTIFY:
             switch (wParam)
             {
-            case IMN_SETOPENSTATUS:     /* IME オ?/オフ */
+            case IMN_SETOPENSTATUS:     /* IME オン/オフ */
                 hImc = ImmGetContext(hWnd);
                 if (ImmGetOpenStatus(hImc))
                     nIMEState |= IME_OPEN;
                 else
                     nIMEState = IME_CLOSE;
-                ImmReleaseContext(hWnd, hImc); /* breakしないで、入力?ードも更新 */
+                ImmReleaseContext(hWnd, hImc); /* breakしないで、入力モードも更新 */
 
-            case IMN_SETCONVERSIONMODE: /* 入力?ード変更     */
-            case IMN_SETSENTENCEMODE:   /* 文節変換?ード変更 */
+            case IMN_SETCONVERSIONMODE: /* 入力モード変更     */
+            case IMN_SETSENTENCEMODE:   /* 文節変換モード変更 */
                  KailleraChatImeGetConversionStatus();
                  break;
             }
@@ -1213,7 +1213,7 @@ static void KailleraChatImeGetConversionStatus(void)
             break;
 
         case IME_CMODE_NATIVE | IME_CMODE_FULLSHAPE:
-            //strcat(szIMEStateStr, "?");
+            //strcat(szIMEStateStr, "あ");
             strcpy(szIMEStateStr, szIMEStateStr_utf8[1]);
             break;
 
@@ -1223,7 +1223,7 @@ static void KailleraChatImeGetConversionStatus(void)
             break;
 
         case IME_CMODE_NATIVE | IME_CMODE_KATAKANA:
-            //strcat(szIMEStateStr, "?");
+            //strcat(szIMEStateStr, "ｶ ");
             strcpy(szIMEStateStr, szIMEStateStr_utf8[3]);
             break;
 

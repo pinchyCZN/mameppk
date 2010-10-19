@@ -622,7 +622,7 @@ void MemoryHack_KailleraInputVal(unsigned short *val, int numplayers)
 
 	if(	MemoryHackFunction.Update == MemoryHackUpdate_hyprolym4p	)
 	{
-		unsigned short start[4];	// X^[g{^?vC[?u??X?E
+		unsigned short start[4];	// X^[g{^̃vC[ʒu͕ύXȁE
 
 		switch( numplayers )
 		{
