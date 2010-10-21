@@ -2345,8 +2345,10 @@ static UINT32 handler_ingame(running_machine *machine, render_container *contain
 		if (old_force_pause != force_pause)
 		{
 			old_force_pause = force_pause;
-//			mame_pause(machine, force_pause);
-			machine->pause();
+			if (force_pause)
+				machine->pause();
+			else
+				machine->resume();
 		}
 	}
 #endif /* USE_PSXPLUGIN */

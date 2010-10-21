@@ -3237,14 +3237,14 @@ static void MoveImage( psx_gpu *p_psxgpu )
 
 void psx_gpu_write( running_machine *machine, UINT32 *p_ram, INT32 n_size )
 {
+	psx_gpu *p_psxgpu = machine->driver_data<psx_state>()->p_psxgpu;
+
 #ifdef USE_PSXPLUGIN
 	if( _psxGPULib.bIsLoaded != FALSE ) {
 		psx_extgpu_write(p_ram, n_size);
 		return;
 	}
 #endif /* USE_PSXPLUGIN */
-
-	psx_gpu *p_psxgpu = machine->driver_data<psx_state>()->p_psxgpu;
 
 	while( n_size > 0 )
 	{
@@ -3731,6 +3731,7 @@ void psx_gpu_write( running_machine *machine, UINT32 *p_ram, INT32 n_size )
 WRITE32_HANDLER( psx_gpu_w )
 {
 	psx_gpu *p_psxgpu = space->machine->driver_data<psx_state>()->p_psxgpu;
+
 #ifdef USE_PSXPLUGIN
 	if( _psxGPULib.bIsLoaded != FALSE ) {
 		psx_extgpu_w(space, offset, data, mem_mask);
@@ -3902,14 +3903,14 @@ WRITE32_HANDLER( psx_gpu_w )
 
 void psx_gpu_read( running_machine *machine, UINT32 *p_ram, INT32 n_size )
 {
+	psx_gpu *p_psxgpu = machine->driver_data<psx_state>()->p_psxgpu;
+
 #ifdef USE_PSXPLUGIN
 	if( _psxGPULib.bIsLoaded != FALSE ) {
 		psx_extgpu_read(p_ram, n_size);
 		return;
 	}
 #endif /* USE_PSXPLUGIN */
-
-	psx_gpu *p_psxgpu = machine->driver_data<psx_state>()->p_psxgpu;
 
 	while( n_size > 0 )
 	{
@@ -3987,13 +3988,14 @@ READ32_HANDLER( psx_gpu_r )
 
 INTERRUPT_GEN( psx_vblank )
 {
+	psx_gpu *p_psxgpu = device->machine->driver_data<psx_state>()->p_psxgpu;
+
 #ifdef USE_PSXPLUGIN
 	if( _psxGPULib.bIsLoaded != FALSE ) {
 		psx_extgpu_vblank(device);
 		return;
 	}
 #endif /* USE_PSXPLUGIN */
-	psx_gpu *p_psxgpu = device->machine->driver_data<psx_state>()->p_psxgpu;
 
 #if defined( MAME_DEBUG )
 	DebugCheckKeys(p_psxgpu);

@@ -650,6 +650,7 @@ VIDEO_UPDATE( psx_extgpu )
 	//set_visible_area( 0, p_psxgpu->n_screenwidth - 1, 0, p_psxgpu->n_screenheight - 1 );
 
 	/*
+	psx_gpu *p_psxgpu = screen->machine->driver_data<psx_state>()->p_psxgpu;
 	UINT32 gpustatus;
 	UINT32 n_x;
 	UINT32 n_y;
@@ -843,6 +844,7 @@ static void set_refresh_rate(running_machine *machine, int scrnum, double val)
 WRITE32_HANDLER( psx_extgpu_w )
 {
 	psx_gpu *p_psxgpu = space->machine->driver_data<psx_state>()->p_psxgpu;
+
 	if( _psxGPULib.bIsLoaded == FALSE ) return;
 
 	// flush stacked dmaChain data if exist.
@@ -1003,7 +1005,7 @@ void psx_extgpu_reset( running_machine *machine )
 {
 	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
 
-	psx_extgpu_w( space, 1, 0, 0 );
+	psx_extgpu_w( space, 1, 0, 0xffffffff );
 }
 
 /*-------------------------------------------------

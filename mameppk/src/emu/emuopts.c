@@ -137,6 +137,7 @@ const options_entry mame_core_options[] =
 	{ "contrast(0.1-2.0)",           "1.0",       0,                 "default game screen contrast correction" },
 	{ "gamma(0.1-3.0)",              "1.0",       0,                 "default game screen gamma correction" },
 	{ "pause_brightness(0.0-1.0)",   "0.65",      0,                 "amount to scale the screen brightness when paused" },
+	{ "effect",                      "none",      0,                 "name of a PNG file to use for visual effects, or 'none'" },
 #ifdef USE_SCALE_EFFECTS
 	{ "scale_effect",                "none",      0,                 "image enhancement effect" },
 #endif /* USE_SCALE_EFFECTS */

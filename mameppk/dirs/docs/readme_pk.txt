@@ -1,4 +1,4 @@
-Mame Plus! 0.139u4ベース
+MAME Plus!ベース
 
 コア関係及びその他の修正
  フルスクリーンチャット、Kaillera対応 [EmeraldMame]
