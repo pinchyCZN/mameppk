@@ -3789,9 +3789,6 @@ BOOL IsGlobalOption(const char *option_name)
 #ifdef USE_HISCORE
 		OPTION_HISCORE_DIRECTORY,
 #endif /* USE_HISCORE */
-#ifdef CMD_LIST
-		OPTION_COMMAND_FILE,
-#endif /* CMD_LIST */
 #ifdef USE_HISCORE
 		OPTION_HISCORE_FILE,
 #endif /* USE_HISCORE */

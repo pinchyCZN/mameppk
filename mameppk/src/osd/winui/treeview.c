@@ -3143,8 +3143,6 @@ static BOOL RegistExtraFolder(const TCHAR *name, LPEXFOLDERDATA *fExData, int ms
 	return FALSE;
 }
 
-extern DWORD create_path_recursive(const TCHAR *path);
-
 static int InitExtraFolders(void)
 {
 	WIN32_FIND_DATAW    ffd;
@@ -3159,7 +3157,7 @@ static int InitExtraFolders(void)
 
 	memset(ExtraFolderData, 0, MAX_EXTRA_FOLDERS * sizeof(LPEXFOLDERDATA));
 
-	create_path_recursive(dir);
+	CreateDirectoryW(dir, NULL);
 
 	_tcscpy(path, dir);
 	wcscat(path, TEXT("\\*"));
