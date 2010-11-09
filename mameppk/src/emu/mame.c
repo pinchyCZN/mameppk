@@ -154,7 +154,7 @@ int mame_is_valid_machine(running_machine *machine)
     mame_execute - run the core emulation
 -------------------------------------------------*/
 
-int mame_execute(core_options *options)
+int mame_execute(osd_interface &osd, core_options *options)
 {
 	bool firstgame = true;
 	bool firstrun = true;
@@ -199,7 +199,7 @@ int mame_execute(core_options *options)
 		const machine_config *config = global_alloc(machine_config(*driver));
 
 		// create the machine structure and driver
-		running_machine *machine = global_alloc(running_machine(*config, *options, started_empty));
+		running_machine *machine = global_alloc(running_machine(*config, osd, *options, started_empty));
 #ifdef KAILLERA
 		k_machine = machine;
 #endif /* KAILLERA */
