@@ -207,6 +207,7 @@ running_machine::running_machine(const machine_config &_config, osd_interface &o
 	  m_driver_device(NULL),
 	  m_cheat(NULL),
 	  m_render(NULL),
+	  m_video(NULL),
 	  m_debug_view(NULL)
 {
 	memset(gfx, 0, sizeof(gfx));
@@ -225,7 +226,7 @@ running_machine::running_machine(const machine_config &_config, osd_interface &o
 	assert(m_driver_device != NULL);
 
 	// find devices
-	primary_screen = screen_first(*this);
+	primary_screen = downcast<screen_device *>(m_devicelist.first(SCREEN));
 	for (device_t *device = m_devicelist.first(); device != NULL; device = device->next())
 		if (dynamic_cast<cpu_device *>(device) != NULL)
 		{
@@ -254,7 +255,7 @@ running_machine::running_machine(const machine_config &_config, osd_interface &o
 
 running_machine::~running_machine()
 {
-	/* clear flag for added devices */
+	// clear flag for added devices
 	options_set_bool(&m_options, OPTION_ADDED_DEVICE_OPTIONS, FALSE, OPTION_PRIORITY_CMDLINE);
 
 #ifdef KAILLERA
@@ -303,7 +304,6 @@ void running_machine::start()
 	palette_init(this);
 	m_render = auto_alloc(this, render_manager(*this));
 	generic_machine_init(this);
-	generic_video_init(this);
 	generic_sound_init(this);
 
 #ifdef KAILLERA
@@ -322,6 +322,9 @@ void running_machine::start()
 
 	// init the osd layer
 	m_osd.init(*this);
+
+	// create the video manager
+	m_video = auto_alloc(this, video_manager(*this));
 	ui_init(this);
 
 	// initialize the base time (needed for doing record/playback)
@@ -346,6 +349,9 @@ void running_machine::start()
 	memory_init(this);
 	watchdog_init(this);
 
+	// must happen after memory_init because this relies on generic.spriteram
+	generic_video_init(this);
+
 	// allocate the gfx elements prior to device initialization
 	gfx_init(this);
 
@@ -357,7 +363,6 @@ void running_machine::start()
 	tilemap_init(this);
 	crosshair_init(this);
 	sound_init(this);
-	video_init(this);
 
 	// initialize the debugger
 	if ((debug_flags & DEBUG_FLAG_ENABLED) != 0)
@@ -451,7 +456,7 @@ int running_machine::run(bool firstrun)
 
 			// otherwise, just pump video updates through
 			else
-				video_frame_update(this, false);
+				m_video->frame_update();
 
 			// handle save/load
 			if (m_saveload_schedule != SLS_NONE)

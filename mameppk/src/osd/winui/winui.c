@@ -11591,8 +11591,8 @@ static void SetupAviStatus(int nGame)
 	const screen_device_config *scrconfig;
 	core_options *o = load_options(OPTIONS_GAME, nGame);
 
-	screen = screen_first(config);
-	scrconfig = downcast<const screen_device_config *>(screen_first(config));
+	screen = config.first_screen();
+	scrconfig = downcast<const screen_device_config *>(config.first_screen());
 
 	AviStatus.source_file = (char*)drivers[nGame]->source_file;
 	AviStatus.index = nGame + 1;

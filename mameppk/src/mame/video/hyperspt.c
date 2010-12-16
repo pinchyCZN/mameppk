@@ -8,7 +8,7 @@
 
 #include "emu.h"
 #include "video/resnet.h"
-#include "includes/trackfld.h"
+#include "includes/hyperspt.h"
 
 #ifdef KAILLERA
 static int no_flip_screen;
@@ -95,14 +95,14 @@ PALETTE_INIT( hyperspt )
 
 WRITE8_HANDLER( hyperspt_videoram_w )
 {
-	trackfld_state *state = space->machine->driver_data<trackfld_state>();
+	hyperspt_state *state = space->machine->driver_data<hyperspt_state>();
 	state->videoram[offset] = data;
 	tilemap_mark_tile_dirty(state->bg_tilemap, offset);
 }
 
 WRITE8_HANDLER( hyperspt_colorram_w )
 {
-	trackfld_state *state = space->machine->driver_data<trackfld_state>();
+	hyperspt_state *state = space->machine->driver_data<hyperspt_state>();
 	state->colorram[offset] = data;
 	tilemap_mark_tile_dirty(state->bg_tilemap, offset);
 }
@@ -118,7 +118,7 @@ WRITE8_HANDLER( hyperspt_flipscreen_w )
 
 static TILE_GET_INFO( get_bg_tile_info )
 {
-	trackfld_state *state = machine->driver_data<trackfld_state>();
+	hyperspt_state *state = machine->driver_data<hyperspt_state>();
 	int code = state->videoram[tile_index] + ((state->colorram[tile_index] & 0x80) << 1) + ((state->colorram[tile_index] & 0x40) << 3);
 	int color = state->colorram[tile_index] & 0x0f;
 	int flags = ((state->colorram[tile_index] & 0x10) ? TILE_FLIPX : 0) | ((state->colorram[tile_index] & 0x20) ? TILE_FLIPY : 0);
@@ -128,7 +128,7 @@ static TILE_GET_INFO( get_bg_tile_info )
 
 VIDEO_START( hyperspt )
 {
-	trackfld_state *state = machine->driver_data<trackfld_state>();
+	hyperspt_state *state = machine->driver_data<hyperspt_state>();
 
 	state->bg_tilemap = tilemap_create(machine, get_bg_tile_info, tilemap_scan_rows, 8, 8, 64, 32);
 	tilemap_set_scroll_rows(state->bg_tilemap, 32);
@@ -142,7 +142,7 @@ VIDEO_START( hyperspt )
 
 static void draw_sprites( running_machine *machine, bitmap_t *bitmap, const rectangle *cliprect )
 {
-	trackfld_state *state = machine->driver_data<trackfld_state>();
+	hyperspt_state *state = machine->driver_data<hyperspt_state>();
 	UINT8 *spriteram = state->spriteram;
 	int offs;
 
@@ -227,7 +227,7 @@ static void rotscreen(running_machine *machine, bitmap_t *bitmap, const rectangl
 
 VIDEO_UPDATE( hyperspt )
 {
-	trackfld_state *state = screen->machine->driver_data<trackfld_state>();
+	hyperspt_state *state = screen->machine->driver_data<hyperspt_state>();
 	int row;
 
 	for (row = 0; row < 32; row++)
@@ -249,7 +249,7 @@ VIDEO_UPDATE( hyperspt )
 /* Road Fighter */
 static TILE_GET_INFO( roadf_get_bg_tile_info )
 {
-	trackfld_state *state = machine->driver_data<trackfld_state>();
+	hyperspt_state *state = machine->driver_data<hyperspt_state>();
 	int code = state->videoram[tile_index] + ((state->colorram[tile_index] & 0x80) << 1) + ((state->colorram[tile_index] & 0x60) << 4);
 	int color = state->colorram[tile_index] & 0x0f;
 	int flags = (state->colorram[tile_index] & 0x10) ? TILE_FLIPX : 0;
@@ -259,7 +259,7 @@ static TILE_GET_INFO( roadf_get_bg_tile_info )
 
 VIDEO_START( roadf )
 {
-	trackfld_state *state = machine->driver_data<trackfld_state>();
+	hyperspt_state *state = machine->driver_data<hyperspt_state>();
 
 	state->bg_tilemap = tilemap_create(machine, roadf_get_bg_tile_info, tilemap_scan_rows, 8, 8, 64, 32);
 	tilemap_set_scroll_rows(state->bg_tilemap, 32);
