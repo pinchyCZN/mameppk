@@ -270,7 +270,7 @@ bool screen_device_config::device_validity_check(const game_driver &driver) cons
 	// sanity check dimensions
 	if (m_width <= 0 || m_height <= 0)
 	{
-		mame_printf_error("%s: %s screen '%s' has invalid display dimensions\n", driver.source_file, driver.name, tag());
+		mame_printf_error(_("%s: %s screen '%s' has invalid display dimensions\n"), driver.source_file, driver.name, tag());
 		error = true;
 	}
 
@@ -282,7 +282,7 @@ bool screen_device_config::device_validity_check(const game_driver &driver) cons
 			(m_visarea.max_x >= m_width) ||
 			(m_visarea.max_y >= m_height))
 		{
-			mame_printf_error("%s: %s screen '%s' has an invalid display area\n", driver.source_file, driver.name, tag());
+			mame_printf_error(_("%s: %s screen '%s' has an invalid display area\n"), driver.source_file, driver.name, tag());
 			error = true;
 		}
 
@@ -291,7 +291,7 @@ bool screen_device_config::device_validity_check(const game_driver &driver) cons
 			m_format != BITMAP_FORMAT_RGB15 &&
 			m_format != BITMAP_FORMAT_RGB32)
 		{
-			mame_printf_error("%s: %s screen '%s' has unsupported format\n", driver.source_file, driver.name, tag());
+			mame_printf_error(_("%s: %s screen '%s' has unsupported format\n"), driver.source_file, driver.name, tag());
 			error = true;
 		}
 	}
@@ -299,7 +299,7 @@ bool screen_device_config::device_validity_check(const game_driver &driver) cons
 	// check for zero frame rate
 	if (m_refresh == 0)
 	{
-		mame_printf_error("%s: %s screen '%s' has a zero refresh rate\n", driver.source_file, driver.name, tag());
+		mame_printf_error(_("%s: %s screen '%s' has a zero refresh rate\n"), driver.source_file, driver.name, tag());
 		error = true;
 	}
 	return error;
