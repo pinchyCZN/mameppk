@@ -556,9 +556,6 @@ void SetUIPaletteString(int n, const char *s);
 #endif /* UI_COLOR_DISPLAY */
 
 BOOL FolderHasVector(const WCHAR *name);
-#ifdef USE_PSXPLUGIN
-BOOL FolderHasPSXCpu(const WCHAR *name);
-#endif /* USE_PSXPLUGIN */
 
 void SetListBrokenColor(COLORREF uColor);
 COLORREF GetListBrokenColor(void);
@@ -575,17 +572,6 @@ void SetDisplaySplashScreen(BOOL val);
 BOOL GetShowTreeSheet(void);
 void SetShowTreeSheet(BOOL val);
 #endif /* TREE_SHEET */
-
-#ifdef USE_PSXPLUGIN
-enum
-{
-	GPUSCR_640x480 = 0,
-	GPUSCR_800x600,
-	GPUSCR_1024x768,
-	GPUSCR_1152x864,
-	GPUSCR_MAX
-};
-#endif /*USE_PSXPLUGIN*/
 
 #ifdef KAILLERA
 #define KAILLERA_LOST_CONNECTION_OPERATION_NONE				0

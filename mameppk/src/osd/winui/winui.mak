@@ -223,10 +223,6 @@ ifneq ($(KAILLERA),)
 RCDEFS += -DKAILLERA
 endif
 
-ifneq ($(USE_PSXPLUGIN),)
-RCDEFS += -DUSE_PSXPLUGIN
-endif
-
 ifneq ($(MAMEUIPLUSPLUS),)
 RCDEFS += -DMAMEUIPLUSPLUS
 endif

@@ -122,12 +122,6 @@ INLINE int limit( int v )
 	return v;
 }
 
-#ifdef USE_PSXPLUGIN
-//================================================================
-#include "psx_extspu.c"
-//================================================================
-extern PSXSPULIB _psxSPULib;
-#endif /* USE_PSXPLUGIN */
 static STREAM_UPDATE( PSXSPU_update )
 {
 	struct psxinfo *chip = (struct psxinfo *)param;
@@ -155,9 +149,7 @@ static STREAM_UPDATE( PSXSPU_update )
 
 	memset( outputs[ 0 ], 0, samples * sizeof( *outputs[ 0 ] ));
 	memset( outputs[ 1 ], 0, samples * sizeof( *outputs[ 1 ] ));
-#ifdef USE_PSXPLUGIN
-	if(_psxSPULib.bIsLoaded != FALSE) return;
-#endif /* USE_PSXPLUGIN */
+
 	for( n_channel = 0; n_channel < MAX_CHANNEL; n_channel++ )
 	{
 		// hack, if the envelope is in release state, silence it
@@ -247,12 +239,6 @@ static void spu_read( running_machine *machine, UINT32 n_address, INT32 n_size )
 {
 	struct psxinfo *chip = get_safe_token(machine->device("spu"));
 	verboselog( machine, 1, "spu_read( %08x, %08x )\n", n_address, n_size );
-#ifdef USE_PSXPLUGIN
-	if(_psxSPULib.bIsLoaded != FALSE) {
-		psx_extspu_read(n_address,n_size);
-		return;
-	}
-#endif /* USE_PSXPLUGIN */
 
 	while( n_size > 0 )
 	{
@@ -272,12 +258,6 @@ static void spu_write( running_machine *machine, UINT32 n_address, INT32 n_size 
 {
 	struct psxinfo *chip = get_safe_token(machine->device("spu"));
 	verboselog( machine, 1, "spu_write( %08x, %08x )\n", n_address, n_size );
-#ifdef USE_PSXPLUGIN
-	if(_psxSPULib.bIsLoaded != FALSE) {
-		psx_extspu_write(n_address,n_size);
-		return;
-	}
-#endif /* USE_PSXPLUGIN */
 
 	while( n_size > 0 )
 	{
@@ -391,20 +371,8 @@ static DEVICE_START( psxspu )
 	chip->installHack = 0;
 
 	chip->stream = stream_create( device, 0, 2, 44100, chip, PSXSPU_update );
-
-#ifdef USE_PSXPLUGIN
-	DEVICE_START_CALL( psx_extspu );
-#endif /* USE_PSXPLUGIN */
 }
 
-#ifdef USE_PSXPLUGIN
-static DEVICE_STOP( psxspu )
-{
-	if(_psxSPULib.bIsLoaded != FALSE) {
-		DEVICE_STOP_CALL( psx_extspu );
-	}
-}
-#endif /* USE_PSXPLUGIN */
 
 WRITE32_DEVICE_HANDLER( psx_spu_delay_w )
 {
@@ -427,11 +395,6 @@ READ32_DEVICE_HANDLER( psx_spu_r )
 	struct psxinfo *chip = get_safe_token(device);
 	running_machine *machine = device->machine;
 	int n_channel;
-#ifdef USE_PSXPLUGIN
-	if(_psxSPULib.bIsLoaded != FALSE) {
-		psx_extspu_r(device, offset, mem_mask);
-	}
-#endif /* USE_PSXPLUGIN */
 	n_channel = offset / 4;
 	if( n_channel < MAX_CHANNEL )
 	{
@@ -502,11 +465,6 @@ WRITE32_DEVICE_HANDLER( psx_spu_w )
 	struct psxinfo *chip = get_safe_token(device);
 	running_machine *machine = device->machine;
 	int n_channel;
-#ifdef USE_PSXPLUGIN
-	if(_psxSPULib.bIsLoaded != FALSE) {
-		psx_extspu_w(device, offset, data, mem_mask);
-	}
-#endif /* USE_PSXPLUGIN */
 	n_channel = offset / 4;
 
 	if( !chip->installHack )
@@ -761,11 +719,7 @@ DEVICE_GET_INFO( psxspu )
 
 		/* --- the following bits of info are returned as pointers to data or functions --- */
 		case DEVINFO_FCT_START:							info->start = DEVICE_START_NAME( psxspu );			break;
-#ifdef USE_PSXPLUGIN
-		case DEVINFO_FCT_STOP:							info->stop = DEVICE_STOP_NAME( psxspu );			break;
-#else /* USE_PSXPLUGIN */
 		case DEVINFO_FCT_STOP:							/* Nothing */									break;
-#endif /* USE_PSXPLUGIN */
 		case DEVINFO_FCT_RESET:							/* Nothing */									break;
 
 		/* --- the following bits of info are returned as NULL-terminated strings --- */

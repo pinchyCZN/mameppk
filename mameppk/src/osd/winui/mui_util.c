@@ -45,10 +45,6 @@
 
 #include <shlwapi.h>
 
-#ifdef USE_PSXPLUGIN
-#include "cpu/mips/psx.h"
-#endif /*USE_PSXPLUGIN*/
-
 
 /***************************************************************************
 	function prototypes
@@ -80,9 +76,6 @@ static struct DriversInfo
 	int numPlayers;
 	int numButtons;
 	BOOL usesController[CONTROLLER_MAX];
-#ifdef USE_PSXPLUGIN
-	BOOL usesPSXCpu;
-#endif /*USE_PSXPLUGIN*/
 	int parentIndex;
 #if defined(KAILLERA) || defined(MAMEUIPLUSPLUS)
 	int parentIndex2;
@@ -571,18 +564,6 @@ static struct DriversInfo* GetDriversInfo(int driver_index)
 				}
 			}
 
-#ifdef USE_PSXPLUGIN
-			{
-				const device_config_execute_interface *device = NULL;
-
-				gameinfo->usesPSXCpu = FALSE;
-				for (bool gotone = config.m_devicelist.first(device); gotone; gotone = device->next(device))
-				{
-					if (device->devconfig().type() == PSXCPU) gameinfo->usesPSXCpu = TRUE;
-				}
-			}
-#endif /*USE_PSXPLUGIN*/
-
 			num_speakers = numberOfSpeakers(&config);
 
 			gameinfo->isStereo = (num_speakers > 1);
@@ -800,13 +781,6 @@ BOOL DriverSupportsSaveState(int driver_index)
 BOOL DriverIsVertical(int driver_index) {
 	return GetDriversInfo(driver_index)->isVertical; 
 }
-
-#ifdef USE_PSXPLUGIN
-BOOL DriverUsesPSXCpu(int driver_index)
-{
-	return GetDriversInfo(driver_index)->usesPSXCpu;
-}
-#endif /*USE_PSXPLUGIN*/
 
 BOOL DriverIsConsole(int driver_index)
 {

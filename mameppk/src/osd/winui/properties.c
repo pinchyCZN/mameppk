@@ -161,10 +161,6 @@ b) Exit the dialog.
 #include "propertiesms.h"
 #endif
 
-#ifdef USE_PSXPLUGIN
-#include "cpu/mips/psx.h"
-#endif /*USE_PSXPLUGIN*/
-
 #if defined(__GNUC__)
 /* fix warning: cast does not match function type */
 #undef  PropSheet_GetTabControl
@@ -271,22 +267,6 @@ static BOOL IsControlOptionValue(HWND hDlg, HWND hwnd_ctrl, core_options *opts, 
 static void UpdateBackgroundBrush(HWND hwndTab);
 static HBRUSH hBkBrush;
 
-#ifdef USE_PSXPLUGIN
-static BOOL g_bWarningFrame     = FALSE;
-static BOOL g_bWarningScrX     = FALSE;
-static BOOL g_bWarningScrY     = FALSE;
-
-//static HWND hwndList  = NULL;
-static void InitializePSXPlugInUI(HWND hwnd);
-//static BOOL IsPSXGPUConfigureAvail(HWND hwnd);
-static void RunPSXGPUConfigure(HWND hwnd);
-static void RunPSXSPUConfigure(HWND hwnd);
-static void FrameRateLimitClick(HWND hwnd);
-static void DetectionClick(HWND hwnd);
-static void GPUStandardScreenClick(HWND hwnd);
-static void GPUCustomScreenClick(HWND hwnd);
-#endif /* USE_PSXPLUGIN */
-
 /**************************************************************
  * Local private variables
  **************************************************************/
@@ -346,33 +326,6 @@ BOOL PropSheetFilter_Vector(const machine_config *drv, const game_driver *gamedr
 {
 	return isDriverVector(drv);
 }
-
-#ifdef USE_PSXPLUGIN
-static BOOL isDriverPSX(const game_driver *gamedrv)
-{
-	machine_config config(*gamedrv);
-	const device_config_execute_interface *device = NULL;
-
-	for (bool gotone = config.m_devicelist.first(device); gotone; gotone = device->next(device))
-	{
-		if (device->devconfig().type() == PSXCPU) return TRUE;
-	}
-	return FALSE;
-}
-
-BOOL PropSheetFilter_PSXPLUGIN(const machine_config *drv, const game_driver *gamedrv)
-{
-	if (g_nPropertyMode == OPTIONS_GLOBAL) return 0;
-
-	if (g_nPropertyMode == OPTIONS_SOURCE)
-	{
-		const WCHAR *folder = GetFolderByID(g_nFolder)->m_lpTitle;
-		return FolderHasPSXCpu(folder);
-	}
-
-	return isDriverPSX(gamedrv);
-}
-#endif /* USE_PSXPLUGIN */
 
 /* Help IDs - moved to auto-generated helpids.c */
 extern const DWORD dwHelpIDs[];
@@ -475,86 +428,6 @@ static const struct
 	{0}
 };
 #endif /* DRIVER_SWITCH */
-
-#ifdef USE_PSXPLUGIN
-
-static struct ComboBoxPsxGpuScrSize
-{
-	const WCHAR*	m_pText;
-	const int	m_pData;
-} g_ComboBoxPsxGpuScrSize[] = 
-{
-	{ TEXT("640x480"),       GPUSCR_640x480    },
-	{ TEXT("800x600"),       GPUSCR_800x600    },
-	{ TEXT("1024x768"),      GPUSCR_1024x768   },
-	{ TEXT("1152x864"),      GPUSCR_1152x864   },
-};
-#define NUMPSXSCRSIZE ARRAY_LENGTH(g_ComboBoxPsxGpuScrSize)
-
-static struct ComboBoxPsxGpuScanline
-{
-	const WCHAR*	m_pText;
-	const int	m_pData;
-} g_ComboBoxPsxGpuScanline[] = 
-{
-	{ TEXT("None"),                 0    },
-	{ TEXT("Dark"),                 1    },
-	{ TEXT("Bright"),               2    },
-};
-#define NUMPSXSCANLINE ARRAY_LENGTH(g_ComboBoxPsxGpuScanline)
-
-static struct ComboBoxPsxGpuBlending
-{
-	const WCHAR*	m_pText;
-	const int	m_pData;
-} g_ComboBoxPsxGpuBlending[] = 
-{
-	{ TEXT("None"),                 0    },
-	{ TEXT("Normal"),               1    },
-	{ TEXT("Advanced"),             2    },
-};
-#define NUMPSXBLENDING ARRAY_LENGTH(g_ComboBoxPsxGpuBlending)
-
-static struct ComboBoxPsxGpuFiltering
-{
-	const WCHAR*	m_pText;
-	const int	m_pData;
-} g_ComboBoxPsxGpuFiltering[] = 
-{
-	{ TEXT("0"),                    0    },
-	{ TEXT("1"),                    1    },
-	{ TEXT("2"),                    2    },
-	{ TEXT("3"),                    3    },
-};
-#define NUMPSXFILTERING ARRAY_LENGTH(g_ComboBoxPsxGpuFiltering)
-
-static struct ComboBoxPsxGpuQuality
-{
-	const WCHAR*	m_pText;
-	const int	m_pData;
-} g_ComboBoxPsxGpuQuality[] = 
-{
-	{ TEXT("Default"),              0    },
-	{ TEXT("4444"),                 1    },
-	{ TEXT("5551"),                 2    },
-	{ TEXT("8888"),                 3    },
-};
-#define NUMPSXQUALITY ARRAY_LENGTH(g_ComboBoxPsxGpuQuality)
-
-static struct ComboBoxPsxGpuCaching
-{
-	const WCHAR*	m_pText;
-	const int	m_pData;
-} g_ComboBoxPsxGpuCaching[] = 
-{
-	{ TEXT("None"),                 0    },
-	{ TEXT("Minimum"),              1    },
-	{ TEXT("Normal"),               2    },
-	{ TEXT("Maximum"),              3    },
-};
-#define NUMPSXCACHING ARRAY_LENGTH(g_ComboBoxPsxGpuCaching)
-
-#endif /* USE_PSXPLUGIN */
 
 
 /***************************************************************
@@ -1550,66 +1423,6 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 				changed = ResetDebugscript(hDlg);
 				break;
 
-#ifdef USE_PSXPLUGIN
-#if 0
-			case IDC_PSXGPU_SCRX:
-				if (wNotifyCode == EN_CHANGE)
-					{
-					if (g_bInternalSet == FALSE)
-					changed = TRUE;
-					}
-				break;
-
-			case IDC_PSXGPU_SCRY:
-				if (wNotifyCode == EN_CHANGE)
-					{
-					if (g_bInternalSet == FALSE)
-					changed = TRUE;
-					}
-				break;
-		
-			case IDC_PSXGPU_FRAMERATE:
-				if (wNotifyCode == EN_CHANGE)
-					{
-					if (g_bInternalSet == FALSE)
-					changed = TRUE;
-					}
-				break;
-#endif
-
-			case IDC_BTN_GPUCFG:
-				if (wNotifyCode == BN_CLICKED) {
-					RunPSXGPUConfigure(hDlg);
-				}
-				break;
-
-			case IDC_BTN_SPUCFG:
-				if (wNotifyCode == BN_CLICKED) {
-					RunPSXSPUConfigure(hDlg);
-				}
-				break;
-
-			case IDC_PSXGPU_FRAME_LIMIT:
-				if (wNotifyCode == BN_CLICKED)
-					FrameRateLimitClick(hDlg);
-				break;
-
-			case IDC_PSXGPU_DETECTION:
-				if (wNotifyCode == BN_CLICKED)
-					DetectionClick(hDlg);
-				break;
-
-			case IDC_PSXGPU_SCRSTD:
-				if (wNotifyCode == BN_CLICKED)
-					GPUStandardScreenClick(hDlg);
-				break;
-
-			case IDC_PSXGPU_SCRCTM:
-				if (wNotifyCode == BN_CLICKED)
-					GPUCustomScreenClick(hDlg);
-				break;
-#endif /* USE_PSXPLUGIN */
-
 			case IDC_PROP_RESET:
 				if (wNotifyCode != BN_CLICKED)
 					break;
@@ -2332,65 +2145,6 @@ static void PropToOptions(HWND hWnd, core_options *o)
 			options_set_string(o, OPTION_SNAPSIZE, buffer2, OPTION_PRIORITY_CMDLINE);
 		}
 	}
-
-#ifdef USE_PSXPLUGIN
-	hCtrl  = GetDlgItem(hWnd, IDC_PSXGPU_SCRX);
-	if (hCtrl)
-	{
-		int n = 0;
-		char buffer[200];
-
-		Edit_GetTextA(hCtrl,buffer,sizeof(buffer));
-		sscanf(buffer,"%d",&n);
-
-		// adjust frame to 0-2048
-		if (n <0 || n > 2048)
-		{
-		n=800;
-		g_bWarningScrX = TRUE;
-		}
-
-		options_set_int(o, "gpu_screen_x", n, OPTION_PRIORITY_CMDLINE);
-	}
-
-	hCtrl  = GetDlgItem(hWnd, IDC_PSXGPU_SCRY);
-	if (hCtrl)
-	{
-		int n = 0;
-		char buffer[200];
-
-		Edit_GetTextA(hCtrl,buffer,sizeof(buffer));
-		sscanf(buffer,"%d",&n);
-
-		// adjust frame to 0-2048
-		if (n <0 || n > 2048)
-		{
-		n=600;
-		g_bWarningScrY = TRUE;
-		}
-
-		options_set_int(o, "gpu_screen_y", n, OPTION_PRIORITY_CMDLINE);
-	}
-
-	hCtrl  = GetDlgItem(hWnd, IDC_PSXGPU_FRAMERATE);
-	if (hCtrl)
-	{
-		int n = 0;
-		char buffer[200];
-
-		Edit_GetTextA(hCtrl,buffer,sizeof(buffer));
-		sscanf(buffer,"%d",&n);
-
-		// adjust frame to 0-1000
-		if (n <0 || n > 1000)
-		{
-		n=60;
-		g_bWarningFrame=TRUE;
-		}
-
-		options_set_int(o, "gpu_frame_rate", n, OPTION_PRIORITY_CMDLINE);
-	}
-#endif /* USE_PSXPLUGIN */
 }
 
 /* Update options from the dialog */
@@ -2609,62 +2363,6 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 			Edit_SetText(hCtrl2, TEXT("480"));
 		}
 	}
-
-#ifdef USE_PSXPLUGIN
-//in this part o->gpu_screen_x and o->gpu_screen_y's value will be changed to zero.
-//I don't know why, anyway, use nscrx and nscry instead and problem solved.
-	hCtrl  = GetDlgItem(hWnd, IDC_PSXGPU_SCRX);
-	if (hCtrl)
-	{
-		WCHAR buf[200];
-
-		if (g_bWarningScrX)
-		{
-		g_bWarningScrX = FALSE;
-		wcscpy(buf, _UIW(TEXT("Screen X setting out of range(0-2048), default to 800.")));
-		MessageBox(NULL, buf, _UIW(TEXT("Error")), MB_OK|MB_ICONSTOP);
-		}
-
-		wsprintf(buf, TEXT("%d"), options_get_int(o, "gpu_screen_x"));
-		Edit_LimitText(hCtrl, 4);
-		Edit_SetText(hCtrl, buf);
-	}
-
-	hCtrl  = GetDlgItem(hWnd, IDC_PSXGPU_SCRY);
-	if (hCtrl)
-	{
-		WCHAR buf[200];
-
-		if (g_bWarningScrY)
-		{
-		g_bWarningScrY = FALSE;
-		wcscpy(buf, _UIW(TEXT("Screen Y setting out of range(0-2048), default to 600.")));
-		MessageBox(NULL, buf, _UIW(TEXT("Error")), MB_OK|MB_ICONSTOP);
-		}
-
-		wsprintf(buf, TEXT("%d"), options_get_int(o, "gpu_screen_y"));
-		Edit_LimitText(hCtrl, 4);
-		Edit_SetText(hCtrl, buf);
-	}
-
-	hCtrl = GetDlgItem(hWnd, IDC_PSXGPU_FRAMERATE);
-	if (hCtrl)
-	{
-		WCHAR buf[200];
-	
-		// adjust frame to 0-1000
-		if (g_bWarningFrame)
-		{
-		g_bWarningFrame = FALSE;
-		wcscpy(buf, _UIW(TEXT("Framerate setting out of range(0-1000), default to 60.")));
-		MessageBox(NULL, buf, _UIW(TEXT("Error")), MB_OK|MB_ICONSTOP);
-		}
-
-		wsprintf(buf, TEXT("%d"), options_get_int(o, "gpu_frame_rate"));
-		Edit_LimitText(hCtrl, 4);
-		Edit_SetText(hCtrl, buf);
-	}
-#endif /* USE_PSXPLUGIN */
 }
 
 /* Adjust controls - tune them to the currently selected game */
@@ -2900,92 +2598,6 @@ static void SetPropEnabledControls(HWND hWnd)
 		Button_Enable(GetDlgItem(hWnd,IDC_ENABLE_AUTOSAVE),TRUE);
 	else
 		Button_Enable(GetDlgItem(hWnd,IDC_ENABLE_AUTOSAVE),FALSE);
-
-#ifdef USE_PSXPLUGIN
-	{
-		BOOL bGpuEnabled = FALSE;
-		BOOL bSpuEnabled = FALSE;
-	
-		if( (g_nPropertyMode == OPTIONS_GLOBAL) || (g_nPropertyMode == OPTIONS_GAME && DriverUsesPSXCpu(nIndex)) ||
-			g_nPropertyMode == OPTIONS_SOURCE ) 
-		{
-			EnableWindow(GetDlgItem(hWnd, IDC_USE_GPUPLUGIN),	TRUE );
-			EnableWindow(GetDlgItem(hWnd, IDC_USE_SPUPLUGIN),	TRUE ); // PSX_SPU
-
-			hCtrl = GetDlgItem(hWnd, IDC_USE_GPUPLUGIN);
-			if( Button_GetCheck(hCtrl) ) 
-				bGpuEnabled = TRUE;
-
-			// PSX_SPU
-			hCtrl = GetDlgItem(hWnd, IDC_USE_SPUPLUGIN);
-			if( Button_GetCheck(hCtrl) )
-				bSpuEnabled = TRUE;
-		}
-		else 
-		{
-			// disable all psx plugins properties
-			bGpuEnabled = FALSE;
-			bSpuEnabled = FALSE;
-			EnableWindow(GetDlgItem(hWnd, IDC_USE_GPUPLUGIN),	FALSE );
-			EnableWindow(GetDlgItem(hWnd, IDC_USE_SPUPLUGIN),	FALSE ); // PSX_SPU
-		}
-
-
-		EnableWindow(GetDlgItem(hWnd, IDC_BTN_GPUCFG),	bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_BTN_SPUCFG),	bSpuEnabled );
-//		EnableWindow(GetDlgItem(hWnd, IDC_MAKE_GPUGAMEWINDOW),		in_window && bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_MAKE_GPUGAMEWINDOW),		FALSE );  // doesn't work any more without
-		EnableWindow(GetDlgItem(hWnd, IDC_COMBO_GPUPLUGIN),		bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_COMBO_SPUPLUGIN),		bSpuEnabled );	// PSX_SPU
-		//EnableWindow(GetDlgItem(hWnd, IDC_COMBO_PSXGPU_SCREENSIZE),	bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_FULLSCREEN),		in_window && bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_SHOWFPS),		bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_COMBO_PSXGPU_SCANLINE),	bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_COMBO_PSXGPU_BLENDING),	bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_32BIT),		bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_DITHERING),		bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_FRAME_SKIP),		bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_DETECTION),		bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_FRAME_LIMIT),		bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_COMBO_PSXGPU_FILTERING),	bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_COMBO_PSXGPU_QUALITY),	bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_COMBO_PSXGPU_CACHING),	bGpuEnabled );
-		//EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_SCRX),			bGpuEnabled );
-		//EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_SCRY),			bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_SCRSTD),		bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_SCRCTM),		bGpuEnabled );
-
-		hCtrl = GetDlgItem(hWnd, IDC_PSXGPU_FRAME_LIMIT);
-		if( Button_GetCheck(hCtrl) )
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_FRAMERATE),		bGpuEnabled );
-		else
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_FRAMERATE),		FALSE );
-
-		hCtrl = GetDlgItem(hWnd, IDC_PSXGPU_SCRSTD);
-		if( Button_GetCheck(hCtrl) )
-		EnableWindow(GetDlgItem(hWnd, IDC_COMBO_PSXGPU_SCREENSIZE),		bGpuEnabled );
-		else
-		EnableWindow(GetDlgItem(hWnd, IDC_COMBO_PSXGPU_SCREENSIZE),		FALSE );
-
-		hCtrl = GetDlgItem(hWnd, IDC_PSXGPU_SCRCTM);
-		if( Button_GetCheck(hCtrl) )
-		{
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_SCRX),		bGpuEnabled );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_SCRY),		bGpuEnabled );
-		}
-		else
-		{
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_SCRX),		FALSE );
-		EnableWindow(GetDlgItem(hWnd, IDC_PSXGPU_SCRY),		FALSE );
-		}
-		if (!options_get_bool(pCurrentOpts, WINOPTION_WINDOW))
-		{
-			options_set_bool(pCurrentOpts, "gpu_fullscreen", TRUE, OPTION_PRIORITY_CMDLINE);
-//			options_set_bool(pCurrentOpts, "make_gpu_gamewin", TRUE, OPTION_PRIORITY_CMDLINE);
-		}
-		options_set_bool(pCurrentOpts, "make_gpu_gamewin", TRUE, OPTION_PRIORITY_CMDLINE);	// doesn't work any more without
-	}
-#endif /* USE_PSXPLUGIN */
 }
 
 //============================================================
@@ -3461,54 +3073,6 @@ static BOOL DriverConfigReadControl(datamap *map, HWND dialog, HWND control, cor
 }
 #endif /* DRIVER_SWITCH */
 
-#if 0
-#ifdef USE_PSXPLUGIN
-static BOOL PsxGPUReadControl(datamap *map, HWND dialog, HWND control_, core_options *opts, const char *option_name)
-{
-	if (!(g_nPropertyMode == OPTIONS_GLOBAL) && Button_GetCheck(control_))
-	{
-		options_set_bool(opts, option_name, TRUE, OPTION_PRIORITY_CMDLINE);
-		if (options_get_bool(opts, WINOPTION_WINDOW))
-		{
-//			options_set_bool(opts, WINOPTION_MAXIMIZE, FALSE, OPTION_PRIORITY_CMDLINE);
-//			options_set_bool(opts, WINOPTION_KEEPASPECT, FALSE, OPTION_PRIORITY_CMDLINE);
-		}
-		else
-		{
-			options_set_bool(opts, "gpu_fullscreen", TRUE, OPTION_PRIORITY_CMDLINE);
-		}
-		if (options_get_bool(opts, "gpu_frame_limit"))
-		{
-			options_set_bool(opts, OPTION_THROTTLE, FALSE, OPTION_PRIORITY_CMDLINE);
-		}
-		options_set_bool(opts, OPTION_AUTOFRAMESKIP, FALSE, OPTION_PRIORITY_CMDLINE);
-		options_set_bool(opts, OPTION_CONFIRM_QUIT, FALSE, OPTION_PRIORITY_CMDLINE);
-		options_set_bool(opts, OPTION_SKIP_GAMEINFO, TRUE, OPTION_PRIORITY_CMDLINE);
-		options_set_string(opts, WINOPTION_VIDEO, "gdi", OPTION_PRIORITY_CMDLINE);
-	}
-	else
-	{
-		options_set_bool(opts, option_name, FALSE, OPTION_PRIORITY_CMDLINE);
-	}
-	return TRUE;
-}
-
-static BOOL PsxSPUReadControl(datamap *map, HWND dialog, HWND control_, core_options *opts, const char *option_name)
-{
-	if (!(g_nPropertyMode == OPTIONS_GLOBAL) && Button_GetCheck(control_))
-	{
-		options_set_bool(opts, option_name, TRUE, OPTION_PRIORITY_CMDLINE);
-	}
-	else
-	{
-		options_set_bool(opts, option_name, FALSE, OPTION_PRIORITY_CMDLINE);
-	}
-
-	return TRUE;
-}
-#endif /* USE_PSXPLUGIN */
-#endif
-
 
 
 //============================================================
@@ -3646,31 +3210,6 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_TRANSPARENCY,			DM_INT,  	OPTION_UI_TRANSPARENCY);
 	datamap_add(properties_datamap, IDC_TRANSPARENCYDISP,			DM_INT,  	OPTION_UI_TRANSPARENCY);
 #endif /* TRANS_UI */
-#ifdef USE_PSXPLUGIN
-	datamap_add(properties_datamap, IDC_USE_GPUPLUGIN,			DM_BOOL,	"use_gpu_plugin");	// PSX GPU
-	datamap_add(properties_datamap, IDC_COMBO_GPUPLUGIN,		DM_STRING,	"gpu_plugin_name");
-	datamap_add(properties_datamap, IDC_PSXGPU_SCRSTD,			DM_BOOL,	"gpu_screen_std");
-	datamap_add(properties_datamap, IDC_PSXGPU_SCRCTM,			DM_BOOL,	"gpu_screen_ctm");
-	datamap_add(properties_datamap, IDC_COMBO_PSXGPU_SCREENSIZE,DM_INT,		"gpu_screen_size");
-	datamap_add(properties_datamap, IDC_PSXGPU_SCRX,			DM_INT,		NULL);
-	datamap_add(properties_datamap, IDC_PSXGPU_SCRY,			DM_INT,		NULL);
-	datamap_add(properties_datamap, IDC_COMBO_PSXGPU_SCANLINE,	DM_INT,		"gpu_scanline");
-	datamap_add(properties_datamap, IDC_COMBO_PSXGPU_BLENDING,	DM_INT,		"gpu_blending");
-	datamap_add(properties_datamap, IDC_PSXGPU_FULLSCREEN,		DM_BOOL,	"gpu_fullscreen");
-	datamap_add(properties_datamap, IDC_PSXGPU_SHOWFPS,			DM_BOOL,	"gpu_showfps");
-	datamap_add(properties_datamap, IDC_PSXGPU_32BIT,			DM_BOOL,	"gpu_32bit");
-	datamap_add(properties_datamap, IDC_PSXGPU_DITHERING,		DM_BOOL,	"gpu_dithering");
-	datamap_add(properties_datamap, IDC_PSXGPU_FRAME_SKIP,		DM_BOOL,	"gpu_frame_skip");
-	datamap_add(properties_datamap, IDC_PSXGPU_DETECTION,		DM_BOOL,	"gpu_detection");
-	datamap_add(properties_datamap, IDC_PSXGPU_FRAME_LIMIT,		DM_BOOL,	"gpu_frame_limit");
-	datamap_add(properties_datamap, IDC_PSXGPU_FRAMERATE,		DM_INT,		NULL);
-	datamap_add(properties_datamap, IDC_MAKE_GPUGAMEWINDOW,		DM_BOOL,	"make_gpu_gamewin");
-	datamap_add(properties_datamap, IDC_COMBO_PSXGPU_FILTERING,	DM_INT,		"gpu_filtering");
-	datamap_add(properties_datamap, IDC_COMBO_PSXGPU_QUALITY,	DM_INT,		"gpu_quality");
-	datamap_add(properties_datamap, IDC_COMBO_PSXGPU_CACHING,	DM_INT,		"gpu_caching");
-	datamap_add(properties_datamap, IDC_USE_SPUPLUGIN,			DM_BOOL,	"use_spu_plugin");	// PSX_SPU
-	datamap_add(properties_datamap, IDC_COMBO_SPUPLUGIN,		DM_STRING,	"spu_plugin_name");
-#endif /* USE_PSXPLUGIN */
 
 
 	// windows performance options
@@ -3769,12 +3308,6 @@ static void BuildDataMap(void)
 			datamap_set_callback(properties_datamap, drivers_table[i].ctrl,	DCT_READ_CONTROL,	DriverConfigReadControl);
 	}
 #endif /* DRIVER_SWITCH */
-#if 0
-#ifdef USE_PSXPLUGIN
-	datamap_set_callback(properties_datamap, IDC_USE_GPUPLUGIN,				DCT_READ_CONTROL,	PsxGPUReadControl);
-	datamap_set_callback(properties_datamap, IDC_USE_SPUPLUGIN,				DCT_READ_CONTROL,	PsxSPUReadControl);
-#endif /* USE_PSXPLUGIN */
-#endif
 
 	datamap_set_option_name_callback(properties_datamap, IDC_VIEW,		ViewSetOptionName);
 	//missing population of views with per game defined additional views
@@ -3888,9 +3421,6 @@ static void InitializeOptions(HWND hDlg)
 #ifdef JOYSTICK_ID
 	InitializeJoyidUI(hDlg);
 #endif /* JOYSTICK_ID */
-#ifdef USE_PSXPLUGIN
-	InitializePSXPlugInUI(hDlg);
-#endif /* USE_PSXPLUGIN */
 }
 
 /* Moved here because it is called in several places */
@@ -4489,282 +4019,6 @@ void UpdateBackgroundBrush(HWND hwndTab)
         ReleaseDC(hwndTab, hDC);
 	}
 }
-
-#ifdef USE_PSXPLUGIN
-static void InitializePSXPlugInUI(HWND hwnd)
-{
-	HWND hCtrl = GetDlgItem(hwnd, IDC_COMBO_GPUPLUGIN);
-	
-/* Only d3d plugins for real fullscreen */
-	if (hCtrl && !options_get_bool(pCurrentOpts, WINOPTION_WINDOW))
-	{
-		int i=0;
-		(void)ComboBox_AddString(hCtrl, TEXT("d3d_renderer.znc"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "d3d_renderer.znc");
-		(void)ComboBox_AddString(hCtrl, TEXT("gpuPeopsSoft.dll"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "gpuPeopsSoft.dll");
-		(void)ComboBox_AddString(hCtrl, TEXT("soft_renderer.znc"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "soft_renderer.znc");
-	}
-	else if (hCtrl && options_get_bool(pCurrentOpts, WINOPTION_WINDOW))
-	{
-		int i=0;
-		(void)ComboBox_AddString(hCtrl, TEXT("gpuPeopsSoft.dll"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "gpuPeopsSoft.dll");
-		(void)ComboBox_AddString(hCtrl, TEXT("d3d_renderer.znc"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "d3d_renderer.znc");
-		(void)ComboBox_AddString(hCtrl, TEXT("soft_renderer.znc"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "soft_renderer.znc");
-		(void)ComboBox_AddString(hCtrl, TEXT("ogl_renderer.znc"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "ogl_renderer.znc");
-		(void)ComboBox_AddString(hCtrl, TEXT("gpuPeteOpenGL2.dll"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "gpuPeteOpenGL2.dll");
-	}
-
-	hCtrl = GetDlgItem(hwnd, IDC_COMBO_PSXGPU_SCANLINE);
-	if (hCtrl)
-	{
-		int i;
-		for (i = 0; i < NUMPSXSCANLINE; i++)
-		{
-			(void)ComboBox_InsertString(hCtrl, i, _UIW(g_ComboBoxPsxGpuScanline[i].m_pText));
-			(void)ComboBox_SetItemData(hCtrl, i, g_ComboBoxPsxGpuScanline[i].m_pData);
-		}
-	}
-	
-	hCtrl = GetDlgItem(hwnd, IDC_COMBO_PSXGPU_BLENDING);
-	if (hCtrl)
-	{
-		int i;
-		for (i = 0; i < NUMPSXBLENDING; i++)
-		{
-			(void)ComboBox_InsertString(hCtrl, i, _UIW(g_ComboBoxPsxGpuBlending[i].m_pText));
-			(void)ComboBox_SetItemData(hCtrl, i, g_ComboBoxPsxGpuBlending[i].m_pData);
-		}
-	}
-	
-	hCtrl = GetDlgItem(hwnd, IDC_COMBO_PSXGPU_SCREENSIZE);
-	if (hCtrl)
-	{
-		int i;
-		for (i = 0; i < NUMPSXSCRSIZE; i++)
-		{
-			(void)ComboBox_InsertString(hCtrl, i, _UIW(g_ComboBoxPsxGpuScrSize[i].m_pText));
-			(void)ComboBox_SetItemData(hCtrl, i, g_ComboBoxPsxGpuScrSize[i].m_pData);
-		}
-	}
-	
-	hCtrl = GetDlgItem(hwnd, IDC_COMBO_PSXGPU_FILTERING);
-	if (hCtrl)
-	{
-		int i;
-		for (i = 0; i < NUMPSXFILTERING; i++)
-		{
-			(void)ComboBox_InsertString(hCtrl, i, _UIW(g_ComboBoxPsxGpuFiltering[i].m_pText));
-			(void)ComboBox_SetItemData(hCtrl, i, g_ComboBoxPsxGpuFiltering[i].m_pData);
-		}
-	}
-	
-	hCtrl = GetDlgItem(hwnd, IDC_COMBO_PSXGPU_QUALITY);
-	if (hCtrl)
-	{
-		int i;
-		for (i = 0; i < NUMPSXQUALITY; i++)
-		{
-			(void)ComboBox_InsertString(hCtrl, i, _UIW(g_ComboBoxPsxGpuQuality[i].m_pText));
-			(void)ComboBox_SetItemData(hCtrl, i, g_ComboBoxPsxGpuQuality[i].m_pData);
-		}
-	}
-	
-	hCtrl = GetDlgItem(hwnd, IDC_COMBO_PSXGPU_CACHING);
-	if (hCtrl)
-	{
-		int i;
-		for (i = 0; i < NUMPSXCACHING; i++)
-		{
-			(void)ComboBox_InsertString(hCtrl, i, _UIW(g_ComboBoxPsxGpuCaching[i].m_pText));
-			(void)ComboBox_SetItemData(hCtrl, i, g_ComboBoxPsxGpuCaching[i].m_pData);
-		}
-	}
-
-	// PSX_SPU
-	hCtrl = GetDlgItem(hwnd, IDC_COMBO_SPUPLUGIN);
-	
-	if (hCtrl)
-	{
-		int i=0;
-		(void)ComboBox_AddString(hCtrl, TEXT("spuPeopsSound.dll"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "spuPeopsSound.dll");
-		(void)ComboBox_AddString(hCtrl, TEXT("sound.znc"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "sound.znc");
-		(void)ComboBox_AddString(hCtrl, TEXT("s11player.dll"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "s11player.dll");
-		(void)ComboBox_AddString(hCtrl, TEXT("spuEternal.dll"));
-		(void)ComboBox_SetItemData(hCtrl, i++, "spuEternal.dll");
-	}
-}
-
-typedef long (CALLBACK *PROC_GPUCONFIGURE)(void);
-typedef long (CALLBACK *PROC_SPUCONFIGURE)(void);
-
-#if 0
-static BOOL IsPSXGPUConfigureAvail(HWND hwnd)
-{
-	/* Get current selected GPU plugin's name */
-	WCHAR plugin[200];
-	WCHAR szFile[256];
-	PROC_GPUCONFIGURE	lpfnGPUconfig;
-	HMODULE hLib;
-	HWND hCtrl = GetDlgItem(hwnd, IDC_COMBO_GPUPLUGIN);
-	
-	if (!hCtrl) return FALSE;
-
-	ComboBox_GetText(hCtrl, plugin, sizeof(plugin)-1);
-	
-	/* make path to plugin */
-	wsprintf( szFile, TEXT("plugins/%s"), plugin );
-
-	/* load library(plugin) */
-	hLib = LoadLibrary( szFile );
-	if( hLib == NULL ) return FALSE;
-	
-	/* get exported configuration function */
-	lpfnGPUconfig = (PROC_GPUCONFIGURE)GetProcAddress( hLib, "GPUconfigure" );
-	
-	FreeLibrary( hLib );
-
-	if( lpfnGPUconfig == NULL ) return FALSE;
-	
-	return TRUE;
-}
-#endif
-
-static void RunPSXGPUConfigure(HWND hwnd)
-{
-	/* Get current selected GPU plugin's name */
-	WCHAR plugin[200];
-	WCHAR szFile[256];
-	WCHAR szMsg[200];
-	long nResult;
-	PROC_GPUCONFIGURE	lpfnGPUconfig;
-	HMODULE hLib;
-	HWND hCtrl = GetDlgItem(hwnd, IDC_COMBO_GPUPLUGIN);
-	if (!hCtrl) return;
-
-	ComboBox_GetText(hCtrl, plugin, sizeof(plugin)-1);
-	
-	/* make path to plugin */
-	wsprintf( szFile, TEXT("plugins/%s"), plugin );
-    //char szMsg[200];
-	//MessageBox( hwnd, _Unicode(szMsg),_UI("ERROR"), filename);
- 
-	/* load library(plugin) */
-	hLib = LoadLibrary( szFile );
-	if( hLib == NULL ) {
-		wsprintf( szMsg,_UIW(TEXT("Unable to load GPU plugin '%s'!")), szFile );
-		MessageBox( hwnd, szMsg, 0, MB_OK|MB_ICONSTOP );
-		return;
-	}
-	
-	/* get exported configuration function */
-	lpfnGPUconfig = (PROC_GPUCONFIGURE)GetProcAddress( hLib, "GPUconfigure");
-	if( lpfnGPUconfig == NULL ) {
-		wsprintf( szMsg,_UIW(TEXT("This plugin does not contains configuration function!")) );
-		MessageBox( hwnd, szMsg, plugin, MB_OK|MB_ICONSTOP );
-		FreeLibrary( hLib );
-		return;
-	}
-	
-	nResult = lpfnGPUconfig();
-	
-	FreeLibrary( hLib );
-
-	if( nResult != 0 ) {
-		wsprintf( szMsg,_UIW(TEXT("GPU plugin returned error code:%ld")), nResult );
-		MessageBox( hwnd, szMsg, plugin, MB_OK|MB_ICONSTOP );
-	}
-}
-
-static void RunPSXSPUConfigure(HWND hwnd)
-{
-	/* Get current selected SPU plugin's name */
-	WCHAR plugin[200];
-	WCHAR szFile[256];
-	WCHAR szMsg[200];
-	long nResult;
-	PROC_SPUCONFIGURE	lpfnSPUconfig;
-	HMODULE hLib;
-	HWND hCtrl = GetDlgItem(hwnd, IDC_COMBO_SPUPLUGIN);
-	if (!hCtrl) return;
-
-	ComboBox_GetText(hCtrl, plugin, sizeof(plugin)-1);
-	
-	/* make path to plugin */
-	wsprintf( szFile, TEXT("plugins/%s"), plugin );
-
-	/* load library(plugin) */
-	hLib = LoadLibrary( szFile );
-	if( hLib == NULL ) {
-		wsprintf( szMsg, _UIW(TEXT("Unable to load SPU plugin '%s'!")), szFile );
-	
-		MessageBox( hwnd, szMsg, 0, MB_OK|MB_ICONSTOP );
-		return;
-	}
-	
-	/* get exported configuration function */
-	lpfnSPUconfig = (PROC_SPUCONFIGURE)GetProcAddress( hLib, "SPUconfigure" );
-	if( lpfnSPUconfig == NULL ) {
-		wsprintf( szMsg, _UIW(TEXT("This plugin does not contains configuration function!")) );
-
-		MessageBox( hwnd, szMsg, 0, MB_OK|MB_ICONSTOP );
-		FreeLibrary( hLib );
-		return;
-	}
-	
-	nResult = lpfnSPUconfig();
-	
-	FreeLibrary( hLib );
-
-	if( nResult != 0 ) {
-		wsprintf( szMsg, _UIW(TEXT("SPU plugin returned error code:%ld")), nResult );
-		MessageBox( hwnd, szMsg, 0, MB_OK|MB_ICONSTOP );
-	}
-}
-
-static void FrameRateLimitClick(HWND hwnd)
-{
-	HWND hCtrl = GetDlgItem(hwnd, IDC_PSXGPU_FRAME_LIMIT);
-	if( Button_GetCheck(hCtrl) )
-		{
-		EnableWindow(GetDlgItem(hwnd, IDC_PSXGPU_FRAMERATE),	TRUE );
-		Button_SetCheck(GetDlgItem(hwnd, IDC_PSXGPU_DETECTION), FALSE);
-		}
-	else
-		EnableWindow(GetDlgItem(hwnd, IDC_PSXGPU_FRAMERATE),	FALSE);
-}
-
-static void DetectionClick(HWND hwnd)
-{
-	HWND hCtrl = GetDlgItem(hwnd, IDC_PSXGPU_DETECTION);
-	if( Button_GetCheck(hCtrl) )
-		Button_SetCheck(GetDlgItem(hwnd, IDC_PSXGPU_FRAME_LIMIT), FALSE);
-}
-
-static void GPUStandardScreenClick(HWND hwnd)
-{
-	EnableWindow(GetDlgItem(hwnd, IDC_PSXGPU_SCRX),	FALSE );
-	EnableWindow(GetDlgItem(hwnd, IDC_PSXGPU_SCRX),	FALSE );
-	EnableWindow(GetDlgItem(hwnd, IDC_COMBO_PSXGPU_SCREENSIZE),	TRUE );
-}
-
-static void GPUCustomScreenClick(HWND hwnd)
-{
-	EnableWindow(GetDlgItem(hwnd, IDC_PSXGPU_SCRX),	TRUE );
-	EnableWindow(GetDlgItem(hwnd, IDC_PSXGPU_SCRX),	TRUE );
-	EnableWindow(GetDlgItem(hwnd, IDC_COMBO_PSXGPU_SCREENSIZE),	FALSE );
-}
-
-#endif /* USE_PSXPLUGIN */
 
 
 /* End of source file */

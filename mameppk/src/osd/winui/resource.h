@@ -67,8 +67,6 @@
 #define IDI_SOURCE                      138
 #define IDI_FOLDER_HORIZONTAL           139
 #define IDI_FOLDER_VERTICAL             140
-#define IDI_FOLDER_PSXGAME              142  // USE_PSXPLUGIN
-#define IDD_PROP_PSXPLUGIN              146  // USE_PSXPLUGIN
 #define IDI_FOLDER_CONTROL              147  // HOUBA
 #define IDI_FOLDER_IMPERFECT            148  // HOUBA
 #define IDI_WIN_IMPERFECT               149  // HOUBA
@@ -492,32 +490,6 @@
 #define IDC_KAILLERA_CLIENT_CHANGES_TO_JAPANESE                 1511 // KAILLERA
 #define IDC_KAILLERA_CLIENT_DLL                                 1512 // KAILLERA
 #define IDC_KAILLERA_MAME32WINDOW_HIDE                          1513 // KAILLERA
-
-#define IDC_USE_GPUPLUGIN               1602 // USE_PSXPLUGIN
-#define IDC_MAKE_GPUGAMEWINDOW          1603 // USE_PSXPLUGIN
-#define	IDC_COMBO_GPUPLUGIN             1604 // USE_PSXPLUGIN
-#define IDC_USE_SPUPLUGIN               1605 // USE_PSXPLUGIN
-#define	IDC_COMBO_SPUPLUGIN             1606 // USE_PSXPLUGIN
-#define IDC_COMBO_PSXGPU_SCREENSIZE     1607 // USE_PSXPLUGIN
-#define IDC_PSXGPU_FULLSCREEN           1608 // USE_PSXPLUGIN
-#define IDC_PSXGPU_SHOWFPS              1609 // USE_PSXPLUGIN
-#define IDC_COMBO_PSXGPU_SCANLINE       1610 // USE_PSXPLUGIN
-#define IDC_COMBO_PSXGPU_BLENDING       1611 // USE_PSXPLUGIN
-#define IDC_BTN_GPUCFG                  1613 // USE_PSXPLUGIN
-#define IDC_BTN_SPUCFG                  1614 // USE_PSXPLUGIN
-#define IDC_PSXGPU_32BIT                1615 // USE_PSXPLUGIN
-#define IDC_PSXGPU_DITHERING            1616 // USE_PSXPLUGIN
-#define IDC_PSXGPU_FRAME_SKIP           1617 // USE_PSXPLUGIN
-#define IDC_PSXGPU_DETECTION            1618 // USE_PSXPLUGIN
-#define IDC_PSXGPU_FRAME_LIMIT          1619 // USE_PSXPLUGIN
-#define IDC_PSXGPU_FRAMERATE            1620 // USE_PSXPLUGIN
-#define IDC_COMBO_PSXGPU_FILTERING      1621 // USE_PSXPLUGIN
-#define IDC_COMBO_PSXGPU_QUALITY        1622 // USE_PSXPLUGIN
-#define IDC_COMBO_PSXGPU_CACHING        1623 // USE_PSXPLUGIN
-#define IDC_PSXGPU_SCRX                 1624 // USE_PSXPLUGIN
-#define IDC_PSXGPU_SCRY                 1625 // USE_PSXPLUGIN
-#define IDC_PSXGPU_SCRSTD               1626 // USE_PSXPLUGIN
-#define IDC_PSXGPU_SCRCTM               1627 // USE_PSXPLUGIN
 
 #define IDD_AVI_STATUS                  1800 // MAME_AVI
 #define IDC_INIT                        1802 // MAME_AVI

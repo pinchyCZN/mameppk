@@ -76,10 +76,6 @@
 #include "uimess.h"
 #endif
 
-#ifdef USE_PSXPLUGIN
-extern HWND m_hPSXWnd;
-#endif /* USE_PSXPLUGIN */
-
 
 //============================================================
 //  PARAMETERS
@@ -1222,9 +1218,6 @@ static void dinput_init(running_machine *machine)
 		fatalerror(_WINDOWS("DirectInput: Unable to enumerate joysticks (result=%08X)\n"), (UINT32)result);
 
 #ifdef JOYSTICK_ID
-#ifdef USE_PSXPLUGIN
-	if (!options_get_bool(machine->options(), "use_gpu_plugin"))
-#endif /* USE_PSXPLUGIN */
 	if (joystick_list != NULL)
 	{
 		int i;
@@ -1274,56 +1267,6 @@ static void dinput_exit(running_machine &machine)
 		IDirectInput_Release(dinput);
 	dinput = NULL;
 }
-
-#ifdef USE_PSXPLUGIN
-void win_init_joystick(HWND hWnd, LPVOID ref)
-{
-	HRESULT result;
-	running_machine *machine = (running_machine *)ref;
-#if DIRECTINPUT_VERSION >= 0x800
-	int didevtype_joystick = DI8DEVCLASS_GAMECTRL;
-#else
-	int didevtype_joystick = DIDEVTYPE_JOYSTICK;
-#endif
-
-	// initialize joystick devices
-	result = IDirectInput_EnumDevices(dinput, didevtype_joystick, dinput_joystick_enum, 0, DIEDFL_ATTACHEDONLY);
-	if (result != DI_OK)
-		fatalerror(_WINDOWS("DirectInput: Unable to enumerate joysticks (result=%08X)\n"), (UINT32)result);
-
-#ifdef JOYSTICK_ID
-	if (joystick_list != NULL)
-	{
-		int i;
-
-		for (i = 0; i < 8; i++)
-		{
-			device_info *devinfo = joystick_list;
-			int index = 0;
-
-			while (devinfo != NULL)
-			{
-				if (index == joyid[i])
-				{
-					mame_printf_info(_WINDOWS("Assign joystick %s to player %d\n"), devinfo->name, i);
-					assign_joystick_to_player(machine, devinfo);
-					break;
-				}
-
-				index++;
-				devinfo = devinfo->next;
-			}
-		}
-	}
-#endif /* JOYSTICK_ID */
-}
-
-void win_shutdown_joystick(void)
-{
-	while (joystick_list != NULL && joystick_list->dinput.device != NULL)
-		dinput_device_release(joystick_list);
-}
-#endif /* USE_PSXPLUGIN */
 
 
 //============================================================
@@ -1388,11 +1331,6 @@ static device_info *dinput_device_create(running_machine *machine, device_info *
 	}
 
 	// set the cooperative level
-#ifdef USE_PSXPLUGIN
-	if (m_hPSXWnd)
-		result = IDirectInputDevice_SetCooperativeLevel(devinfo->dinput.device, m_hPSXWnd, cooperative_level);
-	else
-#endif /* USE_PSXPLUGIN */
 	result = IDirectInputDevice_SetCooperativeLevel(devinfo->dinput.device, win_window_list->hwnd, cooperative_level);
 	if (result != DI_OK)
 		goto error;

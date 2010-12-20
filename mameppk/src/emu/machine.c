@@ -239,10 +239,6 @@ running_machine::running_machine(const machine_config &_config, osd_interface &o
 			cpu[cpunum] = cpu[cpunum - 1]->typenext();
 #endif /* USE_HISCORE */
 
-#ifdef USE_PSXPLUGIN
-	gpu_plugin_loaded = 0;
-#endif /* USE_PSXPLUGIN */
-
 	// fetch core options
 	if (options_get_bool(&m_options, OPTION_DEBUG))
 		debug_flags = (DEBUG_FLAG_ENABLED | DEBUG_FLAG_CALL_HOOK) | (options_get_bool(&m_options, OPTION_DEBUG_INTERNAL) ? 0 : DEBUG_FLAG_OSD_ENABLED);

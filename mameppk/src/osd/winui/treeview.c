@@ -121,9 +121,6 @@ static TREEICON treeIconNames[] =
 	{ IDI_FOLDER_CAPCOM,       "capcom" },
 	{ IDI_FOLDER_MAHJONG,      "mahjong" },
 	{ IDI_FOLDER_GOLDEN,       "golden" }
-#ifdef USE_PSXPLUGIN
-	,{ IDI_FOLDER_PSXGAME,      "psxgame" }
-#endif /* USE_PSXPLUGIN */
 #else
 	{ IDI_FOLDER_OPEN,         "foldopen" },
 	{ IDI_FOLDER,              "folder" },
@@ -3151,9 +3148,6 @@ static int InitExtraFolders(void)
 	TCHAR               path[MAX_PATH];
 	const TCHAR        *dir = GetFolderDir();
 	int                 done = FALSE;
-#ifdef USE_PSXPLUGIN
-	CreateDirectoryW(TEXT("cfg"), NULL);
-#endif /*USE_PSXPLUGIN*/
 
 	memset(ExtraFolderData, 0, MAX_EXTRA_FOLDERS * sizeof(LPEXFOLDERDATA));
 

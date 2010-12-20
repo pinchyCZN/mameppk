@@ -288,36 +288,6 @@ const options_entry mame_core_options[] =
 	{ "avi_minute",                   "0",    0,              "avi options(minute)" },
 	{ "avi_second",                   "0",    0,              "avi options(second)" },
 #endif /* MAME_AVI */
-
-#ifdef USE_PSXPLUGIN
-	// psx plugin options
-	{ NULL,                         NULL,               OPTION_HEADER,  "PSX PLUGIN OPTIONS" },
-	{ "use_gpu_plugin;usegpu",      "0",                OPTION_BOOLEAN, "use external gpu plugins in PSX based emulation." },
-	{ "gpu_plugin_name;gpu_name",   "d3d_renderer.znc", 0,              "gpu plugins file name" },
-	{ "gpu_screen_size;gpu_scrsize","0",                0,              "gpu plugins options(screen_size)" },
-	{ "gpu_screen_std;gpu_scrstd",  "1",                0,              "gpu plugins options(screen_std)" },
-	{ "gpu_screen_ctm;gpu_scrctm",  "0",                0,              "gpu plugins options(screen_ctm)" },
-	{ "gpu_screen_x;gpu_scrx",      "800",              0,              "gpu plugins options(screen_x)" },
-	{ "gpu_screen_y;gpu_scry",      "600",              0,              "gpu plugins options(fullscreen)" },
-	{ "gpu_fullscreen;gpu_fullscr", "0",                OPTION_BOOLEAN, "gpu plugins options(showfps)" },
-	{ "gpu_showfps;gpu_fps",        "1",                OPTION_BOOLEAN, "gpu plugins options(scanline)" },
-	{ "gpu_scanline;gpu_sl",        "0",                0,              "gpu plugins options(scanline)" },
-	{ "gpu_blending;gpu_bld",       "0",                0,              "gpu plugins options(blending)" },
-	{ "gpu_32bit;gpu_32bit",        "0",                OPTION_BOOLEAN, "gpu plugins options(32bit)" },
-	{ "gpu_dithering;gpu_dither",   "1",                OPTION_BOOLEAN, "gpu plugins options(dithering)" },
-	{ "gpu_frame_skip;gpu_fkip",    "1",                OPTION_BOOLEAN, "gpu plugins options(frame_skip)" },
-	{ "gpu_detection;gpu_detect",   "0",                OPTION_BOOLEAN, "gpu plugins options(detection)" },
-	{ "gpu_frame_limit;gpu_flimit", "1",                OPTION_BOOLEAN, "gpu plugins options(frame_limit)" },
-	{ "gpu_frame_rate;gpu_frate",   "60",               0,              "gpu plugins options(frame_rate)" },
-	{ "gpu_filtering;gpu_filter",   "2",                0,              "gpu plugins options(filtering)" },
-	{ "gpu_quality;gpu_quality",    "0",                0,              "gpu plugins options(quality)" },
-	{ "gpu_caching;gpu_cache",      "2",                0,              "gpu plugins options(caching)" },
-
-	{ "make_gpu_gamewin;mkgpuwin",  "1",                OPTION_BOOLEAN, "make another window for PSX based game emulation. (only if external gpu plugins used)" },
-	// PSX_SPU
-	{ "use_spu_plugin;usespu",      "0",                OPTION_BOOLEAN, "use external spu(sound) plugins in PSX based emulation." },
-	{ "spu_plugin_name;spuname",    "spuPeopsSound.dll",0,              "spu plugins file name" },
-#endif /* USE_PSXPLUGIN */
 	{ NULL }
 };
 

@@ -172,12 +172,6 @@ static slider_state *slider_current;
 static int ui_use_natural_keyboard;
 static UINT8 non_char_keys_down[(ARRAY_LENGTH(non_char_keys) + 7) / 8];
 
-#ifdef USE_PSXPLUGIN
-extern void __cdecl dprintf(const char* fmt, ...);
-static int force_pause = FALSE;
-static int old_force_pause = FALSE;
-#endif /* USE_PSXPLUGIN */
-
 
 /***************************************************************************
     FUNCTION PROTOTYPES
@@ -507,10 +501,6 @@ int ui_display_startup_screens(running_machine *machine, int first_time, int sho
 	if (kPlay)
 		show_gameinfo = show_warnings = show_disclaimer = FALSE;
 #endif /* KAILLERA */
-#ifdef USE_PSXPLUGIN
-	if (options_get_bool(mame_options(), "use_gpu_plugin"))
-		show_gameinfo = show_warnings = show_disclaimer = FALSE;
-#endif /* USE_PSXPLUGIN */
 
 	/* initialize the on-screen display system */
 	slider_list = slider_current = slider_init(machine);
@@ -2350,20 +2340,6 @@ static UINT32 handler_ingame(running_machine *machine, render_container *contain
 	/* toggle FPS display */
 	if (ui_input_pressed(machine, IPT_UI_SHOW_FPS))
 		ui_set_show_fps(!ui_get_show_fps());
-
-#ifdef USE_PSXPLUGIN
-	if (machine->gpu_plugin_loaded==1)
-	{
-		if (old_force_pause != force_pause)
-		{
-			old_force_pause = force_pause;
-			if (force_pause)
-				machine->pause();
-			else
-				machine->resume();
-		}
-	}
-#endif /* USE_PSXPLUGIN */
 
 #ifdef KAILLERA
 	if (!kPlay)

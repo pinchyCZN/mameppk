@@ -103,9 +103,6 @@ extern const FOLDERDATA g_folderData[] =
 	{TEXT("80s Games"),       "others2",           FOLDER_OTHERS2,      IDI_FOLDER_80S,           0,             0,            CreateOTHERS2Folders },
 	{TEXT("Mahjong&Puzzle"),  "others4",           FOLDER_OTHERS4,      IDI_FOLDER_MAHJONG,       0,             0,            CreateOTHERS4Folders },
 #endif /* !NCP */
-#ifdef USE_PSXPLUGIN
-	{TEXT("PSX Games"),       "psxgame",           FOLDER_PSXGAME,      IDI_FOLDER_PSXGAME,       0,             F_AVAILABLE,  NULL,                       DriverUsesPSXCpu,  TRUE },
-#endif /* USE_PSXPLUGIN */
 	{ NULL }
 };
 
@@ -201,9 +198,6 @@ extern const PROPERTYSHEETINFO g_propSheets[] =
 	{ TRUE,		NULL,					IDD_PROP_MISC,			GameOptionsProc },
 	{ TRUE,		NULL,					IDD_PROP_DEBUG,			GameOptionsProc },
 	{ TRUE,		PropSheetFilter_Vector,	IDD_PROP_VECTOR,		GameOptionsProc },
-#ifdef USE_PSXPLUGIN
-	{ TRUE,	  PropSheetFilter_PSXPLUGIN,IDD_PROP_PSXPLUGIN,		GameOptionsProc },
-#endif /*USE_PSXPLUGIN*/
 	{ FALSE }
 };
 

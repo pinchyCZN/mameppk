@@ -1947,8 +1947,3 @@ $(VIDEO)/jaguar.o:		$(MAMESRC)/video/jagobj.c \
 $(VIDEO)/model2.o:		$(MAMESRC)/video/model2rd.c
 $(VIDEO)/model3.o:		$(MAMESRC)/video/m3raster.c
 $(VIDEO)/n64.o:			$(MAMESRC)/video/rdpfiltr.c
-
-ifneq ($(USE_PSXPLUGIN),)
-$(VIDEO)/psx.o:	$(MAMESRC)/video/psx_extgpu.c
-$(AUDIO)/psx.o:	$(MAMESRC)/audio/psx_extspu.c
-endif

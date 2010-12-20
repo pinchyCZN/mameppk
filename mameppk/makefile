@@ -503,12 +503,6 @@ DEFS += -DKAILLERA
 endif
 endif
 
-ifeq ($(NCP),)
-ifneq ($(USE_PSXPLUGIN),)
-DEFS += -DUSE_PSXPLUGIN
-endif
-endif
-
 ifneq ($(MAMEUIPLUSPLUS),)
 DEFS += -DMAMEUIPLUSPLUS
 endif

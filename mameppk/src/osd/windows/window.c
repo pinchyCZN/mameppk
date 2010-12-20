@@ -112,13 +112,6 @@ int							nAviAudioRecord;
 extern int get_single_step(void);	
 #endif /* MAME_AVI */
 
-#ifdef USE_PSXPLUGIN
-#include "deprecat.h"
-//extern int osd_is_paused(void);
-int nUseExternalDraw = 0;
-void logmsg(const char*lpszFmt,...);
-#endif /* USE_PSXPLUGIN */
-
 
 
 //============================================================
@@ -565,10 +558,6 @@ void winwindow_toggle_full_screen(void)
 
 	assert(GetCurrentThreadId() == main_threadid);
 
-#ifdef USE_PSXPLUGIN
-	if( nUseExternalDraw ) return;
-#endif /* USE_PSXPLUGIN */
-
 	// if we are in debug mode, never go full screen
 	for (window = win_window_list; window != NULL; window = window->next)
 		if (window->machine->debug_flags & DEBUG_FLAG_OSD_ENABLED)
@@ -599,14 +588,6 @@ BOOL winwindow_has_focus(void)
 	for (window = win_window_list; window != NULL; window = window->next)
 		if (focuswnd == window->hwnd)
 			return TRUE;
-
-#ifdef USE_PSXPLUGIN
-	{
-		extern HWND m_hPSXWnd;
-		if (m_hPSXWnd && focuswnd == m_hPSXWnd)
-			return TRUE;
-	}
-#endif /* USE_PSXPLUGIN */
 
 	return FALSE;
 }
@@ -744,14 +725,6 @@ void winwindow_video_window_create(running_machine *machine, int index, win_moni
 
 	nAviDepth		= 16;
 #endif /* MAME_AVI */
-
-#ifdef USE_PSXPLUGIN
-	if( options_get_bool(machine->options(), "use_gpu_plugin") )
-	{
-		// hide cursor
-		while (ShowCursor(FALSE) >= 0) ;
-	}
-#endif /* USE_PSXPLUGIN */
 }
 
 
@@ -1635,11 +1608,7 @@ static void draw_video_contents(win_window_info *window, HDC dc, int update)
 	if (window->hwnd != NULL && !IsIconic(window->hwnd))
 	{
 		// if no bitmap, just fill
-#ifdef USE_PSXPLUGIN
-		if (window->primlist == NULL || (nUseExternalDraw && !window->machine->paused()))
-#else
 		if (window->primlist == NULL)
-#endif /* USE_PSXPLUGIN */
 		{
 			RECT fill;
 			GetClientRect(window->hwnd, &fill);
@@ -2009,35 +1978,6 @@ static void adjust_window_position_after_major_change(win_window_info *window)
 		logerror("Physical width %d, height %d\n",win_physical_width,win_physical_height);
 	}
 }
-
-#ifdef USE_PSXPLUGIN
-static int logmsg_init = 0;
-void logmsg(const char*lpszFmt,...)
-{
-	CHAR szBuf[2048];
-	va_list vargs;
-	FILE *fp;
-
-	va_start(vargs,lpszFmt);
-	vsprintf(szBuf, lpszFmt, vargs);
-	va_end(vargs);
-
-	if( !logmsg_init ) {
-		remove( "msglog.txt" );
-		logmsg_init = 1;
-	}
-
-	fp = fopen( "msglog.txt", "at" );
-	if( fp == NULL ) {
-		fp = fopen( "msglog.txt", "wt" );
-		if( fp == NULL ) return;
-	}
-
-	fprintf( fp, "%s", szBuf );
-
-	fclose(fp);
-}
-#endif /* USE_PSXPLUGIN */
 
 
 

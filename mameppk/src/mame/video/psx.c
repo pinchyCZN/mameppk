@@ -284,13 +284,6 @@ PALETTE_INIT( psx )
 	}
 }
 
-#ifdef USE_PSXPLUGIN
-//================================================================
-//#include "psx_d3d.c"
-#include "psx_extgpu.c"
-//================================================================
-#endif /* USE_PSXPLUGIN */
-
 #if defined( MAME_DEBUG )
 
 static void DebugMeshInit( psx_gpu *p_psxgpu )
@@ -794,41 +787,13 @@ static void psx_gpu_init( running_machine *machine, int n_gputype )
 	machine->driver_data<psx_state>()->p_psxgpu = p_psxgpu;
 }
 
-#ifdef USE_PSXPLUGIN
-void psx_video_exit(running_machine &machine)
-{
-	if( _psxGPULib.bIsLoaded != FALSE ) {
-		video_stop_psx_extgpu();
-		return;
-	}
-}
-#endif /* USE_PSXPLUGIN */
-
 VIDEO_START( psx_type1 )
 {
-#ifdef USE_PSXPLUGIN
-	{ 
-		psx_extgpu_init(machine, 1);
-		if( _psxGPULib.bIsLoaded != FALSE ) {
-			machine->add_notifier(MACHINE_NOTIFY_EXIT, psx_video_exit);
-			return;
-		}
-	}
-#endif /* USE_PSXPLUGIN */
 	psx_gpu_init(machine, 1);
 }
 
 VIDEO_START( psx_type2 )
 {
-#ifdef USE_PSXPLUGIN
-	{ 
-		psx_extgpu_init(machine, 2);
-		if( _psxGPULib.bIsLoaded != FALSE ) {
-			machine->add_notifier(MACHINE_NOTIFY_EXIT, psx_video_exit);
-			return;
-		}
-	}
-#endif /* USE_PSXPLUGIN */
 	psx_gpu_init(machine, 2);
 }
 
@@ -846,13 +811,6 @@ VIDEO_UPDATE( psx )
 	int n_displaystartx;
 	int n_overscantop;
 	int n_overscanleft;
-
-#ifdef USE_PSXPLUGIN
-	if( _psxGPULib.bIsLoaded != FALSE ) {
-		VIDEO_UPDATE_CALL( psx_extgpu );
-		return UPDATE_HAS_NOT_CHANGED;
-	}
-#endif /* USE_PSXPLUGIN */
 
 #if defined( MAME_DEBUG )
 	if( DebugMeshDisplay( p_psxgpu, bitmap, cliprect ) )
@@ -3239,13 +3197,6 @@ void psx_gpu_write( running_machine *machine, UINT32 *p_ram, INT32 n_size )
 {
 	psx_gpu *p_psxgpu = machine->driver_data<psx_state>()->p_psxgpu;
 
-#ifdef USE_PSXPLUGIN
-	if( _psxGPULib.bIsLoaded != FALSE ) {
-		psx_extgpu_write(p_ram, n_size);
-		return;
-	}
-#endif /* USE_PSXPLUGIN */
-
 	while( n_size > 0 )
 	{
 		UINT32 data = *( p_ram );
@@ -3732,13 +3683,6 @@ WRITE32_HANDLER( psx_gpu_w )
 {
 	psx_gpu *p_psxgpu = space->machine->driver_data<psx_state>()->p_psxgpu;
 
-#ifdef USE_PSXPLUGIN
-	if( _psxGPULib.bIsLoaded != FALSE ) {
-		psx_extgpu_w(space, offset, data, mem_mask);
-		return;
-	}
-#endif /* USE_PSXPLUGIN */
-
 	switch( offset )
 	{
 	case 0x00:
@@ -3905,13 +3849,6 @@ void psx_gpu_read( running_machine *machine, UINT32 *p_ram, INT32 n_size )
 {
 	psx_gpu *p_psxgpu = machine->driver_data<psx_state>()->p_psxgpu;
 
-#ifdef USE_PSXPLUGIN
-	if( _psxGPULib.bIsLoaded != FALSE ) {
-		psx_extgpu_read(p_ram, n_size);
-		return;
-	}
-#endif /* USE_PSXPLUGIN */
-
 	while( n_size > 0 )
 	{
 		if( ( p_psxgpu->n_gpustatus & ( 1L << 0x1b ) ) != 0 )
@@ -3963,12 +3900,6 @@ READ32_HANDLER( psx_gpu_r )
 	psx_gpu *p_psxgpu = space->machine->driver_data<psx_state>()->p_psxgpu;
 	UINT32 data;
 
-#ifdef USE_PSXPLUGIN
-	if( _psxGPULib.bIsLoaded != FALSE ) {
-		return psx_extgpu_r(space, offset, mem_mask);
-	}
-#endif /* USE_PSXPLUGIN */
-
 	switch( offset )
 	{
 	case 0x00:
@@ -3990,13 +3921,6 @@ INTERRUPT_GEN( psx_vblank )
 {
 	psx_gpu *p_psxgpu = device->machine->driver_data<psx_state>()->p_psxgpu;
 
-#ifdef USE_PSXPLUGIN
-	if( _psxGPULib.bIsLoaded != FALSE ) {
-		psx_extgpu_vblank(device);
-		return;
-	}
-#endif /* USE_PSXPLUGIN */
-
 #if defined( MAME_DEBUG )
 	DebugCheckKeys(p_psxgpu);
 #endif
@@ -4016,13 +3940,6 @@ INTERRUPT_GEN( psx_vblank )
 void psx_gpu_reset( running_machine *machine )
 {
 	address_space *space = cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM);
-
-#ifdef USE_PSXPLUGIN
-	if( _psxGPULib.bIsLoaded != FALSE ) {
-		psx_extgpu_reset(machine);
-		return;
-	}
-#endif /* USE_PSXPLUGIN */
 
 	psx_gpu_w(space, 1, 0, 0xffffffff );
 }

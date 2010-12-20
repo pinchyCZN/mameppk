@@ -474,10 +474,6 @@ public:
 	template<class T>
 	T *driver_data() const { return downcast<T *>(m_driver_device); }
 
-#ifdef USE_PSXPLUGIN
-	int						gpu_plugin_loaded;
-#endif /* USE_PSXPLUGIN */
-
 private:
 	void start();
 	void set_saveload_filename(const char *filename);

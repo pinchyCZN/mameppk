@@ -2408,19 +2408,6 @@ BOOL FolderHasVector(const WCHAR *name)
 	return FALSE;
 }
 
-#ifdef USE_PSXPLUGIN
-BOOL FolderHasPSXCpu(const WCHAR *name)
-{
-	int i;
-
-	for (i = 0; drivers[i]; i++)
-		if (DriverUsesPSXCpu(i) && wcscmp(name, GetDriverFilename(i)) == 0)
-			return TRUE;
-
-	return FALSE;
-}
-#endif /* USE_PSXPLUGIN */
-
 COLORREF GetListBrokenColor(void)
 {
 	COLORREF broken_color = (COLORREF)options_get_int(settings, MUIOPTION_BROKEN_COLOR);

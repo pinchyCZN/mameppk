@@ -448,9 +448,6 @@ IDI_VECTOR              ICON                    "res\\vector.ico"
 IDI_ADVANCED            ICON                    "res\\advanced.ico"
 IDI_SCREEN              ICON                    "res\\screen.ico"
 IDI_MISC                ICON                    "res\\misc.ico"
-#ifdef USE_PSXPLUGIN
-IDI_FOLDER_PSXGAME      ICON                    "res\\psxgame.ico"
-#endif /* USE_PSXPLUGIN */
 IDI_FOLDER_NEOGEO       ICON                    "res\\neogeo.ico"
 IDI_FOLDER_NAMCO        ICON                    "res\\namco.ico"
 IDI_FOLDER_TAITO        ICON                    "res\\taito.ico"
@@ -1081,75 +1078,6 @@ BEGIN
     PUSHBUTTON      "Restore Default Settings",IDC_USE_DEFAULT,138,230,117,14,
                     0,0,HIDC_USE_DEFAULT
 END
-
-#ifdef USE_PSXPLUGIN
-IDD_PROP_PSXPLUGIN DIALOGEX 0, 0, 260, 257
-STYLE DS_SETFONT | DS_FIXEDSYS | WS_CHILD | WS_CAPTION
-CAPTION "PSX Plugins"
-FONT 8, "MS Sans Serif"
-BEGIN
-    ICON            IDI_PSXPLUGIN,IDC_STATIC,20,10,20,20
-    LTEXT           "Title\nDirectory\nExtra",IDC_PROP_TITLE,52,9,190,25,
-                    SS_NOPREFIX
-    CONTROL         "",IDC_STATIC,"Static",SS_ETCHEDHORZ,10,38,240,1
-    GROUPBOX        "",IDC_STATIC,4,45,251,93,WS_DISABLED
-    CONTROL         "Use GPU(3D Graphics) plugins",IDC_USE_GPUPLUGIN,"Button",
-                    BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,10,45,140,10
-    COMBOBOX        IDC_COMBO_GPUPLUGIN,10,57,133,100,CBS_DROPDOWN | WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Standard",IDC_PSXGPU_SCRSTD,"Button",BS_AUTORADIOBUTTON,10,73,65,12
-    COMBOBOX        IDC_COMBO_PSXGPU_SCREENSIZE,79,73,64,100,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    CONTROL         "Custom",IDC_PSXGPU_SCRCTM,"Button",BS_AUTORADIOBUTTON,10,89,65,12
-    EDITTEXT        IDC_PSXGPU_SCRX,79,89,26,12,ES_AUTOHSCROLL | ES_NUMBER
-    CTEXT           "X",IDC_STATIC,108,89,8,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_PSXGPU_SCRY,117,89,26,12,ES_AUTOHSCROLL | ES_NUMBER
-    LTEXT           "Scanlines",IDC_STATIC,10,106,65,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_COMBO_PSXGPU_SCANLINE,80,105,64,100,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Blending",IDC_STATIC,10,121,65,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_COMBO_PSXGPU_BLENDING,80,121,64,100,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "GPU configuration",IDC_BTN_GPUCFG,150,57,100,12
-    CONTROL         "Create GPU window",IDC_MAKE_GPUGAMEWINDOW,"Button",
-                    BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,150,73,100,12
-    CONTROL         "Show FPS",IDC_PSXGPU_SHOWFPS,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,150,89,100,12
-    CONTROL         "Full screen",IDC_PSXGPU_FULLSCREEN,"Button",
-                    BS_AUTOCHECKBOX | BS_MULTILINE | WS_TABSTOP,150,105,100,12
-    CONTROL         "32 bit depth",IDC_PSXGPU_32BIT,"Button",BS_AUTOCHECKBOX | 
-                    WS_TABSTOP,150,121,100,12
-    GROUPBOX        "Frame rate control",IDC_STATIC,4,139,251,38
-    CONTROL         "Auto detect FPS",IDC_PSXGPU_DETECTION,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,10,148,80,12
-    CONTROL         "FPS limit",IDC_PSXGPU_FRAME_LIMIT,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,10,162,80,12
-    CONTROL         "Dithering",IDC_PSXGPU_DITHERING,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,92,148,80,12
-    CONTROL         "Frame skipping",IDC_PSXGPU_FRAME_SKIP,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,174,148,80,12
-    LTEXT           "FPS",IDC_STATIC,92,162,60,12,SS_CENTERIMAGE
-    EDITTEXT        IDC_PSXGPU_FRAMERATE,154,162,40,12,ES_AUTOHSCROLL | ES_NUMBER
-    GROUPBOX        "Texture",IDC_STATIC,4,178,251,28
-    LTEXT           "Filtering",IDC_STATIC,10,188,48,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_COMBO_PSXGPU_FILTERING,58,188,30,100,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Quality",IDC_STATIC,93,188,36,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_COMBO_PSXGPU_QUALITY,129,188,36,100,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    LTEXT           "Caching",IDC_STATIC,170,188,44,12,SS_CENTERIMAGE
-    COMBOBOX        IDC_COMBO_PSXGPU_CACHING,214,188,36,100,CBS_DROPDOWNLIST | 
-                    WS_VSCROLL | WS_TABSTOP
-    GROUPBOX        "",IDC_STATIC,4,208,251,30,WS_DISABLED
-    CONTROL         "Use SPU(Sound) plugins",IDC_USE_SPUPLUGIN,"Button",
-                    BS_AUTOCHECKBOX | WS_TABSTOP,10,208,120,10
-    COMBOBOX        IDC_COMBO_SPUPLUGIN,10,220,133,100,CBS_DROPDOWN | 
-                    WS_VSCROLL | WS_TABSTOP
-    PUSHBUTTON      "SPU configuration",IDC_BTN_SPUCFG,150,220,100,12
-    PUSHBUTTON      "Reset",IDC_PROP_RESET,4,241,117,14,0,0,HIDC_PROP_RESET
-    PUSHBUTTON      "Restore Default Settings",IDC_USE_DEFAULT,138,241,117,14,
-                    0,0,HIDC_USE_DEFAULT
-END
-#endif /* USE_PSXPLUGIN */
 
 IDD_PROP_VECTOR DIALOGEX 0, 0, 260, 250
 STYLE WS_CHILD | WS_CAPTION
