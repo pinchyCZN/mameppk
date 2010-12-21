@@ -133,7 +133,6 @@
 #define IDI_SCREEN                      713  // HOUBA
 #define IDI_VECTOR                      714  // HOUBA
 #define IDI_MISC                        715  // HOUBA
-#define IDI_PSXPLUGIN                   716  // HOUBA
 #define IDI_FOLDER_ORIENTATION          717  // HOUBA
 #define IDI_FOLDER_DUMPING              718  // HOUBA
 #define IDI_FOLDER_ORIGINAL             719  // HOUBA

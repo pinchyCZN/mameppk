@@ -51,9 +51,6 @@ BOOL DriverSupportsSaveState(int driver_index);
 BOOL DriverIsVertical(int driver_index);
 BOOL DriverIsConsole(int driver_index);
 int DriverBiosIndex(int driver_index);
-#ifdef USE_PSXPLUGIN
-BOOL DriverUsesPSXCpu(int driver_index);
-#endif /*USE_PSXPLUGIN*/
 
 enum
 {

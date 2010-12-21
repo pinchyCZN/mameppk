@@ -111,7 +111,6 @@ void CreateOTHERS4Folders(int parent_index);
 void CreateOTHERS5Folders(int parent_index);
 void CreateOTHERS6Folders(int parent_index);
 void CreateOTHERS7Folders(int parent_index);
-void CreateHazeMDFolders(int parent_index);
 
 /***************************************************************************/
 
@@ -160,7 +159,6 @@ enum
 	FOLDER_MODIFIED,
 	FOLDER_MOUSE,
 #endif
-#ifndef HAZEMD
 #ifdef MAMEUIPLUSPLUS
 	FOLDER_NEOGEO,
 	FOLDER_CPS,
@@ -179,13 +177,6 @@ enum
 	FOLDER_OTHERS6,
 	FOLDER_OTHERS7,
 	FOLDER_OTHERS8,
-#endif /* !NCP */
-#ifdef USE_PSXPLUGIN
-	FOLDER_PSXGAME,
-#endif /* USE_PSXPLUGIN */
-#endif /* !HAZEMD */
-#ifndef NCP
-	FOLDER_HAZEMD,
 #endif /* !NCP */
 	MAX_FOLDERS,
 };

@@ -46,9 +46,6 @@ typedef struct
 extern const PROPERTYSHEETINFO g_propSheets[];
 
 BOOL PropSheetFilter_Vector(const machine_config *drv, const game_driver *gamedrv);
-#ifdef USE_PSXPLUGIN
-BOOL PropSheetFilter_PSXPLUGIN(const machine_config *drv, const game_driver *gamedrv);
-#endif /* USE_PSXPLUGIN */
 
 INT_PTR CALLBACK GamePropertiesDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam);
 INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam);
