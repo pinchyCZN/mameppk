@@ -79,26 +79,6 @@ int					scale_bank_offset;
 #endif /* USE_SCALE_EFFECTS */
 
 
-#ifdef MAME_AVI
-void screen_device::avi_record_frame()
-{
-	extern int avi_write_handler(running_machine *machine, mame_file *dummy, bitmap_t *bitmap);
-	bitmap_t *bitmap = m_bitmap[1 - m_curbitmap];
-
-	g_profiler.start(PROFILER_MOVIE_REC);
-	avi_write_handler(machine, NULL, bitmap);
-	g_profiler.stop();
-}
-
-
-void toggle_record_avi(void)
-{
-	extern int OnAVIRecord(void);	// Implemented In window.c
-	OnAVIRecord();
-}
-#endif /* MAME_AVI */
-
-
 
 //**************************************************************************
 //  SCREEN DEVICE CONFIGURATION
@@ -310,6 +290,26 @@ bool screen_device_config::device_validity_check(const game_driver &driver) cons
 //**************************************************************************
 //  SCREEN DEVICE
 //**************************************************************************
+
+#ifdef MAME_AVI
+void screen_device::avi_record_frame()
+{
+	extern int avi_write_handler(running_machine *machine, mame_file *dummy, bitmap_t *bitmap);
+	bitmap_t *bitmap = m_bitmap[1 - m_curbitmap];
+
+	g_profiler.start(PROFILER_MOVIE_REC);
+	avi_write_handler(machine, NULL, bitmap);
+	g_profiler.stop();
+}
+
+
+void toggle_record_avi(void)
+{
+	extern int OnAVIRecord(void);	// Implemented In window.c
+	OnAVIRecord();
+}
+#endif /* MAME_AVI */
+
 
 #ifdef USE_SCALE_EFFECTS
 void screen_device::video_init_scale_effect()
