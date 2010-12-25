@@ -128,6 +128,8 @@ psikyo4.c
  Load Runnerのディップ初期値を日本に変更
  Taisen Hot Gimmick 4 Ever (Japan / kaillera)追加
 
+segas16c.c（ドライバ追加）
+ Fantasy Zone II DX追加
 
 segas32.c
  Golden Axe: The Revenge of Death Adder (Japan / 4 Players for kaillera)追加
@@ -160,9 +162,7 @@ warriorb.c
 
 
 既知の不具合
-　PSXプラグイン使用時はUIの表示が見えない
 　ネットゲーム終了後、別のゲームをネットプレイすると突然本体ごと落ちる場合がある（プレイ毎にエミュ本体再起動推奨）
-　PSXプラグイン使用時、GPUウインドウの作成にチェックを入れてないと落ちる
 
 
 

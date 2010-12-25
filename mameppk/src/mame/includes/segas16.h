@@ -116,6 +116,11 @@ VIDEO_START( system16b );
 VIDEO_START( timscanr );
 VIDEO_UPDATE( system16b );
 
+/*----------- defined in video/segas16c.c -----------*/
+
+VIDEO_START( system16c );
+VIDEO_UPDATE( system16c );
+
 /*----------- defined in video/segas18.c -----------*/
 
 VIDEO_START( system18 );

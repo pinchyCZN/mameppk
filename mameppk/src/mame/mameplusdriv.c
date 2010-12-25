@@ -165,6 +165,9 @@ const game_driver * const plusdrivers[] =
 	DRIVER( hyperspt4p )	/* GX330 (c) 1984 + Centuri */
 	DRIVER( hpolym84_4p )	/* GX330 (c) 1984 */
 
+	/* System 16C */
+	DRIVER( fz2dx )	/* (c) 1987 */
+
 	/* Sega System 32 games */
 	DRIVER( ga2j4p )		/* (c) 1992 (Japan) */
 
