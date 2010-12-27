@@ -489,6 +489,10 @@ ifneq ($(USE_HISCORE),)
 DEFS += -DUSE_HISCORE
 endif
 
+ifneq ($(USE_VOLUME_AUTO_ADJUST),)
+DEFS += -DUSE_VOLUME_AUTO_ADJUST
+endif
+
 ifneq ($(MAME_AVI),)
 DEFS += -DMAME_AVI
 endif

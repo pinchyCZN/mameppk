@@ -2569,6 +2569,9 @@ static void SetPropEnabledControls(HWND hWnd)
 #ifdef USE_AUDIO_SYNC
 		EnableWindow(GetDlgItem(hWnd,IDC_AUDIO_SYNC),sound);
 #endif /* USE_AUDIO_SYNC */
+#ifdef USE_VOLUME_AUTO_ADJUST
+		EnableWindow(GetDlgItem(hWnd,IDC_VOLUME_ADJUST),sound);
+#endif /* USE_VOLUME_AUTO_ADJUST */
 		//mamep: allow in GLOBAL_OPTIONS set IDC_SAMPLES
 		if (g_nGame != GLOBAL_OPTIONS)
 			SetSamplesEnabled(hWnd, nIndex, sound);
@@ -3157,6 +3160,9 @@ static void BuildDataMap(void)
 #ifdef USE_AUDIO_SYNC
 	datamap_add(properties_datamap, IDC_AUDIO_SYNC,				DM_BOOL,	WINOPTION_AUDIO_SYNC);
 #endif /* USE_AUDIO_SYNC */
+#ifdef USE_VOLUME_AUTO_ADJUST
+	datamap_add(properties_datamap, IDC_VOLUME_ADJUST,			DM_BOOL,	OPTION_VOLUME_ADJUST);
+#endif /* USE_VOLUME_AUTO_ADJUST */
 
 	// core input options 
 	datamap_add(properties_datamap, IDC_COINLOCKOUT,			DM_BOOL,	OPTION_COIN_LOCKOUT);

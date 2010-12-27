@@ -6,7 +6,7 @@
 %s-%c.sta is Nothing
 
 
-# emu/emuopts.c: 246
+# emu/emuopts.c: 249
 AVI RECORD OPTIONS
 
 
@@ -204,5 +204,9 @@ Transmission completed
 
 # emu/inptport.c: 3503
 Transmission failed
+
+
+# emu/emuopts.c: 152
+enable/disable volume auto adjust
 
 

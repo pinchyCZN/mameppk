@@ -66,6 +66,12 @@ void AVI_AudioStream_WriteWaveData(char* lpwav, int len);	// Implemented in avi.
 
 #define MAX_MIXER_CHANNELS		100
 
+#ifdef USE_VOLUME_AUTO_ADJUST
+#define VOLUME_MULTIPLIER_FRAC_ONE	256
+#define DEFAULT_VOLUME_MULTIPLIER	VOLUME_MULTIPLIER_FRAC_ONE
+#define DEFAULT_VOLUME_MULTIPLIER_MAX	(10 * VOLUME_MULTIPLIER_FRAC_ONE)
+#endif /* USE_VOLUME_AUTO_ADJUST */
+
 
 
 /***************************************************************************
@@ -99,6 +105,14 @@ struct _sound_private
 	wav_file *wavfile;
 };
 
+#ifdef USE_VOLUME_AUTO_ADJUST
+static INT32 volume_multiplier_final = DEFAULT_VOLUME_MULTIPLIER;
+static INT32 volume_multiplier_final_max = DEFAULT_VOLUME_MULTIPLIER_MAX;
+static INT32 volume_multiplier_mixer = DEFAULT_VOLUME_MULTIPLIER;
+static INT32 volume_multiplier_mixer_max = DEFAULT_VOLUME_MULTIPLIER_MAX;
+static int have_sample = 0;
+#endif /* USE_VOLUME_AUTO_ADJUST */
+
 
 
 /***************************************************************************
@@ -112,6 +126,11 @@ static void sound_resume(running_machine &machine);
 static void sound_load(running_machine *machine, int config_type, xml_data_node *parentnode);
 static void sound_save(running_machine *machine, int config_type, xml_data_node *parentnode);
 static TIMER_CALLBACK( sound_update );
+
+#ifdef USE_VOLUME_AUTO_ADJUST
+INLINE INT16 calc_volume_final(INT32 sample);
+INLINE INT16 calc_volume_mixer(INT32 sample);
+#endif /* USE_VOLUME_AUTO_ADJUST */
 
 
 
@@ -344,6 +363,17 @@ static void sound_load(running_machine *machine, int config_type, xml_data_node 
 				sound_set_user_gain(machine, mixernum, newvol);
 		}
 	}
+
+#ifdef USE_VOLUME_AUTO_ADJUST
+	channelnode = xml_get_sibling(parentnode->child, "volume_multiplier");
+	if (channelnode)
+	{
+		volume_multiplier_final = xml_get_attribute_int(channelnode, "final", DEFAULT_VOLUME_MULTIPLIER);
+		volume_multiplier_final_max = xml_get_attribute_int(channelnode, "final_max", DEFAULT_VOLUME_MULTIPLIER_MAX);
+		volume_multiplier_mixer = xml_get_attribute_int(channelnode, "mixer", DEFAULT_VOLUME_MULTIPLIER);
+		volume_multiplier_mixer_max = xml_get_attribute_int(channelnode, "mixer_max", DEFAULT_VOLUME_MULTIPLIER_MAX);
+	}
+#endif /* USE_VOLUME_AUTO_ADJUST */
 }
 
 
@@ -378,6 +408,20 @@ static void sound_save(running_machine *machine, int config_type, xml_data_node 
 				}
 			}
 		}
+
+#ifdef USE_VOLUME_AUTO_ADJUST
+	if (parentnode)
+	{
+		xml_data_node *channelnode = xml_add_child(parentnode, "volume_multiplier", NULL);
+		if (channelnode)
+		{
+			xml_set_attribute_int(channelnode, "final", volume_multiplier_final);
+			xml_set_attribute_int(channelnode, "final_max", volume_multiplier_final_max);
+			xml_set_attribute_int(channelnode, "mixer", volume_multiplier_mixer);
+			xml_set_attribute_int(channelnode, "mixer_max", volume_multiplier_mixer_max);
+		}
+	}
+#endif /* USE_VOLUME_AUTO_ADJUST */
 }
 
 
@@ -415,6 +459,31 @@ static TIMER_CALLBACK( sound_update )
 	/* now downmix the final result */
 	finalmix_step = machine->video().speed_factor();
 	finalmix_offset = 0;
+
+#ifdef USE_VOLUME_AUTO_ADJUST
+	if (options_get_bool(mame_options(), OPTION_VOLUME_ADJUST))
+	{
+		have_sample = 0;
+
+		for (sample = global->finalmix_leftover; sample < samples_this_update * 100; sample += finalmix_step)
+		{
+			int sampindex = sample / 100;
+
+			/* clamp the left side */
+			finalmix[finalmix_offset++] = calc_volume_final(leftmix[sampindex]);
+	
+			/* clamp the right side */
+			finalmix[finalmix_offset++] = calc_volume_final(rightmix[sampindex]);
+		}
+
+		if (have_sample)
+		{
+			if (volume_multiplier_final_max > volume_multiplier_final)
+				volume_multiplier_final++;
+		}
+	}
+	else
+#endif /* USE_VOLUME_AUTO_ADJUST */
 	for (sample = global->finalmix_leftover; sample < samples_this_update * 100; sample += finalmix_step)
 	{
 		int sampindex = sample / 100;
@@ -593,6 +662,66 @@ void speaker_device_config::static_set_position(device_config *device, double x,
 }
 
 
+#ifdef USE_VOLUME_AUTO_ADJUST
+/*************************************
+ *
+ *	Adjust sample by volume multiplier
+ *
+ *************************************/
+
+INLINE INT16 calc_volume_final(INT32 sample)
+{
+	if (sample)
+	{
+		INT32 temp;
+
+		have_sample = 1;
+
+		if (sample > 0)
+			temp = (32767.0 * VOLUME_MULTIPLIER_FRAC_ONE) / (double)sample;
+		else
+			temp = (-32768.0 * VOLUME_MULTIPLIER_FRAC_ONE) / (double)sample;
+
+		if (volume_multiplier_final_max > temp)
+		{
+			volume_multiplier_final_max = temp;
+
+			if (volume_multiplier_final_max < volume_multiplier_final)
+				volume_multiplier_final = volume_multiplier_final_max;
+		}
+	}
+
+	return sample * volume_multiplier_final / VOLUME_MULTIPLIER_FRAC_ONE;
+}
+
+INLINE INT16 calc_volume_mixer(INT32 sample)
+{
+	if (sample)
+	{
+		INT32 temp;
+
+		have_sample = 1;
+		if (volume_multiplier_mixer_max < 1) volume_multiplier_mixer_max = 128;
+
+		if (sample > 0)
+			temp = (32767.0 * VOLUME_MULTIPLIER_FRAC_ONE) / (double)sample;
+		else
+			temp = (-32768.0 * VOLUME_MULTIPLIER_FRAC_ONE) / (double)sample;
+
+		if (volume_multiplier_mixer_max > temp)
+		{
+			if (temp > 50) volume_multiplier_mixer_max = temp;
+
+			if (volume_multiplier_mixer_max < volume_multiplier_mixer)
+				volume_multiplier_mixer = volume_multiplier_mixer_max;
+		}
+	}
+
+	return sample * volume_multiplier_mixer / VOLUME_MULTIPLIER_FRAC_ONE;
+}
+#endif /* USE_VOLUME_AUTO_ADJUST */
+
+
 
 //**************************************************************************
 //  LIVE SPEAKER DEVICE
@@ -728,6 +857,32 @@ void speaker_device::mixer_update(stream_sample_t **inputs, stream_sample_t **ou
 	VPRINTF(("Mixer_update(%d)\n", samples));
 
 	// loop over samples
+#ifdef USE_VOLUME_AUTO_ADJUST
+	if (options_get_bool(mame_options(), OPTION_VOLUME_ADJUST))
+	{
+		have_sample = 0;
+
+		for (pos = 0; pos < samples; pos++)
+		{
+			INT32 sample = inputs[0][pos];
+			int inp;
+
+			/* add up all the inputs */
+			for (inp = 1; inp < m_inputs; inp++)
+				sample += inputs[inp][pos];
+
+			/* clamp and store */
+			outputs[0][pos] = calc_volume_mixer(sample);
+		}
+
+		if (have_sample)
+		{
+			if (volume_multiplier_mixer_max > volume_multiplier_mixer)
+				volume_multiplier_mixer++;
+		}
+	}
+	else
+#endif /* USE_VOLUME_AUTO_ADJUST */
 	for (int pos = 0; pos < samples; pos++)
 	{
 		INT32 sample = inputs[0][pos];

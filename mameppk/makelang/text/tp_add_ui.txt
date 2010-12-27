@@ -10,7 +10,7 @@
 %dp Position %s [%s]
 
 
-# osd/winui/mameui.rc: 1570
+# osd/winui/mameui.rc: 1574
 &Allow Web Access
 
 
@@ -22,7 +22,7 @@
 &Kaillera Client Options...
 
 
-# osd/winui/mameui.rc: 1575
+# osd/winui/mameui.rc: 1579
 &Start when MAME32 starts
 
 
@@ -50,7 +50,7 @@
 80s Games
 
 
-# osd/winui/mameui.rc: 1325
+# osd/winui/mameui.rc: 1329
 AVI RECORD
 
 
@@ -62,7 +62,7 @@ All members' Synchronization is perfect
 All members' save data matched
 
 
-# osd/winui/mameui.rc: 1474
+# osd/winui/mameui.rc: 1478
 All players quit game
 
 
@@ -70,19 +70,19 @@ All players quit game
 All the members' save data was coincidenced
 
 
-# osd/winui/mameui.rc: 1476
+# osd/winui/mameui.rc: 1480
 Auto end
 
 
-# osd/winui/mameui.rc: 1479
+# osd/winui/mameui.rc: 1483
 Auto-save time interval
 
 
-# osd/winui/mameui.rc: 1543
+# osd/winui/mameui.rc: 1547
 Average
 
 
-# osd/winui/mameui.rc: 1541
+# osd/winui/mameui.rc: 1545
 Bad
 
 
@@ -98,27 +98,27 @@ Capcom CPS
 Close KailleraClient Window
 
 
-# osd/winui/mameui.rc: 1409
+# osd/winui/mameui.rc: 1413
 Color Option
 
 
-# osd/winui/mameui.rc: 1386
+# osd/winui/mameui.rc: 1390
 Config as TV
 
 
-# osd/winui/mameui.rc: 1529
+# osd/winui/mameui.rc: 1533
 Connection Type:
 
 
-# osd/winui/mameui.rc: 1539
+# osd/winui/mameui.rc: 1543
 Connection restriction:
 
 
-# osd/winui/mameui.rc: 1340
+# osd/winui/mameui.rc: 1344
 Convert 16bit to 24bit 
 
 
-# osd/winui/mameui.rc: 1338
+# osd/winui/mameui.rc: 1342
 Convert 16bit to 8bit 
 
 
@@ -138,7 +138,7 @@ Default Game Options
 Dipswitches Changed
 
 
-# osd/winui/mameui.rc: 1540
+# osd/winui/mameui.rc: 1544
 Disabled
 
 
@@ -146,7 +146,7 @@ Disabled
 Disconnected, Because there was no response %ums
 
 
-# osd/winui/mameui.rc: 1494
+# osd/winui/mameui.rc: 1498
 Display system messages
 
 
@@ -158,31 +158,31 @@ Do not record sound
 Draw every frame  @
 
 
-# osd/winui/mameui.rc: 1577
+# osd/winui/mameui.rc: 1581
 E&xit when MAME32 exits
 
 
-# osd/winui/mameui.rc: 1545
+# osd/winui/mameui.rc: 1549
 Excellent
 
 
-# osd/winui/mameui.rc: 1596
+# osd/winui/mameui.rc: 1600
 Export &all list
 
 
-# osd/winui/mameui.rc: 1598
+# osd/winui/mameui.rc: 1602
 Export &current folder list
 
 
-# osd/winui/mameui.rc: 1602
+# osd/winui/mameui.rc: 1606
 Export &game detail list
 
 
-# osd/winui/mameui.rc: 1600
+# osd/winui/mameui.rc: 1604
 Export &rom name
 
 
-# osd/winui/mameui.rc: 1592
+# osd/winui/mameui.rc: 1596
 Export List Options
 
 
@@ -202,23 +202,23 @@ Export current folder game list file
 Export detail list file
 
 
-# osd/winui/mameui.rc: 1574
+# osd/winui/mameui.rc: 1578
 Extra Settings:
 
 
-# osd/winui/mameui.rc: 1411
+# osd/winui/mameui.rc: 1415
 File Partition
 
 
-# osd/winui/mameui.rc: 1387
+# osd/winui/mameui.rc: 1391
 Frame Compose
 
 
-# osd/winui/mameui.rc: 1328
+# osd/winui/mameui.rc: 1332
 Frames
 
 
-# osd/winui/mameui.rc: 1938
+# osd/winui/mameui.rc: 1942
 Go to MAME Development site
 
 
@@ -226,7 +226,7 @@ Go to MAME Development site
 Go to MAME Development site?
 
 
-# osd/winui/mameui.rc: 1938
+# osd/winui/mameui.rc: 1942
 Go to MAME FAQ site
 
 
@@ -234,7 +234,7 @@ Go to MAME FAQ site
 Go to MAME FAQ site?
 
 
-# osd/winui/mameui.rc: 1938
+# osd/winui/mameui.rc: 1942
 Go to MAWS information site
 
 
@@ -242,23 +242,23 @@ Go to MAWS information site
 Go to MAWS site?
 
 
-# osd/winui/mameui.rc: 1544
+# osd/winui/mameui.rc: 1548
 Good
 
 
-# osd/winui/mameui.rc: 1444, 1449
+# osd/winui/mameui.rc: 1448, 1453
 Height:
 
 
-# osd/winui/mameui.rc: 1498
+# osd/winui/mameui.rc: 1502
 Hide main window
 
 
-# osd/winui/mameui.rc: 1393
+# osd/winui/mameui.rc: 1397
 Interlaced
 
 
-# osd/winui/mameui.rc: 1531
+# osd/winui/mameui.rc: 1535
 Internet
 
 
@@ -270,15 +270,15 @@ Kaillera &NetPlay...
 Kaillera &Server Options...
 
 
-# osd/winui/mameui.rc: 1491
+# osd/winui/mameui.rc: 1495
 Kaillera Client Changes to Japanese
 
 
-# osd/winui/mameui.rc: 1460
+# osd/winui/mameui.rc: 1464
 Kaillera Options
 
 
-# osd/winui/mameui.rc: 1508
+# osd/winui/mameui.rc: 1512
 Kaillera Server Configuration:
 
 
@@ -286,11 +286,11 @@ Kaillera Server Configuration:
 Kaillera Server Terminated!
 
 
-# osd/winui/mameui.rc: 1566
+# osd/winui/mameui.rc: 1570
 Kaillera Server current status:
 
 
-# osd/winui/mameui.rc: 1567 osd/winui/winui.c: 12311
+# osd/winui/mameui.rc: 1571 osd/winui/winui.c: 12311
 Kaillera Server is not running.
 
 
@@ -302,7 +302,7 @@ Kaillera Server is running...
 Kaillera Server running detected!
 
 
-# osd/winui/mameui.rc: 1487
+# osd/winui/mameui.rc: 1491
 Kaillera record input
 
 
@@ -310,59 +310,59 @@ Kaillera record input
 Konami GX&OLDs
 
 
-# osd/winui/mameui.rc: 1530, 1546
+# osd/winui/mameui.rc: 1534, 1550
 LAN
 
 
-# osd/winui/mameui.rc: 1549
+# osd/winui/mameui.rc: 1553
 Line 1:
 
 
-# osd/winui/mameui.rc: 1550
+# osd/winui/mameui.rc: 1554
 Line 2:
 
 
-# osd/winui/mameui.rc: 1551
+# osd/winui/mameui.rc: 1555
 Line 3:
 
 
-# osd/winui/mameui.rc: 1552
+# osd/winui/mameui.rc: 1556
 Line 4:
 
 
-# osd/winui/mameui.rc: 1553
+# osd/winui/mameui.rc: 1557
 Line 5:
 
 
-# osd/winui/mameui.rc: 1554
+# osd/winui/mameui.rc: 1558
 Line 6:
 
 
-# osd/winui/mameui.rc: 1555
+# osd/winui/mameui.rc: 1559
 Line 7:
 
 
-# osd/winui/mameui.rc: 1556
+# osd/winui/mameui.rc: 1560
 Line 8:
 
 
-# osd/winui/mameui.rc: 1489
+# osd/winui/mameui.rc: 1493
 Local record input
 
 
-# osd/winui/mameui.rc: 1496
+# osd/winui/mameui.rc: 1500
 Lock main window
 
 
-# osd/winui/mameui.rc: 1466
+# osd/winui/mameui.rc: 1470
 Lost connection action
 
 
-# osd/winui/mameui.rc: 1542
+# osd/winui/mameui.rc: 1546
 Low
 
 
-# osd/winui/mameui.rc: 1407
+# osd/winui/mameui.rc: 1411
 M
 
 
@@ -374,7 +374,7 @@ MAME &Development site
 MAME Homepage
 
 
-# osd/winui/mameui.rc: 1412
+# osd/winui/mameui.rc: 1416
 MByte Partition
 
 
@@ -382,7 +382,7 @@ MByte Partition
 Mahjong&Puzzle
 
 
-# osd/winui/mameui.rc: 1515
+# osd/winui/mameui.rc: 1519
 Maximum users:
 
 
@@ -394,11 +394,11 @@ Maybe Desync
 Maybe Desync %s
 
 
-# osd/winui/mameui.rc: 1533
+# osd/winui/mameui.rc: 1537
 Message Limit:
 
 
-# osd/winui/mameui.rc: 1548
+# osd/winui/mameui.rc: 1552
 Message of the day:
 
 
@@ -410,7 +410,7 @@ Namco S1&S2
 Normal
 
 
-# osd/winui/mameui.rc: 1395
+# osd/winui/mameui.rc: 1399
 Odd Frame
 
 
@@ -418,15 +418,15 @@ Odd Frame
 Old Games
 
 
-# osd/winui/mameui.rc: 1344
+# osd/winui/mameui.rc: 1348
 Pause as Partition
 
 
-# osd/winui/mameui.rc: 1891
+# osd/winui/mameui.rc: 1895
 Play game over Kaillera
 
 
-# osd/winui/mameui.rc: 1934
+# osd/winui/mameui.rc: 1938
 Play game with save video in specified avi file
 
 
@@ -438,7 +438,7 @@ Play network game with favorite
 Play to AVI Record...
 
 
-# osd/winui/mameui.rc: 1472
+# osd/winui/mameui.rc: 1476
 Quit game
 
 
@@ -450,15 +450,15 @@ Receiving %d percent
 Reception completed. %s-%c.sta successfully saved.
 
 
-# osd/winui/mameui.rc: 1418
+# osd/winui/mameui.rc: 1422
 Record Option
 
 
-# osd/winui/mameui.rc: 1346
+# osd/winui/mameui.rc: 1350
 Record Range
 
 
-# osd/winui/mameui.rc: 1367
+# osd/winui/mameui.rc: 1371
 Record Time limit
 
 
@@ -470,7 +470,7 @@ Record as WAV file
 Record to AVI
 
 
-# osd/winui/mameui.rc: 1417
+# osd/winui/mameui.rc: 1421
 Record to AVI File
 
 
@@ -478,11 +478,11 @@ Record to AVI File
 Refresh
 
 
-# osd/winui/mameui.rc: 1408, 1636
+# osd/winui/mameui.rc: 1412, 1640
 S
 
 
-# osd/winui/mameui.rc: 1579
+# osd/winui/mameui.rc: 1583
 S&how command-line console
 
 
@@ -498,19 +498,19 @@ S&top Kaillera Server
 SNK Neo-Geo
 
 
-# osd/winui/mameui.rc: 1934
+# osd/winui/mameui.rc: 1938
 Save video in specified avi file
 
 
-# osd/winui/mameui.rc: 1404
+# osd/winui/mameui.rc: 1408
 Screen Beginning Position
 
 
-# osd/winui/mameui.rc: 1436
+# osd/winui/mameui.rc: 1440
 Screen Position and Size in Movie
 
 
-# osd/winui/mameui.rc: 1445
+# osd/winui/mameui.rc: 1449
 Screen Size
 
 
@@ -518,7 +518,7 @@ Screen Size
 Sega S16&S32
 
 
-# osd/winui/mameui.rc: 1595
+# osd/winui/mameui.rc: 1599
 Select Export Content:
 
 
@@ -526,35 +526,35 @@ Select Export Content:
 Sending %d percent
 
 
-# osd/winui/mameui.rc: 1483
+# osd/winui/mameui.rc: 1487
 Sending speed for save file
 
 
-# osd/winui/mameui.rc: 1517
+# osd/winui/mameui.rc: 1521
 Server IP:
 
 
-# osd/winui/mameui.rc: 1513
+# osd/winui/mameui.rc: 1517
 Server Location:
 
 
-# osd/winui/mameui.rc: 1512
+# osd/winui/mameui.rc: 1516
 Server Name:
 
 
-# osd/winui/mameui.rc: 1516
+# osd/winui/mameui.rc: 1520
 Server Port:
 
 
-# osd/winui/mameui.rc: 1911
+# osd/winui/mameui.rc: 1915
 Set kaillera client options
 
 
-# osd/winui/mameui.rc: 1911
+# osd/winui/mameui.rc: 1915
 Set kaillera server options
 
 
-# osd/winui/mameui.rc: 1385
+# osd/winui/mameui.rc: 1389
 Show To Center
 
 
@@ -566,15 +566,15 @@ Since environment differs from the time of creation, it may not reappear well.\n
 Skip %d of 12 frames
 
 
-# osd/winui/mameui.rc: 1335
+# osd/winui/mameui.rc: 1339
 Skip Frame
 
 
-# osd/winui/mameui.rc: 1383
+# osd/winui/mameui.rc: 1387
 Smooth (Length)
 
 
-# osd/winui/mameui.rc: 1381
+# osd/winui/mameui.rc: 1385
 Smooth (Width)
 
 
@@ -582,7 +582,7 @@ Smooth (Width)
 Start Kaillera Server Succeeded!
 
 
-# osd/winui/mameui.rc: 1891
+# osd/winui/mameui.rc: 1895
 Start/Stop Kaillera server
 
 
@@ -594,7 +594,7 @@ Sync Check End
 Sync Check Failure
 
 
-# osd/winui/mameui.rc: 1397
+# osd/winui/mameui.rc: 1401
 T/B Flip (Reverse Top and Bottom)
 
 
@@ -610,7 +610,7 @@ Terminate Kaillera Server ERROR!!!
 The time regulation level was set as %d
 
 
-# osd/winui/mameui.rc: 1406
+# osd/winui/mameui.rc: 1410
 Time
 
 
@@ -618,7 +618,7 @@ Time
 Toa&Cave&BP
 
 
-# osd/winui/mameui.rc: 1435
+# osd/winui/mameui.rc: 1439
 Total Movie Size:
 
 
@@ -634,15 +634,19 @@ Use 'Record AVI' key to toggle start/stop AVI recording.
 Use IME in chat
 
 
-# osd/winui/mameui.rc: 1463
+# osd/winui/mameui.rc: 1467
 Use Kaillera client DLL
 
 
-# osd/winui/mameui.rc: 1514
+# osd/winui/mameui.rc: 855
+Use volume auto adjust
+
+
+# osd/winui/mameui.rc: 1518
 Web site:
 
 
-# osd/winui/mameui.rc: 1443, 1448
+# osd/winui/mameui.rc: 1447, 1452
 Width:
 
 
@@ -654,19 +658,19 @@ Width:
 kailleraclient.dll  (not found)
 
 
-# osd/winui/mameui.rc: 1402, 1438
+# osd/winui/mameui.rc: 1406, 1442
 left
 
 
-# osd/winui/mameui.rc: 1389
+# osd/winui/mameui.rc: 1393
 little
 
 
-# osd/winui/mameui.rc: 1391
+# osd/winui/mameui.rc: 1395
 little(Speed)
 
 
-# osd/winui/mameui.rc: 1536
+# osd/winui/mameui.rc: 1540
 messages in
 
 
@@ -674,15 +678,15 @@ messages in
 replay(inp) to AVI Record...
 
 
-# osd/winui/mameui.rc: 1482
+# osd/winui/mameui.rc: 1486
 sec
 
 
-# osd/winui/mameui.rc: 1537
+# osd/winui/mameui.rc: 1541
 seconds.
 
 
-# osd/winui/mameui.rc: 1403, 1439
+# osd/winui/mameui.rc: 1407, 1443
 top
 
 

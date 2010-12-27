@@ -6,7 +6,7 @@
 %s-%c.sta is Nothing
 %s-%c.sta が見つかりません
 
-# emu/emuopts.c: 246
+# emu/emuopts.c: 249
 AVI RECORD OPTIONS
 AVi録画オプション
 
@@ -205,4 +205,8 @@ Transmission completed
 # emu/inptport.c: 3503
 Transmission failed
 エラー発生、送信に失敗しました
+
+# emu/emuopts.c: 152
+enable/disable volume auto adjust
+自動音量調整機能\を有効
 

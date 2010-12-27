@@ -428,6 +428,7 @@
 #define IDC_PLAYBACK_END_PAUSE          1302 // USE_PLAYBACK_END_PAUSE
 #define IDC_BROKEN_ICON                 1303 // use not working icon
 #define IDC_EDIT_BROKEN_COLOR           1304 // set not working color
+#define IDC_VOLUME_ADJUST               1305 // USE_VOLUME_AUTO_ADJUST
 
 #define IDC_JOYID1                      1311 // JOYSTICK_ID
 #define IDC_JOYID2                      1312 // JOYSTICK_ID

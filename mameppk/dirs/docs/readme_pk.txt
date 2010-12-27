@@ -32,6 +32,7 @@ MAME Plus!ベース
  Direct Inputを強制的に使用するオプション追加（GUIなし。iniファイルのforceuse_dinput=1で有効）
  Kaillera時のフェイクバージョン機能（ui\mame32ui.iniのKailleraFakeVersionを"0.119 (Sep 17 2007)"等に設定して使用）
  UNIBIOSの旧バージョンをサポート
+ 自動音量調整機能の復活
 
 
 
