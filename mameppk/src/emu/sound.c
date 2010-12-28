@@ -854,6 +854,8 @@ void speaker_device::device_post_load()
 
 void speaker_device::mixer_update(stream_sample_t **inputs, stream_sample_t **outputs, int samples)
 {
+	int pos;
+
 	VPRINTF(("Mixer_update(%d)\n", samples));
 
 	// loop over samples
@@ -883,7 +885,7 @@ void speaker_device::mixer_update(stream_sample_t **inputs, stream_sample_t **ou
 	}
 	else
 #endif /* USE_VOLUME_AUTO_ADJUST */
-	for (int pos = 0; pos < samples; pos++)
+	for (pos = 0; pos < samples; pos++)
 	{
 		INT32 sample = inputs[0][pos];
 		int inp;
