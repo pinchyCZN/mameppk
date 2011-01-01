@@ -11889,17 +11889,17 @@ static void MamePlayBackGameAVI()
 	int	hr;
 	play_options playopts;
 
-	memset(&playopts, 0, sizeof(playopts));
+		memset(&playopts, 0, sizeof(playopts));
 
-	*filename = 0;
+		*filename = 0;
 
-	nGame = Picker_GetSelectedItem(hwndList);
-	if (nGame != -1)
-		wcscpy(filename, _Unicode(drivers[nGame]->name));
+		nGame = Picker_GetSelectedItem(hwndList);
+		if (nGame != -1)
+			wcscpy(filename, driversw[nGame]->name);
 
 	if (CommonFileDialog(GetOpenFileName, filename, FILETYPE_INPUT_FILES))
 	{
-		file_error filerr;
+		file_error fileerr;
 		mame_file* pPlayBack;
 #ifdef KAILLERA
 		mame_file* pPlayBackSub;
@@ -11924,10 +11924,9 @@ static void MamePlayBackGameAVI()
 			path[wcslen(path)-1] = 0; // take off trailing back slash
 
 		stemp = utf8_from_wstring(fname);
-		filerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBack);
+		fileerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBack);
 		global_free(stemp);
-
-		if (pPlayBack == NULL)
+		if (fileerr != FILERR_NONE)
 		{
 			MameMessageBox(_UIW(TEXT("Could not open '%s' as a valid input file.")), filename);
 			return;
@@ -11936,25 +11935,35 @@ static void MamePlayBackGameAVI()
 		// check for game name embedded in .inp header
 		if (pPlayBack)
 		{
-			inp_header inp_header;
+			int i;
+			inp_header ihdr;
 
-			// read playback header
-			mame_fread(pPlayBack, &inp_header, sizeof(inp_header));
-
-			if (!isalnum(inp_header.gamename[0])) // If first byte is not alpha-numeric
-				mame_fseek(pPlayBack, 0, SEEK_SET); // old .inp file - no header
-			else
+			/* read the header and verify that it is a modern version; if not, print an error */
+			if (mame_fread(pPlayBack, &ihdr, sizeof(inp_header)) != sizeof(inp_header))
 			{
-				int i;
+				MameMessageBox(_UIW(TEXT("Input file is corrupt or invalid (missing header)")));
+				return;
+			}
+
+			if (memcmp("MAMEINP\0", ihdr.header, 8) != 0)
+			{
+				MameMessageBox(_UIW(TEXT("Input file invalid or in an older, unsupported format")));
+				return;
+			}
+			if (ihdr.majversion != INP_HEADER_MAJVERSION)
+			{
+				MameMessageBox(_UIW(TEXT("Input file format version mismatch")));
+				return;
+			}
+
 				for (i = 0; drivers[i] != 0; i++) // find game and play it
 				{
-					if (strcmp(drivers[i]->name, inp_header.gamename) == 0)
+					if (strcmp(drivers[i]->name, ihdr.gamename) == 0)
 					{
 						nGame = i;
 						break;
 					}
 				}
-			}
 		}
 		mame_fclose(pPlayBack);
 
@@ -11964,9 +11973,9 @@ static void MamePlayBackGameAVI()
 		{
 			//pPlayBackSub = mame_fopen(fname,NULL,FILETYPE_INPUTSUBLOG,0);
 			stemp = utf8_from_wstring(fname2);
-			filerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBackSub);
+			fileerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBackSub);
 			global_free(stemp);
-			if (pPlayBackSub != NULL)
+			if (pPlayBackSub)
 			{
 				inpsub_header inpsub_header;
 
@@ -12004,9 +12013,9 @@ static void MamePlayBackGameAVI()
 				_wsplitpath(filename, NULL, NULL, bare_fname, NULL);
 				wcscpy(filename_avi, bare_fname);
 			} else
-				wcscpy(filename_avi, _Unicode(drivers[nGame]->name));
+				wcscpy(filename_avi, driversw[nGame]->name);
 
-			if (CommonFileDialog(GetSaveFileName, filename_avi, FILETYPE_AVI_FILES))
+			if (!CommonFileDialog(GetSaveFileName, filename_avi, FILETYPE_AVI_FILES))
 				hr = 0;
 		}
 
