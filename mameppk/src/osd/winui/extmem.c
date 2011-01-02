@@ -806,7 +806,7 @@ static void reset_table(game_memory_list *table)
 
 static void init_game_ram_serch(running_machine *machine, game_memory_list *GameRam, unsigned int nGameRamOffset, unsigned int *pTotalGameRamSize, int use)
 {
-	running_device *cpu;
+	device_t *cpu;
 	int cpunum, spacenum;
 	int count = 0;
 	int i;
@@ -1035,7 +1035,7 @@ void end_game_ram_serch(void)
 
 unsigned long game_ram_serch_crc32_(running_machine *machine, unsigned long crc)
 {
-	running_device *cpu;
+	device_t *cpu;
 	int cpunum, spacenum;
 	if (bGameRamSearch_SyncCheck == FALSE)
 		init_game_ram_serch(machine, &GameRam_SyncCheck[0][0], (unsigned int)&GameRam_SyncCheck[1][0] - (unsigned int)&GameRam_SyncCheck[0][0],&nTotalGameRamSize_SyncCheck, 1);
@@ -1104,7 +1104,7 @@ unsigned long game_ram_serch_crc32_(running_machine *machine, unsigned long crc)
 
 unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine *machine, unsigned long crc)
 {
-	running_device *cpu;
+	device_t *cpu;
 	int cpunum;
 
 	if (bGameRamSearch_KailleraStateSave == FALSE)
