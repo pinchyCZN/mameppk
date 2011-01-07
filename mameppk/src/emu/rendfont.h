@@ -108,6 +108,7 @@ private:
 	bool load_cached_bdf(const char *filename);
 	bool load_bdf();
 	bool load_cached(mame_file *file, UINT32 hash);
+	bool load_cached_cmd(mame_file *file, UINT32 hash);
 	bool save_cached(const char *filename, UINT32 hash);
 
 	// internal state
@@ -120,9 +121,11 @@ private:
 	const char *		m_rawdata;			// pointer to the raw data for the font
 	UINT64				m_rawsize;			// size of the raw font data
 	osd_font			m_osdfont;			// handle to the OSD font
-	//FIXME
 	//mamep: for command glyph
-	render_font *			cmd;
+	int					m_height_cmd;		// height of the font, from ascent to descent
+	int					m_yoffs_cmd;		// y offset from baseline to descent
+	glyph *				m_glyphs_cmd[256];	// array of glyph subtables
+	const char *		m_rawdata_cmd;		// pointer to the raw data for the font
 
 	//mamep: allocate command glyph font
 	void render_font_command_glyph();
