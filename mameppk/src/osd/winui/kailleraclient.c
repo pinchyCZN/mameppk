@@ -33,7 +33,7 @@ int kailleraChatSendUTF8(char *s)
 	if (stemp)
 	{
 		ret = kailleraChatSend(stemp);
-		global_free(stemp);
+		osd_free(stemp);
 	}
 	return ret;
 }

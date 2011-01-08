@@ -1515,7 +1515,7 @@ static HICON ExtractIconFromZip(const WCHAR *zipname, const WCHAR *iconname)
 
 	stemp = utf8_from_wstring(zipname);
 	ziperr = zip_file_open(stemp, &zip);
-	global_free(stemp);
+	osd_free(stemp);
 
 	if (ziperr != ZIPERR_NONE)
 		return NULL;
@@ -1525,7 +1525,7 @@ static HICON ExtractIconFromZip(const WCHAR *zipname, const WCHAR *iconname)
 	for (entry = zip_file_first_file(zip); entry; entry = zip_file_next_file(zip))
 		if (mame_stricmp(entry->filename, stemp) == 0)
 			break;
-	global_free(stemp);
+	osd_free(stemp);
 
 	if (entry)
 	{
@@ -1537,7 +1537,7 @@ static HICON ExtractIconFromZip(const WCHAR *zipname, const WCHAR *iconname)
 			if (ziperr == ZIPERR_NONE)
 				hIcon = FormatICOInMemoryToHICON(data, entry->uncompressed_length);
 
-			global_free(data);
+			free(data);
 		}
 	}
 
@@ -1565,7 +1565,7 @@ HICON LoadIconFromFile(const char *iconname)
 	{
 		for (i = 0; GetDirsFunc[i]; i++)
 		{
-			WCHAR *paths = wcsdup(GetDirsFunc[i]());
+			WCHAR *paths = win_tstring_strdup(GetDirsFunc[i]());
 			WCHAR *p;
 
 			for (p = wcstok(paths, TEXT(";")); p; p =wcstok(NULL, TEXT(";")))
@@ -1591,12 +1591,12 @@ HICON LoadIconFromFile(const char *iconname)
 
 				if (hIcon)
 				{
-					global_free(paths);
+					osd_free(paths);
 					return hIcon;
 				}
 			}
 
-			global_free(paths);
+			osd_free(paths);
 		}
 	}
 
@@ -2095,7 +2095,7 @@ static void build_sort_index(void)
 	for (i = 0; i < game_count; i++)
 		sort_index[ptemp[i].index].description = i;
 
-	global_free(ptemp);
+	free(ptemp);
 }
 
 static void build_sort_readings(void)
@@ -2141,7 +2141,7 @@ static void build_sort_readings(void)
 	for (i = 0; i < game_count; i++)
 		sort_index[ptemp[i].index].readings = i;
 
-	global_free(ptemp);
+	free(ptemp);
 }
 
 static void build_driversw(void)
@@ -2150,6 +2150,7 @@ static void build_driversw(void)
 
 	driversw = (_driverw **)malloc(sizeof (*driversw) * (game_count + 1));
 	assert(driversw);
+	memset(driversw, 0, sizeof (*driversw) * (game_count + 1));
 
 	driversw[game_count] = NULL;
 	for (i = 0; i < game_count; i++)
@@ -2157,18 +2158,39 @@ static void build_driversw(void)
 		driversw[i] = (_driverw *)malloc(sizeof *driversw[i]);
 		assert(driversw[i]);
 
-		driversw[i]->name = wcsdup(_Unicode(drivers[i]->name));
-		driversw[i]->description = wcsdup(_Unicode(drivers[i]->description));
-		driversw[i]->modify_the = wcsdup(_Unicode(ModifyThe(drivers[i]->description)));
+		driversw[i]->name = win_tstring_strdup(_Unicode(drivers[i]->name));
+		driversw[i]->description = win_tstring_strdup(_Unicode(drivers[i]->description));
+		driversw[i]->modify_the = win_tstring_strdup(_Unicode(ModifyThe(drivers[i]->description)));
 		assert(driversw[i]->name && driversw[i]->description && driversw[i]->modify_the);
 
-		driversw[i]->manufacturer = wcsdup(_Unicode(drivers[i]->manufacturer));
-		driversw[i]->year = wcsdup(_Unicode(drivers[i]->year));
+		driversw[i]->manufacturer = win_tstring_strdup(_Unicode(drivers[i]->manufacturer));
+		driversw[i]->year = win_tstring_strdup(_Unicode(drivers[i]->year));
 		assert(driversw[i]->manufacturer && driversw[i]->year);
 
-		driversw[i]->source_file = wcsdup(_Unicode(drivers[i]->source_file));
+		driversw[i]->source_file = win_tstring_strdup(_Unicode(drivers[i]->source_file));
 		assert(driversw[i]->source_file);
 	}
+}
+
+static void free_driversw(void)
+{
+	for (int i = 0; i < game_count; i++)
+	{
+		if (driversw[i])
+		{
+			osd_free(driversw[i]->name);
+			osd_free(driversw[i]->description);
+			osd_free(driversw[i]->modify_the);
+
+			osd_free(driversw[i]->manufacturer);
+			osd_free(driversw[i]->year);
+
+			osd_free(driversw[i]->source_file);
+			free(driversw[i]);
+		}
+	}
+
+	free(driversw);
 }
 
 static void ChangeLanguage(int id)
@@ -2931,15 +2953,17 @@ static void Win32UI_exit()
 
 	if (sorted_drivers != NULL)
 	{
-		global_free(sorted_drivers);
+		free(sorted_drivers);
 		sorted_drivers = NULL;
 	}
 
-	global_free(sort_index);
-	global_free(driversw);
+	free(sort_index);
+	free_driversw();
 #ifdef DRIVER_SWITCH
 	global_free(drivers);
 #endif /* DRIVER_SWITCH */
+	ui_lang_shutdown();
+	FreeTranslateBuffer();
 }
 
 static LRESULT CALLBACK MameWindowProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -3014,7 +3038,7 @@ static LRESULT CALLBACK MameWindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 		if (i >= 0 && i < MAX_PATCHES && GetPatchFilename(patch_name, driversw[Picker_GetSelectedItem(hwndList)]->name, i))
 		{
 			FreeIfAllocatedW(&g_IPSMenuSelectName);
-			g_IPSMenuSelectName = _wcsdup(patch_name);
+			g_IPSMenuSelectName = win_tstring_strdup(patch_name);
 			dwprintf(TEXT("menusele: %d %s, updateSS"), (int)(LOWORD(wParam)), patch_name);
 			UpdateScreenShot();
 		}
@@ -4087,7 +4111,7 @@ static void UpdateHistory(void)
 			histText = GetPatchDesc(driversw[Picker_GetSelectedItem(hwndList)]->name, g_IPSMenuSelectName);
 			if (histText)
 			{
-				WCHAR *text = wcsdup(histText);
+				WCHAR *text = win_tstring_strdup(histText);
 
 				wcstok(text, TEXT("\r\n"));	// check only first line
 				if (wcschr(text, '/'))		// no category
@@ -4095,7 +4119,7 @@ static void UpdateHistory(void)
 					WCHAR *p = wcschr(histText, '/');
 					histText = p + 1;
 				}
-				global_free(text);
+				osd_free(text);
 			}
 		}
 		else
@@ -5748,7 +5772,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 					token = wcstok(NULL, TEXT(","));
 				}
 
-				global_free(ips);
+				osd_free(ips);
 			}
 
 			if (patch_filename[0] != '\0')
@@ -5893,7 +5917,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 						p = tmpGames;
 						tmpGames = (char *)malloc(gamesSize);
 						memcpy(tmpGames, p, gamesSize / 2);
-						global_free(p);
+						free(p);
 					}
 					p = tmpGames+s;
 					strcpy(p, _String(LvItem.pszText));
@@ -5916,7 +5940,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 					p = tmpGames;
 					tmpGames = (char *)malloc(gamesSize);
 					memcpy(tmpGames, p, gamesSize / 2);
-					global_free(p);
+					free(p);
 				}
 				p = tmpGames + s;
 				strcpy(p, tmptxt);
@@ -5931,7 +5955,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 					p = tmpGames;
 					tmpGames = (char *)malloc(gamesSize);
 					memcpy(tmpGames, p, gamesSize / 2);
-					global_free(p);
+					free(p);
 				}
 				p = tmpGames + s;
 				strcpy(p, tmptxt);
@@ -5978,7 +6002,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 				ShowWindow(hMain, SW_SHOW);
 			}
 
-			global_free(tmpGames);
+			free(tmpGames);
 
 			kailleraShutdown();	//kt
 			bKailleraNetPlay = FALSE;
@@ -7789,7 +7813,7 @@ static void CopyTrctempStateSaveFile(const WCHAR *fname, inpsub_header *inpsub_h
 			mame_fclose(file_inp);
 			mame_fclose(file_trctemp);
 		}
-		global_free(stemp);
+		osd_free(stemp);
 	}
 }
 
@@ -7927,7 +7951,7 @@ static void MamePlayBackGame()
 
 		stemp = utf8_from_wstring(fname);
 		fileerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBack);
-		global_free(stemp);
+		osd_free(stemp);
 		if (fileerr != FILERR_NONE)
 		{
 			MameMessageBox(_UIW(TEXT("Could not open '%s' as a valid input file.")), filename);
@@ -7975,7 +7999,7 @@ static void MamePlayBackGame()
 		{
 			stemp = utf8_from_wstring(fname2);
 			fileerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBackSub);
-			global_free(stemp);
+			osd_free(stemp);
 			if (fileerr == FILERR_NONE)
 			{
 				inpsub_header inpsub_header;
@@ -8072,7 +8096,7 @@ static void MameLoadState()
 
 		stemp = utf8_from_wstring(state_fname);
 		filerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_STATE, stemp, OPEN_FLAG_READ, &pSaveState);
-		global_free(stemp);
+		osd_free(stemp);
 		if (filerr != FILERR_NONE)
 		{
 			MameMessageBox(_UIW(TEXT("Could not open '%s' as a valid savestate file.")), filename);
@@ -8083,7 +8107,7 @@ static void MameLoadState()
 		stemp = utf8_from_wstring(selected_filename);
 		//mamep: mamecore use utf8 string instead of TCHAR string
 		rc = state_save_check_file(NULL, pSaveState, stemp, MameMessageBoxUTF8);
-		global_free(stemp);
+		osd_free(stemp);
 		mame_fclose(pSaveState);
 		if (rc)
 			return;
@@ -8655,7 +8679,7 @@ static void GamePicker_OnBodyContextMenu(POINT pt)
 		}
 
 		if (ips)
-			global_free(ips);
+			osd_free(ips);
 	}
 #endif /* USE_IPS */
 
@@ -11925,7 +11949,7 @@ static void MamePlayBackGameAVI()
 
 		stemp = utf8_from_wstring(fname);
 		fileerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBack);
-		global_free(stemp);
+		osd_free(stemp);
 		if (fileerr != FILERR_NONE)
 		{
 			MameMessageBox(_UIW(TEXT("Could not open '%s' as a valid input file.")), filename);
@@ -11974,7 +11998,7 @@ static void MamePlayBackGameAVI()
 			//pPlayBackSub = mame_fopen(fname,NULL,FILETYPE_INPUTSUBLOG,0);
 			stemp = utf8_from_wstring(fname2);
 			fileerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBackSub);
-			global_free(stemp);
+			osd_free(stemp);
 			if (pPlayBackSub)
 			{
 				inpsub_header inpsub_header;

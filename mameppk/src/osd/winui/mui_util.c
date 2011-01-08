@@ -514,7 +514,7 @@ static void UpdateController(void)
 		memcpy(gameinfo->usesController, flags, sizeof gameinfo->usesController);
 	}
 
-	global_free(cache);
+	free(cache);
 }
 
 int numberOfSpeakers(const machine_config *config)
@@ -824,14 +824,14 @@ BOOL StringIsSuffixedBy(const char *s, const char *suffix)
 void FreeIfAllocated(char **s)
 {
 	if (*s)
-		global_free(*s);
+		osd_free(*s);
 	*s = NULL;
 }
 
 void FreeIfAllocatedW(WCHAR **s)
 {
 	if (*s)
-		global_free(*s);
+		osd_free(*s);
 	*s = NULL;
 }
 
@@ -954,7 +954,7 @@ static LPWSTR GetPatchDescByLangcode(FILE *fp, int langcode)
 					if (desc)
 					{
 						result = _UTF8Unicode(desc);
-						global_free(desc);
+						osd_free(desc);
 						return result;
 					}
 					else
@@ -993,7 +993,7 @@ static LPWSTR GetPatchDescByLangcode(FILE *fp, int langcode)
 	if (desc)
 	{
 		result = _UTF8Unicode(desc);
-		global_free(desc);
+		osd_free(desc);
 		return result;
 	}
 	else
