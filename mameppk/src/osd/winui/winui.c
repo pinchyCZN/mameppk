@@ -2345,9 +2345,9 @@ static void SetMainTitle(void)
 
 	sscanf(build_version,"%s",version);
 #if defined(KAILLERA) || defined(MAMEUIPLUSPLUS)
-	swprintf(buffer, TEXT("%s Plus! Plus! %s"), TEXT(MAMENAME), _Unicode(GetVersionString()));
+	swprintf(buffer, TEXT("%s Plus! Plus! %s"), TEXT(MAMEUINAME), _Unicode(GetVersionString()));
 #else
-	swprintf(buffer, TEXT("%s Plus! %s"), TEXT(MAMENAME), _Unicode(GetVersionString()));
+	swprintf(buffer, TEXT("%s Plus! %s"), TEXT(MAMEUINAME), _Unicode(GetVersionString()));
 #endif
 
 	SetWindowText(hMain, buffer);
