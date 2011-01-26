@@ -103,6 +103,8 @@ extern const FOLDERDATA g_folderData[] =
 	{TEXT("80s Games"),       "others2",           FOLDER_OTHERS2,      IDI_FOLDER_80S,           0,             0,            CreateOTHERS2Folders },
 	{TEXT("Mahjong&Puzzle"),  "others4",           FOLDER_OTHERS4,      IDI_FOLDER_MAHJONG,       0,             0,            CreateOTHERS4Folders },
 #endif /* !NCP */
+	{TEXT("Mechanical"),      "mechanical",        FOLDER_MECHANICAL,   IDI_FOLDER,               0,             0,            NULL,                       DriverIsMechanical,      TRUE },
+	{TEXT("Non Mechanical"),  "nonmechanical",     FOLDER_NONMECHANICAL,IDI_FOLDER,               0,             0,            NULL,                       DriverIsMechanical,      FALSE },
 	{ NULL }
 };
 
@@ -119,6 +121,7 @@ extern const FILTER_ITEM g_filterList[] =
 	{ F_AVAILABLE,    IDC_FILTER_AVAILABLE,   FilterAvailable, TRUE },
 	{ F_HORIZONTAL,   IDC_FILTER_HORIZONTAL,  DriverIsVertical, FALSE },
 	{ F_VERTICAL,     IDC_FILTER_VERTICAL,    DriverIsVertical, TRUE },
+	{ F_MECHANICAL,   IDC_FILTER_MECHANICAL,  DriverIsMechanical, TRUE },
 	{ 0 }
 };
 
