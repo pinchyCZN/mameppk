@@ -297,7 +297,7 @@ static TIMER_CALLBACK( hiscore_periodic )
 			if (safe_to_load(machine))
 			{
 				hiscore_load(machine);
-				timer_enable(timer, FALSE);
+				timer->enable(false);
 			}
 		}
 	}
@@ -411,8 +411,8 @@ void hiscore_init (running_machine *machine)
 		mame_fclose (f);
 	}
 
-	timer = timer_alloc(machine, hiscore_periodic, NULL);
-	timer_adjust_periodic(timer, machine->primary_screen->frame_period(), 0, machine->primary_screen->frame_period());
+	timer = machine->scheduler().timer_alloc(FUNC(hiscore_periodic), NULL);
+	timer->adjust(machine->primary_screen->frame_period(), 0, machine->primary_screen->frame_period());
 
 	machine->add_notifier(MACHINE_NOTIFY_EXIT, hiscore_close);
 }

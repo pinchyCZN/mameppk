@@ -63,6 +63,7 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 		} else key_F1_old = 0;
 	}
 
+#if 0
 	if(kPlay)
 	{
 		Kaillera_Pos = playernmb_get(KailleraStartOption.player - 1) % 2;
@@ -101,6 +102,7 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 			fromanc2_set_dispvram_w(fromanc2_playerside);
 		}
 	}
+#endif
 
 	cpu_set_input_line(device, 1, HOLD_LINE);
 }
@@ -592,11 +594,11 @@ static MACHINE_START( fromanc4 )
 	state->left_screen = machine->device("lscreen");
 	state->right_screen = machine->device("rscreen");
 
-	state_save_register_global(machine, state->portselect);
-	state_save_register_global(machine, state->sndcpu_nmi_flag);
-	state_save_register_global(machine, state->datalatch1);
-	state_save_register_global(machine, state->datalatch_2h);
-	state_save_register_global(machine, state->datalatch_2l);
+	state->save_item(NAME(state->portselect));
+	state->save_item(NAME(state->sndcpu_nmi_flag));
+	state->save_item(NAME(state->datalatch1));
+	state->save_item(NAME(state->datalatch_2h));
+	state->save_item(NAME(state->datalatch_2l));
 
 	/* video-related elements are saved in VIDEO_START */
 }
@@ -611,8 +613,8 @@ static MACHINE_START( fromanc2 )
 
 	MACHINE_START_CALL(fromanc4);
 
-	state_save_register_global(machine, state->subcpu_int_flag);
-	state_save_register_global(machine, state->subcpu_nmi_flag);
+	state->save_item(NAME(state->subcpu_int_flag));
+	state->save_item(NAME(state->subcpu_nmi_flag));
 }
 
 static MACHINE_RESET( fromanc2 )

@@ -109,7 +109,7 @@ READ8_DEVICE_HANDLER( msm6242_r )
 		case MSM6242_REG_CF: return msm6242->reg[2];
 	}
 
-	logerror("%s: MSM6242 unmapped offset %02x read\n", cpuexec_describe_context(device->machine), offset);
+	logerror("%s: MSM6242 unmapped offset %02x read\n", device->machine->describe_context(), offset);
 	return 0;
 }
 
@@ -152,7 +152,7 @@ WRITE8_DEVICE_HANDLER( msm6242_w )
 		}
 	}
 
-	logerror("%s: MSM6242 unmapped offset %02x written with %02x\n", cpuexec_describe_context(device->machine), offset, data);
+	logerror("%s: MSM6242 unmapped offset %02x written with %02x\n", device->machine->describe_context(), offset, data);
 }
 
 

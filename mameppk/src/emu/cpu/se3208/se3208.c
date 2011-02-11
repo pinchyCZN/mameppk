@@ -1793,14 +1793,21 @@ static CPU_INIT( se3208 )
 	se3208_state->direct = &se3208_state->program->direct();
 
 #ifdef MAMEUIPLUSPLUS
-	state_save_register_device_item_array(device, 0, se3208_state->R);
-	state_save_register_device_item(device, 0, se3208_state->PC);
-	state_save_register_device_item(device, 0, se3208_state->SR);
-	state_save_register_device_item(device, 0, se3208_state->SP);
-	state_save_register_device_item(device, 0, se3208_state->ER);
-	state_save_register_device_item(device, 0, se3208_state->PPC);
-	state_save_register_device_item(device, 0, se3208_state->IRQ);
-	state_save_register_device_item(device, 0, se3208_state->NMI);
+	device->save_item(NAME(se3208_state->R[0]));
+	device->save_item(NAME(se3208_state->R[1]));
+	device->save_item(NAME(se3208_state->R[2]));
+	device->save_item(NAME(se3208_state->R[3]));
+	device->save_item(NAME(se3208_state->R[4]));
+	device->save_item(NAME(se3208_state->R[5]));
+	device->save_item(NAME(se3208_state->R[6]));
+	device->save_item(NAME(se3208_state->R[7]));
+	device->save_item(NAME(se3208_state->PC));
+	device->save_item(NAME(se3208_state->SR));
+	device->save_item(NAME(se3208_state->SP));
+	device->save_item(NAME(se3208_state->ER));
+	device->save_item(NAME(se3208_state->PPC));
+	device->save_item(NAME(se3208_state->IRQ));
+	device->save_item(NAME(se3208_state->NMI));
 #endif /* MAMEUIPLUSPLUS */
 }
 
