@@ -63,7 +63,7 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 		} else key_F1_old = 0;
 	}
 
-#if 0
+	speaker_input info;
 	if(kPlay)
 	{
 		Kaillera_Pos = playernmb_get(KailleraStartOption.player - 1) % 2;
@@ -76,11 +76,15 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 	
 			if (!Kaillera_Pos)
 			{
-				sound_set_user_gain(device->machine, 1, 0.75); // 1P (LEFT)
-				sound_set_user_gain(device->machine, 2, 0.00); // 2P (RIGHT)
+				if (device->machine->sound().indexed_speaker_input(1, info))
+					info.stream->set_input_gain(info.inputnum, 0.75); // 1P (LEFT)
+				if (device->machine->sound().indexed_speaker_input(2, info))
+					info.stream->set_input_gain(info.inputnum, 0.00); // 2P (RIGHT)
 			} else {
-				sound_set_user_gain(device->machine, 1, 0.00); // 1P (LEFT)
-				sound_set_user_gain(device->machine, 2, 0.75); // 2P (RIGHT)
+				if (device->machine->sound().indexed_speaker_input(1, info))
+					info.stream->set_input_gain(info.inputnum, 0.00); // 1P (LEFT)
+				if (device->machine->sound().indexed_speaker_input(2, info))
+					info.stream->set_input_gain(info.inputnum, 0.75); // 2P (RIGHT)
 			}
 	
 			fromanc2_set_dispvram_w(Kaillera_Pos);
@@ -91,18 +95,22 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 	
 			popmessage("PLAYER-%01X SIDE", fromanc2_playerside + 1);
 	
-			if (!fromanc2_playerside) {
-				sound_set_user_gain(device->machine, 1, 0.75); // 1P (LEFT)
-				sound_set_user_gain(device->machine, 2, 0.00); // 2P (RIGHT)
+			if (!fromanc2_playerside)
+			{
+				if (device->machine->sound().indexed_speaker_input(1, info))
+					info.stream->set_input_gain(info.inputnum, 0.75); // 1P (LEFT)
+				if (device->machine->sound().indexed_speaker_input(2, info))
+					info.stream->set_input_gain(info.inputnum, 0.00); // 2P (RIGHT)
 			} else {
-				sound_set_user_gain(device->machine, 1, 0.00); // 1P (LEFT)
-				sound_set_user_gain(device->machine, 2, 0.75); // 2P (RIGHT)
+				if (device->machine->sound().indexed_speaker_input(1, info))
+					info.stream->set_input_gain(info.inputnum, 0.00); // 1P (LEFT)
+				if (device->machine->sound().indexed_speaker_input(2, info))
+					info.stream->set_input_gain(info.inputnum, 0.75); // 2P (RIGHT)
 			}
 	
 			fromanc2_set_dispvram_w(fromanc2_playerside);
 		}
 	}
-#endif
 
 	cpu_set_input_line(device, 1, HOLD_LINE);
 }

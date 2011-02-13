@@ -186,11 +186,6 @@ attotime sound_stream::sample_time() const
 	return attotime(m_device.machine->sound().last_update().seconds, 0) + attotime(0, m_output_sampindex * m_attoseconds_per_sample);
 }
 
-#ifdef USE_VOLUME_AUTO_ADJUST
-INLINE INT16 calc_volume_final(INT32 sample);
-INLINE INT16 calc_volume_mixer(INT32 sample);
-#endif /* USE_VOLUME_AUTO_ADJUST */
-
 //-------------------------------------------------
 //  input_gain - return the input gain on a
 //  given stream's input
@@ -764,91 +759,6 @@ stream_sample_t *sound_stream::generate_resampled_data(stream_input &input, UINT
 		}
 	}
 
-#ifdef MAME_AVI
-	if ( mame_mixer_wave_loging )
-	{
-		unsigned int samples_this_frame_size = samples_this_update;
-		char *buf = (char*)finalmix;
-		
-	        if (mame_mixer_wave_cnvnmb != -1)
-		{
-			unsigned int dst_samples;
-			unsigned int dst_samples_len;
-			if (mame_mixer_wave_cnvnmb & 0x70)
-			{
-				dst_samples = mame_mixer_wave_cnvbuffer_size / (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate/8));
-				dst_samples_len = ((samples_this_frame_size<<16)/mame_mixer_wsr.adder + 256)* (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate/8));
-				
-				samples_this_frame_size = ((samples_this_update<<16)/mame_mixer_wsr.adder + 256);
-			} 
-			else
-			{
-				dst_samples = mame_mixer_wave_cnvbuffer_size / (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate/8));
-				dst_samples_len = samples_this_frame_size * (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate/8));
-			}
-			
-			if (dst_samples < samples_this_frame_size)
-			{
-				if (mame_mixer_wave_cnvbuffer != NULL)
-				{
-					free (mame_mixer_wave_cnvbuffer);
-					mame_mixer_wave_cnvbuffer_size = dst_samples_len;
-				} else
-				{
-					mame_mixer_wave_cnvbuffer_size = mame_mixer_dstwfm.samplespersec * (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate/8));
-					if (mame_mixer_wave_cnvbuffer_size < dst_samples_len)
-						mame_mixer_wave_cnvbuffer_size = dst_samples_len;
-				}
-				mame_mixer_wave_cnvbuffer = (char *)malloc(mame_mixer_wave_cnvbuffer_size);
-			}
-			buf = mame_mixer_wave_cnvbuffer;
-			
-			switch ((mame_mixer_wave_cnvnmb & 0x70)>>4)
-			{
-			default:
-			case 0:
-				wav_wavecnv(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update);
-				break;
-			case 1:
-				samples_this_frame_size = wav_wavecnv_resize(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update, &mame_mixer_wsr);
-				break;
-			case 2:
-				samples_this_frame_size = wav_wavecnv_resample(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update, &mame_mixer_wsre);
-				break;
-			case 3:
-				samples_this_frame_size = wav_wavecnv_stretch(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update, &mame_mixer_wsre);
-				break;
-			case 4:
-				break;
-			case 5:
-				break;
-			case 6:
-				samples_this_frame_size = wav_wavecnv_resample_f(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update, &mame_mixer_wsre);
-				break;
-			case 7:
-				samples_this_frame_size = wav_wavecnv_stretch_f(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update, &mame_mixer_wsre);
-				break;
-			}
-			
-			{
-				const unsigned int len = samples_this_frame_size * (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate / 8));
-				mame_mixer_wave_FileSize += (unsigned __int64)len;
-				if (mame_mixer_wave_BytesWrittenMax < len)
-					mame_mixer_wave_BytesWrittenMax = len;
-			}
-		}
-		
-		if (mame_mixer_wave_loging == 1) 
-		{
-			wav_log_wave(buf, samples_this_frame_size);
-		}
-		else
-		{
-			AVI_AudioStream_WriteWaveData((char*)(&buf[0]), samples_this_frame_size);
-		}
-	}
-#endif /* MAME_AVI */
-
 	return input.m_resample;
 }
 
@@ -1129,6 +1039,8 @@ void sound_manager::resume(running_machine &machine)
 
 void sound_manager::config_load(running_machine *machine, int config_type, xml_data_node *parentnode)
 {
+	xml_data_node *channelnode;
+
 	// we only care about game files
 	if (config_type != CONFIG_TYPE_GAME)
 		return;
@@ -1138,7 +1050,7 @@ void sound_manager::config_load(running_machine *machine, int config_type, xml_d
 		return;
 
 	// iterate over channel nodes
-	for (xml_data_node *channelnode = xml_get_sibling(parentnode->child, "channel"); channelnode != NULL; channelnode = xml_get_sibling(channelnode->next, "channel"))
+	for (channelnode = xml_get_sibling(parentnode->child, "channel"); channelnode != NULL; channelnode = xml_get_sibling(channelnode->next, "channel"))
 	{
 		speaker_input info;
 		if (machine->sound().indexed_speaker_input(xml_get_attribute_int(channelnode, "index", -1), info))
@@ -1149,6 +1061,17 @@ void sound_manager::config_load(running_machine *machine, int config_type, xml_d
 				info.stream->set_input_gain(info.inputnum, newvol);
 		}
 	}
+
+#ifdef USE_VOLUME_AUTO_ADJUST
+	channelnode = xml_get_sibling(parentnode->child, "volume_multiplier");
+	if (channelnode)
+	{
+		volume_multiplier_final = xml_get_attribute_int(channelnode, "final", DEFAULT_VOLUME_MULTIPLIER);
+		volume_multiplier_final_max = xml_get_attribute_int(channelnode, "final_max", DEFAULT_VOLUME_MULTIPLIER_MAX);
+		volume_multiplier_mixer = xml_get_attribute_int(channelnode, "mixer", DEFAULT_VOLUME_MULTIPLIER);
+		volume_multiplier_mixer_max = xml_get_attribute_int(channelnode, "mixer_max", DEFAULT_VOLUME_MULTIPLIER_MAX);
+	}
+#endif /* USE_VOLUME_AUTO_ADJUST */
 }
 
 
@@ -1184,6 +1107,20 @@ void sound_manager::config_save(running_machine *machine, int config_type, xml_d
 				}
 			}
 		}
+
+#ifdef USE_VOLUME_AUTO_ADJUST
+	if (parentnode)
+	{
+		xml_data_node *channelnode = xml_add_child(parentnode, "volume_multiplier", NULL);
+		if (channelnode)
+		{
+			xml_set_attribute_int(channelnode, "final", volume_multiplier_final);
+			xml_set_attribute_int(channelnode, "final_max", volume_multiplier_final_max);
+			xml_set_attribute_int(channelnode, "mixer", volume_multiplier_mixer);
+			xml_set_attribute_int(channelnode, "mixer_max", volume_multiplier_mixer_max);
+		}
+	}
+#endif /* USE_VOLUME_AUTO_ADJUST */
 }
 
 
@@ -1208,6 +1145,30 @@ void sound_manager::update()
 	UINT32 finalmix_offset = 0;
 	INT16 *finalmix = m_finalmix;
 	int sample;
+#ifdef USE_VOLUME_AUTO_ADJUST
+	if (options_get_bool(mame_options(), OPTION_VOLUME_ADJUST))
+	{
+		have_sample = 0;
+
+		for (sample = m_finalmix_leftover; sample < samples_this_update * 100; sample += finalmix_step)
+		{
+			int sampindex = sample / 100;
+
+			/* clamp the left side */
+			finalmix[finalmix_offset++] = calc_volume_final(m_leftmix[sampindex]);
+	
+			/* clamp the right side */
+			finalmix[finalmix_offset++] = calc_volume_final(m_rightmix[sampindex]);
+		}
+
+		if (have_sample)
+		{
+			if (volume_multiplier_final_max > volume_multiplier_final)
+				volume_multiplier_final++;
+		}
+	}
+	else
+#endif /* USE_VOLUME_AUTO_ADJUST */
 	for (sample = m_finalmix_leftover; sample < samples_this_update * 100; sample += finalmix_step)
 	{
 		int sampindex = sample / 100;
@@ -1229,6 +1190,91 @@ void sound_manager::update()
 		finalmix[finalmix_offset++] = samp;
 	}
 	m_finalmix_leftover = sample - samples_this_update * 100;
+
+#ifdef MAME_AVI
+	if ( mame_mixer_wave_loging )
+	{
+		unsigned int samples_this_frame_size = samples_this_update;
+		char *buf = (char*)finalmix;
+		
+	        if (mame_mixer_wave_cnvnmb != -1)
+		{
+			unsigned int dst_samples;
+			unsigned int dst_samples_len;
+			if (mame_mixer_wave_cnvnmb & 0x70)
+			{
+				dst_samples = mame_mixer_wave_cnvbuffer_size / (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate/8));
+				dst_samples_len = ((samples_this_frame_size<<16)/mame_mixer_wsr.adder + 256)* (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate/8));
+				
+				samples_this_frame_size = ((samples_this_update<<16)/mame_mixer_wsr.adder + 256);
+			} 
+			else
+			{
+				dst_samples = mame_mixer_wave_cnvbuffer_size / (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate/8));
+				dst_samples_len = samples_this_frame_size * (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate/8));
+			}
+			
+			if (dst_samples < samples_this_frame_size)
+			{
+				if (mame_mixer_wave_cnvbuffer != NULL)
+				{
+					free (mame_mixer_wave_cnvbuffer);
+					mame_mixer_wave_cnvbuffer_size = dst_samples_len;
+				} else
+				{
+					mame_mixer_wave_cnvbuffer_size = mame_mixer_dstwfm.samplespersec * (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate/8));
+					if (mame_mixer_wave_cnvbuffer_size < dst_samples_len)
+						mame_mixer_wave_cnvbuffer_size = dst_samples_len;
+				}
+				mame_mixer_wave_cnvbuffer = (char *)malloc(mame_mixer_wave_cnvbuffer_size);
+			}
+			buf = mame_mixer_wave_cnvbuffer;
+			
+			switch ((mame_mixer_wave_cnvnmb & 0x70)>>4)
+			{
+			default:
+			case 0:
+				wav_wavecnv(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update);
+				break;
+			case 1:
+				samples_this_frame_size = wav_wavecnv_resize(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update, &mame_mixer_wsr);
+				break;
+			case 2:
+				samples_this_frame_size = wav_wavecnv_resample(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update, &mame_mixer_wsre);
+				break;
+			case 3:
+				samples_this_frame_size = wav_wavecnv_stretch(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update, &mame_mixer_wsre);
+				break;
+			case 4:
+				break;
+			case 5:
+				break;
+			case 6:
+				samples_this_frame_size = wav_wavecnv_resample_f(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update, &mame_mixer_wsre);
+				break;
+			case 7:
+				samples_this_frame_size = wav_wavecnv_stretch_f(mame_mixer_wave_cnvnmb, buf, finalmix, samples_this_update, &mame_mixer_wsre);
+				break;
+			}
+			
+			{
+				const unsigned int len = samples_this_frame_size * (mame_mixer_dstwfm.channel * (mame_mixer_dstwfm.bitrate / 8));
+				mame_mixer_wave_FileSize += (unsigned __int64)len;
+				if (mame_mixer_wave_BytesWrittenMax < len)
+					mame_mixer_wave_BytesWrittenMax = len;
+			}
+		}
+		
+		if (mame_mixer_wave_loging == 1) 
+		{
+			wav_log_wave(buf, samples_this_frame_size);
+		}
+		else
+		{
+			AVI_AudioStream_WriteWaveData((char*)(&buf[0]), samples_this_frame_size);
+		}
+	}
+#endif /* MAME_AVI */
 
 	// play the result
 	if (finalmix_offset > 0)
