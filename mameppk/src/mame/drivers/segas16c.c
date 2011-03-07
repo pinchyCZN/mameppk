@@ -345,9 +345,9 @@ static void fz2dx_i8751_sim(running_machine *machine)
 static NVRAM_HANDLER( system16c )
 {
 	if (read_or_write)
-		mame_fwrite(file, workram, 0x40000);
+		file->write(workram, 0x40000);
 	else if (file)
-		mame_fread(file, workram, 0x40000);
+		file->read(workram, 0x40000);
 }
 
 /*************************************
@@ -584,9 +584,9 @@ static MACHINE_CONFIG_START( system16c, segas1x_state )
 	MCFG_SCREEN_ADD("screen", RASTER)
 	MCFG_SCREEN_FORMAT(BITMAP_FORMAT_INDEXED16)
 	MCFG_SCREEN_RAW_PARAMS(MASTER_CLOCK_25MHz/4, 400, 0, 320, 262, 0, 224)
+	MCFG_SCREEN_UPDATE(system16c)
 
 	MCFG_VIDEO_START(system16c)
-	MCFG_VIDEO_UPDATE(system16c)
 
 	MCFG_SEGA16SP_ADD_16B("segaspr1")
 

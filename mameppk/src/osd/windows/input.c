@@ -517,7 +517,7 @@ void wininput_init(running_machine *machine)
 	assert_always(input_lock != NULL, "Failed to allocate input_lock");
 
 	// decode the options
-	lightgun_shared_axis_mode = options_get_bool(machine->options(), WINOPTION_DUAL_LIGHTGUN);
+	lightgun_shared_axis_mode = options_get_bool(&machine->options(), WINOPTION_DUAL_LIGHTGUN);
 
 #ifdef JOYSTICK_ID
 	{
@@ -533,7 +533,7 @@ void wininput_init(running_machine *machine)
 			int id;
 
 			sprintf(name, "joyid%d", i + 1);
-			id = options_get_int(mame_options(), name);
+			id = options_get_int(&machine->options(), name);
 
 			if (used_id[id] == -1)
 			{
@@ -1769,7 +1769,7 @@ static void rawinput_init(running_machine *machine)
 		goto error;
 
 #ifdef MAMEUIPLUSPLUS
-	if (!options_get_bool(mame_options(), "forceuse_dinput"))
+	if (!options_get_bool(&machine->options(), "forceuse_dinput"))
 #endif /* MAMEUIPLUSPLUS */
 	// iterate backwards through devices; new devices are added at the head
 	for (devnum = device_count - 1; devnum >= 0; devnum--)
@@ -1785,7 +1785,7 @@ static void rawinput_init(running_machine *machine)
 			rawinput_mouse_enum(machine, device);
 	}
 
-	// finally, register to recieve raw input WM_INPUT messages
+	// finally, register to receive raw input WM_INPUT messages
 	regcount = 0;
 	if (keyboard_list != NULL)
 	{

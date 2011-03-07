@@ -36,7 +36,7 @@ VIDEO_START( system16c )
  *
  *************************************/
 
-VIDEO_UPDATE( system16c )
+SCREEN_UPDATE( system16c )
 {
 	/* if no drawing is happening, fill with black and get out */
 	if (!segaic16_display_enable)

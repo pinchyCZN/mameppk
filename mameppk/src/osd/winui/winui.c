@@ -1733,8 +1733,10 @@ void UpdateScreenShot(void)
 		if (g_IPSMenuSelectName)
 			LoadScreenShot(Picker_GetSelectedItem(hwndList), g_IPSMenuSelectName, TAB_IPS);
 		else
+			LoadScreenShot(Picker_GetSelectedItem(hwndList), NULL, TabView_GetCurrentTab(hTabCtrl));
+#else
+		LoadScreenShot(Picker_GetSelectedItem(hwndList), TabView_GetCurrentTab(hTabCtrl));
 #endif /* USE_IPS */
-		LoadScreenShot(Picker_GetSelectedItem(hwndList), NULL, TabView_GetCurrentTab(hTabCtrl));
 	}
 
 	// figure out if we have a history or not, to place our other windows properly
@@ -2409,14 +2411,14 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 
 #ifdef DRIVER_SWITCH
 	{
-		mame_file *file;
 		file_error filerr;
 
-		filerr = mame_fopen_options(options, SEARCHPATH_RAW, CONFIGNAME ".ini", OPEN_FLAG_READ, &file);
+		emu_file file = emu_file(*options, SEARCHPATH_RAW, OPEN_FLAG_READ);
+		filerr = file.open(CONFIGNAME ".ini");
 		if (filerr == FILERR_NONE)
 		{
-			options_parse_ini_file(options, mame_core_file(file), OPTION_PRIORITY_CMDLINE, FALSE);
-			mame_fclose(file);
+			options_parse_ini_file(options, file, OPTION_PRIORITY_CMDLINE, FALSE);
+			file.close();
 		}
 
 		assign_drivers(options);
@@ -7772,7 +7774,6 @@ static void CLIB_DECL MameMessageBoxUTF8(const char *fmt, ...)
 static void CopyTrctempStateSaveFile(const WCHAR *fname, inpsub_header *inpsub_header)
 {
 	file_error filerr;
-	mame_file *file_inp, *file_trctemp;
 	WCHAR path[_MAX_PATH];
 	WCHAR name[_MAX_PATH];
 	char *stemp;
@@ -7797,21 +7798,23 @@ static void CopyTrctempStateSaveFile(const WCHAR *fname, inpsub_header *inpsub_h
 		//sprintf(path, "%s\\trctemp", GetInpDir());
 		wcscpy(path, TEXT("inp\\trctemp"));
 		stemp = utf8_from_wstring(name);
-		filerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_STATE, stemp, OPEN_FLAG_READ, &file_inp);
+		emu_file file_inp = emu_file(*(MameUIGlobal()), SEARCHPATH_STATE, OPEN_FLAG_READ);
+		filerr = file_inp.open(stemp);
 
 		if (!file_inp) 
 			delete_file(_String(name));
 		else
 		{
-			filerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_STATE, stemp, OPEN_FLAG_READ, &file_trctemp);
+			emu_file file_trctemp = emu_file(*(MameUIGlobal()), SEARCHPATH_STATE, OPEN_FLAG_READ);
+			filerr = file_trctemp.open(stemp);
 
-			fsize = mame_fsize(file_inp);
+			fsize = file_inp.size();
 			buf = malloc(fsize);
-			mame_fread(file_inp, buf, fsize);
-			mame_fwrite(file_trctemp, buf, fsize);
+			file_inp.read(buf, fsize);
+			file_trctemp.write(buf, fsize);
 			free(buf);
-			mame_fclose(file_inp);
-			mame_fclose(file_trctemp);
+			file_inp.close();
+			file_trctemp.close();
 		}
 		osd_free(stemp);
 	}
@@ -7923,10 +7926,6 @@ static void MamePlayBackGame()
 	if (CommonFileDialog(GetOpenFileName, filename, FILETYPE_INPUT_FILES))
 	{
 		file_error fileerr;
-		mame_file* pPlayBack;
-#ifdef KAILLERA
-		mame_file* pPlayBackSub;
-#endif /* KAILEERA */
 		WCHAR drive[_MAX_DRIVE];
 		WCHAR dir[_MAX_DIR];
 		WCHAR bare_fname[_MAX_FNAME];
@@ -7950,7 +7949,8 @@ static void MamePlayBackGame()
 			path[wcslen(path)-1] = 0; // take off trailing back slash
 
 		stemp = utf8_from_wstring(fname);
-		fileerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBack);
+		emu_file pPlayBack = emu_file(*(MameUIGlobal()), SEARCHPATH_INPUTLOG, OPEN_FLAG_READ);
+		fileerr = pPlayBack.open(stemp);
 		osd_free(stemp);
 		if (fileerr != FILERR_NONE)
 		{
@@ -7965,7 +7965,7 @@ static void MamePlayBackGame()
 			inp_header ihdr;
 
 			/* read the header and verify that it is a modern version; if not, print an error */
-			if (mame_fread(pPlayBack, &ihdr, sizeof(inp_header)) != sizeof(inp_header))
+			if (pPlayBack.read(&ihdr, sizeof(inp_header)) != sizeof(inp_header))
 			{
 				MameMessageBox(_UIW(TEXT("Input file is corrupt or invalid (missing header)")));
 				return;
@@ -7991,22 +7991,23 @@ static void MamePlayBackGame()
 					}
 				}
 		}
-		mame_fclose(pPlayBack);
+		pPlayBack.close();
 
 #ifdef KAILLERA
 		wsprintf(fname2, TEXT("%s.trc"), bare_fname);
 		if ((!wcscmp(ext, TEXT(".zip"))) || (!wcscmp(ext, TEXT(".trc"))))
 		{
 			stemp = utf8_from_wstring(fname2);
-			fileerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBackSub);
+			emu_file pPlayBackSub = emu_file(*(MameUIGlobal()), SEARCHPATH_INPUTLOG, OPEN_FLAG_READ);
+			fileerr = pPlayBackSub.open(stemp);
 			osd_free(stemp);
 			if (fileerr == FILERR_NONE)
 			{
 				inpsub_header inpsub_header;
 	
 				// read playbacksub header
-				mame_fread(pPlayBackSub, &inpsub_header, sizeof(inpsub_header));
-				mame_fclose(pPlayBackSub);
+				pPlayBackSub.read(&inpsub_header, sizeof(inpsub_header));
+				pPlayBackSub.close();
 				//wsprintf(Trace_filename, TEXT("%s\\%s"), path, fname2);
 	
 				if (MamePlayBackTrace(fname2, &inpsub_header) == 2)
@@ -8049,7 +8050,6 @@ static void MameLoadState()
 	}
 	if (CommonFileDialog(GetOpenFileName, filename, FILETYPE_SAVESTATE_FILES))
 	{
-		mame_file* pSaveState;
 		file_error filerr;
 		WCHAR drive[_MAX_DRIVE];
 		WCHAR dir[_MAX_DIR];
@@ -8095,7 +8095,8 @@ static void MameLoadState()
 #endif // MESS
 
 		stemp = utf8_from_wstring(state_fname);
-		filerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_STATE, stemp, OPEN_FLAG_READ, &pSaveState);
+		emu_file pSaveState = emu_file(*(MameUIGlobal()), SEARCHPATH_STATE, OPEN_FLAG_READ);
+		filerr = pSaveState.open(stemp);
 		osd_free(stemp);
 		if (filerr != FILERR_NONE)
 		{
@@ -8108,7 +8109,7 @@ static void MameLoadState()
 		//mamep: mamecore use utf8 string instead of TCHAR string
 		rc = state_manager::check_file(NULL, pSaveState, stemp, MameMessageBoxUTF8);
 		osd_free(stemp);
-		mame_fclose(pSaveState);
+		pSaveState.close();
 		if (rc)
 			return;
 
@@ -8581,9 +8582,7 @@ static void GamePicker_OnBodyContextMenu(POINT pt)
 {
 	HMENU hMenuLoad;
 	HMENU hMenu;
-	HMENU hSubMenu = NULL;
 
-	int  nGame = Picker_GetSelectedItem(hwndList);
 	TPMPARAMS tpmp;
 	ZeroMemory(&tpmp,sizeof(tpmp));
 	tpmp.cbSize = sizeof(tpmp);
@@ -8599,6 +8598,8 @@ static void GamePicker_OnBodyContextMenu(POINT pt)
 #ifdef USE_IPS
 	if (have_selection)
 	{
+		HMENU hSubMenu = NULL;
+		int  nGame = Picker_GetSelectedItem(hwndList);
 		core_options *o = load_options(OPTIONS_GAME, nGame);
 		int patch_count = GetPatchCount(driversw[nGame]->name, TEXT("*"));
 		WCHAR *ips = options_get_wstring(o, OPTION_IPS);
@@ -10087,17 +10088,20 @@ void WINAPI kChatCallback(char *nick, char *text)
 				{
 					//int flag;
 					file_error filerr;
-					mame_file *file;
 					char filename[MAX_PATH];
 					char name[2];
 					name[0] = Kaillera_StateSave_file; name[1] = 0;
 					sprintf(filename, "%s%s%s-%s.sta", k_machine->basename(), PATH_SEPARATOR, k_machine->gamedrv->name, name);
-					filerr = mame_fopen(SEARCHPATH_STATE, filename, OPEN_FLAG_READ, &file);
+					emu_file file = emu_file(k_machine->options(), SEARCHPATH_STATE, OPEN_FLAG_READ);
+					filerr = file.open(filename);
 					if (filerr != FILERR_NONE)
-						filerr = mame_fopen(SEARCHPATH_STATE, filename, OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS, &file);
-					if (filerr == FILERR_NONE)
-						mame_fclose(file);
-					checksum_file_crc32(SEARCHPATH_STATE, filename, NULL, &size, &crc);
+					{
+						emu_file file2 = emu_file(k_machine->options(), SEARCHPATH_STATE, OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+						filerr = file2.open(filename);
+						file2.close();
+					}
+					file.close();
+					checksum_file_crc32(k_machine->options(), SEARCHPATH_STATE, filename, NULL, &size, &crc);
 				}
 				
 				dat[0] = 0x0000000f;
@@ -10266,17 +10270,15 @@ void WINAPI kChatCallback(char *nick, char *text)
 			temp = (char *)malloc( Kaillera_Send_DecompressLen );
 			zl = uncompress((Bytef *)temp, &Kaillera_Send_DecompressLen, (Bytef *)lpkChatDatabit, Kaillera_Send_Len);
 			if( zl == Z_OK) {
-				mame_file *file;
 				char name[2];
 				name[0] = Kaillera_StateSave_file;
 				name[1] = 0;
-				{
-					//int flag;
-					sprintf(fname, "%s/%s-%c.sta", k_machine->basename(), k_machine->gamedrv->name, name[0]);
-					filerr = mame_fopen(SEARCHPATH_STATE, fname, OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS, &file);
-				}
-				mame_fwrite(file, temp, tst);
-				mame_fclose(file);
+				//int flag;
+				sprintf(fname, "%s/%s-%c.sta", k_machine->basename(), k_machine->gamedrv->name, name[0]);
+				emu_file file = emu_file(k_machine->options(), SEARCHPATH_STATE, OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+				filerr = file.open(fname);
+				file.write(temp, tst);
+				file.close();
 				popmessageW(_UIW(TEXT("Reception completed. %s-%c.sta successfully saved.")), _Unicode(k_machine->gamedrv->name), Kaillera_StateSave_file);
 			}
 			if( zl == Z_MEM_ERROR) popmessage("Z_MEM_ERROR" );
@@ -11924,10 +11926,6 @@ static void MamePlayBackGameAVI()
 	if (CommonFileDialog(GetOpenFileName, filename, FILETYPE_INPUT_FILES))
 	{
 		file_error fileerr;
-		mame_file* pPlayBack;
-#ifdef KAILLERA
-		mame_file* pPlayBackSub;
-#endif /* KAILEERA */
 		WCHAR drive[_MAX_DRIVE];
 		WCHAR dir[_MAX_DIR];
 		WCHAR bare_fname[_MAX_FNAME];
@@ -11948,7 +11946,8 @@ static void MamePlayBackGameAVI()
 			path[wcslen(path)-1] = 0; // take off trailing back slash
 
 		stemp = utf8_from_wstring(fname);
-		fileerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBack);
+		emu_file pPlayBack = emu_file(*(MameUIGlobal()), SEARCHPATH_INPUTLOG, OPEN_FLAG_READ);
+		fileerr = pPlayBack.open(stemp);
 		osd_free(stemp);
 		if (fileerr != FILERR_NONE)
 		{
@@ -11963,7 +11962,7 @@ static void MamePlayBackGameAVI()
 			inp_header ihdr;
 
 			/* read the header and verify that it is a modern version; if not, print an error */
-			if (mame_fread(pPlayBack, &ihdr, sizeof(inp_header)) != sizeof(inp_header))
+			if (pPlayBack.read(&ihdr, sizeof(inp_header)) != sizeof(inp_header))
 			{
 				MameMessageBox(_UIW(TEXT("Input file is corrupt or invalid (missing header)")));
 				return;
@@ -11989,7 +11988,7 @@ static void MamePlayBackGameAVI()
 					}
 				}
 		}
-		mame_fclose(pPlayBack);
+		pPlayBack.close();
 
 #ifdef KAILLERA
 		wsprintf(fname2, TEXT("%s.trc"), bare_fname);
@@ -11997,15 +11996,16 @@ static void MamePlayBackGameAVI()
 		{
 			//pPlayBackSub = mame_fopen(fname,NULL,FILETYPE_INPUTSUBLOG,0);
 			stemp = utf8_from_wstring(fname2);
-			fileerr = mame_fopen_options(MameUIGlobal(), SEARCHPATH_INPUTLOG, stemp, OPEN_FLAG_READ, &pPlayBackSub);
+			emu_file pPlayBackSub = emu_file(*(MameUIGlobal()), SEARCHPATH_INPUTLOG, OPEN_FLAG_READ);
+			fileerr = pPlayBackSub.open(stemp);
 			osd_free(stemp);
 			if (pPlayBackSub)
 			{
 				inpsub_header inpsub_header;
 
 				// read playbacksub header
-				mame_fread(pPlayBackSub, &inpsub_header, sizeof(inpsub_header));
-				mame_fclose(pPlayBackSub);
+				pPlayBackSub.read(&inpsub_header, sizeof(inpsub_header));
+				pPlayBackSub.close();
 				//wsprintf(Trace_filename, TEXT("%s\\%s"), path, fname2);
 
 				if (MamePlayBackTrace(fname2, &inpsub_header) == 2)

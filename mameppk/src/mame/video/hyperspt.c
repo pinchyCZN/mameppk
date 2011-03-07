@@ -225,7 +225,7 @@ static void rotscreen(running_machine *machine, bitmap_t *bitmap, const rectangl
 }
 #endif /* KAILLERA */
 
-VIDEO_UPDATE( hyperspt )
+SCREEN_UPDATE( hyperspt )
 {
 	hyperspt_state *state = screen->machine->driver_data<hyperspt_state>();
 	int row;
