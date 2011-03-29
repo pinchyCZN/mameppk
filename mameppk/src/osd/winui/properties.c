@@ -136,7 +136,6 @@ b) Exit the dialog.
 #include "winui.h"
 #include "datamap.h"
 #include "help.h"
-#include "winmain.h"
 #include "strconv.h"
 #include "winutf8.h"
 #include "sound/samples.h"
@@ -169,34 +168,40 @@ b) Exit the dialog.
 
 #ifdef USE_IPS
 //mamep: ignore ips setting
-static core_options * load_options_ex(OPTIONS_TYPE opt_type, int game_num)
+static void load_options_ex(windows_options &opts, OPTIONS_TYPE opt_type, int game_num)
 {
-	core_options *opts = load_options(opt_type, game_num);
+	load_options(opts, opt_type, game_num);
 
-	options_set_string(opts, OPTION_IPS, "", OPTION_PRIORITY_CMDLINE);
-	return opts;
+	astring error_string;
+	opts.set_value(OPTION_IPS, "", OPTION_PRIORITY_CMDLINE, error_string);
+	assert(!error_string);
 }
 
 //mamep: keep ips setting
-static void save_options_ex(OPTIONS_TYPE opt_type, core_options *opts, int game_num)
+static void save_options_ex(OPTIONS_TYPE opt_type, windows_options &opts, int game_num)
 {
-	core_options *orig = load_options(opt_type, game_num);
-	const char *ips = options_get_string(orig, OPTION_IPS);
+	windows_options orig;
+	load_options(orig, opt_type, game_num);
+	const char *ips = orig.value(OPTION_IPS);
 
-	if (ips && *ips && !opts)
+	if (ips && *ips) // && !opts)
 	{
 		OPTIONS_TYPE type = opt_type;
 
 		if (type > OPTIONS_GLOBAL)
 			type = (OPTIONS_TYPE)(type-1);
 
-		opts = load_options(type, game_num);
+		load_options(opts, type, game_num);
 	}
 
-	if (opts)
-		options_set_string(opts, OPTION_IPS, ips, OPTION_PRIORITY_CMDLINE);
+//	if (opts)
+	{
+		astring error_string;
+		opts.set_value(OPTION_IPS, ips, OPTION_PRIORITY_CMDLINE, error_string);
+		assert(!error_string);
+	}
 
-	options_free(orig);
+//	options_free(orig);
 	save_options(opt_type, opts, game_num);
 }
 
@@ -243,10 +248,10 @@ static void InitializeJoyidUI(HWND hWnd);
 static  void MovePropertySheetChildWindows(HWND hWnd, int nDx, int nDy);
 static  HTREEITEM GetSheetPageTreeItem(int nPage);
 #endif /* TREE_SHEET */
-static void UpdateOptions(HWND hDlg, datamap *map, core_options *opts);
-static void UpdateProperties(HWND hDlg, datamap *map, core_options *opts);
-static void PropToOptions(HWND hWnd, core_options *o);
-static void OptionsToProp(HWND hWnd, core_options *o);
+static void UpdateOptions(HWND hDlg, datamap *map, windows_options &opts);
+static void UpdateProperties(HWND hDlg, datamap *map, windows_options &opts);
+static void PropToOptions(HWND hWnd, windows_options &o);
+static void OptionsToProp(HWND hWnd, windows_options &o);
 static void SetPropEnabledControls(HWND hWnd);
 #if 0 //mamep: use standard combobox
 static BOOL SelectEffect(HWND hWnd);
@@ -261,7 +266,7 @@ static void BuildDataMap(void);
 static void ResetDataMap(HWND hWnd);
 
 #if 1 //mamep: for coloring of changed elements
-static BOOL IsControlOptionValue(HWND hDlg, HWND hwnd_ctrl, core_options *opts, core_options *ref);
+static BOOL IsControlOptionValue(HWND hDlg, HWND hwnd_ctrl, windows_options &opts, windows_options &ref);
 #endif
 
 static void UpdateBackgroundBrush(HWND hwndTab);
@@ -277,9 +282,9 @@ static HBRUSH hBkBrush;
 #define MAX_SCREENS					4
 #endif
 
-static core_options *pOrigOpts, *pDefaultOpts;
+static windows_options pOrigOpts, pDefaultOpts;
 static BOOL orig_uses_defaults;
-static core_options *pCurrentOpts = NULL;
+static windows_options pCurrentOpts;
 static datamap *properties_datamap;
 
 static int  g_nGame            = 0;
@@ -309,11 +314,11 @@ static HBRUSH highlight_brush = NULL;
 static HBRUSH background_brush = NULL;
 
 //mamep: for coloring of changed elements
-static core_options *pOptsGlobal;
-static core_options *pOptsHorizontal;
-static core_options *pOptsVertical;
-static core_options *pOptsVector;
-static core_options *pOptsSource;
+static windows_options pOptsGlobal;
+static windows_options pOptsHorizontal;
+static windows_options pOptsVertical;
+static windows_options pOptsVector;
+static windows_options pOptsSource;
 
 #define ORIENTATION_COLOR RGB( 190, 128, 0) //LIGHT BROWN
 #define VECTOR_COLOR RGB( 190, 0, 0) //DARK RED
@@ -333,7 +338,7 @@ extern const DWORD dwHelpIDs[];
 static struct ComboBoxVideo
 {
 	const WCHAR*	m_pText;
-	const char*	m_pData;
+	const char* 	m_pData;
 } g_ComboBoxVideo[] = 
 {
 	{ TEXT("None"),                 "none"    },
@@ -346,7 +351,7 @@ static struct ComboBoxVideo
 static struct ComboBoxD3DVersion
 {
 	const WCHAR*	m_pText;
-	const int	m_pData;
+	const int	 	m_pData;
 } g_ComboBoxD3DVersion[] = 
 {
 	{ TEXT("Version 9"),  9   },
@@ -358,7 +363,7 @@ static struct ComboBoxD3DVersion
 static struct ComboBoxSelectScreen
 {
 	const WCHAR*	m_pText;
-	const int	m_pData;
+	const int	 	m_pData;
 } g_ComboBoxSelectScreen[] = 
 {
 	{ TEXT("All screens"),      0    },
@@ -375,7 +380,7 @@ static struct ComboBoxView
 	const char*	m_pData;
 } g_ComboBoxView[] = 
 {
-	{ TEXT("Auto"),		          "auto"        },
+	{ TEXT("Auto"),             "auto"        },
 	{ TEXT("Standard"),         "standard"    }, 
 	{ TEXT("Pixel Aspect"),     "pixel"       }, 
 	{ TEXT("Cocktail"),         "cocktail"    },
@@ -507,7 +512,7 @@ static PROPSHEETPAGE *CreatePropSheetPages(HINSTANCE hInst, BOOL bOnlyDefault,
 		else
 		if ((gamedrv != NULL) || g_propSheets[i].bOnDefaultPage)
 		{
-			machine_config config(*gamedrv);
+			machine_config config(*gamedrv,pCurrentOpts);
 
 			if (!gamedrv || !g_propSheets[i].pfnFilterProc || g_propSheets[i].pfnFilterProc(&config, gamedrv))
 			{
@@ -522,7 +527,7 @@ static PROPSHEETPAGE *CreatePropSheetPages(HINSTANCE hInst, BOOL bOnlyDefault,
 			}
 		}
 	}
-	
+
 	if (pnMaxPropSheets)
 		*pnMaxPropSheets = maxPropSheets;
 
@@ -535,17 +540,17 @@ void InitDefaultPropertyPage(HINSTANCE hInst, HWND hWnd)
 	PROPSHEETPAGE   *pspage;
 
 	// clear globals
-	pCurrentOpts = NULL;
+	//pCurrentOpts = NULL;
 
 	g_nGame = GLOBAL_OPTIONS;
 
 	/* Get default options to populate property sheets */
-	pCurrentOpts = load_options(OPTIONS_GLOBAL, g_nGame); //GetDefaultOptions(-1, FALSE);
-	pDefaultOpts = load_options(OPTIONS_GLOBAL, g_nGame);
+	load_options(pCurrentOpts, OPTIONS_GLOBAL, g_nGame); //GetDefaultOptions(-1, FALSE);
+	load_options(pDefaultOpts, OPTIONS_GLOBAL, g_nGame);
 	g_bUseDefaults = FALSE;
 	/* Stash the result for comparing later */
-	pOrigOpts = CreateGameOptions(OPTIONS_TYPE_GLOBAL);
-	options_copy(pOrigOpts, pCurrentOpts);
+	CreateGameOptions(pOrigOpts, OPTIONS_TYPE_GLOBAL);
+	pOrigOpts = pCurrentOpts;
 	orig_uses_defaults = FALSE;
 	g_bReset = FALSE;
 	g_nPropertyMode = OPTIONS_GLOBAL;
@@ -611,7 +616,7 @@ void InitPropertyPageToPage(HINSTANCE hInst, HWND hWnd, HICON hIcon, OPTIONS_TYP
 	// Initialize the options
 
 	// Load the current options, this will pickup the highest priority option set.
-	pCurrentOpts = load_options(opt_type, game_num);
+	load_options(pCurrentOpts, opt_type, game_num);
 
 	// Load the default options, pickup the next lower options set than the current level.
 	if (opt_type > OPTIONS_GLOBAL)
@@ -624,18 +629,18 @@ void InitPropertyPageToPage(HINSTANCE hInst, HWND hWnd, HICON hIcon, OPTIONS_TYP
 		}
 
 	}
-	pDefaultOpts = load_options(default_type, game_num);
+	load_options(pDefaultOpts, default_type, game_num);
 
 	//mamep: for coloring of changed elements
-	pOptsGlobal = load_options(OPTIONS_GLOBAL, game_num);
-	pOptsHorizontal = load_options(OPTIONS_HORIZONTAL, game_num);
-	pOptsVertical = load_options(OPTIONS_VERTICAL, game_num);
-	pOptsVector = load_options(OPTIONS_VECTOR, game_num);
-	pOptsSource = load_options(OPTIONS_SOURCE, game_num);
+	load_options(pOptsGlobal, OPTIONS_GLOBAL, game_num);
+	load_options(pOptsHorizontal, OPTIONS_HORIZONTAL, game_num);
+	load_options(pOptsVertical, OPTIONS_VERTICAL, game_num);
+	load_options(pOptsVector, OPTIONS_VECTOR, game_num);
+	load_options(pOptsSource, OPTIONS_SOURCE, game_num);
 
 	// Copy current_options to original options
-	pOrigOpts = CreateGameOptions(OPTIONS_TYPE_GLOBAL);
-	options_copy(pOrigOpts, pCurrentOpts);
+	CreateGameOptions(pOrigOpts, OPTIONS_TYPE_GLOBAL);
+	//pOrigOpts = pCurrentOpts;
 
 	// Copy icon to use for the property pages
 	g_hIcon = CopyIcon(hIcon);
@@ -648,7 +653,7 @@ void InitPropertyPageToPage(HINSTANCE hInst, HWND hWnd, HICON hIcon, OPTIONS_TYP
 	g_nPropertyMode = opt_type;
 
 	// Evaluate if the current set uses the Default set
-	g_bUseDefaults = options_equal(pCurrentOpts, pDefaultOpts);
+	g_bUseDefaults = (pCurrentOpts == pDefaultOpts);
 	g_bReset = FALSE;
 	BuildDataMap();
 
@@ -736,7 +741,7 @@ void InitPropertyPageToPage(HINSTANCE hInst, HWND hWnd, HICON hIcon, OPTIONS_TYP
 static LPCWSTR GameInfoCPU(UINT nIndex)
 {
 	static WCHAR buf[1024];
-	machine_config config(*drivers[nIndex]);
+	machine_config config(*drivers[nIndex],pCurrentOpts);
 	const device_config_execute_interface *cpu;
 
 	ZeroMemory(buf, sizeof(buf));
@@ -774,7 +779,7 @@ static LPCWSTR GameInfoSound(UINT nIndex)
 
 	buf[0] = 0;
 	
-	machine_config config(*drivers[nIndex]);
+	machine_config config(*drivers[nIndex],pCurrentOpts);
 
 	/* iterate over sound chips */
 	const device_config_sound_interface *sound = NULL;
@@ -834,7 +839,7 @@ static LPCWSTR GameInfoSound(UINT nIndex)
 static LPCWSTR GameInfoScreen(UINT nIndex)
 {
 	static WCHAR buf[1024];
-	machine_config config(*drivers[nIndex]);
+	machine_config config(*drivers[nIndex],pCurrentOpts);
 	memset(buf, '\0', 1024);
 
 	if (isDriverVector(&config))
@@ -955,7 +960,7 @@ static LPCWSTR GameInfoSaveState(int driver_index)
 static LPCWSTR GameInfoColors(UINT nIndex)
 {
 	static WCHAR buf[1024];
-	machine_config config(*drivers[nIndex]);
+	machine_config config(*drivers[nIndex],pCurrentOpts);
 
 	ZeroMemory(buf, sizeof(buf));
 	swprintf(buf, _UIW(TEXT("%d colors ")), config.m_total_colors);
@@ -1318,8 +1323,8 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 
 		UpdateProperties(hDlg, properties_datamap, pCurrentOpts);
 
-		g_bUseDefaults = options_equal(pCurrentOpts, pDefaultOpts);
-		g_bReset = options_equal(pCurrentOpts, pOrigOpts) ? FALSE : TRUE;
+		g_bUseDefaults = (pCurrentOpts == pDefaultOpts);
+		g_bReset = (pCurrentOpts == pOrigOpts) ? FALSE : TRUE;
 
 		if (g_nGame == GLOBAL_OPTIONS)
 			ShowWindow(GetDlgItem(hDlg, IDC_USE_DEFAULT), SW_HIDE);
@@ -1338,7 +1343,7 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 
 		EnableWindow(GetDlgItem(hDlg, IDC_PROP_RESET), g_bReset);
 		ShowWindow(hDlg, SW_SHOW);
-  
+
 		return 1;
 
 	case WM_HSCROLL:
@@ -1427,10 +1432,10 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 				if (wNotifyCode != BN_CLICKED)
 					break;
 
-				options_copy(pCurrentOpts, pOrigOpts);
+				//pCurrentOpts = pOrigOpts;
 				UpdateProperties(hDlg, properties_datamap, pCurrentOpts);
 
-				g_bUseDefaults = options_equal(pCurrentOpts, pDefaultOpts);
+				g_bUseDefaults = (pCurrentOpts == pDefaultOpts);
 				g_bReset = FALSE;
 				PropSheet_UnChanged(GetParent(hDlg), hDlg);
 				EnableWindow(GetDlgItem(hDlg, IDC_USE_DEFAULT), (g_bUseDefaults) ? FALSE : TRUE);
@@ -1438,13 +1443,13 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 
 			case IDC_USE_DEFAULT:
 				// Copy the pDefaultOpts into pCurrentOpts
-				options_copy(pCurrentOpts, pDefaultOpts);
+				//pCurrentOpts = pDefaultOpts;
 				// repopulate the controls with the new data
 				UpdateProperties(hDlg, properties_datamap, pCurrentOpts);
 				
-				g_bUseDefaults = options_equal(pCurrentOpts, pDefaultOpts);
+				g_bUseDefaults = (pCurrentOpts == pDefaultOpts);
 				// This evaluates properly
-				g_bReset = options_equal(pCurrentOpts, pOrigOpts) ? FALSE : TRUE;
+				g_bReset = (pCurrentOpts == pOrigOpts) ? FALSE : TRUE;
 				// Enable/Dispable the Reset to Defaults button
 				EnableWindow(GetDlgItem(hDlg, IDC_USE_DEFAULT), (g_bUseDefaults) ? FALSE : TRUE);
 				// Tell the dialog to enable/disable the apply button.
@@ -1522,13 +1527,13 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 				UpdateOptions(hDlg, properties_datamap, pCurrentOpts);
 				// enable the apply button
 				PropSheet_Changed(GetParent(hDlg), hDlg);
-				g_bUseDefaults = options_equal(pCurrentOpts, pDefaultOpts);
-				g_bReset = options_equal(pCurrentOpts, pOrigOpts) ? FALSE : TRUE;
+				g_bUseDefaults = (pCurrentOpts == pDefaultOpts);
+				g_bReset = (pCurrentOpts == pOrigOpts) ? FALSE : TRUE;
 				EnableWindow(GetDlgItem(hDlg, IDC_USE_DEFAULT), (g_bUseDefaults) ? FALSE : TRUE);
 			}
 
 			// If we are closing, pCurrentOpts may be null
-			if (NULL != pCurrentOpts)
+/*			if (NULL != pCurrentOpts)
 			{
 				// make sure everything's copied over, to determine what's changed
 				UpdateOptions(hDlg, properties_datamap, pCurrentOpts);
@@ -1536,7 +1541,7 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 				// redraw it, it might be a new color now
 				if (GetDlgItem(hDlg,wID))
 					InvalidateRect(GetDlgItem(hDlg,wID),NULL,FALSE);
-			}
+			}*/
 		}
 		break;
 
@@ -1552,8 +1557,8 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 			case PSN_SETACTIVE:
 				/* Initialize the controls. */
 				UpdateProperties(hDlg, properties_datamap, pCurrentOpts);
-				g_bUseDefaults = options_equal(pCurrentOpts, pDefaultOpts);
-				g_bReset = options_equal(pCurrentOpts, pOrigOpts) ? FALSE : TRUE;
+				g_bUseDefaults = (pCurrentOpts == pDefaultOpts);
+				g_bReset = (pCurrentOpts == pOrigOpts) ? FALSE : TRUE;
 
 				// Sync RESET TO DEFAULTS buttons.
 				EnableWindow(GetDlgItem(hDlg, IDC_USE_DEFAULT), (g_bUseDefaults) ? FALSE : TRUE);
@@ -1562,24 +1567,24 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 			case PSN_APPLY:
 				// Handle more than one PSN_APPLY, since this proc handles more tha one
 				// property sheet and can be called multiple times when it's time to exit,
-				// and we may have already freed the core_options.
+				// and we may have already freed the windows_options.
 				if (bClosing)
 				{
-					if (NULL == pCurrentOpts)
-						return TRUE;
+					//if (NULL == pCurrentOpts)
+//						return TRUE;
 				}
 
 				// Read the datamap
 				UpdateOptions(hDlg, properties_datamap, pCurrentOpts);
 
 				// Copy current options to orignal options.
-				options_copy(pOrigOpts, pCurrentOpts);
+				//pOrigOpts = pCurrentOpts;
 				
 				// Repopulate the controls?  WTF?  We just read them, they should be fine.
 				UpdateProperties(hDlg, properties_datamap, pCurrentOpts);
 
 				// Determine button states.
-				g_bUseDefaults = options_equal(pCurrentOpts, pDefaultOpts);
+				g_bUseDefaults = (pCurrentOpts == pDefaultOpts);
 				g_bReset = FALSE;
 
 				orig_uses_defaults = g_bUseDefaults;
@@ -1589,27 +1594,28 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 				EnableWindow(GetDlgItem(hDlg, IDC_PROP_RESET), g_bReset);
 
 				// Save or remove the current options
-				save_options((OPTIONS_TYPE)g_nPropertyMode, (g_bUseDefaults) ? NULL : pCurrentOpts, g_nGame);
+				//save_options((OPTIONS_TYPE)g_nPropertyMode, (g_bUseDefaults) ? NULL : pCurrentOpts, g_nGame);
+				save_options((OPTIONS_TYPE)g_nPropertyMode, pCurrentOpts, g_nGame);
 
 				// Disable apply button
 				PropSheet_UnChanged(GetParent(hDlg), hDlg);
 				SetWindowLongPtr(hDlg, DWLP_MSGRESULT, PSNRET_NOERROR);
 
-				// If we a closing, free the core_options
+				// If we a closing, free the windows_options
 				if (bClosing)
 				{
-					if (pCurrentOpts) options_free(pCurrentOpts);
-					if (pOrigOpts)    options_free(pOrigOpts);
-					if (pDefaultOpts) options_free(pDefaultOpts);
-					pCurrentOpts = pOrigOpts = pDefaultOpts = NULL;
+					//if (pCurrentOpts) options_free(pCurrentOpts);
+					//if (pOrigOpts)    options_free(pOrigOpts);
+					//if (pDefaultOpts) options_free(pDefaultOpts);
+					//pCurrentOpts = pOrigOpts = pDefaultOpts = NULL;
 
 					//mamep: for coloring of changed elements
-					if (pOptsGlobal) options_free(pOptsGlobal);
-					if (pOptsHorizontal) options_free(pOptsHorizontal);
-					if (pOptsVertical) options_free(pOptsVertical);
-					if (pOptsVector) options_free(pOptsVector);
-					if (pOptsSource) options_free(pOptsSource);
-					pOptsGlobal = pOptsHorizontal = pOptsVertical = pOptsVector = pOptsSource = NULL;
+					//if (pOptsGlobal) options_free(pOptsGlobal);
+					//if (pOptsHorizontal) options_free(pOptsHorizontal);
+					//if (pOptsVertical) options_free(pOptsVertical);
+					//if (pOptsVector) options_free(pOptsVector);
+					//if (pOptsSource) options_free(pOptsSource);
+					//pOptsGlobal = pOptsHorizontal = pOptsVertical = pOptsVector = pOptsSource = NULL;
 				}
 				return TRUE;
 
@@ -1617,7 +1623,7 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 				/* Save Changes to the options here. */
 				UpdateOptions(hDlg, properties_datamap, pCurrentOpts);
 				// Determine button states.
-				g_bUseDefaults = options_equal(pCurrentOpts, pDefaultOpts);
+				g_bUseDefaults = (pCurrentOpts == pDefaultOpts);
 
 				ResetDataMap(hDlg);
 				SetWindowLongPtr(hDlg, DWLP_MSGRESULT, FALSE);
@@ -1625,7 +1631,7 @@ INT_PTR CALLBACK GameOptionsProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 
 			case PSN_RESET:
 				// Reset to the original values. Disregard changes
-				options_copy(pCurrentOpts, pOrigOpts);
+				//pCurrentOpts = pOrigOpts;
 				SetWindowLongPtr(hDlg, DWLP_MSGRESULT, FALSE);
 				break;
 
@@ -2065,11 +2071,12 @@ static void AspectSetOptionName(datamap *map, HWND dialog, HWND control, char *b
 }
 
 /* Read controls that are not handled in the DataMap */
-static void PropToOptions(HWND hWnd, core_options *o)
+static void PropToOptions(HWND hWnd, windows_options &o)
 {
 	HWND hCtrl;
 	HWND hCtrl2;
 	HWND hCtrl3;
+	astring error_string;
 
 	// It appears these are here to clear the global struct we are removing!
 	// FIXME
@@ -2087,7 +2094,7 @@ static void PropToOptions(HWND hWnd, core_options *o)
 
 		if (Button_GetCheck(hCtrl3))
 		{
-			options_set_string(o, aspect_option, "auto", OPTION_PRIORITY_CMDLINE);
+			o.set_value(aspect_option, "auto", OPTION_PRIORITY_CMDLINE,error_string);
 		}
 		else
 		{
@@ -2109,7 +2116,7 @@ static void PropToOptions(HWND hWnd, core_options *o)
 			}
 
 			snprintf(buffer2,sizeof(buffer2),"%d:%d",n,d);
-			options_set_string(o, aspect_option, buffer2, OPTION_PRIORITY_CMDLINE);
+			o.set_value(aspect_option, buffer2, OPTION_PRIORITY_CMDLINE,error_string);
 		}
 	}
 	/* aspect ratio */
@@ -2120,7 +2127,7 @@ static void PropToOptions(HWND hWnd, core_options *o)
 	{
 		if (Button_GetCheck(hCtrl3))
 		{
-			options_set_string(o, OPTION_SNAPSIZE, "auto", OPTION_PRIORITY_CMDLINE);
+			o.set_value(OPTION_SNAPSIZE, "auto", OPTION_PRIORITY_CMDLINE,error_string);
 		}
 		else
 		{
@@ -2142,13 +2149,13 @@ static void PropToOptions(HWND hWnd, core_options *o)
 			}
 
 			snprintf(buffer2,sizeof(buffer2),"%dx%d",width,height);
-			options_set_string(o, OPTION_SNAPSIZE, buffer2, OPTION_PRIORITY_CMDLINE);
+			o.set_value(OPTION_SNAPSIZE, buffer2, OPTION_PRIORITY_CMDLINE,error_string);
 		}
 	}
 }
 
 /* Update options from the dialog */
-static void UpdateOptions(HWND hDlg, datamap *map, core_options *opts)
+static void UpdateOptions(HWND hDlg, datamap *map, windows_options &opts)
 {
 	/* These are always called together, so make one conveniece function. */
 	datamap_read_all_controls(map, hDlg, opts);
@@ -2156,7 +2163,7 @@ static void UpdateOptions(HWND hDlg, datamap *map, core_options *opts)
 }
 
 /* Update the dialog from the options */
-static void UpdateProperties(HWND hDlg, datamap *map, core_options *opts)
+static void UpdateProperties(HWND hDlg, datamap *map, windows_options &opts)
 {
 	/* These are always called together, so make one conviniece function. */
 	datamap_populate_all_controls(map, hDlg, opts);
@@ -2165,7 +2172,7 @@ static void UpdateProperties(HWND hDlg, datamap *map, core_options *opts)
 }
 
 /* Populate controls that are not handled in the DataMap */
-static void OptionsToProp(HWND hWnd, core_options* o)
+static void OptionsToProp(HWND hWnd, windows_options& o)
 {
 	HWND hCtrl;
 	HWND hCtrl2;
@@ -2204,7 +2211,7 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 		for( i=0; i< iCount; i++ )
 		{
 			cBuffer = (const char*)ComboBox_GetItemData( hCtrl, i );
-			if (strcmp(cBuffer, options_get_string(pCurrentOpts, OPTION_BIOS) ) == 0)
+			if (strcmp(cBuffer, pCurrentOpts.bios() ) == 0)
 			{
 				(void)ComboBox_SetCurSel(hCtrl, i);
 				break;
@@ -2215,7 +2222,7 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 
 #ifdef DRIVER_SWITCH
 	{
-		char *temp = mame_strdup(options_get_string(o, OPTION_DRIVER_CONFIG));
+		char *temp = mame_strdup(o.value(OPTION_DRIVER_CONFIG));
 		UINT32 enabled = 0;
 		int i;
 
@@ -2267,7 +2274,7 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 	{
 		char aspect_option[32];
 		AspectSetOptionName(NULL, hWnd, NULL, aspect_option, ARRAY_LENGTH(aspect_option));
-		if( strcmp(options_get_string(o, aspect_option), "auto") == 0)
+		if( strcmp(o.value(aspect_option), "auto") == 0)
 		{
 			Button_SetCheck(hCtrl, TRUE);
 			g_bAutoAspect[GetSelectedScreen(hWnd)] = TRUE;
@@ -2289,9 +2296,9 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 
 		n = 0;
 		d = 0;
-		if (options_get_string(o, aspect_option))
+		if (o.value(aspect_option))
 		{
-			if (sscanf(options_get_string(o, aspect_option), "%d:%d", &n, &d) == 2 && n != 0 && d != 0)
+			if (sscanf(o.value(aspect_option), "%d:%d", &n, &d) == 2 && n != 0 && d != 0)
 			{
 				swprintf(buf, TEXT("%d"), n);
 				Edit_SetText(hCtrl, buf);
@@ -2324,7 +2331,7 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 	hCtrl = GetDlgItem(hWnd, IDC_SNAPSIZE);
 	if (hCtrl)
 	{
-		if( strcmp(options_get_string(o, OPTION_SNAPSIZE), "auto") == 0)
+		if( strcmp(o.value(OPTION_SNAPSIZE), "auto") == 0)
 		{
 			Button_SetCheck(hCtrl, TRUE);
 			g_bAutoSnapSize = TRUE;
@@ -2342,9 +2349,9 @@ static void OptionsToProp(HWND hWnd, core_options* o)
 	{
 		n = 0;
 		d = 0;
-		if (options_get_string(o, OPTION_SNAPSIZE))
+		if (o.value(OPTION_SNAPSIZE))
 		{
-			if (sscanf(options_get_string(o, OPTION_SNAPSIZE), "%dx%d", &width, &height) == 2 && width != 0 && height != 0)
+			if (sscanf(o.value(OPTION_SNAPSIZE), "%dx%d", &width, &height) == 2 && width != 0 && height != 0)
 			{
 				swprintf(buf, TEXT("%d"), width);
 				Edit_SetText(hCtrl, buf);
@@ -2380,11 +2387,11 @@ static void SetPropEnabledControls(HWND hWnd)
 
 	nIndex = g_nGame;
 
-	d3d = !mame_stricmp(options_get_string(pCurrentOpts, WINOPTION_VIDEO), "d3d");
-	ddraw = !mame_stricmp(options_get_string(pCurrentOpts, WINOPTION_VIDEO), "ddraw");
+	d3d = !mame_stricmp(pCurrentOpts.value(WINOPTION_VIDEO), "d3d");
+	ddraw = !mame_stricmp(pCurrentOpts.value(WINOPTION_VIDEO), "ddraw");
 	gdi = !d3d && !ddraw;
 
-	in_window = options_get_bool(pCurrentOpts, WINOPTION_WINDOW);
+	in_window = pCurrentOpts.bool_value(WINOPTION_WINDOW);
 	Button_SetCheck(GetDlgItem(hWnd, IDC_ASPECT), g_bAutoAspect[GetSelectedScreen(hWnd)] );
 
 	//mamep: control -maximize option
@@ -2607,32 +2614,34 @@ static void SetPropEnabledControls(HWND hWnd)
 //  CONTROL HELPER FUNCTIONS FOR DATA EXCHANGE
 //============================================================
 
-static BOOL RotateReadControl(datamap *map, HWND dialog, HWND control, core_options *opts, const char *option_name)
+static BOOL RotateReadControl(datamap *map, HWND dialog, HWND control, windows_options *opts, const char *option_name)
 {
 	int selected_index = ComboBox_GetCurSel(control);
 	int original_selection = 0;
 
 	// Figure out what the original selection value is
-	if (options_get_bool(opts, OPTION_ROR) && !options_get_bool(opts, OPTION_ROL))
+	if (opts->bool_value(OPTION_ROR) && !opts->bool_value(OPTION_ROL))
 		original_selection = 1;
-	else if (!options_get_bool(opts, OPTION_ROR) && options_get_bool(opts, OPTION_ROL))
+	else if (!opts->bool_value(OPTION_ROR) && opts->bool_value(OPTION_ROL))
 		original_selection = 2;
-	else if (!options_get_bool(opts, OPTION_ROTATE))
+	else if (!opts->bool_value(OPTION_ROTATE))
 		original_selection = 3;
-	else if (options_get_bool(opts, OPTION_AUTOROR))
+	else if (opts->bool_value(OPTION_AUTOROR))
 		original_selection = 4;
-	else if (options_get_bool(opts, OPTION_AUTOROL))
+	else if (opts->bool_value(OPTION_AUTOROL))
 		original_selection = 5;
 
 	// Any work to do?  If so, make the changes and return TRUE.
 	if (selected_index != original_selection)
 	{
 		// Set the options based on the new selection.
-		options_set_bool(opts, OPTION_ROR,		selected_index == 1, OPTION_PRIORITY_CMDLINE);
-		options_set_bool(opts, OPTION_ROL,		selected_index == 2, OPTION_PRIORITY_CMDLINE);
-		options_set_bool(opts, OPTION_ROTATE,	selected_index != 3, OPTION_PRIORITY_CMDLINE);
-		options_set_bool(opts, OPTION_AUTOROR,	selected_index == 4, OPTION_PRIORITY_CMDLINE);
-		options_set_bool(opts, OPTION_AUTOROL,	selected_index == 5, OPTION_PRIORITY_CMDLINE);
+		astring error_string;
+		opts->set_value(OPTION_ROR,		selected_index == 1, OPTION_PRIORITY_CMDLINE,error_string);
+		opts->set_value(OPTION_ROL,		selected_index == 2, OPTION_PRIORITY_CMDLINE,error_string);
+		opts->set_value(OPTION_ROTATE,	selected_index != 3, OPTION_PRIORITY_CMDLINE,error_string);
+		opts->set_value(OPTION_AUTOROR,	selected_index == 4, OPTION_PRIORITY_CMDLINE,error_string);
+		opts->set_value(OPTION_AUTOROL,	selected_index == 5, OPTION_PRIORITY_CMDLINE,error_string);
+		assert(!error_string);
 		return TRUE;
 	}
 
@@ -2642,18 +2651,18 @@ static BOOL RotateReadControl(datamap *map, HWND dialog, HWND control, core_opti
 
 
 
-static BOOL RotatePopulateControl(datamap *map, HWND dialog, HWND control, core_options *opts, const char *option_name)
+static BOOL RotatePopulateControl(datamap *map, HWND dialog, HWND control, windows_options *opts, const char *option_name)
 {
 	int selected_index = 0;
-	if (options_get_bool(opts, OPTION_ROR) && !options_get_bool(opts, OPTION_ROL))
+	if (opts->bool_value(OPTION_ROR) && !opts->bool_value(OPTION_ROL))
 		selected_index = 1;
-	else if (!options_get_bool(opts, OPTION_ROR) && options_get_bool(opts, OPTION_ROL))
+	else if (!opts->bool_value(OPTION_ROR) && opts->bool_value(OPTION_ROL))
 		selected_index = 2;
-	else if (!options_get_bool(opts, OPTION_ROTATE))
+	else if (!opts->bool_value(OPTION_ROTATE))
 		selected_index = 3;
-	else if (options_get_bool(opts, OPTION_AUTOROR))
+	else if (opts->bool_value(OPTION_AUTOROR))
 		selected_index = 4;
-	else if (options_get_bool(opts, OPTION_AUTOROL))
+	else if (opts->bool_value(OPTION_AUTOROL))
 		selected_index = 5;
 
 	(void)ComboBox_SetCurSel(control, selected_index);
@@ -2673,27 +2682,29 @@ static void ScreenSetOptionName(datamap *map, HWND dialog, HWND control, char *b
 }
 
 
-static BOOL ScreenReadControl(datamap *map, HWND dialog, HWND control, core_options *opts, const char *option_name)
+static BOOL ScreenReadControl(datamap *map, HWND dialog, HWND control, windows_options *opts, const char *option_name)
 {
 	char screen_option_name[32];
 	TCHAR *screen_option_value;
 	int selected_screen;
 	int screen_option_index;
 	char *op_val;
+	astring error_string;
 
 	selected_screen = GetSelectedScreen(dialog);
 	screen_option_index = ComboBox_GetCurSel(control);
 	screen_option_value = (TCHAR*) ComboBox_GetItemData(control, screen_option_index);
 	ScreenSetOptionName(map, dialog, control, screen_option_name, ARRAY_LENGTH(screen_option_name));
 	op_val = utf8_from_tstring(screen_option_value);
-	options_set_string(opts, screen_option_name, op_val, OPTION_PRIORITY_CMDLINE);
+	opts->set_value(screen_option_name, op_val, OPTION_PRIORITY_CMDLINE,error_string);
+	assert(!error_string);
 	osd_free(op_val);
 	return FALSE;
 }
 
 
 
-static BOOL ScreenPopulateControl(datamap *map, HWND dialog, HWND control, core_options *opts, const char *option_name)
+static BOOL ScreenPopulateControl(datamap *map, HWND dialog, HWND control, windows_options *opts, const char *option_name)
 {
 	//int iMonitors;
 	DISPLAY_DEVICE dd;
@@ -2721,7 +2732,7 @@ static BOOL ScreenPopulateControl(datamap *map, HWND dialog, HWND control, core_
 			(void)ComboBox_SetItemData(control, i+1, (void*)win_tstring_strdup(dd.DeviceName));
 
 			ScreenSetOptionName(map, dialog, control, screen_option, ARRAY_LENGTH(screen_option));
-			t_option = tstring_from_utf8(options_get_string(opts, screen_option));
+			t_option = tstring_from_utf8(opts->value(screen_option));
 			if( !t_option )
 				return FALSE;
 			if (wcscmp(t_option, dd.DeviceName) == 0)
@@ -2745,7 +2756,7 @@ static void ViewSetOptionName(datamap *map, HWND dialog, HWND control, char *buf
 		strcpy(buffer, WINOPTION_VIEW);
 }
 
-static BOOL ViewPopulateControl(datamap *map, HWND dialog, HWND control, core_options *opts, const char *option_name)
+static BOOL ViewPopulateControl(datamap *map, HWND dialog, HWND control, windows_options *opts, const char *option_name)
 {
 	int i;
 	int selected_index = 0;
@@ -2754,7 +2765,7 @@ static BOOL ViewPopulateControl(datamap *map, HWND dialog, HWND control, core_op
 
 	// determine the view option value
 	ViewSetOptionName(map, dialog, control, view_option, ARRAY_LENGTH(view_option));
-	view = options_get_string(opts, view_option);
+	view = opts->value(view_option);
 
 	(void)ComboBox_ResetContent(control);
 	for (i = 0; i < NUMVIEW; i++)
@@ -2769,14 +2780,14 @@ static BOOL ViewPopulateControl(datamap *map, HWND dialog, HWND control, core_op
 	return FALSE;
 }
 
-static BOOL SnapViewPopulateControl(datamap *map, HWND dialog, HWND control, core_options *opts, const char *option_name)
+static BOOL SnapViewPopulateControl(datamap *map, HWND dialog, HWND control, windows_options *opts, const char *option_name)
 {
 	int i;
 	int selected_index = 0;
 	const char *snapview;
 
 	// determine the snapview option value
-	snapview = options_get_string(opts, OPTION_SNAPVIEW);
+	snapview = opts->value(OPTION_SNAPVIEW);
 
 	(void)ComboBox_ResetContent(control);
 	for (i = 0; i < NUMSNAPVIEW; i++)
@@ -2791,21 +2802,23 @@ static BOOL SnapViewPopulateControl(datamap *map, HWND dialog, HWND control, cor
 	return FALSE;
 }
 
-static BOOL DefaultInputReadControl(datamap *map, HWND dialog, HWND control, core_options *opts, const char *option_name)
+static BOOL DefaultInputReadControl(datamap *map, HWND dialog, HWND control, windows_options *opts, const char *option_name)
 {
 	const char *input_option_value;	
 	int input_option_index;
 	//char *op_val;
+	astring error_string;
 
 	input_option_index = ComboBox_GetCurSel(control);
 	input_option_value = (const char *) ComboBox_GetItemData(control, input_option_index);	
 	//op_val = utf8_from_tstring(input_option_value);
-	options_set_string(opts, OPTION_CTRLR, input_option_value, OPTION_PRIORITY_CMDLINE);
+	opts->set_value(OPTION_CTRLR, input_option_value, OPTION_PRIORITY_CMDLINE,error_string);
+	assert(!error_string);
 	//osd_free(op_val);
 	return FALSE;
 }
 
-static BOOL DefaultInputPopulateControl(datamap *map, HWND dialog, HWND control, core_options *opts, const char *option_name)
+static BOOL DefaultInputPopulateControl(datamap *map, HWND dialog, HWND control, windows_options *opts, const char *option_name)
 {
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
@@ -2820,7 +2833,7 @@ static BOOL DefaultInputPopulateControl(datamap *map, HWND dialog, HWND control,
 	//TCHAR* t_ctrldir;
 
 	// determine the ctrlr option
-	ctrlr_option = options_get_string(opts, OPTION_CTRLR);
+	ctrlr_option = opts->ctrlr();
 	if( ctrlr_option != NULL )
 	{
 		t_buf = wstring_from_utf8(ctrlr_option);
@@ -2907,13 +2920,14 @@ static void ResolutionSetOptionName(datamap *map, HWND dialog, HWND control, cha
 }
 
 
-static BOOL ResolutionReadControl(datamap *map, HWND dialog, HWND control, core_options *opts, const char *option_name)
+static BOOL ResolutionReadControl(datamap *map, HWND dialog, HWND control, windows_options *opts, const char *option_name)
 {
 	HWND refresh_control = GetDlgItem(dialog, IDC_REFRESH);
 	HWND sizes_control = GetDlgItem(dialog, IDC_SIZES);
 	int refresh_index, refresh_value, width, height;
 	char option_value[256];
 	TCHAR buffer[256];
+	astring error_string;
 
 	if (refresh_control && sizes_control)
 	{
@@ -2928,14 +2942,15 @@ static BOOL ResolutionReadControl(datamap *map, HWND dialog, HWND control, core_
 		{
 			snprintf(option_value, ARRAY_LENGTH(option_value), "auto");
 		}
-		options_set_string(opts, option_name, option_value, OPTION_PRIORITY_CMDLINE);
+		opts->set_value(option_name, option_value, OPTION_PRIORITY_CMDLINE,error_string);
+		assert(!error_string);
 	}
 	return FALSE;
 }
 
 
 
-static BOOL ResolutionPopulateControl(datamap *map, HWND dialog, HWND control_, core_options *opts, const char *option_name)
+static BOOL ResolutionPopulateControl(datamap *map, HWND dialog, HWND control_, windows_options *opts, const char *option_name)
 {
 	HWND sizes_control = GetDlgItem(dialog, IDC_SIZES);
 	HWND refresh_control = GetDlgItem(dialog, IDC_REFRESH);
@@ -2955,7 +2970,7 @@ static BOOL ResolutionPopulateControl(datamap *map, HWND dialog, HWND control_, 
 	if (sizes_control && refresh_control)
 	{
 		// determine the resolution
-		option_value = options_get_string(opts, option_name);
+		option_value = opts->value(option_name);
 		if (sscanf(option_value, "%dx%d@%d", &width, &height, &refresh) != 3)
 		{
 			width = 0;
@@ -2977,7 +2992,7 @@ static BOOL ResolutionPopulateControl(datamap *map, HWND dialog, HWND control_, 
 
 		// determine which screen we're using
 		ScreenSetOptionName(map, dialog, NULL, screen_option, ARRAY_LENGTH(screen_option));
-		screen = options_get_string(opts, screen_option);
+		screen = opts->value(screen_option);
 		//t_screen = tstring_from_utf8(screen);
 
 		if (!screen || !*screen || mame_stricmp(screen, "auto") == 0)
@@ -3030,13 +3045,14 @@ static BOOL ResolutionPopulateControl(datamap *map, HWND dialog, HWND control_, 
 }
 
 #ifdef DRIVER_SWITCH
-static BOOL DriverConfigReadControl(datamap *map, HWND dialog, HWND control, core_options *opts, const char *option_name)
+static BOOL DriverConfigReadControl(datamap *map, HWND dialog, HWND control, windows_options *opts, const char *option_name)
 {
 	const char *option;
 	char buf[256];
 	BOOL all = TRUE;
 	BOOL found = FALSE;
 	int i;
+	astring error_string;
 
 	buf[0] = '\0';
 
@@ -3066,11 +3082,12 @@ static BOOL DriverConfigReadControl(datamap *map, HWND dialog, HWND control, cor
 	if (all)
 		strcpy(buf, "all");
 
-	option = options_get_string(opts, OPTION_DRIVER_CONFIG);
+	option = opts->value(OPTION_DRIVER_CONFIG);
 	if (mame_stricmp(option, buf) == 0)
 		return FALSE;
 
-	options_set_string(opts, OPTION_DRIVER_CONFIG, buf, OPTION_PRIORITY_CMDLINE);
+	opts->set_value(OPTION_DRIVER_CONFIG, buf, OPTION_PRIORITY_CMDLINE,error_string);
+	assert(!error_string);
 
 	return TRUE;
 }
@@ -3092,10 +3109,12 @@ static void ResetDataMap(HWND hWnd)
 
 	ScreenSetOptionName(NULL, hWnd, NULL, screen_option, ARRAY_LENGTH(screen_option));
 
-	screen_option_value = options_get_string(pCurrentOpts, screen_option);
+	screen_option_value = pCurrentOpts.value(screen_option);
 	if (screen_option_value == NULL || *screen_option_value == '\0')
 	{
-		options_set_string(pCurrentOpts, screen_option, "auto", OPTION_PRIORITY_CMDLINE);
+		astring error_string;
+		pCurrentOpts.set_value(screen_option, "auto", OPTION_PRIORITY_CMDLINE,error_string);
+		assert(!error_string);
 	}
 }
 
@@ -3106,7 +3125,7 @@ static void BuildDataMap(void)
 	properties_datamap = datamap_create();
 
 	// core state options
-	datamap_add(properties_datamap, IDC_ENABLE_AUTOSAVE,			DM_BOOL,	OPTION_AUTOSAVE);
+	datamap_add(properties_datamap, IDC_ENABLE_AUTOSAVE,		DM_BOOL,	OPTION_AUTOSAVE);
 	datamap_add(properties_datamap, IDC_SNAPVIEW,				DM_STRING,	OPTION_SNAPVIEW);
 	datamap_add(properties_datamap, IDC_SNAPSIZEWIDTH,			DM_STRING,	NULL);
 	datamap_add(properties_datamap, IDC_SNAPSIZEHEIGHT,			DM_STRING,	NULL);
@@ -3115,38 +3134,38 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_AUTOFRAMESKIP,			DM_BOOL,	OPTION_AUTOFRAMESKIP);
 	datamap_add(properties_datamap, IDC_FRAMESKIP,				DM_INT,		OPTION_FRAMESKIP);
 	datamap_add(properties_datamap, IDC_SECONDSTORUN,			DM_INT,		OPTION_SECONDS_TO_RUN);
-	datamap_add(properties_datamap, IDC_SECONDSTORUNDISP,			DM_INT,		OPTION_SECONDS_TO_RUN);
+	datamap_add(properties_datamap, IDC_SECONDSTORUNDISP,		DM_INT,		OPTION_SECONDS_TO_RUN);
 	datamap_add(properties_datamap, IDC_THROTTLE,				DM_BOOL,	OPTION_THROTTLE);
-	datamap_add(properties_datamap, IDC_SLEEP,				DM_BOOL,	OPTION_SLEEP);
-	datamap_add(properties_datamap, IDC_SPEED,				DM_FLOAT,	OPTION_SPEED);
+	datamap_add(properties_datamap, IDC_SLEEP,					DM_BOOL,	OPTION_SLEEP);
+	datamap_add(properties_datamap, IDC_SPEED,					DM_FLOAT,	OPTION_SPEED);
 	datamap_add(properties_datamap, IDC_SPEEDDISP,				DM_FLOAT,	OPTION_SPEED);
 	datamap_add(properties_datamap, IDC_REFRESHSPEED,			DM_BOOL,	OPTION_REFRESHSPEED);
 
 	// core retation options
-	datamap_add(properties_datamap, IDC_ROTATE,				DM_INT,		NULL);
+	datamap_add(properties_datamap, IDC_ROTATE,					DM_INT,		NULL);
 	// ror, rol, autoror, autorol handled by callback
-	datamap_add(properties_datamap, IDC_FLIPX,				DM_BOOL,	OPTION_FLIPX);
-	datamap_add(properties_datamap, IDC_FLIPY,				DM_BOOL,	OPTION_FLIPY);
+	datamap_add(properties_datamap, IDC_FLIPX,					DM_BOOL,	OPTION_FLIPX);
+	datamap_add(properties_datamap, IDC_FLIPY,					DM_BOOL,	OPTION_FLIPY);
 
 	// core artwork options
 	datamap_add(properties_datamap, IDC_ARTWORK_CROP,			DM_BOOL,	OPTION_ARTWORK_CROP);
 	datamap_add(properties_datamap, IDC_BACKDROPS,				DM_BOOL,	OPTION_USE_BACKDROPS);
 	datamap_add(properties_datamap, IDC_OVERLAYS,				DM_BOOL,	OPTION_USE_OVERLAYS);
-	datamap_add(properties_datamap, IDC_BEZELS,				DM_BOOL,	OPTION_USE_BEZELS);
+	datamap_add(properties_datamap, IDC_BEZELS,					DM_BOOL,	OPTION_USE_BEZELS);
 
 	// core screen options
 	datamap_add(properties_datamap, IDC_BRIGHTCORRECT,			DM_FLOAT,	OPTION_BRIGHTNESS);
-	datamap_add(properties_datamap, IDC_BRIGHTCORRECTDISP,			DM_FLOAT,	OPTION_BRIGHTNESS);
+	datamap_add(properties_datamap, IDC_BRIGHTCORRECTDISP,		DM_FLOAT,	OPTION_BRIGHTNESS);
 	datamap_add(properties_datamap, IDC_CONTRAST,				DM_FLOAT,	OPTION_CONTRAST);
 	datamap_add(properties_datamap, IDC_CONTRASTDISP,			DM_FLOAT,	OPTION_CONTRAST);
-	datamap_add(properties_datamap, IDC_GAMMA,				DM_FLOAT,	OPTION_GAMMA);
+	datamap_add(properties_datamap, IDC_GAMMA,					DM_FLOAT,	OPTION_GAMMA);
 	datamap_add(properties_datamap, IDC_GAMMADISP,				DM_FLOAT,	OPTION_GAMMA);
 	datamap_add(properties_datamap, IDC_PAUSEBRIGHT,			DM_FLOAT,	OPTION_PAUSE_BRIGHTNESS);
-	datamap_add(properties_datamap, IDC_PAUSEBRIGHTDISP,			DM_FLOAT,	OPTION_PAUSE_BRIGHTNESS);
+	datamap_add(properties_datamap, IDC_PAUSEBRIGHTDISP,		DM_FLOAT,	OPTION_PAUSE_BRIGHTNESS);
 
 	// core vector options
 	datamap_add(properties_datamap, IDC_ANTIALIAS,				DM_BOOL,	OPTION_ANTIALIAS);
-	datamap_add(properties_datamap, IDC_BEAM,				DM_FLOAT,	OPTION_BEAM);
+	datamap_add(properties_datamap, IDC_BEAM,					DM_FLOAT,	OPTION_BEAM);
 	datamap_add(properties_datamap, IDC_BEAMDISP,				DM_FLOAT,	OPTION_BEAM);
 	datamap_add(properties_datamap, IDC_FLICKER,				DM_FLOAT,	OPTION_FLICKER);
 	datamap_add(properties_datamap, IDC_FLICKERDISP,			DM_FLOAT,	OPTION_FLICKER);
@@ -3155,7 +3174,7 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_SAMPLERATE,				DM_INT,		OPTION_SAMPLERATE);
 	datamap_add(properties_datamap, IDC_SAMPLES,				DM_BOOL,	OPTION_SAMPLES);
 	datamap_add(properties_datamap, IDC_USE_SOUND,				DM_BOOL,	OPTION_SOUND);
-	datamap_add(properties_datamap, IDC_VOLUME,				DM_INT,		OPTION_VOLUME);
+	datamap_add(properties_datamap, IDC_VOLUME,					DM_INT,		OPTION_VOLUME);
 	datamap_add(properties_datamap, IDC_VOLUMEDISP,				DM_INT,		OPTION_VOLUME);
 #ifdef USE_AUDIO_SYNC
 	datamap_add(properties_datamap, IDC_AUDIO_SYNC,				DM_BOOL,	WINOPTION_AUDIO_SYNC);
@@ -3173,55 +3192,55 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_STEADYKEY,				DM_BOOL,	OPTION_STEADYKEY);
 	datamap_add(properties_datamap, IDC_MULTIKEYBOARD,			DM_BOOL,	OPTION_MULTIKEYBOARD);
 	datamap_add(properties_datamap, IDC_MULTIMOUSE,				DM_BOOL,	OPTION_MULTIMOUSE);
-	datamap_add(properties_datamap, IDC_RELOAD,				DM_BOOL,	OPTION_OFFSCREEN_RELOAD);
+	datamap_add(properties_datamap, IDC_RELOAD,					DM_BOOL,	OPTION_OFFSCREEN_RELOAD);
 
-	datamap_add(properties_datamap, IDC_JDZ,				DM_FLOAT,	OPTION_JOYSTICK_DEADZONE);
+	datamap_add(properties_datamap, IDC_JDZ,					DM_FLOAT,	OPTION_JOYSTICK_DEADZONE);
 	datamap_add(properties_datamap, IDC_JDZDISP,				DM_FLOAT,	OPTION_JOYSTICK_DEADZONE);
-	datamap_add(properties_datamap, IDC_JSAT,				DM_FLOAT,	OPTION_JOYSTICK_SATURATION);
+	datamap_add(properties_datamap, IDC_JSAT,					DM_FLOAT,	OPTION_JOYSTICK_SATURATION);
 	datamap_add(properties_datamap, IDC_JSATDISP,				DM_FLOAT,	OPTION_JOYSTICK_SATURATION);
 	datamap_add(properties_datamap, IDC_JOYSTICKMAP,			DM_STRING,	OPTION_JOYSTICK_MAP);
 
 	// core input automatic enable options
-	datamap_add(properties_datamap, IDC_PADDLE,				DM_STRING,	OPTION_PADDLE_DEVICE);
+	datamap_add(properties_datamap, IDC_PADDLE,					DM_STRING,	OPTION_PADDLE_DEVICE);
 	datamap_add(properties_datamap, IDC_ADSTICK,				DM_STRING,	OPTION_ADSTICK_DEVICE);
-	datamap_add(properties_datamap, IDC_PEDAL,				DM_STRING,	OPTION_PEDAL_DEVICE);
-	datamap_add(properties_datamap, IDC_DIAL,				DM_STRING,	OPTION_DIAL_DEVICE);
+	datamap_add(properties_datamap, IDC_PEDAL,					DM_STRING,	OPTION_PEDAL_DEVICE);
+	datamap_add(properties_datamap, IDC_DIAL,					DM_STRING,	OPTION_DIAL_DEVICE);
 	datamap_add(properties_datamap, IDC_TRACKBALL,				DM_STRING,	OPTION_TRACKBALL_DEVICE);
 	datamap_add(properties_datamap, IDC_LIGHTGUNDEVICE,			DM_STRING,	OPTION_LIGHTGUN_DEVICE);
 	datamap_add(properties_datamap, IDC_POSITIONAL,				DM_STRING,	OPTION_POSITIONAL_DEVICE);
-	datamap_add(properties_datamap, IDC_MOUSE,				DM_STRING,	OPTION_MOUSE_DEVICE);
+	datamap_add(properties_datamap, IDC_MOUSE,					DM_STRING,	OPTION_MOUSE_DEVICE);
 
 	// windows debugging options
-	datamap_add(properties_datamap, IDC_OSLOG,				DM_BOOL,	WINOPTION_OSLOG);
+	datamap_add(properties_datamap, IDC_OSLOG,					DM_BOOL,	WINOPTION_OSLOG);
 	// watchdog missing
 
 	// core debugging options
-	datamap_add(properties_datamap, IDC_LOG,				DM_BOOL,	OPTION_LOG);
-	datamap_add(properties_datamap, IDC_DEBUG,				DM_BOOL,	OPTION_DEBUG);
+	datamap_add(properties_datamap, IDC_LOG,					DM_BOOL,	OPTION_LOG);
+	datamap_add(properties_datamap, IDC_DEBUG,					DM_BOOL,	OPTION_DEBUG);
 	datamap_add(properties_datamap, IDC_VERBOSE,				DM_BOOL,	OPTION_VERBOSE);
 	datamap_add(properties_datamap, IDC_UPDATEINPAUSE,			DM_BOOL,	OPTION_UPDATEINPAUSE);
 	datamap_add(properties_datamap, IDC_DEBUGSCRIPT,			DM_STRING,	OPTION_DEBUGSCRIPT);
 
 	// core misc options
-	datamap_add(properties_datamap, IDC_BIOS,				DM_STRING,	OPTION_BIOS);
-	datamap_add(properties_datamap, IDC_CHEAT,				DM_BOOL,	OPTION_CHEAT);
+	datamap_add(properties_datamap, IDC_BIOS,					DM_STRING,	OPTION_BIOS);
+	datamap_add(properties_datamap, IDC_CHEAT,					DM_BOOL,	OPTION_CHEAT);
 	datamap_add(properties_datamap, IDC_SKIP_GAME_INFO,			DM_BOOL,	OPTION_SKIP_GAMEINFO);
 #ifdef CONFIRM_QUIT
 	datamap_add(properties_datamap, IDC_CONFIRM_QUIT,			DM_BOOL,	OPTION_CONFIRM_QUIT);
 #endif /* CONFIRM_QUIT */
 #ifdef PLAYBACK_END_PAUSE
-	datamap_add(properties_datamap, IDC_PLAYBACK_END_PAUSE,			DM_BOOL,	OPTION_PLAYBACK_END_PAUSE);
+	datamap_add(properties_datamap, IDC_PLAYBACK_END_PAUSE,		DM_BOOL,	OPTION_PLAYBACK_END_PAUSE);
 #endif /* PLAYBACK_END_PAUSE */
 #ifdef TRANS_UI
 	datamap_add(properties_datamap, IDC_TRANSPARENCY,			DM_INT,  	OPTION_UI_TRANSPARENCY);
-	datamap_add(properties_datamap, IDC_TRANSPARENCYDISP,			DM_INT,  	OPTION_UI_TRANSPARENCY);
+	datamap_add(properties_datamap, IDC_TRANSPARENCYDISP,		DM_INT,  	OPTION_UI_TRANSPARENCY);
 #endif /* TRANS_UI */
 
 
 	// windows performance options
 	datamap_add(properties_datamap, IDC_HIGH_PRIORITY,			DM_INT,		WINOPTION_PRIORITY);
-	datamap_add(properties_datamap, IDC_HIGH_PRIORITYTXT,			DM_INT,		WINOPTION_PRIORITY);
-	datamap_add(properties_datamap, IDC_MULTITHREAD_RENDERING,		DM_BOOL,	WINOPTION_MULTITHREADING);
+	datamap_add(properties_datamap, IDC_HIGH_PRIORITYTXT,		DM_INT,		WINOPTION_PRIORITY);
+	datamap_add(properties_datamap, IDC_MULTITHREAD_RENDERING,	DM_BOOL,	WINOPTION_MULTITHREADING);
 
 	// windows video options
 	datamap_add(properties_datamap, IDC_VIDEO_MODE,				DM_STRING,	WINOPTION_VIDEO);
@@ -3233,7 +3252,7 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_PRESCALE,				DM_INT,		WINOPTION_PRESCALE);
 	datamap_add(properties_datamap, IDC_PRESCALEDISP,			DM_INT,		WINOPTION_PRESCALE);
 	//mamep: use standard combobox
-	datamap_add(properties_datamap, IDC_EFFECT,				DM_STRING,	OPTION_EFFECT);
+	datamap_add(properties_datamap, IDC_EFFECT,					DM_STRING,	OPTION_EFFECT);
 	datamap_add(properties_datamap, IDC_WAITVSYNC,				DM_BOOL,	WINOPTION_WAITVSYNC);
 	datamap_add(properties_datamap, IDC_SYNCREFRESH,			DM_BOOL,	WINOPTION_SYNCREFRESH);
 #ifdef USE_SCALE_EFFECTS
@@ -3248,19 +3267,19 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_D3D_FILTER,				DM_BOOL,	WINOPTION_FILTER);
 
 	// per window video options
-	datamap_add(properties_datamap, IDC_SCREEN,				DM_STRING,	NULL);
+	datamap_add(properties_datamap, IDC_SCREEN,					DM_STRING,	NULL);
 	datamap_add(properties_datamap, IDC_SCREENSELECT,			DM_STRING,	NULL);
-	datamap_add(properties_datamap, IDC_VIEW,				DM_STRING,	NULL);
-	datamap_add(properties_datamap, IDC_ASPECTRATIOD,			DM_STRING,  	NULL);
-	datamap_add(properties_datamap, IDC_ASPECTRATION,			DM_STRING,  	NULL);
-	datamap_add(properties_datamap, IDC_REFRESH,				DM_STRING,  	NULL);
-	datamap_add(properties_datamap, IDC_SIZES,				DM_STRING,  	NULL);
+	datamap_add(properties_datamap, IDC_VIEW,					DM_STRING,	NULL);
+	datamap_add(properties_datamap, IDC_ASPECTRATIOD,			DM_STRING,  NULL);
+	datamap_add(properties_datamap, IDC_ASPECTRATION,			DM_STRING,  NULL);
+	datamap_add(properties_datamap, IDC_REFRESH,				DM_STRING,  NULL);
+	datamap_add(properties_datamap, IDC_SIZES,					DM_STRING,  NULL);
 
 	// full screen options
 	datamap_add(properties_datamap, IDC_TRIPLE_BUFFER,			DM_BOOL,	WINOPTION_TRIPLEBUFFER);
 	datamap_add(properties_datamap, IDC_SWITCHRES,				DM_BOOL,	WINOPTION_SWITCHRES);
 	datamap_add(properties_datamap, IDC_FSBRIGHTNESS,			DM_FLOAT,	WINOPTION_FULLSCREENBRIGHTNESS);
-	datamap_add(properties_datamap, IDC_FSBRIGHTNESSDISP,			DM_FLOAT,	WINOPTION_FULLSCREENBRIGHTNESS);
+	datamap_add(properties_datamap, IDC_FSBRIGHTNESSDISP,		DM_FLOAT,	WINOPTION_FULLSCREENBRIGHTNESS);
 	datamap_add(properties_datamap, IDC_FSCONTRAST,				DM_FLOAT,	WINOPTION_FULLLSCREENCONTRAST);
 	datamap_add(properties_datamap, IDC_FSCONTRASTDISP,			DM_FLOAT,	WINOPTION_FULLLSCREENCONTRAST);
 	datamap_add(properties_datamap, IDC_FSGAMMA,				DM_FLOAT,	WINOPTION_FULLSCREENGAMMA);
@@ -3268,19 +3287,19 @@ static void BuildDataMap(void)
 
 	// windows sound options
 	datamap_add(properties_datamap, IDC_AUDIO_LATENCY,			DM_INT,		WINOPTION_AUDIO_LATENCY);
-	datamap_add(properties_datamap, IDC_AUDIO_LATENCY_DISP,			DM_INT,		WINOPTION_AUDIO_LATENCY);
+	datamap_add(properties_datamap, IDC_AUDIO_LATENCY_DISP,		DM_INT,		WINOPTION_AUDIO_LATENCY);
 
 	// input device options
 	datamap_add(properties_datamap, IDC_DUAL_LIGHTGUN,			DM_BOOL,	WINOPTION_DUAL_LIGHTGUN);
 #ifdef JOYSTICK_ID
-	datamap_add(properties_datamap, IDC_JOYID1,				DM_INT,		WINOPTION_JOYID1);
-	datamap_add(properties_datamap, IDC_JOYID2,				DM_INT,		WINOPTION_JOYID2);
-	datamap_add(properties_datamap, IDC_JOYID3,				DM_INT,		WINOPTION_JOYID3);
-	datamap_add(properties_datamap, IDC_JOYID4,				DM_INT,		WINOPTION_JOYID4);
-	datamap_add(properties_datamap, IDC_JOYID5,				DM_INT,		WINOPTION_JOYID5);
-	datamap_add(properties_datamap, IDC_JOYID6,				DM_INT,		WINOPTION_JOYID6);
-	datamap_add(properties_datamap, IDC_JOYID7,				DM_INT,		WINOPTION_JOYID7);
-	datamap_add(properties_datamap, IDC_JOYID8,				DM_INT,		WINOPTION_JOYID8);
+	datamap_add(properties_datamap, IDC_JOYID1,					DM_INT,		WINOPTION_JOYID1);
+	datamap_add(properties_datamap, IDC_JOYID2,					DM_INT,		WINOPTION_JOYID2);
+	datamap_add(properties_datamap, IDC_JOYID3,					DM_INT,		WINOPTION_JOYID3);
+	datamap_add(properties_datamap, IDC_JOYID4,					DM_INT,		WINOPTION_JOYID4);
+	datamap_add(properties_datamap, IDC_JOYID5,					DM_INT,		WINOPTION_JOYID5);
+	datamap_add(properties_datamap, IDC_JOYID6,					DM_INT,		WINOPTION_JOYID6);
+	datamap_add(properties_datamap, IDC_JOYID7,					DM_INT,		WINOPTION_JOYID7);
+	datamap_add(properties_datamap, IDC_JOYID8,					DM_INT,		WINOPTION_JOYID8);
 #endif /* JOYSTICK_ID */
 
 #ifdef DRIVER_SWITCH
@@ -3293,18 +3312,18 @@ static void BuildDataMap(void)
 #endif /* DRIVER_SWITCH */
 
 	// set up callbacks
-	datamap_set_callback(properties_datamap, IDC_ROTATE,			DCT_READ_CONTROL,	RotateReadControl);
-	datamap_set_callback(properties_datamap, IDC_ROTATE,			DCT_POPULATE_CONTROL,	RotatePopulateControl);
-	datamap_set_callback(properties_datamap, IDC_SCREEN,			DCT_READ_CONTROL,	ScreenReadControl);
-	datamap_set_callback(properties_datamap, IDC_SCREEN,			DCT_POPULATE_CONTROL,	ScreenPopulateControl);
+	datamap_set_callback(properties_datamap, IDC_ROTATE,		DCT_READ_CONTROL,		RotateReadControl);
+	datamap_set_callback(properties_datamap, IDC_ROTATE,		DCT_POPULATE_CONTROL,	RotatePopulateControl);
+	datamap_set_callback(properties_datamap, IDC_SCREEN,		DCT_READ_CONTROL,		ScreenReadControl);
+	datamap_set_callback(properties_datamap, IDC_SCREEN,		DCT_POPULATE_CONTROL,	ScreenPopulateControl);
 	datamap_set_callback(properties_datamap, IDC_VIEW,			DCT_POPULATE_CONTROL,	ViewPopulateControl);
-	datamap_set_callback(properties_datamap, IDC_REFRESH,			DCT_READ_CONTROL,	ResolutionReadControl);
-	datamap_set_callback(properties_datamap, IDC_REFRESH,			DCT_POPULATE_CONTROL,	ResolutionPopulateControl);
-	datamap_set_callback(properties_datamap, IDC_SIZES,			DCT_READ_CONTROL,	ResolutionReadControl);
+	datamap_set_callback(properties_datamap, IDC_REFRESH,		DCT_READ_CONTROL,		ResolutionReadControl);
+	datamap_set_callback(properties_datamap, IDC_REFRESH,		DCT_POPULATE_CONTROL,	ResolutionPopulateControl);
+	datamap_set_callback(properties_datamap, IDC_SIZES,			DCT_READ_CONTROL,		ResolutionReadControl);
 	datamap_set_callback(properties_datamap, IDC_SIZES,			DCT_POPULATE_CONTROL,	ResolutionPopulateControl);
-	datamap_set_callback(properties_datamap, IDC_DEFAULT_INPUT,		DCT_READ_CONTROL,	DefaultInputReadControl);	
-	datamap_set_callback(properties_datamap, IDC_DEFAULT_INPUT,		DCT_POPULATE_CONTROL,	DefaultInputPopulateControl);
-	datamap_set_callback(properties_datamap, IDC_SNAPVIEW,			DCT_POPULATE_CONTROL,	SnapViewPopulateControl);
+	datamap_set_callback(properties_datamap, IDC_DEFAULT_INPUT,	DCT_READ_CONTROL,		DefaultInputReadControl);	
+	datamap_set_callback(properties_datamap, IDC_DEFAULT_INPUT,	DCT_POPULATE_CONTROL,	DefaultInputPopulateControl);
+	datamap_set_callback(properties_datamap, IDC_SNAPVIEW,		DCT_POPULATE_CONTROL,	SnapViewPopulateControl);
 
 #ifdef DRIVER_SWITCH
 	{
@@ -3322,27 +3341,27 @@ static void BuildDataMap(void)
 
 
 	// formats
-	datamap_set_int_format(properties_datamap, IDC_VOLUMEDISP,		"%ddB");
+	datamap_set_int_format(properties_datamap, IDC_VOLUMEDISP,			"%ddB");
 	datamap_set_int_format(properties_datamap, IDC_AUDIO_LATENCY_DISP,	"%d/5");
-	datamap_set_float_format(properties_datamap, IDC_BEAMDISP,		"%03.2f");
+	datamap_set_float_format(properties_datamap, IDC_BEAMDISP,			"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_FLICKERDISP,		"%03.2f");
-	datamap_set_float_format(properties_datamap, IDC_GAMMADISP,		"%03.2f");
+	datamap_set_float_format(properties_datamap, IDC_GAMMADISP,			"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_BRIGHTCORRECTDISP,	"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_CONTRASTDISP,		"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_PAUSEBRIGHTDISP,	"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_FSGAMMADISP,		"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_FSBRIGHTNESSDISP,	"%03.2f");
 	datamap_set_float_format(properties_datamap, IDC_FSCONTRASTDISP,	"%03.2f");
-	datamap_set_float_format(properties_datamap, IDC_JDZDISP,		"%03.2f");
-	datamap_set_float_format(properties_datamap, IDC_JSATDISP,		"%03.2f");
-	datamap_set_float_format(properties_datamap, IDC_SPEEDDISP,		"%03.2f");
+	datamap_set_float_format(properties_datamap, IDC_JDZDISP,			"%03.2f");
+	datamap_set_float_format(properties_datamap, IDC_JSATDISP,			"%03.2f");
+	datamap_set_float_format(properties_datamap, IDC_SPEEDDISP,			"%03.2f");
 
 	// trackbar ranges
 	datamap_set_trackbar_range(properties_datamap, IDC_PRESCALE,    1, 10, 1);
 	datamap_set_trackbar_range(properties_datamap, IDC_JDZ,         0.00,  1.00, (float)0.05);
 	datamap_set_trackbar_range(properties_datamap, IDC_JSAT,        0.00,  1.00, (float)0.05);
 	datamap_set_trackbar_range(properties_datamap, IDC_SPEED,       0.00,  3.00, (float)0.01);
-	datamap_set_trackbar_range(properties_datamap, IDC_BEAM,        (float)0.10, 10.00, (float)0.10);       
+	datamap_set_trackbar_range(properties_datamap, IDC_BEAM,        (float)0.10, 10.00, (float)0.10);
 	datamap_set_trackbar_range(properties_datamap, IDC_VOLUME,      -32,  0, 1);
 	datamap_set_trackbar_range(properties_datamap, IDC_SECONDSTORUN, 0,  60, 1);
 #ifdef TRANS_UI
@@ -3356,21 +3375,21 @@ static void BuildDataMap(void)
 }
 
 #if 1 //mamep: for coloring of changed elements
-static BOOL IsControlOptionValue(HWND hDlg, HWND hwnd_ctrl, core_options *opts, core_options *ref)
+static BOOL IsControlOptionValue(HWND hDlg, HWND hwnd_ctrl, windows_options &opts, windows_options &ref)
 {
 	const char *option_name;
 	const char *opts_value;
 	const char *ref_value;
 
-	if (!opts || !ref)
-		return FALSE;
+//	if (!opts || !ref)
+//		return FALSE;
 
 	option_name = datamap_get_contorl_option_name(properties_datamap, hDlg, hwnd_ctrl);
 	if (option_name == NULL)
 		return TRUE;
 
-	opts_value = options_get_string(opts, option_name);
-	ref_value = options_get_string(ref, option_name);
+	opts_value = opts.value(option_name);
+	ref_value = ref.value(option_name);
 
 	if (opts_value == ref_value)
 		return TRUE;
@@ -3393,10 +3412,10 @@ static void SetSamplesEnabled(HWND hWnd, int nIndex, BOOL bSoundEnabled)
 	{
 		const device_config_sound_interface *sound;
 		if ( nIndex > -1 ) {
-			machine_config config(*drivers[nIndex]);
+			machine_config config(*drivers[nIndex],pCurrentOpts);
 		
 			for (bool gotone = config.m_devicelist.first(sound); gotone; gotone = sound->next(sound))
-				{
+			{
 				if (sound->devconfig().type() == SAMPLES ||
 					sound->devconfig().type() == VLM5030) {
 					enabled = TRUE;
@@ -3583,7 +3602,7 @@ static void UpdateSelectScreenUI(HWND hwnd)
 		if ((curSel < 0) || (curSel >= NUMSELECTSCREEN))
 			curSel = 0;
 		(void)ComboBox_ResetContent(hCtrl );
-		for (i = 0; i < NUMSELECTSCREEN && i < options_get_int(pCurrentOpts, WINOPTION_NUMSCREENS) + 1; i++)
+		for (i = 0; i < NUMSELECTSCREEN && i < pCurrentOpts.int_value(WINOPTION_NUMSCREENS) + 1; i++)
 		{
 			(void)ComboBox_InsertString(hCtrl, i, _UIW(g_ComboBoxSelectScreen[i].m_pText));
 			(void)ComboBox_SetItemData( hCtrl, i, g_ComboBoxSelectScreen[i].m_pData);
@@ -3657,7 +3676,7 @@ static void InitializeEffectUI(HWND hwnd)
 static void InitializeControllerMappingUI(HWND hwnd)
 {
 	int i;
-	HWND hCtrl = GetDlgItem(hwnd,IDC_PADDLE);
+	HWND hCtrl  = GetDlgItem(hwnd,IDC_PADDLE);
 	HWND hCtrl1 = GetDlgItem(hwnd,IDC_ADSTICK);
 	HWND hCtrl2 = GetDlgItem(hwnd,IDC_PEDAL);
 	HWND hCtrl3 = GetDlgItem(hwnd,IDC_MOUSE);
@@ -3985,9 +4004,9 @@ static BOOL ResetDebugscript(HWND hWnd)
 
 void UpdateBackgroundBrush(HWND hwndTab)
 {
-    // Destroy old brush
-    if (hBkBrush)
-        DeleteBrush(hBkBrush);
+	// Destroy old brush
+	if (hBkBrush)
+		DeleteBrush(hBkBrush);
 
 	hBkBrush = NULL;
 
@@ -4006,12 +4025,12 @@ void UpdateBackgroundBrush(HWND hwndTab)
 		// Create a compatible DC
 		hDCMem = CreateCompatibleDC(hDC);
 		hBmp = CreateCompatibleBitmap(hDC, 
-		                              rc.right - rc.left, rc.bottom - rc.top);
+				rc.right - rc.left, rc.bottom - rc.top);
 		hBmpOld = (HBITMAP)(SelectObject(hDCMem, hBmp));
 
 		// Tell the tab control to paint in our DC
 		SendMessage(hwndTab, WM_PRINTCLIENT, (WPARAM)(hDCMem), 
-		            (LPARAM)(PRF_ERASEBKGND | PRF_CLIENT | PRF_NONCLIENT));
+			(LPARAM)(PRF_ERASEBKGND | PRF_CLIENT | PRF_NONCLIENT));
 
 		// Create a pattern brush from the bitmap selected in our DC
 		hBkBrush = CreatePatternBrush(hBmp);
@@ -4019,10 +4038,10 @@ void UpdateBackgroundBrush(HWND hwndTab)
 		// Restore the bitmap
 		SelectObject(hDCMem, hBmpOld);
 
-        // Cleanup
-        DeleteBitmap(hBmp);
-        DeleteDC(hDCMem);
-        ReleaseDC(hwndTab, hDC);
+		// Cleanup
+		DeleteBitmap(hBmp);
+		DeleteDC(hDCMem);
+		ReleaseDC(hwndTab, hDC);
 	}
 }
 

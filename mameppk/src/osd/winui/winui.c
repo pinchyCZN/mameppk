@@ -54,7 +54,6 @@
 #include "winutf8.h"
 #include "strconv.h"
 #include "window.h"
-#include "winmain.h"
 #ifdef DRIVER_SWITCH
 #include "clifront.h"
 #endif /* DRIVER_SWITCH */
@@ -391,7 +390,7 @@ static BOOL             FolderCheck(void);
 
 static void             ToggleScreenShot(void);
 static void             AdjustMetrics(void);
-//static void             EnablePlayOptions(int nIndex, core_options *o);
+//static void             EnablePlayOptions(int nIndex, windows_options *o);
 
 /* Icon routines */
 static DWORD            GetShellLargeIconSize(void);
@@ -1066,7 +1065,7 @@ extern const LPCTSTR column_names[COLUMN_MAX] =
     External functions
  ***************************************************************************/
 #if 0
-static void CopyOptions(core_options *pDestOpts, core_options *pSourceOpts)
+static void CopyOptions(emu_options *pDestOpts, emu_options *pSourceOpts)
 {
 	options_enumerator *enumerator;
 	const char *option_name;
@@ -1115,58 +1114,59 @@ static BOOL WaitWithMessageLoop(HANDLE hEvent)
 }
 #endif
 
-static void override_options(core_options *opts, void *param)
+static void override_options(windows_options &opts, void *param)
 {
 	const play_options *playopts = (const play_options *)param;
+	astring error_string;
 
 #ifdef MAME_AVI
 	if (playopts->aviwrite2)
 	{
 		options_set_wstring(opts, "avi_avi_filename", playopts->aviwrite2, OPTION_PRIORITY_CMDLINE);
 
-		options_set_float (opts, "avi_def_fps", AviStatus.def_fps, OPTION_PRIORITY_CMDLINE);
-		options_set_float (opts, "avi_fps", AviStatus.fps, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_frame_skip", AviStatus.frame_skip, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, "avi_frame_cmp", AviStatus.frame_cmp, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, "avi_frame_cmp_pre15", AviStatus.frame_cmp_pre15, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, "avi_frame_cmp_few", AviStatus.frame_cmp_few, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_width", AviStatus.width, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_height", AviStatus.height, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_depth", AviStatus.depth, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_orientation", AviStatus.orientation, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_rect_top", AviStatus.rect.m_Top, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_rect_left", AviStatus.rect.m_Left, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_rect_width", AviStatus.rect.m_Width, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_rect_height", AviStatus.rect.m_Height, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, "avi_interlace", AviStatus.interlace, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, "avi_interlace_odd_field", AviStatus.interlace_odd_number_field, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_filesize", AviStatus.avi_filesize, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, "avi_avi_savefile_pause", AviStatus.avi_savefile_pause, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_width", AviStatus.avi_width, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_height", AviStatus.avi_height, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_depth", AviStatus.avi_depth, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_rect_top", AviStatus.avi_rect.m_Top, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_rect_left", AviStatus.avi_rect.m_Left, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_rect_width", AviStatus.avi_rect.m_Width, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_rect_height", AviStatus.avi_rect.m_Height, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, "avi_avi_smooth_resize_x", AviStatus.avi_smooth_resize_x, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, "avi_avi_smooth_resize_y", AviStatus.avi_smooth_resize_y, OPTION_PRIORITY_CMDLINE);
+		opts.set_value("avi_def_fps", (float)AviStatus.def_fps, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_fps", (float)AviStatus.fps, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_frame_skip", AviStatus.frame_skip, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_frame_cmp", AviStatus.frame_cmp, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_frame_cmp_pre15", AviStatus.frame_cmp_pre15, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_frame_cmp_few", AviStatus.frame_cmp_few, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_width", AviStatus.width, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_height", AviStatus.height, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_depth", AviStatus.depth, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_orientation", (int)AviStatus.orientation, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_rect_top", (int)AviStatus.rect.m_Top, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_rect_left", (int)AviStatus.rect.m_Left, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_rect_width", (int)AviStatus.rect.m_Width, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_rect_height", (int)AviStatus.rect.m_Height, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_interlace", AviStatus.interlace, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_interlace_odd_field", AviStatus.interlace_odd_number_field, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_filesize", (int)AviStatus.avi_filesize, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_savefile_pause", AviStatus.avi_savefile_pause, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_width", AviStatus.avi_width, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_height", AviStatus.avi_height, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_depth", AviStatus.avi_depth, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_rect_top", (int)AviStatus.avi_rect.m_Top, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_rect_left", (int)AviStatus.avi_rect.m_Left, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_rect_width", (int)AviStatus.avi_rect.m_Width, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_rect_height", (int)AviStatus.avi_rect.m_Height, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_smooth_resize_x", AviStatus.avi_smooth_resize_x, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_smooth_resize_y", AviStatus.avi_smooth_resize_y, OPTION_PRIORITY_CMDLINE,error_string);
 
 		if (AviStatus.wav_filename && strlen((const char *)AviStatus.wav_filename))
-			options_set_string(opts, "avi_wav_filename", (const char *)AviStatus.wav_filename, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_audio_type", AviStatus.audio_type, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_audio_channel", AviStatus.audio_channel, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_audio_samples_per_sec", AviStatus.audio_samples_per_sec, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_audio_bitrate", AviStatus.audio_bitrate, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_audio_record_type", AviStatus.avi_audio_record_type, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_audio_channel", AviStatus.avi_audio_channel, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_audio_samples_per_sec", AviStatus.avi_audio_samples_per_sec, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_avi_audio_bitrate", AviStatus.avi_audio_bitrate, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, "avi_audio_cmp", AviStatus.avi_audio_cmp, OPTION_PRIORITY_CMDLINE);
-		
-		options_set_int   (opts, "avi_hour", AviStatus.hour, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_minute", AviStatus.minute, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, "avi_second", AviStatus.second, OPTION_PRIORITY_CMDLINE);
+			opts.set_value("avi_wav_filename", (const char *)AviStatus.wav_filename, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_audio_type", AviStatus.audio_type, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_audio_channel", AviStatus.audio_channel, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_audio_samples_per_sec", AviStatus.audio_samples_per_sec, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_audio_bitrate", AviStatus.audio_bitrate, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_audio_record_type", AviStatus.avi_audio_record_type, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_audio_channel", AviStatus.avi_audio_channel, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_audio_samples_per_sec", AviStatus.avi_audio_samples_per_sec, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_avi_audio_bitrate", AviStatus.avi_audio_bitrate, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_audio_cmp", AviStatus.avi_audio_cmp, OPTION_PRIORITY_CMDLINE,error_string);
+
+		opts.set_value("avi_hour", AviStatus.hour, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_minute", AviStatus.minute, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value("avi_second", AviStatus.second, OPTION_PRIORITY_CMDLINE,error_string);
 	}
 	else
 	{
@@ -1184,23 +1184,23 @@ static void override_options(core_options *opts, void *param)
 	// kaillera force options
 	if (kPlay)
 	{
-		options_set_bool  (opts, OPTION_AUTOFRAMESKIP, TRUE, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, OPTION_THROTTLE, TRUE, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, WINOPTION_WAITVSYNC, 0, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, WINOPTION_SYNCREFRESH, 0, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, OPTION_SOUND, TRUE, OPTION_PRIORITY_CMDLINE);
-		options_set_int   (opts, OPTION_SAMPLERATE, 48000, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, OPTION_SAMPLES, TRUE, OPTION_PRIORITY_CMDLINE);
+		opts.set_value(OPTION_AUTOFRAMESKIP, TRUE, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(OPTION_THROTTLE, TRUE, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(WINOPTION_WAITVSYNC, 0, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(WINOPTION_SYNCREFRESH, 0, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(OPTION_SOUND, TRUE, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(OPTION_SAMPLERATE, 48000, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(OPTION_SAMPLES, TRUE, OPTION_PRIORITY_CMDLINE,error_string);
 #if 0
 		if (!mame_stricmp(GetDriverFilename(nGameIndex), "neogeo.c") && !mame_stricmp(pOpts->bios, "uni-bios.22"))
-			options_set_string(opts, OPTION_BIOS, pOpts->bios, OPTION_PRIORITY_CMDLINE);
+			opts.set_value(OPTION_BIOS, pOpts->bios, OPTION_PRIORITY_CMDLINE,error_string);
 		else
 #endif
-		options_set_string(opts, OPTION_BIOS, "0", OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, OPTION_CHEAT, 0, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, WINOPTION_MULTITHREADING, 0, OPTION_PRIORITY_CMDLINE);
-		options_set_float (opts, OPTION_SPEED, 1.0, OPTION_PRIORITY_CMDLINE);
-		options_set_bool  (opts, OPTION_REFRESHSPEED, 0, OPTION_PRIORITY_CMDLINE);
+		opts.set_value(OPTION_BIOS, "0", OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(OPTION_CHEAT, 0, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(WINOPTION_MULTITHREADING, 0, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(OPTION_SPEED, 1.0f, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(OPTION_REFRESHSPEED, 0, OPTION_PRIORITY_CMDLINE,error_string);
 	}
 #endif /* KAILLERA */
 }
@@ -1211,17 +1211,17 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 	double elapsedtime;
 	DWORD dwExitCode = 0;
 	int i;
-	core_options *mame_opts;
-
+	windows_options mame_opts;
+	astring error_string;
 	// set up MAME options
-	mame_opts = mame_options_init(mame_win_options);
+//	mame_opts = mame_options_init(mame_win_options);
 
 	// Tell mame were to get the INIs
 	//mamep: we want parse MAME.ini in root directory with all INIs in inipath. not only parse inipath
-	//options_set_string(mame_opts, OPTION_INIPATH, GetIniDir(), OPTION_PRIORITY_CMDLINE);
+//	mame_opts.set_value(OPTION_INIPATH, GetIniDir(), OPTION_PRIORITY_CMDLINE,error_string);
 
 	// add image specific device options
-	image_add_device_options(mame_opts, drivers[nGameIndex]);
+	mame_opts.set_system_name(drivers[nGameIndex]->name);
 
 	// set any specified play options
 	if (playopts != NULL)
@@ -1246,7 +1246,7 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 
 #ifdef MESS
 	if (g_szSelectedSoftware[0] && g_szSelectedDevice[0]) {
-			options_set_string(mame_opts, g_szSelectedDevice, g_szSelectedSoftware, OPTION_PRIORITY_CMDLINE);
+			mame_opts.set_value(g_szSelectedDevice, g_szSelectedSoftware, OPTION_PRIORITY_CMDLINE,error_string);
 			// Add params and clear so next start of driver is without parameters			
 			g_szSelectedSoftware[0] = 0;
 			g_szSelectedDevice[0] = 0;
@@ -1261,11 +1261,11 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 		Picker_ClearIdle(GetDlgItem(hMain, s_nPickers[i]));
 
 	// run the emulation
-	options_set_string(mame_opts, OPTION_GAMENAME, drivers[nGameIndex]->name, OPTION_PRIORITY_CMDLINE);
+	//mame_opts.set_value(OPTION_SYSTEMNAME, drivers[nGameIndex]->name, OPTION_PRIORITY_CMDLINE,error_string);
 	// Time the game run.
 	time(&start);
 	windows_osd_interface osd;
-	mame_execute(osd, mame_opts);
+	mame_execute(mame_opts, osd);
 	// Calc the duration
 	time(&end);
 	elapsedtime = end - start;
@@ -2391,7 +2391,7 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	extern const FOLDERDATA g_folderData[];
 	extern const FILTER_ITEM g_filterList[];
 	LONG     common_control_version = GetCommonControlVersion();
-	core_options *options;
+	windows_options options;
 #if !defined(KAILLERA) && !defined(MAMEUIPLUSPLUS)
 	int validity_failed = 0;
 #endif
@@ -2404,7 +2404,7 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	mame_set_output_channel(OUTPUT_CHANNEL_ERROR, winui_output_error, NULL, NULL, NULL);
 
 	//mamep: set up initial option system
-	options = mame_options_init(mame_win_options);
+	CreateGameOptions(options, OPTIONS_TYPE_GLOBAL);
 
 	//mamep: initialzied ui lang system
 	lang_set_langcode(options, UI_LANG_EN_US);
@@ -2413,11 +2413,12 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	{
 		file_error filerr;
 
-		emu_file file = emu_file(*options, SEARCHPATH_RAW, OPEN_FLAG_READ);
+		emu_file file = emu_file(OPEN_FLAG_READ);
 		filerr = file.open(CONFIGNAME ".ini");
 		if (filerr == FILERR_NONE)
 		{
-			options_parse_ini_file(options, file, OPTION_PRIORITY_CMDLINE, FALSE);
+			astring error;
+			options.parse_ini_file(file, OPTION_PRIORITY_CMDLINE, FALSE, error);
 			file.close();
 		}
 
@@ -2492,8 +2493,8 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	}
 
 	//mamep: finished initial option system
-	options_free(options);
-	options = NULL;
+//	options_free(options);
+//	options = NULL;
 
 	dprintf("about to init options");
 	OptionsInit();
@@ -5748,7 +5749,8 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 		if (GetPatchFilename(patch_filename, driversw[nGame]->name, id-ID_PLAY_IPS))
 		{
 			static WCHAR new_opt[MAX_PATCHNAME * MAX_PATCHES];
-			core_options *o = load_options(OPTIONS_GAME, nGame);
+			windows_options o;
+			load_options(o, OPTIONS_GAME, nGame);
 			WCHAR *ips = options_get_wstring(o, OPTION_IPS);
 
 			new_opt[0] = '\0';
@@ -5787,7 +5789,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 			options_set_wstring(o, OPTION_IPS, new_opt, OPTION_PRIORITY_CMDLINE);
 			save_options(OPTIONS_GAME, o, nGame);
 
-			options_free(o);
+//			options_free(o);
 		}
 		return TRUE;
 	}
@@ -6949,7 +6951,7 @@ static const TCHAR *GamePicker_GetItemString(HWND hwndPicker, int nItem, int nCo
 
 		case COLUMN_TYPE:
 			{
-				machine_config config(*drivers[nItem]);
+				machine_config config(*drivers[nItem],MameUIGlobal());
 				/* Vector/Raster */
 				if (isDriverVector(&config))
 					s = _UIW(TEXT("Vector"));
@@ -7454,8 +7456,8 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 
 	case COLUMN_TYPE:
 		{
-			machine_config config1(*drivers[index1]);
-			machine_config config2(*drivers[index2]);
+			machine_config config1(*drivers[index1],MameUIGlobal());
+			machine_config config2(*drivers[index2],MameUIGlobal());
 
 			value = isDriverVector(&config1) - isDriverVector(&config2);
 		}
@@ -7798,14 +7800,14 @@ static void CopyTrctempStateSaveFile(const WCHAR *fname, inpsub_header *inpsub_h
 		//sprintf(path, "%s\\trctemp", GetInpDir());
 		wcscpy(path, TEXT("inp\\trctemp"));
 		stemp = utf8_from_wstring(name);
-		emu_file file_inp = emu_file(*(MameUIGlobal()), SEARCHPATH_STATE, OPEN_FLAG_READ);
+		emu_file file_inp = emu_file(MameUIGlobal().state_directory(), OPEN_FLAG_READ);
 		filerr = file_inp.open(stemp);
 
 		if (!file_inp) 
 			delete_file(_String(name));
 		else
 		{
-			emu_file file_trctemp = emu_file(*(MameUIGlobal()), SEARCHPATH_STATE, OPEN_FLAG_READ);
+			emu_file file_trctemp = emu_file(MameUIGlobal().state_directory(), OPEN_FLAG_READ);
 			filerr = file_trctemp.open(stemp);
 
 			fsize = file_inp.size();
@@ -7949,7 +7951,7 @@ static void MamePlayBackGame()
 			path[wcslen(path)-1] = 0; // take off trailing back slash
 
 		stemp = utf8_from_wstring(fname);
-		emu_file pPlayBack = emu_file(*(MameUIGlobal()), SEARCHPATH_INPUTLOG, OPEN_FLAG_READ);
+		emu_file pPlayBack = emu_file(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
 		fileerr = pPlayBack.open(stemp);
 		osd_free(stemp);
 		if (fileerr != FILERR_NONE)
@@ -7998,7 +8000,7 @@ static void MamePlayBackGame()
 		if ((!wcscmp(ext, TEXT(".zip"))) || (!wcscmp(ext, TEXT(".trc"))))
 		{
 			stemp = utf8_from_wstring(fname2);
-			emu_file pPlayBackSub = emu_file(*(MameUIGlobal()), SEARCHPATH_INPUTLOG, OPEN_FLAG_READ);
+			emu_file pPlayBackSub = emu_file(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
 			fileerr = pPlayBackSub.open(stemp);
 			osd_free(stemp);
 			if (fileerr == FILERR_NONE)
@@ -8095,7 +8097,7 @@ static void MameLoadState()
 #endif // MESS
 
 		stemp = utf8_from_wstring(state_fname);
-		emu_file pSaveState = emu_file(*(MameUIGlobal()), SEARCHPATH_STATE, OPEN_FLAG_READ);
+		emu_file pSaveState = emu_file(MameUIGlobal().state_directory(), OPEN_FLAG_READ);
 		filerr = pSaveState.open(stemp);
 		osd_free(stemp);
 		if (filerr != FILERR_NONE)
@@ -8459,7 +8461,7 @@ static void AdjustMetrics(void)
 
 #if 0
 /* Adjust options - tune them to the currently selected game */
-static void EnablePlayOptions(int nIndex, core_options *o)
+static void EnablePlayOptions(int nIndex, emu_options *o)
 {
 }
 #endif
@@ -8600,11 +8602,12 @@ static void GamePicker_OnBodyContextMenu(POINT pt)
 	{
 		HMENU hSubMenu = NULL;
 		int  nGame = Picker_GetSelectedItem(hwndList);
-		core_options *o = load_options(OPTIONS_GAME, nGame);
+		windows_options o;
+		load_options(o, OPTIONS_GAME, nGame);
 		int patch_count = GetPatchCount(driversw[nGame]->name, TEXT("*"));
 		WCHAR *ips = options_get_wstring(o, OPTION_IPS);
 
-		options_free(o);
+//		options_free(o);
 
 		if (patch_count > MAX_PATCHES)
 			patch_count = MAX_PATCHES;
@@ -10092,16 +10095,16 @@ void WINAPI kChatCallback(char *nick, char *text)
 					char name[2];
 					name[0] = Kaillera_StateSave_file; name[1] = 0;
 					sprintf(filename, "%s%s%s-%s.sta", k_machine->basename(), PATH_SEPARATOR, k_machine->gamedrv->name, name);
-					emu_file file = emu_file(k_machine->options(), SEARCHPATH_STATE, OPEN_FLAG_READ);
+					emu_file file = emu_file(k_machine->options().state_directory(), OPEN_FLAG_READ);
 					filerr = file.open(filename);
 					if (filerr != FILERR_NONE)
 					{
-						emu_file file2 = emu_file(k_machine->options(), SEARCHPATH_STATE, OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+						emu_file file2 = emu_file(k_machine->options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
 						filerr = file2.open(filename);
 						file2.close();
 					}
 					file.close();
-					checksum_file_crc32(k_machine->options(), SEARCHPATH_STATE, filename, NULL, &size, &crc);
+					checksum_file_crc32(k_machine->options().state_directory(), filename, NULL, &size, &crc);
 				}
 				
 				dat[0] = 0x0000000f;
@@ -10275,7 +10278,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 				name[1] = 0;
 				//int flag;
 				sprintf(fname, "%s/%s-%c.sta", k_machine->basename(), k_machine->gamedrv->name, name[0]);
-				emu_file file = emu_file(k_machine->options(), SEARCHPATH_STATE, OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+				emu_file file = emu_file(k_machine->options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
 				filerr = file.open(fname);
 				file.write(temp, tst);
 				file.close();
@@ -11592,13 +11595,13 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 }
 
 
-static void set_mame_mixer_wfm(int drvindex, core_options *o)
+static void set_mame_mixer_wfm(int drvindex, windows_options &o)
 {
 	extern int mame_mixer_wave_cnvnmb;
 	extern struct WAV_WAVEFORMAT		mame_mixer_dstwfm, mame_mixer_srcwfm;
 	extern struct WAV_SAMPLES_RESIZE	mame_mixer_wsr;	
 
-	mame_mixer_srcwfm.samplespersec = options_get_int(o, OPTION_SAMPLERATE);
+	mame_mixer_srcwfm.samplespersec = o.int_value(OPTION_SAMPLERATE);
 	mame_mixer_srcwfm.channel = 2;		// changed from 0.93 (Aaron's big sound system change) - DarkCoder
 	mame_mixer_srcwfm.bitrate = 16;
 
@@ -11612,10 +11615,11 @@ static void SetupAviStatus(int nGame)
 {
 	extern int neogeo_check_lower_resolution( const char *name );
 	struct MAME_AVI_STATUS *OldAviStatus;	//kt
-	machine_config config(*drivers[nGame]);
 	const device_config *screen;
 	const screen_device_config *scrconfig;
-	core_options *o = load_options(OPTIONS_GAME, nGame);
+	windows_options o;
+	load_options(o, OPTIONS_GAME, nGame);
+	machine_config config(*drivers[nGame], o);
 
 	screen = config.first_screen();
 	scrconfig = downcast<const screen_device_config *>(config.first_screen());
@@ -11629,7 +11633,7 @@ static void SetupAviStatus(int nGame)
 	AviStatus.flags   = drivers[nGame]->flags;
 	AviStatus.orientation = AviStatus.flags & ORIENTATION_MASK;
 
-	if (options_get_bool(o, OPTION_ROR))
+	if (o.bool_value(OPTION_ROR))
 	{
 		if ((AviStatus.orientation & ROT180) == ORIENTATION_FLIP_X ||
 			(AviStatus.orientation & ROT180) == ORIENTATION_FLIP_Y) 
@@ -11638,7 +11642,7 @@ static void SetupAviStatus(int nGame)
 		}
 		AviStatus.orientation ^= ROT90;
 	}
-	else if(options_get_bool(o, OPTION_ROL))
+	else if(o.bool_value(OPTION_ROL))
 	{
 		if ((AviStatus.orientation & ROT180) == ORIENTATION_FLIP_X ||
 			(AviStatus.orientation & ROT180) == ORIENTATION_FLIP_Y) 
@@ -11648,9 +11652,9 @@ static void SetupAviStatus(int nGame)
 		AviStatus.orientation ^= ROT270;
 	}
 
-	if (options_get_bool(o, OPTION_FLIPX))
+	if (o.bool_value(OPTION_FLIPX))
 		AviStatus.orientation ^= ORIENTATION_FLIP_X;
-	if (options_get_bool(o, OPTION_FLIPY))
+	if (o.bool_value(OPTION_FLIPY))
 		AviStatus.orientation ^= ORIENTATION_FLIP_Y;
 
 	AviStatus.frame_skip		= 0;
@@ -11682,7 +11686,7 @@ static void SetupAviStatus(int nGame)
 		AviStatus.avi_audio_samples_per_sec = mame_mixer_dstwfm.samplespersec;
 		AviStatus.avi_audio_bitrate			= mame_mixer_dstwfm.bitrate;
 
-		AviStatus.audio_type			= options_get_bool(o, OPTION_SOUND);
+		AviStatus.audio_type			= o.bool_value(OPTION_SOUND);
 		AviStatus.avi_audio_record_type	= (AviStatus.audio_type!=0) ? 2:0;
 	}
 
@@ -11782,7 +11786,7 @@ static void SetupAviStatus(int nGame)
 	}
 
 	SetAviStatus(&AviStatus);
-	options_free(o);
+//	options_free(o);
 }
 
 void get_autofilename(int nGame, WCHAR *avidir, WCHAR *avifilename, WCHAR *ext)
@@ -11946,7 +11950,7 @@ static void MamePlayBackGameAVI()
 			path[wcslen(path)-1] = 0; // take off trailing back slash
 
 		stemp = utf8_from_wstring(fname);
-		emu_file pPlayBack = emu_file(*(MameUIGlobal()), SEARCHPATH_INPUTLOG, OPEN_FLAG_READ);
+		emu_file pPlayBack = emu_file(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
 		fileerr = pPlayBack.open(stemp);
 		osd_free(stemp);
 		if (fileerr != FILERR_NONE)
@@ -11996,7 +12000,7 @@ static void MamePlayBackGameAVI()
 		{
 			//pPlayBackSub = mame_fopen(fname,NULL,FILETYPE_INPUTSUBLOG,0);
 			stemp = utf8_from_wstring(fname2);
-			emu_file pPlayBackSub = emu_file(*(MameUIGlobal()), SEARCHPATH_INPUTLOG, OPEN_FLAG_READ);
+			emu_file pPlayBackSub = emu_file(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
 			fileerr = pPlayBackSub.open(stemp);
 			osd_free(stemp);
 			if (pPlayBackSub)

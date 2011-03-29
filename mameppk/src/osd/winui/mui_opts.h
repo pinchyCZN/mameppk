@@ -18,6 +18,7 @@
 #include "options.h"
 #include "emu.h" /* for input_seq definition */
 #include <video.h> /* for MAX_SCREENS Definition*/
+#include "winmain.h"
 
 #ifdef MESS
 #include "optionsms.h"
@@ -161,20 +162,30 @@ enum
 // (that's how many options we have after MAX_TAB_TYPES)
 #define TAB_SUBTRACT 3
 
+class winui_options : public core_options
+{
+public:
+	// construction/destruction
+	winui_options();
+
+private:
+	static const options_entry s_option_entries[];
+};
+
 BOOL OptionsInit(void);
 void OptionsExit(void);
 
 #define OPTIONS_TYPE_GLOBAL		-1
 #define OPTIONS_TYPE_FOLDER		-2
 
-core_options *load_options(OPTIONS_TYPE opt_type, int game_num);
-void save_options(OPTIONS_TYPE opt_type, core_options *opts, int game_num);
+void load_options(windows_options &opts, OPTIONS_TYPE opt_type, int game_num);
+void save_options(OPTIONS_TYPE opt_type, windows_options &opts, int game_num);
 
-void AddOptions(core_options *opts, const options_entry *entrylist, BOOL is_global);
-core_options *CreateGameOptions(int driver_index);
+//void AddOptions(winui_options *opts, const options_entry *entrylist, BOOL is_global);
+void CreateGameOptions(windows_options &opts, int driver_index);
 
-core_options * MameUISettings(void);
-core_options * MameUIGlobal(void);
+winui_options & MameUISettings(void);
+windows_options & MameUIGlobal(void);
 
 //void LoadFolderFlags(void);
 //const char* GetFolderNameByID(UINT nID);
@@ -514,8 +525,10 @@ void ColumnDecodeStringWithCount(const char* str, int *value, int count);
  ***************************************************************************/
 
 #ifdef UNICODE
-WCHAR *options_get_wstring(core_options *opts, const char *name);
-void options_set_wstring(core_options *opts, const char *name, const WCHAR *value, int priority);
+WCHAR *options_get_wstring(winui_options &opts, const char *name);
+void options_set_wstring(winui_options &opts, const char *name, const WCHAR *value, int priority);
+WCHAR *options_get_wstring(windows_options &opts, const char *name);
+void options_set_wstring(windows_options &opts, const char *name, const WCHAR *value, int priority);
 #endif /* UNICODE */
 
 #ifdef STORY_DATAFILE

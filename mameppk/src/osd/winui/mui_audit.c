@@ -39,7 +39,6 @@
 #include "mui_opts.h"
 #include "mui_util.h"
 #include "properties.h"
-#include "emuopts.h"
 #include "translate.h"
 
 
@@ -188,7 +187,7 @@ static BOOL RomsetNotExist(int game)
 
 		// open the file if we can
 		fname = astring_assemble_2(astring_alloc(), drv->name, ".zip");
-		emu_file file = emu_file(*(MameUIGlobal()), SEARCHPATH_ROM, OPEN_FLAG_READ);
+		emu_file file = emu_file(MameUIGlobal().media_path(), OPEN_FLAG_READ);
 		filerr = file.open(astring_c(fname));
 		astring_free(fname);
 		if (filerr == FILERR_NONE)
