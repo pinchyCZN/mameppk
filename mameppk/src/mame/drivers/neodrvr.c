@@ -9252,17 +9252,17 @@ INPUT_PORTS_END
 
 static DRIVER_INIT( gfxdec42 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	neogeo_sfix_decrypt(machine);
 }
 
 static DRIVER_INIT( gfxdec50 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	neogeo_sfix_decrypt(machine);
 }
 
@@ -9293,38 +9293,38 @@ static DRIVER_INIT( mslugx )
 
 static DRIVER_INIT( kof99 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	kof99_decrypt_68k(machine);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0x00);
 	kof99_install_protection(machine);
 }
 
 static DRIVER_INIT( kof99k )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0x00);
 }
 
 static DRIVER_INIT( garou )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	garou_decrypt_68k(machine);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0x06);
 	garou_install_protection(machine);
 }
 
 static DRIVER_INIT( garouo )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	garouo_decrypt_68k(machine);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0x06);
 	garouo_install_protection(machine);
 }
@@ -9345,19 +9345,19 @@ static DRIVER_INIT( garoubl )
 
 static DRIVER_INIT( mslug3 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	mslug3_decrypt_68k(machine);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0xad);
 	mslug3_install_protection(machine);
 }
 
 static DRIVER_INIT( mslug3h )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0xad);
 }
 
@@ -9370,10 +9370,10 @@ static DRIVER_INIT( mslug3b6 )
 
 static DRIVER_INIT( kof2000 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	kof2000_decrypt_68k(machine);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x00);
 	kof2000_install_protection(machine);
@@ -9381,9 +9381,9 @@ static DRIVER_INIT( kof2000 )
 
 static DRIVER_INIT( kof2000n )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x00);
 }
@@ -9396,9 +9396,9 @@ static DRIVER_INIT( kof2000d )
 
 static DRIVER_INIT( kof2001 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof2000_neogeo_gfx_decrypt(machine, 0x1e);
 	neogeo_cmc50_m1_decrypt(machine);
 }
@@ -9461,9 +9461,9 @@ static DRIVER_INIT( ct2k3sa )
 
 static DRIVER_INIT( mslug4 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1; /* USA violent content screen is wrong -- not a bug, confirmed on real hardware! */
+	state->m_fixed_layer_bank_type = 1; /* USA violent content screen is wrong -- not a bug, confirmed on real hardware! */
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x31);
 	neo_pcm2_snk_1999(machine, 8);
@@ -9486,63 +9486,63 @@ static DRIVER_INIT( ms4plus )
 
 static DRIVER_INIT( ganryu )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0x07);
 }
 
 static DRIVER_INIT( s1945p )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0x05);
 }
 
 static DRIVER_INIT( preisle2 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0x9f);
 }
 
 static DRIVER_INIT( bangbead )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0xf8);
 }
 
 static DRIVER_INIT( nitd )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0xff);
 }
 
 static DRIVER_INIT( zupapa )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0xbd);
 }
 
 static DRIVER_INIT( sengoku3 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof99_neogeo_gfx_decrypt(machine, 0xfe);
 }
 
 static READ16_HANDLER( popbounc_sfix_16_r )
 {
-	if (cpu_get_pc(space->cpu)==0x6b10)
+	if (cpu_get_pc(&space->device())==0x6b10)
 		return 0;
 	return save_ram[0x4fbc/2];
 }
@@ -9553,16 +9553,16 @@ static DRIVER_INIT( popbounc )
 	DRIVER_INIT_CALL(neogeo);
 
 	/* the game hangs after a while without this patch */
-	if (!machine->sample_rate)
-		memory_install_read16_handler(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x104fbc, 0x104fbd, 0, 0, popbounc_sfix_16_r);
+	if (!machine.sample_rate())
+		machine.device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(0x104fbc, 0x104fbd, FUNC(popbounc_sfix_16_r));
 }
 
 static DRIVER_INIT( rotd )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	neo_pcm2_snk_1999(machine, 16);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x3f);
 }
@@ -9589,8 +9589,8 @@ static DRIVER_INIT( kof2002b )
 	kof2002_decrypt_68k(machine);
 	neo_pcm2_swap(machine, 0);
 	neogeo_cmc50_m1_decrypt(machine);
-	kof2002b_gfx_decrypt(machine, machine->region("sprites")->base(),0x4000000);
-	kof2002b_gfx_decrypt(machine, machine->region("fixed")->base(),0x20000);
+	kof2002b_gfx_decrypt(machine, machine.region("sprites")->base(),0x4000000);
+	kof2002b_gfx_decrypt(machine, machine.region("fixed")->base(),0x20000);
 }
 
 static DRIVER_INIT( kf2k2pls )
@@ -9681,7 +9681,7 @@ static DRIVER_INIT( kof10thd ) // decrypted P
 
 static DRIVER_INIT( kf2k4pls )
 {
-	unsigned char *src = machine->region("maincpu")->base();
+	unsigned char *src = machine.region("maincpu")->base();
 	unsigned char *dst = (unsigned char*)malloc(0x200000);
 
 	if (dst)
@@ -9704,11 +9704,11 @@ static DRIVER_INIT( kf2k4pls )
 
 static DRIVER_INIT( matrim )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	matrim_decrypt_68k(machine);
 	neo_pcm2_swap(machine, 1);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x6a);
 }
@@ -9723,20 +9723,20 @@ static DRIVER_INIT( matrimd )
 
 static DRIVER_INIT( matrimbl )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	matrim_decrypt_68k(machine);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	matrimbl_decrypt(machine);
 	neogeo_sfix_decrypt(machine); /* required for text layer */
 }
 
 static DRIVER_INIT( pnyaa )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	neo_pcm2_snk_1999(machine, 4);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x2e);
 }
@@ -9750,11 +9750,11 @@ static DRIVER_INIT( pnyaad ) // decrypted C
 
 static DRIVER_INIT( mslug5 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	mslug5_decrypt_68k(machine);
 	neo_pcm2_swap(machine, 2);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x19);
 	install_pvc_protection(machine);
@@ -9762,9 +9762,9 @@ static DRIVER_INIT( mslug5 )
 
 static DRIVER_INIT( mslug5b )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	kof2000_neogeo_gfx_decrypt(machine, 0x19);
 	neo_pcm2_swap(machine, 2);
 	neogeo_cmc50_m1_decrypt(machine);
@@ -9781,23 +9781,23 @@ static DRIVER_INIT( mslug5d ) // decrypted C & decrypted P
 static TIMER_CALLBACK( ms5pcb_bios_timer_callback )
 {
 	int harddip3 = input_port_read(machine, "HARDDIP") & 1;
-	memory_set_bankptr(machine, NEOGEO_BANK_BIOS, machine->region("mainbios")->base() + 0x20000 + harddip3 * 0x20000);
+	memory_set_bankptr(machine, NEOGEO_BANK_BIOS, machine.region("mainbios")->base() + 0x20000 + harddip3 * 0x20000);
 }
 
 static DRIVER_INIT( ms5pcb )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 
 	/* start a timer that will check the BIOS select DIP every second */
-	machine->scheduler().timer_set(attotime::zero, FUNC(ms5pcb_bios_timer_callback));
-	machine->scheduler().timer_pulse(attotime::from_msec(1000), FUNC(ms5pcb_bios_timer_callback));
+	machine.scheduler().timer_set(attotime::zero, FUNC(ms5pcb_bios_timer_callback));
+	machine.scheduler().timer_pulse(attotime::from_msec(1000), FUNC(ms5pcb_bios_timer_callback));
 
 	mslug5_decrypt_68k(machine);
 	svcpcb_gfx_decrypt(machine);
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x19);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	svcpcb_s1data_decrypt(machine);
 	neo_pcm2_swap(machine, 2);
 	install_pvc_protection(machine);
@@ -9805,12 +9805,12 @@ static DRIVER_INIT( ms5pcb )
 
 static DRIVER_INIT( ms5plus )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	cmc50_neogeo_gfx_decrypt(machine, 0x19);
 	neo_pcm2_swap(machine, 2);
 	neogeo_bootleg_sx_decrypt(machine, 1);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	neogeo_cmc50_m1_decrypt(machine);
 	install_ms5plus_protection(machine);
 }
@@ -9818,17 +9818,17 @@ static DRIVER_INIT( ms5plus )
 static TIMER_CALLBACK( svcpcb_bios_timer_callback )
 {
 	int harddip3 = input_port_read(machine, "HARDDIP") & 1;
-	memory_set_bankptr(machine, NEOGEO_BANK_BIOS, machine->region("mainbios")->base() + 0x20000 + harddip3 * 0x20000);
+	memory_set_bankptr(machine, NEOGEO_BANK_BIOS, machine.region("mainbios")->base() + 0x20000 + harddip3 * 0x20000);
 }
 
 static DRIVER_INIT( svcpcb )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 
 	/* start a timer that will check the BIOS select DIP every second */
-	machine->scheduler().timer_set(attotime::zero, FUNC(svcpcb_bios_timer_callback));
-	machine->scheduler().timer_pulse(attotime::from_msec(1000), FUNC(svcpcb_bios_timer_callback));
+	machine.scheduler().timer_set(attotime::zero, FUNC(svcpcb_bios_timer_callback));
+	machine.scheduler().timer_pulse(attotime::from_msec(1000), FUNC(svcpcb_bios_timer_callback));
 
 	svc_px_decrypt(machine);
 	svcpcb_gfx_decrypt(machine);
@@ -9836,17 +9836,17 @@ static DRIVER_INIT( svcpcb )
 	kof2000_neogeo_gfx_decrypt(machine, 0x57);
 	svcpcb_s1data_decrypt(machine);
 	neo_pcm2_swap(machine, 3);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	install_pvc_protection(machine);
 }
 
 static DRIVER_INIT( svc )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	svc_px_decrypt(machine);
 	neo_pcm2_swap(machine, 3);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x57);
 	install_pvc_protection(machine);
@@ -9898,11 +9898,11 @@ static DRIVER_INIT( svcd ) // decrypted C
 
 static DRIVER_INIT( samsho5 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	samsho5_decrypt_68k(machine);
 	neo_pcm2_swap(machine, 4);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x0f);
 }
@@ -9926,7 +9926,7 @@ static DRIVER_INIT( samsho5d ) // decrypted C
 
 static DRIVER_INIT( kf2k3pcb )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	kf2k3pcb_decrypt_68k(machine);
 	kf2k3pcb_gfx_decrypt(machine);
@@ -9938,7 +9938,7 @@ static DRIVER_INIT( kf2k3pcb )
        incorrect */
 	{
 		int i;
-		UINT8* rom = machine->region("audiocpu")->base();
+		UINT8* rom = machine.region("audiocpu")->base();
 		for (i = 0; i < 0x90000; i++)
 		{
 			rom[i] = BITSWAP8(rom[i], 5, 6, 1, 4, 3, 0, 7, 2);
@@ -9949,18 +9949,18 @@ static DRIVER_INIT( kf2k3pcb )
 	kof2000_neogeo_gfx_decrypt(machine, 0x9d);
 	kf2k3pcb_decrypt_s1data(machine);
 	neo_pcm2_swap(machine, 5);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	install_pvc_protection(machine);
-	memory_install_read_bank(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0xc00000, 0xc7ffff, 0, 0, "bios" );  // 512k bios
+	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_read_bank(0xc00000, 0xc7ffff, "bios" );  // 512k bios
 }
 
 static DRIVER_INIT( kof2003 )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	kof2003_decrypt_68k(machine);
 	neo_pcm2_swap(machine, 5);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x9d);
 	install_pvc_protection(machine);
@@ -9968,11 +9968,11 @@ static DRIVER_INIT( kof2003 )
 
 static DRIVER_INIT( kof2003h )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	kof2003h_decrypt_68k(machine);
 	neo_pcm2_swap(machine, 5);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x9d);
 	install_pvc_protection(machine);
@@ -10016,7 +10016,7 @@ static DRIVER_INIT( kof2003d ) // decrypted C & decrypted P
 
 static DRIVER_INIT( kf2k3pcd ) // decrypted C & decrypted Bios
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	kf2k3pcb_decrypt_68k(machine);
 	kf2k3pcb_decrypt_s1data(machine);
@@ -10027,7 +10027,7 @@ static DRIVER_INIT( kf2k3pcd ) // decrypted C & decrypted Bios
        incorrect */
 	{
 		int i;
-		UINT8* rom = (UINT8 *)machine->region("audiocpu")->base();
+		UINT8* rom = (UINT8 *)machine.region("audiocpu")->base();
 		for (i=0;i<0x90000;i++)
 		{
 			rom[i] = BITSWAP8(rom[i], 5, 6, 1, 4, 3, 0, 7, 2);
@@ -10036,18 +10036,18 @@ static DRIVER_INIT( kf2k3pcd ) // decrypted C & decrypted Bios
 	}
 
 	neo_pcm2_swap(machine, 5);
-	state->fixed_layer_bank_type = 2;
+	state->m_fixed_layer_bank_type = 2;
 	install_pvc_protection(machine);
-	memory_install_read_bank(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0xc00000, 0xc7ffff, 0, 0, "bios" );  // 512k bios
+	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_read_bank(0xc00000, 0xc7ffff, "bios" );  // 512k bios
 }
 
 static DRIVER_INIT( samsh5sp )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
 	samsh5sp_decrypt_68k(machine);
 	neo_pcm2_swap(machine, 6);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0x0d);
 }
@@ -10062,25 +10062,25 @@ static DRIVER_INIT( samsh5sd ) // decrypted C
 
 static DRIVER_INIT( jockeygp )
 {
-	neogeo_state *state = machine->driver_data<neogeo_state>();
+	neogeo_state *state = machine.driver_data<neogeo_state>();
 	DRIVER_INIT_CALL(neogeo);
-	state->fixed_layer_bank_type = 1;
+	state->m_fixed_layer_bank_type = 1;
 	neogeo_cmc50_m1_decrypt(machine);
 	kof2000_neogeo_gfx_decrypt(machine, 0xac);
 
 	/* install some extra RAM */
-	memory_install_ram(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x200000, 0x201fff, 0, 0, NULL);
+	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_ram(0x200000, 0x201fff);
 
-//  memory_install_read_port(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x280000, 0x280001, 0, 0, "IN5");
-//  memory_install_read_port(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x2c0000, 0x2c0001, 0, 0, "IN6");
+//  machine.device("maincpu")->memory().space(AS_PROGRAM)->install_read_port(0x280000, 0x280001, "IN5");
+//  machine.device("maincpu")->memory().space(AS_PROGRAM)->install_read_port(0x2c0000, 0x2c0001, "IN6");
 }
 
 static DRIVER_INIT( vliner )
 {
-	memory_install_ram(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x200000, 0x201fff, 0, 0, NULL);
+	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_ram(0x200000, 0x201fff);
 
-	memory_install_read_port(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x280000, 0x280001, 0, 0, "IN5");
-	memory_install_read_port(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x2c0000, 0x2c0001, 0, 0, "IN6");
+	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_read_port(0x280000, 0x280001, "IN5");
+	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_read_port(0x2c0000, 0x2c0001, "IN6");
 
 	DRIVER_INIT_CALL(neogeo);
 }
@@ -10088,7 +10088,7 @@ static DRIVER_INIT( vliner )
 static DRIVER_INIT( kog )
 {
 	/* overlay cartridge ROM */
-	memory_install_read_port(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x0ffffe, 0x0fffff, 0, 0, "JUMPER");
+	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_read_port(0x0ffffe, 0x0fffff, "JUMPER");
 
 	kog_px_decrypt(machine);
 	neogeo_bootleg_sx_decrypt(machine, 1);
@@ -10098,7 +10098,7 @@ static DRIVER_INIT( kog )
 
 static DRIVER_INIT( kof97pla )
 {
-	UINT8 *mem8 = (UINT8 *)machine->region("maincpu")->base();
+	UINT8 *mem8 = (UINT8 *)machine.region("maincpu")->base();
 	mem8[0x1394A] = 0x6C;
 	mem8[0x1394B] = 0xD1;
 	mem8[0x1394C] = 0x3A;
@@ -10124,7 +10124,7 @@ static DRIVER_INIT( lans2004 )
 static WRITE16_HANDLER( fr2ch_cx_hack_w )
 {
 	int i, n;
-	UINT8 *src = (UINT8 *)space->machine->region("sprites")->base();
+	UINT8 *src = (UINT8 *)space->machine().region("sprites")->base();
 	if (offset == 1) {
 		for (i = 0; i < 0x200000; i++) {
 			n = src[0x200000 + i];
@@ -10134,11 +10134,11 @@ static WRITE16_HANDLER( fr2ch_cx_hack_w )
 	}
 }
 
-static void fr2ch_patches( running_machine *machine )
+static void fr2ch_patches( running_machine &machine )
 {
-	UINT16 *src = (UINT16*)machine->region("maincpu")->base();
-	UINT8 *rom = (UINT8 *)machine->region("maincpu")->base();
-	UINT8 *dst = (UINT8 *)machine->region("fixed")->base();
+	UINT16 *src = (UINT16*)machine.region("maincpu")->base();
+	UINT8 *rom = (UINT8 *)machine.region("maincpu")->base();
+	UINT8 *dst = (UINT8 *)machine.region("fixed")->base();
 
 	int i;
 	UINT8 data[16] = {
@@ -10188,7 +10188,7 @@ static DRIVER_INIT( fr2ch )
 {
 	fr2ch_patches(machine);
 	DRIVER_INIT_CALL(neogeo);
-	memory_install_write16_handler(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x200000, 0x2fffff, 0, 0, fr2ch_cx_hack_w);
+	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_write_handler(0x200000, 0x2fffff, FUNC(fr2ch_cx_hack_w));
 }
 
 static DRIVER_INIT( jckeygpd )
@@ -10197,10 +10197,10 @@ static DRIVER_INIT( jckeygpd )
 	neogeo_cmc50_m1_decrypt(machine);
 
 	/* install some extra RAM */
-	memory_install_ram(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x200000, 0x201fff, 0, 0, NULL);
+	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_ram(0x200000, 0x201fff);
 
-//  memory_install_read_port(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x280000, 0x280001, 0, 0, "IN5");
-//  memory_install_read_port(cputag_get_address_space(machine, "maincpu", ADDRESS_SPACE_PROGRAM), 0x2c0000, 0x2c0001, 0, 0, "IN6");
+//  machine.device("maincpu")->memory().space(AS_PROGRAM)->install_read_port(0x280000, 0x280001, "IN5");
+//  machine.device("maincpu")->memory().space(AS_PROGRAM)->install_read_port(0x2c0000, 0x2c0001, "IN6");
 }
 
 
