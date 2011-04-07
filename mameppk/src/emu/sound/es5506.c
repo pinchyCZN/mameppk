@@ -292,7 +292,7 @@ static void compute_tables(es5506_state *chip)
 		UINT32 mantissa = (i & 0xff) | 0x100;
 
 #ifdef MAMEUIPLUSPLUS
-		if (!mame_stricmp(chip->device->machine->gamedrv->name, "quizmoon"))
+		if (!mame_stricmp(chip->device->machine().system().name, "quizmoon"))
 		{
 			if (i < 256) exponent = 0;
 			if (exponent > 8) exponent=8;

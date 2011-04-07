@@ -1252,9 +1252,9 @@ file_error video_manager::open_next(emu_file &file, const char *extension)
 }
 
 #ifdef MAME_AVI
-extern int usrintrf_message_ok_cancel(running_machine *machine, const char *str);
+extern int usrintrf_message_ok_cancel(running_machine &machine, const char *str);
 
-int avi_nextfile(running_machine *machine)
+int avi_nextfile(running_machine &machine)
 {
 	return usrintrf_message_ok_cancel(machine, "Type OK to continue");
 }

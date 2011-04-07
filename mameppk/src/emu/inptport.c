@@ -1760,23 +1760,23 @@ int has_playback_file(running_machine &machine)
 
 
 #ifdef KAILLERA
-int has_record_sub_file(running_machine *machine)
+int has_record_sub_file(running_machine &machine)
 {
-	return machine->input_port_data->record_sub_file != NULL;
+	return machine.input_port_data->record_sub_file != NULL;
 }
 
-int has_playback_sub_file(running_machine *machine)
+int has_playback_sub_file(running_machine &machine)
 {
-	return machine->input_port_data->playback_sub_file != NULL;
+	return machine.input_port_data->playback_sub_file != NULL;
 }
-emu_file *handle_record_sub_file(running_machine *machine)
+emu_file *handle_record_sub_file(running_machine &machine)
 {
-	return machine->input_port_data->record_sub_file;
+	return machine.input_port_data->record_sub_file;
 }
 
-emu_file *handle_playback_sub_file(running_machine *machine)
+emu_file *handle_playback_sub_file(running_machine &machine)
 {
-	return machine->input_port_data->playback_sub_file;
+	return machine.input_port_data->playback_sub_file;
 }
 #endif /* KAILLERA */
 
@@ -2488,99 +2488,99 @@ static void init_port_state(running_machine &machine)
 
 		KailleraStartOption.gameinputmin = 0;
 		// Sega
-		if (!mame_stricmp(machine->gamedrv->name, "gground"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "ga2j4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ga2u"))				KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "gground"))			KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "ga2j4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ga2u"))				KailleraStartOption.gameinputmin = 4;
 
 		// Namco
-		if (!mame_stricmp(machine->gamedrv->name, "numanath"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "numanatj"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "numanath"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "numanatj"))			KailleraStartOption.gameinputmin = 4;
 
 		// Copcom
-		if (!mame_stricmp(machine->gamedrv->name, "captcomm3p"))		KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "captcomu3p"))		KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "captcomj3p"))		KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "captcomm4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "captcomu4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "captcomj4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "avsp3p"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "avspu3p"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "avspj3p"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "avspa3p"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "batcir4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "batcirj4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddsom4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddsomr2_4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddsomu4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddsomur1_4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddsomj4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddsomjr1_4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddsoma4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddtod"))				KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddtodr1"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddtodh"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddtodj"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddtodjr1"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddtodu"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ddtodur1"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "armwarr1"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "armwaru"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "pgear"))				KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "pgearr1"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "wof"))				KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "wofa"))				KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "wofu"))				KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine->gamedrv->name, "wofj"))				KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "captcomm3p"))		KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "captcomu3p"))		KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "captcomj3p"))		KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "captcomm4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "captcomu4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "captcomj4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "avsp3p"))			KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "avspu3p"))			KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "avspj3p"))			KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "avspa3p"))			KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "batcir4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "batcirj4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddsom4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddsomr2_4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddsomu4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddsomur1_4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddsomj4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddsomjr1_4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddsoma4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddtod"))				KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddtodr1"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddtodh"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddtodj"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddtodjr1"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddtodu"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ddtodur1"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "armwarr1"))			KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "armwaru"))			KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "pgear"))				KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "pgearr1"))			KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "wof"))				KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "wofa"))				KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "wofu"))				KailleraStartOption.gameinputmin = 3;
+		if (!mame_stricmp(machine.system().name, "wofj"))				KailleraStartOption.gameinputmin = 3;
 #ifdef MAMEUIPLUSPLUS
-		if (!mame_stricmp(machine->gamedrv->name, "xmvsfregion4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "xmvsfregion4p"))		KailleraStartOption.gameinputmin = 4;
 #endif /* MAMEUIPLUSPLUS */
-		if (!mame_stricmp(machine->gamedrv->name, "mshvsfj4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "mvscj4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "mshvsfj4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "mvscj4p"))			KailleraStartOption.gameinputmin = 4;
 
 		// Neo-Geo
-		if (!mame_stricmp(machine->gamedrv->name, "lbowling4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "kof98_6p"))			KailleraStartOption.gameinputmin = 6;
-		if (!mame_stricmp(machine->gamedrv->name, "kof95_6p"))			KailleraStartOption.gameinputmin = 6;
+		if (!mame_stricmp(machine.system().name, "lbowling4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "kof98_6p"))			KailleraStartOption.gameinputmin = 6;
+		if (!mame_stricmp(machine.system().name, "kof95_6p"))			KailleraStartOption.gameinputmin = 6;
 
 		// Konami
-		if (!mame_stricmp(machine->gamedrv->name, "hyprolym4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "hyperspt4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "hpolym84_4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ssriders"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ssrdradd"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ssrdreaa"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ssrdruac"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "ssrdruda"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "hyprolym4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "hyperspt4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "hpolym84_4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ssriders"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ssrdradd"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ssrdreaa"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ssrdruac"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "ssrdruda"))			KailleraStartOption.gameinputmin = 4;
 
 		// Deco
-		if (!mame_stricmp(machine->gamedrv->name, "thndzone"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "thndzone"))			KailleraStartOption.gameinputmin = 4;
 
 #if 1
 		// Psikyo
-		if (!mame_stricmp(machine->gamedrv->name, "hotgmck_k"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "hgkairak_k"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "hotgmck3_k"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "hotgm4ev_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "hotgmck_k"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "hgkairak_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "hotgmck3_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "hotgm4ev_k"))		KailleraStartOption.gameinputmin = 4;
 
 		// Video System Co.
-		if (!mame_stricmp(machine->gamedrv->name, "fromanc2_k"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "fromancr_k"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "fromanc4_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "fromanc2_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "fromancr_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "fromanc4_k"))		KailleraStartOption.gameinputmin = 4;
 #endif
 
 		// Taito
-		if (!mame_stricmp(machine->gamedrv->source_file+17, "taito_f3.c")) KAnalogCtrl = 0;
+		if (!mame_stricmp(machine.system().source_file+17, "taito_f3.c")) KAnalogCtrl = 0;
 
-		if (!mame_stricmp(machine->gamedrv->name, "arabianm4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "arabiamj4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "arabiamu4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "dungeonm4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "lightbr4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "dungenmu4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "arabianm4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "arabiamj4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "arabiamu4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "dungeonm4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "lightbr4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "dungenmu4p"))		KailleraStartOption.gameinputmin = 4;
 
 		// IGS/PGM
-		if (!mame_stricmp(machine->gamedrv->name, "kov2106_4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine->gamedrv->name, "kov2p4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "kov2106_4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!mame_stricmp(machine.system().name, "kov2p4p"))			KailleraStartOption.gameinputmin = 4;
 
 		memset(&kBitsPlayValues,-1,sizeof(kBitsPlayValues));
 		memset(&kMahjongPlayValues,-1,sizeof(kMahjongPlayValues));	//kt
@@ -2591,7 +2591,7 @@ static void init_port_state(running_machine &machine)
 		kMaxDipSwitch	= 0;	//kt
 		kMaxMahjong		= 0;	//kt
 
-		for (port = machine->m_portlist.first(); port != NULL; port = port->next())
+		for (port = machine.m_portlist.first(); port != NULL; port = port->next())
 		{
 			if (portnum < MAX_INPUT_PORTS) port_info[portnum] = port;
 
@@ -2694,21 +2694,21 @@ static void init_port_state(running_machine &machine)
 
 				//case IPT_SERVICE1:								break;
 				case IPT_SERVICE2:
-					if (!mame_stricmp(machine->gamedrv->source_file+17, "playch10.c") &&
+					if (!mame_stricmp(machine.system().source_file+17, "playch10.c") &&
 						!strcmp(field->name, "Channel Select"))	{ player=0;	pos =  3;	break;}
 					break;
 				case IPT_SERVICE3:
-					if (!mame_stricmp(machine->gamedrv->source_file+17, "playch10.c") &&
+					if (!mame_stricmp(machine.system().source_file+17, "playch10.c") &&
 						!strcmp(field->name, "Enter"))				{ player=0;	pos =  4;	break;}
 					break;
 				case IPT_SERVICE4:
-					if (!mame_stricmp(machine->gamedrv->source_file+17, "playch10.c") &&
+					if (!mame_stricmp(machine.system().source_file+17, "playch10.c") &&
 						!strcmp(field->name, "Reset"))				{ player=0;	pos =  5;	break;}
 					break;
 
 				case IPT_OTHER:
-					if (!mame_stricmp(machine->gamedrv->source_file+17, "neogeo.c") ||
-						!mame_stricmp(machine->gamedrv->source_file+17, "neodrvr.c"))
+					if (!mame_stricmp(machine.system().source_file+17, "neogeo.c") ||
+						!mame_stricmp(machine.system().source_file+17, "neodrvr.c"))
 					{
 						if (!strcmp(field->name, "Next Game"))		{ player=0;	pos =  4;	break;}
 						if (!strcmp(field->name, "Previous Game"))	{ player=1;	pos =  4;	break;}
@@ -2717,7 +2717,7 @@ static void init_port_state(running_machine &machine)
 
 				case IPT_DIPSWITCH:
 
-					if (!mame_stricmp(machine->gamedrv->source_file+17, "namcona1.c"))
+					if (!mame_stricmp(machine.system().source_file+17, "namcona1.c"))
 						if (!strcmp(field->name, "Test"))	{ player=0;	pos =  4;	break;}
 
 					if (!strcmp(field->name, "Service Mode") &&
@@ -2737,7 +2737,7 @@ static void init_port_state(running_machine &machine)
 					break;
 				}
 
-				if (!mame_stricmp(machine->gamedrv->source_file+17, "fromanc2.c"))
+				if (!mame_stricmp(machine.system().source_file+17, "fromanc2.c"))
 				{
 					switch(field->type)
 					{
@@ -2748,7 +2748,7 @@ static void init_port_state(running_machine &machine)
 					}
 				}
 
-				if (!mame_stricmp(machine->gamedrv->source_file+17, "namcos2.c"))
+				if (!mame_stricmp(machine.system().source_file+17, "namcos2.c"))
 				{
 					//Service Button
 					if (player==0 && pos==14 && portnum<2)	{ player=0; pos=3; }
@@ -2812,7 +2812,7 @@ static void init_port_state(running_machine &machine)
 			FILE *fp;
 			int i,j;
 			fp = fopen("port.txt","a");
-			fprintf(fp, "%s%s%s\n\n", "/*-------------- ", machine->gamedrv->name, " --------------*/");
+			fprintf(fp, "%s%s%s\n\n", "/*-------------- ", machine.system().name, " --------------*/");
 			for (i=0;i<4;i++)
 				for (j=0;j<16;j++)
 					if (kBitsPlayValues[i][j][0] != -1)
@@ -3163,11 +3163,11 @@ static key_buffer *get_buffer(running_machine &machine)
 }
 
 #ifdef KAILLERA
-static void input_port_value_save(running_machine *machine)
+static void input_port_value_save(running_machine &machine)
 {
 	const input_port_config *port;
 	int portnum = 0;
-	for (port = machine->m_portlist.first(); port != NULL; port = port->next())
+	for (port = machine.m_portlist.first(); port != NULL; port = port->next())
 	{
 		const input_field_config *field;
 
@@ -3180,12 +3180,12 @@ static void input_port_value_save(running_machine *machine)
 	}
 }
 
-static void input_port_value_load(running_machine *machine)
+static void input_port_value_load(running_machine &machine)
 {
 	const input_port_config *port;
 	int portnum = 0;
 
-	for (port = machine->m_portlist.first(); port != NULL; port = port->next())
+	for (port = machine.m_portlist.first(); port != NULL; port = port->next())
 	{
 		const input_field_config *field;
 
@@ -3399,7 +3399,7 @@ g_profiler.start(PROFILER_INPUT);
 			kFirstMsg=0;
 			if( has_record_file(machine) )
 			{
-				popmessage(_("Play Game With Record Input Log As %s"), machine->options().value("auto_record_name"));
+				popmessage(_("Play Game With Record Input Log As %s"), machine.options().value("auto_record_name"));
 			}
 
 			for(i=0;i<4;i++)
@@ -3529,10 +3529,10 @@ g_profiler.start(PROFILER_INPUT);
 							name[0] = Kaillera_StateSave_file;
 							name[1] = 0;
 							//int flag;
-							sprintf(fname, "%s/%s-%c.sta", machine->basename(), machine->gamedrv->name, name[0]);
-							emu_file file = emu_file(machine->options().state_directory(), OPEN_FLAG_READ);
+							sprintf(fname, "%s/%s-%c.sta", machine.basename(), machine.system().name, name[0]);
+							emu_file file = emu_file(machine.options().state_directory(), OPEN_FLAG_READ);
 							filerr = file.open(fname);
-							if(filerr != FILERR_NONE) popmessage(_("%s-%c.sta is Nothing"), machine->gamedrv->name, name[0]);
+							if(filerr != FILERR_NONE) popmessage(_("%s-%c.sta is Nothing"), machine.system().name, name[0]);
 							else {
 								length = file.size();
 								destLen = length + 12;
@@ -3609,7 +3609,7 @@ g_profiler.start(PROFILER_INPUT);
 						Kaillera_StateSave_Flags &= ~KAILLERA_STATESAVE_AUTOSAVE;
 						kailleraChatSendUTF8(_("Auto-save Stop"));
 					} else { 
-						const screen_device_config *screen = (const screen_device_config *)downcast<const legacy_device_config_base &>(machine->primary_screen->baseconfig()).inline_config();
+						const screen_device_config *screen = (const screen_device_config *)downcast<const legacy_device_config_base &>(machine.primary_screen->baseconfig()).inline_config();
 						double defrefresh = ATTOSECONDS_TO_HZ(screen->refresh());
 
 						Kaillera_StateSave_Flags |= KAILLERA_STATESAVE_AUTOSAVE;
@@ -3970,7 +3970,7 @@ g_profiler.start(PROFILER_INPUT);
 						//extern int time_to_reset;
 						//time_to_reset = 2;
 						ResetReplay();
-						machine->schedule_soft_reset();
+						machine.schedule_soft_reset();
 						perform_ui = 3;
 						perform_ui_dat = 0;
 					}
@@ -3982,8 +3982,8 @@ g_profiler.start(PROFILER_INPUT);
 						char filename[20];
 						if(Kaillera_StateSave_Count > 0) break;
 						filen = '@';
-						sprintf(filename, "%s-%c", machine->gamedrv->name, filen);
-						machine->schedule_save(filename);
+						sprintf(filename, "%s-%c", machine.system().name, filen);
+						machine.schedule_save(filename);
 						perform_ui = 1;
 						perform_ui_dat = (int)Kaillera_StateSave_file & 0xff;
 						Kaillera_StateSave_TimeRemainder = KAILLERA_STATESAVE_NORMAL_DELAYTIME + 8;
@@ -4006,10 +4006,10 @@ g_profiler.start(PROFILER_INPUT);
 						
 						ResetReplay();
 						
-						sprintf(filename, "%s-%c", machine->gamedrv->name, file);
-						machine->schedule_load(filename);
+						sprintf(filename, "%s-%c", machine.system().name, file);
+						machine.schedule_load(filename);
 						if (GetShowSystemMessage())
-							popmessage(_("Load from %s-%c.sta"), machine->gamedrv->name, file);
+							popmessage(_("Load from %s-%c.sta"), machine.system().name, file);
 						//palette_refresh();
 						perform_ui = 2;
 						perform_ui_dat = (int)Kaillera_StateSave_file & 0xff;
@@ -4330,7 +4330,7 @@ g_profiler.start(PROFILER_INPUT);
 	{
 		if (kFirstMsg)
 		{
-			const char *stemp = machine->options().value("auto_record_name");
+			const char *stemp = machine.options().value("auto_record_name");
 			kFirstMsg=0;
 			if( has_record_file(machine) && stemp && strlen(stemp) > 0 )
 			{
@@ -4392,8 +4392,8 @@ g_profiler.start(PROFILER_INPUT);
 			{
 				//int flag;
 				char filename[20];
-				sprintf(filename, "%s-%c", machine->gamedrv->name, input_ui_temp_dat[0]);
-				machine->schedule_save(filename);
+				sprintf(filename, "%s-%c", machine.system().name, input_ui_temp_dat[0]);
+				machine.schedule_save(filename);
 				if (has_playback_sub_file(machine) && GetShowSystemMessage()) popmessage(_("Saved Name As %c"), input_ui_temp_dat[0]);
 			}
 			perform_ui = input_ui_temp;
@@ -4406,11 +4406,11 @@ g_profiler.start(PROFILER_INPUT);
 
 				ResetReplay();
 
-				sprintf(filename, "%s-%c", machine->gamedrv->name, input_ui_temp_dat[0]);
-				machine->schedule_load(filename);
+				sprintf(filename, "%s-%c", machine.system().name, input_ui_temp_dat[0]);
+				machine.schedule_load(filename);
 				//palette_refresh();
 				if (GetShowSystemMessage())
-					popmessage(_("Load from %s-%c.sta"), machine->gamedrv->name, input_ui_temp_dat[0]);
+					popmessage(_("Load from %s-%c.sta"), machine.system().name, input_ui_temp_dat[0]);
 			}
 			perform_ui = input_ui_temp;
 			perform_ui_dat = (int)input_ui_temp_dat[0] & 0xff;
@@ -4420,7 +4420,7 @@ g_profiler.start(PROFILER_INPUT);
 				//extern int time_to_reset;
 				//time_to_reset = 2;
 				ResetReplay();
-				machine->schedule_soft_reset();
+				machine.schedule_soft_reset();
 			}
 			perform_ui = input_ui_temp;
 			perform_ui_dat = 0;
@@ -7693,7 +7693,7 @@ static int auto_pressed(running_machine &machine, const input_field_config *fiel
 	{
 		autofiretoggle[field->player] = field->state->toggle;
 #ifdef MAMEUIPLUSPLUS
-		if (machine->options().bool_value("disp_autofire_status"))
+		if (machine.options().bool_value("disp_autofire_status"))
 		{
 			char tmp[256];
 			

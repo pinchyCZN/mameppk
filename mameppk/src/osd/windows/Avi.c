@@ -84,7 +84,7 @@
 static BOOL     AVI_Check_Version(void);
 
 static void     AVI_Close(char* filename);
-static char*    AVI_Convert_Bitmap(running_machine *machine, bitmap_t *tBitmap, UINT32 *pPalEntries);
+static char*    AVI_Convert_Bitmap(running_machine &machine, bitmap_t *tBitmap, UINT32 *pPalEntries);
 static void     AVI_Message_Error(void);
 
 
@@ -105,10 +105,10 @@ static void		AVI_Convert_16to24_TVInterlace_sxy_Bitmap(char *pSrcBitmap, int l);
 static void		AVI_Convert_16to24_TVInterlace_sy_Bitmap(char *pSrcBitmap, int l);
 
 // by DarkCoder
-void TransformBitmap32to16(running_machine *machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
-void TransformBitmap15to16(running_machine *machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
-void TransformBitmap16to16(running_machine *machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
-void TransformBitmap8to16 (running_machine *machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
+void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
+void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
+void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
+void TransformBitmap8to16 (running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
 
 /***************************************************************************
     External variables
@@ -1276,7 +1276,7 @@ LPBITMAPINFOHEADER AviFrameSmooth(void)
 /* Add a frame to an open AVI */
 extern int			win_visible_width;
 extern int			win_visible_height;
-void AviAddBitmap(running_machine *machine, bitmap_t *tBitmap, UINT32* pPalEntries)
+void AviAddBitmap(running_machine &machine, bitmap_t *tBitmap, UINT32* pPalEntries)
 {
 	extern unsigned __int64 mame_mixer_wave_FileSize;
     LPBITMAPINFOHEADER lpbit;
@@ -1321,7 +1321,7 @@ void AviAddBitmap(running_machine *machine, bitmap_t *tBitmap, UINT32* pPalEntri
 			}
 
 			{
-				extern int avi_nextfile(running_machine *machine);
+				extern int avi_nextfile(running_machine &machine);
 				extern struct WAV_WAVEFORMAT mame_mixer_dstwfm;
 				int br = TRUE;
 
@@ -1726,7 +1726,7 @@ static void AVI_Message_Error(void)
 }
 
 // 32bit triplets (888) -> 16bit RGB triplets (555) by DarkCoder
-void TransformBitmap32to16(running_machine *machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
+void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
 {
 	UINT32 *ptr;
 	UINT16 *prev_dst;
@@ -1875,7 +1875,7 @@ void TransformBitmap32to16(running_machine *machine, bitmap_t *tBitmap, unsigned
 }
 
 // 15bit RGB triplets (555) -> 16bit RGB triplets (555) by DarkCoder
-void TransformBitmap15to16(running_machine *machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
+void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
 {
 	UINT16 *ptr, *prev_dst;
 	int i, x, nLineSize, nTop, nLeft, nWidth, nHeight;
@@ -2000,7 +2000,7 @@ void TransformBitmap15to16(running_machine *machine, bitmap_t *tBitmap, unsigned
 }
 
 // 16bit indexed -> 16bit RGB triplets (555) by DarkCoder
-void TransformBitmap16to16(running_machine *machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
+void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
 {
 	UINT16 *ptr, *prev_dst;
 	int i, x, nLineSize, nTop, nLeft, nWidth, nHeight;
@@ -2156,7 +2156,7 @@ void TransformBitmap16to16(running_machine *machine, bitmap_t *tBitmap, unsigned
 }
 
 // 8bit indexed -> 16bit RGB triplets (555) by DarkCoder
-void TransformBitmap8to16(running_machine *machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
+void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
 {
 	UINT8 *ptr;
 	UINT16 *prev_dst;
@@ -2312,7 +2312,7 @@ void TransformBitmap8to16(running_machine *machine, bitmap_t *tBitmap, unsigned 
 	}
 }
 
-static char* AVI_Convert_Bitmap(running_machine *machine, bitmap_t *tBitmap, UINT32 *pPalEntries)
+static char* AVI_Convert_Bitmap(running_machine &machine, bitmap_t *tBitmap, UINT32 *pPalEntries)
 {
     char*     bitmap;
     int       i;

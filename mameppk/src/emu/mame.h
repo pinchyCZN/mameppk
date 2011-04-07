@@ -135,5 +135,8 @@ void CLIB_DECL popmessage(const char *format,...) ATTR_PRINTF(1,2);
 // log to the standard error.log file
 void CLIB_DECL logerror(const char *format,...) ATTR_PRINTF(1,2);
 
+#ifdef KAILLERA
+running_machine &get_global_machine(void);
+#endif /* KAILLERA */
 
 #endif	/* __MAME_H__ */

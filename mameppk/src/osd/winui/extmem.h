@@ -26,7 +26,7 @@ void MemoryHack_KailleraInputVal(unsigned short *val, int numplayers);
 
 //###########################################################3
 
-unsigned long game_ram_serch_crc32_(running_machine *machine, unsigned long crc);
-unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine *machine, unsigned long crc);
+unsigned long game_ram_serch_crc32_(running_machine &machine, unsigned long crc);
+unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine &machine, unsigned long crc);
 int get_game_ram_serch_cpu(unsigned int *size, unsigned int *bankcpu, unsigned int *bankcount);
 void end_game_ram_serch(void);

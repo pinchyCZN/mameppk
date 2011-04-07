@@ -85,7 +85,7 @@ BOOL    AviStartCapture(HWND hwnd, char* filename, struct MAME_AVI_STATUS *AviSt
 
 void    AviEndCapture(void);
 
-void    AviAddBitmap(running_machine *machine, bitmap_t *tBitmap, UINT32 *pPalEntries);
+void    AviAddBitmap(running_machine &machine, bitmap_t *tBitmap, UINT32 *pPalEntries);
 
 void    SetAviFPS(int fps);
 int     GetAviCapture(void);

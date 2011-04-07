@@ -46,7 +46,7 @@ void __stdcall MemoryHackStateLoad_xmvsfregion4p(void)
 }
 void __stdcall MemoryHackUpdate_xmvsfregion4p(void)
 {
-	address_space *space = cpu_get_address_space(k_machine->firstcpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = get_global_machine().firstcpu->memory().space(AS_PROGRAM);
 	unsigned short Player[2];
 	unsigned char Mode[2];
 	unsigned char Play[2];
@@ -98,7 +98,7 @@ void __stdcall MemoryHackUpdate_xmvsfregion4p(void)
 
 void __stdcall MemoryHackUpdate_mshvsfj4p(void)
 {
-	address_space *space = cpu_get_address_space(k_machine->firstcpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = get_global_machine().firstcpu->memory().space(AS_PROGRAM);
 	unsigned short Player[2];
 	unsigned char Mode[2];
 	unsigned char Play[2];
@@ -158,7 +158,7 @@ void __stdcall MemoryHackUpdate_mshvsfj4p(void)
 // mvscj4p
 void __stdcall MemoryHackUpdate_mvscj4p(void)
 {
-	address_space *space = cpu_get_address_space(k_machine->firstcpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = get_global_machine().firstcpu->memory().space(AS_PROGRAM);
 	unsigned short Player[2];
 	unsigned char Mode[2];
 	unsigned char Play[2];
@@ -223,7 +223,7 @@ void __stdcall MemoryHackStateLoad_kof98_6p(void)
 }
 void __stdcall MemoryHackUpdate_kof98_6p(void)
 {
-	address_space *space = cpu_get_address_space(k_machine->firstcpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = get_global_machine().firstcpu->memory().space(AS_PROGRAM);
 	unsigned char Player[2];
 	unsigned char Play1[2];
 	unsigned char Play2[2];
@@ -305,7 +305,7 @@ void __stdcall MemoryHackUpdate_kof98_6p(void)
 // kof95_6p
 void __stdcall MemoryHackUpdate_kof95_6p(void)
 {
-	address_space *space = cpu_get_address_space(k_machine->firstcpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = get_global_machine().firstcpu->memory().space(AS_PROGRAM);
 	unsigned char Player[2];
 	unsigned char Play1[2];
 	unsigned char Play2[2];
@@ -397,7 +397,7 @@ void __stdcall MemoryHackStateLoad_lbowling4p(void)
 }
 void __stdcall MemoryHackUpdate_lbowling4p(void)
 {
-	address_space *space = cpu_get_address_space(k_machine->firstcpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = get_global_machine().firstcpu->memory().space(AS_PROGRAM);
 	unsigned char Player[2];
 
 	int i;
@@ -445,7 +445,7 @@ void __stdcall MemoryHackStateLoad_hyprolym4p(void)
 }
 void __stdcall MemoryHackUpdate_hyprolym4p(void)
 {
-	address_space *space = cpu_get_address_space(k_machine->firstcpu, ADDRESS_SPACE_PROGRAM);
+	address_space *space = get_global_machine().firstcpu->memory().space(AS_PROGRAM);
 	unsigned char PlayerA, PlayerB;
 	
 	unsigned char Name;
@@ -804,7 +804,7 @@ static void reset_table(game_memory_list *table)
 	memset(table, 0, sizeof(game_memory_list) * MAX_MEMORY_BLOCKS);
 }
 
-static void init_game_ram_serch(running_machine *machine, game_memory_list *GameRam, unsigned int nGameRamOffset, unsigned int *pTotalGameRamSize, int use)
+static void init_game_ram_serch(running_machine &machine, game_memory_list *GameRam, unsigned int nGameRamOffset, unsigned int *pTotalGameRamSize, int use)
 {
 	device_t *cpu;
 	int cpunum, spacenum;
@@ -816,13 +816,13 @@ static void init_game_ram_serch(running_machine *machine, game_memory_list *Game
 		FILE *fp;
 
 		fp = fopen("a.txt", "w");
-		fprintf(fp,"%s\n", machine->gamedrv->name);
+		fprintf(fp,"%s\n", machine.system().name);
 		fclose(fp);
 		fp = fopen("b.txt", "w");
-		fprintf(fp,"%s\n", machine->gamedrv->name);
+		fprintf(fp,"%s\n", machine.system().name);
 		fclose(fp);
 		fp = fopen("c.txt", "w");
-		fprintf(fp,"%s\n", machine->gamedrv->name);
+		fprintf(fp,"%s\n", machine.system().name);
 		fclose(fp);
 	}
 #endif
@@ -833,17 +833,17 @@ static void init_game_ram_serch(running_machine *machine, game_memory_list *Game
 		reset_table((game_memory_list*)((int)GameRam + i*nGameRamOffset));
 
 	/* loop over CPUs and address spaces */
-	for (cpu = machine->m_devicelist.first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
+	for (cpu = machine.m_devicelist.first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
 	{
 		const address_space *space;
 		const address_map	*map;
 		game_memory_list	*ext_gr = (game_memory_list*)((int)GameRam + cpunum*nGameRamOffset);
 
-		for (spacenum = 0; spacenum <= ADDRESS_SPACE_PROGRAM; spacenum++)
+		for (spacenum = 0; spacenum <= AS_PROGRAM; spacenum++)
 		{
 			const address_map_entry *entry;
 
-			space = cpu_get_address_space(cpu, spacenum);
+			space = cpu->memory().space(spacenum);
 			map = space->map();
 
 			/* fill in base/size entries, and handle shared memory */
@@ -854,7 +854,7 @@ static void init_game_ram_serch(running_machine *machine, game_memory_list *Game
 				int enable;
 				handler = &entry->m_write;
 
-				strcpy( source, machine->gamedrv->source_file+17);
+				strcpy( source, machine.system().source_file+17);
 				//StrCharReplacement( source, '\\', '/');
 
 				enable = 0;
@@ -1033,7 +1033,7 @@ void end_game_ram_serch(void)
 	memset (GameRam_KailleraStateSave, 0, sizeof(GameRam_KailleraStateSave));
 }
 
-unsigned long game_ram_serch_crc32_(running_machine *machine, unsigned long crc)
+unsigned long game_ram_serch_crc32_(running_machine &machine, unsigned long crc)
 {
 	device_t *cpu;
 	int cpunum, spacenum;
@@ -1048,11 +1048,11 @@ unsigned long game_ram_serch_crc32_(running_machine *machine, unsigned long crc)
 						FILE *fp;
 
 						fp = fopen("c.txt", "a");
-						fprintf(fp,"\nframe:%ld\n", (long)video_screen_get_frame_number(machine->primary_screen));
+						fprintf(fp,"\nframe:%ld\n", (long)video_screen_get_frame_number(machine.primary_screen));
 						fclose(fp);
 					}
 #endif
-	for (cpu = machine->m_devicelist.first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
+	for (cpu = machine.m_devicelist.first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
 	{
 		if ( cpu->type() )
 		{
@@ -1102,7 +1102,7 @@ unsigned long game_ram_serch_crc32_(running_machine *machine, unsigned long crc)
 	return crc;
 }
 
-unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine *machine, unsigned long crc)
+unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine &machine, unsigned long crc)
 {
 	device_t *cpu;
 	int cpunum;
@@ -1113,7 +1113,7 @@ unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine *machine,
 
 	if (nTotalGameRamSize_KailleraStateSave == 0) return crc;
 
-	for (cpu = machine->m_devicelist.first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
+	for (cpu = machine.m_devicelist.first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
 	{
 		if ( cpu->type() )
 		{

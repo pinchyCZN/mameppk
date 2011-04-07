@@ -324,11 +324,11 @@ void screen_device_config::static_set_screen_eof(device_config *device, screen_e
 #ifdef MAME_AVI
 void screen_device::avi_record_frame()
 {
-	extern int avi_write_handler(running_machine *machine, emu_file *dummy, bitmap_t *bitmap);
+	extern int avi_write_handler(running_machine &machine, emu_file *dummy, bitmap_t *bitmap);
 	bitmap_t *bitmap = m_bitmap[1 - m_curbitmap];
 
 	g_profiler.start(PROFILER_MOVIE_REC);
-	avi_write_handler(machine, NULL, bitmap);
+	avi_write_handler(machine(), NULL, bitmap);
 	g_profiler.stop();
 }
 

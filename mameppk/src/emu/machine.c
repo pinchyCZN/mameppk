@@ -244,10 +244,6 @@ running_machine::running_machine(const machine_config &_config, osd_interface &o
 
 running_machine::~running_machine()
 {
-
-#ifdef KAILLERA
-	k_machine = NULL;
-#endif /* KAILLERA */
 }
 
 

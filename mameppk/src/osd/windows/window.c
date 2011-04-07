@@ -1495,11 +1495,11 @@ int OnAVIRecord(void)
 	return 0;
 }
 
-void avi_info_view(running_machine *machine)
+void avi_info_view(running_machine &machine)
 {
 	#define ARGB_RED				MAKE_ARGB(0x80,0xff,0x00,0x00)
-	const screen_device_config *screen = (const screen_device_config *)downcast<const legacy_device_config_base &>(machine->primary_screen->baseconfig()).inline_config();
-	render_container *container = &machine->primary_screen->container();
+	const screen_device_config *screen = (const screen_device_config *)downcast<const legacy_device_config_base &>(machine.primary_screen->baseconfig()).inline_config();
+	render_container *container = &machine.primary_screen->container();
 
 	{	/* INFO VIEW */
 		static int counter = 59;
@@ -1542,9 +1542,9 @@ void avi_info_view(running_machine *machine)
 				DWORD RemainingTime = (DWORD)((double)nAviFrameCountStart / ATTOSECONDS_TO_HZ(screen->refresh()) * scale);
 				LapsedTime		/= 1000;
 				sprintf(bf, "TotalTime: %lu:%.2lu:%.2lu", RemainingTime/(60*60),RemainingTime/60%60,RemainingTime%60);
-				ui_draw_text2(container, bf, 0, ui_get_line_height(*machine)*1, ARGB_RED);
+				ui_draw_text2(container, bf, 0, ui_get_line_height(machine)*1, ARGB_RED);
 				sprintf(bf, "Elapsed  : %lu:%.2lu:%.2lu", LapsedTime/(60*60),LapsedTime/60%60,LapsedTime%60);
-				ui_draw_text2(container, bf, 0, ui_get_line_height(*machine)*2, ARGB_RED);
+				ui_draw_text2(container, bf, 0, ui_get_line_height(machine)*2, ARGB_RED);
 
 			}
 		}
@@ -1552,14 +1552,14 @@ void avi_info_view(running_machine *machine)
 	}	/* INFO VIEW */
 }
 
-int avi_write_handler(running_machine *machine, emu_file *dummy, bitmap_t *bitmap)
+int avi_write_handler(running_machine &machine, emu_file *dummy, bitmap_t *bitmap)
 {
     if (bAviRun)
 	{
 		//extern int osd_is_paused(void);		/* Implemented in video.c (DarkCoder) */
 		extern int get_single_step(void);	/* Implemented in usrintrf.c (DarkCoder) */
 
-		if ((!machine->paused()) || (machine->paused() && get_single_step()))
+		if ((!machine.paused()) || (machine.paused() && get_single_step()))
 		{
 			AviAddBitmap(machine, bitmap, NULL);
 			if (nAviFrameCountStart>0 && nAviFrameCount==0)

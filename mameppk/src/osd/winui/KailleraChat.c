@@ -109,9 +109,9 @@ static BOOL             MSIME2K_GetReg(void);
 //static void             GetWinVersion(BOOL *bIsNT, int *nMajor, int *nMinor, int *nBuildNumber);
 
 extern void             ui_draw_box(render_container *container, float x0, float y0, float x1, float y1, rgb_t backcolor);
-extern void             displaychatlog(running_machine *machine, render_container *container, char *text);
+extern void             displaychatlog(running_machine &machine, render_container *container, char *text);
 extern HWND             GetGameWindow(void);
-extern void             win_pause_input(running_machine *machine, int paused);
+extern void             win_pause_input(running_machine &machine, int paused);
 
 void KailleraChatLogClear(void);
 
@@ -121,7 +121,6 @@ void KailleraChatLogClear(void);
 
 int nChatDrawMode;
 static HWND	hChat		= NULL;
-running_machine *k_machine;
 
 /***************************************************************************
     Internal variables
@@ -538,13 +537,13 @@ void KailleraChatReInit(running_machine &machine)
     SetWindowLong(hChat, GWL_WNDPROC, (LONG)EditProc);
 }
 
-void KailleraChatUpdate(running_machine *machine, render_container *container)
+void KailleraChatUpdate(running_machine &machine, render_container *container)
 {
     char szChatLine[KC_BUFFER_MAX + 6];
     char szCursor[4];
     int i;
     float j;
-	float line_height = ui_get_line_height(*machine);
+	float line_height = ui_get_line_height(machine);
 	float totalheight;
 	char *utf8_string;
 
@@ -564,7 +563,7 @@ void KailleraChatUpdate(running_machine *machine, render_container *container)
     {
         if (ui_input_pressed(machine, IPT_UI_CHAT_OPEN))
         {
-			input_device_class_enable(k_machine, DEVICE_CLASS_KEYBOARD, FALSE);
+			input_device_class_enable(machine, DEVICE_CLASS_KEYBOARD, FALSE);
             if (bUseIME)
             {
                 if (_WINNLSEnableIME)
@@ -689,7 +688,7 @@ void KailleraChatUpdate(running_machine *machine, render_container *container)
         ZeroMemory(szCursor, 4);
         nCursorDispPos = 5 + nCursorPos;
         nCursorColor   = bShowCursor ? ARGB_WHITE : UI_BACKGROUND_COLOR;
-		cx = ui_get_string_width(*machine, "Chat:");
+		cx = ui_get_string_width(machine, "Chat:");
         if (szInputBuf[nCursorPos])
         {
             char *p = &szInputBuf[nCursorPos];
@@ -699,7 +698,7 @@ void KailleraChatUpdate(running_machine *machine, render_container *container)
             utf8_string = utf8_from_astring(szInputBuf_tmp);
             if (utf8_string)
             {
-                cx += ui_get_string_width(*machine, utf8_string);
+                cx += ui_get_string_width(machine, utf8_string);
                 free(utf8_string);
             }
 
@@ -716,14 +715,14 @@ void KailleraChatUpdate(running_machine *machine, render_container *container)
         else
         {
             szCursor[0] = ' ';
-			if (szInputBuf_utf8) cx += ui_get_string_width(*machine, szInputBuf_utf8);
+			if (szInputBuf_utf8) cx += ui_get_string_width(machine, szInputBuf_utf8);
         }
 
         if (bUseIME)
         {
             if (szIMEStateStr[0])
             {
-                ui_draw_colortext(container, szIMEStateStr, 1.0f - ui_get_string_width(*machine, szIMEStateStr_utf8[0]), 1.0f - line_height - nAdjustHeight, ARGB_WHITE);
+                ui_draw_colortext(container, szIMEStateStr, 1.0f - ui_get_string_width(machine, szIMEStateStr_utf8[0]), 1.0f - line_height - nAdjustHeight, ARGB_WHITE);
             }
 
             if (nIMEState & IME_CONVERSION)
@@ -748,7 +747,7 @@ void KailleraChatUpdate(running_machine *machine, render_container *container)
 					if (szConvStrBuf_utf8)
 					{
 						ui_draw_text(container, szConvStrBuf_utf8, cx, 1.0f - line_height - nAdjustHeight);
-						cx += ui_get_string_width(*machine, szConvStrBuf_utf8);
+						cx += ui_get_string_width(machine, szConvStrBuf_utf8);
 					}
 
                     szCursor[0]    = Cursor[nIMEType];
@@ -896,7 +895,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
                 switch (wParam)
                 {
                 case VK_RETURN:
-					ui_input_pressed(k_machine, IPT_UI_SELECT); /* IPT_UI_SELECTの押下フラグをクリア */
+					ui_input_pressed(get_global_machine(), IPT_UI_SELECT); /* IPT_UI_SELECTの押下フラグをクリア */
                     if (szInputBuf[0] == '\0')
 					{
 						KailleraChatCloseChat(); //kt
@@ -908,7 +907,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 
                 case VK_ESCAPE:
                     KailleraChatCloseChat();
-                    ui_input_pressed(k_machine, IPT_UI_CANCEL); /* IPT_UI_CANCELの押下フラグをクリア */
+                    ui_input_pressed(get_global_machine(), IPT_UI_CANCEL); /* IPT_UI_CANCELの押下フラグをクリア */
                     return TRUE;
                 
 				case VK_HOME:
@@ -1177,7 +1176,7 @@ static void KailleraChatCloseChat(void)
 		szConvStrBuf_utf8 = NULL;
 	}
 
-	input_device_class_enable(k_machine, DEVICE_CLASS_KEYBOARD, TRUE);
+	input_device_class_enable(get_global_machine(), DEVICE_CLASS_KEYBOARD, TRUE);
 }
 
 void KailleraChatEnd(void)

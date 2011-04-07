@@ -8109,11 +8109,11 @@ static void MameLoadState()
 		// call the MAME core function to check the save state file
 		stemp = utf8_from_wstring(selected_filename);
 		//mamep: mamecore use utf8 string instead of TCHAR string
-		rc = state_manager::check_file(NULL, pSaveState, stemp, MameMessageBoxUTF8);
+		//rc = state_manager::check_file(NULL, pSaveState, stemp, MameMessageBoxUTF8);
 		osd_free(stemp);
 		pSaveState.close();
-		if (rc)
-			return;
+		//if (rc)
+//			return;
 
 		memset(&playopts, 0, sizeof(playopts));
 #ifdef MESS
@@ -9967,9 +9967,9 @@ void WINAPI kChatCallback(char *nick, char *text)
 					//int flag;
 					WCHAR fname_src[MAX_PATH];
 					WCHAR fname_dest[MAX_PATH];
-					wsprintf(fname_dest, TEXT("%s/%s/%s-%s.sta"), GetStateDir(), _Unicode(k_machine->basename()), _Unicode(k_machine->gamedrv->name), _Unicode(name));
+					wsprintf(fname_dest, TEXT("%s/%s/%s-%s.sta"), GetStateDir(), _Unicode(get_global_machine().basename()), _Unicode(get_global_machine().system().name), _Unicode(name));
 					name[0] = '@';
-					wsprintf(fname_src, TEXT("%s/%s/%s-%s.sta"), GetStateDir(), _Unicode(k_machine->basename()), _Unicode(k_machine->gamedrv->name), _Unicode(name));
+					wsprintf(fname_src, TEXT("%s/%s/%s-%s.sta"), GetStateDir(), _Unicode(get_global_machine().basename()), _Unicode(get_global_machine().system().name), _Unicode(name));
 					CopyFileW(fname_src, fname_dest, FALSE);
 				}
 
@@ -10094,17 +10094,17 @@ void WINAPI kChatCallback(char *nick, char *text)
 					char filename[MAX_PATH];
 					char name[2];
 					name[0] = Kaillera_StateSave_file; name[1] = 0;
-					sprintf(filename, "%s%s%s-%s.sta", k_machine->basename(), PATH_SEPARATOR, k_machine->gamedrv->name, name);
-					emu_file file = emu_file(k_machine->options().state_directory(), OPEN_FLAG_READ);
+					sprintf(filename, "%s%s%s-%s.sta", get_global_machine().basename(), PATH_SEPARATOR, get_global_machine().system().name, name);
+					emu_file file = emu_file(get_global_machine().options().state_directory(), OPEN_FLAG_READ);
 					filerr = file.open(filename);
 					if (filerr != FILERR_NONE)
 					{
-						emu_file file2 = emu_file(k_machine->options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+						emu_file file2 = emu_file(get_global_machine().options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
 						filerr = file2.open(filename);
 						file2.close();
 					}
 					file.close();
-					checksum_file_crc32(k_machine->options().state_directory(), filename, NULL, &size, &crc);
+					checksum_file_crc32(get_global_machine().options().state_directory(), filename, NULL, &size, &crc);
 				}
 				
 				dat[0] = 0x0000000f;
@@ -10277,12 +10277,12 @@ void WINAPI kChatCallback(char *nick, char *text)
 				name[0] = Kaillera_StateSave_file;
 				name[1] = 0;
 				//int flag;
-				sprintf(fname, "%s/%s-%c.sta", k_machine->basename(), k_machine->gamedrv->name, name[0]);
-				emu_file file = emu_file(k_machine->options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+				sprintf(fname, "%s/%s-%c.sta", get_global_machine().basename(), get_global_machine().system().name, name[0]);
+				emu_file file = emu_file(get_global_machine().options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
 				filerr = file.open(fname);
 				file.write(temp, tst);
 				file.close();
-				popmessageW(_UIW(TEXT("Reception completed. %s-%c.sta successfully saved.")), _Unicode(k_machine->gamedrv->name), Kaillera_StateSave_file);
+				popmessageW(_UIW(TEXT("Reception completed. %s-%c.sta successfully saved.")), _Unicode(get_global_machine().system().name), Kaillera_StateSave_file);
 			}
 			if( zl == Z_MEM_ERROR) popmessage("Z_MEM_ERROR" );
 			if( zl == Z_BUF_ERROR) popmessage("Z_BUF_ERROR" );

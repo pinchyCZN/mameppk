@@ -324,12 +324,12 @@ void nvram_load(running_machine &machine)
 
 #ifdef KAILLERA
 	extern int kPlay;
-	if (kPlay && !(!mame_stricmp(machine->gamedrv->source_file+17, "seibuspi.c")
-				|| !mame_stricmp(machine->gamedrv->source_file+17, "taitogn.c")))
+	if (kPlay && !(!mame_stricmp(machine.system().source_file+17, "seibuspi.c")
+				|| !mame_stricmp(machine.system().source_file+17, "taitogn.c")))
 	{
 		// initialize via the general NVRAM handler first
-		if (machine->config->m_nvram_handler != NULL)
-			(*machine->config->m_nvram_handler)(machine, NULL, FALSE);
+		if (machine.config().m_nvram_handler != NULL)
+			(*machine.config().m_nvram_handler)(machine, NULL, FALSE);
 
 		// find all devices with NVRAM handlers, and read from them next
 		for (bool gotone = (nvram != NULL); gotone; gotone = nvram->next(nvram))

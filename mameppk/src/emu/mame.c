@@ -107,6 +107,13 @@ static bool print_verbose = false;
 
 static running_machine *global_machine;
 
+#ifdef KAILLERA
+running_machine &get_global_machine(void)
+{
+	return *global_machine;
+}
+#endif /* KAILLERA */
+
 /* output channels */
 static output_callback_func output_cb[OUTPUT_CHANNEL_COUNT];
 static void *output_cb_param[OUTPUT_CHANNEL_COUNT];
@@ -188,9 +195,6 @@ int mame_execute(emu_options &options, osd_interface &osd)
 
 		// create the machine structure and driver
 		running_machine machine(config, osd, started_empty);
-#ifdef KAILLERA
-		k_machine = &machine;
-#endif /* KAILLERA */
 
 		// looooong term: remove this
 		global_machine = &machine;
