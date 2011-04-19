@@ -27,9 +27,8 @@
 #include <stdio.h>
 #include <tchar.h>
 
-#include "emu.h"
-
 // MAME/MAMEUI headers
+#include "emu.h"
 #include "unzip.h"
 #include "sound/samples.h"
 #include "winutf8.h"
@@ -533,13 +532,7 @@ static struct DriversInfo* GetDriversInfo(int driver_index)
 			const game_driver *gamedrv = drivers[ndriver];
 			struct DriversInfo *gameinfo = &drivers_info[ndriver];
 			const rom_entry *region, *rom;
-#if 1 //mamep: less memory
 			machine_config config(*gamedrv, MameUIGlobal());
-#else
-			windows_options pCurrentOpts;
-			load_options(pCurrentOpts, OPTIONS_GLOBAL, driver_index); 
-			machine_config config(*gamedrv, pCurrentOpts);
-#endif
 			const rom_source *source;
 			int num_speakers;
 
@@ -714,6 +707,15 @@ static struct DriversInfo* GetDriversInfo(int driver_index)
 		UpdateController();
 	}
 	return &drivers_info[driver_index];
+}
+
+void FreeDriversInfo(void)
+{
+	if (drivers_info != NULL)
+	{
+		free(drivers_info);
+		drivers_info = NULL;
+	}
 }
 
 BOOL DriverIsClone(int driver_index)

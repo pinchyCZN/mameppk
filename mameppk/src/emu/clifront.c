@@ -97,9 +97,6 @@ static void match_roms(emu_options &options, const hash_collection &hashes, int 
 static void display_suggestions(const char *gamename);
 static void namecopy(char *name_ref, const char *desc);
 
-//mamep: required for using -listxml to parse -driver_config
-extern int parse_ini_file(emu_options &options, const char *name, int priority);
-
 
 //**************************************************************************
 //  COMMAND-LINE OPTIONS
@@ -189,6 +186,9 @@ int cli_execute(cli_options &options, osd_interface &osd, int argc, char **argv)
 	try
 	{
 		setup_language(options);
+#ifdef DRIVER_SWITCH
+		assign_drivers(options);
+#endif /* DRIVER_SWITCH */
 
 		// parse the command line, adding any system-specific options
 		astring option_errors;
@@ -202,7 +202,16 @@ int cli_execute(cli_options &options, osd_interface &osd, int argc, char **argv)
 			throw emu_fatalerror(MAMERR_INVALID_CONFIG, "%s", option_errors.trimspace().cstr());
 		}
 		if (option_errors)
-			printf("Error in command line:\n%s\n", option_errors.trimspace().cstr());
+			printf(_("Error in command line:\n%s\n"), option_errors.trimspace().cstr());
+
+		//mamep: driver_config and language need the INIs parsed
+		options.parse_standard_inis(option_errors);
+		if (option_errors)
+			printf("%s\n", option_errors.cstr());
+
+#ifdef DRIVER_SWITCH
+		assign_drivers(options);
+#endif /* DRIVER_SWITCH */
 
 		// determine the base name of the EXE
 		astring exename;
@@ -255,6 +264,10 @@ int cli_execute(cli_options &options, osd_interface &osd, int argc, char **argv)
 		result = MAMERR_FATALERROR;
 	}
 
+#ifdef DRIVER_SWITCH
+	global_free(drivers);
+#endif /* DRIVER_SWITCH */
+
 	// report any unfreed memory on clean exits
 	if (result == MAMERR_NONE)
 		dump_unfreed_mem();
@@ -280,7 +293,7 @@ static void execute_commands(cli_options &options, const char *exename)
 	if (strcmp(options.command(), CLICOMMAND_SHOWUSAGE) == 0)
 	{
 		astring helpstring;
-		mame_printf_info("Usage: %s [%s] [options]\n\nOptions:\n%s", exename, GAMENOUN, options.output_help(helpstring));
+		mame_printf_info(_("Usage: %s [%s] [options]\n\nOptions:\n%s"), exename, GAMENOUN, options.output_help(helpstring));
 		return;
 	}
 
@@ -303,8 +316,6 @@ static void execute_commands(cli_options &options, const char *exename)
 	if (option_errors)
 		printf("%s\n", option_errors.cstr());
 
-	setup_language(options);
-
 	// createconfig?
 	if (strcmp(options.command(), CLICOMMAND_CREATECONFIG) == 0)
 	{
@@ -322,6 +333,10 @@ static void execute_commands(cli_options &options, const char *exename)
 	// showconfig?
 	if (strcmp(options.command(), CLICOMMAND_SHOWCONFIG) == 0)
 	{
+		//FIXME for mamepgui
+		if (!options.bool_value(OPTION_READCONFIG))
+			lang_set_langcode(options, UI_LANG_EN_US);
+
 		// print the INI text
 		astring initext;
 		printf("%s\n", options.output_ini(initext));
@@ -348,8 +363,8 @@ static void execute_commands(cli_options &options, const char *exename)
 		{ CLICOMMAND_VERIFYSAMPLES,	info_verifysamples },
 		{ CLICOMMAND_LISTMEDIA,		info_listmedia },
 		{ CLICOMMAND_LISTSOFTWARE,	info_listsoftware },
-		{ CLICOMMAND_ROMIDENT,		info_romident }
-		,{ CLIOPTION_LISTGAMES,		cli_info_listgames }		// for make tp_manufact.txt
+		{ CLICOMMAND_ROMIDENT,		info_romident },
+		{ CLICOMMAND_LISTGAMES,		cli_info_listgames }		// for make tp_manufact.txt
 	};
 
 	// find the command

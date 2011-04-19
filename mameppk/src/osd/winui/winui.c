@@ -2349,7 +2349,7 @@ static void SetMainTitle(void)
 #if defined(KAILLERA) || defined(MAMEUIPLUSPLUS)
 	swprintf(buffer, TEXT("%s Plus! Plus! %s"), TEXT(MAMEUINAME), _Unicode(GetVersionString()));
 #else
-	swprintf(buffer, TEXT("%s Plus! %s"), TEXT(MAMEUINAME), _Unicode(GetVersionString()));
+	swprintf(buffer, TEXT("%s Plus! %s"), TEXT(MAMENAME), _Unicode(GetVersionString()));
 #endif
 
 	SetWindowText(hMain, buffer);
@@ -2926,7 +2926,9 @@ static void Win32UI_exit()
 		DeleteFont(hFont);
 		hFont = NULL;
 	}
-	
+
+	SplittersExit();
+
 	DestroyIcons();
 
 	DestroyAcceleratorTable(hAccel);
@@ -2953,6 +2955,8 @@ static void Win32UI_exit()
 
 	pool_free_lib(mameui_pool);
 	mameui_pool = NULL;
+
+	FreeDriversInfo();
 
 	if (sorted_drivers != NULL)
 	{

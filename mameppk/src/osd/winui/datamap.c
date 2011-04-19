@@ -43,6 +43,10 @@
 #define snprintf _snprintf
 #endif
 
+#undef malloc
+#undef realloc
+#undef free
+
 //============================================================
 //  TYPE DEFINITIONS
 //============================================================
@@ -147,9 +151,6 @@ void datamap_free(datamap *map)
 //============================================================
 //  datamap_add
 //============================================================
-
-#undef realloc
-#undef malloc
 
 void datamap_add(datamap *map, int dlgitem, datamap_entry_type type, const char *option_name)
 {
@@ -601,6 +602,7 @@ static void read_control(datamap *map, HWND control, windows_options *opts, data
 					break;
 
 				case DM_FLOAT:
+					// Use tztrim(float_value) or we get trailing zero's that break options_equal().
 					if (float_value != opts->float_value(option_name)) {
 						opts->set_value(option_name, tztrim(float_value), OPTION_PRIORITY_CMDLINE, error);
 						assert(!error);
