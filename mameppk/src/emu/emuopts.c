@@ -95,7 +95,7 @@ const options_entry emu_options::s_option_entries[] =
 	{ "hiscore_directory",                               "hi",        OPTION_STRING,     "directory to save hiscores" },
 #endif /* USE_HISCORE */
 #ifdef MAME_AVI
-	{ "avi_directory",               "avi",       0,                 "directory to save avi video file" },
+	{ "avi_directory",                                   "avi",       OPTION_STRING,     "directory to save avi video file" },
 #endif /* MAME_AVI */
 
 	// filename options
@@ -177,7 +177,7 @@ const options_entry emu_options::s_option_entries[] =
 	{ OPTION_SAMPLES,                                    "1",         OPTION_BOOLEAN,    "enable the use of external samples if available" },
 	{ OPTION_VOLUME ";vol",                              "0",         OPTION_INTEGER,    "sound volume in decibels (-32 min, 0 max)" },
 #ifdef USE_VOLUME_AUTO_ADJUST
-	{ "volume_adjust",               "0",         OPTION_BOOLEAN,    "enable/disable volume auto adjust" },
+	{ "volume_adjust",                                   "0",         OPTION_BOOLEAN,    "enable/disable volume auto adjust" },
 #endif /* USE_VOLUME_AUTO_ADJUST */
 
 	// input options
@@ -196,7 +196,7 @@ const options_entry emu_options::s_option_entries[] =
 	{ OPTION_JOYSTICK_SATURATION ";joy_saturation;jsat", "0.85",      OPTION_FLOAT,      "end of axis saturation range for joystick where change is ignored (0.0 center, 1.0 end)" },
 	{ OPTION_NATURAL_KEYBOARD ";nat",                    "0",         OPTION_BOOLEAN,    "specifies whether to use a natural keyboard or not" },
 #ifdef MAMEUIPLUSPLUS
-	{ "forceuse_dinput",             "0",         OPTION_BOOLEAN,    "force use direct input" },
+	{ "forceuse_dinput",                                 "0",         OPTION_BOOLEAN,    "force use direct input" },
 #endif /* MAMEUIPLUSPLUS */
 
 	// input autoenable options
@@ -239,7 +239,7 @@ const options_entry emu_options::s_option_entries[] =
 	{ OPTION_IPS,                                        NULL,        OPTION_STRING,     "ips datafile name"},
 #endif /* USE_IPS */
 #ifdef MAMEUIPLUSPLUS
-	{ "disp_autofire_status",        "1",         OPTION_BOOLEAN,    "display autofire status" },
+	{ "disp_autofire_status",                            "1",         OPTION_BOOLEAN,    "display autofire status" },
 #endif /* MAMEUIPLUSPLUS */
 
 #ifdef UI_COLOR_DISPLAY
@@ -270,50 +270,50 @@ const options_entry emu_options::s_option_entries[] =
 
 #ifdef MAME_AVI
 	// avi options
-	{ NULL,                           NULL,   OPTION_HEADER,  "AVI RECORD OPTIONS" },
-	{ "avi_avi_filename",             NULL,   0,              "avi options(avi_filename)" },
-	{ "avi_def_fps",                  "60.0", 0,              "avi options(def_fps)" },
-	{ "avi_fps",                      "60.0", 0,              "avi options(fps)" },
-	{ "avi_frame_skip",               "0",    0,              "avi options(frame_skip)" },
-	{ "avi_frame_cmp",                "0",    OPTION_BOOLEAN, "avi options(frame_cmp)" },
-	{ "avi_frame_cmp_pre15",          "0",    OPTION_BOOLEAN, "avi options(frame_cmp_pre15)" },
-	{ "avi_frame_cmp_few",            "0",    OPTION_BOOLEAN, "avi options(frame_cmp_few)" },
-	{ "avi_width",                    "0",    0,              "avi options(width)" },
-	{ "avi_height",                   "0",    0,              "avi options(height)" },
-	{ "avi_depth",                    "16",   0,              "avi options(depth)" },
-	{ "avi_orientation",              "0",    0,              "avi options(orientation)" },
-	{ "avi_rect_top",                 "0",    0,              "avi options(rect_top)" },
-	{ "avi_rect_left",                "0",    0,              "avi options(rect_left)" },
-	{ "avi_rect_width",               "0",    0,              "avi options(rect_width)" },
-	{ "avi_rect_height",              "0",    0,              "avi options(rect_height)" },
-	{ "avi_interlace",                "0",    OPTION_BOOLEAN, "avi options(interlace)" },
-	{ "avi_interlace_odd_field",      "0",    OPTION_BOOLEAN, "avi options(interlace_odd_field)" },
-	{ "avi_avi_filesize",             "0",    0,              "avi options(avi_filesize)" },
-	{ "avi_avi_savefile_pause",       "0",    OPTION_BOOLEAN, "avi options(avi_savefile_pause)" },
-	{ "avi_avi_width",                "0",    0,              "avi options(avi_width)" },
-	{ "avi_avi_height",               "0",    0,              "avi options(avi_height)" },
-	{ "avi_avi_depth",                "16",   0,              "avi options(avi_depth)" },
-	{ "avi_avi_rect_top",             "0",    0,              "avi options(avi_rect_top)" },
-	{ "avi_avi_rect_left",            "0",    0,              "avi options(avi_rect_left)" },
-	{ "avi_avi_rect_width",           "0",    0,              "avi options(avi_rect_width)" },
-	{ "avi_avi_rect_height",          "0",    0,              "avi options(avi_rect_height)" },
-	{ "avi_avi_smooth_resize_x",      "0",    OPTION_BOOLEAN, "avi options(avi_smooth_resize_x)" },
-	{ "avi_avi_smooth_resize_y",      "0",    OPTION_BOOLEAN, "avi options(avi_smooth_resize_y)" },
+	{ NULL,                                             NULL,         OPTION_HEADER,     "AVI RECORD OPTIONS" },
+	{ "avi_avi_filename",                               NULL,         OPTION_STRING,     "avi options(avi_filename)" },
+	{ "avi_def_fps",                                    "60.0",       OPTION_FLOAT,      "avi options(def_fps)" },
+	{ "avi_fps",                                        "60.0",       OPTION_FLOAT,      "avi options(fps)" },
+	{ "avi_frame_skip",                                 "0",          OPTION_INTEGER,    "avi options(frame_skip)" },
+	{ "avi_frame_cmp",                                  "0",          OPTION_BOOLEAN,    "avi options(frame_cmp)" },
+	{ "avi_frame_cmp_pre15",                            "0",          OPTION_BOOLEAN,    "avi options(frame_cmp_pre15)" },
+	{ "avi_frame_cmp_few",                              "0",          OPTION_BOOLEAN,    "avi options(frame_cmp_few)" },
+	{ "avi_width",                                      "0",          OPTION_INTEGER,    "avi options(width)" },
+	{ "avi_height",                                     "0",          OPTION_INTEGER,    "avi options(height)" },
+	{ "avi_depth",                                      "16",         OPTION_INTEGER,    "avi options(depth)" },
+	{ "avi_orientation",                                "0",          OPTION_INTEGER,    "avi options(orientation)" },
+	{ "avi_rect_top",                                   "0",          OPTION_INTEGER,    "avi options(rect_top)" },
+	{ "avi_rect_left",                                  "0",          OPTION_INTEGER,    "avi options(rect_left)" },
+	{ "avi_rect_width",                                 "0",          OPTION_INTEGER,    "avi options(rect_width)" },
+	{ "avi_rect_height",                                "0",          OPTION_INTEGER,    "avi options(rect_height)" },
+	{ "avi_interlace",                                  "0",          OPTION_BOOLEAN,    "avi options(interlace)" },
+	{ "avi_interlace_odd_field",                        "0",          OPTION_BOOLEAN,    "avi options(interlace_odd_field)" },
+	{ "avi_avi_filesize",                               "0",          OPTION_INTEGER,    "avi options(avi_filesize)" },
+	{ "avi_avi_savefile_pause",                         "0",          OPTION_BOOLEAN,    "avi options(avi_savefile_pause)" },
+	{ "avi_avi_width",                                  "0",          OPTION_INTEGER,    "avi options(avi_width)" },
+	{ "avi_avi_height",                                 "0",          OPTION_INTEGER,    "avi options(avi_height)" },
+	{ "avi_avi_depth",                                  "16",         OPTION_INTEGER,    "avi options(avi_depth)" },
+	{ "avi_avi_rect_top",                               "0",          OPTION_INTEGER,    "avi options(avi_rect_top)" },
+	{ "avi_avi_rect_left",                              "0",          OPTION_INTEGER,    "avi options(avi_rect_left)" },
+	{ "avi_avi_rect_width",                             "0",          OPTION_INTEGER,    "avi options(avi_rect_width)" },
+	{ "avi_avi_rect_height",                            "0",          OPTION_INTEGER,    "avi options(avi_rect_height)" },
+	{ "avi_avi_smooth_resize_x",                        "0",          OPTION_BOOLEAN,    "avi options(avi_smooth_resize_x)" },
+	{ "avi_avi_smooth_resize_y",                        "0",          OPTION_BOOLEAN,    "avi options(avi_smooth_resize_y)" },
 
-	{ "avi_wav_filename",             NULL,   0,              "avi options(wav_filename)" },
-	{ "avi_audio_type",               "0",    0,              "avi options(audio_type)" },
-	{ "avi_audio_channel",            "0",    0,              "avi options(audio_channel)" },
-	{ "avi_audio_samples_per_sec",    "0",    0,              "avi options(audio_samples_per_sec)" },
-	{ "avi_audio_bitrate",            "0",    0,              "avi options(audio_bitrate)" },
-	{ "avi_audio_record_type",        "0",    0,              "avi options(audio_record_type)" },
-	{ "avi_avi_audio_channel",        "0",    0,              "avi options(avi_audio_channel)" },
-	{ "avi_avi_audio_samples_per_sec","0",    0,              "avi options(avi_audio_samples_per_sec)" },
-	{ "avi_avi_audio_bitrate",        "0",    0,              "avi options(avi_audio_bitrate)" },
-	{ "avi_audio_cmp",                "0",    OPTION_BOOLEAN, "avi options(audio_cmp)" },
+	{ "avi_wav_filename",                               NULL,         OPTION_STRING,     "avi options(wav_filename)" },
+	{ "avi_audio_type",                                 "0",          OPTION_INTEGER,    "avi options(audio_type)" },
+	{ "avi_audio_channel",                              "0",          OPTION_INTEGER,    "avi options(audio_channel)" },
+	{ "avi_audio_samples_per_sec",                      "0",          OPTION_INTEGER,    "avi options(audio_samples_per_sec)" },
+	{ "avi_audio_bitrate",                              "0",          OPTION_INTEGER,    "avi options(audio_bitrate)" },
+	{ "avi_audio_record_type",                          "0",          OPTION_INTEGER,    "avi options(audio_record_type)" },
+	{ "avi_avi_audio_channel",                          "0",          OPTION_INTEGER,    "avi options(avi_audio_channel)" },
+	{ "avi_avi_audio_samples_per_sec",                  "0",          OPTION_INTEGER,    "avi options(avi_audio_samples_per_sec)" },
+	{ "avi_avi_audio_bitrate",                          "0",          OPTION_INTEGER,    "avi options(avi_audio_bitrate)" },
+	{ "avi_audio_cmp",                                  "0",          OPTION_BOOLEAN,    "avi options(audio_cmp)" },
 
-	{ "avi_hour",                     "0",    0,              "avi options(hour)" },
-	{ "avi_minute",                   "0",    0,              "avi options(minute)" },
-	{ "avi_second",                   "0",    0,              "avi options(second)" },
+	{ "avi_hour",                                       "0",          OPTION_INTEGER,    "avi options(hour)" },
+	{ "avi_minute",                                     "0",          OPTION_INTEGER,    "avi options(minute)" },
+	{ "avi_second",                                     "0",          OPTION_INTEGER,    "avi options(second)" },
 #endif /* MAME_AVI */
 	{ NULL }
 };

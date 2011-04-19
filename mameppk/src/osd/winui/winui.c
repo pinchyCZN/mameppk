@@ -1170,7 +1170,7 @@ static void override_options(windows_options &opts, void *param)
 	}
 	else
 	{
-		options_set_wstring(opts, "avi_avi_filename", NULL, OPTION_PRIORITY_CMDLINE);
+		options_set_wstring(opts, "avi_avi_filename", TEXT(""), OPTION_PRIORITY_CMDLINE);
 	}
 #endif /* MAME_AVI */
 #ifdef KAILLERA
