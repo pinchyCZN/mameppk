@@ -83,7 +83,6 @@ SOUNDS += CEM3394
 #-------------------------------------------------
 
 DRVLIBS = \
-	$(MAMEOBJ)/tiny.o \
 	$(EMUDRIVERS)/emudummy.o \
 	$(MACHINE)/ticket.o \
 	$(DRIVERS)/carpolo.o $(MACHINE)/carpolo.o $(VIDEO)/carpolo.o \
@@ -149,3 +148,12 @@ $(DRIVERS)/circus.o:	$(LAYOUT)/circus.lh \
 						$(LAYOUT)/crash.lh
 
 $(MAMEOBJ)/mamedriv.o:	$(LAYOUT)/pinball.lh
+
+#-------------------------------------------------
+# mamep: driver list dependencies
+#-------------------------------------------------
+
+#FXIXME
+$(OBJ)/$(TARGET)/$(SUBTARGET).lst:	$(SRC)/$(TARGET)/$(SUBTARGET)drv.h
+	@echo Generating $@...
+	$(CC) $(CDEFS) $(INCPATH) -E $< -o $@

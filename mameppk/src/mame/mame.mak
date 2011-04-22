@@ -121,6 +121,8 @@ CPUS += I8008
 CPUS += SCMP
 CPUS += MN10200
 CPUS += COSMAC
+CPUS += UNSP
+CPUS += HCD62121
 CPUS += PPS4
 CPUS += UPD7725
 CPUS += HD61700
@@ -234,20 +236,6 @@ SOUNDS += MAS3507D
 # comprise MAME plus mamedriv.o which contains
 # the list of drivers
 #-------------------------------------------------
-
-ifeq ($(TARGET),mame)
-DRVLIBS += \
-	$(MAMEOBJ)/mamedriv.o
-endif
-
-DRVLIBS += \
-
-ifneq ($(USE_DRIVER_SWITCH),)
-DRVLIBS += \
-	$(MAMEOBJ)/mameplusdriv.o \
-	$(MAMEOBJ)/mamehbdriv.o \
-	$(MAMEOBJ)/mamedecrypteddriv.o
-endif
 
 DRVLIBS += \
 	$(MAMEOBJ)/alba.a \
@@ -495,6 +483,7 @@ $(MAMEOBJ)/atlus.a: \
 	$(DRIVERS)/powerins.o $(VIDEO)/powerins.o \
 
 $(MAMEOBJ)/barcrest.a: \
+	$(DRIVERS)/mpu3.o \
 	$(DRIVERS)/mpu4.o \
 	$(DRIVERS)/mpu5.o \
 	$(VIDEO)/awpvid.o \
@@ -515,6 +504,7 @@ $(MAMEOBJ)/bmc.a: \
 $(MAMEOBJ)/capcom.a: \
 	$(DRIVERS)/1942.o $(VIDEO)/1942.o \
 	$(DRIVERS)/1943.o $(VIDEO)/1943.o \
+	$(DRIVERS)/alien.o \
 	$(DRIVERS)/bionicc.o $(VIDEO)/bionicc.o \
 	$(DRIVERS)/blktiger.o $(VIDEO)/blktiger.o \
 	$(DRIVERS)/cbasebal.o $(VIDEO)/cbasebal.o \
@@ -1043,6 +1033,7 @@ $(MAMEOBJ)/nintendo.a: \
 	$(DRIVERS)/playch10.o $(MACHINE)/playch10.o $(VIDEO)/playch10.o \
 	$(DRIVERS)/popeye.o $(VIDEO)/popeye.o \
 	$(DRIVERS)/punchout.o $(VIDEO)/punchout.o \
+        $(DRIVERS)/famibox.o \
 	$(DRIVERS)/sfcbox.o \
 	$(DRIVERS)/snesb.o \
 	$(DRIVERS)/spacefb.o $(AUDIO)/spacefb.o  $(VIDEO)/spacefb.o \
@@ -1175,7 +1166,7 @@ $(MAMEOBJ)/sega.a: \
 	$(DRIVERS)/segas16b.o $(VIDEO)/segas16b.o \
 	$(DRIVERS)/segas16c.o $(VIDEO)/segas16c.o \
 	$(DRIVERS)/segas18.o $(VIDEO)/segas18.o \
-	$(DRIVERS)/segas24.o $(MACHINE)/segas24.o $(VIDEO)/segas24.o \
+	$(DRIVERS)/segas24.o $(VIDEO)/segas24.o \
 	$(DRIVERS)/segas32.o $(MACHINE)/segas32.o $(VIDEO)/segas32.o \
 	$(DRIVERS)/segaxbd.o $(VIDEO)/segaxbd.o \
 	$(DRIVERS)/segaybd.o $(VIDEO)/segaybd.o \
@@ -1280,6 +1271,7 @@ $(MAMEOBJ)/subsino.a: \
 	$(DRIVERS)/lastfght.o \
 	$(DRIVERS)/subsino.o \
 	$(DRIVERS)/subsino2.o \
+	$(MACHINE)/subsino.o \
 
 $(MAMEOBJ)/sun.a: \
 	$(DRIVERS)/arabian.o $(VIDEO)/arabian.o \
@@ -1597,7 +1589,6 @@ $(MAMEOBJ)/misc.a: \
 	$(DRIVERS)/39in1.o \
 	$(DRIVERS)/1945kiii.o \
 	$(DRIVERS)/2mindril.o \
-	$(DRIVERS)/3super8.o \
 	$(DRIVERS)/4enraya.o $(VIDEO)/4enraya.o \
 	$(DRIVERS)/4roses.o \
 	$(DRIVERS)/5clown.o \
@@ -1624,6 +1615,7 @@ $(MAMEOBJ)/misc.a: \
 	$(DRIVERS)/cave.o $(VIDEO)/cave.o \
 	$(DRIVERS)/cb2001.o \
 	$(DRIVERS)/cdi.o $(VIDEO)/mcd212.o $(MACHINE)/cdi070.o $(MACHINE)/cdislave.o $(MACHINE)/cdicdic.o \
+	$(DRIVERS)/cesclass.o \
 	$(DRIVERS)/chsuper.o \
 	$(DRIVERS)/cidelsa.o $(VIDEO)/cidelsa.o \
 	$(DRIVERS)/coinmstr.o \
@@ -1697,6 +1689,7 @@ $(MAMEOBJ)/misc.a: \
 	$(DRIVERS)/magicfly.o \
 	$(DRIVERS)/magictg.o \
 	$(DRIVERS)/magtouch.o \
+	$(DRIVERS)/majorpkr.o \
 	$(DRIVERS)/malzak.o $(VIDEO)/malzak.o \
 	$(DRIVERS)/mcatadv.o $(VIDEO)/mcatadv.o \
 	$(DRIVERS)/micro3d.o $(MACHINE)/micro3d.o $(VIDEO)/micro3d.o $(AUDIO)/micro3d.o \
@@ -1895,6 +1888,8 @@ $(DRIVERS)/lucky74.o:	$(LAYOUT)/lucky74.lh
 $(DRIVERS)/magic10.o:	$(LAYOUT)/sgsafari.lh \
 						$(LAYOUT)/musicsrt.lh
 
+$(DRIVERS)/majorpkr.o:	$(LAYOUT)/majorpkr.lh
+
 $(DRIVERS)/maxaflex.o:	$(LAYOUT)/maxaflex.lh
 
 $(DRIVERS)/mcr3.o:		$(LAYOUT)/turbotag.lh
@@ -2056,3 +2051,12 @@ $(VIDEO)/jaguar.o:		$(MAMESRC)/video/jagobj.c \
 $(VIDEO)/model2.o:		$(MAMESRC)/video/model2rd.c
 $(VIDEO)/model3.o:		$(MAMESRC)/video/m3raster.c
 $(VIDEO)/n64.o:			$(MAMESRC)/video/rdpfiltr.c
+
+#-------------------------------------------------
+# mamep: driver list dependencies
+#-------------------------------------------------
+
+#FXIXME
+$(OBJ)/$(TARGET)/$(SUBTARGET).lst:	$(SRC)/$(TARGET)/$(SUBTARGET)drv.h
+	@echo Generating $@...
+	$(CC) $(CDEFS) $(INCPATH) -E $< -o $@

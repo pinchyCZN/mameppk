@@ -57,15 +57,15 @@ static WRITE16_HANDLER( rom_5704_bank_w );
 
 static const segaic16_memory_map_entry rom_5704_custom_info[] =
 {
-	{ 0x3d/2, 0x00000, 0x04000, 0xffc000,      ~0, misc_io_r, NULL,     misc_io_w,             NULL,     NULL,                  "I/O space" },
-	{ 0x39/2, 0x00000, 0x01000, 0xfff000,      ~0, NULL,      "bank10", segaic16_paletteram_w, NULL,     &segaic16_paletteram,  "color RAM" },
-	{ 0x35/2, 0x00000, 0x10000, 0xfe0000,      ~0, NULL,      "bank11", segaic16_tileram_0_w,  NULL,     &segaic16_tileram_0,   "tile RAM" },
-	{ 0x35/2, 0x10000, 0x01000, 0xfef000,      ~0, NULL,      "bank12", segaic16_textram_0_w,  NULL,     &segaic16_textram_0,   "text RAM" },
-	{ 0x31/2, 0x00000, 0x02000, 0xffe000,      ~0, NULL,      "bank13", NULL,                  "bank13", &segaic16_spriteram_0, "object RAM" },
-	{ 0x2d/2, 0x00000, 0x40000, 0xfc0000,      ~0, NULL,      "bank14", NULL,                  "bank14", &workram,				"work RAM" },
-	{ 0x29/2, 0x00000, 0x10000, 0xff0000,      ~0, NULL,      NULL,     rom_5704_bank_w,       NULL,     NULL,                  "tile bank" },
-	{ 0x25/2, 0x00000, 0x80000, 0xfc0000, 0x80000, NULL,      "bank16", NULL,                  NULL,     NULL,                  "ROM 1" },
-	{ 0x21/2, 0x00000, 0x80000, 0xfc0000, 0x00000, NULL,      "bank17", NULL,                  NULL,     NULL,                  "ROM 0" },
+	{ 0x3d/2, 0x00000, 0x04000, 0xffc000,      ~0, FUNC(misc_io_r), NULL,    FUNC(misc_io_w),              NULL,     NULL,                  "I/O space" },
+	{ 0x39/2, 0x00000, 0x01000, 0xfff000,      ~0, FUNC_NULL,      "bank10", FUNC(segaic16_paletteram_w),  NULL,     &segaic16_paletteram,  "color RAM" },
+	{ 0x35/2, 0x00000, 0x10000, 0xfe0000,      ~0, FUNC_NULL,      "bank11", FUNC(segaic16_tileram_0_w),   NULL,     &segaic16_tileram_0,   "tile RAM" },
+	{ 0x35/2, 0x10000, 0x01000, 0xfef000,      ~0, FUNC_NULL,      "bank12", FUNC(segaic16_textram_0_w),   NULL,     &segaic16_textram_0,   "text RAM" },
+	{ 0x31/2, 0x00000, 0x02000, 0xffe000,      ~0, FUNC_NULL,      "bank13", FUNC_NULL,                   "bank13",  &segaic16_spriteram_0, "object RAM" },
+	{ 0x2d/2, 0x00000, 0x40000, 0xfc0000,      ~0, FUNC_NULL,      "bank14", FUNC_NULL,                   "bank14",  &workram,              "work RAM" },
+	{ 0x29/2, 0x00000, 0x10000, 0xff0000,      ~0, FUNC_NULL,       NULL,    FUNC(rom_5704_bank_w),        NULL,     NULL,                  "tile bank" },
+	{ 0x25/2, 0x00000, 0x80000, 0xfc0000, 0x80000, FUNC_NULL,      "bank16", FUNC_NULL,                    NULL,     NULL,                  "ROM 1" },
+	{ 0x21/2, 0x00000, 0x80000, 0xfc0000, 0x00000, FUNC_NULL,      "bank17", FUNC_NULL,                    NULL,     NULL,                  "ROM 0" },
 	{ 0 }
 };
 
