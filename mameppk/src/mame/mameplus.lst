@@ -93,7 +93,7 @@ ironclad		// 0220 (c) 1996 Saurus - Wii Virtual Console to MVS Conversion
 #ifndef NCP
 // Konami "Nemesis hardware" games
 spclone			// GX587 (c) 1986 based
-#endif /* !NCP
+#endif /* !NCP */
 
 #ifdef MAMEUIPLUSPLUS
 // Capcom CPS2 games
@@ -104,7 +104,7 @@ jojobap			// 13/09/1999 (c) 1999 Capcom
 
 // Neo Geo games
 ssh5spnd		// 0272 (c) 2004 Yuki Enterprise / SNK Playmore
-#endif /* MAMEUIPLUSPLUS
+#endif /* MAMEUIPLUSPLUS */
 
 #ifdef KAILLERA
 // Capcom CPS1 games
@@ -138,7 +138,7 @@ sfz3jr2p		// 29/06/1998 (c) 1998 (Japan)
 sfz3ar1p		// 01/07/1998 (c) 1998 (Asia)
 #ifdef MAMEUIPLUSPLUS
 xmvsfregion4p		// 23/10/1996 (c) 1996 (US)
-#endif /* MAMEUIPLUSPLUS
+#endif /* MAMEUIPLUSPLUS */
 mshvsfj4p		// 07/07/1997 (c) 1997 (Japan)
 mvscj4p			// 23/01/1998 (c) 1998 (Japan)
 
@@ -179,6 +179,6 @@ ga2j4p			// (c) 1992 (Japan)
 // IGS PGM System Games
 kov2106_4p		// (c) 2000
 kov2p4p			// (c) 2000
-#endif /* NCP
+#endif /* NCP */
 
-#endif /* KAILLERA
+#endif /* KAILLERA */

@@ -355,7 +355,7 @@ static void             UpdateStatusBar(void);
 static BOOL             TreeViewNotify(NMHDR *nm);
 
 static void             ResetBackground(const WCHAR *szFile);
-static void				RandomSelectBackground(void);
+static void             RandomSelectBackground(void);
 static void             LoadBackgroundBitmap(void);
 #ifndef USE_VIEW_PCBINFO
 static void             PaintBackgroundImage(HWND hWnd, HRGN hRgn, int x, int y);
@@ -369,10 +369,10 @@ static void             EnableSelection(int nGame);
 
 static HICON            GetSelectedPickItemIcon(void);
 static void             SetRandomPickItem(void);
-static void				PickColor(COLORREF *cDefault);
+static void             PickColor(COLORREF *cDefault);
 
 static LPTREEFOLDER     GetSelectedFolder(void);
-static HICON			GetSelectedFolderIcon(void);
+static HICON            GetSelectedFolderIcon(void);
 
 static LRESULT CALLBACK HistoryWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 static LRESULT CALLBACK PictureFrameWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -383,7 +383,7 @@ static void             MamePlayBackGame(void);
 static void             MamePlayRecordWave(void);
 static void             MamePlayRecordMNG(void);
 static void             MamePlayRecordAVI(void);
-static void				MameLoadState(void);
+static void             MameLoadState(void);
 static void             MamePlayGameWithOptions(int nGame, const play_options *playopts);
 static BOOL             GameCheck(void);
 static BOOL             FolderCheck(void);
@@ -406,8 +406,8 @@ static void             InitTreeContextMenu(HMENU hTreeMenu);
 static void             ToggleShowFolder(int folder);
 static BOOL             HandleTreeContextMenu( HWND hWnd, WPARAM wParam, LPARAM lParam);
 static BOOL             HandleScreenShotContextMenu( HWND hWnd, WPARAM wParam, LPARAM lParam);
-static void				GamePicker_OnHeaderContextMenu(POINT pt, int nColumn);
-static void				GamePicker_OnBodyContextMenu(POINT pt);
+static void             GamePicker_OnHeaderContextMenu(POINT pt, int nColumn);
+static void             GamePicker_OnBodyContextMenu(POINT pt);
 
 static void             InitListView(void);
 /* Re/initialize the ListView header columns */
@@ -1221,7 +1221,7 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 //	mame_opts.set_value(OPTION_INIPATH, GetIniDir(), OPTION_PRIORITY_CMDLINE,error_string);
 
 	// add image specific device options
-	mame_opts.set_system_name(drivers[nGameIndex]->name);
+	mame_opts.set_system_name(driver_list::driver(nGameIndex).name);
 
 	// set any specified play options
 	if (playopts != NULL)
@@ -1991,7 +1991,7 @@ int GetParentRomSetIndex(const game_driver *driver)
 
 	if( nParentIndex >= 0)
 	{
-		if ((drivers[nParentIndex]->flags & GAME_IS_BIOS_ROOT) == 0)
+		if ((driver_list::driver(nParentIndex).flags & GAME_IS_BIOS_ROOT) == 0)
 			return nParentIndex;
 	}
 
@@ -2008,10 +2008,10 @@ int GetParentRomSetIndex2(const game_driver *driver)
 	{
 		if( nParentIndex >= 0)
 		{
-			if ((drivers[nParentIndex]->flags & GAME_IS_BIOS_ROOT) == 0)
+			if ((driver_list::driver(nParentIndex).flags & GAME_IS_BIOS_ROOT) == 0)
 				nParentIndex2 = nParentIndex;
 		} else break;
-	} while ((nParentIndex = GetGameNameIndex(drivers[nParentIndex]->parent)) >= 0);
+	} while ((nParentIndex = GetGameNameIndex(driver_list::driver(nParentIndex).parent)) >= 0);
 
 	return nParentIndex2;
 }
@@ -2160,16 +2160,16 @@ static void build_driversw(void)
 		driversw[i] = (_driverw *)malloc(sizeof *driversw[i]);
 		assert(driversw[i]);
 
-		driversw[i]->name = win_tstring_strdup(_Unicode(drivers[i]->name));
-		driversw[i]->description = win_tstring_strdup(_Unicode(drivers[i]->description));
-		driversw[i]->modify_the = win_tstring_strdup(_Unicode(ModifyThe(drivers[i]->description)));
+		driversw[i]->name = win_tstring_strdup(_Unicode(driver_list::driver(i).name));
+		driversw[i]->description = win_tstring_strdup(_Unicode(driver_list::driver(i).description));
+		driversw[i]->modify_the = win_tstring_strdup(_Unicode(ModifyThe(driver_list::driver(i).description)));
 		assert(driversw[i]->name && driversw[i]->description && driversw[i]->modify_the);
 
-		driversw[i]->manufacturer = win_tstring_strdup(_Unicode(drivers[i]->manufacturer));
-		driversw[i]->year = win_tstring_strdup(_Unicode(drivers[i]->year));
+		driversw[i]->manufacturer = win_tstring_strdup(_Unicode(driver_list::driver(i).manufacturer));
+		driversw[i]->year = win_tstring_strdup(_Unicode(driver_list::driver(i).year));
 		assert(driversw[i]->manufacturer && driversw[i]->year);
 
-		driversw[i]->source_file = win_tstring_strdup(_Unicode(drivers[i]->source_file));
+		driversw[i]->source_file = win_tstring_strdup(_Unicode(driver_list::driver(i).source_file));
 		assert(driversw[i]->source_file);
 	}
 }
@@ -2427,9 +2427,7 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 #endif /* DRIVER_SWITCH */
 
 	// Count the number of games
-	game_count = 0;
-	while (drivers[game_count] != 0)
-		game_count++;
+	game_count = driver_list::total();
 
 	build_driversw();
 	build_sort_index();
@@ -2448,7 +2446,7 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	memset(sorted_drivers, 0, sizeof(driver_data_type) * game_count);
 	for (i=0; i<game_count; i++)
 	{
-		sorted_drivers[i].name = drivers[i]->name;
+		sorted_drivers[i].name = driver_list::driver(i).name;
 		sorted_drivers[i].index = i;
 	}
 	qsort(sorted_drivers, game_count, sizeof (*sorted_drivers), DriverDataCompareFunc);
@@ -3165,7 +3163,7 @@ static LRESULT CALLBACK MameWindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 			/* Save the users current game options and default game */
 			nItem = Picker_GetSelectedItem(hwndList);
-			SetDefaultGame(drivers[nItem]->name);
+			SetDefaultGame(driver_list::driver(nItem).name);
 
 			/* hide window to prevent orphan empty rectangles on the taskbar */
 			/* ShowWindow(hWnd,SW_HIDE); */
@@ -3315,11 +3313,11 @@ static LRESULT CALLBACK MameWindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 				if (s)
 					*s = '\0';
 
-				for (nGameIndex = 0; drivers[nGameIndex]; nGameIndex++)
+				for (nGameIndex = 0; nGameIndex < driver_list::total(); nGameIndex++)
 				{
-					for (nParentIndex = nGameIndex; nGameIndex == -1; nParentIndex = GetParentIndex(drivers[nParentIndex]))
+					for (nParentIndex = nGameIndex; nGameIndex == -1; nParentIndex = GetParentIndex(&driver_list::driver(nParentIndex)))
 					{
-						if (!mame_stricmp(drivers[nParentIndex]->name, szFileName))
+						if (!mame_stricmp(driver_list::driver(nParentIndex).name, szFileName))
 						{
 							if (pfnGetAuditResults(nGameIndex) != UNKNOWN)
 							{
@@ -4335,7 +4333,7 @@ static void EnableSelection(int nGame)
 
 	if (bProgressShown && bListReady == TRUE)
 	{
-		SetDefaultGame(drivers[nGame]->name);
+		SetDefaultGame(driver_list::driver(nGame).name);
 	}
 	have_selection = TRUE;
 
@@ -4412,7 +4410,7 @@ static LPCWSTR GetCloneParentName(int nItem)
 
 	if (DriverIsClone(nItem) == TRUE)
 	{
-		nParentIndex = GetParentIndex(drivers[nItem]);
+		nParentIndex = GetParentIndex(&driver_list::driver(nItem));
 		if (nParentIndex >= 0)
 			return  UseLangList() ? _LSTW(driversw[nParentIndex]->description) : driversw[nParentIndex]->modify_the;
 	}
@@ -5216,7 +5214,7 @@ static int MMO2LST(void)
 		return 1;
 	}
 
-	    for (i = 0; drivers[i]; i++)
+	    for (i = 0; i < driver_list::total(); i++)
 	    {
 		    const WCHAR *lst = _LSTW(driversw[i]->description);
 		    const WCHAR *readings = _READINGSW(driversw[i]->description);
@@ -5225,7 +5223,7 @@ static int MMO2LST(void)
 			    readings = lst;
     
 		    fprintf(fp, "%s\t%s\t%s\t%s\n",
-			    drivers[i]->name, _String(lst), _String(readings), drivers[i]->manufacturer);
+			    driver_list::driver(i).name, _String(lst), _String(readings), driver_list::driver(i).manufacturer);
 	    }
 	fclose(fp);
 	break;
@@ -5296,10 +5294,10 @@ static void ExportTranslationToFile(char *szFile)
 			nGameIndex  = lvi.lParam;
 
 			fprintf(fp, "%s\t%s\t%s\t%s\n",
-			drivers[nGameIndex]->name,
-			UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(drivers[nGameIndex]->description),
-			UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(drivers[nGameIndex]->description),
-			drivers[nGameIndex]->manufacturer);
+			driver_list::driver(nGameIndex).name,
+			UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(driver_list::driver(nGameIndex).description),
+			UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(driver_list::driver(nGameIndex).description),
+			driver_list::driver(nGameIndex).manufacturer);
 		}
 	   }
 	fclose(fp);
@@ -5484,15 +5482,15 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 						{
 							if ( DriverIsClone(nGameIndex) && (GetViewMode() == VIEW_GROUPED) )
 							{
-								sprintf( &Buf[strlen(Buf)], "    %-*.*s |", Size[Order[i]]-3, Size[Order[i]]-3, UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(drivers[nGameIndex]->description));
+								sprintf( &Buf[strlen(Buf)], "    %-*.*s |", Size[Order[i]]-3, Size[Order[i]]-3, UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(driver_list::driver(nGameIndex).description));
 							}
 							else
 							{
-								sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(drivers[nGameIndex]->description));
+								sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(driver_list::driver(nGameIndex).description));
 							}
 						}
 						else
-							sprintf( &Buf[strlen(Buf)], "%s\t", UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(drivers[nGameIndex]->description));
+							sprintf( &Buf[strlen(Buf)], "%s\t", UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(driver_list::driver(nGameIndex).description));
 						break;
 
 					case  1: // ROMs
@@ -5519,9 +5517,9 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 
 					case  3: // Directory
 						if ( Formatted )
-							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], drivers[nGameIndex]->name );
+							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], driver_list::driver(nGameIndex).name );
 						else
-							sprintf( &Buf[strlen(Buf)], "%s", drivers[nGameIndex]->name );
+							sprintf( &Buf[strlen(Buf)], "%s", driver_list::driver(nGameIndex).name );
 						break;
 
 					case  4: // Type
@@ -5547,16 +5545,16 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 
 					case  7: // Manufacturer
 						if ( Formatted )
-							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], drivers[nGameIndex]->manufacturer );
+							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], driver_list::driver(nGameIndex).manufacturer );
 						else
-							sprintf( &Buf[strlen(Buf)], "%s", drivers[nGameIndex]->manufacturer );
+							sprintf( &Buf[strlen(Buf)], "%s", driver_list::driver(nGameIndex).manufacturer );
 						break;
 
 					case  8: // Year
 						if ( Formatted )
-							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], drivers[nGameIndex]->year );
+							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], driver_list::driver(nGameIndex).year );
 						else
-							sprintf( &Buf[strlen(Buf)], "%s", drivers[nGameIndex]->year );
+							sprintf( &Buf[strlen(Buf)], "%s", driver_list::driver(nGameIndex).year );
 						break;
 
 					case  9: // Clone of
@@ -5716,7 +5714,7 @@ static void SaveRomsListToFile(char *szFile)
 				switch( Order[i] )
 				{
 					case  3: // ROMs
-						sprintf( &Buf[strlen(Buf)], "%s", drivers[nGameIndex]->name );
+						sprintf( &Buf[strlen(Buf)], "%s", driver_list::driver(nGameIndex).name );
 						break;
 				}
 			}
@@ -6595,7 +6593,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 			char address[256];
 			nGame = Picker_GetSelectedItem(hwndList);
 			strcpy(address, "http://maws.mameworld.info/maws/romset/");
-			strcat(address, drivers[nGame]->name);
+			strcat(address, driver_list::driver(nGame).name);
 			if (MessageBoxW(GetMainWindow(), _UIW(TEXT("Go to MAWS site?")),
 				TEXT(MAMEUINAME), MB_ICONQUESTION | MB_YESNO) == IDYES)
 			{
@@ -6955,7 +6953,7 @@ static const TCHAR *GamePicker_GetItemString(HWND hwndPicker, int nItem, int nCo
 
 		case COLUMN_TYPE:
 			{
-				machine_config config(*drivers[nItem],MameUIGlobal());
+				machine_config config(driver_list::driver(nItem), MameUIGlobal());
 				/* Vector/Raster */
 				if (isDriverVector(&config))
 					s = _UIW(TEXT("Vector"));
@@ -7043,9 +7041,9 @@ static void GamePicker_EnteringItem(HWND hwndPicker, int nItem)
 static int GamePicker_FindItemParent(HWND hwndPicker, int nItem)
 {
 #if defined(KAILLERA) || defined(MAMEUIPLUSPLUS)
-	return GetParentRomSetIndex2(drivers[nItem]);
+	return GetParentRomSetIndex2(&driver_list::driver(nItem));
 #else
-	return GetParentRomSetIndex(drivers[nItem]);
+	return GetParentRomSetIndex(&driver_list::driver(nItem));
 #endif
 }
 
@@ -7131,16 +7129,16 @@ static void AddDriverIcon(int nItem,int default_icon_index)
 	if (icon_index[nItem] == 1 || icon_index[nItem] == 3)
 		return;
 
-	hIcon = LoadIconFromFile((char *)drivers[nItem]->name);
+	hIcon = LoadIconFromFile((char *)driver_list::driver(nItem).name);
 	if (hIcon == NULL)
 	{
-		nParentIndex = GetParentIndex(drivers[nItem]);
+		nParentIndex = GetParentIndex(&driver_list::driver(nItem));
 		if( nParentIndex >= 0)
 		{
-			hIcon = LoadIconFromFile((char *)drivers[nParentIndex]->name);
-			nParentIndex = GetParentIndex(drivers[nParentIndex]);
+			hIcon = LoadIconFromFile((char *)driver_list::driver(nParentIndex).name);
+			nParentIndex = GetParentIndex(&driver_list::driver(nParentIndex));
 			if (hIcon == NULL && nParentIndex >= 0)
-				hIcon = LoadIconFromFile((char *)drivers[nParentIndex]->name);
+				hIcon = LoadIconFromFile((char *)driver_list::driver(nParentIndex).name);
 		}
 	}
 
@@ -7445,7 +7443,7 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 		break;
 
 	case COLUMN_DIRECTORY:
-		value = mame_stricmp(drivers[index1]->name, drivers[index2]->name);
+		value = mame_stricmp(driver_list::driver(index1).name, driver_list::driver(index2).name);
 		break;
 
    	case COLUMN_SRCDRIVERS:
@@ -7460,8 +7458,8 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 
 	case COLUMN_TYPE:
 		{
-			machine_config config1(*drivers[index1],MameUIGlobal());
-			machine_config config2(*drivers[index2],MameUIGlobal());
+			machine_config config1(driver_list::driver(index1), MameUIGlobal());
+			machine_config config2(driver_list::driver(index2), MameUIGlobal());
 
 			value = isDriverVector(&config1) - isDriverVector(&config2);
 		}
@@ -7476,11 +7474,11 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 	   break;
 
 	case COLUMN_MANUFACTURER:
-		value = mame_stricmp(drivers[index1]->manufacturer, drivers[index2]->manufacturer);
+		value = mame_stricmp(driver_list::driver(index1).manufacturer, driver_list::driver(index2).manufacturer);
 		break;
 
 	case COLUMN_YEAR:
-		value = mame_stricmp(drivers[index1]->year, drivers[index2]->year);
+		value = mame_stricmp(driver_list::driver(index1).year, driver_list::driver(index2).year);
 		break;
 
 	case COLUMN_CLONE:
@@ -7988,9 +7986,9 @@ static void MamePlayBackGame()
 				return;
 			}
 
-				for (i = 0; drivers[i] != 0; i++) // find game and play it
+				for (i = 0; i < driver_list::total(); i++) // find game and play it
 				{
-					if (strcmp(drivers[i]->name, ihdr.gamename) == 0)
+					if (strcmp(driver_list::driver(i).name, ihdr.gamename) == 0)
 					{
 						nGame = i;
 						break;
@@ -8066,7 +8064,7 @@ static void MameLoadState()
 		WCHAR bare_fname[_MAX_FNAME];
 		WCHAR *state_fname;
 		char *stemp;
-		int rc;
+//		int rc;
 
 		_wsplitpath(filename, drive, dir, bare_fname, ext);
 
@@ -8202,14 +8200,14 @@ void MamePlayGame(void)
 	if (record)
 	{
 
-		if ( strcmp(drivers[nGame]->name, oldname) )
+		if ( strcmp(driver_list::driver(nGame).name, oldname) )
 		{
-			strcpy(oldname, drivers[nGame]->name);
+			strcpy(oldname, driver_list::driver(nGame).name);
 			num_record = 0;
 		}
 	
 		wsprintf(local_recode_filename, TEXT("n%02d"), num_record);
-		wsprintf(filename, TEXT("%s_%s"), _Unicode(drivers[nGame]->name), local_recode_filename);
+		wsprintf(filename, TEXT("%s_%s"), _Unicode(driver_list::driver(nGame).name), local_recode_filename);
 		wsprintf(fname, TEXT("%s.inp"), filename);
 		wsprintf(fname2, TEXT("%s.trc"), filename);
 
@@ -10565,16 +10563,16 @@ static void KailleraTraceRecordGame(void)
 
 	nGame = Picker_GetSelectedItem(hwndList);
 
-	if ( strcmp(drivers[nGame]->name, oldname) )
+	if ( strcmp(driver_list::driver(nGame).name, oldname) )
 	{
-		strcpy(oldname, drivers[nGame]->name);
+		strcpy(oldname, driver_list::driver(nGame).name);
 		num_record = 0;
 	}
 
 	MKInpDir();
 	wsprintf(kaillera_recode_filename, TEXT("k%02d"), num_record);
-	wsprintf(filename, TEXT("%s_%s.inp"), _Unicode(drivers[nGame]->name), kaillera_recode_filename);
-	wsprintf(filename_trc, TEXT("%s_%s.trc"), _Unicode(drivers[nGame]->name), kaillera_recode_filename);
+	wsprintf(filename, TEXT("%s_%s.inp"), _Unicode(driver_list::driver(nGame).name), kaillera_recode_filename);
+	wsprintf(filename_trc, TEXT("%s_%s.trc"), _Unicode(driver_list::driver(nGame).name), kaillera_recode_filename);
 
 	num_record = (num_record + 1) % 100;
 
@@ -11623,18 +11621,18 @@ static void SetupAviStatus(int nGame)
 	const screen_device_config *scrconfig;
 	windows_options o;
 	load_options(o, OPTIONS_GAME, nGame);
-	machine_config config(*drivers[nGame], o);
+	machine_config config(driver_list::driver(nGame), o);
 
 	screen = config.first_screen();
 	scrconfig = downcast<const screen_device_config *>(config.first_screen());
 
-	AviStatus.source_file = (char*)drivers[nGame]->source_file;
+	AviStatus.source_file = (char*)driver_list::driver(nGame).source_file;
 	AviStatus.index = nGame + 1;
 
 	AviStatus.def_fps = ATTOSECONDS_TO_HZ(scrconfig->refresh()); // fps
 	AviStatus.fps     = AviStatus.def_fps;
 	AviStatus.depth   = 16; //playing_game_options.depth;	// (auto/16bit/32bit)
-	AviStatus.flags   = drivers[nGame]->flags;
+	AviStatus.flags   = driver_list::driver(nGame).flags;
 	AviStatus.orientation = AviStatus.flags & ORIENTATION_MASK;
 
 	if (o.bool_value(OPTION_ROR))
@@ -11797,11 +11795,11 @@ void get_autofilename(int nGame, WCHAR *avidir, WCHAR *avifilename, WCHAR *ext)
 {
 	WCHAR sztmpfile[MAX_PATH];
 
-	wsprintf( sztmpfile, TEXT("%s\\%s.%s"), avidir, _Unicode(drivers[nGame]->name), ext );
+	wsprintf( sztmpfile, TEXT("%s\\%s.%s"), avidir, _Unicode(driver_list::driver(nGame).name), ext );
 	if( _waccess(sztmpfile, 0) != -1 ) {
 		do
 		{
-			wsprintf(sztmpfile, TEXT("%s\\%.4s%04d.%s"), avidir, _Unicode(drivers[nGame]->name), _nAviNo++, ext);
+			wsprintf(sztmpfile, TEXT("%s\\%.4s%04d.%s"), avidir, _Unicode(driver_list::driver(nGame).name), _nAviNo++, ext);
 		} while (_waccess(sztmpfile, 0) != -1);
 	}
 
@@ -11987,9 +11985,9 @@ static void MamePlayBackGameAVI()
 				return;
 			}
 
-				for (i = 0; drivers[i] != 0; i++) // find game and play it
+				for (i = 0; i < driver_list::total(); i++) // find game and play it
 				{
-					if (strcmp(drivers[i]->name, ihdr.gamename) == 0)
+					if (strcmp(driver_list::driver(i).name, ihdr.gamename) == 0)
 					{
 						nGame = i;
 						break;
