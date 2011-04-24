@@ -7762,6 +7762,7 @@ void SetStatusBarTextF(int part_index, const TCHAR *fmt, ...)
 	SetStatusBarText(part_index, buf);
 }
 
+#ifdef UNUSED_FUNCTION
 //mamep: callback for mamecore that is use utf8 strings instead of TCHAR
 static void CLIB_DECL MameMessageBoxUTF8(const char *fmt, ...)
 {
@@ -7773,6 +7774,7 @@ static void CLIB_DECL MameMessageBoxUTF8(const char *fmt, ...)
 	MessageBox(GetMainWindow(), _UTF8Unicode(buf), TEXT(MAMEUINAME), MB_OK | MB_ICONERROR);
 	va_end(va);
 }
+#endif
 
 #ifdef KAILLERA
 static void CopyTrctempStateSaveFile(const WCHAR *fname, inpsub_header *inpsub_header)
