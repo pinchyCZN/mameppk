@@ -48,7 +48,7 @@
 static const char *drivlist[MAX_DRIVERS];
 
 #ifdef DRIVER_SWITCH
-static char filename[1024];
+static char filename[_MAX_FNAME];
 static const char *extra_drivlist[MAX_DRIVERS];
 #endif /* DRIVER_SWITCH */
 
@@ -92,17 +92,20 @@ int main(int argc, char *argv[])
 
 #ifdef DRIVER_SWITCH
 	int extra_drivcount = 0;
+#endif /* DRIVER_SWITCH */
 	{
 		char drive[_MAX_DRIVE];
 		char dir[_MAX_DIR];
 		char file[_MAX_FNAME];
 		char ext[_MAX_EXT];
 		_splitpath(srcfile, drive, dir, file, ext);
+#ifdef DRIVER_SWITCH
 		strcpy(filename, file);
+#endif /* DRIVER_SWITCH */
 
 		if (stricmp(ext, ".lst")) continue;
 	}
-#endif /* DRIVER_SWITCH */
+
 
 	// read source file
 	void *buffer;
@@ -219,10 +222,11 @@ int main(int argc, char *argv[])
 		printf("\n");
 
 		// then output the array
-		printf("const game_driver * const driver_switch::%sdrivers[%d] =\n", filename, extra_drivcount);
+		printf("const game_driver * const driver_switch::%sdrivers[%d] =\n", filename, extra_drivcount+1);
 		printf("{\n");
 		for (int index = 0; index < extra_drivcount; index++)
-			printf("\t&GAME_NAME(%s)%s\n", extra_drivlist[index], (index == extra_drivcount - 1) ? "" : ",");
+			printf("\t&GAME_NAME(%s)%s\n", extra_drivlist[index], ",");
+		printf("\tNULL\n");
 		printf("};\n");
 		printf("\n");
 #endif /* DRIVER_SWITCH */

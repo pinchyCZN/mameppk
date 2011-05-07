@@ -640,7 +640,7 @@
 #define ID_OPTIONS_HISTORY              40101
 
 #define ID_OPTIONS_STORY                40111 // STORY_DATAFILE
-#define ID_BIOS_PROPERTIES		40112 // menu: Properties for BIOS
+#define ID_BIOS_PROPERTIES              40112 // menu: Properties for BIOS
 #define ID_VIEW_MAWS                    40105
 
 #define ID_VIEW_BYGAME                  40151 // sort items
