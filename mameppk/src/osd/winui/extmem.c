@@ -833,7 +833,7 @@ static void init_game_ram_serch(running_machine &machine, game_memory_list *Game
 		reset_table((game_memory_list*)((int)GameRam + i*nGameRamOffset));
 
 	/* loop over CPUs and address spaces */
-	for (cpu = machine.m_devicelist.first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
+	for (cpu = machine.devicelist().first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
 	{
 		const address_space *space;
 		const address_map	*map;
@@ -1052,7 +1052,7 @@ unsigned long game_ram_serch_crc32_(running_machine &machine, unsigned long crc)
 						fclose(fp);
 					}
 #endif
-	for (cpu = machine.m_devicelist.first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
+	for (cpu = machine.devicelist().first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
 	{
 		if ( cpu->type() )
 		{
@@ -1113,7 +1113,7 @@ unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine &machine,
 
 	if (nTotalGameRamSize_KailleraStateSave == 0) return crc;
 
-	for (cpu = machine.m_devicelist.first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
+	for (cpu = machine.devicelist().first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
 	{
 		if ( cpu->type() )
 		{

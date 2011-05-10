@@ -11619,19 +11619,17 @@ static void SetupAviStatus(int nGame)
 {
 	extern int neogeo_check_lower_resolution( const char *name );
 	struct MAME_AVI_STATUS *OldAviStatus;	//kt
-	const device_config *screen;
-	const screen_device_config *scrconfig;
+	const screen_device *screen;
 	windows_options o;
 	load_options(o, OPTIONS_GAME, nGame);
 	machine_config config(driver_list::driver(nGame), o);
 
 	screen = config.first_screen();
-	scrconfig = downcast<const screen_device_config *>(config.first_screen());
 
 	AviStatus.source_file = (char*)driver_list::driver(nGame).source_file;
 	AviStatus.index = nGame + 1;
 
-	AviStatus.def_fps = ATTOSECONDS_TO_HZ(scrconfig->refresh()); // fps
+	AviStatus.def_fps = ATTOSECONDS_TO_HZ(screen->refresh_attoseconds()); // fps
 	AviStatus.fps     = AviStatus.def_fps;
 	AviStatus.depth   = 16; //playing_game_options.depth;	// (auto/16bit/32bit)
 	AviStatus.flags   = driver_list::driver(nGame).flags;
@@ -11700,21 +11698,21 @@ static void SetupAviStatus(int nGame)
 
 	if (AviStatus.orientation & ORIENTATION_SWAP_XY)
 	{
-		AviStatus.width  = scrconfig->height();
-		AviStatus.height = scrconfig->width();
-		AviStatus.rect.m_Left   = scrconfig->visible_area().min_y;
-		AviStatus.rect.m_Top    = scrconfig->visible_area().min_x;
-		AviStatus.rect.m_Width  = scrconfig->visible_area().max_y - scrconfig->visible_area().min_y + 1;
-		AviStatus.rect.m_Height = scrconfig->visible_area().max_x - scrconfig->visible_area().min_x + 1;
+		AviStatus.width  = screen->height();
+		AviStatus.height = screen->width();
+		AviStatus.rect.m_Left   = screen->visible_area().min_y;
+		AviStatus.rect.m_Top    = screen->visible_area().min_x;
+		AviStatus.rect.m_Width  = screen->visible_area().max_y - screen->visible_area().min_y + 1;
+		AviStatus.rect.m_Height = screen->visible_area().max_x - screen->visible_area().min_x + 1;
 	}
 	else
 	{
-		AviStatus.width  = scrconfig->width();
-		AviStatus.height = scrconfig->height();
-		AviStatus.rect.m_Left   = scrconfig->visible_area().min_x;
-		AviStatus.rect.m_Top    = scrconfig->visible_area().min_y;
-		AviStatus.rect.m_Width  = scrconfig->visible_area().max_x - scrconfig->visible_area().min_x + 1;
-		AviStatus.rect.m_Height = scrconfig->visible_area().max_y - scrconfig->visible_area().min_y + 1;
+		AviStatus.width  = screen->width();
+		AviStatus.height = screen->height();
+		AviStatus.rect.m_Left   = screen->visible_area().min_x;
+		AviStatus.rect.m_Top    = screen->visible_area().min_y;
+		AviStatus.rect.m_Width  = screen->visible_area().max_x - screen->visible_area().min_x + 1;
+		AviStatus.rect.m_Height = screen->visible_area().max_y - screen->visible_area().min_y + 1;
 	}
 	
 #if 0
@@ -11722,7 +11720,7 @@ static void SetupAviStatus(int nGame)
 	if (!strcmp(drivers[nGame]->source_file+17, "neogeo.c") && neogeo_check_lower_resolution(drivers[nGame]->name))
 	{
 		AviStatus.rect.m_Left   = 1*8;
-		AviStatus.rect.m_Top    = scrconfig->defstate.visarea.min_y;
+		AviStatus.rect.m_Top    = screen->visible_area().min_y;
 		AviStatus.rect.m_Width  = 39*8-1 - 1*8 + 1;
 		AviStatus.rect.m_Height = scrconfig->defstate.visarea.max_y - scrconfig->defstate.visarea.min_y + 1;
 	}

@@ -148,7 +148,7 @@ sound_stream::sound_stream(device_t &device, int inputs, int outputs, int sample
 	astring state_tag;
 	state_tag.printf("%d", m_device.machine().sound().m_stream_list.count());
 	m_device.machine().save().save_item("stream", state_tag, 0, NAME(m_sample_rate));
-	m_device.machine().save().register_postload(state_postload_stub<sound_stream, &sound_stream::postload>, this);
+	m_device.machine().save().register_postload(save_prepost_delegate(FUNC(sound_stream::postload), this));
 
 	// save the gain of each input and output
 	for (int inputnum = 0; inputnum < m_inputs; inputnum++)
@@ -834,7 +834,7 @@ sound_manager::sound_manager(running_machine &machine)
 		machine.m_sample_rate = 11025;
 
 	// count the speakers
-	VPRINTF(("total speakers = %d\n", machine.m_devicelist.count(SPEAKER)));
+	VPRINTF(("total speakers = %d\n", machine.devicelist().count(SPEAKER)));
 
 	// allocate memory for mix buffers
 	m_leftmix = auto_alloc_array(machine, INT32, machine.sample_rate());
@@ -846,10 +846,10 @@ sound_manager::sound_manager(running_machine &machine)
 		m_wavfile = wav_open(wavfile, machine.sample_rate(), 2);
 
 	// register callbacks
-	config_register(machine, "mixer", &sound_manager::config_load, &sound_manager::config_save);
-	machine.add_notifier(MACHINE_NOTIFY_PAUSE, &sound_manager::pause);
-	machine.add_notifier(MACHINE_NOTIFY_RESUME, &sound_manager::resume);
-	machine.add_notifier(MACHINE_NOTIFY_RESET, &sound_manager::reset);
+	config_register(machine, "mixer", config_saveload_delegate(FUNC(sound_manager::config_load), this), config_saveload_delegate(FUNC(sound_manager::config_save), this));
+	machine.add_notifier(MACHINE_NOTIFY_PAUSE, machine_notify_delegate(FUNC(sound_manager::pause), this));
+	machine.add_notifier(MACHINE_NOTIFY_RESUME, machine_notify_delegate(FUNC(sound_manager::resume), this));
+	machine.add_notifier(MACHINE_NOTIFY_RESET, machine_notify_delegate(FUNC(sound_manager::reset), this));
 
 	// register global states
 	state_save_register_global(machine, m_last_update);
@@ -969,7 +969,7 @@ void sound_manager::set_attenuation(int attenuation)
 bool sound_manager::indexed_speaker_input(int index, speaker_input &info) const
 {
 	// scan through the speakers until we find the indexed input
-	for (info.speaker = downcast<speaker_device *>(machine().m_devicelist.first(SPEAKER)); info.speaker != NULL; info.speaker = info.speaker->next_speaker())
+	for (info.speaker = downcast<speaker_device *>(machine().devicelist().first(SPEAKER)); info.speaker != NULL; info.speaker = info.speaker->next_speaker())
 	{
 		if (index < info.speaker->inputs())
 		{
@@ -1003,11 +1003,11 @@ void sound_manager::mute(bool mute, UINT8 reason)
 //  reset - reset all sound chips
 //-------------------------------------------------
 
-void sound_manager::reset(running_machine &machine)
+void sound_manager::reset()
 {
 	// reset all the sound chips
 	device_sound_interface *sound = NULL;
-	for (bool gotone = machine.m_devicelist.first(sound); gotone; gotone = sound->next(sound))
+	for (bool gotone = machine().devicelist().first(sound); gotone; gotone = sound->next(sound))
 		sound->device().reset();
 }
 
@@ -1016,9 +1016,9 @@ void sound_manager::reset(running_machine &machine)
 //  pause - pause sound output
 //-------------------------------------------------
 
-void sound_manager::pause(running_machine &machine)
+void sound_manager::pause()
 {
-	machine.sound().mute(true, MUTE_REASON_PAUSE);
+	mute(true, MUTE_REASON_PAUSE);
 }
 
 
@@ -1026,9 +1026,9 @@ void sound_manager::pause(running_machine &machine)
 //  resume - resume sound output
 //-------------------------------------------------
 
-void sound_manager::resume(running_machine &machine)
+void sound_manager::resume()
 {
-	machine.sound().mute(false, MUTE_REASON_PAUSE);
+	mute(false, MUTE_REASON_PAUSE);
 }
 
 
@@ -1037,7 +1037,7 @@ void sound_manager::resume(running_machine &machine)
 //  configuration file
 //-------------------------------------------------
 
-void sound_manager::config_load(running_machine &machine, int config_type, xml_data_node *parentnode)
+void sound_manager::config_load(int config_type, xml_data_node *parentnode)
 {
 	xml_data_node *channelnode;
 
@@ -1053,7 +1053,7 @@ void sound_manager::config_load(running_machine &machine, int config_type, xml_d
 	for (channelnode = xml_get_sibling(parentnode->child, "channel"); channelnode != NULL; channelnode = xml_get_sibling(channelnode->next, "channel"))
 	{
 		speaker_input info;
-		if (machine.sound().indexed_speaker_input(xml_get_attribute_int(channelnode, "index", -1), info))
+		if (indexed_speaker_input(xml_get_attribute_int(channelnode, "index", -1), info))
 		{
 			float defvol = xml_get_attribute_float(channelnode, "defvol", -1000.0);
 			float newvol = xml_get_attribute_float(channelnode, "newvol", -1000.0);
@@ -1080,7 +1080,7 @@ void sound_manager::config_load(running_machine &machine, int config_type, xml_d
 //  file
 //-------------------------------------------------
 
-void sound_manager::config_save(running_machine &machine, int config_type, xml_data_node *parentnode)
+void sound_manager::config_save(int config_type, xml_data_node *parentnode)
 {
 	// we only care about game files
 	if (config_type != CONFIG_TYPE_GAME)
@@ -1091,7 +1091,7 @@ void sound_manager::config_save(running_machine &machine, int config_type, xml_d
 		for (int mixernum = 0; ; mixernum++)
 		{
 			speaker_input info;
-			if (!machine.sound().indexed_speaker_input(mixernum, info))
+			if (!indexed_speaker_input(mixernum, info))
 				break;
 			float defvol = info.stream->initial_input_gain(info.inputnum);
 			float newvol = info.stream->input_gain(info.inputnum);
@@ -1137,7 +1137,7 @@ void sound_manager::update()
 
 	// force all the speaker streams to generate the proper number of samples
 	int samples_this_update = 0;
-	for (speaker_device *speaker = downcast<speaker_device *>(machine().m_devicelist.first(SPEAKER)); speaker != NULL; speaker = speaker->next_speaker())
+	for (speaker_device *speaker = downcast<speaker_device *>(machine().devicelist().first(SPEAKER)); speaker != NULL; speaker = speaker->next_speaker())
 		speaker->mix(m_leftmix, m_rightmix, samples_this_update, (m_muted & MUTE_REASON_SYSTEM));
 
 	// now downmix the final result

@@ -1788,7 +1788,7 @@ void CreateCPUFolders(int parent_index)
 	int i, j, device_folder_count = 0;
 	LPTREEFOLDER device_folders[512];
 	LPTREEFOLDER folder;
-	const device_config_execute_interface *device = NULL;
+	const device_execute_interface *device = NULL;
 	int nFolder = numFolders;
 
 	for (i = 0; i < driver_list::total(); i++)
@@ -1796,11 +1796,11 @@ void CreateCPUFolders(int parent_index)
 		machine_config config(driver_list::driver(i), MameUIGlobal());
 
 		// enumerate through all devices
-		for (bool gotone = config.m_devicelist.first(device); gotone; gotone = device->next(device))
+		for (bool gotone = config.devicelist().first(device); gotone; gotone = device->next(device))
 		{
 		
 			// get the name
-			const TCHAR *dev_name = _Unicode(device->devconfig().name());
+			const TCHAR *dev_name = _Unicode(device->device().name());
 
 			// do we have a folder for this device?
 			folder = NULL;
@@ -1818,7 +1818,7 @@ void CreateCPUFolders(int parent_index)
 			{
 				LPTREEFOLDER lpTemp;
 
-				lpTemp = NewFolder(_Unicode(device->devconfig().name()), 0, FALSE, next_folder_id++, parent_index, IDI_CPU);
+				lpTemp = NewFolder(_Unicode(device->device().name()), 0, FALSE, next_folder_id++, parent_index, IDI_CPU);
 				AddFolder(lpTemp);
 				folder = treeFolders[nFolder++];
 
@@ -1838,7 +1838,7 @@ void CreateSoundFolders(int parent_index)
 	int i, j, device_folder_count = 0;
 	LPTREEFOLDER device_folders[512];
 	LPTREEFOLDER folder;
-	const device_config_sound_interface *device = NULL;
+	const device_sound_interface *device = NULL;
 	int nFolder = numFolders;
 
 	for (i = 0; i < driver_list::total(); i++)
@@ -1847,10 +1847,10 @@ void CreateSoundFolders(int parent_index)
 
 		// enumerate through all devices
 		
-		for (bool gotone = config.m_devicelist.first(device); gotone; gotone = device->next(device))
+		for (bool gotone = config.devicelist().first(device); gotone; gotone = device->next(device))
 		{
 			// get the name
-			const TCHAR *dev_name = _Unicode(device->devconfig().name());
+			const TCHAR *dev_name = _Unicode(device->device().name());
 
 			// do we have a folder for this device?
 			folder = NULL;
@@ -1868,7 +1868,7 @@ void CreateSoundFolders(int parent_index)
 			{
 				LPTREEFOLDER lpTemp;
 
-				lpTemp = NewFolder(_Unicode(device->devconfig().name()), 0, FALSE, next_folder_id++, parent_index, IDI_SND);
+				lpTemp = NewFolder(_Unicode(device->device().name()), 0, FALSE, next_folder_id++, parent_index, IDI_SND);
 				AddFolder(lpTemp);
 				folder = treeFolders[nFolder++];
 
@@ -2114,7 +2114,7 @@ void CreateResolutionFolders(int parent_index)
 	for (jj = 0; jj < nGames; jj++)
 	{
 		machine_config config(driver_list::driver(jj), MameUIGlobal());
-		const screen_device_config *screen;
+		const screen_device *screen;
 		screen = config.first_screen();
 		if (screen != NULL)
 		{
@@ -2182,11 +2182,11 @@ void CreateFPSFolders(int parent_index)
 		LPTREEFOLDER lpTemp;
 		float f;
 		machine_config config(driver_list::driver(i), MameUIGlobal());
-		const screen_device_config *screen;
+		const screen_device *screen;
 		screen = config.first_screen();
 		if (screen != NULL)
 		{
-			f = ATTOSECONDS_TO_HZ(screen->refresh());
+			f = ATTOSECONDS_TO_HZ(screen->refresh_attoseconds());
 
 			for (jj = 0; jj < nFPS; jj++)
 				if (fps[jj] == f)

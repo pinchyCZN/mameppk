@@ -2469,7 +2469,7 @@ static MACHINE_START( cps3 )
 #endif /* MAMEUIPLUSPLUS */
 
 	wd33c93_init(machine, &scsi_intf);
-	machine.add_notifier(MACHINE_NOTIFY_EXIT, cps3_exit);
+	machine.add_notifier(MACHINE_NOTIFY_EXIT, machine_notify_delegate(FUNC(cps3_exit), &machine));
 }
 
 static MACHINE_RESET( cps3 )

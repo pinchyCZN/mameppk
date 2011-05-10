@@ -265,7 +265,7 @@ void winwindow_init(running_machine &machine)
 	main_threadid = GetCurrentThreadId();
 
 	// ensure we get called on the way out
-	machine.add_notifier(MACHINE_NOTIFY_EXIT, winwindow_exit);
+	machine.add_notifier(MACHINE_NOTIFY_EXIT, machine_notify_delegate(FUNC(winwindow_exit), &machine));
 
 	// set up window class and register it
 	create_window_class();
@@ -1497,8 +1497,8 @@ int OnAVIRecord(void)
 void avi_info_view(running_machine &machine)
 {
 	#define ARGB_RED				MAKE_ARGB(0x80,0xff,0x00,0x00)
-	const screen_device_config *screen = (const screen_device_config *)downcast<const legacy_device_config_base &>(machine.primary_screen->baseconfig()).inline_config();
-	render_container *container = &machine.primary_screen->container();
+	const screen_device *screen = machine.first_screen();
+	render_container *container = &screen->container();
 
 	{	/* INFO VIEW */
 		static int counter = 59;
@@ -1520,7 +1520,7 @@ void avi_info_view(running_machine &machine)
 
 			if (nAviFrameCount>0)
 			{
-				const unsigned int sec = ((double)nAviFrameCount / ATTOSECONDS_TO_HZ(screen->refresh()));
+				const unsigned int sec = ((double)nAviFrameCount / ATTOSECONDS_TO_HZ(screen->refresh_attoseconds()));
 				sprintf(buf, "%s %.2d:%.2d:%.2d", _WINDOWS(ch), sec/(60*60),sec/60%60,sec%60);
 			} 
 			else
@@ -1536,9 +1536,9 @@ void avi_info_view(running_machine &machine)
 			{
 				char bf[64];
 				DWORD LapsedTime	= timeGetTime() - nAviStartTime;
-				double tt = (double)(nAviFrameCountStart - nAviFrameCount) / ATTOSECONDS_TO_HZ(screen->refresh());
+				double tt = (double)(nAviFrameCountStart - nAviFrameCount) / ATTOSECONDS_TO_HZ(screen->refresh_attoseconds());
 				double scale = (double)LapsedTime / 1000 / tt;
-				DWORD RemainingTime = (DWORD)((double)nAviFrameCountStart / ATTOSECONDS_TO_HZ(screen->refresh()) * scale);
+				DWORD RemainingTime = (DWORD)((double)nAviFrameCountStart / ATTOSECONDS_TO_HZ(screen->refresh_attoseconds()) * scale);
 				LapsedTime		/= 1000;
 				sprintf(bf, "TotalTime: %lu:%.2lu:%.2lu", RemainingTime/(60*60),RemainingTime/60%60,RemainingTime%60);
 				ui_draw_text2(container, bf, 0, ui_get_line_height(machine)*1, ARGB_RED);
