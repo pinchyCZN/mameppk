@@ -563,7 +563,7 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
     {
         if (ui_input_pressed(machine, IPT_UI_CHAT_OPEN))
         {
-			input_device_class_enable(machine, DEVICE_CLASS_KEYBOARD, FALSE);
+			get_global_machine().input().device_class(DEVICE_CLASS_KEYBOARD).enable(false);
             if (bUseIME)
             {
                 if (_WINNLSEnableIME)
@@ -1176,7 +1176,7 @@ static void KailleraChatCloseChat(void)
 		szConvStrBuf_utf8 = NULL;
 	}
 
-	input_device_class_enable(get_global_machine(), DEVICE_CLASS_KEYBOARD, TRUE);
+	get_global_machine().input().device_class(DEVICE_CLASS_KEYBOARD).enable(true);
 }
 
 void KailleraChatEnd(void)

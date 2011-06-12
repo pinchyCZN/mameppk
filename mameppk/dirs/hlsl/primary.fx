@@ -15,19 +15,6 @@ sampler DiffuseSampler = sampler_state
 	AddressW = CLAMP;
 };
 
-texture LastPass;
-
-sampler PreviousSampler = sampler_state
-{
-	Texture   = <LastPass>;
-	MipFilter = LINEAR;
-	MinFilter = LINEAR;
-	MagFilter = LINEAR;
-	AddressU = CLAMP;
-	AddressV = CLAMP;
-	AddressW = CLAMP;
-};
-
 //-----------------------------------------------------------------------------
 // Vertex Definitions
 //-----------------------------------------------------------------------------
@@ -37,7 +24,6 @@ struct VS_OUTPUT
 	float4 Position : POSITION;
 	float4 Color : COLOR0;
 	float2 TexCoord : TEXCOORD0;
-	float2 PrevCoord : TEXCOORD1;
 };
 
 struct VS_INPUT
@@ -45,14 +31,12 @@ struct VS_INPUT
 	float3 Position : POSITION;
 	float4 Color : COLOR0;
 	float2 TexCoord : TEXCOORD0;
-	float2 ExtraInfo : TEXCOORD1;
 };
 
 struct PS_INPUT
 {
 	float4 Color : COLOR0;
 	float2 TexCoord : TEXCOORD0;
-	float2 PrevCoord : TEXCOORD1;
 };
 
 //-----------------------------------------------------------------------------
@@ -61,9 +45,8 @@ struct PS_INPUT
 
 uniform float TargetWidth;
 uniform float TargetHeight;
-
-uniform float RawWidth;
-uniform float RawHeight;
+uniform float PostPass;
+uniform float FixedAlpha;
 
 VS_OUTPUT vs_main(VS_INPUT Input)
 {
@@ -77,11 +60,8 @@ VS_OUTPUT vs_main(VS_INPUT Input)
 	Output.Position.y -= 0.5f;
 	Output.Position *= float4(2.0f, 2.0f, 1.0f, 1.0f);
 	Output.Color = Input.Color;
-	
-	float2 InvTexSize = float2(1.0f / TargetWidth, 1.0f / TargetHeight);
-	Output.TexCoord = Input.TexCoord + 0.5f * InvTexSize;
-	Output.PrevCoord = Output.TexCoord + 0.5f * InvTexSize;
-	
+	Output.TexCoord = lerp(Input.TexCoord, Input.Position.xy / float2(TargetWidth, TargetHeight), PostPass);
+
 	return Output;
 }
 
@@ -89,20 +69,10 @@ VS_OUTPUT vs_main(VS_INPUT Input)
 // Simple Pixel Shader
 //-----------------------------------------------------------------------------
 
-uniform float RedPhosphor = 0.0f;
-uniform float GreenPhosphor = 0.0f;
-uniform float BluePhosphor = 0.0f;
-
 float4 ps_main(PS_INPUT Input) : COLOR
 {
-	float4 CurrPix = tex2D(DiffuseSampler, Input.TexCoord);
-	float3 PrevPix = tex2D(PreviousSampler, Input.PrevCoord).rgb * float3(RedPhosphor, GreenPhosphor, BluePhosphor);
-	
-	float RedMax = max(CurrPix.r, PrevPix.r);
-	float GreenMax = max(CurrPix.g, PrevPix.g);
-	float BlueMax = max(CurrPix.b, PrevPix.b);
-
-	return float4(RedMax, GreenMax, BlueMax, CurrPix.a);
+	float4 BaseTexel = tex2D(DiffuseSampler, Input.TexCoord);
+	return BaseTexel * Input.Color;
 }
 
 //-----------------------------------------------------------------------------
@@ -116,7 +86,6 @@ technique TestTechnique
 		Lighting = FALSE;
 
 		//Sampler[0] = <DiffuseSampler>;
-		//Sampler[1] = <PreviousSampler>;
 
 		VertexShader = compile vs_2_0 vs_main();
 		PixelShader  = compile ps_2_0 ps_main();

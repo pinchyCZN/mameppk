@@ -55,7 +55,7 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 
 	if(!kPlay)
 	{
-		if (input_code_pressed(device->machine(), KEYCODE_F1)) {
+		if (device->machine().input().code_pressed(KEYCODE_F1)) {
 			if (key_F1_old != 1) {
 				key_F1_old = 1;
 				fromanc2_playerside ^= 1;

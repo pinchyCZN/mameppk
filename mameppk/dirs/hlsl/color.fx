@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-// Pincushion Post-Processing Effect
+// Color-Convolution Effect
 //-----------------------------------------------------------------------------
 
 texture Diffuse;
@@ -24,28 +24,19 @@ struct VS_OUTPUT
 	float4 Position : POSITION;
 	float4 Color : COLOR0;
 	float2 TexCoord : TEXCOORD0;
-	float2 ExtraInfo : TEXCOORD1;
-	float2 RedCoord : TEXCOORD2;
-	float2 GreenCoord : TEXCOORD3;
-	float2 BlueCoord : TEXCOORD4;
 };
 
 struct VS_INPUT
 {
-	float3 Position : POSITION;
+	float4 Position : POSITION;
 	float4 Color : COLOR0;
 	float2 TexCoord : TEXCOORD0;
-	float2 ExtraInfo : TEXCOORD1;
 };
 
 struct PS_INPUT
 {
 	float4 Color : COLOR0;
 	float2 TexCoord : TEXCOORD0;
-	float2 ExtraInfo : TEXCOORD1;
-	float2 RedCoord : TEXCOORD2;
-	float2 GreenCoord : TEXCOORD3;
-	float2 BlueCoord : TEXCOORD4;
 };
 
 //-----------------------------------------------------------------------------
@@ -57,6 +48,11 @@ uniform float TargetHeight;
 
 uniform float RawWidth;
 uniform float RawHeight;
+
+uniform float WidthRatio;
+uniform float HeightRatio;
+
+uniform float YIQEnable;
 
 VS_OUTPUT vs_main(VS_INPUT Input)
 {
@@ -71,16 +67,7 @@ VS_OUTPUT vs_main(VS_INPUT Input)
 	Output.Position.y -= 0.5f;
 	Output.Position *= float4(2.0f, 2.0f, 1.0f, 1.0f);
 	Output.Color = Input.Color;
-	Output.TexCoord = Input.TexCoord;
-	
-	Output.TexCoord.x -= 0.25f;
-	Output.TexCoord.y -= 0.25f;
-	Output.TexCoord.x -= 0.5f;
-	Output.TexCoord.y -= 0.5f;
-	Output.TexCoord.x /= 18.0f * (TargetWidth / RawWidth);
-	Output.TexCoord.y /= 18.0f * (TargetHeight / RawHeight);
-	Output.TexCoord.x += 0.5f;
-	Output.TexCoord.y += 0.5f;
+	Output.TexCoord = Input.TexCoord + float2(0.5f, 0.5f) * invDims;
 
 	return Output;
 }
@@ -89,41 +76,74 @@ VS_OUTPUT vs_main(VS_INPUT Input)
 // Post-Processing Pixel Shader
 //-----------------------------------------------------------------------------
 
-uniform float PI = 3.14159265f;
+uniform float RedFromRed = 1.0f;
+uniform float RedFromGrn = 0.0f;
+uniform float RedFromBlu = 0.0f;
+uniform float GrnFromRed = 0.0f;
+uniform float GrnFromGrn = 1.0f;
+uniform float GrnFromBlu = 0.0f;
+uniform float BluFromRed = 0.0f;
+uniform float BluFromGrn = 0.0f;
+uniform float BluFromBlu = 1.0f;
 
-uniform float PincushionAmountX = 0.1f;
-uniform float PincushionAmountY = 0.1f;
+uniform float RedOffset = 0.0f;
+uniform float GrnOffset = 0.0f;
+uniform float BluOffset = 0.0f;
 
-uniform float WidthRatio;
-uniform float HeightRatio;
+uniform float RedScale = 1.0f;
+uniform float GrnScale = 1.0f;
+uniform float BluScale = 1.0f;
+
+uniform float RedFloor = 0.0f;
+uniform float GrnFloor = 0.0f;
+uniform float BluFloor = 0.0f;
+
+uniform float Saturation = 1.0f;
+
+uniform float RedPower = 2.2f;
+uniform float GrnPower = 2.2f;
+uniform float BluPower = 2.2f;
 
 float4 ps_main(PS_INPUT Input) : COLOR
 {
-	float2 Ratios = float2(WidthRatio, HeightRatio);
+	float4 BaseTexel = tex2D(DiffuseSampler, Input.TexCoord);
+	
+	float3 OutRGB = BaseTexel.rgb;
 
-	// -- Screen Pincushion Calculation --
-	float2 UnitCoord = Input.TexCoord * Ratios * 2.0f - 1.0f;
+	// -- RGB Tint & Shift --
+	float ShiftedRed = dot(OutRGB, float3(RedFromRed, RedFromGrn, RedFromBlu));
+	float ShiftedGrn = dot(OutRGB, float3(GrnFromRed, GrnFromGrn, GrnFromBlu));
+	float ShiftedBlu = dot(OutRGB, float3(BluFromRed, BluFromGrn, BluFromBlu));
+	
+	// -- RGB Offset & Scale --
+	float3 RGBScale = float3(RedScale, GrnScale, BluScale);
+	float3 RGBShift = float3(RedOffset, GrnOffset, BluOffset);
+	float3 OutTexel = float3(ShiftedRed, ShiftedGrn, ShiftedBlu) * RGBScale + RGBShift;
+	
+	// -- Saturation --
+	float3 Gray = float3(0.3f, 0.59f, 0.11f);
+	float OutLuma = dot(OutTexel, Gray);
+	float3 OutChroma = OutTexel - OutLuma;
+	float3 Saturated = OutLuma + OutChroma * Saturation;
+	
+	OutRGB.r = pow(Saturated.r, RedPower);
+	OutRGB.g = pow(Saturated.g, GrnPower);
+	OutRGB.b = pow(Saturated.b, BluPower);
 
-	float PincushionR2 = pow(length(UnitCoord),2.0f) / pow(length(Ratios), 2.0f);
-	float2 PincushionCurve = UnitCoord * PincushionAmountX * PincushionR2;
-	float2 BaseCoord = Input.TexCoord + PincushionCurve;
-
-	return tex2D(DiffuseSampler, BaseCoord);
+	return float4(OutRGB, BaseTexel.a);
 }
 
 //-----------------------------------------------------------------------------
-// Post-Processing Effect
+// Color-Convolution Technique
 //-----------------------------------------------------------------------------
 
-technique TestTechnique
+technique ColorTechnique
 {
 	pass Pass0
 	{
 		Lighting = FALSE;
 
-		Sampler[0] = <DiffuseSampler>;
-
-		VertexShader = compile vs_2_0 vs_main();
-		PixelShader  = compile ps_2_0 ps_main();
+		VertexShader = compile vs_3_0 vs_main();
+		PixelShader  = compile ps_3_0 ps_main();
 	}
 }
