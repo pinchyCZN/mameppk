@@ -1,8 +1,8 @@
 /***************************************************************************
 
-    inptport.h
+    ioport.h
 
-    Handle input ports and mappings.
+    Input/output port handling.
 
     Copyright Nicola Salmoria and the MAME Team.
     Visit http://mamedev.org for licensing and usage restrictions.
@@ -784,7 +784,7 @@ public:
 	simple_list<input_field_config> &fieldlist() { return m_fieldlist; }
 	const char *tag() const { return m_tag; }
 	int modcount() const { return m_modcount; }
-
+	
 	void bump_modcount() { m_modcount++; }
 
 	void collapse_fields(astring &errorbuf);
@@ -806,7 +806,7 @@ private:
 class input_type_entry
 {
 	friend class simple_list<input_type_entry>;
-
+	
 public:
 	input_type_entry(UINT32 type, ioport_group group, int player, const char *token, const char *name, input_seq standard);
 	input_type_entry(UINT32 type, ioport_group group, int player, const char *token, const char *name, input_seq standard, input_seq decrement, input_seq increment);
@@ -1172,6 +1172,8 @@ void INPUT_PORTS_NAME(_name)(device_t &owner, ioport_list &portlist, astring &er
 /* name of table */
 #define DEVICE_INPUT_DEFAULTS_NAME(_name) device_iptdef_##_name
 
+#define device_iptdef___null NULL
+
 /* start of table */
 #define DEVICE_INPUT_DEFAULTS_START(_name) \
 	const input_device_default DEVICE_INPUT_DEFAULTS_NAME(_name)[] = {
@@ -1342,7 +1344,6 @@ input_port_value input_port_active(running_machine &machine, const char *tag);
 input_port_value input_port_active_safe(running_machine &machine, const char *tag, input_port_value defvalue);
 
 
-
 /* ----- port reading ----- */
 
 /* return the value of an input port */
@@ -1381,7 +1382,7 @@ void input_port_write_safe(running_machine &machine, const char *tag, input_port
 /* ----- misc helper functions ----- */
 
 /* return the TRUE if the given condition attached is true */
-int input_condition_true(running_machine &machine, const input_condition *condition);
+int input_condition_true(running_machine &machine, const input_condition *condition,device_t &owner);
 
 /* convert an input_port_token to a default string */
 const char *input_port_string_from_token(const char *token);

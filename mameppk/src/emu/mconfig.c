@@ -68,21 +68,23 @@ machine_config::machine_config(const game_driver &gamedrv, emu_options &options)
 	(*gamedrv.machine_config)(*this, NULL);
 
 	// intialize slot devices - make sure that any required devices have been allocated
-	device_slot_interface *slot = NULL;
-    for (bool gotone = m_devicelist.first(slot); gotone; gotone = slot->next(slot))
+	device_slot_interface *slot = NULL;	
+	for (bool gotone = m_devicelist.first(slot); gotone; gotone = slot->next(slot))
 	{
 		const slot_interface *intf = slot->get_slot_interfaces();
 		if (intf != NULL)
 		{
 			device_t &owner = slot->device();
 			const char *selval = options.value(owner.tag());
-			if (options.seqid(owner.tag()) == 0)
+			if (!options.exists(owner.tag()))
 				selval = slot->get_default_card();
 
 			if (selval != NULL)
 				for (int i = 0; intf[i].name != NULL; i++)
-					if (strcmp(selval, intf[i].name) == 0)
-						device_add(&owner, intf[i].name, intf[i].devtype, 0);
+					if (strcmp(selval, intf[i].name) == 0) {
+						device_t *new_dev = device_add(&owner, intf[i].name, intf[i].devtype, 0);
+						device_t::static_set_input_default(*new_dev, slot->input_ports_defaults());
+					}
 		}
 	}
 

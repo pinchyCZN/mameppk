@@ -53,6 +53,8 @@ public:
         UINT16	  *framebuffer[2];
         UINT16	  **framebuffer_draw_lines;
 	    UINT8     *gfx_decode;
+		UINT16    lopr;
+		UINT16    copr;
 
 		int       local_x;
 		int       local_y;
@@ -79,6 +81,22 @@ public:
         UINT8 intback;
 	}m_smpc;
 
+	struct {
+		UINT8 vblank_out;
+		UINT8 vblank_in;
+		UINT8 hblank_in;
+		UINT8 timer_0;
+		UINT8 timer_1;
+		UINT8 dsp_end;
+		UINT8 sound_req;
+		UINT8 smpc;
+		UINT8 pad;
+		UINT8 dma_end[3];
+		UINT8 dma_ill;
+		UINT8 vdp1_end;
+		UINT8 abus;
+	}m_scu_irq;
+
 	/* Saturn specific*/
 	int m_saturn_region;
 	UINT8 m_cart_type;
@@ -96,8 +114,8 @@ public:
 	legacy_cpu_device* m_audiocpu;
 };
 
-#define MASTER_CLOCK_352 57272800
-#define MASTER_CLOCK_320 53748200
+#define MASTER_CLOCK_352 57272720
+#define MASTER_CLOCK_320 53693174
 #define CEF_1	state->m_vdp1_regs[0x010/2]|=0x0002
 #define CEF_0   state->m_vdp1_regs[0x010/2]&=~0x0002
 #define BEF_1	state->m_vdp1_regs[0x010/2]|=0x0001
