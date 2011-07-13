@@ -312,6 +312,21 @@ void coin_lockout_global_w(running_machine &machine, int on)
 ***************************************************************************/
 
 /*-------------------------------------------------
+    nvram_filename - returns filename of system's
+	NVRAM depending of selected BIOS
+-------------------------------------------------*/
+
+static astring nvram_filename(running_machine &machine, astring &result)
+{
+	if (rom_system_bios(machine) == 0 || rom_default_bios(machine) == rom_system_bios(machine)) {
+		result.printf("%s",machine.basename());
+	} else {
+		result.printf("%s_%d",machine.basename(),rom_system_bios(machine) - 1);
+	}
+	return result;
+}
+
+/*-------------------------------------------------
     nvram_load - load a system's NVRAM
 -------------------------------------------------*/
 
@@ -340,8 +355,9 @@ void nvram_load(running_machine &machine)
 #endif /* KAILLERA */
 
 	// open the file; if it exists, call everyone to read from it
+	astring filename;
 	emu_file file(machine.options().nvram_directory(), OPEN_FLAG_READ);
-	if (file.open(machine.basename(), ".nv") == FILERR_NONE)
+	if (file.open(nvram_filename(machine,filename), ".nv") == FILERR_NONE)
 	{
 		// read data from general NVRAM handler first
 		if (machine.config().m_nvram_handler != NULL)
@@ -383,8 +399,9 @@ void nvram_save(running_machine &machine)
 #endif /* KAILLERA */
 
 	// open the file; if it exists, call everyone to read from it
+	astring filename;
 	emu_file file(machine.options().nvram_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
-	if (file.open(machine.basename(), ".nv") == FILERR_NONE)
+	if (file.open(nvram_filename(machine,filename), ".nv") == FILERR_NONE)
 	{
 		// write data via general NVRAM handler first
 		// mamep: dont save nvram during playback
