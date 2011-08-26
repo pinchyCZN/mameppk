@@ -1150,9 +1150,9 @@ void sound_manager::update()
 	{
 		have_sample = 0;
 
-		for (sample = m_finalmix_leftover; sample < samples_this_update * 100; sample += finalmix_step)
+		for (sample = m_finalmix_leftover; sample < samples_this_update * 1000; sample += finalmix_step)
 		{
-			int sampindex = sample / 100;
+			int sampindex = sample / 1000;
 
 			/* clamp the left side */
 			finalmix[finalmix_offset++] = calc_volume_final(m_leftmix[sampindex]);
@@ -1169,9 +1169,9 @@ void sound_manager::update()
 	}
 	else
 #endif /* USE_VOLUME_AUTO_ADJUST */
-	for (sample = m_finalmix_leftover; sample < samples_this_update * 100; sample += finalmix_step)
+	for (sample = m_finalmix_leftover; sample < samples_this_update * 1000; sample += finalmix_step)
 	{
-		int sampindex = sample / 100;
+		int sampindex = sample / 1000;
 
 		// clamp the left side
 		INT32 samp = m_leftmix[sampindex];
@@ -1189,7 +1189,7 @@ void sound_manager::update()
 			samp = 32767;
 		finalmix[finalmix_offset++] = samp;
 	}
-	m_finalmix_leftover = sample - samples_this_update * 100;
+	m_finalmix_leftover = sample - samples_this_update * 1000;
 
 #ifdef MAME_AVI
 	if ( mame_mixer_wave_loging )
