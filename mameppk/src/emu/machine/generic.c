@@ -327,16 +327,27 @@ static astring nvram_filename(running_machine &machine, astring &result)
 }
 
 /*-------------------------------------------------
+    nvram_filename - returns filename of system's
+    NVRAM depending of selected BIOS
+-------------------------------------------------*/
+
+static astring nvram_filename(device_t &device, astring &result)
+{
+	running_machine &machine = device.machine();
+	if (rom_system_bios(machine) == 0 || rom_default_bios(machine) == rom_system_bios(machine)) {
+		result.printf("%s\\%s",machine.basename(),device.tag());
+	} else {
+		result.printf("%s_%d\\%s",machine.basename(),rom_system_bios(machine) - 1,device.tag());
+	}
+	return result;
+}
+
+/*-------------------------------------------------
     nvram_load - load a system's NVRAM
 -------------------------------------------------*/
 
 void nvram_load(running_machine &machine)
 {
-	// only need to do something if we have an NVRAM device or an nvram_handler
-	device_nvram_interface *nvram = NULL;
-	if (!machine.devicelist().first(nvram) && machine.config().m_nvram_handler == NULL)
-		return;
-
 #ifdef KAILLERA
 	extern int kPlay;
 	if (kPlay && !(!mame_stricmp(machine.system().source_file+17, "seibuspi.c")
@@ -347,37 +358,47 @@ void nvram_load(running_machine &machine)
 			(*machine.config().m_nvram_handler)(machine, NULL, FALSE);
 
 		// find all devices with NVRAM handlers, and read from them next
-		for (bool gotone = (nvram != NULL); gotone; gotone = nvram->next(nvram))
-			nvram->nvram_reset();
+		device_nvram_interface *nvram = NULL;
+		if (machine.devicelist().first(nvram))
+			for (bool gotone = (nvram != NULL); gotone; gotone = nvram->next(nvram))
+				nvram->nvram_reset();
 
 		return;
 	}
 #endif /* KAILLERA */
 
-	// open the file; if it exists, call everyone to read from it
-	astring filename;
-	emu_file file(machine.options().nvram_directory(), OPEN_FLAG_READ);
-	if (file.open(nvram_filename(machine,filename), ".nv") == FILERR_NONE)
+	if (machine.config().m_nvram_handler != NULL)
 	{
-		// read data from general NVRAM handler first
-		if (machine.config().m_nvram_handler != NULL)
+		astring filename;
+		emu_file file(machine.options().nvram_directory(), OPEN_FLAG_READ);
+		if (file.open(nvram_filename(machine,filename),".nv") == FILERR_NONE)
+		{
 			(*machine.config().m_nvram_handler)(machine, &file, FALSE);
-
-		// find all devices with NVRAM handlers, and read from them next
-		for (bool gotone = (nvram != NULL); gotone; gotone = nvram->next(nvram))
-			nvram->nvram_load(file);
+			file.close();
+		}
+		else
+		{
+			(*machine.config().m_nvram_handler)(machine, NULL, FALSE);
+		}
 	}
 
-	// otherwise, tell everyone to initialize their NVRAM areas
-	else
+	device_nvram_interface *nvram = NULL;
+	if (machine.devicelist().first(nvram))
 	{
-		// initialize via the general NVRAM handler first
-		if (machine.config().m_nvram_handler != NULL)
-			(*machine.config().m_nvram_handler)(machine, NULL, FALSE);
-
-		// find all devices with NVRAM handlers, and read from them next
 		for (bool gotone = (nvram != NULL); gotone; gotone = nvram->next(nvram))
-			nvram->nvram_reset();
+		{
+			astring filename;
+			emu_file file(machine.options().nvram_directory(), OPEN_FLAG_READ);
+			if (file.open(nvram_filename(nvram->device(),filename)) == FILERR_NONE)
+			{
+				nvram->nvram_load(file);
+				file.close();
+			}
+			else
+			{
+				nvram->nvram_reset();
+			}
+		}
 	}
 }
 
@@ -388,29 +409,39 @@ void nvram_load(running_machine &machine)
 
 void nvram_save(running_machine &machine)
 {
-	// only need to do something if we have an NVRAM device or an nvram_handler
-	device_nvram_interface *nvram = NULL;
-	if (!machine.devicelist().first(nvram) && machine.config().m_nvram_handler == NULL)
-		return;
-
 #ifdef KAILLERA
 	extern int kPlay;
 	if (kPlay) return;
 #endif /* KAILLERA */
 
-	// open the file; if it exists, call everyone to read from it
-	astring filename;
-	emu_file file(machine.options().nvram_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
-	if (file.open(nvram_filename(machine,filename), ".nv") == FILERR_NONE)
-	{
-		// write data via general NVRAM handler first
-		// mamep: dont save nvram during playback
-		if (machine.config().m_nvram_handler != NULL && !has_playback_file(machine))
-			(*machine.config().m_nvram_handler)(machine, &file, TRUE);
+	// mamep: dont save nvram during playback
+	if (has_playback_file(machine))
+		return;
 
-		// find all devices with NVRAM handlers, and tell them to write next
+	if (machine.config().m_nvram_handler != NULL)
+	{
+		astring filename;
+		emu_file file(machine.options().nvram_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+		if (file.open(nvram_filename(machine,filename), ".nv") == FILERR_NONE)
+		{
+			(*machine.config().m_nvram_handler)(machine, &file, TRUE);
+			file.close();
+		}
+	}
+
+	device_nvram_interface *nvram = NULL;
+	if (machine.devicelist().first(nvram))
+	{
 		for (bool gotone = (nvram != NULL); gotone; gotone = nvram->next(nvram))
-			nvram->nvram_save(file);
+		{
+			astring filename;
+			emu_file file(machine.options().nvram_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+			if (file.open(nvram_filename(nvram->device(),filename)) == FILERR_NONE)
+			{
+				nvram->nvram_save(file);
+				file.close();
+			}
+		}
 	}
 }
 

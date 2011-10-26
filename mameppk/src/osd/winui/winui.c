@@ -3362,10 +3362,8 @@ static LRESULT CALLBACK MameWindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 		break;
 
 	default:
-
 		break;
 	}
-
 	return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
