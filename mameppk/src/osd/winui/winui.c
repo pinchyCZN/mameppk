@@ -943,17 +943,13 @@ static const int CommandToString[] =
 static const int s_nPickers[] =
 {
 	IDC_LIST
-#ifdef MESS
-	,IDC_SWLIST
-	,IDC_SOFTLIST
-#endif
 };
 
 
 /* How to resize toolbar sub window */
 static ResizeItem toolbar_resize_items[] =
 {
-	{ RA_ID,   { ID_TOOLBAR_EDIT },  TRUE, RA_RIGHT | RA_TOP,     NULL },
+	{ RA_ID,   { ID_TOOLBAR_EDIT },  TRUE, RA_LEFT | RA_TOP,     NULL },
 	{ RA_END,  { 0 },            FALSE, 0,                                 NULL }
 };
 
@@ -973,11 +969,6 @@ static ResizeItem main_resize_items[] =
 	{ RA_ID,   { IDC_SSPICTURE },FALSE,	RA_RIGHT | RA_BOTTOM | RA_TOP,     NULL },
 	{ RA_ID,   { IDC_HISTORY },  TRUE,	RA_RIGHT | RA_BOTTOM | RA_TOP,     NULL },
 	{ RA_ID,   { IDC_SSTAB },    FALSE,	RA_RIGHT | RA_TOP,                 NULL },
-#ifdef MESS
-	{ RA_ID,   { IDC_SWLIST },    TRUE,	RA_RIGHT | RA_BOTTOM | RA_TOP,     NULL },
-	{ RA_ID,   { IDC_SOFTLIST },  TRUE,	RA_RIGHT | RA_BOTTOM | RA_TOP,     NULL },
-	{ RA_ID,   { IDC_SPLITTER3 },FALSE,	RA_RIGHT | RA_BOTTOM | RA_TOP,     NULL },
-#endif /* MESS */
 	{ RA_END,  { 0 },            FALSE, 0,                                 NULL }
 };
 
@@ -1244,14 +1235,6 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 #endif
 	}
 
-#ifdef MESS
-	if (g_szSelectedSoftware[0] && g_szSelectedDevice[0]) {
-			mame_opts.set_value(g_szSelectedDevice, g_szSelectedSoftware, OPTION_PRIORITY_CMDLINE,error_string);
-			// Add params and clear so next start of driver is without parameters			
-			g_szSelectedSoftware[0] = 0;
-			g_szSelectedDevice[0] = 0;
-	}
-#endif	
 	// Mame will parse all the needed .ini files.
 
 	// prepare MAME32 to run the game
@@ -2465,10 +2448,6 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 
 	RegisterClass(&wndclass);
 
-#ifdef MESS
-	DevView_RegisterClass();
-#endif //MESS
-
 	InitCommonControls();
 
 	// Are we using an Old comctl32.dll?
@@ -2694,9 +2673,6 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	dprintf("did init tree\n");
 
 	/* Initialize listview columns */
-#ifdef MESS
-	InitMessPicker();
-#endif
 	InitListView();
 	SetFocus(hwndList);
 
@@ -2876,9 +2852,7 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 
 static void Win32UI_exit()
 {
-#ifdef MESS
-	MySoftwareListClose();
-#endif
+
 
 	DragAcceptFiles(hMain, FALSE);
 
@@ -4256,10 +4230,6 @@ static void EnableSelection(int nGame)
 	//TCHAR*          t_description;
 	int             bios_driver;
 
-#ifdef MESS
-	MyFillSoftwareList(nGame, FALSE);
-#endif
-
 	//t_description = tstring_from_utf8(ConvertAmpersandString(ModifyThe(drivers[nGame]->description)));
 	//if( !t_description )
 	//	return;
@@ -5157,7 +5127,7 @@ static void PickColor(COLORREF *cDefault)
  	cc.hwndOwner   = hMain;
  	cc.rgbResult   = *cDefault;
  	cc.lpCustColors = choice_colors;
- 	cc.Flags       = CC_ANYCOLOR | CC_RGBINIT | CC_SOLIDCOLOR;
+ 	cc.Flags       = CC_ANYCOLOR | CC_RGBINIT | CC_SOLIDCOLOR | CC_FULLOPEN;
  	if (!ChooseColor(&cc))
  		return;
  	for (i=0;i<16;i++)
@@ -6368,15 +6338,6 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 		{
 			folder = GetFolderByName(FOLDER_SOURCE, GetDriverFilename(Picker_GetSelectedItem(hwndList)) );
 			InitPropertyPage(hInst, hwnd, GetSelectedPickItemIcon(), OPTIONS_GAME, folder->m_nFolderId, Picker_GetSelectedItem(hwndList));
-#ifdef MESS
-			{
-				extern BOOL g_bModifiedSoftwarePaths;
-				if (g_bModifiedSoftwarePaths) {
-					g_bModifiedSoftwarePaths = FALSE;
-					MessUpdateSoftwareList();
-				}
-			}
-#endif
 		}
 		/* Just in case the toggle MMX on/off */
 		UpdateStatusBar();
@@ -6488,9 +6449,6 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 			int  nResult;
 			BOOL bUpdateRoms;
 			BOOL bUpdateSamples;
-#ifdef MESS
-			BOOL bUpdateSoftware;
-#endif
 
 			nResult = DialogBox(GetModuleHandle(NULL),
 								MAKEINTRESOURCE(IDD_DIRECTORIES),
@@ -6501,12 +6459,6 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 
 			bUpdateRoms    = ((nResult & DIRDLG_ROMS)	 == DIRDLG_ROMS)	? TRUE : FALSE;
 			bUpdateSamples = ((nResult & DIRDLG_SAMPLES) == DIRDLG_SAMPLES) ? TRUE : FALSE;
-#ifdef MESS
-			bUpdateSoftware = ((nResult & DIRDLG_SOFTWARE) == DIRDLG_SOFTWARE) ? TRUE : FALSE;
-
-			if (bUpdateSoftware)
-				MessUpdateSoftwareList();
-#endif /* MESS */
 
 			if (s_pWatcher)
 			{
@@ -6833,11 +6785,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 				return FALSE;
 			}
 		}
-#ifdef MESS
-		return MessCommand(hwnd, id, hwndCtl, codeNotify);
-#else
 		break;
-#endif
 	}
 
 	return FALSE;
@@ -6917,19 +6865,24 @@ static const TCHAR *GamePicker_GetItemString(HWND hwndPicker, int nItem, int nCo
 			/* Driver description */
 			s = UseLangList() ? _LSTW(driversw[nItem]->description):driversw[nItem]->modify_the;
 			break;
+
 		case COLUMN_ORIENTATION:
 			s = DriverIsVertical(nItem) ? _UIW(TEXT("Vertical")) : _UIW(TEXT("Horizontal")); 
 			break;
+
 #if 1 //mamep
 		case COLUMN_ROMS:
 			/* Has Roms */
 			s = GetAuditString(GetRomAuditResults(nItem));
 			break;
 #endif
+
 		case COLUMN_SAMPLES:
 			/* Samples */
 			if (DriverUsesSamples(nItem))
-				s = GetAuditString(GetSampleAuditResults(nItem));
+				s = TEXT("Yes");
+			else
+				s = TEXT("No");
 			break;
 
 		case COLUMN_DIRECTORY:
@@ -6949,15 +6902,14 @@ static const TCHAR *GamePicker_GetItemString(HWND hwndPicker, int nItem, int nCo
 			break;
 
 		case COLUMN_TYPE:
-			{
-				machine_config config(driver_list::driver(nItem), MameUIGlobal());
-				/* Vector/Raster */
-				if (isDriverVector(&config))
-					s = _UIW(TEXT("Vector"));
-				else
-					s = _UIW(TEXT("Raster"));
-
-			}
+			/* Vector/Raster */
+		{
+			machine_config config(driver_list::driver(nItem), MameUIGlobal());
+			if (isDriverVector(&config))
+				s = _UIW(TEXT("Vector"));
+			else
+				s = _UIW(TEXT("Raster"));
+		}
 			break;
 
 		case COLUMN_TRACKBALL:
@@ -7030,9 +6982,6 @@ static void GamePicker_EnteringItem(HWND hwndPicker, int nItem)
 	}
 
 	EnableSelection(nItem);
-#ifdef MESS
-	MessReadMountedSoftware(nItem);
-#endif
 }
 
 static int GamePicker_FindItemParent(HWND hwndPicker, int nItem)
@@ -7275,11 +7224,7 @@ static void CreateIcons(void)
 	int icon_count;
 	DWORD dwStyle;
 	int i;
-#ifdef MESS
-	int grow = 3000;
-#else
 	int grow = 5000;
-#endif
 
 	icon_count = 0;
 	while(g_iconData[icon_count].icon_name)
@@ -7321,12 +7266,8 @@ static void CreateIcons(void)
 	// restore our view
 	SetWindowLong(hwndList,GWL_STYLE,dwStyle);
 
-#ifdef MESS
-	CreateMessIcons();
-#endif
-
 	// Now set up header specific stuff
-	hHeaderImages = ImageList_Create(8,8,ILC_COLORDDB | ILC_MASK,2,2);
+	hHeaderImages = ImageList_Create(16,16,ILC_COLORDDB | ILC_MASK,2,2);
 	hIcon = LoadIcon(hInst,MAKEINTRESOURCE(IDI_HEADER_UP));
 	ImageList_AddIcon(hHeaderImages,hIcon);
 	hIcon = LoadIcon(hInst,MAKEINTRESOURCE(IDI_HEADER_DOWN));
@@ -7454,12 +7395,11 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 		break;
 
 	case COLUMN_TYPE:
-		{
-			machine_config config1(driver_list::driver(index1), MameUIGlobal());
-			machine_config config2(driver_list::driver(index2), MameUIGlobal());
-
-			value = isDriverVector(&config1) - isDriverVector(&config2);
-		}
+	{
+		machine_config config1(driver_list::driver(index1), MameUIGlobal());
+		machine_config config2(driver_list::driver(index2), MameUIGlobal());
+		value = isDriverVector(&config1) - isDriverVector(&config2);
+	}
 		break;
 
 	case COLUMN_TRACKBALL:
@@ -8302,12 +8242,6 @@ static void MamePlayGameWithOptions(int nGame, const play_options *playopts)
 {
 	DWORD dwExitCode;
 	BOOL res;
-
-
-#ifdef MESS
-	if (!MessApproveImageList(hMain, nGame))
-		return;
-#endif
 
 #ifdef KAILLERA
 	if( playopts->recordsub != NULL )
