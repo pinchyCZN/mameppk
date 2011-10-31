@@ -5882,7 +5882,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 					LvItem.iSubItem   = 0;
 					LvItem.pszText    = (LPTSTR)tmptxt;
 					LvItem.cchTextMax = sizeof(tmptxt) / 2;
-					ListView_GetItem(hwndList, &LvItem);
+					(void)ListView_GetItem(hwndList, &LvItem);
 
 					while ((s + strlen(_String(LvItem.pszText)) + 4) > gamesSize)
 					{

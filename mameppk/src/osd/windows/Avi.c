@@ -2596,8 +2596,8 @@ static void AVI_Convert_16to24_TVInterlace_Bitmap(char *pSrcBitmap, int l)
 	}
 
 	
-	srcoffs = (unsigned int)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
-	dstoffs = (unsigned int)(pAviBitmap_bitConv + (rectAvi.m_Left * 3) + sizeof(BITMAPINFOHEADER));
+	srcoffs = (FPTR)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
+	dstoffs = (FPTR)(pAviBitmap_bitConv + (rectAvi.m_Left * 3) + sizeof(BITMAPINFOHEADER));
 
 	l &= 0x1;
 
@@ -2658,8 +2658,8 @@ static void AVI_Convert_16to24_TVInterlace_s_Bitmap(char *pSrcBitmap, int l)
 	}
 
 
-	srcoffs = (unsigned int)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
-	dstoffs = (unsigned int)(pAviBitmap_bitConv + (rectAvi.m_Left * 3) + sizeof(BITMAPINFOHEADER));
+	srcoffs = (FPTR)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
+	dstoffs = (FPTR)(pAviBitmap_bitConv + (rectAvi.m_Left * 3) + sizeof(BITMAPINFOHEADER));
 
 	l &= 0x1;
 
@@ -2748,9 +2748,9 @@ static void AVI_Convert_16to24_TVInterlace_sxy_Bitmap(char *pSrcBitmap, int l)
 		rectAvi.m_Top = 0;
 	}
 
-	srcoffs  = (unsigned int)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
-	srcoffsa = (unsigned int)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
-	dstoffs  = (unsigned int)(pAviBitmap_bitConv + (rectAvi.m_Left * 3) + sizeof(BITMAPINFOHEADER));
+	srcoffs  = (FPTR)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
+	srcoffsa = (FPTR)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
+	dstoffs  = (FPTR)(pAviBitmap_bitConv + (rectAvi.m_Left * 3) + sizeof(BITMAPINFOHEADER));
 
 	srcy = starty;
 	for(y=0; y<dsty; y++)
@@ -2868,9 +2868,9 @@ static void AVI_Convert_16to24_TVInterlace_sy_Bitmap(char *pSrcBitmap, int l)
 		rectAvi.m_Top = 0;
 	}
 
-	srcoffs  = (unsigned int)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
-	srcoffsa = (unsigned int)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
-	dstoffs  = (unsigned int)(pAviBitmap_bitConv + (rectAvi.m_Left * 3) + sizeof(BITMAPINFOHEADER));
+	srcoffs  = (FPTR)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
+	srcoffsa = (FPTR)(pSrcBitmap + sizeof(BITMAPINFOHEADER));
+	dstoffs  = (FPTR)(pAviBitmap_bitConv + (rectAvi.m_Left * 3) + sizeof(BITMAPINFOHEADER));
 
 	srcy = starty;
 	for(y=0; y<dsty; y++)

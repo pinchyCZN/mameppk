@@ -373,8 +373,8 @@ void KailleraChatInit(running_machine &machine)
     if (_WINNLSEnableIME)
         _WINNLSEnableIME(hChat, FALSE);
 
-    DefaultWindowProc = (WNDPROC)(LONG)(int)GetWindowLong(hChat, GWL_WNDPROC);
-    SetWindowLong(hChat, GWL_WNDPROC, (LONG)EditProc);
+    DefaultWindowProc = (WNDPROC)GetClassLongPtr(hChat, GCLP_WNDPROC);
+    SetWindowLongPtr(hChat, GWLP_WNDPROC, (ULONG_PTR)EditProc);
 }
 
 
@@ -384,7 +384,7 @@ void KailleraChatExit(void)
 
 	if(hChat) {
 		if(DefaultWindowProc) {
-			SetWindowLongPtr(hChat, GWL_WNDPROC, (LONG)DefaultWindowProc);
+			SetWindowLongPtr(hChat, GWLP_WNDPROC, (ULONG_PTR)DefaultWindowProc);
 			DefaultWindowProc = NULL;
 		}
 
@@ -533,8 +533,8 @@ void KailleraChatReInit(running_machine &machine)
     if (_WINNLSEnableIME)
         _WINNLSEnableIME(hChat, FALSE);
 
-    DefaultWindowProc = (WNDPROC)(LONG)(int)GetWindowLong(hChat, GWL_WNDPROC);
-    SetWindowLong(hChat, GWL_WNDPROC, (LONG)EditProc);
+    DefaultWindowProc = (WNDPROC)GetClassLongPtr(hChat, GCLP_WNDPROC);
+    SetWindowLongPtr(hChat, GWLP_WNDPROC, (ULONG_PTR)EditProc);
 }
 
 void KailleraChatUpdate(running_machine &machine, render_container *container)
