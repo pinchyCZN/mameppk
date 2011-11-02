@@ -13,10 +13,6 @@
 #ifndef KAILLERACHAT_H
 #define KAILLERACHAT_H
 
-#ifndef BOOL
-#include <windows.h>
-#endif
-
 void KailleraChatInit(running_machine &machine);
 void KailleraChatExit(void);
 void KailleraChatReInit(running_machine &machine);

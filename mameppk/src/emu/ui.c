@@ -9,6 +9,12 @@
 
 *********************************************************************/
 
+#ifdef KAILLERA
+#define WIN32_LEAN_AND_MEAN
+#define _WIN32_IE 0x0501
+#include <windows.h>
+#endif /* KAILLERA */
+
 #include "emu.h"
 #include "emuopts.h"
 #include "video/vector.h"
@@ -36,6 +42,7 @@ extern int	bAviRun;
 #endif /* MAME_AVI */
 
 #ifdef KAILLERA
+#include "kailleraclient.h"
 #include "KailleraChat.h"
 #include "ui_temp.h"
 extern int kPlay;

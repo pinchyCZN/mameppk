@@ -3,17 +3,21 @@
   Original Source from EmeraldMame 185
 ***************************************************************************/
 
+// standard windows headers
 #define WIN32_LEAN_AND_MEAN
+#define _WIN32_IE 0x0501
 #include <windows.h>
 #include <mmsystem.h>
 #include <dsound.h>
 
-#include "Wav.h"
-
-
+// standard C headers
 #include <fcntl.h>
 #include <io.h>
 #include <sys\stat.h>
+
+// MAME/MAMEUI headers
+#include "emucore.h"
+#include "Wav.h"
 
 // for VC2005
 #if defined(_MSC_VER) && _MSC_VER >= 1400
@@ -45,12 +49,12 @@ static int wavfile = -1;
 
 static int                  stereo_factor;
 static UINT32               samples_per_sec;
-static int					samples_bit_rate;
+static int                  samples_bit_rate;
 
 int wav_wavefile_create(const void* fname, UINT32 samplerate, int bitrate, int channel )
 {
 	int file;
-   	file = open((const char *)fname, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, S_IREAD|S_IWRITE);
+	file = open((const char *)fname, O_WRONLY | O_CREAT | O_TRUNC | O_BINARY, S_IREAD|S_IWRITE);
 	if (file == -1)
         return -1;
 
@@ -82,7 +86,7 @@ struct WAV_WAVEFORMAT wav_wavefile_getformat(const void* fname)
 
 	memset(&wfm, 0, sizeof(wfm));
 
-   	file = open((const char *)fname, O_RDONLY | O_BINARY);
+	file = open((const char *)fname, O_RDONLY | O_BINARY);
 	if (file == -1)
         return wfm;
 
@@ -194,7 +198,7 @@ void wav_stop_log_wave(void)
     wavfile = -1;
 }
 
-void wav_log_wave(void* buf, unsigned int len)
+void wav_log_wave(void* buf, UINT32 len)
 {
     if (wavfile != -1 && buf)
 	{
@@ -251,13 +255,13 @@ int wav_convert_select(struct WAV_WAVEFORMAT *dstwfm, struct WAV_WAVEFORMAT *src
 		{
 			if (wsr != NULL)
 			{
-				wsr->adder = (unsigned int)(((unsigned __int64)srcwfm->samplespersec<<16) / (unsigned int)dstwfm->samplespersec);
+				wsr->adder = (UINT32)(((UINT64)srcwfm->samplespersec<<16) / (UINT32)dstwfm->samplespersec);
 				wsr->pos = 0;
 			}
 		}
 		if ( nmb & 0x20 )
 		{
-			wsre->adder = (unsigned int)(((unsigned __int64)srcwfm->samplespersec<<16) / (unsigned int)dstwfm->samplespersec);
+			wsre->adder = (UINT32)(((UINT64)srcwfm->samplespersec<<16) / (UINT32)dstwfm->samplespersec);
 			wsre->next = 0;
 			wsre->count = 0;
 			wsre->pos_start = 0;
@@ -292,12 +296,12 @@ int wav_convert_select(struct WAV_WAVEFORMAT *dstwfm, struct WAV_WAVEFORMAT *src
 }
 
 
-unsigned int wav_wavecnv_resize(int cnvnmb, void* dst, void* src, unsigned int samples, struct WAV_SAMPLES_RESIZE *wsr)
+FPTR wav_wavecnv_resize(int cnvnmb, void* dst, void* src, FPTR samples, struct WAV_SAMPLES_RESIZE *wsr)
 {
-	const unsigned int destpos = (unsigned int)dst;
-	const unsigned int adder = wsr->adder;
-	unsigned int fpos = wsr->pos;
-	unsigned int upos = fpos>>16;
+	const FPTR destpos = (FPTR)dst;
+	const FPTR adder = wsr->adder;
+	FPTR fpos = wsr->pos;
+	FPTR upos = fpos>>16;
 
 
 	switch (cnvnmb & 0xf)
@@ -309,28 +313,28 @@ unsigned int wav_wavecnv_resize(int cnvnmb, void* dst, void* src, unsigned int s
 	case 2:					//mo16_to_mo8
 		while( upos < samples )
 		{
-			const int s = (int)(*((short*)src+upos));
-			*((unsigned char*)dst) = ((s >> 8) + 128) & 0xff;
-			dst = (char*)dst+1;
+			const int s = (int)(*((INT16*)src+upos));
+			*((UINT8*)dst) = ((s >> 8) + 128) & 0xff;
+			dst = (INT8*)dst+1;
 			fpos = (fpos & 0xffff)+adder;
 			upos += (fpos>>16);
 		}
 		wsr->pos = fpos - ((samples - (upos - (fpos>>16)))<<16);
-		samples = ((unsigned int)dst - destpos)/sizeof(char);
+		samples = ((FPTR)dst - destpos)/sizeof(INT8);
 		break;
 	case 3:					//st16_to_mo8
 		while( upos < samples )
 		{
-			const int sl = (int)(*((short*)((long*)src+upos)));
-			const int sr = (int)(*((short*)((long*)src+upos) + 1));
-			const short s = (short)((sl + sr) >> 1);
-			*((unsigned char*)dst) = ((s >> 8) + 128) & 0xff;
-			dst = (char*)dst+1;
+			const int sl = (int)(*((INT16*)((INT32*)src+upos)));
+			const int sr = (int)(*((INT16*)((INT32*)src+upos) + 1));
+			const short s = (INT16)((sl + sr) >> 1);
+			*((UINT8*)dst) = ((s >> 8) + 128) & 0xff;
+			dst = (INT8*)dst+1;
 			fpos = (fpos & 0xffff)+adder;
 			upos += (fpos>>16);
 		}
 		wsr->pos = fpos - ((samples - (upos - (fpos>>16)))<<16);
-		samples = ((unsigned int)dst - destpos)/sizeof(char);
+		samples = ((FPTR)dst - destpos)/sizeof(INT8);
 		break;
 	case 4:
 		break;
@@ -339,27 +343,27 @@ unsigned int wav_wavecnv_resize(int cnvnmb, void* dst, void* src, unsigned int s
 	case 6:					//mo16_to_st8
 		while( upos < samples )
 		{
-			const unsigned short s = (((*((short*)src+upos)) >> 8) + 128) & 0xff;
-			*((short*)dst) = s | (s << 8);
-			dst = (short*)dst+1;
+			const UINT16 s = (((*((INT16*)src+upos)) >> 8) + 128) & 0xff;
+			*((INT16*)dst) = s | (s << 8);
+			dst = (INT16*)dst+1;
 			fpos = (fpos & 0xffff)+adder;
 			upos += (fpos>>16);
 		}
 		wsr->pos = fpos - ((samples - (upos - (fpos>>16)))<<16);
-		samples = ((unsigned int)dst - destpos)/sizeof(short);
+		samples = ((FPTR)dst - destpos)/sizeof(INT16);
 		break;
 	case 7:					//st16_to_st8
 		while( upos < samples )
 		{
-			const unsigned short sl = (((*((short*)((long*)src+upos)))	>> 8) + 128) & 0xff;
-			const unsigned short sr = (((*((short*)((long*)src+upos) + 1))>> 8) + 128) & 0xff;
-			*((short*)dst) = sl | (sr << 8);
-			dst = (short*)dst+1;
+			const UINT16 sl = (((*((INT16*)((INT32*)src+upos)))	>> 8) + 128) & 0xff;
+			const UINT16 sr = (((*((INT16*)((INT32*)src+upos) + 1))>> 8) + 128) & 0xff;
+			*((INT16*)dst) = sl | (sr << 8);
+			dst = (INT16*)dst+1;
 			fpos = (fpos & 0xffff)+adder;
 			upos += (fpos>>16);
 		}
 		wsr->pos = fpos - ((samples - (upos - (fpos>>16)))<<16);
-		samples = ((unsigned int)dst - destpos)/sizeof(short);
+		samples = ((FPTR)dst - destpos)/sizeof(INT16);
 		break;
 
 	case 8:
@@ -369,27 +373,27 @@ unsigned int wav_wavecnv_resize(int cnvnmb, void* dst, void* src, unsigned int s
 	case 10:				//mo16_to_mo16
 		while( upos < samples )
 		{
-			const short s = *((short*)src+upos);
-			*((short*)dst) = s;
-			dst = (short*)dst+1;
+			const INT16 s = *((INT16*)src+upos);
+			*((INT16*)dst) = s;
+			dst = (INT16*)dst+1;
 			fpos = (fpos & 0xffff)+adder;
 			upos += (fpos>>16);
 		}
 		wsr->pos = fpos - ((samples - (upos - (fpos>>16)))<<16);
-		samples = ((unsigned int)dst - destpos)/sizeof(short);
+		samples = ((FPTR)dst - destpos)/sizeof(INT16);
 		break;
 	case 11:				//st16_to_mo16
 		while( upos < samples )
 		{
-			const int sl = (int)(*((short*)((long*)src+upos)));
-			const int sr = (int)(*((short*)((long*)src+upos) + 1));
-			*((short*)dst) = (short)((sl + sr) >> 1);
-			dst = (short*)dst+1;
+			const int sl = (int)(*((INT16*)((INT32*)src+upos)));
+			const int sr = (int)(*((INT16*)((INT32*)src+upos) + 1));
+			*((INT16*)dst) = (short)((sl + sr) >> 1);
+			dst = (INT16*)dst+1;
 			fpos = (fpos & 0xffff)+adder;
 			upos += (fpos>>16);
 		}
 		wsr->pos = fpos - ((samples - (upos - (fpos>>16)))<<16);
-		samples = ((unsigned int)dst - destpos)/sizeof(short);
+		samples = ((FPTR)dst - destpos)/sizeof(INT16);
 		break;
 	case 12:
 		break;
@@ -398,26 +402,26 @@ unsigned int wav_wavecnv_resize(int cnvnmb, void* dst, void* src, unsigned int s
 	case 14:				//mo16_to_st16
 		while( upos < samples )
 		{
-			const unsigned long s = *((unsigned short*)src+upos);
-			*((long*)dst) = s | (s << 16);
-			dst = (long*)dst+1;
+			const UINT32 s = *((UINT16*)src+upos);
+			*((INT32*)dst) = s | (s << 16);
+			dst = (INT32*)dst+1;
 			fpos = (fpos & 0xffff)+adder;
 			upos += (fpos>>16);
 		}
 		wsr->pos = fpos - ((samples - (upos - (fpos>>16)))<<16);
-		samples = ((unsigned int)dst - destpos)/sizeof(long);
+		samples = ((FPTR)dst - destpos)/sizeof(INT32);
 		break;
 	case 15:				//st16_to_st16
 		while( upos < samples )
 		{
-			const int s = *((long*)src+upos);
-			*((long*)dst) = s;
-			dst = (long*)dst+1;
+			const int s = *((INT32*)src+upos);
+			*((INT32*)dst) = s;
+			dst = (INT32*)dst+1;
 			fpos = (fpos & 0xffff)+adder;
 			upos += (fpos>>16);
 		}
 		wsr->pos = fpos - ((samples - (upos - (fpos>>16)))<<16);
-		samples = ((unsigned int)dst - destpos)/sizeof(long);
+		samples = ((FPTR)dst - destpos)/sizeof(INT32);
 		break;
 	}
 
@@ -425,7 +429,7 @@ unsigned int wav_wavecnv_resize(int cnvnmb, void* dst, void* src, unsigned int s
 }
 
 
-void wav_wavecnv(int cnvnmb, void* dst, void* src, unsigned int samples)
+void wav_wavecnv(int cnvnmb, void* dst, void* src, FPTR samples)
 {
 
 	switch (cnvnmb & 0xf)
@@ -437,22 +441,22 @@ void wav_wavecnv(int cnvnmb, void* dst, void* src, unsigned int samples)
 	case 2:
 		while( samples )	//mo16_to_mo8
 		{
-			const int s = (int)(*((short*)src));
-			*((unsigned char*)dst) = ((s >> 8) + 128) & 0xff;
-			src = (short*)src+1;
-			dst = (char*)dst+1;
+			const int s = (int)(*((INT16*)src));
+			*((UINT8*)dst) = ((s >> 8) + 128) & 0xff;
+			src = (INT16*)src+1;
+			dst = (INT8*)dst+1;
 			samples--;
 		}
 		break;
 	case 3:					//st16_to_mo8
 		while( samples )
 		{
-			const int sl = (int)(*((short*)src));
-			const int sr = (int)(*((short*)src + 1));
-			const short s = (short)((sl + sr) >> 1);
-			*((unsigned char*)dst) = ((s >> 8) + 128) & 0xff;
-			src = (long*)src+1;
-			dst = (char*)dst+1;
+			const int sl = (int)(*((INT16*)src));
+			const int sr = (int)(*((INT16*)src + 1));
+			const short s = (INT16)((sl + sr) >> 1);
+			*((UINT8*)dst) = ((s >> 8) + 128) & 0xff;
+			src = (INT32*)src+1;
+			dst = (INT8*)dst+1;
 			samples--;
 		}
 		break;
@@ -463,21 +467,21 @@ void wav_wavecnv(int cnvnmb, void* dst, void* src, unsigned int samples)
 	case 6:					//mo16_to_st8
 		while( samples )
 		{
-			const unsigned short s = (((*((short*)src))	>> 8) + 128) & 0xff;
-			*((short*)dst) = s | (s << 8);
-			src = (short*)src+1;
-			dst = (short*)dst+1;
+			const UINT16 s = (((*((INT16*)src))	>> 8) + 128) & 0xff;
+			*((INT16*)dst) = s | (s << 8);
+			src = (INT16*)src+1;
+			dst = (INT16*)dst+1;
 			samples--;
 		}
 		break;
 	case 7:					//st16_to_st8
 		while( samples )
 		{
-			const unsigned short sl = (((*((short*)src))	>> 8) + 128) & 0xff;
-			const unsigned short sr = (((*((short*)src + 1))>> 8) + 128) & 0xff;
-			*((short*)dst) = sl | (sr << 8);
-			src = (long*)src+1;
-			dst = (short*)dst+1;
+			const UINT16 sl = (((*((INT16*)src))	>> 8) + 128) & 0xff;
+			const UINT16 sr = (((*((INT16*)src + 1))>> 8) + 128) & 0xff;
+			*((INT16*)dst) = sl | (sr << 8);
+			src = (INT32*)src+1;
+			dst = (INT16*)dst+1;
 			samples--;
 		}
 		break;
@@ -491,11 +495,11 @@ void wav_wavecnv(int cnvnmb, void* dst, void* src, unsigned int samples)
 	case 11:				//st16_to_mo16
 		while( samples )
 		{
-			const int sl = (int)(*((short*)src));
-			const int sr = (int)(*((short*)src + 1));
-			*((short*)dst) = (short)((sl + sr) >> 1);
-			src = (long*)src+1;
-			dst = (short*)dst+1;
+			const int sl = (int)(*((INT16*)src));
+			const int sr = (int)(*((INT16*)src + 1));
+			*((INT16*)dst) = (INT16)((sl + sr) >> 1);
+			src = (INT32*)src+1;
+			dst = (INT16*)dst+1;
 			samples--;
 		}
 		break;
@@ -506,9 +510,10 @@ void wav_wavecnv(int cnvnmb, void* dst, void* src, unsigned int samples)
 	case 14:				//mo16_to_st16
 		while( samples )
 		{
-			const unsigned long s = *((unsigned short*)src);
-			*((long*)dst) = s | (s << 16);
-			src = (short*)src+1;	dst = (long*)dst+1;	samples--;
+			const UINT32 s = *((UINT16*)src);
+			*((INT32*)dst) = s | (s << 16);
+			src = (INT16*)src+1;	dst = (INT32*)dst+1;
+			samples--;
 		}
 		break;
 	case 15:
@@ -528,10 +533,10 @@ static int rr1, rr2;
 			wsre->pos += 0x10000;\
 			if (wsre->pos >= wsre->pos_end)\
 			{\
-				const unsigned int j = ((wsre->pos + 0xffff) >> 16) + wsre->next;\
-				const unsigned int	s=wsre->pos_start & 0xffff;\
-				unsigned int		e=wsre->pos_end & 0xffff;\
-				unsigned int t = j<<16;\
+				const FPTR j = ((wsre->pos + 0xffff) >> 16) + wsre->next;\
+				const FPTR s=wsre->pos_start & 0xffff;\
+				FPTR e=wsre->pos_end & 0xffff;\
+				FPTR t = j<<16;\
 				int r1,r2;\
 \
 				wsre->count = 0;\
@@ -562,7 +567,7 @@ static int		r1, r2;
 			wsre->pos += 0x10000;\
 			if (wsre->pos >= wsre->pos_end)\
 			{\
-				const unsigned int j = ((wsre->pos + 0xffff) >> 16) + wsre->next;\
+				const FPTR j = ((wsre->pos + 0xffff) >> 16) + wsre->next;\
 				const double	s=(double)(wsre->pos_start & 0xffff) / 65536.0;\
 				double			e=(double)(wsre->pos_end & 0xffff) / 65536.0;\
 				double t = (double)j;\
@@ -602,12 +607,12 @@ static int		r1, r2;
 			}\
 			samples--;\
 		}\
-		samples = ((unsigned int)dst - destpos)/sizeof(dsti);
+		samples = ((FPTR)dst - destpos)/sizeof(dsti);
 
-unsigned int wav_wavecnv_resample(int cnvnmb, void* dst, void* src, unsigned int samples, struct WAV_SAMPLES_RESAMPLE *wsre)
+FPTR wav_wavecnv_resample(int cnvnmb, void* dst, void* src, FPTR samples, struct WAV_SAMPLES_RESAMPLE *wsre)
 {
-	const unsigned int destpos = (unsigned int)dst;
-	unsigned int i;
+	const FPTR destpos = (FPTR)dst;
+	FPTR i;
 
 
 	switch (cnvnmb & 0xf)
@@ -617,19 +622,19 @@ unsigned int wav_wavecnv_resample(int cnvnmb, void* dst, void* src, unsigned int
 	case 1:
 		break;
 	case 2:					//mo16_to_mo8
-		RESAMPLE_S(unsigned char,short,samples,wsre)
+		RESAMPLE_S(UINT8, INT16, samples, wsre)
 					rr1 = (sample <<16 >>16);
 					r1 += (rr1 * alpha);
 				}
 				if(r1>(ClippingMax<<15)) r1=ClippingMax<<15;
 				else	if(r1<(ClippingMin<<15)) r1=ClippingMin<<15;
 
-				*((unsigned char*)dst) = ((r1 >> (15+8)) + 128) & 0xff;
-				dst = (unsigned char*)dst+1;
-		RESAMPLE_E(unsigned char,short,samples,wsre)
+				*((UINT8*)dst) = ((r1 >> (15+8)) + 128) & 0xff;
+				dst = (UINT8*)dst+1;
+		RESAMPLE_E(UINT8, INT16, samples, wsre)
 		break;
 	case 3:					//st16_to_mo8
-		RESAMPLE_S(unsigned char,long,samples,wsre)
+		RESAMPLE_S(UINT8, INT32, samples, wsre)
 					rr1 = (sample <<16 >>16);
 					rr2 = (sample >> 16);
 					r1 += (rr1 * alpha);
@@ -641,28 +646,28 @@ unsigned int wav_wavecnv_resample(int cnvnmb, void* dst, void* src, unsigned int
 				if(r2>(ClippingMax<<15)) r2=ClippingMax<<15;
 				else	if(r2<(ClippingMin<<15)) r2=ClippingMin<<15;
 
-				*((unsigned char*)dst) = ((((r1>>15) + (r2>>15))>>(1+8)) + 128) & 0xff;
-				dst = (unsigned char*)dst+1;
-		RESAMPLE_E(unsigned char,long,samples,wsre)
+				*((UINT8*)dst) = ((((r1>>15) + (r2>>15))>>(1+8)) + 128) & 0xff;
+				dst = (UINT8*)dst+1;
+		RESAMPLE_E(UINT8, INT32, samples, wsre)
 		break;
 	case 4:
 		break;
 	case 5:
 		break;
 	case 6:					//mo16_to_st8
-		RESAMPLE_S(short,short,samples,wsre)
+		RESAMPLE_S(INT16, INT16, samples, wsre)
 					rr1 = (sample <<16 >>16);
 					r1 += (rr1 * alpha);
 				}
 				if(r1>(ClippingMax<<15)) r1=ClippingMax<<15;
 				else	if(r1<(ClippingMin<<15)) r1=ClippingMin<<15;
 
-				*((short*)dst) = (((r1 >> (15+8))+ 128) & 0xff) | (((r1 >> 15)+ (128<<8)) & 0xff00);
-				dst = (short*)dst+1;
-		RESAMPLE_E(short,short,samples,wsre)
+				*((INT16*)dst) = (((r1 >> (15+8))+ 128) & 0xff) | (((r1 >> 15)+ (128<<8)) & 0xff00);
+				dst = (INT16*)dst+1;
+		RESAMPLE_E(INT16, INT16, samples, wsre)
 		break;
 	case 7:					//st16_to_st8
-		RESAMPLE_S(short,long,samples,wsre)
+		RESAMPLE_S(INT16, INT32, samples, wsre)
 					rr1 = (sample <<16 >>16);
 					rr2 = (sample >> 16);
 
@@ -675,9 +680,9 @@ unsigned int wav_wavecnv_resample(int cnvnmb, void* dst, void* src, unsigned int
 				if(r2>(ClippingMax<<15)) r2=ClippingMax<<15;
 				else	if(r2<(ClippingMin<<15)) r2=ClippingMin<<15;
 				
-				*((short*)dst) = (((r1 >> (15+8))+ 128) & 0xff) | (((r2 >> 15)+ (128<<8)) & 0xff00);
-				dst = (short*)dst+1;
-		RESAMPLE_E(short,long,samples,wsre)
+				*((INT16*)dst) = (((r1 >> (15+8))+ 128) & 0xff) | (((r2 >> 15)+ (128<<8)) & 0xff00);
+				dst = (INT16*)dst+1;
+		RESAMPLE_E(INT16, INT32, samples, wsre)
 		break;
 
 	case 8:
@@ -685,19 +690,19 @@ unsigned int wav_wavecnv_resample(int cnvnmb, void* dst, void* src, unsigned int
 	case 9:
 		break;
 	case 10:				//mo16_to_mo16
-		RESAMPLE_S(short,short,samples,wsre)
+		RESAMPLE_S(INT16, INT16, samples, wsre)
 					rr1 = (sample <<16 >>16);
 					r1 += (rr1 * alpha);
 				}
 				if(r1>(ClippingMax<<15)) r1=ClippingMax<<15;
 				else	if(r1<(ClippingMin<<15)) r1=ClippingMin<<15;
 
-				*((short*)dst) = (short)(r1>>15);
-				dst = (short*)dst+1;
-		RESAMPLE_E(short,short,samples,wsre)
+				*((INT16*)dst) = (INT16)(r1>>15);
+				dst = (INT16*)dst+1;
+		RESAMPLE_E(INT16, INT16, samples ,wsre)
 		break;
 	case 11:				//st16_to_mo16
-		RESAMPLE_S(short,long,samples,wsre)
+		RESAMPLE_S(INT16, INT32, samples, wsre)
 					rr1 = (sample <<16 >>16);
 					rr2 = (sample >> 16);
 
@@ -710,28 +715,28 @@ unsigned int wav_wavecnv_resample(int cnvnmb, void* dst, void* src, unsigned int
 				if(r2>(ClippingMax<<15)) r2=ClippingMax<<15;
 				else	if(r2<(ClippingMin<<15)) r2=ClippingMin<<15;
 
-				*((short*)dst) = (short)(((r1>>15) + (r2>>15))>>1);
-				dst = (short*)dst+1;
-		RESAMPLE_E(short,long,samples,wsre)
+				*((INT16*)dst) = (INT16)(((r1>>15) + (r2>>15))>>1);
+				dst = (INT16*)dst+1;
+		RESAMPLE_E(INT16, INT32, samples, wsre)
 		break;
 	case 12:
 		break;
 	case 13:
 		break;
 	case 14:				//mo16_to_st16
-		RESAMPLE_S(long,short,samples,wsre)
+		RESAMPLE_S(INT32, INT16, samples, wsre)
 					rr1 = (sample <<16 >>16);
 					r1 += (rr1 * alpha);
 				}
 				if(r1>(ClippingMax<<15)) r1=ClippingMax<<15;
 				else	if(r1<(ClippingMin<<15)) r1=ClippingMin<<15;
 
-				*((long*)dst) = ((r1>>15) & 0xffff) | ((r1<<1) & 0xffff0000);
-				dst = (long*)dst+1;
-		RESAMPLE_E(long,short,samples,wsre)
+				*((INT32*)dst) = ((r1>>15) & 0xffff) | ((r1<<1) & 0xffff0000);
+				dst = (INT32*)dst+1;
+		RESAMPLE_E(INT32, INT16, samples, wsre)
 		break;
 	case 15:				//st16_to_st16
-		RESAMPLE_S(long,long,samples,wsre)
+		RESAMPLE_S(INT32, INT32, samples, wsre)
 					rr1 = (sample <<16 >>16);
 					rr2 = (sample >> 16);
 
@@ -745,9 +750,9 @@ unsigned int wav_wavecnv_resample(int cnvnmb, void* dst, void* src, unsigned int
 				else	if(r2<(ClippingMin<<15)) r2=ClippingMin<<15;
 				
 				r1 = ((r1>>15) & 0xffff) | ((r2<<1)&0xffff0000);
-				*((long*)dst) = r1;
-				dst = (long*)dst+1;
-		RESAMPLE_E(long,long,samples,wsre)
+				*((INT32*)dst) = r1;
+				dst = (INT32*)dst+1;
+		RESAMPLE_E(INT32, INT32, samples, wsre)
 		break;
 	}
 	return samples;
@@ -756,10 +761,10 @@ unsigned int wav_wavecnv_resample(int cnvnmb, void* dst, void* src, unsigned int
 
 
 
-unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned int samples, struct WAV_SAMPLES_RESAMPLE *wsre)
+FPTR wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, FPTR samples, struct WAV_SAMPLES_RESAMPLE *wsre)
 {
-	const unsigned int destpos = (unsigned int)dst;
-	unsigned int i;
+	const FPTR destpos = (FPTR)dst;
+	FPTR i;
 
 
 	switch (cnvnmb & 0xf)
@@ -769,7 +774,7 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 	case 1:
 		break;
 	case 2:					//mo16_to_mo8
-		RESAMPLE_S_F(unsigned char,short,samples,wsre)
+		RESAMPLE_S_F(UINT8, INT16, samples, wsre)
 					ff1 = (double)(sample <<16 >>16);
 					f1 += (ff1 * alpha);
 				}
@@ -778,12 +783,12 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 				if(r1>ClippingMax) r1=ClippingMax;
 				else	if(r1<ClippingMin) r1=ClippingMin;
 
-				*((unsigned char*)dst) = ((r1 >> 8) + 128) & 0xff;
-				dst = (char*)dst+1;
-		RESAMPLE_E(unsigned char,short,samples,wsre)
+				*((UINT8*)dst) = ((r1 >> 8) + 128) & 0xff;
+				dst = (INT8*)dst+1;
+		RESAMPLE_E(UINT8, INT16, samples, wsre)
 		break;
 	case 3:					//st16_to_mo8
-		RESAMPLE_S_F(unsigned char,long,samples,wsre)
+		RESAMPLE_S_F(UINT8, INT32, samples, wsre)
 					ff1 = (double)(sample <<16 >>16);
 					ff2 = (double)(sample >> 16);
 
@@ -798,16 +803,16 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 				if(r2>ClippingMax) r2=ClippingMax;
 				else	if(r2<ClippingMin) r2=ClippingMin;
 
-				*((unsigned char*)dst) = (((r1 + r2)>>(1+8)) + 128) & 0xff;
-				dst = (char*)dst+1;
-		RESAMPLE_E(unsigned char,long,samples,wsre)
+				*((UINT8*)dst) = (((r1 + r2)>>(1+8)) + 128) & 0xff;
+				dst = (INT8*)dst+1;
+		RESAMPLE_E(UINT8, INT32, samples, wsre)
 		break;
 	case 4:
 		break;
 	case 5:
 		break;
 	case 6:					//mo16_to_st8
-		RESAMPLE_S_F(short,short,samples,wsre)
+		RESAMPLE_S_F(INT16, INT16, samples, wsre)
 					ff1 = (double)(sample <<16 >>16);
 					f1 += (ff1 * alpha);
 				}
@@ -816,12 +821,12 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 				if(r1>ClippingMax) r1=ClippingMax;
 				else	if(r1<ClippingMin) r1=ClippingMin;
 
-				*((short*)dst) = (((r1 >> 8)+ 128) & 0xff) | ((r1 + (128<<8)) & 0xff00);
-				dst = (short*)dst+1;
-		RESAMPLE_E(short,short,samples,wsre)
+				*((INT16*)dst) = (((r1 >> 8)+ 128) & 0xff) | ((r1 + (128<<8)) & 0xff00);
+				dst = (INT16*)dst+1;
+		RESAMPLE_E(INT16, INT16, samples, wsre)
 		break;
 	case 7:					//st16_to_st8
-		RESAMPLE_S_F(short,long,samples,wsre)
+		RESAMPLE_S_F(INT16, INT32, samples, wsre)
 					ff1 = (double)(sample <<16 >>16);
 					ff2 = (double)(sample >> 16);
 
@@ -837,9 +842,9 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 				else	if(r2<ClippingMin) r2=ClippingMin;
 
 
-				*((short*)dst) = (((r1 >> 8)+ 128) & 0xff) | ((r2 + (128<<8)) & 0xff00);
-				dst = (short*)dst+1;
-		RESAMPLE_E(short,long,samples,wsre)
+				*((INT16*)dst) = (((r1 >> 8)+ 128) & 0xff) | ((r2 + (128<<8)) & 0xff00);
+				dst = (INT16*)dst+1;
+		RESAMPLE_E(INT16, INT32, samples, wsre)
 		break;
 
 	case 8:
@@ -847,7 +852,7 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 	case 9:
 		break;
 	case 10:				//mo16_to_mo16
-		RESAMPLE_S_F(short,short,samples,wsre)
+		RESAMPLE_S_F(INT16, INT16, samples, wsre)
 					ff1 = (double)(sample <<16 >>16);
 					f1 += (ff1 * alpha);
 				}
@@ -856,12 +861,12 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 				if(r1>ClippingMax) r1=ClippingMax;
 				else	if(r1<ClippingMin) r1=ClippingMin;
 
-				*((short*)dst) = (short)r1;
-				dst = (short*)dst+1;
-		RESAMPLE_E(short,short,samples,wsre)
+				*((INT16*)dst) = (INT16)r1;
+				dst = (INT16*)dst+1;
+		RESAMPLE_E(INT16, INT16, samples, wsre)
 		break;
 	case 11:				//st16_to_mo16
-		RESAMPLE_S_F(short,long,samples,wsre)
+		RESAMPLE_S_F(INT16, INT32, samples, wsre)
 					ff1 = (double)(sample <<16 >>16);
 					ff2 = (double)(sample >> 16);
 
@@ -876,16 +881,16 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 				if(r2>ClippingMax) r2=ClippingMax;
 				else	if(r2<ClippingMin) r2=ClippingMin;
 
-				*((short*)dst) = (short)((r1 + r2)>>1);
-				dst = (short*)dst+1;
-		RESAMPLE_E(short,long,samples,wsre)
+				*((INT16*)dst) = (INT16)((r1 + r2)>>1);
+				dst = (INT16*)dst+1;
+		RESAMPLE_E(INT16, INT32, samples, wsre)
 		break;
 	case 12:
 		break;
 	case 13:
 		break;
 	case 14:				//mo16_to_st16
-		RESAMPLE_S_F(long,short,samples,wsre)
+		RESAMPLE_S_F(INT32, INT16, samples, wsre)
 					ff1 = (double)(sample <<16 >>16);
 					f1 += (ff1 * alpha);
 				}
@@ -894,12 +899,12 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 				if(r1>ClippingMax) r1=ClippingMax;
 				else	if(r1<ClippingMin) r1=ClippingMin;
 
-				*((long*)dst) = (r1 & 0xffff) | ((r1<<16) & 0xffff0000);
-				dst = (long*)dst+1;
-		RESAMPLE_E(long,short,samples,wsre)
+				*((INT32*)dst) = (r1 & 0xffff) | ((r1<<16) & 0xffff0000);
+				dst = (INT32*)dst+1;
+		RESAMPLE_E(INT32, INT16, samples, wsre)
 		break;
 	case 15:				//st16_to_st16
-		RESAMPLE_S_F(long,long,samples,wsre)
+		RESAMPLE_S_F(INT32, INT32, samples, wsre)
 					ff1 = (double)(sample <<16 >>16);
 					ff2 = (double)(sample >> 16);
 
@@ -914,9 +919,9 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 				if(r2>ClippingMax) r2=ClippingMax;
 				else	if(r2<ClippingMin) r2=ClippingMin;
 
-				*((long*)dst) = (r1 & 0xffff) | ((r2<<16) & 0xffff0000);
-				dst = (long*)dst+1;
-		RESAMPLE_E(long,long,samples,wsre)
+				*((INT32*)dst) = (r1 & 0xffff) | ((r2<<16) & 0xffff0000);
+				dst = (INT32*)dst+1;
+		RESAMPLE_E(INT32, INT32, samples, wsre)
 		break;
 	}
 	return samples;
@@ -930,7 +935,7 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 			src = (srci*)src+1;\
 			if (wsre->count>1)\
 			{\
-				unsigned int j;\
+				FPTR j;\
 				for(j=wsre->pos_start; j<0x10000; j+=wsre->adder)\
 				{\
 					const int sample_a = ((srci*)wsre->buf)[1];\
@@ -944,7 +949,7 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 			src = (SRCI*)src+1;\
 			if (wsre->count>1)\
 			{\
-				unsigned int j;\
+				FPTR j;\
 				for(j=wsre->pos_start; j<0x10000; j+=wsre->adder)\
 				{\
 					const int sample_a = ((SRCI*)wsre->buf)[1];\
@@ -998,11 +1003,11 @@ unsigned int wav_wavecnv_resample_f(int cnvnmb, void* dst, void* src, unsigned i
 			wsre->count=1;\
 			samples--;\
 		}\
-		samples = ((unsigned int)dst - destpos)/sizeof(dsti);
+		samples = ((FPTR)dst - destpos)/sizeof(dsti);
 
-unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int samples, struct WAV_SAMPLES_RESAMPLE *wsre)
+FPTR wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, FPTR samples, struct WAV_SAMPLES_RESAMPLE *wsre)
 {
-	const unsigned int destpos = (unsigned int)dst;
+	const FPTR destpos = (FPTR)dst;
 
 	switch (cnvnmb & 0xf)
 	{
@@ -1011,7 +1016,7 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 	case 1:
 		break;
 	case 2:					//mo16_to_mo8
-		STRETCH_S(char,short,samples,wsre)
+		STRETCH_S(INT8, INT16, samples, wsre)
 					int rr1;
 					int r1 = (sample_a <<16 >>16);
 					r1 = r1 * alpha;
@@ -1022,12 +1027,12 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 					if(r1>(ClippingMax<<15)) r1=ClippingMax<<15;
 					else	if(r1<(ClippingMin<<15)) r1=ClippingMin<<15;
 
-					*((unsigned char*)dst) = ((r1 >> (15+8)) + 128) & 0xff;
-					dst = (char*)dst+1;
-		STRETCH_E(char,short,samples,wsre)
+					*((UINT8*)dst) = ((r1 >> (15+8)) + 128) & 0xff;
+					dst = (INT8*)dst+1;
+		STRETCH_E(INT8, INT16, samples, wsre)
 		break;
 	case 3:					//st16_to_mo8
-		STRETCH_S(char,long,samples,wsre)
+		STRETCH_S(INT8, INT32, samples, wsre)
 					int rr1,rr2;
 					int r1 = (sample_a <<16 >>16);
 					int r2 = (sample_a >> 16);
@@ -1044,16 +1049,16 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 					if(r2>(ClippingMax<<15)) r2=ClippingMax<<15;
 					else	if(r2<(ClippingMin<<15)) r2=ClippingMin<<15;
 					
-					*((unsigned char*)dst) = ((((r1>>15) + (r2>>15))>>(1+8)) + 128) & 0xff;
-					dst = (char*)dst+1;
-		STRETCH_E(char,long,samples,wsre)
+					*((UINT8*)dst) = ((((r1>>15) + (r2>>15))>>(1+8)) + 128) & 0xff;
+					dst = (INT8*)dst+1;
+		STRETCH_E(INT8, INT32, samples, wsre)
 		break;
 	case 4:
 		break;
 	case 5:
 		break;
 	case 6:					//mo16_to_st8
-		STRETCH_S(short,short,samples,wsre)
+		STRETCH_S(INT16, INT16, samples, wsre)
 					int rr1;
 					int r1 = (sample_a <<16 >>16);
 					r1 = r1 * alpha;
@@ -1064,12 +1069,12 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 					if(r1>(ClippingMax<<15)) r1=ClippingMax<<15;
 					else	if(r1<(ClippingMin<<15)) r1=ClippingMin<<15;
 		
-					*((short*)dst) = (((r1 >> (15+8))+ 128) & 0xff) | (((r1 >> 15)+ (128<<8)) & 0xff00);
-					dst = (short*)dst+1;
-		STRETCH_E(short,short,samples,wsre)
+					*((INT16*)dst) = (((r1 >> (15+8))+ 128) & 0xff) | (((r1 >> 15)+ (128<<8)) & 0xff00);
+					dst = (INT16*)dst+1;
+		STRETCH_E(INT16, INT16, samples, wsre)
 		break;
 	case 7:					//st16_to_st8
-		STRETCH_S(short,long,samples,wsre)
+		STRETCH_S(INT16, INT32, samples, wsre)
 					int rr1,rr2;
 					int r1 = (sample_a <<16 >>16);
 					int r2 = (sample_a >> 16);
@@ -1086,9 +1091,9 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 					if(r2>(ClippingMax<<15)) r2=ClippingMax<<15;
 					else	if(r2<(ClippingMin<<15)) r2=ClippingMin<<15;
 
-					*((short*)dst) = (((r1 >> (15+8))+ 128) & 0xff) | (((r2 >> 15)+ (128<<8)) & 0xff00);
-					dst = (short*)dst+1;
-		STRETCH_E(short,long,samples,wsre)
+					*((INT16*)dst) = (((r1 >> (15+8))+ 128) & 0xff) | (((r2 >> 15)+ (128<<8)) & 0xff00);
+					dst = (INT16*)dst+1;
+		STRETCH_E(INT16, INT32, samples, wsre)
 		break;
 
 	case 8:
@@ -1096,7 +1101,7 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 	case 9:
 		break;
 	case 10:				//mo16_to_mo16
-		STRETCH_S(short,short,samples,wsre)
+		STRETCH_S(INT16, INT16, samples, wsre)
 					int rr1;
 					int r1 = (sample_a <<16 >>16);
 					r1 = r1 * alpha;
@@ -1107,12 +1112,12 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 					if(r1>(ClippingMax<<15)) r1=ClippingMax<<15;
 					else	if(r1<(ClippingMin<<15)) r1=ClippingMin<<15;
 
-					*((short*)dst) = (r1>>15) & 0xffff;
-					dst = (short*)dst+1;
-		STRETCH_E(short,short,samples,wsre)
+					*((INT16*)dst) = (r1>>15) & 0xffff;
+					dst = (INT16*)dst+1;
+		STRETCH_E(INT16, INT16, samples, wsre)
 		break;
 	case 11:				//st16_to_mo16
-		STRETCH_S(short,long,samples,wsre)
+		STRETCH_S(INT16, INT32, samples, wsre)
 					int rr1,rr2;
 					int r1 = (sample_a <<16 >>16);
 					int r2 = (sample_a >> 16);
@@ -1129,16 +1134,16 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 					if(r2>(ClippingMax<<15)) r2=ClippingMax<<15;
 					else	if(r2<(ClippingMin<<15)) r2=ClippingMin<<15;
 					
-					*((short*)dst) = (short)(((r1>>15) + (r2>>15))>>1);
-					dst = (short*)dst+1;
-		STRETCH_E(short,long,samples,wsre)
+					*((INT16*)dst) = (INT16)(((r1>>15) + (r2>>15))>>1);
+					dst = (INT16*)dst+1;
+		STRETCH_E(INT16, INT32, samples, wsre)
 		break;
 	case 12:
 		break;
 	case 13:
 		break;
 	case 14:				//mo16_to_st16
-		STRETCH_S(long,short,samples,wsre)
+		STRETCH_S(INT32, INT16, samples, wsre)
 					int rr1;
 					int r1 = (sample_a <<16 >>16);
 					r1 = r1 * alpha;
@@ -1149,12 +1154,12 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 					if(r1>(ClippingMax<<15)) r1=ClippingMax<<15;
 					else	if(r1<(ClippingMin<<15)) r1=ClippingMin<<15;
 		
-					*((long*)dst) = ((r1>>15) & 0xffff) | ((r1<<1) & 0xffff0000);
-					dst = (long*)dst+1;
-		STRETCH_E(long,short,samples,wsre)
+					*((INT32*)dst) = ((r1>>15) & 0xffff) | ((r1<<1) & 0xffff0000);
+					dst = (INT32*)dst+1;
+		STRETCH_E(INT32, INT16, samples, wsre)
 		break;
 	case 15:				//st16_to_st16
-		STRETCH_S(long,long,samples,wsre)
+		STRETCH_S(INT32, INT32, samples, wsre)
 					int rr1,rr2;
 					int r1 = (sample_a <<16 >>16);
 					int r2 = (sample_a >> 16);
@@ -1171,9 +1176,9 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 					if(r2>(ClippingMax<<15)) r2=ClippingMax<<15;
 					else	if(r2<(ClippingMin<<15)) r2=ClippingMin<<15;
 
-					*((long*)dst) = ((r1>>15) & 0xffff) | ((r2<<1)&0xffff0000);
-					dst = (long*)dst+1;
-		STRETCH_E(long,long,samples,wsre)
+					*((INT32*)dst) = ((r1>>15) & 0xffff) | ((r2<<1)&0xffff0000);
+					dst = (INT32*)dst+1;
+		STRETCH_E(INT32, INT32, samples, wsre)
 		break;
 	}
 
@@ -1183,9 +1188,9 @@ unsigned int wav_wavecnv_stretch(int cnvnmb, void* dst, void* src, unsigned int 
 
 
 
-unsigned int wav_wavecnv_stretch_f(int cnvnmb, void* dst, void* src, unsigned int samples, struct WAV_SAMPLES_RESAMPLE *wsre)
+FPTR wav_wavecnv_stretch_f(int cnvnmb, void* dst, void* src, FPTR samples, struct WAV_SAMPLES_RESAMPLE *wsre)
 {
-	const unsigned int destpos = (unsigned int)dst;
+	const FPTR destpos = (FPTR)dst;
 
 
 	switch (cnvnmb & 0xf)
@@ -1195,36 +1200,36 @@ unsigned int wav_wavecnv_stretch_f(int cnvnmb, void* dst, void* src, unsigned in
 	case 1:
 		break;
 	case 2:					//mo16_to_mo8
-		STRETCH_S_F(char,short,samples,wsre)
+		STRETCH_S_F(INT8, INT16, samples, wsre)
 		STRETCH_ALPHA_MONO_F
-					*((unsigned char*)dst) = ((r1 >> 8) + 128) & 0xff;
-					dst = (char*)dst+1;
-		STRETCH_E(char,short,samples,wsre)
+					*((UINT8*)dst) = ((r1 >> 8) + 128) & 0xff;
+					dst = (INT8*)dst+1;
+		STRETCH_E(INT8, INT16, samples, wsre)
 		break;
 	case 3:					//st16_to_mo8
-		STRETCH_S_F(char,long,samples,wsre)
+		STRETCH_S_F(INT8, INT32, samples, wsre)
 		STRETCH_ALPHA_STEREO_F
-					*((unsigned char*)dst) = (((r1 + r2)>>(1+8)) + 128) & 0xff;
-					dst = (char*)dst+1;
-		STRETCH_E(char,long,samples,wsre)
+					*((UINT8*)dst) = (((r1 + r2)>>(1+8)) + 128) & 0xff;
+					dst = (INT8*)dst+1;
+		STRETCH_E(INT8, INT32, samples, wsre)
 		break;
 	case 4:
 		break;
 	case 5:
 		break;
 	case 6:					//mo16_to_st8
-		STRETCH_S_F(short,short,samples,wsre)
+		STRETCH_S_F(INT16, INT16, samples, wsre)
 		STRETCH_ALPHA_MONO_F
-					*((short*)dst) = (((r1 >> 8)+ 128) & 0xff) | ((r1 + (128<<8)) & 0xff00);
-					dst = (short*)dst+1;
-		STRETCH_E(short,short,samples,wsre)
+					*((INT16*)dst) = (((r1 >> 8)+ 128) & 0xff) | ((r1 + (128<<8)) & 0xff00);
+					dst = (INT16*)dst+1;
+		STRETCH_E(INT16, INT16, samples, wsre)
 		break;
 	case 7:					//st16_to_st8
-		STRETCH_S_F(short,long,samples,wsre)
+		STRETCH_S_F(INT16, INT32, samples, wsre)
 		STRETCH_ALPHA_STEREO_F
-					*((short*)dst) = (((r1 >> 8)+ 128) & 0xff) | ((r2 + (128<<8)) & 0xff00);
-					dst = (short*)dst+1;
-		STRETCH_E(short,long,samples,wsre)
+					*((INT16*)dst) = (((r1 >> 8)+ 128) & 0xff) | ((r2 + (128<<8)) & 0xff00);
+					dst = (INT16*)dst+1;
+		STRETCH_E(INT16, INT32, samples, wsre)
 		break;
 
 	case 8:
@@ -1232,36 +1237,36 @@ unsigned int wav_wavecnv_stretch_f(int cnvnmb, void* dst, void* src, unsigned in
 	case 9:
 		break;
 	case 10:				//mo16_to_mo16
-		STRETCH_S_F(short,short,samples,wsre)
+		STRETCH_S_F(INT16, INT16, samples, wsre)
 		STRETCH_ALPHA_MONO_F
-					*((short*)dst) = r1 & 0xffff;
-					dst = (short*)dst+1;
-		STRETCH_E(short,short,samples,wsre)
+					*((INT16*)dst) = r1 & 0xffff;
+					dst = (INT16*)dst+1;
+		STRETCH_E(INT16, INT16, samples, wsre)
 		break;
 	case 11:				//st16_to_mo16
-		STRETCH_S_F(short,long,samples,wsre)
+		STRETCH_S_F(INT16, INT32, samples, wsre)
 		STRETCH_ALPHA_STEREO_F
-					*((short*)dst) = (short)((r1 + r2)>>1);
-					dst = (short*)dst+1;
-		STRETCH_E(short,long,samples,wsre)
+					*((INT16*)dst) = (INT16)((r1 + r2)>>1);
+					dst = (INT16*)dst+1;
+		STRETCH_E(INT16, INT32, samples, wsre)
 		break;
 	case 12:
 		break;
 	case 13:
 		break;
 	case 14:				//mo16_to_st16
-		STRETCH_S_F(long,short,samples,wsre)
+		STRETCH_S_F(INT32, INT16, samples, wsre)
 		STRETCH_ALPHA_MONO_F
-					*((long*)dst) = (r1 & 0xffff) | (r1 & 0xffff0000);
-					dst = (long*)dst+1;
-		STRETCH_E(long,short,samples,wsre)
+					*((INT32*)dst) = (r1 & 0xffff) | (r1 & 0xffff0000);
+					dst = (INT32*)dst+1;
+		STRETCH_E(INT32, INT16, samples, wsre)
 		break;
 	case 15:				//st16_to_st16
-		STRETCH_S_F(long,long,samples,wsre)
+		STRETCH_S_F(INT32, INT32, samples, wsre)
 		STRETCH_ALPHA_STEREO_F
-					*((long*)dst) = (r1 & 0xffff) | ((r2<<16) & 0xffff0000);
-					dst = (long*)dst+1;
-		STRETCH_E(long,long,samples,wsre)
+					*((INT32*)dst) = (r1 & 0xffff) | ((r2<<16) & 0xffff0000);
+					dst = (INT32*)dst+1;
+		STRETCH_E(INT32, INT32, samples, wsre)
 
 		break;
 	}

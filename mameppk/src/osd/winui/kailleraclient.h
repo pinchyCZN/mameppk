@@ -2,8 +2,8 @@
 #ifndef KAILLERA_CLIENT_H
 #define KAILLERA_CLIENT_H
 
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
+//#define WIN32_LEAN_AND_MEAN
+//#include <windows.h>
 #include <tchar.h>
 
 

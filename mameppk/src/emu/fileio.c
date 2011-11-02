@@ -37,14 +37,21 @@
 
 ***************************************************************************/
 
+// standard windows headers
+#define WIN32_LEAN_AND_MEAN
+#define _WIN32_IE 0x0501
+#include <windows.h>
+
+// standard C headers
+#include <stdio.h>
+#include <direct.h>
+#include <sys/stat.h>
+
+// MAME/MAMEUI headers
 #include "emu.h"
 #include "hash.h"
 #include "unzip.h"
 #include "fileio.h"
-#include <windows.h>
-#include <stdio.h>
-#include <direct.h>
-#include <sys/stat.h>
 #include "zlib.h"
 #include "translate.h"
 

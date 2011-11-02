@@ -37,12 +37,14 @@
   2004.5. Modified by DarkCoder for EK-MAME Plus!
 ***************************************************************************/
 
-#include "emu.h"
-
+// standard windows headers
 #define WIN32_LEAN_AND_MEAN
+#define _WIN32_IE 0x0501
 #include <windows.h>
 #include <windowsx.h>
 #include <shellapi.h>
+
+// standard C headers
 #include <stdio.h>
 #include <io.h>
 #include <fcntl.h>
@@ -52,13 +54,9 @@
 #include <sys/stat.h>
 #include <wingdi.h>
 #include <tchar.h>
-/* to shutup the warnings about functions were NOT calling in vfw.h */
-#ifdef CDECL
-#undef CDECL
-#define CDECL CLIB_DECL
-#endif
-#include <vfw.h>
 
+// MAME/MAMEUI headers
+#include "emu.h"
 #include "deprecat.h"
 
 #include "bitmask.h"	// for LPBITS structure definition (used in winui/options.h)
@@ -72,6 +70,9 @@
 #ifndef BMP_PALSIZE
 #define BMP_PALSIZE		256
 #endif
+
+/* to shutup the warnings about functions were NOT calling in vfw.h */
+#include <vfw.h>
 
 //#include "win32text.h"
 

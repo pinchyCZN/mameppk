@@ -1,5 +1,30 @@
+/***************************************************************************
+
+  M.A.M.E.UI  -  Multiple Arcade Machine Emulator with User Interface
+  Win32 Portions Copyright (C) 1997-2003 Michael Soderstrom and Chris Kirmse,
+  Copyright (C) 2003-2007 Chris Kirmse and the MAME32/MAMEUI team.
+
+  This file is part of MAMEUI, and may only be used, modified and
+  distributed under the terms of the MAME license, in "readme.txt".
+  By continuing to use, modify or distribute this file you indicate
+  that you have read the license and understand and accept it fully.
+
+ ***************************************************************************/
+
+ /***************************************************************************
+
+  ui_temp.c
+
+***************************************************************************/
 
 
+// standard windows headers
+#define WIN32_LEAN_AND_MEAN
+#define _WIN32_IE 0x0501
+#include <windows.h>
+
+
+// MAME/MAMEUI headers
 #include "emu.h"
 #include "extmem.h"
 #include "ui_temp.h"
@@ -757,8 +782,8 @@ static game_memory_list	GameRam_SyncCheck[MAX_CPU][MAX_MEMORY_BLOCKS];
 
 static unsigned int nTotalGameRamSize_KailleraStateSave;
 static unsigned int nTotalGameRamSize_SyncCheck;
-static BOOL			bGameRamSearch_KailleraStateSave = FALSE;
-static BOOL			bGameRamSearch_SyncCheck = FALSE;
+static bool			bGameRamSearch_KailleraStateSave = false;
+static bool			bGameRamSearch_SyncCheck = false;
 
 //static unsigned int GameRamOverSize = 0;
 
@@ -804,7 +829,7 @@ static void reset_table(game_memory_list *table)
 	memset(table, 0, sizeof(game_memory_list) * MAX_MEMORY_BLOCKS);
 }
 
-static void init_game_ram_serch(running_machine &machine, game_memory_list *GameRam, unsigned int nGameRamOffset, unsigned int *pTotalGameRamSize, int use)
+static void init_game_ram_serch(running_machine &machine, game_memory_list *GameRam, FPTR nGameRamOffset, FPTR *pTotalGameRamSize, int use)
 {
 	device_t *cpu;
 	int cpunum, spacenum;
@@ -830,14 +855,14 @@ static void init_game_ram_serch(running_machine &machine, game_memory_list *Game
 	(*pTotalGameRamSize) = 0;
 
 	for (i=0; i<MAX_CPU; i++)
-		reset_table((game_memory_list*)((int)GameRam + i*nGameRamOffset));
+		reset_table((game_memory_list*)((FPTR)GameRam + i*nGameRamOffset));
 
 	/* loop over CPUs and address spaces */
 	for (cpu = machine.devicelist().first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
 	{
 		const address_space *space;
 		const address_map	*map;
-		game_memory_list	*ext_gr = (game_memory_list*)((int)GameRam + cpunum*nGameRamOffset);
+		game_memory_list	*ext_gr = (game_memory_list*)((FPTR)GameRam + cpunum*nGameRamOffset);
 
 		for (spacenum = 0; spacenum <= AS_PROGRAM; spacenum++)
 		{
@@ -1012,7 +1037,7 @@ static void init_game_ram_serch(running_machine &machine, game_memory_list *Game
 void end_game_ram_serch(void)
 {
 	int i;
-	if(bGameRamSearch_KailleraStateSave == TRUE)
+	if(bGameRamSearch_KailleraStateSave == true)
 	{
 		for (i=0; i<MAX_CPU; i++)
 			reset_table(&GameRam_KailleraStateSave[i][0]);
@@ -1023,8 +1048,8 @@ void end_game_ram_serch(void)
 			reset_table(&GameRam_SyncCheck[i][0]);
 	}
 
-	bGameRamSearch_SyncCheck			= FALSE;
-	bGameRamSearch_KailleraStateSave	= FALSE;
+	bGameRamSearch_SyncCheck			= false;
+	bGameRamSearch_KailleraStateSave	= false;
 	nTotalGameRamSize_SyncCheck			= 0;
 	nTotalGameRamSize_KailleraStateSave	= 0;
 
@@ -1038,7 +1063,7 @@ unsigned long game_ram_serch_crc32_(running_machine &machine, unsigned long crc)
 	device_t *cpu;
 	int cpunum, spacenum;
 	if (bGameRamSearch_SyncCheck == FALSE)
-		init_game_ram_serch(machine, &GameRam_SyncCheck[0][0], (unsigned int)&GameRam_SyncCheck[1][0] - (unsigned int)&GameRam_SyncCheck[0][0],&nTotalGameRamSize_SyncCheck, 1);
+		init_game_ram_serch(machine, &GameRam_SyncCheck[0][0], (FPTR)&GameRam_SyncCheck[1][0] - (FPTR)&GameRam_SyncCheck[0][0], (FPTR*)&nTotalGameRamSize_SyncCheck, 1);
 	bGameRamSearch_SyncCheck = TRUE;
 
 	if (nTotalGameRamSize_SyncCheck == 0) return crc;
@@ -1107,9 +1132,9 @@ unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine &machine,
 	device_t *cpu;
 	int cpunum;
 
-	if (bGameRamSearch_KailleraStateSave == FALSE)
-		init_game_ram_serch(machine, &GameRam_KailleraStateSave[0][0], (unsigned int)&GameRam_KailleraStateSave[1][0] - (unsigned int)&GameRam_KailleraStateSave[0][0], &nTotalGameRamSize_KailleraStateSave, 0);
-	bGameRamSearch_KailleraStateSave = TRUE;
+	if (bGameRamSearch_KailleraStateSave == false)
+		init_game_ram_serch(machine, &GameRam_KailleraStateSave[0][0], (FPTR)&GameRam_KailleraStateSave[1][0] - (FPTR)&GameRam_KailleraStateSave[0][0], (FPTR*)&nTotalGameRamSize_KailleraStateSave, 0);
+	bGameRamSearch_KailleraStateSave = true;
 
 	if (nTotalGameRamSize_KailleraStateSave == 0) return crc;
 

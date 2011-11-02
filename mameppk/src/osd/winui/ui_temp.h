@@ -196,15 +196,15 @@ void input_temp_Clear(void);
 void Kaillera_Emerald_End(void);
 
 
-#include <windows.h>
-#include "kailleraclient.h"
+//#include <windows.h>
+//#include "kailleraclient.h"
 
-extern HANDLE hProcess_KailleraIPC;
+//extern HANDLE hProcess_KailleraIPC;
 extern int nKailleraGameCallBack_IPC;
 extern unsigned long dwID_Thread_KailleraIPC;
 
 
-int load_16to8_bitmap(void *filename, RGBQUAD *rgbq, char* cnv);
+//int load_16to8_bitmap(void *filename, RGBQUAD *rgbq, char* cnv);
 
 void PreparationcheckClear(void);
 void PreparationcheckReset(void);

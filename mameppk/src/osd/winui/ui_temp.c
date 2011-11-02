@@ -1,9 +1,39 @@
-#include "emu.h"
-#include "ui_temp.h"
+/***************************************************************************
+
+  M.A.M.E.UI  -  Multiple Arcade Machine Emulator with User Interface
+  Win32 Portions Copyright (C) 1997-2003 Michael Soderstrom and Chris Kirmse,
+  Copyright (C) 2003-2007 Chris Kirmse and the MAME32/MAMEUI team.
+
+  This file is part of MAMEUI, and may only be used, modified and
+  distributed under the terms of the MAME license, in "readme.txt".
+  By continuing to use, modify or distribute this file you indicate
+  that you have read the license and understand and accept it fully.
+
+ ***************************************************************************/
+
+ /***************************************************************************
+
+  ui_temp.c
+
+***************************************************************************/
+
+
+// standard windows headers
+#define WIN32_LEAN_AND_MEAN
+#define _WIN32_IE 0x0501
+#include <windows.h>
+
+// standard C headers
 #include <stdlib.h>
 #include <stdio.h>
+
+
+// MAME/MAMEUI headers
+#include "emu.h"
+#include "ui_temp.h"
 #include "bitmask.h"
 #include "mui_opts.h"
+#include "kailleraclient.h"
 #include "KailleraChat.h"
 #include "uilang.h"
 #include "ui.h"
@@ -872,6 +902,7 @@ struct MAME_AVI_STATUS_SAVEDIR *load_avifile_dir(void *filename)
 #endif
 
 /*-------------------------------------------------*/
+#include <mmsystem.h>
 
 struct KAILLERA_CHATDATA_PREPARATIONCHECK KailleraChatdataPreparationcheck;
 
