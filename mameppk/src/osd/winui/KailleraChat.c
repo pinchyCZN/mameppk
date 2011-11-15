@@ -395,7 +395,7 @@ void KailleraChatExit(void)
 	for (i = 0; i < 6; i++)
 		if (szIMEStateStr_utf8[i])
 		{
-			free(szIMEStateStr_utf8[i]);
+			osd_free(szIMEStateStr_utf8[i]);
 			szIMEStateStr_utf8[i] = NULL;
 		}
 
@@ -588,12 +588,12 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
 
 			if (szInputBuf_utf8)
 			{
-				free(szInputBuf_utf8);
+				osd_free(szInputBuf_utf8);
 				szInputBuf_utf8 = NULL;
 			}
 			if (szConvStrBuf_utf8)
 			{
-				free(szConvStrBuf_utf8);
+				osd_free(szConvStrBuf_utf8);
 				szConvStrBuf_utf8 = NULL;
 			}
 
@@ -700,7 +700,7 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
             if (utf8_string)
             {
                 cx += ui_get_string_width(machine, utf8_string);
-                free(utf8_string);
+                osd_free(utf8_string);
             }
 
             szCursor[0] = *p;
@@ -710,7 +710,7 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
             if (utf8_string)
             {
                 strcpy(szCursor, utf8_string);
-                free(utf8_string);
+                osd_free(utf8_string);
             } else strcpy(szCursor, " ");
         }
         else
@@ -795,7 +795,7 @@ void KailleraChateReceive(char *szText)
 			strcat(szChatLog, utf8_string);
 		    strcat(szChatLog,"\n");
 		}
-		free(utf8_string);
+		osd_free(utf8_string);
 	}
 }
 
@@ -808,7 +808,7 @@ void KailleraChatLogClear(void)
 	if (utf8_string)
 	{
 		strcat(szChatLog, utf8_string);
-		free(utf8_string);
+		osd_free(utf8_string);
 	}
 
 	bShowLog      = FALSE;
@@ -881,7 +881,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
                     }
 					if (szInputBuf_utf8)
 					{
-						free(szInputBuf_utf8);
+						osd_free(szInputBuf_utf8);
 					}
 					szInputBuf_utf8 = utf8_from_astring(szInputBuf);
                 }
@@ -1033,7 +1033,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
                 ZeroMemory(szConvStrBuf, KC_BUFFER_MAX);
 				if (szConvStrBuf_utf8)
 				{
-					free(szConvStrBuf_utf8);
+					osd_free(szConvStrBuf_utf8);
 					szConvStrBuf_utf8 = NULL;
 				}
             }
@@ -1047,7 +1047,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
                 ZeroMemory(szConvStrBuf, KC_BUFFER_MAX);
 				if (szConvStrBuf_utf8)
 				{
-					free(szConvStrBuf_utf8);
+					osd_free(szConvStrBuf_utf8);
 				}
                 ImmGetCompositionString(hImc, GCS_COMPSTR, szConvStrBuf, KC_BUFFER_MAX - 1);
                 szConvStrBuf_utf8 = utf8_from_astring(szConvStrBuf);
@@ -1114,7 +1114,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
             ZeroMemory(szConvStrBuf, KC_BUFFER_MAX);
 			if (szConvStrBuf_utf8)
 			{
-				free(szConvStrBuf_utf8);
+				osd_free(szConvStrBuf_utf8);
 				szConvStrBuf_utf8 = NULL;
 			}
             break;
@@ -1168,12 +1168,12 @@ static void KailleraChatCloseChat(void)
 
 	if (szInputBuf_utf8)
 	{
-		free(szInputBuf_utf8);
+		osd_free(szInputBuf_utf8);
 		szInputBuf_utf8 = NULL;
 	}
 	if (szConvStrBuf_utf8)
 	{
-		free(szConvStrBuf_utf8);
+		osd_free(szConvStrBuf_utf8);
 		szConvStrBuf_utf8 = NULL;
 	}
 

@@ -2573,6 +2573,7 @@ korokoro		// (c) 1999 Takumi
 crusherm		// (c) 1999 Takumi
 tjumpman		// (c) 1999 Namco
 
+#ifdef USE_DISABLED_DRIVER
 mushisam		// (c) 2004 Cave
 mushisama		// (c) 2004 Cave
 espgal2			// (c) 2005 Cave
@@ -2590,6 +2591,7 @@ pinkswtsb		// (c) 2006 Cave
 deathsml		// (c) 2007 Cave
 mmpork			// (c) 2007 Cave
 mmmbanc			// (c) 2007 Cave
+#endif // USE_DISABLED_DRIVER
 
 // Kyugo games
 // Kyugo only made four games: Repulse, Flash Gal, SRD Mission and Air Wolf.

@@ -519,6 +519,10 @@ ifneq ($(KSERVER),)
 DEFS += -DKSERVER
 endif
 
+ifneq ($(USE_DISABLED_DRIVER),)
+DEFS += -DUSE_DISABLED_DRIVER
+endif
+
 
 
 #-------------------------------------------------
