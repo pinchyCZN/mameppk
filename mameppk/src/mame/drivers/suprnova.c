@@ -692,9 +692,6 @@ static READ32_HANDLER( skns_msm6242_r )
 		return 0;
 #endif /* KAILLERA */
 
-	if (has_record_file(space->machine()) || has_playback_file(space->machine()))
-		return 0;
-
 	space->machine().base_datetime(systime);
 	// The clock is not y2k-compatible, wrap back 10 years, screw the leap years
 	//  tm->tm_year -= 10;

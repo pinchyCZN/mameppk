@@ -1437,11 +1437,12 @@ int has_record_file(running_machine &machine);
 
 /* has_playback_file */
 int has_playback_file(running_machine &machine);
+
 #ifdef KAILLERA
-int has_record_sub_file(running_machine *machine);
-int has_playback_sub_file(running_machine *machine);
-emu_file *handle_record_sub_file(running_machine *machine);
-emu_file *handle_playback_sub_file(running_machine *machine);
+int has_record_sub_file(running_machine &machine);
+int has_playback_sub_file(running_machine &machine);
+emu_file *handle_record_sub_file(running_machine &machine);
+emu_file *handle_playback_sub_file(running_machine &machine);
 #endif /* KAILLERA */
 
 #ifdef USE_AUTOFIRE

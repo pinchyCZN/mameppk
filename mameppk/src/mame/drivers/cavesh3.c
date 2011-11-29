@@ -6160,7 +6160,7 @@ static MACHINE_CONFIG_START( cavesh3, cavesh3_state )
 	MCFG_CPU_IO_MAP(cavesh3_port)
 	MCFG_CPU_VBLANK_INT("screen", cavesh3_interrupt)
 
-	MCFG_RTC9701_ADD("eeprom", XTAL_32_768kHz)
+	MCFG_RTC9701_ADD("eeprom")
 	MCFG_NVRAM_HANDLER(cavesh3)
 
 	/* video hardware */
