@@ -57,7 +57,6 @@
 
 // MAME/MAMEUI headers
 #include "emu.h"
-#include "deprecat.h"
 
 #include "bitmask.h"	// for LPBITS structure definition (used in winui/options.h)
 #include "screenshot.h"	// for MYBITMAPINFO structure definition (used in winui/winui.h)

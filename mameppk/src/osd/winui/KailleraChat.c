@@ -42,7 +42,6 @@
 #include "mui_opts.h"
 #include "strconv.h"
 #include "translate.h"
-#include "deprecat.h"
 
 #include "window.h"
 #define win_video_window		win_window_list->hwnd

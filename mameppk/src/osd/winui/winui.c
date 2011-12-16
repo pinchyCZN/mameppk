@@ -105,7 +105,6 @@ static struct MAME_AVI_STATUS AviStatus;
 #include "zlib.h"
 #include "ui.h"
 #include "emuopts.h"
-#include "deprecat.h"
 
 #ifdef __INTEL_COMPILER
 #define BILD_COMPILER "ICC"
