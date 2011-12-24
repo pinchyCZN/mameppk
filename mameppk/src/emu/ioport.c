@@ -2475,7 +2475,7 @@ static void init_port_state(running_machine &machine)
 		memset(&kMahjongPlayValues,-1,sizeof(kMahjongPlayValues));	//kt
 		memset(&kDipSwitchValues,-1,sizeof(kDipSwitchValues));		//kt
 		memset(&kAnalogPlayValues,-1,sizeof(kAnalogPlayValues));	//kt
-		memset(&port_info,0,sizeof(input_port_config) * MAX_INPUT_PORTS);
+		memset(&port_info,0,sizeof(port_info));
 		kAnalog_input_port_clear();
 		kMaxDipSwitch	= 0;	//kt
 		kMaxMahjong		= 0;	//kt
@@ -2696,7 +2696,7 @@ static void init_port_state(running_machine &machine)
 			}
 			portnum++;
 		}
-#if 0
+#if PK_DEBUG
 		{
 			FILE *fp;
 			int i,j;
