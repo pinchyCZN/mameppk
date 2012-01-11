@@ -1,13 +1,13 @@
 /*************************************************************************
 
-    smsvdp.h
+    sega315_5124.h
 
-    Implementation of Sega VDP chip used in Master System and Game Gear
+    Implementation of Sega VDP chips used in System E, Master System and Game Gear
 
 **************************************************************************/
 
-#ifndef __SMSVDP_H__
-#define __SMSVDP_H__
+#ifndef __SEGA315_5124_H__
+#define __SEGA315_5124_H__
 
 #include "devcb.h"
 
@@ -68,7 +68,7 @@ class sega315_5124_device : public device_t,
 public:
 	// construction/destruction
 	sega315_5124_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock);
-	sega315_5124_device(const machine_config &mconfig, device_type type, const char *name, const char *tag, device_t *owner, UINT32 clock, UINT8 cram_size, UINT8 palette_offset);
+	sega315_5124_device(const machine_config &mconfig, device_type type, const char *name, const char *tag, device_t *owner, UINT32 clock, UINT8 cram_size, UINT8 palette_offset, bool supports_224_240);
 
 	DECLARE_READ8_MEMBER( vram_read );
 	DECLARE_WRITE8_MEMBER( vram_write );
@@ -78,14 +78,16 @@ public:
 	DECLARE_READ8_MEMBER( hcount_latch_read );
 	DECLARE_WRITE8_MEMBER( hcount_latch_write );
 
-	/* update the screen */
-	void update_video( bitmap_t *bitmap, const rectangle *cliprect );
+	bitmap_t *get_bitmap() { return m_tmpbitmap; };
+	bitmap_t *get_y1_bitmap() { return m_y1_bitmap; };
 
-	int check_brightness( int x, int y );
+	/* update the screen */
+	void update_video( bitmap_t &bitmap, const rectangle &cliprect );
+
 	virtual void set_sega315_5124_compatibility_mode( bool sega315_5124_compatibility_mode ) { };
 
 protected:
-	virtual void set_display_settings();
+	void set_display_settings();
 	virtual void update_palette();
 	virtual void draw_scanline( int pixel_offset_x, int pixel_plot_y, int line );
 	virtual UINT16 get_name_table_address();
@@ -95,6 +97,7 @@ protected:
 	void draw_sprites_tms9918_mode( int *line_buffer, int pixel_plot_y, int line );
 	void draw_scanline_mode2( int *line_buffer, int line );
 	void draw_scanline_mode0( int *line_buffer, int line );
+	void select_sprites( int pixel_plot_y, int line );
 
 	// device-level overrides
 	virtual void device_config_complete();
@@ -127,6 +130,12 @@ protected:
 	bitmap_t         *m_y1_bitmap;
 	UINT8            m_collision_buffer[SEGA315_5124_WIDTH];
 	UINT8            m_palette_offset;
+	bool             m_supports_224_240;
+	UINT16           m_sprite_base;
+	int              m_selected_sprite[8];
+	int              m_sprite_count;
+	int              m_sprite_height;
+	int              m_sprite_zoom;
 
 	/* line_buffer will be used to hold 5 lines of line data. Line #0 is the regular blitting area.
        Lines #1-#4 will be used as a kind of cache to be used for vertical scaling in the gamegear
@@ -163,7 +172,6 @@ public:
 	sega315_5246_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock);
 
 protected:
-	virtual void set_display_settings();
 	virtual UINT16 get_name_table_address();
 };
 
@@ -178,7 +186,6 @@ public:
 	virtual void set_sega315_5124_compatibility_mode( bool sega315_5124_compatibility_mode );
 
 protected:
-	virtual void set_display_settings();
 	virtual void update_palette();
 	virtual void draw_scanline( int pixel_offset_x, int pixel_plot_y, int line );
 	virtual UINT16 get_name_table_address();
@@ -201,4 +208,4 @@ protected:
 	MCFG_DEVICE_ADD(_tag, SEGA315_5378, 0) \
 	MCFG_DEVICE_CONFIG(_interface)
 
-#endif /* __SMSVDP_H__ */
+#endif /* __SEGA315_5124_H__ */

@@ -38,7 +38,7 @@ static int Kaillera_Pos_old = -1;
 
 
 /* --- SPRITES --- */
-static void draw_sprites( running_machine &machine, bitmap_t *bitmap, const rectangle *cliprect, UINT32 scr )
+static void draw_sprites( running_machine &machine, bitmap_t &bitmap, const rectangle &cliprect, UINT32 scr )
 {
 	/*- Sprite Format 0x0000 - 0x2bff -**
 
@@ -134,71 +134,17 @@ static void draw_sprites( running_machine &machine, bitmap_t *bitmap, const rect
 	}
 }
 
-SCREEN_UPDATE( psikyo4 )
+SCREEN_UPDATE( psikyo4_left )
 {
-	device_t *left_screen  = screen->machine().device("lscreen");
-	device_t *right_screen = screen->machine().device("rscreen");
+	bitmap.fill(0x1000, cliprect);
+	draw_sprites(screen.machine(), bitmap, cliprect, 0x0000);
+	return 0;
+}
 
-#ifdef KAILLERA
-	if (!strcmp(screen->machine().system().name,"hotgmck_k") ||
-	    !strcmp(screen->machine().system().name,"hgkairak_k") ||
-	    !strcmp(screen->machine().system().name,"hotgmck3_k") ||
-	    !strcmp(screen->machine().system().name,"hotgm4ev_k") ||
-	    !strcmp(screen->machine().system().name,"loderndf_k") ||
-	    !strcmp(screen->machine().system().name,"loderndf_vs") ||
-	    !strcmp(screen->machine().system().name,"hotdebut_k"))
-	{
-		int scr = 0x0000;
-		if(kPlay) {
-			int Kaillera_Pos = 0;
-			if (!strcmp(screen->machine().system().name,"hotgmck_k") ||
-			    !strcmp(screen->machine().system().name,"hgkairak_k") ||
-			    !strcmp(screen->machine().system().name,"hotgmck3_k") ||
-			    !strcmp(screen->machine().system().name,"hotgm4ev_k") ||
-			    !strcmp(screen->machine().system().name,"loderndf_vs"))
-			{
-				Kaillera_Pos = playernmb_get(KailleraStartOption.player - 1) % 2;
-			}
-			else
-			if (!strcmp(screen->machine().system().name,"loderndf_k") ||
-			    !strcmp(screen->machine().system().name,"hotdebut_k"))
-			{
-				if(playernmb_get(KailleraStartOption.player - 1) < 2)
-					Kaillera_Pos = 0;
-				else
-					Kaillera_Pos = 1;
-			}
-			scr = 0x2000 * Kaillera_Pos;
-			if (Kaillera_Pos_old != Kaillera_Pos)
-			{
-				Kaillera_Pos_old = Kaillera_Pos;
-				popmessage("PLAYER-%01X SIDE", (Kaillera_Pos + 1));
-			}
-		} else {
-			if (input_port_read(screen->machine(), "FAKE") & 1) scr = 0x0000; /* change screens from false dip, is this ok? */
-			else if (input_port_read(screen->machine(), "FAKE") & 2) scr = 0x2000;
-		}
-
-		bitmap_fill(bitmap, cliprect, ((scr==0x0000)?0x1000:0x1001));
-		draw_sprites(screen->machine(), bitmap, cliprect, scr);
-	}
-	else
-	{
-#endif /* KAILLERA */
-
-	if (screen == left_screen)
-	{
-		bitmap_fill(bitmap, cliprect, 0x1000);
-		draw_sprites(screen->machine(), bitmap, cliprect, 0x0000);
-	}
-	if (screen == right_screen)
-	{
-		bitmap_fill(bitmap, cliprect, 0x1001);
-		draw_sprites(screen->machine(), bitmap, cliprect, 0x2000);
-	}
-#ifdef KAILLERA
-	}
-#endif /* KAILLERA */
+SCREEN_UPDATE( psikyo4_right )
+{
+	bitmap.fill(0x1001, cliprect);
+	draw_sprites(screen.machine(), bitmap, cliprect, 0x2000);
 	return 0;
 }
 

@@ -140,7 +140,7 @@ VIDEO_START( hyperspt )
 #endif /* KAILLERA */
 }
 
-static void draw_sprites( running_machine &machine, bitmap_t *bitmap, const rectangle *cliprect )
+static void draw_sprites( running_machine &machine, bitmap_t &bitmap, const rectangle &cliprect )
 {
 	hyperspt_state *state = machine.driver_data<hyperspt_state>();
 	UINT8 *spriteram = state->m_spriteram;
@@ -227,18 +227,18 @@ static void rotscreen(running_machine &machine, bitmap_t *bitmap, const rectangl
 
 SCREEN_UPDATE( hyperspt )
 {
-	hyperspt_state *state = screen->machine().driver_data<hyperspt_state>();
+	hyperspt_state *state = screen.machine().driver_data<hyperspt_state>();
 	int row;
 
 	for (row = 0; row < 32; row++)
 	{
 		int scrollx = state->m_scroll[row * 2] + (state->m_scroll[(row * 2) + 1] & 0x01) * 256;
-		if (flip_screen_get(screen->machine())) scrollx = -scrollx;
+		if (flip_screen_get(screen.machine())) scrollx = -scrollx;
 		tilemap_set_scrollx(state->m_bg_tilemap, row, scrollx);
 	}
 
 	tilemap_draw(bitmap, cliprect, state->m_bg_tilemap, 0, 0);
-	draw_sprites(screen->machine(), bitmap, cliprect);
+	draw_sprites(screen.machine(), bitmap, cliprect);
 
 #ifdef KAILLERA
 	if (no_flip_screen && flip_screen_get(screen->machine())) rotscreen(screen->machine(), bitmap, cliprect);
