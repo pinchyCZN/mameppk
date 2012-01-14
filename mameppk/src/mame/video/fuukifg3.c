@@ -308,7 +308,7 @@ static void fuuki32_draw_layer( running_machine &machine, bitmap_t &bitmap, cons
 
 SCREEN_UPDATE( fuuki32 )
 {
-	const rectangle &visarea_sprites = screen->visible_area();
+	const rectangle &visarea_sprites = screen.visible_area();
 	fuuki32_state *state = screen.machine().driver_data<fuuki32_state>();
 	UINT16 layer0_scrollx, layer0_scrolly;
 	UINT16 layer1_scrollx, layer1_scrolly;
@@ -365,7 +365,7 @@ SCREEN_UPDATE( fuuki32 )
 	fuuki32_draw_layer(screen.machine(), bitmap, cliprect, tm_front,  0, 4);
 
 	/* don't do the rasters on the sprites. it's very slow and the hw might not anyway. */
-	if (cliprect->max_y == visarea_sprites.max_y)
+	if (cliprect.max_y == visarea_sprites.max_y)
 	draw_sprites(screen, bitmap, cliprect);
 	return 0;
 }

@@ -1916,6 +1916,8 @@ $(DRIVERS)/avalnche.o:	$(LAYOUT)/avalnche.lh
 
 $(DRIVERS)/balsente.o:	$(LAYOUT)/stocker.lh
 
+$(DRIVERS)/beaminv.o:	$(LAYOUT)/beaminv.lh
+
 $(DRIVERS)/bfm_sc1.o:	$(LAYOUT)/bfm_sc1.lh
 
 $(DRIVERS)/bfm_sc2.o:	$(LAYOUT)/bfm_sc2.lh \

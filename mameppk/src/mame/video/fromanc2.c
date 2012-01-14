@@ -608,7 +608,7 @@ void fromanc2_set_dispvram_w(int vram)
 
 SCREEN_UPDATE( fromanc2_k )
 {
-	fromanc2_state *state = screen->machine().driver_data<fromanc2_state>();
+	fromanc2_state *state = screen.machine().driver_data<fromanc2_state>();
 	int i;
 	int *scrollx = NULL;
 	int *scrolly = NULL;

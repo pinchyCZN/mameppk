@@ -401,11 +401,13 @@ static UINT64 cave_blit_delay;
 
 static int cavesh_gfx_size;
 static bitmap_t *cavesh_bitmaps;
+static rectangle cavesh_clip;
 
 static VIDEO_START( cavesh3 )
 {
 	cavesh_gfx_size	= 0x2000 * 0x1000;
 	cavesh_bitmaps	=	auto_bitmap_alloc(machine, 0x2000, 0x1000, BITMAP_FORMAT_RGB32);
+	cavesh_clip = cavesh_bitmaps->cliprect();
 }
 
 
@@ -4884,7 +4886,7 @@ INLINE void cavesh_gfx_upload(offs_t *addr)
 
 	for (y = 0; y < dimy; y++)
 	{
-		dst = BITMAP_ADDR32(cavesh_bitmaps, dst_y_start + y, 0);
+		dst = (UINT32 *)cavesh_bitmaps->pix32(dst_y_start + y, 0);
 		dst += dst_x_start;
 
 		for (x = 0; x < dimx; x++)
@@ -4900,7 +4902,7 @@ INLINE void cavesh_gfx_upload(offs_t *addr)
 	}
 }
 
-#define draw_params cavesh_bitmaps, &cavesh_bitmaps->cliprect, BITMAP_ADDR32(cavesh_bitmaps, 0,0),src_x,src_y, x,y, dimx,dimy, flipy, s_alpha, d_alpha, &tint_clr
+#define draw_params cavesh_bitmaps, &cavesh_clip, (UINT32 *)cavesh_bitmaps->pix32(0,0),src_x,src_y, x,y, dimx,dimy, flipy, s_alpha, d_alpha, &tint_clr
 
 typedef const void (*caveblitfunction)(bitmap_t *,
 					 const rectangle *,
@@ -5269,10 +5271,10 @@ static void cavesh_gfx_create_shadow_copy(address_space &space)
 	offs_t addr = cavesh_gfx_addr & 0x1fffffff;
 	UINT16 cliptype = 0;
 
-	cavesh_bitmaps->cliprect.min_x = cavesh_gfx_scroll_1_x_shadowcopy;
-	cavesh_bitmaps->cliprect.min_y = cavesh_gfx_scroll_1_y_shadowcopy;
-	cavesh_bitmaps->cliprect.max_x = cavesh_bitmaps->cliprect.min_x + 320-1;
-	cavesh_bitmaps->cliprect.max_y = cavesh_bitmaps->cliprect.min_y + 240-1;
+	cavesh_clip.min_x = cavesh_gfx_scroll_1_x_shadowcopy;
+	cavesh_clip.min_y = cavesh_gfx_scroll_1_y_shadowcopy;
+	cavesh_clip.max_x = cavesh_clip.min_x + 320-1;
+	cavesh_clip.max_y = cavesh_clip.min_y + 240-1;
 
 	while (1)
 	{
@@ -5291,17 +5293,17 @@ static void cavesh_gfx_create_shadow_copy(address_space &space)
 
 				if (cliptype)
 				{
-					cavesh_bitmaps->cliprect.min_x = cavesh_gfx_scroll_1_x_shadowcopy;
-					cavesh_bitmaps->cliprect.min_y = cavesh_gfx_scroll_1_y_shadowcopy;
-					cavesh_bitmaps->cliprect.max_x = cavesh_bitmaps->cliprect.min_x + 320-1;
-					cavesh_bitmaps->cliprect.max_y = cavesh_bitmaps->cliprect.min_y + 240-1;
+					cavesh_clip.min_x = cavesh_gfx_scroll_1_x_shadowcopy;
+					cavesh_clip.min_y = cavesh_gfx_scroll_1_y_shadowcopy;
+					cavesh_clip.max_x = cavesh_clip.min_x + 320-1;
+					cavesh_clip.max_y = cavesh_clip.min_y + 240-1;
 				}
 				else
 				{
-					cavesh_bitmaps->cliprect.min_x = 0;
-					cavesh_bitmaps->cliprect.min_y = 0;
-					cavesh_bitmaps->cliprect.max_x = 0x2000-1;
-					cavesh_bitmaps->cliprect.max_y = 0x1000-1;
+					cavesh_clip.min_x = 0;
+					cavesh_clip.min_y = 0;
+					cavesh_clip.max_x = 0x2000-1;
+					cavesh_clip.max_y = 0x1000-1;
 				}
 
 				break;
@@ -5332,10 +5334,10 @@ static void cavesh_gfx_exec(void)
 
 //  logerror("GFX EXEC: %08X\n", addr);
 
-	cavesh_bitmaps->cliprect.min_x = cavesh_gfx_scroll_1_x_shadowcopy;
-	cavesh_bitmaps->cliprect.min_y = cavesh_gfx_scroll_1_y_shadowcopy;
-	cavesh_bitmaps->cliprect.max_x = cavesh_bitmaps->cliprect.min_x + 320-1;
-	cavesh_bitmaps->cliprect.max_y = cavesh_bitmaps->cliprect.min_y + 240-1;
+	cavesh_clip.min_x = cavesh_gfx_scroll_1_x_shadowcopy;
+	cavesh_clip.min_y = cavesh_gfx_scroll_1_y_shadowcopy;
+	cavesh_clip.max_x = cavesh_clip.min_x + 320-1;
+	cavesh_clip.max_y = cavesh_clip.min_y + 240-1;
 
 	while (1)
 	{
@@ -5353,17 +5355,17 @@ static void cavesh_gfx_exec(void)
 
 				if (cliptype)
 				{
-					cavesh_bitmaps->cliprect.min_x = cavesh_gfx_scroll_1_x_shadowcopy;
-					cavesh_bitmaps->cliprect.min_y = cavesh_gfx_scroll_1_y_shadowcopy;
-					cavesh_bitmaps->cliprect.max_x = cavesh_bitmaps->cliprect.min_x + 320-1;
-					cavesh_bitmaps->cliprect.max_y = cavesh_bitmaps->cliprect.min_y + 240-1;
+					cavesh_clip.min_x = cavesh_gfx_scroll_1_x_shadowcopy;
+					cavesh_clip.min_y = cavesh_gfx_scroll_1_y_shadowcopy;
+					cavesh_clip.max_x = cavesh_clip.min_x + 320-1;
+					cavesh_clip.max_y = cavesh_clip.min_y + 240-1;
 				}
 				else
 				{
-					cavesh_bitmaps->cliprect.min_x = 0;
-					cavesh_bitmaps->cliprect.min_y = 0;
-					cavesh_bitmaps->cliprect.max_x = 0x2000-1;
-					cavesh_bitmaps->cliprect.max_y = 0x1000-1;
+					cavesh_clip.min_x = 0;
+					cavesh_clip.min_y = 0;
+					cavesh_clip.max_x = 0x2000-1;
+					cavesh_clip.max_y = 0x1000-1;
 				}
 				break;
 
@@ -5454,7 +5456,7 @@ static WRITE32_HANDLER( cavesh_gfx_exec_w )
 static SCREEN_UPDATE( cavesh3 )
 {
 
-	cavesh3_state *state = screen->machine().driver_data<cavesh3_state>();
+	cavesh3_state *state = screen.machine().driver_data<cavesh3_state>();
 
 	if (state->blitter_request)
 	{
@@ -5470,7 +5472,7 @@ static SCREEN_UPDATE( cavesh3 )
 	int scroll_0_x, scroll_0_y;
 //  int scroll_1_x, scroll_1_y;
 
-	bitmap_fill(bitmap, cliprect, 0);
+	bitmap.fill(0, cliprect);
 
 	scroll_0_x = -cavesh_gfx_scroll_0_x;
 	scroll_0_y = -cavesh_gfx_scroll_0_y;
@@ -5479,7 +5481,7 @@ static SCREEN_UPDATE( cavesh3 )
 
 	//printf("SCREEN UPDATE\n %d %d %d %d\n", scroll_0_x, scroll_0_y, scroll_1_x, scroll_1_y);
 
-	copyscrollbitmap(bitmap, cavesh_bitmaps, 1,&scroll_0_x, 1,&scroll_0_y, cliprect);
+	copyscrollbitmap(bitmap, *cavesh_bitmaps, 1,&scroll_0_x, 1,&scroll_0_y, cliprect);
 
 	return 0;
 }

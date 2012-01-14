@@ -1598,7 +1598,7 @@ void avi_info_view(running_machine &machine)
 	}	/* INFO VIEW */
 }
 
-int avi_write_handler(running_machine &machine, emu_file *dummy, bitmap_t *bitmap)
+int avi_write_handler(running_machine &machine, emu_file *dummy, bitmap_t &bitmap)
 {
     if (bAviRun)
 	{

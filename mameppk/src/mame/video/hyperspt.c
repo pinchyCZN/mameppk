@@ -135,8 +135,8 @@ VIDEO_START( hyperspt )
 
 #ifdef KAILLERA
 	no_flip_screen = 0;
-	if (!strcmp(machine.system().name, "hyperspt4p") ||
-		!strcmp(machine.system().name, "hpolym84_4p")) no_flip_screen = 1;
+	if (!mame_stricmp(machine.system().name, "hyperspt4p") ||
+		!mame_stricmp(machine.system().name, "hpolym84_4p")) no_flip_screen = 1;
 #endif /* KAILLERA */
 }
 
@@ -185,21 +185,21 @@ static void draw_sprites( running_machine &machine, bitmap_t &bitmap, const rect
 }
 
 #ifdef KAILLERA
-static void rotscreen(running_machine &machine, bitmap_t *bitmap, const rectangle *cliprect)
+static void rotscreen(running_machine &machine, bitmap_t &bitmap, const rectangle &cliprect)
 {
 	int x,y;
-	const int min_x = cliprect->min_x;
-	const int min_y = cliprect->min_y;
-	const int max_x = cliprect->max_x;
-	const int max_y = cliprect->max_y;
+	const int min_x = cliprect.min_x;
+	const int min_y = cliprect.min_y;
+	const int max_x = cliprect.max_x;
+	const int max_y = cliprect.max_y;
 
 #if 0
 	if(machine.color_depth == 32)
 	{
 		for(y=0; y<((max_y-min_y+1)>>1); y++)
 		{
-			UINT32 *dst = (UINT32 *)BITMAP_ADDR32(bitmap, min_y + y, min_x);
-			UINT32 *src  = (UINT32 *)BITMAP_ADDR32(bitmap, max_y - y, min_x);
+			UINT32 *dst = (UINT32 *)bitmap.pix32(min_y + y, min_x);
+			UINT32 *src  = (UINT32 *)bitmap.pix32(max_y - y, min_x);
 			for(x=0; x<max_x-min_x+1; x++)
 			{
 				const UINT32 tm = src[max_x - x];
@@ -212,8 +212,8 @@ static void rotscreen(running_machine &machine, bitmap_t *bitmap, const rectangl
 	{
 		for(y=0; y<((max_y-min_y+1)>>1); y++)
 		{
-			UINT16 *dst = (UINT16 *)BITMAP_ADDR16(bitmap, min_y + y, min_x);
-			UINT16 *src  = (UINT16 *)BITMAP_ADDR16(bitmap, max_y - y, min_x);
+			UINT16 *dst = (UINT16 *)bitmap.pix16(min_y + y, min_x);
+			UINT16 *src  = (UINT16 *)bitmap.pix16(max_y - y, min_x);
 			for(x=0; x<max_x-min_x+1; x++)
 			{
 				const UINT16 tm = src[max_x - x];
@@ -241,7 +241,7 @@ SCREEN_UPDATE( hyperspt )
 	draw_sprites(screen.machine(), bitmap, cliprect);
 
 #ifdef KAILLERA
-	if (no_flip_screen && flip_screen_get(screen->machine())) rotscreen(screen->machine(), bitmap, cliprect);
+	if (no_flip_screen && flip_screen_get(screen.machine())) rotscreen(screen.machine(), bitmap, cliprect);
 #endif /* KAILLERA */
 	return 0;
 }

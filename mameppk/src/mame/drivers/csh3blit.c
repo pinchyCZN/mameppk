@@ -137,7 +137,7 @@ const void FUNCNAME(bitmap_t *bitmap,
 
 	for (y = starty; y < dimy; y++)
 	{
-		bmp = BITMAP_ADDR32(bitmap, dst_y_start + y, dst_x_start+startx);
+		bmp = (UINT32 *)bitmap->pix32(dst_y_start + y, dst_x_start+startx);
 		int ysrc_index =  ((src_y + yf * y) & 0x0fff) * 0x2000;
 		gfx2 = gfx + ysrc_index;
 

@@ -84,7 +84,7 @@
 static BOOL     AVI_Check_Version(void);
 
 static void     AVI_Close(char* filename);
-static char*    AVI_Convert_Bitmap(running_machine &machine, bitmap_t *tBitmap, UINT32 *pPalEntries);
+static char*    AVI_Convert_Bitmap(running_machine &machine, bitmap_t &tBitmap, UINT32 *pPalEntries);
 static void     AVI_Message_Error(void);
 
 
@@ -105,10 +105,10 @@ static void		AVI_Convert_16to24_TVInterlace_sxy_Bitmap(char *pSrcBitmap, int l);
 static void		AVI_Convert_16to24_TVInterlace_sy_Bitmap(char *pSrcBitmap, int l);
 
 // by DarkCoder
-void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
-void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
-void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
-void TransformBitmap8to16 (running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries);
+void TransformBitmap32to16(running_machine &machine, bitmap_t &tBitmap, unsigned short *dst, UINT32 *pPalEntries);
+void TransformBitmap15to16(running_machine &machine, bitmap_t &tBitmap, unsigned short *dst, UINT32 *pPalEntries);
+void TransformBitmap16to16(running_machine &machine, bitmap_t &tBitmap, unsigned short *dst, UINT32 *pPalEntries);
+void TransformBitmap8to16 (running_machine &machine, bitmap_t &tBitmap, unsigned short *dst, UINT32 *pPalEntries);
 
 /***************************************************************************
     External variables
@@ -1276,7 +1276,7 @@ LPBITMAPINFOHEADER AviFrameSmooth(void)
 /* Add a frame to an open AVI */
 extern int			win_visible_width;
 extern int			win_visible_height;
-void AviAddBitmap(running_machine &machine, bitmap_t *tBitmap, UINT32* pPalEntries)
+void AviAddBitmap(running_machine &machine, bitmap_t &tBitmap, UINT32* pPalEntries)
 {
 	extern unsigned __int64 mame_mixer_wave_FileSize;
     LPBITMAPINFOHEADER lpbit;
@@ -1726,7 +1726,7 @@ static void AVI_Message_Error(void)
 }
 
 // 32bit triplets (888) -> 16bit RGB triplets (555) by DarkCoder
-void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
+void TransformBitmap32to16(running_machine &machine, bitmap_t &tBitmap, unsigned short *dst, UINT32 *pPalEntries)
 {
 	UINT32 *ptr;
 	UINT16 *prev_dst;
@@ -1744,8 +1744,8 @@ void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 
 	if( nAviOrientation & ORIENTATION_SWAP_XY ) {
 
-		if( (nAviSrcWidth != tBitmap->height) || 
-			(nAviSrcHeight != tBitmap->width) ) {
+		if( (nAviSrcWidth != tBitmap.height()) || 
+			(nAviSrcHeight != tBitmap.width()) ) {
 			//logmsg( "Invalid size: nAviSrcWidth(%d) != height(%d) or nAviSrcHeight(%d) != width(%d).\n",
 			//	nAviSrcWidth, tBitmap->height, nAviSrcHeight, tBitmap->width );
 
@@ -1758,7 +1758,7 @@ void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT32 *)BITMAP_ADDR32(tBitmap, i + nLeft, nTop);
+				ptr = (UINT32 *)tBitmap.pix32(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					r = (ptr[x] >> 19) & 0x1f;
@@ -1775,7 +1775,7 @@ void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT32 *)BITMAP_ADDR32(tBitmap, i + nLeft, nTop);
+				ptr = (UINT32 *)tBitmap.pix32(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					r = (ptr[x] >> 19) & 0x1f;
@@ -1793,7 +1793,7 @@ void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT32 *)BITMAP_ADDR32(tBitmap, i + nLeft, nTop);
+				ptr = (UINT32 *)tBitmap.pix32(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					r = (ptr[x] >> 19) & 0x1f;
@@ -1811,7 +1811,7 @@ void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 		if( nAviFlipX && nAviFlipY ) {
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT32 *)BITMAP_ADDR32(tBitmap, i + nTop, nLeft);
+				ptr = (UINT32 *)tBitmap.pix32(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
 					r = (ptr[x] >> 19) & 0x1f;
@@ -1828,7 +1828,7 @@ void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			dst += ((nHeight - 1)  * nLineSize);
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT32 *)BITMAP_ADDR32(tBitmap, i + nTop, nLeft);
+				ptr = (UINT32 *)tBitmap.pix32(i + nTop, nLeft);
 				for (x = nWidth-1,x2=0; x >=0; x--,x2++)
 				{
 					r = (ptr[x] >> 19) & 0x1f;
@@ -1843,7 +1843,7 @@ void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 		else if( nAviFlipY ) {
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT32 *)BITMAP_ADDR32(tBitmap, i + nTop, nLeft);
+				ptr = (UINT32 *)tBitmap.pix32(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
 					r = (ptr[x] >> 19) & 0x1f;
@@ -1859,7 +1859,7 @@ void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			dst += ((nHeight - 1)  * nLineSize);
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT32 *)BITMAP_ADDR32(tBitmap, i + nTop, nLeft);
+				ptr = (UINT32 *)tBitmap.pix32(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
 					r = (ptr[x] >> 19) & 0x1f;
@@ -1875,7 +1875,7 @@ void TransformBitmap32to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 }
 
 // 15bit RGB triplets (555) -> 16bit RGB triplets (555) by DarkCoder
-void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
+void TransformBitmap15to16(running_machine &machine, bitmap_t &tBitmap, unsigned short *dst, UINT32 *pPalEntries)
 {
 	UINT16 *ptr, *prev_dst;
 	int i, x, nLineSize, nTop, nLeft, nWidth, nHeight;
@@ -1891,8 +1891,8 @@ void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 
 	if( nAviOrientation & ORIENTATION_SWAP_XY ) {
 
-		if( (nAviSrcWidth != tBitmap->height) || 
-			(nAviSrcHeight != tBitmap->width) ) {
+		if( (nAviSrcWidth != tBitmap.height()) || 
+			(nAviSrcHeight != tBitmap.width()) ) {
 			//logmsg( "Invalid size: nAviSrcWidth(%d) != height(%d) or nAviSrcHeight(%d) != width(%d).\n",
 			//	nAviSrcWidth, tBitmap->height, nAviSrcHeight, tBitmap->width );
 
@@ -1905,7 +1905,7 @@ void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nLeft, nTop);
+				ptr = (UINT16 *)tBitmap.pix16(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					*dst = (*ptr++);
@@ -1919,7 +1919,7 @@ void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nLeft, nTop);
+				ptr = (UINT16 *)tBitmap.pix16(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					*dst = (*ptr++);
@@ -1934,7 +1934,7 @@ void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nLeft, nTop);
+				ptr = (UINT16 *)tBitmap.pix16(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					*dst = (*ptr++);
@@ -1949,7 +1949,7 @@ void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 		if( nAviFlipX && nAviFlipY ) {
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nTop, nLeft);
+				ptr = (UINT16 *)tBitmap.pix16(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
 					dst[x] = (*ptr++);
@@ -1962,7 +1962,7 @@ void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			dst += ((nHeight - 1)  * nLineSize);
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nTop, nLeft);
+				ptr = (UINT16 *)tBitmap.pix16(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
 					dst[x] = (*ptr++);
@@ -1974,7 +1974,7 @@ void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 		else if( nAviFlipY ) {
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nTop, nLeft);
+				ptr = (UINT16 *)tBitmap.pix16(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
 					dst[x] = (*ptr++);
@@ -1987,7 +1987,7 @@ void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			dst += ((nHeight - 1)  * nLineSize);
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nTop, nLeft);
+				ptr = (UINT16 *)tBitmap.pix16(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
 					dst[x] = (*ptr++);
@@ -2000,7 +2000,7 @@ void TransformBitmap15to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 }
 
 // 16bit indexed -> 16bit RGB triplets (555) by DarkCoder
-void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
+void TransformBitmap16to16(running_machine &machine, bitmap_t &tBitmap, unsigned short *dst, UINT32 *pPalEntries)
 {
 	UINT16 *ptr, *prev_dst;
 	int i, x, nLineSize, nTop, nLeft, nWidth, nHeight;
@@ -2019,8 +2019,8 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 
 	if( nAviOrientation & ORIENTATION_SWAP_XY ) {
 
-		if( (nAviSrcWidth != tBitmap->height) || 
-			(nAviSrcHeight != tBitmap->width) ) {
+		if( (nAviSrcWidth != tBitmap.height()) || 
+			(nAviSrcHeight != tBitmap.width()) ) {
 			//logmsg( "Invalid size: nAviSrcWidth(%d) != height(%d) or nAviSrcHeight(%d) != width(%d).\n",
 			//	nAviSrcWidth, tBitmap->height, nAviSrcHeight, tBitmap->width );
 
@@ -2033,7 +2033,7 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nLeft, nTop);
+				ptr = (UINT16 *)tBitmap.pix16(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2051,7 +2051,7 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nLeft, nTop);
+				ptr = (UINT16 *)tBitmap.pix16(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2070,7 +2070,7 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nLeft, nTop);
+				ptr = (UINT16 *)tBitmap.pix16(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2089,7 +2089,7 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 		if( nAviFlipX && nAviFlipY ) {
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nTop, nLeft);
+				ptr = (UINT16 *)tBitmap.pix16(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2106,7 +2106,7 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			dst += ((nHeight - 1)  * nLineSize);
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nTop, nLeft);
+				ptr = (UINT16 *)tBitmap.pix16(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2122,7 +2122,7 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 		else if( nAviFlipY ) {
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nTop, nLeft);
+				ptr = (UINT16 *)tBitmap.pix16(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2139,7 +2139,7 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 			dst += ((nHeight - 1)  * nLineSize);
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT16 *)BITMAP_ADDR16(tBitmap, i + nTop, nLeft);
+				ptr = (UINT16 *)tBitmap.pix16(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2156,7 +2156,7 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t *tBitmap, unsigned
 }
 
 // 8bit indexed -> 16bit RGB triplets (555) by DarkCoder
-void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned short *dst, UINT32 *pPalEntries)
+void TransformBitmap8to16(running_machine &machine, bitmap_t &tBitmap, unsigned short *dst, UINT32 *pPalEntries)
 {
 	UINT8 *ptr;
 	UINT16 *prev_dst;
@@ -2176,8 +2176,8 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned 
 
 	if( nAviOrientation & ORIENTATION_SWAP_XY ) {
 
-		if( (nAviSrcWidth != tBitmap->height) || 
-			(nAviSrcHeight != tBitmap->width) ) {
+		if( (nAviSrcWidth != tBitmap.height()) || 
+			(nAviSrcHeight != tBitmap.width()) ) {
 			//logmsg( "Invalid size: nAviSrcWidth(%d) != height(%d) or nAviSrcHeight(%d) != width(%d).\n",
 			//	nAviSrcWidth, tBitmap->height, nAviSrcHeight, tBitmap->width );
 
@@ -2190,7 +2190,7 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned 
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT8 *)BITMAP_ADDR8(tBitmap, i + nLeft, nTop);
+				ptr = (UINT8 *)tBitmap.pix8(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2208,7 +2208,7 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned 
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT8 *)BITMAP_ADDR8(tBitmap, i + nLeft, nTop);
+				ptr = (UINT8 *)tBitmap.pix8(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2227,7 +2227,7 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned 
 			for (i=0; i<nWidth; i++)
 			{
 				prev_dst = dst;
-				ptr = (UINT8 *)BITMAP_ADDR8(tBitmap, i + nLeft, nTop);
+				ptr = (UINT8 *)tBitmap.pix8(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2246,7 +2246,7 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned 
 		if( nAviFlipX && nAviFlipY ) {
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT8 *)BITMAP_ADDR8(tBitmap, i + nTop, nLeft);
+				ptr = (UINT8 *)tBitmap.pix8(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2263,7 +2263,7 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned 
 			dst += ((nHeight - 1)  * nLineSize);
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT8 *)BITMAP_ADDR8(tBitmap, i + nTop, nLeft);
+				ptr = (UINT8 *)tBitmap.pix8(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2279,7 +2279,7 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned 
 		else if( nAviFlipY ) {
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT8 *)BITMAP_ADDR8(tBitmap, i + nTop, nLeft);
+				ptr = (UINT8 *)tBitmap.pix8(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2296,7 +2296,7 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned 
 			dst += ((nHeight - 1)  * nLineSize);
 			for (i=0; i<nHeight; i++)
 			{
-				ptr = (UINT8 *)BITMAP_ADDR8(tBitmap, i + nTop, nLeft);
+				ptr = (UINT8 *)tBitmap.pix8(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
 					color = palette_get_color(machine, *ptr++);
@@ -2312,7 +2312,7 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t *tBitmap, unsigned 
 	}
 }
 
-static char* AVI_Convert_Bitmap(running_machine &machine, bitmap_t *tBitmap, UINT32 *pPalEntries)
+static char* AVI_Convert_Bitmap(running_machine &machine, bitmap_t &tBitmap, UINT32 *pPalEntries)
 {
     char*     bitmap;
     int       i;
@@ -2354,16 +2354,16 @@ static char* AVI_Convert_Bitmap(running_machine &machine, bitmap_t *tBitmap, UIN
 
 		dst = (unsigned short*)&bitmap[bmihSize];
 
-		if(tBitmap->format == BITMAP_FORMAT_INDEXED32 || tBitmap->format == BITMAP_FORMAT_RGB32) {
+		if(tBitmap.format() == BITMAP_FORMAT_INDEXED32 || tBitmap.format() == BITMAP_FORMAT_RGB32) {
 			TransformBitmap32to16(machine, tBitmap, dst, pPalEntries);
 		}
-		else if(tBitmap->format == BITMAP_FORMAT_RGB15) {
+		else if(tBitmap.format() == BITMAP_FORMAT_RGB15) {
 			TransformBitmap15to16(machine, tBitmap, dst, pPalEntries);
 		}
-		else if(tBitmap->format == BITMAP_FORMAT_INDEXED16) {
+		else if(tBitmap.format() == BITMAP_FORMAT_INDEXED16) {
 			TransformBitmap16to16(machine, tBitmap, dst, pPalEntries);
 		}
-		else if(tBitmap->format == BITMAP_FORMAT_INDEXED8) 
+		else if(tBitmap.format() == BITMAP_FORMAT_INDEXED8) 
 		{
 			TransformBitmap8to16(machine, tBitmap, dst, pPalEntries);
 		}
