@@ -140,7 +140,7 @@ VIDEO_START( hyperspt )
 #endif /* KAILLERA */
 }
 
-static void draw_sprites( running_machine &machine, bitmap_t &bitmap, const rectangle &cliprect )
+static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const rectangle &cliprect )
 {
 	hyperspt_state *state = machine.driver_data<hyperspt_state>();
 	UINT8 *spriteram = state->m_spriteram;
@@ -185,7 +185,7 @@ static void draw_sprites( running_machine &machine, bitmap_t &bitmap, const rect
 }
 
 #ifdef KAILLERA
-static void rotscreen(running_machine &machine, bitmap_t &bitmap, const rectangle &cliprect)
+static void rotscreen(running_machine &machine, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
 	int x,y;
 	const int min_x = cliprect.min_x;
@@ -193,39 +193,21 @@ static void rotscreen(running_machine &machine, bitmap_t &bitmap, const rectangl
 	const int max_x = cliprect.max_x;
 	const int max_y = cliprect.max_y;
 
-#if 0
-	if(machine.color_depth == 32)
+	for(y=0; y<((max_y-min_y+1)>>1); y++)
 	{
-		for(y=0; y<((max_y-min_y+1)>>1); y++)
+		UINT16 *dst = (UINT16 *)bitmap.pix16(min_y + y, min_x);
+		UINT16 *src  = (UINT16 *)bitmap.pix16(max_y - y, min_x);
+		for(x=0; x<max_x-min_x+1; x++)
 		{
-			UINT32 *dst = (UINT32 *)bitmap.pix32(min_y + y, min_x);
-			UINT32 *src  = (UINT32 *)bitmap.pix32(max_y - y, min_x);
-			for(x=0; x<max_x-min_x+1; x++)
-			{
-				const UINT32 tm = src[max_x - x];
-				src[max_x - x] = dst[x];
-				dst[x] = tm;
-			}
-		}
-	} else
-#endif
-	{
-		for(y=0; y<((max_y-min_y+1)>>1); y++)
-		{
-			UINT16 *dst = (UINT16 *)bitmap.pix16(min_y + y, min_x);
-			UINT16 *src  = (UINT16 *)bitmap.pix16(max_y - y, min_x);
-			for(x=0; x<max_x-min_x+1; x++)
-			{
-				const UINT16 tm = src[max_x - x];
-				src[max_x - x] = dst[x];
-				dst[x] = tm;
-			}
+			const UINT16 tm = src[max_x - x];
+			src[max_x - x] = dst[x];
+			dst[x] = tm;
 		}
 	}
 }
 #endif /* KAILLERA */
 
-SCREEN_UPDATE( hyperspt )
+SCREEN_UPDATE_IND16( hyperspt )
 {
 	hyperspt_state *state = screen.machine().driver_data<hyperspt_state>();
 	int row;

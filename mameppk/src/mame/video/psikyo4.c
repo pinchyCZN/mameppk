@@ -38,7 +38,7 @@ static int Kaillera_Pos_old = -1;
 
 
 /* --- SPRITES --- */
-static void draw_sprites( running_machine &machine, bitmap_t &bitmap, const rectangle &cliprect, UINT32 scr )
+static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const rectangle &cliprect, UINT32 scr )
 {
 	/*- Sprite Format 0x0000 - 0x2bff -**
 
@@ -134,14 +134,14 @@ static void draw_sprites( running_machine &machine, bitmap_t &bitmap, const rect
 	}
 }
 
-SCREEN_UPDATE( psikyo4_left )
+SCREEN_UPDATE_IND16( psikyo4_left )
 {
 	bitmap.fill(0x1000, cliprect);
 	draw_sprites(screen.machine(), bitmap, cliprect, 0x0000);
 	return 0;
 }
 
-SCREEN_UPDATE( psikyo4_right )
+SCREEN_UPDATE_IND16( psikyo4_right )
 {
 	bitmap.fill(0x1001, cliprect);
 	draw_sprites(screen.machine(), bitmap, cliprect, 0x2000);
