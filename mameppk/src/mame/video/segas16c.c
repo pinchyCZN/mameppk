@@ -36,7 +36,7 @@ VIDEO_START( system16c )
  *
  *************************************/
 
-SCREEN_UPDATE( system16c )
+SCREEN_UPDATE_IND16( system16c )
 {
 	/* if no drawing is happening, fill with black and get out */
 	if (!segaic16_display_enable)
@@ -53,7 +53,7 @@ SCREEN_UPDATE( system16c )
 	segaic16_tilemap_draw(screen, bitmap, cliprect, 0, SEGAIC16_TILEMAP_BACKGROUND, 1 | TILEMAP_DRAW_OPAQUE, 0x00);
 
 	/* draw background again, just to set the priorities on non-transparent pixels */
-	bitmap_t dummy_bitmap;
+	bitmap_ind16 dummy_bitmap;
 	segaic16_tilemap_draw(screen, dummy_bitmap,   cliprect, 0, SEGAIC16_TILEMAP_BACKGROUND, 0, 0x01);
 	segaic16_tilemap_draw(screen, dummy_bitmap,   cliprect, 0, SEGAIC16_TILEMAP_BACKGROUND, 1, 0x02);
 

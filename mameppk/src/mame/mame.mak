@@ -2183,6 +2183,7 @@ $(VIDEO)/jaguar.o:	$(MAMESRC)/video/jagobj.c \
 $(VIDEO)/model2.o:		$(MAMESRC)/video/model2rd.c
 $(VIDEO)/model3.o:		$(MAMESRC)/video/m3raster.c
 $(VIDEO)/n64.o:			$(MAMESRC)/video/rdpfiltr.c
+$(DRIVERS)/cavesh3.o:	$(MAMESRC)/drivers/csh3blit.c
 
 #-------------------------------------------------
 # mamep: driver list dependencies

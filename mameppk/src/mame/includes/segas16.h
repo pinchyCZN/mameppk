@@ -121,7 +121,7 @@ SCREEN_UPDATE_IND16( system16b );
 /*----------- defined in video/segas16c.c -----------*/
 
 VIDEO_START( system16c );
-SCREEN_UPDATE( system16c );
+SCREEN_UPDATE_IND16( system16c );
 
 /*----------- defined in video/segas18.c -----------*/
 

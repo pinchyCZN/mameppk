@@ -400,13 +400,13 @@ static UINT64 cave_blit_delay;
 
 
 static int cavesh_gfx_size;
-static bitmap_t *cavesh_bitmaps;
+static bitmap_rgb32 *cavesh_bitmaps;
 static rectangle cavesh_clip;
 
 static VIDEO_START( cavesh3 )
 {
-	cavesh_gfx_size	= 0x2000 * 0x1000;
-	cavesh_bitmaps	=	auto_bitmap_alloc(machine, 0x2000, 0x1000, BITMAP_FORMAT_RGB32);
+	cavesh_gfx_size = 0x2000 * 0x1000;
+	cavesh_bitmaps = auto_bitmap_rgb32_alloc(machine, 0x2000, 0x1000);
 	cavesh_clip = cavesh_bitmaps->cliprect();
 }
 
@@ -4886,7 +4886,7 @@ INLINE void cavesh_gfx_upload(offs_t *addr)
 
 	for (y = 0; y < dimy; y++)
 	{
-		dst = (UINT32 *)cavesh_bitmaps->pix32(dst_y_start + y, 0);
+		dst = &cavesh_bitmaps->pix(dst_y_start + y, 0);
 		dst += dst_x_start;
 
 		for (x = 0; x < dimx; x++)
@@ -4902,9 +4902,9 @@ INLINE void cavesh_gfx_upload(offs_t *addr)
 	}
 }
 
-#define draw_params cavesh_bitmaps, &cavesh_clip, (UINT32 *)cavesh_bitmaps->pix32(0,0),src_x,src_y, x,y, dimx,dimy, flipy, s_alpha, d_alpha, &tint_clr
+#define draw_params cavesh_bitmaps, &cavesh_clip, &cavesh_bitmaps->pix(0,0),src_x,src_y, x,y, dimx,dimy, flipy, s_alpha, d_alpha, &tint_clr
 
-typedef const void (*caveblitfunction)(bitmap_t *,
+typedef const void (*caveblitfunction)(bitmap_rgb32 *,
 					 const rectangle *,
 					 UINT32 *, /* gfx */
 					 int , /* src_x */
@@ -5453,7 +5453,7 @@ static WRITE32_HANDLER( cavesh_gfx_exec_w )
 
 
 
-static SCREEN_UPDATE( cavesh3 )
+static SCREEN_UPDATE_RGB32( cavesh3 )
 {
 
 	cavesh3_state *state = screen.machine().driver_data<cavesh3_state>();
@@ -6169,14 +6169,13 @@ static MACHINE_CONFIG_START( cavesh3, cavesh3_state )
 	MCFG_SCREEN_ADD("screen", RASTER)
 	MCFG_SCREEN_REFRESH_RATE(60)
 	MCFG_SCREEN_VBLANK_TIME(ATTOSECONDS_IN_USEC(0))
-	MCFG_SCREEN_FORMAT(BITMAP_FORMAT_RGB32)
 	MCFG_SCREEN_SIZE(0x200, 0x200)
 	MCFG_SCREEN_VISIBLE_AREA(0, 0x140-1, 0, 0xf0-1)
 
 	MCFG_PALETTE_LENGTH(0x10000)
 
 
-	MCFG_SCREEN_UPDATE(cavesh3)
+	MCFG_SCREEN_UPDATE_STATIC(cavesh3)
 	MCFG_MACHINE_START(cavesh3)
 	MCFG_MACHINE_RESET(cavesh3)
 

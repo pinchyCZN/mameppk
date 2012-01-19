@@ -606,7 +606,7 @@ void fromanc2_set_dispvram_w(int vram)
 	fromanc2_dispvram = vram;
 }
 
-SCREEN_UPDATE( fromanc2_k )
+SCREEN_UPDATE_IND16( fromanc2_k )
 {
 	fromanc2_state *state = screen.machine().driver_data<fromanc2_state>();
 	int i;

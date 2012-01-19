@@ -157,6 +157,12 @@ $(DRIVERS)/circus.o:	$(LAYOUT)/circus.lh \
 $(MAMEOBJ)/mamedriv.o:	$(LAYOUT)/pinball.lh
 
 #-------------------------------------------------
+# misc dependencies
+#-------------------------------------------------
+
+$(DRIVERS)/cavesh3.o:	$(MAMESRC)/drivers/csh3blit.c
+
+#-------------------------------------------------
 # mamep: driver list dependencies
 #-------------------------------------------------
 

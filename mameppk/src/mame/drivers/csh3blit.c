@@ -13,7 +13,7 @@
 
 #endif
 
-const void FUNCNAME(bitmap_t *bitmap,
+const void FUNCNAME(bitmap_rgb32 *bitmap,
 					 const rectangle *clip,
 					 UINT32 *gfx,
 					 int src_x,
@@ -137,7 +137,7 @@ const void FUNCNAME(bitmap_t *bitmap,
 
 	for (y = starty; y < dimy; y++)
 	{
-		bmp = (UINT32 *)bitmap->pix32(dst_y_start + y, dst_x_start+startx);
+		bmp = &bitmap->pix(dst_y_start + y, dst_x_start+startx);
 		int ysrc_index =  ((src_y + yf * y) & 0x0fff) * 0x2000;
 		gfx2 = gfx + ysrc_index;
 
