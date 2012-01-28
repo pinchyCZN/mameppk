@@ -712,6 +712,9 @@ void construct_core_types(simple_list<input_type_entry> &typelist)
 #endif /* MAME_AVI */
 	INPUT_PORT_DIGITAL_TYPE( 0, UI,      UI_RECORD_MOVIE,     "Record Movie",           input_seq(KEYCODE_F12, KEYCODE_LSHIFT) )
 	INPUT_PORT_DIGITAL_TYPE( 0, UI,      UI_TOGGLE_CHEAT,     "Toggle Cheat",           input_seq(KEYCODE_F6) )
+#ifdef USE_SHOW_TIME
+	INPUT_PORT_DIGITAL_TYPE( 0, UI,      UI_TIME,             "Show Current Time",      input_seq() )
+#endif /* USE_SHOW_TIME */
 #ifdef USE_SHOW_INPUT_LOG
 	INPUT_PORT_DIGITAL_TYPE( 0, UI,      UI_SHOW_INPUT_LOG,   "Show Button Input",      input_seq(KEYCODE_F1, KEYCODE_LSHIFT) )
 #endif /* USE_SHOW_INPUT_LOG */

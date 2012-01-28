@@ -37,6 +37,9 @@
 #endif /* MAMEMESS */
 
 #include <ctype.h>
+#ifdef USE_SHOW_TIME
+#include <time.h>
+#endif /* USE_SHOW_TIME */
 
 #ifdef MAME_AVI
 extern int	bAviRun;
@@ -129,7 +132,7 @@ static rgb_t uifont_colortable[MAX_COLORTABLE];
 #endif /* UI_COLOR_DISPLAY */
 static rgb_t ui_bgcolor;
 static render_texture *bgtexture;
-static bitmap_rgb32 *bgbitmap;
+static bitmap_argb32 *bgbitmap;
 
 static int multiline_text_box_visible_lines;
 static int multiline_text_box_target_lines;
@@ -179,6 +182,11 @@ static slider_state *slider_current;
 /* natural keyboard info */
 static int ui_use_natural_keyboard;
 static UINT8 non_char_keys_down[(ARRAY_LENGTH(non_char_keys) + 7) / 8];
+
+#ifdef USE_SHOW_TIME
+static int show_time = 0;
+static int Show_Time_Position;
+#endif /* USE_SHOW_TIME */
 
 
 /***************************************************************************
@@ -457,6 +465,11 @@ int ui_init(running_machine &machine)
 #ifdef CMD_LIST
 	datafile_init(machine, &machine.options());
 #endif /* CMD_LIST */
+
+#ifdef USE_SHOW_TIME
+	show_time = 0;
+	Show_Time_Position = 0;
+#endif /* USE_SHOW_TIME */
 
 	/* reset globals */
 	single_step = FALSE;
@@ -1257,7 +1270,7 @@ void ui_draw_text_box(render_container *container, const char *text, int justify
 }
 
 
-#ifdef CMD_LIST
+#if defined(CMD_LIST) || defined(USE_SHOW_TIME)
 void ui_draw_text_box_fixed_width(render_container *container, const char *text, int justify, float xpos, float ypos, rgb_t backcolor)
 {
 	int mode_save = draw_text_fixed_mode;
@@ -1923,6 +1936,62 @@ void ui_image_handler_ingame(running_machine &machine)
 
 }
 
+
+#ifdef USE_SHOW_TIME
+
+#define DISPLAY_AMPM 0
+
+static void ui_display_time(running_machine &machine, render_container *container)
+{
+	char buf[20];
+#if DISPLAY_AMPM
+	char am_pm[] = "am";
+#endif /* DISPLAY_AMPM */
+	float width;
+	time_t ltime;
+	struct tm *today;
+	float line_height = ui_get_line_height(machine);
+
+	time(&ltime);
+	today = localtime(&ltime);
+
+#if DISPLAY_AMPM
+	if( today->tm_hour > 12 )
+	{
+		strcpy( am_pm, "pm" );
+		today->tm_hour -= 12;
+	}
+	if( today->tm_hour == 0 ) /* Adjust if midnight hour. */
+		today->tm_hour = 12;
+#endif /* DISPLAY_AMPM */
+
+#if DISPLAY_AMPM
+	sprintf(buf, "%02d:%02d:%02d %s", today->tm_hour, today->tm_min, today->tm_sec, am_pm);
+#else
+	sprintf(buf, "%02d:%02d:%02d", today->tm_hour, today->tm_min, today->tm_sec);
+#endif /* DISPLAY_AMPM */
+	width = ui_get_string_width(machine, buf) + UI_LINE_WIDTH * 2.0f;
+	switch(Show_Time_Position)
+	{
+		case 0:
+			ui_draw_text_box_fixed_width(container, buf, JUSTIFY_LEFT, 1.0f - width, 1.0f - line_height, UI_BACKGROUND_COLOR);
+			break;
+
+		case 1:
+			ui_draw_text_box_fixed_width(container, buf, JUSTIFY_LEFT, 1.0f - width, 0.0f, UI_BACKGROUND_COLOR);
+			break;
+
+		case 2:
+			ui_draw_text_box_fixed_width(container, buf, JUSTIFY_LEFT, 0.0f + width, 0.0f, UI_BACKGROUND_COLOR);
+			break;
+
+		case 3:
+			ui_draw_text_box_fixed_width(container, buf, JUSTIFY_LEFT, 0.0f + width, 1.0f - line_height, UI_BACKGROUND_COLOR);
+			break;
+	}
+}
+#endif /* USE_SHOW_TIME */
+
 #ifdef USE_SHOW_INPUT_LOG
 /*-------------------------------------------------
     ui_display_input_log -
@@ -2281,6 +2350,30 @@ static UINT32 handler_ingame(running_machine &machine, render_container *contain
 		else
 			machine.pause();
 	}
+
+#ifdef USE_SHOW_TIME
+	if (ui_input_pressed(machine, IPT_UI_TIME))
+	{
+		if (show_time)
+		{
+			Show_Time_Position++;
+
+			if (Show_Time_Position > 3)
+			{
+				Show_Time_Position = 0;
+				show_time = 0;
+			}
+		}
+		else
+		{
+			Show_Time_Position = 0;
+			show_time = 1;
+		}
+	}
+
+	if (show_time)
+		ui_display_time(machine, container);
+#endif /* USE_SHOW_TIME */
 
 #ifdef USE_SHOW_INPUT_LOG
 	if (ui_input_pressed(machine, IPT_UI_SHOW_INPUT_LOG))
@@ -3171,7 +3264,7 @@ static void build_bgtexture(running_machine &machine)
 	a = ui_transparency;
 #endif /* TRANS_UI */
 
-	bgbitmap = auto_bitmap_rgb32_alloc(machine, 1, 1024);
+	bgbitmap = auto_alloc(machine, bitmap_argb32(1, 1024));
 	if (bgbitmap == NULL)
 		fatalerror("build_bgtexture failed");
 
