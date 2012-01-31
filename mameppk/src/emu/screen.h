@@ -138,7 +138,7 @@ private:
 	bitmap_format		m_format;
 	texture_format		m_texformat;
 	bitmap_t *			m_live;
-	bitmap_ind16		m_ind16;
+	bitmap_ind16	m_ind16;
 	bitmap_rgb32		m_rgb32;
 };
 
@@ -168,6 +168,7 @@ public:
 	int width() const { return m_width; }
 	int height() const { return m_height; }
 	const rectangle &visible_area() const { return m_visarea; }
+	const rectangle &cliprect() const { return m_bitmap[0].cliprect(); }
 	bool oldstyle_vblank_supplied() const { return m_oldstyle_vblank_supplied; }
 	attoseconds_t refresh_attoseconds() const { return m_refresh; }
 	attoseconds_t vblank_attoseconds() const { return m_vblank; }
@@ -195,7 +196,6 @@ public:
 #endif /* MAME_AVI */
 
 	// information getters
-	screen_device *next_screen() const { return downcast<screen_device *>(typenext()); }
 	render_container &container() const { assert(m_container != NULL); return *m_container; }
 
 	// dynamic configuration
@@ -247,7 +247,7 @@ private:
 	};
 
 	// device-level overrides
-	virtual bool device_validity_check(emu_options &options, const game_driver &driver) const;
+	virtual void device_validity_check(validity_checker &valid) const;
 	virtual void device_start();
 	virtual void device_stop();
 	virtual void device_post_load();
@@ -355,9 +355,13 @@ private:
 // device type definition
 extern const device_type SCREEN;
 
+// iterator helper
+typedef device_type_iterator<&device_creator<screen_device>, screen_device> screen_device_iterator;
+
 #ifdef MAME_AVI
 void toggle_record_avi(void);
 #endif /* MAME_AVI */
+
 
 
 //**************************************************************************

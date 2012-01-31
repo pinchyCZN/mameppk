@@ -97,14 +97,14 @@ WRITE8_HANDLER( hyperspt_videoram_w )
 {
 	hyperspt_state *state = space->machine().driver_data<hyperspt_state>();
 	state->m_videoram[offset] = data;
-	tilemap_mark_tile_dirty(state->m_bg_tilemap, offset);
+	state->m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_HANDLER( hyperspt_colorram_w )
 {
 	hyperspt_state *state = space->machine().driver_data<hyperspt_state>();
 	state->m_colorram[offset] = data;
-	tilemap_mark_tile_dirty(state->m_bg_tilemap, offset);
+	state->m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_HANDLER( hyperspt_flipscreen_w )
@@ -112,7 +112,7 @@ WRITE8_HANDLER( hyperspt_flipscreen_w )
 	if (flip_screen_get(space->machine()) != (data & 0x01))
 	{
 		flip_screen_set(space->machine(), data & 0x01);
-		tilemap_mark_all_tiles_dirty_all(space->machine());
+		space->machine().tilemap().mark_all_dirty();
 	}
 }
 
@@ -131,7 +131,7 @@ VIDEO_START( hyperspt )
 	hyperspt_state *state = machine.driver_data<hyperspt_state>();
 
 	state->m_bg_tilemap = tilemap_create(machine, get_bg_tile_info, tilemap_scan_rows, 8, 8, 64, 32);
-	tilemap_set_scroll_rows(state->m_bg_tilemap, 32);
+	state->m_bg_tilemap->set_scroll_rows(32);
 
 #ifdef KAILLERA
 	no_flip_screen = 0;
@@ -216,10 +216,10 @@ SCREEN_UPDATE_IND16( hyperspt )
 	{
 		int scrollx = state->m_scroll[row * 2] + (state->m_scroll[(row * 2) + 1] & 0x01) * 256;
 		if (flip_screen_get(screen.machine())) scrollx = -scrollx;
-		tilemap_set_scrollx(state->m_bg_tilemap, row, scrollx);
+		state->m_bg_tilemap->set_scrollx(row, scrollx);
 	}
 
-	tilemap_draw(bitmap, cliprect, state->m_bg_tilemap, 0, 0);
+	state->m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	draw_sprites(screen.machine(), bitmap, cliprect);
 
 #ifdef KAILLERA
@@ -244,5 +244,5 @@ VIDEO_START( roadf )
 	hyperspt_state *state = machine.driver_data<hyperspt_state>();
 
 	state->m_bg_tilemap = tilemap_create(machine, roadf_get_bg_tile_info, tilemap_scan_rows, 8, 8, 64, 32);
-	tilemap_set_scroll_rows(state->m_bg_tilemap, 32);
+	state->m_bg_tilemap->set_scroll_rows(32);
 }

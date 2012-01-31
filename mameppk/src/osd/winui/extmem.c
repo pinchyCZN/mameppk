@@ -831,7 +831,7 @@ static void reset_table(game_memory_list *table)
 
 static void init_game_ram_serch(running_machine &machine, game_memory_list *GameRam, FPTR nGameRamOffset, FPTR *pTotalGameRamSize, int use)
 {
-	device_t *cpu;
+	device_execute_interface *cpu;
 	int cpunum, spacenum;
 	int count = 0;
 	int i;
@@ -858,7 +858,8 @@ static void init_game_ram_serch(running_machine &machine, game_memory_list *Game
 		reset_table((game_memory_list*)((FPTR)GameRam + i*nGameRamOffset));
 
 	/* loop over CPUs and address spaces */
-	for (cpu = machine.devicelist().first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
+	execute_interface_iterator iter(machine.config().root_device());
+	for (cpu = iter.first(), cpunum = 0; cpu != NULL; cpu = iter.next(), cpunum++)
 	{
 		const address_space *space;
 		const address_map	*map;
@@ -868,7 +869,7 @@ static void init_game_ram_serch(running_machine &machine, game_memory_list *Game
 		{
 			const address_map_entry *entry;
 
-			space = cpu->memory().space(spacenum);
+			space = cpu->device().memory().space(spacenum);
 			map = space->map();
 
 			/* fill in base/size entries, and handle shared memory */
@@ -1060,7 +1061,7 @@ void end_game_ram_serch(void)
 
 unsigned long game_ram_serch_crc32_(running_machine &machine, unsigned long crc)
 {
-	device_t *cpu;
+	device_execute_interface *cpu;
 	int cpunum, spacenum;
 	if (bGameRamSearch_SyncCheck == FALSE)
 		init_game_ram_serch(machine, &GameRam_SyncCheck[0][0], (FPTR)&GameRam_SyncCheck[1][0] - (FPTR)&GameRam_SyncCheck[0][0], (FPTR*)&nTotalGameRamSize_SyncCheck, 1);
@@ -1077,9 +1078,10 @@ unsigned long game_ram_serch_crc32_(running_machine &machine, unsigned long crc)
 						fclose(fp);
 					}
 #endif
-	for (cpu = machine.devicelist().first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
+	execute_interface_iterator iter(machine.config().root_device());
+	for (cpu = iter.first(), cpunum = 0; cpu != NULL; cpu = iter.next(), cpunum++)
 	{
-		if ( cpu->type() )
+		if ( cpu->device().type() )
 		{
 			game_memory_list	* ext;
 			for(ext = &GameRam_SyncCheck[cpunum][0]; ext->memory; ext++)
@@ -1129,7 +1131,7 @@ unsigned long game_ram_serch_crc32_(running_machine &machine, unsigned long crc)
 
 unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine &machine, unsigned long crc)
 {
-	device_t *cpu;
+	device_execute_interface *cpu;
 	int cpunum;
 
 	if (bGameRamSearch_KailleraStateSave == false)
@@ -1138,9 +1140,10 @@ unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine &machine,
 
 	if (nTotalGameRamSize_KailleraStateSave == 0) return crc;
 
-	for (cpu = machine.devicelist().first(), cpunum = 0; cpu != NULL; cpu = cpu->next(), cpunum++)
+	execute_interface_iterator iter(machine.config().root_device());
+	for (cpu = iter.first(), cpunum = 0; cpu != NULL; cpu = iter.next(), cpunum++)
 	{
-		if ( cpu->type() )
+		if ( cpu->device().type() )
 		{
 			game_memory_list	* ext;
 			for(ext = &GameRam_KailleraStateSave[cpunum][0]; ext->memory; ext++)
@@ -1155,5 +1158,3 @@ unsigned long game_ram_serch_crc32_kaillera_state_save(running_machine &machine,
 	}
 	return crc;
 }
-
-
