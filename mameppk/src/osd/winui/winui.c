@@ -1662,7 +1662,7 @@ static void ResizeTreeAndListViews(BOOL bResizeHidden)
 		if (bVisible)
 		{
 			nLastWidth2 = nLastWidth;
-			nLastWidth += nLeftWindowWidth + SPLITTER_WIDTH; 
+			nLastWidth += nLeftWindowWidth + SPLITTER_WIDTH;
 		}
 	}
 }
@@ -2752,11 +2752,11 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	}
 
 	if (GetRunFullScreen())
-	{ 
+	{
 		LONG lMainStyle;
 
 		// Remove menu
-		SetMenu(hMain,NULL); 
+		SetMenu(hMain,NULL);
 
 		// Frameless dialog (fake fullscreen)
 		lMainStyle = GetWindowLong(hMain, GWL_STYLE);
@@ -3162,7 +3162,7 @@ static LRESULT CALLBACK MameWindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 		  there is one check for each of the subclassed windows too.
     
 		  POSSIBLE BUGS:
-		  I've included this check in the subclassed windows, but a 
+		  I've included this check in the subclassed windows, but a
 		  mose move in either the title bar, the menu, or the
 		  toolbar will not generate a WM_MOUSEOVER message. At least
 		  not one that I know how to pick up. A solution could maybe
@@ -3207,7 +3207,7 @@ static LRESULT CALLBACK MameWindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 
 			GetClassName(lpNmHdr->hwndFrom, szClass, ARRAY_LENGTH(szClass));
 			if (!_tcscmp(szClass, TEXT("SysListView32")))
-				return Picker_HandleNotify(lpNmHdr);	
+				return Picker_HandleNotify(lpNmHdr);
 			if (!_tcscmp(szClass, TEXT("SysTabControl32")))
 				return TabView_HandleNotify(lpNmHdr);
 		}
@@ -3381,7 +3381,7 @@ static BOOL PumpMessage()
 	{
 		BOOL absorbed_key = FALSE;
 		if (GetKeyGUI())
-			absorbed_key = HandleKeyboardGUIMessage(msg.hwnd, msg.message, 
+			absorbed_key = HandleKeyboardGUIMessage(msg.hwnd, msg.message,
 			                                        msg.wParam, msg.lParam);
 		else
 			absorbed_key = TranslateAccelerator(hMain, hAccel, &msg);
@@ -3464,8 +3464,8 @@ static BOOL FolderCheck(void)
 			res = ListView_RedrawItems(hwndList, i, i);
 			while( PeekMessage( &msg, hwndList, 0, 0, PM_REMOVE ) != 0)
 			{
-				TranslateMessage(&msg); 
-				DispatchMessage(&msg); 
+				TranslateMessage(&msg);
+				DispatchMessage(&msg);
 			}
 		}
 		changed = FALSE;
@@ -3550,7 +3550,7 @@ static BOOL OnIdle(HWND hWnd)
 		return idle_work;
 	}
 	// NPW 17-Jun-2003 - Commenting this out because it is redundant
-	// and it causes the game to reset back to the original game after an F5 
+	// and it causes the game to reset back to the original game after an F5
 	// refresh
 	//driver_index = GetGameNameIndex(GetDefaultGame());
 	//SetSelectedPickItem(driver_index);
@@ -3923,7 +3923,7 @@ static HWND InitToolbar(HWND hParent)
 	iHeight = rect.bottom - rect.top - 2;
 
 	// create Edit Control
-	CreateWindowEx( 0L, TEXT("Edit"), _UIW(TEXT(SEARCH_PROMPT)), WS_CHILD | WS_BORDER | WS_VISIBLE | ES_LEFT, 
+	CreateWindowEx( 0L, TEXT("Edit"), _UIW(TEXT(SEARCH_PROMPT)), WS_CHILD | WS_BORDER | WS_VISIBLE | ES_LEFT,
 					iPosX, iPosY, 200, iHeight, hToolBar, (HMENU)ID_TOOLBAR_EDIT, hInst, NULL );
 
 	return hToolBar;
@@ -4151,7 +4151,7 @@ static void UpdateHistory(void)
 		if( ( (rect.bottom - rect.top) / nLineHeight) < (nLines) )
 		{
 			//more than one Page, so show Scrollbar
-			SetScrollRange(GetDlgItem(hMain, IDC_HISTORY), SB_VERT, 0, nLines, TRUE); 
+			SetScrollRange(GetDlgItem(hMain, IDC_HISTORY), SB_VERT, 0, nLines, TRUE);
 		}
 		else
 		{
@@ -5701,7 +5701,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 	//char* utf8_szFile;
 	BOOL res;
 
-	if ((id >= ID_LANGUAGE_ENGLISH_US) && (id < ID_LANGUAGE_ENGLISH_US + UI_LANG_MAX) 
+	if ((id >= ID_LANGUAGE_ENGLISH_US) && (id < ID_LANGUAGE_ENGLISH_US + UI_LANG_MAX)
 		&& ((id - ID_LANGUAGE_ENGLISH_US) != GetLangcode()))
 	{
 		ChangeLanguage(id);
@@ -5787,7 +5787,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
         MamePlayBackGameAVI();
         return TRUE;
 
-	case ID_FILE_PLAY_WITH_AVI:	
+	case ID_FILE_PLAY_WITH_AVI:
 		MamePlayGameAVI();
 		return TRUE;
 #endif /* MAME_AVI */
@@ -5964,7 +5964,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 			bKailleraMAME32WindowOwner = GetKailleraMAME32WindowOwner();
 			if (bKailleraMAME32WindowOwner == FALSE)
 				kailleraSelectServerDialog(NULL);
-			else 
+			else
 				kailleraSelectServerDialog(hMain);
 
 			if(bKailleraMAME32WindowHide == TRUE)
@@ -6129,7 +6129,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 		break;
 
 		/*
-		  Switches to fullscreen mode. No check mark handeling 
+		  Switches to fullscreen mode. No check mark handeling
 		  for this item cause in fullscreen mode the menu won't
 		  be visible anyways.
 		*/    
@@ -6165,7 +6165,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 			Edit_GetText(hwndCtl, buf, ARRAY_LENGTH(buf));
 			switch (codeNotify)
 			{
-			case TOOLBAR_EDIT_ACCELERATOR_PRESSED: 
+			case TOOLBAR_EDIT_ACCELERATOR_PRESSED:
 				hToolbarEdit = GetDlgItem( s_hToolBar, ID_TOOLBAR_EDIT);
 				SetFocus(hToolbarEdit);
 				break;
@@ -6671,7 +6671,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 				res = TreeView_EndEditLabelNow(hTreeView, FALSE);
 				return TRUE;
 			}
-			else 
+			else
 				if (have_selection)
 					MamePlayGame();
 		}
@@ -6866,7 +6866,7 @@ static const TCHAR *GamePicker_GetItemString(HWND hwndPicker, int nItem, int nCo
 			break;
 
 		case COLUMN_ORIENTATION:
-			s = DriverIsVertical(nItem) ? _UIW(TEXT("Vertical")) : _UIW(TEXT("Horizontal")); 
+			s = DriverIsVertical(nItem) ? _UIW(TEXT("Vertical")) : _UIW(TEXT("Horizontal"));
 			break;
 
 #if 1 //mamep
@@ -6951,7 +6951,7 @@ static const TCHAR *GamePicker_GetItemString(HWND hwndPicker, int nItem, int nCo
 	//
 	//	_sntprintf(pszBuffer, nBufferLength, TEXT("%s"), t_s);		
 	//	osd_free(t_s);
-	//	
+	//
 	//	s = pszBuffer;
 	//}
 
@@ -7053,7 +7053,7 @@ static void InitListView()
 	_stprintf(path, TEXT("%s\\bkground.png"), GetBgDir());
 	bki.ulFlags = LVBKIF_SOURCE_URL | LVBKIF_STYLE_TILE;
 	bki.pszImage = path;
-	if( hBackground )	
+	if( hBackground )
 		res = ListView_SetBkImageA(hwndList, &bki);
 
 	CreateIcons();
@@ -7062,7 +7062,7 @@ static void InitListView()
 
 	// Allow selection to change the default saved game
 	bListReady = TRUE;
-	//osd_free(t_bgdir); 
+	//osd_free(t_bgdir);
 }
 
 static void AddDriverIcon(int nItem,int default_icon_index)
@@ -7322,7 +7322,7 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 			{
 				if (IsAuditResultYes(audit_result))
 					nTemp1 = 2;
-				else 
+				else
 					nTemp1 = 1;
 			}
 			else
@@ -7336,7 +7336,7 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 			{
 				if (IsAuditResultYes(audit_result))
 					nTemp2 = 2;
-				else 
+				else
 					nTemp2 = 1;
 			}
 			else
@@ -7355,7 +7355,7 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 			{
 				if (IsAuditResultYes(audit_result))
 					nTemp1 = 2;
-				else 
+				else
 					nTemp1 = 1;
 			}
 			else
@@ -7370,7 +7370,7 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 			{
 				if (IsAuditResultYes(audit_result))
 					nTemp2 = 2;
-				else 
+				else
 					nTemp2 = 1;
 			}
 			else
@@ -7743,7 +7743,7 @@ static void CopyTrctempStateSaveFile(const WCHAR *fname, inpsub_header *inpsub_h
 		emu_file file_inp = emu_file(MameUIGlobal().state_directory(), OPEN_FLAG_READ);
 		filerr = file_inp.open(stemp);
 
-		if (!file_inp) 
+		if (!file_inp)
 			delete_file(_String(name));
 		else
 		{
@@ -8173,7 +8173,7 @@ static void MamePlayRecordWave()
 		memset(&playopts, 0, sizeof(playopts));
 		playopts.wavwrite = filename;
 		MamePlayGameWithOptions(nGame, &playopts);
-	}	
+	}
 }
 
 static void MamePlayRecordMNG()
@@ -8203,7 +8203,7 @@ static void MamePlayRecordMNG()
 		wcscat(fname, TEXT(".mng"));
 		playopts.mngwrite = fname;
 		MamePlayGameWithOptions(nGame, &playopts);
-	}	
+	}
 }
 
 static void MamePlayRecordAVI()
@@ -8233,7 +8233,7 @@ static void MamePlayRecordAVI()
 		wcscat(fname, TEXT(".avi"));
 		playopts.aviwrite = fname;
 		MamePlayGameWithOptions(nGame, &playopts);
-	}	
+	}
 }
 
 
@@ -8277,7 +8277,7 @@ static void MamePlayGameWithOptions(int nGame, const play_options *playopts)
 	in_emulation = FALSE;
 
 	// re-sort if sorting on # of times played
-	if (GetSortColumn() == COLUMN_PLAYED 
+	if (GetSortColumn() == COLUMN_PLAYED
 	 || GetSortColumn() == COLUMN_PLAYTIME)
 		Picker_Sort(hwndList);
 
@@ -8780,7 +8780,7 @@ static void UpdateMenu(HMENU hMenu)
 		EnableMenuItem(hMenu, ID_BIOS_PROPERTIES,       MF_GRAYED);
 		EnableMenuItem(hMenu, ID_CONTEXT_SELECT_RANDOM, MF_GRAYED);
 #ifdef MAME_AVI
-        EnableMenuItem(hMenu, ID_FILE_PLAY_WITH_AVI,    MF_GRAYED);	
+        EnableMenuItem(hMenu, ID_FILE_PLAY_WITH_AVI,    MF_GRAYED);
 #endif /* MAME_AVI */
 	}
 
@@ -8832,7 +8832,7 @@ static void UpdateMenu(HMENU hMenu)
 		else
 			EnableMenuItem(hMenu,ID_VIEW_TAB_SCREENSHOT + i,MF_BYCOMMAND | MF_GRAYED);
 
-		// check toggle menu items 
+		// check toggle menu items
 		if (GetShowTab(i))
 			CheckMenuItem(hMenu, ID_TOGGLE_TAB_SCREENSHOT + i,MF_BYCOMMAND | MF_CHECKED);
 		else
@@ -9003,8 +9003,8 @@ static LRESULT CALLBACK PictureFrameWndProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 		// check if they clicked on the picture area (leave 6 pixel no man's land
 		// by the history window to reduce mistaken clicks)
 		// no more no man's land, the Cursor changes when Edit control is left, should be enough feedback
-		if (have_history && 
-			NeedHistoryText() && 
+		if (have_history &&
+			NeedHistoryText() &&
 //			  (rect.top - 6) < pt.y && pt.y < (rect.bottom + 6) ) )
 			  		PtInRect( &rect, pt ) )
 
@@ -9138,11 +9138,11 @@ static LRESULT CALLBACK PictureWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 		region1 = CreateRectRgnIndirect(&rect);
 		region2 = CreateRectRgnIndirect(&rect2);
 		CombineRgn(region2,region2,region1,RGN_DIFF);
-		holdBrush = (HBRUSH)SelectObject(hdc, hBrush); 
+		holdBrush = (HBRUSH)SelectObject(hdc, hBrush);
 
 		FillRgn(hdc,region2, hBrush );
-		SelectObject(hdc, holdBrush); 
-		DeleteBrush(hBrush); 
+		SelectObject(hdc, holdBrush);
+		DeleteBrush(hBrush);
 
 		SetStretchBltMode(hdc,STRETCH_HALFTONE);
 		StretchBlt(hdc,nBordersize,nBordersize,rect.right-rect.left,rect.bottom-rect.top,
@@ -9218,24 +9218,24 @@ static void BeginListViewDrag(NM_LISTVIEW *pnmv)
 	pt.x = 0;
 	pt.y = 0;
 
-	/* Tell the list view control to create an image to use 
+	/* Tell the list view control to create an image to use
 	   for dragging. */
     himl_drag = ListView_CreateDragImage(hwndList,pnmv->iItem,&pt);
  
     /* Start the drag operation. */
-    ImageList_BeginDrag(himl_drag, 0, 0, 0); 
+    ImageList_BeginDrag(himl_drag, 0, 0, 0);
 
 	pt = pnmv->ptAction;
 	ClientToScreen(hwndList,&pt);
 	ImageList_DragEnter(GetDesktopWindow(),pt.x,pt.y);
 
-    /* Hide the mouse cursor, and direct mouse input to the 
+    /* Hide the mouse cursor, and direct mouse input to the
 	   parent window. */
     SetCapture(hMain);
 
 	prev_drag_drop_target = NULL;
 
-    g_listview_dragging = TRUE; 
+    g_listview_dragging = TRUE;
 
 }
 
@@ -9532,7 +9532,7 @@ static void CalculateBestScreenShotRect(HWND hWnd, RECT *pRect, BOOL restrict_he
   Removing the menu might cause problems later if some
   function tries to poll info stored in the menu. Don't
   know if you've done that, but this was the only way I
-  knew to remove the menu dynamically. 
+  knew to remove the menu dynamically.
 */
 
 static void SwitchFullScreenMode(void)
@@ -9550,7 +9550,7 @@ static void SwitchFullScreenMode(void)
 		DrawMenuBar(hMain);
 		
 		// Refresh the checkmarks
-		CheckMenuItem(GetMenu(hMain), ID_VIEW_FOLDERS, GetShowFolderList() ? MF_CHECKED : MF_UNCHECKED); 
+		CheckMenuItem(GetMenu(hMain), ID_VIEW_FOLDERS, GetShowFolderList() ? MF_CHECKED : MF_UNCHECKED);
 		CheckMenuItem(GetMenu(hMain), ID_VIEW_TOOLBARS, GetShowToolBar() ? MF_CHECKED : MF_UNCHECKED);    
 		CheckMenuItem(GetMenu(hMain), ID_VIEW_STATUS, GetShowStatusBar() ? MF_CHECKED : MF_UNCHECKED);
 		CheckMenuItem(GetMenu(hMain), ID_VIEW_PAGETAB, GetShowTabCtrl() ? MF_CHECKED : MF_UNCHECKED);
@@ -9584,7 +9584,7 @@ static void SwitchFullScreenMode(void)
 		// Set to fullscreen
 		
 		// Remove menu
-		SetMenu(hMain,NULL); 
+		SetMenu(hMain,NULL);
 
 		// Frameless dialog (fake fullscreen)
 		lMainStyle = GetWindowLong(hMain, GWL_STYLE);
@@ -9603,7 +9603,7 @@ static void SwitchFullScreenMode(void)
 
 /*
   Checks to see if the mouse has been moved since this func
-  was first called (which is at startup). The reason for 
+  was first called (which is at startup). The reason for
   storing the startup coordinates of the mouse is that when
   a window is created it generates WM_MOUSEOVER events, even
   though the user didn't actually move the mouse. So we need
@@ -9611,7 +9611,7 @@ static void SwitchFullScreenMode(void)
 
   POSSIBLE BUGS:
   Gets polled at every WM_MOUSEMOVE so it might cause lag,
-  but there's probably another way to code this that's 
+  but there's probably another way to code this that's
   way better?
   
 */
@@ -10327,7 +10327,7 @@ void __cdecl SendSyncCheck(int flag)
 		crc = KailleraSyncCheck.crc[KailleraStartOption.player-1][j];
 		for (i=0; i<KailleraStartOption.numplayers; i++)
 		{
-			if ((KailleraPlayerOption.drop_player[i>>3] & (1<<(i & 0x3))) 
+			if ((KailleraPlayerOption.drop_player[i>>3] & (1<<(i & 0x3)))
 				) //&& i != KailleraStartOption.player )
 			{
 				if (crc == KailleraSyncCheck.crc[i][j])
@@ -10933,7 +10933,7 @@ void AviDialogProcRefresh(HWND hDlg)
 
 	if (Button_GetCheck(GetDlgItem(hDlg, IDC_INTERLACE)) &&
 		Button_GetCheck(GetDlgItem(hDlg, IDC_COLOR_CNV_16TO24))	)
-	{	
+	{
 		Button_Enable(GetDlgItem(hDlg, IDC_INTERLACE_ODD),	 TRUE);
 		Button_Enable(GetDlgItem(hDlg, IDC_SMOOTH_RESIZE_X), TRUE);
 		Button_Enable(GetDlgItem(hDlg, IDC_SMOOTH_RESIZE_Y), TRUE);
@@ -11230,7 +11230,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 				Button_Enable(GetDlgItem(hDlg, IDC_FRAME_CMP), TRUE);
 				Button_Enable(GetDlgItem(hDlg, IDC_FRAME_CMP_PRE), TRUE);
 				Button_Enable(GetDlgItem(hDlg, IDC_FRAME_CMP_FEW), TRUE);
-			}else 
+			}else
 			{
 				Button_Enable(GetDlgItem(hDlg, IDC_FRAME_CMP), FALSE);
 				Button_Enable(GetDlgItem(hDlg, IDC_FRAME_CMP_PRE), FALSE);
@@ -11291,7 +11291,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 			break;
 		case IDC_INTERLACE:
 			if (Button_GetCheck(GetDlgItem(hDlg, IDC_INTERLACE)) == TRUE)
-			{	
+			{
 				char buf[32];
 				sprintf(buf, "%lu", AviStatus.rect.m_Height*2);
 				Edit_SetTextA(GetDlgItem(hDlg, IDC_AVISIZE_HEIGHT),        buf);
@@ -11337,7 +11337,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 				Edit_GetText(GetDlgItem(hDlg, IDC_HEIGHT), (LPTSTR)buf, 100);
 				sscanf(_String((LPTSTR)buf),"%u", &height);	if (height == 0)	height = AviStatus.rect.m_Height;
 
-				width_src = width; 
+				width_src = width;
 				height_src = height;
 
 				width *= 2;
@@ -11351,7 +11351,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 				sprintf(buf, "%u", y);
 				Edit_SetTextA(GetDlgItem(hDlg, IDC_AVI_TOP),        buf);
 				sprintf(buf, "%u", width);
-				Edit_SetTextA(GetDlgItem(hDlg, IDC_AVI_WIDTH),        buf);	
+				Edit_SetTextA(GetDlgItem(hDlg, IDC_AVI_WIDTH),        buf);
 				sprintf(buf, "%u", height);
 				Edit_SetTextA(GetDlgItem(hDlg, IDC_AVI_HEIGHT),        buf);
 				
@@ -11533,7 +11533,7 @@ static void set_mame_mixer_wfm(int drvindex, windows_options &o)
 {
 	extern int mame_mixer_wave_cnvnmb;
 	extern struct WAV_WAVEFORMAT		mame_mixer_dstwfm, mame_mixer_srcwfm;
-	extern struct WAV_SAMPLES_RESIZE	mame_mixer_wsr;	
+	extern struct WAV_SAMPLES_RESIZE	mame_mixer_wsr;
 
 	mame_mixer_srcwfm.samplespersec = o.int_value(OPTION_SAMPLERATE);
 	mame_mixer_srcwfm.channel = 2;		// changed from 0.93 (Aaron's big sound system change) - DarkCoder
@@ -11541,7 +11541,7 @@ static void set_mame_mixer_wfm(int drvindex, windows_options &o)
 
 	mame_mixer_dstwfm = mame_mixer_srcwfm;
 
-	mame_mixer_wave_cnvnmb = wav_convert_select(&mame_mixer_dstwfm, &mame_mixer_srcwfm, 
+	mame_mixer_wave_cnvnmb = wav_convert_select(&mame_mixer_dstwfm, &mame_mixer_srcwfm,
 												&mame_mixer_wsr, NULL ); //&mame_mixer_wsre );
 }
 
@@ -11568,7 +11568,7 @@ static void SetupAviStatus(int nGame)
 	if (o.bool_value(OPTION_ROR))
 	{
 		if ((AviStatus.orientation & ROT180) == ORIENTATION_FLIP_X ||
-			(AviStatus.orientation & ROT180) == ORIENTATION_FLIP_Y) 
+			(AviStatus.orientation & ROT180) == ORIENTATION_FLIP_Y)
 		{
 			AviStatus.orientation ^= ROT180;
 		}
@@ -11577,7 +11577,7 @@ static void SetupAviStatus(int nGame)
 	else if(o.bool_value(OPTION_ROL))
 	{
 		if ((AviStatus.orientation & ROT180) == ORIENTATION_FLIP_X ||
-			(AviStatus.orientation & ROT180) == ORIENTATION_FLIP_Y) 
+			(AviStatus.orientation & ROT180) == ORIENTATION_FLIP_Y)
 		{
 			AviStatus.orientation ^= ROT180;
 		}
@@ -11667,7 +11667,7 @@ static void SetupAviStatus(int nGame)
 	AviStatus.avi_smooth_resize_y	= FALSE;
 
 	if (AviStatus.avi_rect.m_Width < AviStatus.rect.m_Width ||
-		(int)((double)(AviStatus.avi_rect.m_Width<<16) / (double)AviStatus.rect.m_Width) & 0xffff)	
+		(int)((double)(AviStatus.avi_rect.m_Width<<16) / (double)AviStatus.rect.m_Width) & 0xffff)
 		AviStatus.avi_smooth_resize_x	= TRUE;
 
 	if (AviStatus.avi_rect.m_Height < AviStatus.rect.m_Height ||
@@ -11775,7 +11775,7 @@ static void MamePlayGameAVI(void)
 			if (wav_start_log_wave(_String(filename_wav), &mame_mixer_dstwfm) == 0)
 			{
 				wav_stop_log_wave();
-			} 
+			}
 			else
 			{
 				MameMessageBox(_UIW(TEXT("Could not open '%s' as a valid wave file.")), filename_wav);
@@ -11834,7 +11834,7 @@ static void MamePlayGameAVI(void)
 			MamePlayGameWithOptions(nGame, &playopts);
 			//AviEndCapture();
 		}
-		//else 
+		//else
 		{
 			
 			//if( _nAviNo ) _nAviNo--;
@@ -11979,7 +11979,7 @@ static void MamePlayBackGameAVI()
 				hr = 0;
 		}
 
-		if (hr == 1) 
+		if (hr == 1)
 		{
 			wcscpy(filename_wav, TEXT(""));
 			if (AviStatus.avi_audio_record_type)
@@ -12001,7 +12001,7 @@ static void MamePlayBackGameAVI()
 					if (wav_start_log_wave(_String(filename_wav), &mame_mixer_dstwfm) == 0)
 					{
 						wav_stop_log_wave();
-					} 
+					}
 					else
 					{
 						MameMessageBox(_UIW(TEXT("Could not open '%s' as a valid wave file.")), filename_wav);
@@ -12862,7 +12862,7 @@ const char *CheckIP(void)
 {
  WSADATA wsaData;
  char host_name[255];
- PHOSTENT hostinfo; 
+ PHOSTENT hostinfo;
 
  if ( WSAStartup( MAKEWORD(2,0), &wsaData ) == 0 )
   {

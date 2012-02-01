@@ -689,7 +689,7 @@ BOOL OptionsInit()
 {
  	//mamep: for save/load mameui.ini
  	hOptsMutex = CreateMutex(NULL , FALSE , MUTEX_STR);
- 
+
 	// create a memory pool for our data
 	//options_memory_pool = pool_alloc_lib(memory_error);
 	//if (!options_memory_pool)
@@ -714,7 +714,7 @@ BOOL OptionsInit()
 			{
 				options_entry entry[2] = { { 0 }, { 0 } };
 				snprintf(buffer, ARRAY_LENGTH(buffer), "%s%s", driver_list::driver(i).name, perGameOptions[j].name);
-				
+
 				entry[0].name = core_strdup(buffer);
 				entry[0].defvalue = perGameOptions[j].defvalue;
 				entry[0].flags = perGameOptions[j].flags;
@@ -3697,7 +3697,7 @@ static void LoadOptionsAndSettings(void)
 	GetGlobalOptionsFileName(buffer, ARRAY_LENGTH(buffer));
 	LoadSettingsFile(global, buffer);
 
-	// parse ui/mameui.ini 
+	// parse ui/mameui.ini
 	GetSettingsFileName(buffer, ARRAY_LENGTH(buffer));
 	LoadSettingsFile(settings, buffer);
 
@@ -4062,7 +4062,7 @@ void save_options(OPTIONS_TYPE opt_type, windows_options &opts, int game_num)
 
 	if (opt_type == OPTIONS_GLOBAL)
 	{
-		// Don't try to save a null global options file,  or it will be erased. 
+		// Don't try to save a null global options file,  or it will be erased.
 		//if (NULL == opts)
 			//return;
 		global = opts;
