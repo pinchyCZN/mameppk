@@ -83,7 +83,7 @@ void player_renmb(void *val,int len)
 
 	for(i=0; i<KAILLERA_MAX_PLAYER; i++)
 		memcpy(lp + i*len, chvaltemp + (playernmb[i])*len, len);
-	
+
 }
 
 void playernmb_set(int nmb, int to)
@@ -152,7 +152,7 @@ void getmessage_playernmb(char *dst, int recvPlayer, int player, const char *str
 	for(jj=0;jj<26;jj++)
 		chPlNmb[jj+10] = jj + 'A';
 
-	
+
 	if (KailleraPlayerOption.subplayer )
 	{
 		pl = ((player & 0x1) ? (KailleraStartOption.numplayers +(player>>1)):(player>>1)) + 1;
@@ -200,7 +200,7 @@ void player_renmb_dup(char *chval, unsigned short valxor, int players, int maxmj
 
 	len = KAILLERA_VAL_LEN + Kaillera_analog_port * KAILLERA_ANALOG_LEN;
 	if( maxmj )	len++;
-	
+
 	memcpy(tmp_chval, chval, len*players);
 
 	for(i=0; i<players; i++)
@@ -284,7 +284,7 @@ void getmessage_playernmb_dup(char *dst, int recvPlayer, int player, const char 
 		s[ii] = ',';
 		ii++;
 	}
-					
+
 	if( KailleraPlayerOption.subplayer )
 	{
 		int p[KAILLERA_MAX_PLAYER];
@@ -473,7 +473,7 @@ char* kChatDatabit(void *src, int len)
 	dst = &tmp[4];
 	(*dst) = (char)0x80;// クリア
 	for(i=0; i<len; i++) {
-		for(j=0; j<8; j++) 
+		for(j=0; j<8; j++)
 		{
 			(*dst) |= (((*s)>> j & 0x1) << bitpos);
 			bitpos = bitpos + 1;
@@ -974,17 +974,17 @@ void KailleraLostConnection(void)
 			{
 			case KAILLERA_LOST_CONNECTION_OPERATION_NONE:	default:
 				break;
-				
+
 			case KAILLERA_LOST_CONNECTION_OPERATION_WINDOW_MODE:
 				if (!win_window_mode)
 					winwindow_toggle_full_screen();
 				break;
-				
+
 			case KAILLERA_LOST_CONNECTION_OPERATION_END:
 				quiting = 2;
 				KailleraChatEnd();
 				break;
-				
+
 			case KAILLERA_LOST_CONNECTION_OPERATION_END_ALL_PLAYERS:
 				if (KailleraStartOption.player == 1)
 				{
@@ -992,7 +992,7 @@ void KailleraLostConnection(void)
 					dat[1] = 0xffffffff;	//全員ゲーム終了
 					kailleraChatSend(kChatData(&dat[0], 8));
 				}
-				
+
 				quiting = 2;
 				KailleraChatEnd();
 				break;

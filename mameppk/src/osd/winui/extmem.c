@@ -89,7 +89,7 @@ void __stdcall MemoryHackUpdate_xmvsfregion4p(void)
 	{
 
 		MemoryHack_Player[i] = 0;
-		
+
 		if(Play[i])
 		{
 			if(Mode[i] == 1)
@@ -149,7 +149,7 @@ void __stdcall MemoryHackUpdate_mshvsfj4p(void)
 		}
 
 		MemoryHack_Player[i] = 0;
-		
+
 		if(Play[i])
 		{
 			if(Mode[i] == 1)
@@ -199,7 +199,7 @@ void __stdcall MemoryHackUpdate_mvscj4p(void)
 		p1			 = space->read_byte(0xFF3003 + i*0x400);
 		p2			 = space->read_byte(0xFF3803 + i*0x400);
 		p3			 = space->read_byte(0xFF32B0 + i*0x400);
-		if (p1 == 1 && p2 == 1 && p3 == 0x06) 
+		if (p1 == 1 && p2 == 1 && p3 == 0x06)
 			Play[i] = 1;
 		else
 			Play[i] = 0;
@@ -208,7 +208,7 @@ void __stdcall MemoryHackUpdate_mvscj4p(void)
 	for(i=0; i<2; i++)
 	{
 		MemoryHack_Player[i] = 0;
-		
+
 		if(Play[i])
 		{
 			if(Mode[i] == 1)
@@ -253,7 +253,7 @@ void __stdcall MemoryHackUpdate_kof98_6p(void)
 	unsigned char Play1[2];
 	unsigned char Play2[2];
 	unsigned char Com[2];
-	
+
 	unsigned char SelectMode;
 	unsigned char Mode;
 
@@ -269,7 +269,7 @@ void __stdcall MemoryHackUpdate_kof98_6p(void)
 
 	SelectMode	= space->read_byte(0x10EBE7);
 	Mode		= space->read_byte(0x1085CE);
-	
+
 
 	if(Mode == 3)
 	{
@@ -365,7 +365,7 @@ void __stdcall MemoryHackUpdate_kof95_6p(void)
 		{
 			MemoryHack_Player[0] = 0;
 			MemoryHack_Player[1] = 0;
-		} 
+		}
 		else if(SelectMode == 16)
 		{
 			MemoryHack_Player[0] = 0;
@@ -472,7 +472,7 @@ void __stdcall MemoryHackUpdate_hyprolym4p(void)
 {
 	address_space *space = get_global_machine().firstcpu->memory().space(AS_PROGRAM);
 	unsigned char PlayerA, PlayerB;
-	
+
 	unsigned char Name;
 	unsigned char Mode;
 	unsigned char GameMode;
@@ -482,7 +482,7 @@ void __stdcall MemoryHackUpdate_hyprolym4p(void)
 	{
 		MemoryHack_Player[i] = 0;
 	}
-	
+
 	PlayerA = space->read_byte(0x28FB);
 	PlayerB = space->read_byte(0x28DF);
 
@@ -572,7 +572,7 @@ void SelectMemoryHack(const char* gamename)
 		MemoryHackFunction.Update	= MemoryHackUpdate_kof98_6p;
 		return;
 	}
-	
+
 	if (!strcmp(gamename, "kof95_6p"))
 	{
 		MemoryHackFunction.Init		= MemoryHackInit_kof98_6p;
@@ -664,8 +664,8 @@ void MemoryHack_KailleraInputVal(unsigned short *val, int numplayers)
 			if(MemoryHack_Player[i] == 1)
 				val[i] = val[i];
 			if(MemoryHack_Player[i] == 2)
-				val[i] = val[i+2];				
-			
+				val[i] = val[i+2];
+
 			for(i=0; i<3; i++)
 				val[i] = (val[i] & ~0x1000) | start[i];
 			break;
@@ -977,7 +977,7 @@ static void init_game_ram_serch(running_machine &machine, game_memory_list *Game
 					FILE *fp;
 					char desc[256];
 					unsigned char *p;
-					
+
 					if (handler->type == AMH_BANK)
 					{
 						sprintf(desc, _("BANK%.2d"), ((UINT32)handler - ((UINT32)STATIC_BANK1)) + 1);
@@ -1012,7 +1012,7 @@ static void init_game_ram_serch(running_machine &machine, game_memory_list *Game
 				if (enable && use)
 				{
 					unsigned int size = (entry->m_byteend - entry->m_bytestart) + 1;
-					
+
 					ext_gr->bank = 1;	// used
 					if((handler->m_type == AMH_BANK) || ((&entry->m_read)->m_type == AMH_BANK))
 					{

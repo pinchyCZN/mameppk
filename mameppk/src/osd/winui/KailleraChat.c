@@ -788,7 +788,7 @@ void KailleraChateReceive(char *szText)
 	    if (szRecvBuf[0])
 	        strcat(szRecvBuf,"\n");
 	    strcat(szRecvBuf, utf8_string);
-	
+
 		if( strlen(szChatLog) < (8192-512))
 		{
 			strcat(szChatLog, utf8_string);
@@ -909,7 +909,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
                     KailleraChatCloseChat();
                     ui_input_pressed(get_global_machine(), IPT_UI_CANCEL); /* IPT_UI_CANCELの押下フラグをクリア */
                     return TRUE;
-                
+
 				case VK_HOME:
                     KailleraChatCloseChat(); //kt
 		           return TRUE;
@@ -1091,7 +1091,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
                 int i, j, len;
                 int pTemp[KC_BUFFER_MAX];
 
-                /* 
+                /*
                  文節情報の取得
                  取得したデータは たとえば、今日は|良い|天気|です であれば
                  00000006|0000000a|0000000d|000000012 のように、32bit値で

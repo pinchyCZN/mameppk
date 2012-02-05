@@ -1306,7 +1306,7 @@ int MameUIMain(HINSTANCE    hInstance,
 		for (i = 0; i < __argc; i++)
 			osd_free(utf8_argv[i]);
 		free(utf8_argv);
-		
+
 		exit(rc);
 	}
 	if (!Win32UI_init(hInstance, lpCmdLine, nCmdShow))
@@ -2452,7 +2452,7 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	// Are we using an Old comctl32.dll?
 	dprintf("common controlversion %ld %ld\n",common_control_version >> 16,
 	        common_control_version & 0xffff);
-			 
+
 	oldControl = (common_control_version < PACKVERSION(4,71));
 	xpControl = (common_control_version >= PACKVERSION(6,0));
 	if (oldControl)
@@ -2885,13 +2885,13 @@ static void Win32UI_exit()
 		DeleteBitmap(hBackground);
 		hBackground = NULL;
 	}
-	
+
 	if (hPALbg)
 	{
 		DeletePalette(hPALbg);
 		hPALbg = NULL;
 	}
-	
+
 	if (hFont)
 	{
 		DeleteFont(hFont);
@@ -3160,7 +3160,7 @@ static LRESULT CALLBACK MameWindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 		  main WinProc (here), but somehow the WM_MOUSEDOWN messages
 		  are eaten up before they reach MameWindowProc. That's why
 		  there is one check for each of the subclassed windows too.
-    
+
 		  POSSIBLE BUGS:
 		  I've included this check in the subclassed windows, but a
 		  mose move in either the title bar, the menu, or the
@@ -3168,12 +3168,12 @@ static LRESULT CALLBACK MameWindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 		  not one that I know how to pick up. A solution could maybe
 		  be to subclass those too, but that's too much work :)
 		*/
-		
+
 	case WM_MOUSEMOVE:
 	{
 		if (MouseHasBeenMoved())
 			ShowCursor(TRUE);
-		
+
 		if (g_listview_dragging)
 			MouseMoveListViewDrag(MAKEPOINTS(lParam));
 		else
@@ -3401,7 +3401,7 @@ static BOOL PumpMessage()
 
 static BOOL FolderCheck(void)
 {
-	
+
 	//char *pDescription = NULL;
 	int nGameIndex = 0;
 	int i=0;
@@ -3623,7 +3623,7 @@ static void SetAllWindowsFont(HWND hParent, const Resize *r, HFONT hTheFont, BOO
 		/* Take care of subcontrols, if appropriate */
 		if (r->items[i].subwindow != NULL)
 			SetAllWindowsFont(hControl, (const Resize*)r->items[i].subwindow, hTheFont, bRedraw);
-		
+
 	}
 
 	hControl = GetDlgItem(hwndList, 0);
@@ -4080,7 +4080,7 @@ static void UpdateHistory(void)
 	if (GetSelectedPick() >= 0)
 	{
 		LPCWSTR histText;
-		
+
 #ifdef USE_IPS
 		if (g_IPSMenuSelectName)
 		{
@@ -4130,7 +4130,7 @@ static void UpdateHistory(void)
 		{
 			// We're using the new mode, with the history filling the entire tab (almost)
 			sRect.top = history_rect.top + 14;
-			sRect.bottom = (history_rect.bottom - history_rect.top) - 30;   
+			sRect.bottom = (history_rect.bottom - history_rect.top) - 30;
 		}
 		else
 		{
@@ -4461,7 +4461,7 @@ static BOOL TreeViewNotify(LPNMHDR nm)
 		return TryRenameCustomFolder(folder, ptvdi->item.pszText);
 
 		//osd_free(utf8_szText);
-		
+
 		//return result;
 	    }
 	case TVN_ENDLABELEDITA :
@@ -4734,7 +4734,7 @@ static void KeyboardKeyUp(int syskey, int vk_code, int special)
 
 static void PollGUIJoystick()
 {
-	// For the exec timer, will keep track of how long the button has been pressed  
+	// For the exec timer, will keep track of how long the button has been pressed
 	static int exec_counter = 0;
 	//const char* exec_command;
 	//TCHAR* t_exec_command;
@@ -4819,7 +4819,7 @@ static void PollGUIJoystick()
 	{
 		SendMessage(hMain, WM_COMMAND, ID_UI_HISTORY_DOWN, 0);
 	}
-  
+
   // User pressed EXECUTE COMMANDLINE
 	if (g_pJoyGUI->is_joy_pressed(JOYCODE(GetUIJoyExec(0), GetUIJoyExec(1), GetUIJoyExec(2),GetUIJoyExec(3))))
 	{
@@ -4841,7 +4841,7 @@ static void PollGUIJoystick()
 			//if( !t_exec_command )
 			//	return;
 			CreateProcessW(NULL, GetExecCommand(), NULL, NULL, FALSE, 0, NULL, NULL, &si, &pi);
-			
+
 			//osd_free(t_exec_command);
 
 			// We will not wait for the process to finish cause it might be a background task
@@ -5118,10 +5118,10 @@ static void PickColor(COLORREF *cDefault)
  	CHOOSECOLOR cc;
  	COLORREF choice_colors[16];
  	int i;
-	
+
  	for (i=0;i<16;i++)
  		choice_colors[i] = GetCustomColor(i);
- 
+
  	cc.lStructSize = sizeof(CHOOSECOLOR);
  	cc.hwndOwner   = hMain;
  	cc.rgbResult   = *cDefault;
@@ -5184,10 +5184,10 @@ static int MMO2LST(void)
 	    {
 		    const WCHAR *lst = _LSTW(driversw[i]->description);
 		    const WCHAR *readings = _READINGSW(driversw[i]->description);
-    
+
 		    if (readings == driversw[i]->description)
 			    readings = lst;
-    
+
 		    fprintf(fp, "%s\t%s\t%s\t%s\n",
 			    driver_list::driver(i).name, _String(lst), _String(readings), driver_list::driver(i).manufacturer);
 	    }
@@ -5540,7 +5540,7 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 					case 11: // Play time
 					{
 						WCHAR Tmp[20];
-						
+
 						GetTextPlayTime(nGameIndex, Tmp);
 
 						if ( Formatted )
@@ -6132,7 +6132,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 		  Switches to fullscreen mode. No check mark handeling
 		  for this item cause in fullscreen mode the menu won't
 		  be visible anyways.
-		*/    
+		*/
 	case ID_VIEW_FULLSCREEN:
 		SwitchFullScreenMode();
 		break;
@@ -6576,9 +6576,9 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 			OpenFileName.nFileOffset       = 0;
 			OpenFileName.nFileExtension    = 0;
 			OpenFileName.lpstrDefExt       = NULL;
-			OpenFileName.lCustData         = 0;                                                 
+			OpenFileName.lCustData         = 0;
 			OpenFileName.lpfnHook 		   = NULL;
-			OpenFileName.lpTemplateName    = NULL;                                    
+			OpenFileName.lpTemplateName    = NULL;
 			OpenFileName.Flags             = OFN_NOCHANGEDIR | OFN_SHOWHELP | OFN_EXPLORER;
 
 			if (GetOpenFileName(&OpenFileName))
@@ -6949,7 +6949,7 @@ static const TCHAR *GamePicker_GetItemString(HWND hwndPicker, int nItem, int nCo
 	//	if( !t_s )
 	//		return s;
 	//
-	//	_sntprintf(pszBuffer, nBufferLength, TEXT("%s"), t_s);		
+	//	_sntprintf(pszBuffer, nBufferLength, TEXT("%s"), t_s);
 	//	osd_free(t_s);
 	//
 	//	s = pszBuffer;
@@ -7247,7 +7247,7 @@ static void CreateIcons(void)
 		win_message_box_utf8(hwndList, "Cannot allocate small icon image list", "Allocation error - Exiting", IDOK);
 		PostQuitMessage(0);
 	}
-	
+
 	hLarge = ImageList_Create(dwLargeIconSize, dwLargeIconSize,
 							  ILC_COLORDDB | ILC_MASK, icon_count, icon_count + grow);
 
@@ -7657,7 +7657,7 @@ BOOL CommonFileDialog(common_file_dialog_proc cfd, WCHAR *filename, int filetype
 		//dprintf("got filename %s nFileExtension %u\n",filename,of.nFileExtension);
 		/*GetDirectory(filename,last_directory,sizeof(last_directory));*/
 	}
-	
+
 #if 0 //mamep: use standard combobox
 	if( t_artdir )
 		osd_free(t_artdir);
@@ -7791,7 +7791,7 @@ static int MamePlayBackTrace(const WCHAR *filename, inpsub_header *inpsub_header
 
 		sprintf(ver,"%s %s", MAMEUINAME "++", build_version);
 		if ( strcmp(ver, inpsub_header->version)) {r=3;}
-		
+
 		if (inpsub_header->playcount != 0 || mame32_PlayGameCount != 0) {r=3;}
 
 		//r=1;
@@ -7946,12 +7946,12 @@ static void MamePlayBackGame()
 			if (fileerr == FILERR_NONE)
 			{
 				inpsub_header inpsub_header;
-	
+
 				// read playbacksub header
 				pPlayBackSub.read(&inpsub_header, sizeof(inpsub_header));
 				pPlayBackSub.close();
 				//wsprintf(Trace_filename, TEXT("%s\\%s"), path, fname2);
-	
+
 				if (MamePlayBackTrace(fname2, &inpsub_header) == 2)
 				{
 					CopyTrctempStateSaveFile(fname2, &inpsub_header);
@@ -8143,7 +8143,7 @@ void MamePlayGame(void)
 			strcpy(oldname, driver_list::driver(nGame).name);
 			num_record = 0;
 		}
-	
+
 		wsprintf(local_recode_filename, TEXT("n%02d"), num_record);
 		wsprintf(filename, TEXT("%s_%s"), _Unicode(driver_list::driver(nGame).name), local_recode_filename);
 		wsprintf(fname, TEXT("%s.inp"), filename);
@@ -8571,7 +8571,7 @@ static void GamePicker_OnBodyContextMenu(POINT pt)
 					int  i;
 
 					*wp = '\0';
-					
+
 					for (i=1; i<GetMenuItemCount(hMenu); i++)	// do not create submenu if exists
 					{
 						hSubMenu = GetSubMenu(hMenu, i);
@@ -8585,7 +8585,7 @@ static void GamePicker_OnBodyContextMenu(POINT pt)
 							hSubMenu = NULL;
 						}
 					}
-					
+
 					if(!hSubMenu)
 					{
 						hSubMenu = CreateMenu();
@@ -8897,7 +8897,7 @@ void InitTreeContextMenu(HMENU hTreeMenu)
 			SetMenuItemInfoW(hMenu,ID_CONTEXT_SHOW_FOLDER_START,FALSE,&mii);
 		else
 			InsertMenuItemW(hMenu,i,FALSE,&mii);
-			
+
 		//osd_free(t_title);
 	}
 
@@ -8967,7 +8967,7 @@ static LRESULT CALLBACK HistoryWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPAR
 		case WM_PAINT:
 		{
 			POINT p = { 0, 0 };
-			
+
 			/* get base point of background bitmap */
 			MapWindowPoints(hWnd,hTreeView,&p,1);
 			PaintBackgroundImage(hWnd, NULL, p.x, p.y);
@@ -8990,7 +8990,7 @@ static LRESULT CALLBACK PictureFrameWndProc(HWND hWnd, UINT uMsg, WPARAM wParam,
 			ShowCursor(TRUE);
 		break;
     }
-  
+
     case WM_NCHITTEST :
 	{
 		POINT pt;
@@ -9173,7 +9173,7 @@ static void RemoveGameCustomFolder(int driver_index)
 	int num_folders;
 
 	GetFolders(&folders,&num_folders);
-	
+
 	for (i=0;i<num_folders;i++)
 	{
 	    if (folders[i]->m_dwFlags & F_CUSTOM && folders[i]->m_nFolderId == GetCurrentFolderID())
@@ -9187,7 +9187,7 @@ static void RemoveGameCustomFolder(int driver_index)
 			   /* if we just removed the current game,
 				  move the current selection so that when we rebuild the listview it
 				  leaves the cursor on next or previous one */
-			
+
 			   current_pick_index = GetSelectedPick();
 			   Picker_SetSelectedPick(hwndList, GetSelectedPick() + 1);
 			   if (current_pick_index == GetSelectedPick()) /* we must have deleted the last item */
@@ -9221,7 +9221,7 @@ static void BeginListViewDrag(NM_LISTVIEW *pnmv)
 	/* Tell the list view control to create an image to use
 	   for dragging. */
     himl_drag = ListView_CreateDragImage(hwndList,pnmv->iItem,&pt);
- 
+
     /* Start the drag operation. */
     ImageList_BeginDrag(himl_drag, 0, 0, 0);
 
@@ -9266,7 +9266,7 @@ static void MouseMoveListViewDrag(POINTS p)
 	   else
 		   res = TreeView_SelectDropTarget(hTreeView,NULL);
 	   ImageList_DragShowNolock(TRUE);
-	   
+
 	   prev_drag_drop_target = htiTarget;
    }
 }
@@ -9278,7 +9278,7 @@ static void ButtonUpListViewDrag(POINTS p)
 	TV_HITTESTINFO tvht;
 	TVITEM tvi;
 	BOOL res;
-	
+
 	ReleaseCapture();
 
     ImageList_DragLeave(hwndList);
@@ -9369,7 +9369,7 @@ static HICON GetSelectedFolderIcon(void)
 		tvi.hItem = htree;
 		tvi.mask = TVIF_PARAM;
 		res = TreeView_GetItem(hTreeView,&tvi);
-		
+
 		folder = (LPTREEFOLDER)tvi.lParam;
 		//hSmall_icon = TreeView_GetImageList(hTreeView,(int)tvi.iImage);
 		hSmall_icon = NULL;
@@ -9394,7 +9394,7 @@ static void CalculateBestScreenShotRect(HWND hWnd, RECT *pRect, BOOL restrict_he
 	int 	destW, destH;
 	int		nBorder;
 	RECT	rect;
-	/* for scaling */		 
+	/* for scaling */
 	int x, y;
 	int rWidth, rHeight;
 	double scale;
@@ -9471,10 +9471,10 @@ static void CalculateBestScreenShotRect(HWND hWnd, RECT *pRect, BOOL restrict_he
 				scale = (double)rWidth / x;
 			else
 				scale = (double)rHeight / y;
-			
+
 			destW = (int)(x * scale);
 			destH = (int)(y * scale);
-			
+
 			// If it's too big, scale again
 			if (destW > rWidth || destH > rHeight)
 			{
@@ -9482,7 +9482,7 @@ static void CalculateBestScreenShotRect(HWND hWnd, RECT *pRect, BOOL restrict_he
 					scale = (double)rWidth	/ destW;
 				else
 					scale = (double)rHeight / destH;
-				
+
 				destW = (int)(destW * scale);
 				destH = (int)(destH * scale);
 			}
@@ -9538,7 +9538,7 @@ static void CalculateBestScreenShotRect(HWND hWnd, RECT *pRect, BOOL restrict_he
 static void SwitchFullScreenMode(void)
 {
 	LONG lMainStyle;
-	
+
 	if (GetRunFullScreen())
 	{
 		int i;
@@ -9548,10 +9548,10 @@ static void SwitchFullScreenMode(void)
 		SetMenu(hMain, LoadMenu(hInst,MAKEINTRESOURCE(IDR_UI_MENU)));
 		TranslateMenu(GetMenu(hMain), 0);
 		DrawMenuBar(hMain);
-		
+
 		// Refresh the checkmarks
 		CheckMenuItem(GetMenu(hMain), ID_VIEW_FOLDERS, GetShowFolderList() ? MF_CHECKED : MF_UNCHECKED);
-		CheckMenuItem(GetMenu(hMain), ID_VIEW_TOOLBARS, GetShowToolBar() ? MF_CHECKED : MF_UNCHECKED);    
+		CheckMenuItem(GetMenu(hMain), ID_VIEW_TOOLBARS, GetShowToolBar() ? MF_CHECKED : MF_UNCHECKED);
 		CheckMenuItem(GetMenu(hMain), ID_VIEW_STATUS, GetShowStatusBar() ? MF_CHECKED : MF_UNCHECKED);
 		CheckMenuItem(GetMenu(hMain), ID_VIEW_PAGETAB, GetShowTabCtrl() ? MF_CHECKED : MF_UNCHECKED);
 		CheckMenuItem(GetMenu(hMain), ID_VIEW_PICTURE_AREA, GetShowScreenShot() ? MF_CHECKED : MF_UNCHECKED);
@@ -9562,12 +9562,12 @@ static void SwitchFullScreenMode(void)
 			CheckMenuItem(GetMenu(hMain), i + ID_LANGUAGE_ENGLISH_US, i == GetLangcode() ? MF_CHECKED : MF_UNCHECKED);
 				EnableMenuItem(GetMenu(hMain), i + ID_LANGUAGE_ENGLISH_US, IsValidCodePage(cp) ? MF_ENABLED : MF_GRAYED);
 		}
-		
+
 		// Add frame to dialog again
 		lMainStyle = GetWindowLong(hMain, GWL_STYLE);
 		lMainStyle = lMainStyle | WS_BORDER;
 		SetWindowLong(hMain, GWL_STYLE, lMainStyle);
-		
+
 		// Show the window maximized
 		if( GetWindowState() == SW_MAXIMIZE )
 		{
@@ -9582,7 +9582,7 @@ static void SwitchFullScreenMode(void)
 	else
 	{
 		// Set to fullscreen
-		
+
 		// Remove menu
 		SetMenu(hMain,NULL);
 
@@ -9596,7 +9596,7 @@ static void SwitchFullScreenMode(void)
 			SetWindowState( SW_MAXIMIZE );
 		}
 		ShowWindow(hMain, SW_MAXIMIZE);
-		
+
 		SetRunFullScreen(TRUE);
 	}
 }
@@ -9613,7 +9613,7 @@ static void SwitchFullScreenMode(void)
   Gets polled at every WM_MOUSEMOVE so it might cause lag,
   but there's probably another way to code this that's
   way better?
-  
+
 */
 
 BOOL MouseHasBeenMoved(void)
@@ -9629,8 +9629,8 @@ BOOL MouseHasBeenMoved(void)
 		mouse_x = p.x;
 		mouse_y = p.y;
     }
-	
-	return (p.x != mouse_x || p.y != mouse_y);       
+
+	return (p.x != mouse_x || p.y != mouse_y);
 }
 
 #ifdef USE_SHOW_SPLASH_SCREEN
@@ -9777,7 +9777,7 @@ int WINAPI kGameCallback(char *game, int player, int numplayers)
 		KailleraPlayerOption.drop_player[i>>3] |= (1<<(i & 0x3));
 		i++;
 	}
-	
+
 	KailleraPlayerOption.waittimemode = 1;
 	KailleraMaxWait = (osd_ticks_t)UCLOCKS_PER_SEC>>2;
 	KailleraPlayerOption.waittimemode = 2;
@@ -9955,7 +9955,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 				extern UINT32 kDefValues[MAX_INPUT_PORTS];
 				unsigned short *val = (UINT16*)&kChatDataBuf[1];
 				UINT32 dip, mask;
-				
+
 				i=0;
 				for(i=0;i<kMaxDipSwitch;i++) {
 					mask = kDipSwitchValues[i][1];
@@ -10014,7 +10014,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 					break;
 				}
 				// データ受信準備
-				
+
 				Kaillera_Send_DecompressLen	= kChatDataBuf[3];
 				Kaillera_Send_Pos			= 0;
 				Kaillera_Send_lpBuf = (char *)malloc( Kaillera_Send_Len );
@@ -10040,7 +10040,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 					file.close();
 					checksum_file_crc32(get_global_machine().options().state_directory(), filename, NULL, &size, &crc);
 				}
-				
+
 				dat[0] = 0x0000000f;
 				dat[1] = 0x00000009;
 				dat[2] = 0x00000000;
@@ -10074,7 +10074,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 					KailleraChatdataPreparationcheck.flag |= 0x80000000;
 					popmessageW(_UIW(TEXT("Sync Check Failure")));
 				}
-				
+
 				if (KailleraSyncCheck.count)
 				{
 					dat[0] = 0x0000000f | ((KailleraStartOption.player & 0xff) << 24);
@@ -10085,11 +10085,11 @@ void WINAPI kChatCallback(char *nick, char *text)
 					KailleraSyncCheck.count = 0;
 					break;
 				}
-				
+
 				{
 					const unsigned short steppos = kChatDataBuf[2] & 0xffff, count = (kChatDataBuf[2] & 0xffff0000)>>16;
 					KailleraSyncCheck.basepos		= kChatDataBuf[1];
-					KailleraSyncCheck.totalcount	= count;			
+					KailleraSyncCheck.totalcount	= count;
 					KailleraSyncCheck.step			= steppos;
 					KailleraSyncCheck.count			= KailleraSyncCheck.totalcount;
 					KailleraSyncCheck.pos			= KailleraSyncCheck.basepos + KailleraSyncCheck.step;
@@ -10153,7 +10153,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 			if( kChatDataBuf[2] & 0x80000000) { //中止
 				KailleraChatdataPreparationcheck.flag |= 0x80000000;
 				(*KailleraChatdataPreparationcheck.Callback_Update)( 0x80000000, &kChatDataBuf[0] );
-				
+
 				if( KailleraChatdataPreparationcheck.count<=0 ) {
 					(*KailleraChatdataPreparationcheck.Callback)( 1 );
 					KailleraChatdataPreparationcheck.nmb			= 0;
@@ -10179,19 +10179,19 @@ void WINAPI kChatCallback(char *nick, char *text)
 		file_error filerr;
 		unsigned long len;
 		int f = 0;
-		
+
 		if( KailleraStartOption.player == 1 )
 		{
 			//if( Kaillera_Send_Flags &= 0x1 ) popmessage("送信状況 %d％", (int)((double)Kaillera_Send_Pos/(double)Kaillera_Send_Len * 100));
 			if( Kaillera_Send_Flags & 0x1 ) popmessageW(_UIW(TEXT("Sending %d percent")), (int)((double)Kaillera_Send_Pos/(double)Kaillera_Send_Len * 100));
 			return;
 		}
-		
+
 		if( lpkChatDatabit == 0 )			return;
 		if( ~Kaillera_Send_Flags & 0x2 )	return;
-		
+
 		len = kChatReDatabit(lpkChatDatabit + Kaillera_Send_Pos, text+4);
-		
+
 		Kaillera_Send_SleepTime += 120;
 		if( Kaillera_Send_SleepTime > 600 ) Kaillera_Send_SleepTime = 600;
 		Kaillera_Send_Pos += len;
@@ -10242,7 +10242,7 @@ void WINAPI kDropCallback(char *nick, int playernb)
 
     sprintf(tmp, _String(_UIW(TEXT("* Player %i (%s) dropped from the current game."))), playernb, nick);
     KailleraChateReceive(tmp);
-    
+
 	//kt start
 	if( Kaillera_StateSave_Flags & KAILLERA_STATESAVE_AUTOSAVE )
 		popmessageW(_UIW(TEXT("Autosave was discontinued")));
@@ -10250,11 +10250,11 @@ void WINAPI kDropCallback(char *nick, int playernb)
 	Kaillera_StateSave_Flags = 0;
 	Kaillera_StateSave_Retry = 0;
 	if(--KailleraPlayerOption.max < 0) KailleraPlayerOption.max = 0;
-	
+
 	if (playernb)
 	{
 		KailleraPlayerOption.drop_player[(playernb-1)>>3] &= ~(1<<((playernb-1) & 0x3));
-		
+
 		if (KailleraStartOption.auto_end)
 		{
 			if (playernb <= KailleraStartOption.auto_end || KailleraStartOption.auto_end == -1)
@@ -10290,7 +10290,7 @@ void __cdecl SendOverclockParam(int flag)
 	if(flag) {
 		return;
 	}
-	
+
 	//sprintf(tmp, _UI("CPUs Overclocked %d %%"), (int)(Kaillera_Overclock_Multiple * 50));
 	Kaillera_StateSave_Flags |= KAILLERA_FLAGS_RESET_MACHINE;
 	//kailleraChatSend(tmp);
@@ -10353,7 +10353,7 @@ void __cdecl SendSyncCheck(int flag)
 			}
 		}
 	}
-	
+
 	if (crc)
 	{
 		WCHAR tmp[256];
@@ -10651,10 +10651,10 @@ INT_PTR CALLBACK KailleraOptionDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 			wsprintf(buf, TEXT("%u"), GetKailleraAutosaveTimeInterval());
 			Edit_SetText(hCtrl, buf);
 		}
-        
+
 
         Button_SetCheck(GetDlgItem(hDlg, IDC_SHOW_SYSTEM_MESSAGE),      GetShowSystemMessage());
-  
+
 
 		hCtrl = GetDlgItem(hDlg, IDC_KAILLERA_MAME32WINDOW_OWNER);
 		if (hCtrl)
@@ -10695,7 +10695,7 @@ INT_PTR CALLBACK KailleraOptionDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 
 			wsprintf (buf2, TEXT("%s\\*.dll"), dirname);
 			hFile=FindFirstFile(buf2, &w32FindData);
-			
+
 			if(hFile!=INVALID_HANDLE_VALUE)
 			{
 				do
@@ -10821,7 +10821,7 @@ INT_PTR CALLBACK KailleraOptionDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 				}
 				SetKailleraClientChangesToJapanese(b);
 			}
-			
+
             SetKailleraMAME32WindowHide(Button_GetCheck(GetDlgItem(hDlg, IDC_KAILLERA_MAME32WINDOW_HIDE)));
 			SetKailleraRecordInput(Button_GetCheck(GetDlgItem(hDlg, IDC_KAILLERA_RECORD_INPUT)));
 			SetLocalRecordInput(Button_GetCheck(GetDlgItem(hDlg, IDC_LOCAL_RECORD_INPUT)));
@@ -10846,7 +10846,7 @@ INT_PTR CALLBACK KailleraOptionDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LP
 					SetKailleraClientDLL(buf2);
 				}
 			}
-            
+
 		    bKailleraMAME32WindowHide  = GetKailleraMAME32WindowHide();
 
 			/* Fall through */
@@ -10944,7 +10944,7 @@ void AviDialogProcRefresh(HWND hDlg)
 		Button_Enable(GetDlgItem(hDlg, IDC_AVI_WIDTH),			TRUE);
 		Button_Enable(GetDlgItem(hDlg, IDC_AVI_TOP),			TRUE);
 		Button_Enable(GetDlgItem(hDlg, IDC_AVI_HEIGHT),			TRUE);
-	
+
 		Button_Enable(GetDlgItem(hDlg, IDC_AVI_POS_CENTER),			TRUE);
 		Static_SetText(GetDlgItem(hDlg, IDC_TEXT_FPS_DIV2),        TEXT("/2"));
 		Static_SetText(GetDlgItem(hDlg, IDC_TEXT_AVI_TOP_MUL2),    TEXT("x2"));
@@ -11088,7 +11088,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 			Edit_SetText(GetDlgItem(hDlg, IDC_AVI_WIDTH),  buf);
 			wsprintf(buf, TEXT("%lu"), AviStatus.avi_rect.m_Height);
 			Edit_SetText(GetDlgItem(hDlg, IDC_AVI_HEIGHT), buf);
-			
+
 			hCtrl = GetDlgItem(hDlg, IDC_AVI_FILESIZE);
 			if (hCtrl)
 			{
@@ -11165,7 +11165,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 				}else
 				{
                     const WCHAR *lpszStereo = TEXT("Stereo");
-					const WCHAR *lpszMono   = TEXT("Mono");				
+					const WCHAR *lpszMono   = TEXT("Mono");
 					wsprintf(buf, TEXT("%uHz %ubit %s"), AviStatus.audio_samples_per_sec, AviStatus.audio_bitrate, (AviStatus.audio_channel == 2) ? lpszStereo:lpszMono);
 					Static_SetText(GetDlgItem(hDlg, IDC_AUDIO_SRC_FORMAT),        buf);
 					wsprintf(buf, TEXT("%uHz %ubit %s"), AviStatus.avi_audio_samples_per_sec, AviStatus.avi_audio_bitrate, (AviStatus.avi_audio_channel == 2) ? lpszStereo:lpszMono);
@@ -11181,7 +11181,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 				wsprintf(buf, TEXT("%d"), AviStatus.second);
 				Edit_SetText(	GetDlgItem(hDlg, IDC_SECOND), buf);
 			}
-			
+
 
 			Button_SetCheck(GetDlgItem(hDlg, IDC_FRAME_CMP),      AviStatus.frame_cmp);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_FRAME_CMP_PRE),  AviStatus.frame_cmp_pre15);
@@ -11195,24 +11195,24 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 			Button_SetCheck(GetDlgItem(hDlg, IDC_AVI_SAVEFILE_PAUSE),	AviStatus.avi_savefile_pause);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_SMOOTH_RESIZE_X),		AviStatus.avi_smooth_resize_x);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_SMOOTH_RESIZE_Y),		AviStatus.avi_smooth_resize_y);
-			
+
 			Button_SetCheck(GetDlgItem(hDlg, IDC_AUDIO_16BIT),    (AviStatus.avi_audio_bitrate>8) ? TRUE:FALSE);
 			Button_SetCheck(GetDlgItem(hDlg, IDC_AUDIO_STEREO),   (AviStatus.avi_audio_channel==2) ? TRUE:FALSE);
 
-	
+
 			if (AviStatus.depth == 16)
 			{
 				if (AviStatus.avi_depth == 8)	Button_SetCheck(GetDlgItem(hDlg, IDC_COLOR_CNV_16TO8),TRUE);
 				else							Button_SetCheck(GetDlgItem(hDlg, IDC_COLOR_CNV_16TO8),FALSE);
 				if (AviStatus.avi_depth == 24)	Button_SetCheck(GetDlgItem(hDlg, IDC_COLOR_CNV_16TO24),TRUE);
 				else							Button_SetCheck(GetDlgItem(hDlg, IDC_COLOR_CNV_16TO24),FALSE);
-			
+
 				Button_Enable(GetDlgItem(hDlg, IDC_COLOR_CNV_16TO8), TRUE);
 				Button_Enable(GetDlgItem(hDlg, IDC_COLOR_CNV_16TO24), TRUE);
 
 				Button_Enable(GetDlgItem(hDlg, IDC_INTERLACE), TRUE);
 				Button_Enable(GetDlgItem(hDlg, IDC_SET_TV_DISPLAY_SETTING), TRUE);
-				
+
 
 			} else
 			{
@@ -11223,7 +11223,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 				Button_Enable(GetDlgItem(hDlg, IDC_INTERLACE), FALSE);
 				Button_Enable(GetDlgItem(hDlg, IDC_SET_TV_DISPLAY_SETTING), FALSE);
 			}
-			
+
 
 			if (AviStatus.depth == 16)
 			{
@@ -11354,7 +11354,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 				Edit_SetTextA(GetDlgItem(hDlg, IDC_AVI_WIDTH),        buf);
 				sprintf(buf, "%u", height);
 				Edit_SetTextA(GetDlgItem(hDlg, IDC_AVI_HEIGHT),        buf);
-				
+
 				if (width % width_src)		AviStatus.avi_smooth_resize_x = TRUE;
 				else						AviStatus.avi_smooth_resize_x = FALSE;
 				if (height % height_src)	AviStatus.avi_smooth_resize_y = TRUE;
@@ -11362,7 +11362,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 
 				Button_SetCheck(GetDlgItem(hDlg, IDC_SMOOTH_RESIZE_X),		AviStatus.avi_smooth_resize_x);
 				Button_SetCheck(GetDlgItem(hDlg, IDC_SMOOTH_RESIZE_Y),		AviStatus.avi_smooth_resize_y);
-				
+
 				(void)ComboBox_SetCurSel(GetDlgItem(hDlg, IDC_AVIFRAMESKIP), 0);
 
 			}
@@ -11389,7 +11389,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 				Edit_SetTextA(GetDlgItem(hDlg, IDC_AVI_TOP),        buf);
 			}
 			break;
-			
+
         case IDOK :
 			{
 				char buf[100];
@@ -11422,7 +11422,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 					AviStatus.fps = (double)df / pow(10,j);
 					AviStatus.fps += (double)di;
 
-									
+
 					sprintf(buf, "%5.6f", AviStatus.def_fps);
 					j2=-1;
 					for(i=0; i<100; i++)
@@ -11455,7 +11455,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 				AviStatus.interlace_odd_number_field = Button_GetCheck(GetDlgItem(hDlg, IDC_INTERLACE_ODD));
 
 				AviStatus.force_flip_y    = Button_GetCheck(GetDlgItem(hDlg, IDC_CHECK_FORCEFLIPY));
-				
+
 				AviStatus.avi_savefile_pause  = Button_GetCheck(GetDlgItem(hDlg, IDC_AVI_SAVEFILE_PAUSE));
 				AviStatus.avi_smooth_resize_x = Button_GetCheck(GetDlgItem(hDlg, IDC_SMOOTH_RESIZE_X));
 				AviStatus.avi_smooth_resize_y = Button_GetCheck(GetDlgItem(hDlg, IDC_SMOOTH_RESIZE_Y));
@@ -11499,7 +11499,7 @@ INT_PTR CALLBACK AviDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam
 				if (buf[0] != 0)	sscanf(_String((LPTSTR)buf),"%lu", &AviStatus.rect.m_Width);
 				Edit_GetText(GetDlgItem(hDlg, IDC_HEIGHT), (LPTSTR)buf, 100);
 				if (buf[0] != 0)	sscanf(_String((LPTSTR)buf),"%lu", &AviStatus.rect.m_Height);
-				
+
 				Edit_GetText(GetDlgItem(hDlg, IDC_HOUR), (LPTSTR)buf, 100);
 				if (buf[0] != 0)	sscanf(_String((LPTSTR)buf),"%d", &AviStatus.hour);
 				Edit_GetText(GetDlgItem(hDlg, IDC_MINUTE), (LPTSTR)buf, 100);
@@ -11613,7 +11613,7 @@ static void SetupAviStatus(int nGame)
 		AviStatus.audio_channel         = mame_mixer_srcwfm.channel;
 		AviStatus.audio_samples_per_sec	= mame_mixer_srcwfm.samplespersec;
 		AviStatus.audio_bitrate			= mame_mixer_srcwfm.bitrate;
-		
+
 		AviStatus.avi_audio_channel			= mame_mixer_dstwfm.channel;
 		AviStatus.avi_audio_samples_per_sec = mame_mixer_dstwfm.samplespersec;
 		AviStatus.avi_audio_bitrate			= mame_mixer_dstwfm.bitrate;
@@ -11644,7 +11644,7 @@ static void SetupAviStatus(int nGame)
 		AviStatus.rect.m_Width  = screen->visible_area().max_x - screen->visible_area().min_x + 1;
 		AviStatus.rect.m_Height = screen->visible_area().max_y - screen->visible_area().min_y + 1;
 	}
-	
+
 #if 0
 	//neogeo
 	if (!strcmp(drivers[nGame]->source_file+17, "neogeo.c") && neogeo_check_lower_resolution(drivers[nGame]->name))
@@ -11672,7 +11672,7 @@ static void SetupAviStatus(int nGame)
 
 	if (AviStatus.avi_rect.m_Height < AviStatus.rect.m_Height ||
 		(int)((double)(AviStatus.avi_rect.m_Height<<16) / (double)AviStatus.rect.m_Height) & 0xffff)
-		AviStatus.avi_smooth_resize_y	= TRUE;		
+		AviStatus.avi_smooth_resize_y	= TRUE;
 
 
 	OldAviStatus = GetAviStatus();
@@ -11700,7 +11700,7 @@ static void SetupAviStatus(int nGame)
 
 		if (AviStatus.audio_type == OldAviStatus->audio_type)
 			AviStatus.avi_audio_record_type	= OldAviStatus->avi_audio_record_type;
-		
+
 		AviStatus.hour = OldAviStatus->hour;
 		AviStatus.minute = OldAviStatus->minute;
 		AviStatus.second = OldAviStatus->second;
@@ -11745,7 +11745,7 @@ static void MamePlayGameAVI(void)
 	nGame = Picker_GetSelectedItem(hwndList);
 
 	SetupAviStatus(nGame);
-	
+
 	hr = DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_AVI_STATUS),
 				   hMain, AviDialogProc);
 
@@ -11836,7 +11836,7 @@ static void MamePlayGameAVI(void)
 		}
 		//else
 		{
-			
+
 			//if( _nAviNo ) _nAviNo--;
 		}
 	}
@@ -11958,7 +11958,7 @@ static void MamePlayBackGameAVI()
 #endif
 
 		SetupAviStatus(nGame);
-		
+
 		hr = DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_AVI_STATUS),
 					   hMain, AviDialogProc);
 
@@ -12051,7 +12051,7 @@ static void MamePlayBackGameAVI()
 
 			//if (AviStartCapture(hMain, filename_avi, &AviStatus))
 			{
-				
+
 				WCHAR buf[1024];
 				wsprintf(buf, _UIW(TEXT("Use 'Record AVI' key to toggle start/stop AVI recording.")));
 				MessageBox(hMain, buf, TEXT(MAMEUINAME), MB_OK | MB_ICONEXCLAMATION );
@@ -12319,7 +12319,7 @@ INT_PTR CALLBACK KServerOptionDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPA
 	MameMessageBox(buffermsg);
 			}
 		else {
-	
+
 	fprintf( fp, "; Kaillera Server settings.\n" );
 	fprintf( fp, "; Auto Generated by EMU_MAX.\n\n" );
 

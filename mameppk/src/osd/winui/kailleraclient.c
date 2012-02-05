@@ -120,7 +120,7 @@ BOOL LoadLibrary_KailleraClient_DLL(const TCHAR *fname)
 	if (kailleraShutdown == NULL)	goto err;
 	kailleraSetInfos = (int (WINAPI *) (kailleraInfos*))GetProcAddress((HINSTANCE)hDLL, "_kailleraSetInfos@4");
 	if (kailleraSetInfos == NULL)	goto err;
-	
+
 	kailleraSelectServerDialog = (int (WINAPI *)(HWND))GetProcAddress((HINSTANCE)hDLL, "_kailleraSelectServerDialog@4");
 	if (kailleraSelectServerDialog == NULL)	goto err;
 	kailleraModifyPlayValues = (int (WINAPI *)(void *, int))GetProcAddress((HINSTANCE)hDLL, "_kailleraModifyPlayValues@8");
@@ -150,7 +150,7 @@ void FreeLibrary_KailleraClient_DLL(void)
 	{
 		FreeLibrary((HINSTANCE)hDLL);
 		hDLL = NULL;
-	
+
 		KailleraFuncReset();
 	}
 }
@@ -216,7 +216,7 @@ BOOL Kaillera_GetVersion(const TCHAR *fname, char *version)
 	SetErrorMode(error_mode);
 	if (hTempDLL == NULL)
 	   goto err;
-	
+
 
 	Temp_GetKailleraVersion = (int (WINAPI *)(char *))GetProcAddress(hTempDLL, "_kailleraGetVersion@4");
 	if (Temp_GetKailleraVersion == NULL)	goto err;
