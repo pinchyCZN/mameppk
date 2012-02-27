@@ -603,7 +603,7 @@ $(MAMEOBJ)/dataeast.a: \
 	$(DRIVERS)/deco_ld.o \
 	$(DRIVERS)/deco_mlc.o $(VIDEO)/deco_mlc.o \
 	$(DRIVERS)/deco156.o $(MACHINE)/deco156.o \
-	$(DRIVERS)/deco32.o $(VIDEO)/deco32.o \
+	$(DRIVERS)/deco32.o $(VIDEO)/deco32.o $(VIDEO)/dvi.o \
 	$(AUDIO)/decobsmt.o \
 	$(DRIVERS)/decocass.o $(MACHINE)/decocass.o $(VIDEO)/decocass.o \
 	$(DRIVERS)/deshoros.o \
@@ -1811,6 +1811,7 @@ $(MAMEOBJ)/misc.a: \
 	$(DRIVERS)/polyplay.o $(AUDIO)/polyplay.o $(VIDEO)/polyplay.o \
 	$(DRIVERS)/poker72.o \
 	$(DRIVERS)/poo.o \
+	$(DRIVERS)/potgoldu.o \
 	$(DRIVERS)/proconn.o \
 	$(DRIVERS)/psattack.o \
 	$(DRIVERS)/quizo.o \
@@ -1880,6 +1881,7 @@ $(MAMEOBJ)/misc.a: \
 	$(DRIVERS)/cupidon.o \
 	$(DRIVERS)/extrema.o \
 	$(DRIVERS)/tmspoker.o \
+	$(DRIVERS)/manohman.o \
 
 
 #-------------------------------------------------
