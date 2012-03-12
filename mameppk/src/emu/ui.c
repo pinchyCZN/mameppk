@@ -1920,8 +1920,8 @@ void ui_paste(running_machine &machine)
 }
 
 /*-------------------------------------------------
-    ui_image_handler_ingame - execute display 
-	callback function for each image device
+    ui_image_handler_ingame - execute display
+    callback function for each image device
 -------------------------------------------------*/
 
 void ui_image_handler_ingame(running_machine &machine)
@@ -2796,7 +2796,7 @@ static slider_state *slider_init(running_machine &machine)
 -------------------------------------------------*/
 
 static INT32 slider_volume(running_machine &machine, void *arg, astring *string, INT32 newval)
-	{
+{
 	if (newval != SLIDER_NOCHANGE)
 		machine.sound().set_attenuation(newval);
 	if (string != NULL)

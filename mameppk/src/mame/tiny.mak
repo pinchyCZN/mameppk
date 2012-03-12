@@ -166,7 +166,7 @@ $(DRIVERS)/cavesh3.o:	$(MAMESRC)/drivers/csh3blit.c
 # mamep: driver list dependencies
 #-------------------------------------------------
 
-#FXIXME
+#FIXME
 $(MAMEOBJ)/%.lst:	$(MAMESRC)/%.lst
 	@echo Generating $@...
 	@echo #include "$<" > $@.h
