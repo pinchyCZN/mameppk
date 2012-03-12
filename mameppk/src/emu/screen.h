@@ -422,10 +422,10 @@ void toggle_record_avi(void);
 	screen_device::static_set_screen_vblank(*device, screen_vblank_delegate(&screen_vblank_##_func, "screen_vblank_" #_func)); \
 
 #define MCFG_SCREEN_VBLANK_DRIVER(_class, _method) \
-	screen_device::static_set_screen_vblank(*device, screen_vblank_delegate(&_class::_method, #_class "::" #_method, NULL)); \
+	screen_device::static_set_screen_vblank(*device, screen_vblank_delegate(&_class::_method, #_class "::" #_method, NULL, (_class *)0)); \
 
 #define MCFG_SCREEN_VBLANK_DEVICE(_device, _class, _method) \
-	screen_device::static_set_screen_vblank(*device, screen_vblank_delegate(&_class::_method, #_class "::" #_method, _device)); \
+	screen_device::static_set_screen_vblank(*device, screen_vblank_delegate(&_class::_method, #_class "::" #_method, _device, (_class *)0)); \
 
 
 

@@ -63,7 +63,7 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 		} else key_F1_old = 0;
 	}
 
-	speaker_input info;
+	mixer_input info;
 	if(kPlay)
 	{
 		Kaillera_Pos = playernmb_get(KailleraStartOption.player - 1) % 2;
@@ -76,14 +76,14 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 	
 			if (!Kaillera_Pos)
 			{
-				if (device->machine().sound().indexed_speaker_input(1, info))
+				if (device->machine().sound().indexed_mixer_input(1, info))
 					info.stream->set_input_gain(info.inputnum, 0.75); // 1P (LEFT)
-				if (device->machine().sound().indexed_speaker_input(2, info))
+				if (device->machine().sound().indexed_mixer_input(2, info))
 					info.stream->set_input_gain(info.inputnum, 0.00); // 2P (RIGHT)
 			} else {
-				if (device->machine().sound().indexed_speaker_input(1, info))
+				if (device->machine().sound().indexed_mixer_input(1, info))
 					info.stream->set_input_gain(info.inputnum, 0.00); // 1P (LEFT)
-				if (device->machine().sound().indexed_speaker_input(2, info))
+				if (device->machine().sound().indexed_mixer_input(2, info))
 					info.stream->set_input_gain(info.inputnum, 0.75); // 2P (RIGHT)
 			}
 	
@@ -97,14 +97,14 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 	
 			if (!fromanc2_playerside)
 			{
-				if (device->machine().sound().indexed_speaker_input(1, info))
+				if (device->machine().sound().indexed_mixer_input(1, info))
 					info.stream->set_input_gain(info.inputnum, 0.75); // 1P (LEFT)
-				if (device->machine().sound().indexed_speaker_input(2, info))
+				if (device->machine().sound().indexed_mixer_input(2, info))
 					info.stream->set_input_gain(info.inputnum, 0.00); // 2P (RIGHT)
 			} else {
-				if (device->machine().sound().indexed_speaker_input(1, info))
+				if (device->machine().sound().indexed_mixer_input(1, info))
 					info.stream->set_input_gain(info.inputnum, 0.00); // 1P (LEFT)
-				if (device->machine().sound().indexed_speaker_input(2, info))
+				if (device->machine().sound().indexed_mixer_input(2, info))
 					info.stream->set_input_gain(info.inputnum, 0.75); // 2P (RIGHT)
 			}
 	
