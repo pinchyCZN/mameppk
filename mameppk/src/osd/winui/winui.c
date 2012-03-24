@@ -2840,8 +2840,8 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 #if !defined(KAILLERA) && !defined(MAMEUIPLUSPLUS)
 	if (validity_failed)
 	{
-		win_message_box_utf8(hMain, MAMENAME " has failed its validity checks.  The GUI will "
-			"still work, but emulations will fail to execute", MAMENAME, MB_OK);
+		MessageBox(hMain, _UIW(TEXT(MAMENAME " has failed its validity checks.  The GUI will "
+			"still work, but emulations will fail to execute")), TEXT(MAMENAME), MB_OK);
 	}
 #endif
 
