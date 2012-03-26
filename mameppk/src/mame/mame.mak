@@ -763,6 +763,12 @@ $(MAMEOBJ)/igs.a: \
 	$(DRIVERS)/spoker.o \
 	$(MACHINE)/pgmcrypt.o \
 	$(MACHINE)/pgmprot.o \
+	$(MACHINE)/pgmprot1.o \
+	$(MACHINE)/pgmprot2.o \
+	$(MACHINE)/pgmprot3.o \
+	$(MACHINE)/pgmprot4.o \
+	$(MACHINE)/pgmprot5.o \
+	$(MACHINE)/pgmprot6.o \
 
 $(MAMEOBJ)/irem.a: \
 	$(DRIVERS)/m10.o $(VIDEO)/m10.o \
@@ -1883,6 +1889,7 @@ $(MAMEOBJ)/misc.a: \
 	$(DRIVERS)/extrema.o \
 	$(DRIVERS)/tmspoker.o \
 	$(DRIVERS)/manohman.o \
+	$(DRIVERS)/jankenmn.o \
 
 
 #-------------------------------------------------
@@ -1993,7 +2000,8 @@ $(DRIVERS)/gatron.o:	$(LAYOUT)/poker41.lh \
 			$(LAYOUT)/pulltabs.lh
 
 $(DRIVERS)/goldnpkr.o:	$(LAYOUT)/goldnpkr.lh \
-			$(LAYOUT)/pmpoker.lh
+			$(LAYOUT)/pmpoker.lh \
+			$(LAYOUT)/upndown.lh
 
 $(DRIVERS)/goldstar.o:	$(LAYOUT)/lucky8.lh \
 			$(LAYOUT)/bingowng.lh
@@ -2003,6 +2011,8 @@ $(DRIVERS)/grchamp.o:	$(LAYOUT)/grchamp.lh
 $(DRIVERS)/highvdeo.o:	$(LAYOUT)/fashion.lh
 
 $(DRIVERS)/igspoker.o:	$(LAYOUT)/igspoker.lh
+
+$(DRIVERS)/jankenmn.o:	$(LAYOUT)/jankenmn.lh
 
 $(DRIVERS)/kas89.o:	$(LAYOUT)/kas89.lh
 
