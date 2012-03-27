@@ -9,6 +9,10 @@
 
 #define PGMARM7LOGERROR 0
 
+//mamep: hack defs
+#define PGMSPEEDHACK 1
+//#define PGMREGIONHACK 1
+
 class pgm_state : public driver_device
 {
 public:
@@ -229,6 +233,10 @@ DRIVER_INIT( kov2 );
 DRIVER_INIT( kov2p );
 DRIVER_INIT( martmast );
 DRIVER_INIT( ddp2 );
+#ifdef KAILLERA
+DRIVER_INIT( kov2_4p );
+DRIVER_INIT( kov2p4p );
+#endif /* KAILLERA */
 
 /* simulations (or missing) */
 

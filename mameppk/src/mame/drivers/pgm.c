@@ -3654,10 +3654,16 @@ GAME( 2000, kov2103,      kov2,      kov2,    kov2,    kov2,       ROT0,   "IGS"
 GAME( 2000, kov2102,      kov2,      kov2,    kov2,    kov2,       ROT0,   "IGS", "Knights of Valour 2 / Sangoku Senki 2 (ver. 102, 101, 100HK)", GAME_IMPERFECT_SOUND | GAME_SUPPORTS_SAVE ) // 12/14/00 10:33:36 V102 (Ext. Arm V101, Int. Arm V100HK)
 GAME( 2000, kov2101,      kov2,      kov2,    kov2,    kov2,       ROT0,   "IGS", "Knights of Valour 2 / Sangoku Senki 2 (ver. 101, 101, 100HK)", GAME_IMPERFECT_SOUND | GAME_SUPPORTS_SAVE ) // 11/29/00 11:03:08 V100 (Ext. Arm V100, Int. Arm V100HK)
 GAME( 2000, kov2100,      kov2,      kov2,    kov2,    kov2,       ROT0,   "IGS", "Knights of Valour 2 / Sangoku Senki 2 (ver. 100, 100, 100HK)", GAME_IMPERFECT_SOUND | GAME_SUPPORTS_SAVE ) // 11/29/00 11:03:08 V100 (Ext. Arm V100, Int. Arm V100HK)
+#ifdef KAILLERA
+GAME_HACK( 2000, kov2106_4p, kov2106,      kov2, kov2,    kov2_4p,   ROT0,   "IGS", "Knights of Valour 2 / Sangoku Senki 2 (ver. 106 / 4 Players for kaillera)", GAME_IMPERFECT_SOUND | GAME_SUPPORTS_SAVE )
+#endif /* KAILLERA */
 
 // region provided by internal ARM rom
 GAME( 2001, kov2p,        pgm,       kov2,    kov2,    kov2p,      ROT0,   "IGS", "Knights of Valour 2 Plus - Nine Dragons / Sangoku Senki 2 Plus - Nine Dragons (ver. M204XX)", GAME_IMPERFECT_SOUND | GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING | GAME_SUPPORTS_SAVE ) /* need internal rom of IGS027A */
 GAME( 2001, kov2p205,     kov2p,     kov2,    kov2,    kov2p,      ROT0,   "IGS", "Knights of Valour 2 Plus - Nine Dragons / Sangoku Senki 2 Plus - Nine Dragons (ver. M205XX)", GAME_IMPERFECT_SOUND | GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING | GAME_SUPPORTS_SAVE ) /* need internal rom of IGS027A */
+#ifdef KAILLERA
+GAME_HACK( 2001, kov2p4p,    kov2p,        kov2, kov2,    kov2p4p,      ROT0,   "IGS", "Knights of Valour 2 Plus - Nine Dragons / Sangoku Senki 2 Plus - Nine Dragons (ver. M204XX / 4 Players for kaillera)", GAME_IMPERFECT_SOUND | GAME_UNEMULATED_PROTECTION | GAME_NOT_WORKING | GAME_SUPPORTS_SAVE ) /* need internal rom of IGS027A */
+#endif /* KAILLERA */
 
 // region provided by internal ARM rom
 GAME( 2001, martmast,     pgm,       kov2,    martmast,  martmast,   ROT0,   "IGS", "Martial Masters (ver. 104, 102, 102US)", GAME_IMPERFECT_SOUND | GAME_SUPPORTS_SAVE ) // 68k V104, Ext Arm 102, Int Arm 102US
