@@ -838,7 +838,7 @@ static ADDRESS_MAP_START( cps2_map, AS_PROGRAM, 16, cps_state )
 	AM_RANGE(0x804140, 0x80417f) AM_READWRITE(cps1_cps_b_r, cps1_cps_b_w)           							/* CPS-B custom */
 	AM_RANGE(0x900000, 0x92ffff) AM_RAM_WRITE(cps1_gfxram_w) AM_BASE_SIZE(m_gfxram, m_gfxram_size)	/* Video RAM */
 #ifdef MAMEUIPLUSPLUS
-	AM_RANGE(0xff0000, 0xffffff) AM_RAM AM_BASE_MEMBER(cps_state, m_cps2_ram)									/* RAM */
+	AM_RANGE(0xff0000, 0xffffff) AM_RAM AM_BASE(m_cps2_ram)														/* RAM */
 #else
 	AM_RANGE(0xff0000, 0xffffff) AM_RAM																			/* RAM */
 #endif /* MAMEUIPLUSPLUS */

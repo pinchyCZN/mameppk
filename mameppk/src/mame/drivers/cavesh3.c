@@ -155,7 +155,6 @@ Speedups
 #include "machine/rtc9701.h"
 #include "sound/ymz770.h"
 
-static UINT64* cavesh3_ram;
 //static UINT64* cavesh3_ram_copy;
 static UINT16* cavesh3_ram16;
 static UINT16* cavesh3_ram16_copy = 0;
@@ -178,6 +177,27 @@ public:
 	// blit timing
 	emu_timer *cavesh3_blitter_delay_timer;
 	int blitter_busy;
+
+	UINT64* cavesh3_ram;
+
+	DECLARE_WRITE64_MEMBER(cavesh3_nop_write);
+	DECLARE_READ8_MEMBER(ibara_flash_io_r);
+	DECLARE_WRITE8_MEMBER(ibara_flash_io_w);
+	DECLARE_READ8_MEMBER(serial_rtc_eeprom_r);
+	DECLARE_WRITE8_MEMBER(serial_rtc_eeprom_w);
+	DECLARE_READ32_MEMBER(cavesh3_blitter_r);
+	DECLARE_WRITE32_MEMBER(cavesh3_blitter_w);
+	DECLARE_READ64_MEMBER(ibara_flash_port_e_r);
+	DECLARE_READ64_MEMBER(ibara_fpga_r);
+	DECLARE_WRITE64_MEMBER(ibara_fpga_w);
+	DECLARE_READ32_MEMBER(cavesh_gfx_ready_r);
+	DECLARE_WRITE32_MEMBER(cavesh_gfx_exec_w);
+	DECLARE_WRITE8_MEMBER(flash_enab_w);
+	DECLARE_WRITE8_MEMBER(flash_cmd_w);
+	DECLARE_WRITE8_MEMBER(flash_data_w);
+	DECLARE_WRITE8_MEMBER(flash_addr_w);
+	DECLARE_READ8_MEMBER(flash_io_r);
+	DECLARE_READ8_MEMBER(flash_ready_r);
 };
 
 /***************************************************************************
@@ -5396,7 +5416,7 @@ static void *blit_request_callback(void *param, int threadid)
 
 
 
-static READ32_HANDLER( cavesh_gfx_ready_r )
+READ32_MEMBER( cavesh3_state::cavesh_gfx_ready_r )
 {
 	// ideally we want a recompiler for the CPU before we attempt to do this
 	// otherwise the games get stuck in more loops waiting for the blitter and we'd
@@ -5411,9 +5431,9 @@ static READ32_HANDLER( cavesh_gfx_ready_r )
 		return 0x00000010;
 }
 
-static WRITE32_HANDLER( cavesh_gfx_exec_w )
+WRITE32_MEMBER( cavesh3_state::cavesh_gfx_exec_w )
 {
-	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
+	cavesh3_state *state = space.machine().driver_data<cavesh3_state>();
 
 	if ( ACCESSING_BITS_0_7 )
 	{
@@ -5432,7 +5452,7 @@ static WRITE32_HANDLER( cavesh_gfx_exec_w )
 			}
 
 			cave_blit_delay = 0;
-			cavesh_gfx_create_shadow_copy(*space); // create a copy of the blit list so we can safely thread it.
+			cavesh_gfx_create_shadow_copy(space); // create a copy of the blit list so we can safely thread it.
 
 			if (cave_blit_delay)
 			{
@@ -5487,12 +5507,12 @@ static SCREEN_UPDATE_RGB32( cavesh3 )
 }
 
 
-static READ32_HANDLER( cavesh3_blitter_r )
+READ32_MEMBER( cavesh3_state::cavesh3_blitter_r )
 {
 	switch (offset*4)
 	{
 		case 0x10:
-			return cavesh_gfx_ready_r(space,offset,mem_mask);
+			return cavesh3_state::cavesh_gfx_ready_r(space,offset,mem_mask);
 
 		case 0x24:
 			return 0xffffffff;
@@ -5501,7 +5521,7 @@ static READ32_HANDLER( cavesh3_blitter_r )
 			return 0xffffffff;
 
 		case 0x50:
-			return input_port_read(space->machine(), "DSW");
+			return input_port_read(space.machine(), "DSW");
 
 		default:
 			logerror("unknowncavesh3_blitter_r %08x %08x\n", offset*4, mem_mask);
@@ -5511,7 +5531,7 @@ static READ32_HANDLER( cavesh3_blitter_r )
 	return 0;
 }
 
-static WRITE32_HANDLER( cavesh3_blitter_w )
+WRITE32_MEMBER( cavesh3_state::cavesh3_blitter_w )
 {
 	switch (offset*4)
 	{
@@ -5585,7 +5605,7 @@ static void flash_hard_reset(running_machine &machine)
 	flash_page_index = 0;
 }
 
-static WRITE8_HANDLER( flash_enab_w )
+WRITE8_MEMBER( cavesh3_state::flash_enab_w )
 {
 	//logerror("%08x FLASH: enab = %02X\n", cpu_get_pc(&space->device()), data);
 	flash_enab = data;
@@ -5605,9 +5625,9 @@ static void flash_change_state(running_machine &machine, flash_state_t state)
 	//logerror("flash_change_state - FLASH: state = %s\n", flash_state_name[state]);
 }
 
-static WRITE8_HANDLER( flash_cmd_w )
+WRITE8_MEMBER( cavesh3_state::flash_cmd_w )
 {
-	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
+	cavesh3_state *state = space.machine().driver_data<cavesh3_state>();
 
 	if (!flash_enab)
 		return;
@@ -5629,7 +5649,7 @@ static WRITE8_HANDLER( flash_cmd_w )
 				break;
 
 			case 0x70:	// READ STATUS
-				flash_change_state( space->machine(), STATE_READ_STATUS );
+				flash_change_state( space.machine(), STATE_READ_STATUS );
 				break;
 
 			case 0x80:	// PAGE / CACHE PROGRAM
@@ -5639,16 +5659,16 @@ static WRITE8_HANDLER( flash_cmd_w )
 				break;
 
 			case 0x90:	// READ ID
-				flash_change_state( space->machine(), STATE_READ_ID );
+				flash_change_state( space.machine(), STATE_READ_ID );
 				break;
 
 			case 0xff:	// RESET
-				flash_change_state( space->machine(), STATE_IDLE );
+				flash_change_state( space.machine(), STATE_IDLE );
 				break;
 
 			default:
 			{
-				//logerror("%08x FLASH: unknown cmd1 = %02X\n", cpu_get_pc(&space->device()), data);
+				//logerror("%08x FLASH: unknown cmd1 = %02X\n", cpu_get_pc(space.device()), data);
 			}
 		}
 	}
@@ -5665,7 +5685,7 @@ static WRITE8_HANDLER( flash_cmd_w )
 					flash_page_addr = flash_col;
 					flash_page_index = flash_row;
 
-					flash_change_state( space->machine(), STATE_READ );
+					flash_change_state( space.machine(), STATE_READ );
 
 					//logerror("%08x FLASH: caching page = %04X\n", cpu_get_pc(&space->device()), flash_row);
 				}
@@ -5674,7 +5694,7 @@ static WRITE8_HANDLER( flash_cmd_w )
 			case 0x60: // BLOCK ERASE
 				if (data==0xd0)
 				{
-					flash_change_state( space->machine(), STATE_BLOCK_ERASE );
+					flash_change_state( space.machine(), STATE_BLOCK_ERASE );
 					state->flashwritemap[flash_col] |= 1;
 					memset(state->flashregion + flash_col * FLASH_PAGE_SIZE, 0xff, FLASH_PAGE_SIZE);
 					//logerror("erased block %04x (%08x - %08x)\n", flash_col, flash_col * FLASH_PAGE_SIZE,  ((flash_col+1) * FLASH_PAGE_SIZE)-1);
@@ -5687,7 +5707,7 @@ static WRITE8_HANDLER( flash_cmd_w )
 			case 0x80:
 				if (data==0x10)
 				{
-					flash_change_state( space->machine(), STATE_PAGE_PROGRAM );
+					flash_change_state( space.machine(), STATE_PAGE_PROGRAM );
 					state->flashwritemap[flash_row] |= (memcmp(state->flashregion + flash_row * FLASH_PAGE_SIZE, flash_page_data, FLASH_PAGE_SIZE) != 0);
 					memcpy(state->flashregion + flash_row * FLASH_PAGE_SIZE, flash_page_data, FLASH_PAGE_SIZE);
 					//logerror("re-written block %04x (%08x - %08x)\n", flash_row, flash_row * FLASH_PAGE_SIZE,  ((flash_row+1) * FLASH_PAGE_SIZE)-1);
@@ -5708,7 +5728,7 @@ static WRITE8_HANDLER( flash_cmd_w )
 	}
 }
 
-static WRITE8_HANDLER( flash_data_w ) // death smiles
+WRITE8_MEMBER( cavesh3_state::flash_data_w ) // death smiles
 {
 	if (!flash_enab)
 		return;
@@ -5718,7 +5738,7 @@ static WRITE8_HANDLER( flash_data_w ) // death smiles
 	flash_page_addr++;
 }
 
-static WRITE8_HANDLER( flash_addr_w )
+WRITE8_MEMBER( cavesh3_state::flash_addr_w )
 {
 	if (!flash_enab)
 		return;
@@ -5743,7 +5763,7 @@ static WRITE8_HANDLER( flash_addr_w )
 	}
 }
 
-static READ8_HANDLER( flash_io_r )
+READ8_MEMBER( cavesh3_state::flash_io_r )
 {
 	UINT8 data = 0x00;
 //  UINT32 old;
@@ -5795,27 +5815,27 @@ static READ8_HANDLER( flash_io_r )
 
 		default:
 		{
-			logerror("%08x FLASH: unknown read in state %s\n", cpu_get_pc(&space->device()), flash_state_name[flash_state]);
+			logerror("%08x FLASH: unknown read in state %s\n", cpu_get_pc(&space.device()), flash_state_name[flash_state]);
 		}
 	}
 
 	return data;
 }
 
-static READ8_HANDLER( flash_ready_r )
+READ8_MEMBER( cavesh3_state::flash_ready_r )
 {
 	return 1;
 }
 
 // FLASH interface
 
-static READ64_HANDLER( ibara_flash_port_e_r )
+READ64_MEMBER( cavesh3_state::ibara_flash_port_e_r )
 {
-	return	((flash_ready_r(space, offset) ? 0x20 : 0x00)) | 0xdf;
+	return	((cavesh3_state::flash_ready_r(space, offset) ? 0x20 : 0x00)) | 0xdf;
 }
 
 
-static READ8_HANDLER( ibara_flash_io_r )
+READ8_MEMBER( cavesh3_state::ibara_flash_io_r )
 {
 	switch (offset)
 	{
@@ -5836,7 +5856,7 @@ static READ8_HANDLER( ibara_flash_io_r )
 	}
 }
 
-static WRITE8_HANDLER( ibara_flash_io_w )
+WRITE8_MEMBER( cavesh3_state::ibara_flash_io_w )
 {
 	switch (offset)
 	{
@@ -5863,9 +5883,9 @@ static WRITE8_HANDLER( ibara_flash_io_w )
 
 // ibarablk uses the rtc to render the clock in the first attract demo
 // if this code returns bad values it has gfx corruption.  the ibarablka set doesn't do this?!
-static READ8_HANDLER( serial_rtc_eeprom_r )
+READ8_MEMBER( cavesh3_state::serial_rtc_eeprom_r )
 {
-	rtc9701_device* dev = space->machine().device<rtc9701_device>("eeprom");
+	rtc9701_device* dev = space.machine().device<rtc9701_device>("eeprom");
 
 	switch (offset)
 	{
@@ -5888,14 +5908,14 @@ static READ8_HANDLER( serial_rtc_eeprom_r )
 
 
 
-static WRITE8_HANDLER( serial_rtc_eeprom_w )
+WRITE8_MEMBER( cavesh3_state::serial_rtc_eeprom_w )
 {
 	switch (offset)
 	{
 		case 0x01:
 //      logerror("serial_rtc_eeprom_w access offset %02x data %02x\n",offset, data);
 
-		input_port_write(space->machine(), "EEPROMOUT", data, 0xff);
+		input_port_write(space.machine(), "EEPROMOUT", data, 0xff);
 
 		// data & 0x00010000 = DATA
 		// data & 0x00020000 = CLK
@@ -5916,23 +5936,23 @@ static WRITE8_HANDLER( serial_rtc_eeprom_w )
 
 
 
-static WRITE64_HANDLER( cavesh3_nop_write )
+WRITE64_MEMBER( cavesh3_state::cavesh3_nop_write )
 {
 
 }
 
 
-static ADDRESS_MAP_START( cavesh3_map, AS_PROGRAM, 64 )
+static ADDRESS_MAP_START( cavesh3_map, AS_PROGRAM, 64, cavesh3_state )
 	AM_RANGE(0x00000000, 0x003fffff) AM_ROM AM_REGION("maincpu", 0) AM_WRITE(cavesh3_nop_write) // mmmbanc writes here on startup for some reason..
 
 
 	/*       0x04000000, 0x07ffffff  SH3 Internal Regs (including ports) */
 
-	AM_RANGE(0x0c000000, 0x0cffffff) AM_RAM AM_BASE(&cavesh3_ram)//  AM_SHARE("mainram")// work RAM
+	AM_RANGE(0x0c000000, 0x0cffffff) AM_RAM AM_BASE(cavesh3_ram)//  AM_SHARE("mainram")// work RAM
 //  AM_RANGE(0x0c800000, 0x0cffffff) AM_RAM// AM_SHARE("mainram") // mirror of above on type B boards, extra ram on type D
 
 	AM_RANGE(0x10000000, 0x10000007) AM_READWRITE8(ibara_flash_io_r, ibara_flash_io_w, U64(0xffffffffffffffff))
-	AM_RANGE(0x10400000, 0x10400007) AM_DEVREADWRITE8_MODERN("ymz770", ymz770_device, read, write, U64(0xffffffffffffffff))
+	AM_RANGE(0x10400000, 0x10400007) AM_DEVREADWRITE8("ymz770", ymz770_device, read, write, U64(0xffffffffffffffff))
 	AM_RANGE(0x10C00000, 0x10C00007) AM_READWRITE8(serial_rtc_eeprom_r, serial_rtc_eeprom_w, U64(0xffffffffffffffff))
 	AM_RANGE(0x18000000, 0x18000057) AM_READWRITE32(cavesh3_blitter_r, cavesh3_blitter_w, U64(0xffffffffffffffff))
 
@@ -5940,12 +5960,12 @@ static ADDRESS_MAP_START( cavesh3_map, AS_PROGRAM, 64 )
 	/*       0xffffe000, 0xffffffff  SH3 Internal Regs 2 */
 ADDRESS_MAP_END
 
-static READ64_HANDLER( ibara_fpga_r )
+READ64_MEMBER( cavesh3_state::ibara_fpga_r )
 {
 	return 0xff;
 }
 
-static WRITE64_HANDLER( ibara_fpga_w )
+WRITE64_MEMBER( cavesh3_state::ibara_fpga_w )
 {
 	if (ACCESSING_BITS_24_31)
 	{
@@ -5956,7 +5976,7 @@ static WRITE64_HANDLER( ibara_fpga_w )
 }
 
 
-static ADDRESS_MAP_START( cavesh3_port, AS_IO, 64 )
+static ADDRESS_MAP_START( cavesh3_port, AS_IO, 64, cavesh3_state )
 	AM_RANGE(SH3_PORT_C, SH3_PORT_C+7) AM_READ_PORT("PORT_C")
 	AM_RANGE(SH3_PORT_D, SH3_PORT_D+7) AM_READ_PORT("PORT_D")
 	AM_RANGE(SH3_PORT_E, SH3_PORT_E+7) AM_READ( ibara_flash_port_e_r )
@@ -6080,7 +6100,7 @@ static MACHINE_RESET( cavesh3 )
 
 	flash_enab = 0;
 	flash_hard_reset(machine);
-	cavesh3_ram16 = (UINT16*)cavesh3_ram;
+	cavesh3_ram16 = (UINT16*)state->cavesh3_ram;
 
 	state->flashregion = machine.region( "game" )->base();
 
@@ -6421,11 +6441,12 @@ ROM_END
 
 static READ64_HANDLER( mushisam_speedup_r )
 {
+	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
 	int pc = cpu_get_pc(&space->device());
 	if ( pc == 0xc04a0aa ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // mushisam
 	else if (pc == 0xc04a0da)  device_spin_until_time(&space->device(), attotime::from_usec(10)); // mushitam
 //  else printf("read %08x\n", cpu_get_pc(&space->device()));
-	return cavesh3_ram[0x0022f0/8];
+	return state->cavesh3_ram[0x0022f0/8];
 }
 
 DRIVER_INIT( mushisam )
@@ -6435,9 +6456,10 @@ DRIVER_INIT( mushisam )
 
 static READ64_HANDLER( mushisama_speedup_r )
 {
+	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
 	if ( cpu_get_pc(&space->device())== 0xc04a2aa ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // mushisam
 //  else printf("read %08x\n", cpu_get_pc(&space->device()));
-	return cavesh3_ram[0x00024d8/8];
+	return state->cavesh3_ram[0x00024d8/8];
 }
 
 DRIVER_INIT( mushisama )
@@ -6447,13 +6469,14 @@ DRIVER_INIT( mushisama )
 
 static READ64_HANDLER( espgal2_speedup_r )
 {
+	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
 	int pc = cpu_get_pc(&space->device());
 
 	if ( pc == 0xc05177a ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // espgal2
 	if ( pc == 0xc05176a ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // futari15 / futari15a / futari10 / futariblk / ibarablk / ibarablka / mmpork / mmmbanc
 	if ( pc == 0xc0519a2 ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // deathsml
 //  else printf("read %08x\n", cpu_get_pc(&space->device()));
-	return cavesh3_ram[0x002310/8];
+	return state->cavesh3_ram[0x002310/8];
 }
 
 DRIVER_INIT( espgal2 )

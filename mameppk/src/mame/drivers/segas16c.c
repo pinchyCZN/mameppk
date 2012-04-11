@@ -84,7 +84,7 @@ static void sound_w(running_machine &machine, UINT8 data)
 	if (state->m_soundcpu != NULL)
 	{
 		address_space *space = state->m_maincpu->memory().space(AS_PROGRAM);
-		soundlatch_w(space, 0, data & 0xff);
+		state->soundlatch_w(*space, 0, data & 0xff);
 		device_set_input_line(state->m_soundcpu, 0, HOLD_LINE);
 	}
 }
@@ -361,9 +361,9 @@ static void fz2dx_i8751_sim(running_machine &machine)
  *
  *************************************/
 
-static ADDRESS_MAP_START( system16c_map, AS_PROGRAM, 16 )
+static ADDRESS_MAP_START( system16c_map, AS_PROGRAM, 16, segas1x_state )
 	ADDRESS_MAP_UNMAP_HIGH
-	AM_RANGE(0x000000, 0xffffff) AM_READWRITE(segaic16_memory_mapper_lsb_r, segaic16_memory_mapper_lsb_w)
+	AM_RANGE(0x000000, 0xffffff) AM_READWRITE_LEGACY(segaic16_memory_mapper_lsb_r, segaic16_memory_mapper_lsb_w)
 ADDRESS_MAP_END
 
 
@@ -374,7 +374,7 @@ ADDRESS_MAP_END
  *
  *************************************/
 
-static ADDRESS_MAP_START( sound_map, AS_PROGRAM, 8 )
+static ADDRESS_MAP_START( sound_map, AS_PROGRAM, 8, segas1x_state )
 	ADDRESS_MAP_UNMAP_HIGH
 	AM_RANGE(0x0000, 0x7fff) AM_ROM
 	AM_RANGE(0x8000, 0xdfff) AM_ROMBANK("bank1")
@@ -382,12 +382,12 @@ static ADDRESS_MAP_START( sound_map, AS_PROGRAM, 8 )
 	AM_RANGE(0xf800, 0xffff) AM_RAM
 ADDRESS_MAP_END
 
-static ADDRESS_MAP_START( sound_portmap, AS_IO, 8 )
+static ADDRESS_MAP_START( sound_portmap, AS_IO, 8, segas1x_state )
 	ADDRESS_MAP_UNMAP_HIGH
 	ADDRESS_MAP_GLOBAL_MASK(0xff)
-	AM_RANGE(0x00, 0x01) AM_MIRROR(0x3e) AM_DEVREADWRITE("ymsnd", ym2151_r, ym2151_w)
-	AM_RANGE(0x40, 0x40) AM_MIRROR(0x3f) AM_DEVWRITE("upd", upd7759_control_w)
-	AM_RANGE(0x80, 0x80) AM_MIRROR(0x3f) AM_DEVREADWRITE("upd", upd7759_status_r, upd7759_port_w)
+	AM_RANGE(0x00, 0x01) AM_MIRROR(0x3e) AM_DEVREADWRITE_LEGACY("ymsnd", ym2151_r, ym2151_w)
+	AM_RANGE(0x40, 0x40) AM_MIRROR(0x3f) AM_DEVWRITE_LEGACY("upd", upd7759_control_w)
+	AM_RANGE(0x80, 0x80) AM_MIRROR(0x3f) AM_DEVREADWRITE_LEGACY("upd", upd7759_status_r, upd7759_port_w)
 	AM_RANGE(0xc0, 0xc0) AM_MIRROR(0x3f) AM_READ(soundlatch_r)
 ADDRESS_MAP_END
 
@@ -399,9 +399,9 @@ ADDRESS_MAP_END
  *
  *************************************/
 
-static ADDRESS_MAP_START( mcu_io_map, AS_IO, 8 )
+static ADDRESS_MAP_START( mcu_io_map, AS_IO, 8, segas1x_state )
 	ADDRESS_MAP_UNMAP_HIGH
-	AM_RANGE(0x0000, 0x001f) AM_MIRROR(0xff00) AM_READWRITE(segaic16_memory_mapper_r, segaic16_memory_mapper_w)
+	AM_RANGE(0x0000, 0x001f) AM_MIRROR(0xff00) AM_READWRITE_LEGACY(segaic16_memory_mapper_r, segaic16_memory_mapper_w)
 ADDRESS_MAP_END
 
 

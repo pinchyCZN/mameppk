@@ -153,6 +153,26 @@ extern const game_driver GAME_NAME(NAME) =	\
 	&LAYOUT[0]								\
 };
 
+#if defined(KAILLERA) || defined(MAMEUIPLUSPLUS)
+#define GAME_HACK(YEAR,NAME,PARENT,MACHINE,INPUT,INIT,MONITOR,COMPANY,FULLNAME,FLAGS)	\
+extern const game_driver GAME_NAME(NAME) =	\
+{											\
+	__FILE__,								\
+	#PARENT,								\
+	#NAME,									\
+	FULLNAME,								\
+	#YEAR,									\
+	COMPANY,								\
+	MACHINE_CONFIG_NAME(MACHINE),			\
+	INPUT_PORTS_NAME(INPUT),				\
+	DRIVER_INIT_NAME(INIT),					\
+	ROM_NAME(PARENT),						\
+	NULL,									\
+	(MONITOR)|(FLAGS)|GAME_TYPE_ARCADE,		\
+	((const char *)0)						\
+};
+#endif /* KAILLERA || MAMEUIPLUSPLUS */
+
 // standard console definition macro
 #define CONS(YEAR,NAME,PARENT,COMPAT,MACHINE,INPUT,INIT,COMPANY,FULLNAME,FLAGS)	\
 extern const game_driver GAME_NAME(NAME) =	\

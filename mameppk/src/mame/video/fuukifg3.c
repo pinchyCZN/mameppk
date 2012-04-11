@@ -77,10 +77,10 @@ INLINE void fuuki32_vram_w(address_space *space, offs_t offset, UINT32 data, UIN
 	state->m_tilemap[_N_]->mark_tile_dirty(offset);
 }
 
-WRITE32_HANDLER( fuuki32_vram_0_w ) { fuuki32_vram_w(space, offset, data, mem_mask, 0); }
-WRITE32_HANDLER( fuuki32_vram_1_w ) { fuuki32_vram_w(space, offset, data, mem_mask, 1); }
-WRITE32_HANDLER( fuuki32_vram_2_w ) { fuuki32_vram_w(space, offset, data, mem_mask, 2); }
-WRITE32_HANDLER( fuuki32_vram_3_w ) { fuuki32_vram_w(space, offset, data, mem_mask, 3); }
+WRITE32_MEMBER(fuuki32_state::fuuki32_vram_0_w){ fuuki32_vram_w(&space, offset, data, mem_mask, 0); }
+WRITE32_MEMBER(fuuki32_state::fuuki32_vram_1_w){ fuuki32_vram_w(&space, offset, data, mem_mask, 1); }
+WRITE32_MEMBER(fuuki32_state::fuuki32_vram_2_w){ fuuki32_vram_w(&space, offset, data, mem_mask, 2); }
+WRITE32_MEMBER(fuuki32_state::fuuki32_vram_3_w){ fuuki32_vram_w(&space, offset, data, mem_mask, 3); }
 
 
 /***************************************************************************
@@ -364,8 +364,10 @@ SCREEN_UPDATE_IND16( fuuki32 )
 	fuuki32_draw_layer(screen.machine(), bitmap, cliprect, tm_middle, 0, 2);
 	fuuki32_draw_layer(screen.machine(), bitmap, cliprect, tm_front,  0, 4);
 
+#ifdef MAMEUIPLUSPLUS
 	/* don't do the rasters on the sprites. it's very slow and the hw might not anyway. */
 	if (cliprect.max_y == visarea_sprites.max_y)
+#endif /* MAMEUIPLUSPLUS */
 	draw_sprites(screen, bitmap, cliprect);
 	return 0;
 }
