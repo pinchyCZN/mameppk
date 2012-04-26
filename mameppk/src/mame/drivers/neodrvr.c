@@ -10932,7 +10932,7 @@ static INPUT_PORTS_START( mjneogeo )
 	PORT_DIPNAME( 0x0080, 0x0080, "Freeze" ) PORT_DIPLOCATION("SW:8")
 	PORT_DIPSETTING(	  0x0080, DEF_STR( Off ) )
 	PORT_DIPSETTING(	  0x0000, DEF_STR( On ) )
-	PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(mahjong_controller_r, NULL)
+	PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, neogeo_state,mahjong_controller_r, NULL)
 
 	STANDARD_IN1
 
@@ -10991,7 +10991,7 @@ INPUT_PORTS_END
 static INPUT_PORTS_START( irrmaze )
 	PORT_START("IN0")
 	STANDARD_DIPS
-	PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(multiplexed_controller_r, (void *)0)
+	PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, neogeo_state,multiplexed_controller_r, (void *)0)
 
 	PORT_START("IN1")
 	PORT_BIT( 0x0fff, IP_ACTIVE_LOW, IPT_UNUSED )
@@ -11006,7 +11006,7 @@ static INPUT_PORTS_START( irrmaze )
 	PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_UNUSED )
 	PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_START2 )
 	PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_UNUSED )
-	PORT_BIT( 0x7000, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(get_memcard_status, NULL)
+	PORT_BIT( 0x7000, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, neogeo_state,get_memcard_status, NULL)
 	PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN )
 
 	STANDARD_IN3
@@ -11033,11 +11033,11 @@ INPUT_PORTS_END
 static INPUT_PORTS_START( popbounc )
 	PORT_START("IN0")
 	STANDARD_DIPS
-	PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(multiplexed_controller_r, (void *)0)
+	PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, neogeo_state,multiplexed_controller_r, (void *)0)
 
 	PORT_START("IN1")
 	PORT_BIT( 0x00ff, IP_ACTIVE_LOW, IPT_UNUSED )
-	PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(multiplexed_controller_r, (void *)1)
+	PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, neogeo_state,multiplexed_controller_r, (void *)1)
 
 	STANDARD_IN2
 
@@ -11093,13 +11093,13 @@ static INPUT_PORTS_START( vliner )
 	PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* this bit is used.. */
 	PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_UNUSED )
 	PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* this bit is used.. */
-	PORT_BIT( 0x7000, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(get_memcard_status, NULL)
+	PORT_BIT( 0x7000, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, neogeo_state,get_memcard_status, NULL)
 	PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN )
 
 	PORT_START("IN3")
 	PORT_BIT( 0x003f, IP_ACTIVE_LOW, IPT_UNUSED )
-	PORT_BIT( 0x00c0, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(get_calendar_status, NULL)
-	PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(get_audio_result, NULL)
+	PORT_BIT( 0x00c0, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, neogeo_state,get_calendar_status, NULL)
+	PORT_BIT( 0xff00, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, neogeo_state,get_audio_result, NULL)
 
 	STANDARD_IN4
 
@@ -11132,7 +11132,7 @@ static INPUT_PORTS_START( jockeygp )
 	PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_OTHER ) PORT_NAME("Next Game") PORT_CODE(KEYCODE_7)
 	PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_UNKNOWN ) /* game freezes with this bit enabled */
 	PORT_BIT( 0x0800, IP_ACTIVE_LOW, IPT_OTHER ) PORT_NAME("Previous Game") PORT_CODE(KEYCODE_8)
-	PORT_BIT( 0x7000, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM(get_memcard_status, NULL)
+	PORT_BIT( 0x7000, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, neogeo_state,get_memcard_status, NULL)
 	PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN )
 
 	STANDARD_IN3
@@ -11484,8 +11484,8 @@ static DRIVER_INIT( kof2002b )
 	kof2002_decrypt_68k(machine);
 	neo_pcm2_swap(machine, 0);
 	neogeo_cmc50_m1_decrypt(machine);
-	kof2002b_gfx_decrypt(machine, machine.region("sprites")->base(),0x4000000);
-	kof2002b_gfx_decrypt(machine, machine.region("fixed")->base(),0x20000);
+	kof2002b_gfx_decrypt(machine, machine.root_device().memregion("sprites")->base(),0x4000000);
+	kof2002b_gfx_decrypt(machine, machine.root_device().memregion("fixed")->base(),0x20000);
 }
 
 static DRIVER_INIT( kf2k2pls )
@@ -11576,7 +11576,7 @@ static DRIVER_INIT( kof10thd ) // decrypted P
 
 static DRIVER_INIT( kf2k4pls )
 {
-	unsigned char *src = machine.region("maincpu")->base();
+	unsigned char *src = machine.root_device().memregion("maincpu")->base();
 	unsigned char *dst = (unsigned char*)malloc(0x200000);
 
 	if (dst)
@@ -11685,7 +11685,7 @@ static DRIVER_INIT( mslug5hd )
 static TIMER_CALLBACK( ms5pcb_bios_timer_callback )
 {
 	int harddip3 = input_port_read(machine, "HARDDIP") & 1;
-	memory_set_bankptr(machine, NEOGEO_BANK_BIOS, machine.region("mainbios")->base() + 0x20000 + harddip3 * 0x20000);
+	machine.root_device().membank(NEOGEO_BANK_BIOS)->set_base(machine.root_device().memregion("mainbios")->base() + 0x20000 + harddip3 * 0x20000);
 }
 
 static DRIVER_INIT( ms5pcb )
@@ -11722,7 +11722,7 @@ static DRIVER_INIT( ms5plus )
 static TIMER_CALLBACK( svcpcb_bios_timer_callback )
 {
 	int harddip3 = input_port_read(machine, "HARDDIP") & 1;
-	memory_set_bankptr(machine, NEOGEO_BANK_BIOS, machine.region("mainbios")->base() + 0x20000 + harddip3 * 0x20000);
+	machine.root_device().membank(NEOGEO_BANK_BIOS)->set_base(machine.root_device().memregion("mainbios")->base() + 0x20000 + harddip3 * 0x20000);
 }
 
 static DRIVER_INIT( svcpcb )
@@ -11842,7 +11842,7 @@ static DRIVER_INIT( kf2k3pcb )
        incorrect */
 	{
 		int i;
-		UINT8* rom = machine.region("audiocpu")->base();
+		UINT8* rom = state->memregion("audiocpu")->base();
 		for (i = 0; i < 0x90000; i++)
 		{
 			rom[i] = BITSWAP8(rom[i], 5, 6, 1, 4, 3, 0, 7, 2);
@@ -11953,7 +11953,7 @@ static DRIVER_INIT( kf2k3pcd ) // decrypted C & decrypted Bios
        incorrect */
 	{
 		int i;
-		UINT8* rom = (UINT8 *)machine.region("audiocpu")->base();
+		UINT8* rom = (UINT8 *)state->memregion("audiocpu")->base();
 		for (i=0;i<0x90000;i++)
 		{
 			rom[i] = BITSWAP8(rom[i], 5, 6, 1, 4, 3, 0, 7, 2);
@@ -12024,7 +12024,7 @@ static DRIVER_INIT( kog )
 
 static DRIVER_INIT( kof97pla )
 {
-	UINT8 *mem8 = (UINT8 *)machine.region("maincpu")->base();
+	UINT8 *mem8 = (UINT8 *)machine.root_device().memregion("maincpu")->base();
 	mem8[0x1394A] = 0x6C;
 	mem8[0x1394B] = 0xD1;
 	mem8[0x1394C] = 0x3A;
@@ -12066,7 +12066,7 @@ static DRIVER_INIT( mvs )
 
 static READ16_HANDLER( sbp_lowerrom_r )
 {
-	UINT16* rom = (UINT16*)space->machine().region("maincpu")->base();
+	UINT16* rom = (UINT16*)space->machine().root_device().memregion("maincpu")->base();
 	UINT16 origdata = rom[(offset+(0x200/2))];
 	UINT16 data =  BITSWAP16(origdata, 11,10,9,8,15,14,13,12,3,2,1,0,7,6,5,4);
 	int realoffset = 0x200+(offset*2);
@@ -12112,7 +12112,7 @@ static DRIVER_INIT( sbp )
 
 	/* the game code clears the text overlay used ingame immediately after writing it.. why? protection? sloppy code that the hw ignores? imperfect emulation? */
 	{
-		UINT16* rom = (UINT16*)machine.region("maincpu")->base();
+		UINT16* rom = (UINT16*)machine.root_device().memregion("maincpu")->base();
 
 		rom[0x2a6f8/2] = 0x4e71;
 		rom[0x2a6fa/2] = 0x4e71;

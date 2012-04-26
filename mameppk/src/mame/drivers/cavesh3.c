@@ -166,7 +166,8 @@ class cavesh3_state : public driver_device
 {
 public:
 	cavesh3_state(const machine_config &mconfig, device_type type, const char *tag)
-		: driver_device(mconfig, type, tag) { }
+		: driver_device(mconfig, type, tag),
+		cavesh3_ram(*this, "mainram") { }
 
 	UINT8* flashregion;
 	UINT8* flashwritemap;
@@ -178,7 +179,7 @@ public:
 	emu_timer *cavesh3_blitter_delay_timer;
 	int blitter_busy;
 
-	UINT64* cavesh3_ram;
+	required_shared_ptr<UINT64> cavesh3_ram;
 
 	DECLARE_WRITE64_MEMBER(cavesh3_nop_write);
 	DECLARE_READ8_MEMBER(ibara_flash_io_r);
@@ -5948,7 +5949,7 @@ static ADDRESS_MAP_START( cavesh3_map, AS_PROGRAM, 64, cavesh3_state )
 
 	/*       0x04000000, 0x07ffffff  SH3 Internal Regs (including ports) */
 
-	AM_RANGE(0x0c000000, 0x0cffffff) AM_RAM AM_BASE(cavesh3_ram)//  AM_SHARE("mainram")// work RAM
+	AM_RANGE(0x0c000000, 0x0cffffff) AM_RAM AM_SHARE("mainram") // work RAM
 //  AM_RANGE(0x0c800000, 0x0cffffff) AM_RAM// AM_SHARE("mainram") // mirror of above on type B boards, extra ram on type D
 
 	AM_RANGE(0x10000000, 0x10000007) AM_READWRITE8(ibara_flash_io_r, ibara_flash_io_w, U64(0xffffffffffffffff))
@@ -6079,7 +6080,7 @@ static TIMER_CALLBACK( cavesh3_blitter_delay_callback )
 
 static MACHINE_START( cavesh3 )
 {
-	size_t size = machine.region( "game" )->bytes();
+	size_t size = machine.root_device().memregion( "game" )->bytes();
 	cavesh3_state *state = machine.driver_data<cavesh3_state>();
 
 	state->flashwritemap = auto_alloc_array(machine, UINT8, size / FLASH_PAGE_SIZE);
@@ -6100,9 +6101,9 @@ static MACHINE_RESET( cavesh3 )
 
 	flash_enab = 0;
 	flash_hard_reset(machine);
-	cavesh3_ram16 = (UINT16*)state->cavesh3_ram;
+	cavesh3_ram16 = reinterpret_cast<UINT16 *>(state->cavesh3_ram.target());
 
-	state->flashregion = machine.region( "game" )->base();
+	state->flashregion = machine.root_device().memregion( "game" )->base();
 
 
 	// cache table to avoid divides in blit code, also pre-clamped
@@ -6137,8 +6138,8 @@ static NVRAM_HANDLER( cavesh3 )
 {
 	/* Yes we have to crawl through the entire ~128MB flash because some games
        (eg. Deathsmiles) save data there on top of to the actual EEPROM */
-	UINT8 *region = machine.region( "game" )->base();
-	size_t size = machine.region( "game" )->bytes();
+	UINT8 *region = machine.root_device().memregion( "game" )->base();
+	size_t size = machine.root_device().memregion( "game" )->bytes();
 	cavesh3_state *state = machine.driver_data<cavesh3_state>();
 	if (size % FLASH_PAGE_SIZE) return; // region size must be multiple of flash page size
 	size /= FLASH_PAGE_SIZE;
