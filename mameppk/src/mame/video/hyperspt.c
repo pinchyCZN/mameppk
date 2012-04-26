@@ -35,6 +35,7 @@ static int no_flip_screen;
 
 PALETTE_INIT( hyperspt )
 {
+	const UINT8 *color_prom = machine.root_device().memregion("proms")->base();
 	static const int resistances_rg[3] = { 1000, 470, 220 };
 	static const int resistances_b[2] = { 470, 220 };
 	double rweights[3], gweights[3], bweights[2];
@@ -107,9 +108,9 @@ WRITE8_MEMBER(hyperspt_state::hyperspt_colorram_w)
 
 WRITE8_MEMBER(hyperspt_state::hyperspt_flipscreen_w)
 {
-	if (flip_screen_get(machine()) != (data & 0x01))
+	if (flip_screen() != (data & 0x01))
 	{
-		flip_screen_set(machine(), data & 0x01);
+		flip_screen_set(data & 0x01);
 		machine().tilemap().mark_all_dirty();
 	}
 }
@@ -144,7 +145,7 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 	UINT8 *spriteram = state->m_spriteram;
 	int offs;
 
-	for (offs = state->m_spriteram_size - 4;offs >= 0;offs -= 4)
+	for (offs = state->m_spriteram.bytes() - 4;offs >= 0;offs -= 4)
 	{
 		int sx = spriteram[offs + 3];
 		int sy = 240 - spriteram[offs + 1];
@@ -153,13 +154,13 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 		int flipx = ~spriteram[offs] & 0x40;
 		int flipy = spriteram[offs] & 0x80;
 
-		if (flip_screen_get(machine))
+		if (state->flip_screen())
 		{
 			sy = 240 - sy;
 			flipy = !flipy;
 		}
 
-		/* Note that this adjustment must be done AFTER handling flip_screen_get(machine), thus */
+		/* Note that this adjustment must be done AFTER handling state->flip_screen(), thus */
 		/* proving that this is a hardware related "feature" */
 
 		sy += 1;
@@ -213,7 +214,7 @@ SCREEN_UPDATE_IND16( hyperspt )
 	for (row = 0; row < 32; row++)
 	{
 		int scrollx = state->m_scroll[row * 2] + (state->m_scroll[(row * 2) + 1] & 0x01) * 256;
-		if (flip_screen_get(screen.machine())) scrollx = -scrollx;
+		if (state->flip_screen()) scrollx = -scrollx;
 		state->m_bg_tilemap->set_scrollx(row, scrollx);
 	}
 
@@ -221,7 +222,7 @@ SCREEN_UPDATE_IND16( hyperspt )
 	draw_sprites(screen.machine(), bitmap, cliprect);
 
 #ifdef KAILLERA
-	if (no_flip_screen && flip_screen_get(screen.machine())) rotscreen(screen.machine(), bitmap, cliprect);
+	if (no_flip_screen && state->flip_screen()) rotscreen(screen.machine(), bitmap, cliprect);
 #endif /* KAILLERA */
 	return 0;
 }
