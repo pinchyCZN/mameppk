@@ -1704,6 +1704,7 @@ $(MAMEOBJ)/misc.a: \
 	$(DRIVERS)/cb2001.o \
 	$(DRIVERS)/cdi.o $(VIDEO)/mcd212.o $(MACHINE)/cdi070.o $(MACHINE)/cdislave.o $(MACHINE)/cdicdic.o \
 	$(DRIVERS)/cesclass.o \
+	$(DRIVERS)/chance32.o \
 	$(DRIVERS)/chsuper.o \
 	$(DRIVERS)/cidelsa.o $(VIDEO)/cidelsa.o \
 	$(DRIVERS)/coinmstr.o \
@@ -1912,6 +1913,8 @@ $(DRIVERS)/8080bw.o:	$(LAYOUT)/invrvnge.lh \
 
 $(DRIVERS)/acefruit.o:	$(LAYOUT)/sidewndr.lh
 
+$(DRIVERS)/amaticmg.o:	$(LAYOUT)/suprstar.lh
+
 $(DRIVERS)/ampoker2.o:	$(LAYOUT)/ampoker2.lh \
 			$(LAYOUT)/sigmapkr.lh \
 
@@ -2076,6 +2079,8 @@ $(DRIVERS)/meadows.o:	$(LAYOUT)/deadeye.lh \
 $(DRIVERS)/meyc8080.o:	$(LAYOUT)/wldarrow.lh \
 			$(LAYOUT)/mdrawpkr.lh \
 			$(LAYOUT)/meybjack.lh
+
+$(DRIVERS)/meyc8088.o:	$(LAYOUT)/gldarrow.lh
 
 $(DRIVERS)/midzeus.o:	$(LAYOUT)/crusnexo.lh
 
