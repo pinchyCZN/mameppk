@@ -300,7 +300,7 @@ void running_machine::start()
 		m_base_time = newbase;
 
 #ifdef KAILLERA
-	if (kPlay || has_record_sub_file(*this) || has_playback_sub_file(*this))
+	if (kPlay || ioport().has_record_sub_file() || ioport().has_playback_sub_file())
 	{
 		memset(&m_base_time, 0, sizeof(m_base_time));
 	}
@@ -461,7 +461,7 @@ int running_machine::run(bool firstrun)
 		sound().ui_mute(true);
 		nvram_save(*this);
 		// mamep: dont save settings during playback
-		if (!has_playback_file(*this))
+		if (!ioport().has_playback_file())
 		config_save_settings(*this);
 	}
 	catch (emu_fatalerror &fatal)

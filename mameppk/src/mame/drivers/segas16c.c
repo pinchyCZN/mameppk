@@ -187,11 +187,11 @@ static READ16_HANDLER( standard_io_r )
 		case 0x1000/2:
 		{
 			static const char *const sysports[] = { "SERVICE", "P1", "UNUSED", "P2" };
-			return input_port_read(space->machine(), sysports[offset & 3]);
+			return space->machine().root_device().ioport(sysports[offset & 3])->read();
 		}
 
 		case 0x2000/2:
-			return input_port_read(space->machine(), (offset & 1) ? "DSW2" : "DSW1");
+			return space->machine().root_device().ioport((offset & 1) ? "DSW2" : "DSW1")->read();
 	}
 	logerror("%06X:standard_io_r - unknown read access to address %04X\n", cpu_get_pc(&space->device()), offset * 2);
 	return segaic16_open_bus_r(space, 0, mem_mask);

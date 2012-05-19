@@ -5522,7 +5522,7 @@ READ32_MEMBER( cavesh3_state::cavesh3_blitter_r )
 			return 0xffffffff;
 
 		case 0x50:
-			return input_port_read(space.machine(), "DSW");
+			return space.machine().root_device().ioport("DSW")->read();
 
 		default:
 			logerror("unknowncavesh3_blitter_r %08x %08x\n", offset*4, mem_mask);
@@ -5916,7 +5916,7 @@ WRITE8_MEMBER( cavesh3_state::serial_rtc_eeprom_w )
 		case 0x01:
 //      logerror("serial_rtc_eeprom_w access offset %02x data %02x\n",offset, data);
 
-		input_port_write(space.machine(), "EEPROMOUT", data, 0xff);
+		space.machine().root_device().ioport("EEPROMOUT")->write(data, 0xff);
 
 		// data & 0x00010000 = DATA
 		// data & 0x00020000 = CLK

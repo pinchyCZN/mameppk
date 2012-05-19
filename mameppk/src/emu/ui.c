@@ -1344,7 +1344,7 @@ int ui_window_scroll_keys(running_machine &machine)
 	if (message_window_scroll > max_scroll)
 		message_window_scroll = max_scroll;
 
-	if (input_type_pressed(machine, IPT_UI_UP,0) || input_type_pressed(machine, IPT_UI_DOWN,0))
+	if (machine.ioport().type_pressed(IPT_UI_UP,0) || machine.ioport().type_pressed(IPT_UI_DOWN,0))
 	{
 		if (++counter == 25)
 		{
@@ -2002,6 +2002,7 @@ static void ui_display_input_log(running_machine &machine, render_container *con
 	double time_fadeout = attotime::from_msec(1000).as_double();
 	float curx;
 	int i;
+	struct ioport_manager::input_log *command_buffer = machine.ioport().command_buffer();
 
 	if (!command_buffer[0].code)
 		return;
@@ -2327,7 +2328,7 @@ static UINT32 handler_ingame(running_machine &machine, render_container *contain
 		machine.video().save_active_screen_snapshots();
 
 #ifdef INP_CAPTION
-	draw_caption(machine, container);
+	machine.ioport().draw_caption(container);
 #endif /* INP_CAPTION */
 
 #ifdef KAILLERA
@@ -2375,12 +2376,12 @@ static UINT32 handler_ingame(running_machine &machine, render_container *contain
 #ifdef USE_SHOW_INPUT_LOG
 	if (ui_input_pressed(machine, IPT_UI_SHOW_INPUT_LOG))
 	{
-		show_input_log ^= 1;
-		command_buffer[0].code = '\0';
+		machine.ioport().show_input_log() ^= 1;
+		machine.ioport().command_buffer()[0].code = '\0';
 	}
 
 	/* show popup message if input exist any log */
-	if (show_input_log)
+	if (machine.ioport().show_input_log())
 		ui_display_input_log(machine, container);
 #endif /* USE_SHOW_INPUT_LOG */
 

@@ -473,9 +473,9 @@ static DEVICE_START( upd4990a )
 	upd4990a->weekday = systime->local_time.weekday;
 
 #ifdef KAILLERA
-	if( kPlay || has_record_file(device->machine()) || has_playback_file(device->machine()) )
+	if( kPlay || device->machine().ioport().has_record_file() || device->machine().ioport().has_playback_file() )
 #else
-	if(has_record_file(device->machine()) || has_playback_file(device->machine()))
+	if(device->machine().ioport().has_record_file() || device->machine().ioport().has_playback_file())
 #endif /* KAILLERA */
 	{
 		upd4990a->seconds = 0;

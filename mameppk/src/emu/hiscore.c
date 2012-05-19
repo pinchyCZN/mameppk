@@ -49,7 +49,7 @@ static int is_highscore_enabled(running_machine &machine)
 #endif /* KAILLERA */
 
 	/* disable high score when record/playback is on */
-	if (has_record_file(machine) || has_playback_file(machine))
+	if (machine.ioport().has_record_file() || machine.ioport().has_playback_file())
 		return FALSE;
 
 	return TRUE;
