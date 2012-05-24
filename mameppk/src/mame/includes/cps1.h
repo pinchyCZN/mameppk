@@ -64,9 +64,6 @@ class cps_state : public driver_device
 public:
 	cps_state(const machine_config &mconfig, device_type type, const char *tag)
 		: driver_device(mconfig, type, tag),
-#ifdef MAMEUIPLUSPLUS
-		m_cps2_ram(*this, "mainram"),
-#endif /* MAMEUIPLUSPLUS */
 		m_gfxram(*this, "gfxram"),
 		m_cps_a_regs(*this, "cps_a_regs"),
 		m_cps_b_regs(*this, "cps_b_regs"),
@@ -74,7 +71,11 @@ public:
 		m_qsound_sharedram2(*this, "qsound_ram2"),
 		m_objram1(*this, "objram1"),
 		m_objram2(*this, "objram2"),
-		m_output(*this, "output") { }
+		m_output(*this, "output")
+#ifdef MAMEUIPLUSPLUS
+		,m_cps2_ram(*this, "mainram")
+#endif /* MAMEUIPLUSPLUS */
+		 { }
 
 	/* memory pointers */
 	// cps1

@@ -414,7 +414,7 @@ static void UpdateController(void)
 			device_iterator iter(config.root_device());
 			for (device_t *device = iter.first(); device != NULL; device = iter.next())
 				if (device->input_ports())
-						portlist.append(*device, errors);
+					portlist.append(*device, errors);
 
 			for (port = portlist.first(); port != NULL; port = port->next())
 			{
