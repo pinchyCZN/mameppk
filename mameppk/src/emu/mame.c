@@ -169,15 +169,6 @@ int mame_execute(emu_options &options, osd_interface &osd)
 				started_empty = true;
 		}
 
-		// otherwise, perform validity checks before anything else
-#if !defined(KAILLERA) && !defined(MAMEUIPLUSPLUS)
-		else
-		{
-			validity_checker valid(options);
-			valid.check_shared_source(*system);
-		}
-#endif
-
 		firstgame = false;
 
 		// parse any INI files as the first thing
@@ -187,6 +178,15 @@ int mame_execute(emu_options &options, osd_interface &osd)
 			astring errors;
 			options.parse_standard_inis(errors);
 		}
+		// otherwise, perform validity checks before anything else
+#if !defined(KAILLERA) && !defined(MAMEUIPLUSPLUS)
+		if (system != NULL)
+		{
+			validity_checker valid(options);
+			valid.check_shared_source(*system);
+		}
+#endif
+
 
 		// create the machine configuration
 		machine_config config(*system, options);
