@@ -199,6 +199,10 @@ public:
 	DECLARE_WRITE8_MEMBER(flash_addr_w);
 	DECLARE_READ8_MEMBER(flash_io_r);
 	DECLARE_READ8_MEMBER(flash_ready_r);
+
+	DECLARE_DRIVER_INIT(mushisam);
+	DECLARE_DRIVER_INIT(mushisama);
+	DECLARE_DRIVER_INIT(espgal2);
 };
 
 /***************************************************************************
@@ -6450,9 +6454,9 @@ static READ64_HANDLER( mushisam_speedup_r )
 	return state->cavesh3_ram[0x0022f0/8];
 }
 
-DRIVER_INIT( mushisam )
+DRIVER_INIT_MEMBER(cavesh3_state,mushisam)
 {
-	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(0xc0022f0, 0xc0022f7, FUNC(mushisam_speedup_r) );
+	machine().device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(0xc0022f0, 0xc0022f7, FUNC(mushisam_speedup_r) );
 }
 
 static READ64_HANDLER( mushisama_speedup_r )
@@ -6463,9 +6467,9 @@ static READ64_HANDLER( mushisama_speedup_r )
 	return state->cavesh3_ram[0x00024d8/8];
 }
 
-DRIVER_INIT( mushisama )
+DRIVER_INIT_MEMBER(cavesh3_state,mushisama)
 {
-	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(0xc0024d8, 0xc0024df, FUNC(mushisama_speedup_r) );
+	machine().device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(0xc0024d8, 0xc0024df, FUNC(mushisama_speedup_r) );
 }
 
 static READ64_HANDLER( espgal2_speedup_r )
@@ -6480,29 +6484,29 @@ static READ64_HANDLER( espgal2_speedup_r )
 	return state->cavesh3_ram[0x002310/8];
 }
 
-DRIVER_INIT( espgal2 )
+DRIVER_INIT_MEMBER(cavesh3_state,espgal2)
 {
-	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(0xc002310, 0xc002317, FUNC(espgal2_speedup_r) );
+	machine().device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(0xc002310, 0xc002317, FUNC(espgal2_speedup_r) );
 }
 
 
-GAME( 2004, mushisam,   0,        cavesh3, cavesh3, mushisam,  ROT270, "Cave", "Mushihime-Sama (2004/10/12 MASTER VER.)",                          0 )
-GAME( 2004, mushisama,  mushisam, cavesh3, cavesh3, mushisama, ROT270, "Cave", "Mushihime-Sama (2004/10/12 MASTER VER)",                           0 )
-GAME( 2005, espgal2,    0,        cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Espgaluda II (2005/11/14 MASTER VER)",                             0 )
-GAME( 2005, ibara,      0,        cavesh3, cavesh3, mushisam,  ROT270, "Cave", "Ibara (2005/03/22 MASTER VER..)",                                   0 )
-GAME( 2006, ibarablk,   0,        cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Ibara Kuro Black Label (2006/02/06. MASTER VER.)",                 0 )
-GAME( 2006, ibarablka,  ibarablk, cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Ibara Kuro Black Label (2006/02/06 MASTER VER.)",                  0 )
-GAME( 2005, mushitam,   0,        cavesh3, cavesh3, mushisam,  ROT0,   "Cave", "Puzzle! Mushihime-Tama (2005/09/09 MASTER VER)",                   0 )
-GAME( 2006, futari15,   0,        cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Mushihime-Sama Futari Ver 1.5 (2006/12/8.MASTER VER. 1.54.)",      0 )
-GAME( 2006, futari15a,  futari15, cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Mushihime-Sama Futari Ver 1.5 (2006/12/8 MASTER VER 1.54)",        0 )
-GAME( 2006, futari10,   futari15, cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Mushihime-Sama Futari Ver 1.0 (2006/10/23 MASTER VER.)",           0 )
-GAME( 2007, futariblk,  futari15, cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Mushihime-Sama Futari Black Label (2007/12/11 BLACK LABEL VER)",   0 )
-GAME( 2006, pinkswts,   0,        cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER....)",          0 )
-GAME( 2006, pinkswtsa,  pinkswts, cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER...)",           0 )
-GAME( 2006, pinkswtsb,  pinkswts, cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER.)",             0 )
-GAME( 2007, deathsml,   0,        cavesh3, cavesh3, espgal2,   ROT0,   "Cave", "Deathsmiles (2007/10/09 MASTER VER)",                              0 )
-GAME( 2007, mmpork,     0,        cavesh3, cavesh3, espgal2,   ROT270, "Cave", "Muchi Muchi Pork! (2007/ 4/17 MASTER VER.)",                       0 )
-GAME( 2007, mmmbanc,    0,        cavesh3, cavesh3, espgal2,   ROT0,   "Cave", "Medal Mahjong Moukari Bancho (2007/06/05 MASTER VER.)",             GAME_NOT_WORKING )
+GAME( 2004, mushisam,   0,        cavesh3, cavesh3, cavesh3_state, mushisam,  ROT270, "Cave", "Mushihime-Sama (2004/10/12 MASTER VER.)",                          0 )
+GAME( 2004, mushisama,  mushisam, cavesh3, cavesh3, cavesh3_state, mushisama, ROT270, "Cave", "Mushihime-Sama (2004/10/12 MASTER VER)",                           0 )
+GAME( 2005, espgal2,    0,        cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Espgaluda II (2005/11/14 MASTER VER)",                             0 )
+GAME( 2005, ibara,      0,        cavesh3, cavesh3, cavesh3_state, mushisam,  ROT270, "Cave", "Ibara (2005/03/22 MASTER VER..)",                                   0 )
+GAME( 2006, ibarablk,   0,        cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Ibara Kuro Black Label (2006/02/06. MASTER VER.)",                 0 )
+GAME( 2006, ibarablka,  ibarablk, cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Ibara Kuro Black Label (2006/02/06 MASTER VER.)",                  0 )
+GAME( 2005, mushitam,   0,        cavesh3, cavesh3, cavesh3_state, mushisam,  ROT0,   "Cave", "Puzzle! Mushihime-Tama (2005/09/09 MASTER VER)",                   0 )
+GAME( 2006, futari15,   0,        cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Mushihime-Sama Futari Ver 1.5 (2006/12/8.MASTER VER. 1.54.)",      0 )
+GAME( 2006, futari15a,  futari15, cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Mushihime-Sama Futari Ver 1.5 (2006/12/8 MASTER VER 1.54)",        0 )
+GAME( 2006, futari10,   futari15, cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Mushihime-Sama Futari Ver 1.0 (2006/10/23 MASTER VER.)",           0 )
+GAME( 2007, futariblk,  futari15, cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Mushihime-Sama Futari Black Label (2007/12/11 BLACK LABEL VER)",   0 )
+GAME( 2006, pinkswts,   0,        cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER....)",          0 )
+GAME( 2006, pinkswtsa,  pinkswts, cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER...)",           0 )
+GAME( 2006, pinkswtsb,  pinkswts, cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER.)",             0 )
+GAME( 2007, deathsml,   0,        cavesh3, cavesh3, cavesh3_state, espgal2,   ROT0,   "Cave", "Deathsmiles (2007/10/09 MASTER VER)",                              0 )
+GAME( 2007, mmpork,     0,        cavesh3, cavesh3, cavesh3_state, espgal2,   ROT270, "Cave", "Muchi Muchi Pork! (2007/ 4/17 MASTER VER.)",                       0 )
+GAME( 2007, mmmbanc,    0,        cavesh3, cavesh3, cavesh3_state, espgal2,   ROT0,   "Cave", "Medal Mahjong Moukari Bancho (2007/06/05 MASTER VER.)",             GAME_NOT_WORKING )
 
 /*
 

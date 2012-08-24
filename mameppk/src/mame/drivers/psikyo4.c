@@ -1082,30 +1082,30 @@ static void install_hotgmck_pcm_bank(running_machine &machine)
 	machine.save().register_postload(save_prepost_delegate(FUNC(hotgmck_pcm_bank_postload), &machine));
 }
 
-static DRIVER_INIT( hotgmck )
+DRIVER_INIT_MEMBER(psikyo4_state,hotgmck)
 {
-	UINT8 *RAM = machine.root_device().memregion("maincpu")->base();
-	machine.root_device().membank("bank1")->set_base(&RAM[0x100000]);
-	install_hotgmck_pcm_bank(machine);	// Banked PCM ROM
+	UINT8 *RAM = machine().root_device().memregion("maincpu")->base();
+	machine().root_device().membank("bank1")->set_base(&RAM[0x100000]);
+	install_hotgmck_pcm_bank(machine());	// Banked PCM ROM
 }
 
 
 /*    YEAR  NAME      PARENT    MACHINE    INPUT     INIT      MONITOR COMPANY   FULLNAME     FLAGS */
-GAME( 1997, hotgmck,  0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick (Japan)", 0 )
-GAME( 1998, hgkairak, 0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick Kairakuten (Japan)", 0 )
-GAME( 1999, hotgmck3, 0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick 3 Digital Surfing (Japan)", 0 )
-GAME( 2000, hotgm4ev, 0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick 4 Ever (Japan)", 0 )
-GAME( 2001, hotgmcki, 0,        ps4big,    hotgmck,  hotgmck,  ROT0,   "Psikyo", "Mahjong Hot Gimmick Integral (Japan)", 0 )
-GAME( 2000, loderndf, 0,        ps4small,  loderndf, 0,        ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. B)", 0 )
-GAME( 2000, loderndfa,loderndf, ps4small,  loderndf, 0,        ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. A)", 0 )
-GAME( 2000, hotdebut, 0,        ps4small,  hotdebut, 0,        ROT0,   "Psikyo / Moss", "Quiz de Idol! Hot Debut (Japan)", 0 )
+GAME( 1997, hotgmck,  0,        ps4big,    hotgmck, psikyo4_state,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick (Japan)", 0 )
+GAME( 1998, hgkairak, 0,        ps4big,    hotgmck, psikyo4_state,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick Kairakuten (Japan)", 0 )
+GAME( 1999, hotgmck3, 0,        ps4big,    hotgmck, psikyo4_state,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick 3 Digital Surfing (Japan)", 0 )
+GAME( 2000, hotgm4ev, 0,        ps4big,    hotgmck, psikyo4_state,  hotgmck,  ROT0,   "Psikyo", "Taisen Hot Gimmick 4 Ever (Japan)", 0 )
+GAME( 2001, hotgmcki, 0,        ps4big,    hotgmck, psikyo4_state,  hotgmck,  ROT0,   "Psikyo", "Mahjong Hot Gimmick Integral (Japan)", 0 )
+GAME( 2000, loderndf, 0,        ps4small,  loderndf, driver_device, 0,        ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. B)", 0 )
+GAME( 2000, loderndfa,loderndf, ps4small,  loderndf, driver_device, 0,        ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. A)", 0 )
+GAME( 2000, hotdebut, 0,        ps4small,  hotdebut, driver_device, 0,        ROT0,   "Psikyo / Moss", "Quiz de Idol! Hot Debut (Japan)", 0 )
 
 #ifdef KAILLERA
-GAME_HACK( 1997, hotgmck_k,  hotgmck,        ps4big_k,   hotgmck_k,  hotgmck, ROT0,   "Psikyo", "Taisen Hot Gimmick (Japan / kaillera)", 0 )
-GAME_HACK( 1998, hgkairak_k, hgkairak,       ps4big_k,   hotgmck_k,  hotgmck, ROT0,   "Psikyo", "Taisen Hot Gimmick Kairakuten (Japan / kaillera)", 0 )
-GAME_HACK( 1999, hotgmck3_k, hotgmck3,       ps4big_k,   hotgmck_k,  hotgmck, ROT0,   "Psikyo", "Taisen Hot Gimmick 3 Digital Surfing (Japan / kaillera)", 0 )
-GAME_HACK( 2000, hotgm4ev_k, hotgm4ev,       ps4big_k,   hotgmck_k,  hotgmck, ROT0,   "Psikyo", "Taisen Hot Gimmick 4 Ever (Japan / kaillera)", 0 )
-GAME_HACK( 2000, loderndf_k,  loderndf,    loderndf_k,  loderndf_k,  0,       ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. B) (Japan / co kaillera)", 0 )
-GAME_HACK( 2000, loderndf_vs, loderndf,   loderndf_vs,  loderndf_k,  0,       ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. B) (Japan / vs kaillera)", 0 )
-GAME_HACK( 2000, hotdebut_k,  hotdebut,    ps4small_k,  hotdebut_k,  0,       ROT0,   "Psikyo / Moss", "Quiz de Idol! Hot Debut (Japan / kaillera)", 0 )
+GAME_HACK( 1997, hotgmck_k,  hotgmck,        ps4big_k,   hotgmck_k, psikyo4_state,  hotgmck, ROT0,   "Psikyo", "Taisen Hot Gimmick (Japan / kaillera)", 0 )
+GAME_HACK( 1998, hgkairak_k, hgkairak,       ps4big_k,   hotgmck_k, psikyo4_state,  hotgmck, ROT0,   "Psikyo", "Taisen Hot Gimmick Kairakuten (Japan / kaillera)", 0 )
+GAME_HACK( 1999, hotgmck3_k, hotgmck3,       ps4big_k,   hotgmck_k, psikyo4_state,  hotgmck, ROT0,   "Psikyo", "Taisen Hot Gimmick 3 Digital Surfing (Japan / kaillera)", 0 )
+GAME_HACK( 2000, hotgm4ev_k, hotgm4ev,       ps4big_k,   hotgmck_k, psikyo4_state,  hotgmck, ROT0,   "Psikyo", "Taisen Hot Gimmick 4 Ever (Japan / kaillera)", 0 )
+GAME_HACK( 2000, loderndf_k,  loderndf,    loderndf_k,  loderndf_k, driver_device,  0,       ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. B) (Japan / co kaillera)", 0 )
+GAME_HACK( 2000, loderndf_vs, loderndf,   loderndf_vs,  loderndf_k, driver_device,  0,       ROT0,   "Psikyo", "Lode Runner - The Dig Fight (ver. B) (Japan / vs kaillera)", 0 )
+GAME_HACK( 2000, hotdebut_k,  hotdebut,    ps4small_k,  hotdebut_k, driver_device,  0,       ROT0,   "Psikyo / Moss", "Quiz de Idol! Hot Debut (Japan / kaillera)", 0 )
 #endif /* KAILLERA */

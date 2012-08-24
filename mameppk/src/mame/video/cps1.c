@@ -1840,7 +1840,7 @@ READ16_HANDLER( cps2_region_16_r )
 #define MASK_NONE  0x0000
 
 #define CPS2_REGION_16_R(NAME, OFFSET, DATA, COUNT, MASK)  \
-if (!strcmp(machine.system().name, NAME))                  \
+if (!strcmp(machine().system().name, NAME))                  \
 {                                                          \
     state->m_region_switch_offset  = OFFSET & 0xffff;      \
     state->m_region_switch_data    = DATA;                 \
@@ -1848,7 +1848,7 @@ if (!strcmp(machine.system().name, NAME))                  \
     state->m_region_switch_count   = COUNT;                \
     if (state->m_region_switch_mask == MASK_LOW)           \
         state->m_region_switch_data <<= 8;                 \
-	machine.device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(OFFSET, OFFSET+1, FUNC(cps2_region_16_r)); \
+	machine().device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(OFFSET, OFFSET+1, FUNC(cps2_region_16_r)); \
 }
 
 MACHINE_RESET( cps2 )
@@ -1859,38 +1859,37 @@ MACHINE_RESET( cps2 )
 #endif /* MAMEUIPLUSPLUS */
 
 
-DRIVER_INIT( cps1 )
+DRIVER_INIT_MEMBER(cps_state,cps1)
 {
-	cps_state *state = machine.driver_data<cps_state>();
 
-	cps1_gfx_decode(machine);
+	cps1_gfx_decode(machine());
 
-	state->m_scanline1 = 0;
-	state->m_scanline2 = 0;
-	state->m_scancalls = 0;
-	state->m_last_sprite_offset = 0;
-	state->m_pri_ctrl = 0;
-	state->m_objram_bank = 0;
+	m_scanline1 = 0;
+	m_scanline2 = 0;
+	m_scancalls = 0;
+	m_last_sprite_offset = 0;
+	m_pri_ctrl = 0;
+	m_objram_bank = 0;
 }
 
 
 
-DRIVER_INIT( cps2_video )
+DRIVER_INIT_MEMBER(cps_state,cps2_video)
 {
 #ifdef KAILLERA
 	extern void SelectMemoryHack(const char* gamename);
 #endif /* KAILLERA */
-	cps_state *state = machine.driver_data<cps_state>();
+	cps_state *state = machine().driver_data<cps_state>();
 
-	cps2_gfx_decode(machine);
+	cps2_gfx_decode(machine());
 
-	state->m_scanline1 = 262;
-	state->m_scanline2 = 262;
-	state->m_scancalls = 0;
-	state->m_last_sprite_offset = 0;
-	state->m_cps2_last_sprite_offset = 0;
-	state->m_pri_ctrl = 0;
-	state->m_objram_bank = 0;
+	m_scanline1 = 262;
+	m_scanline2 = 262;
+	m_scancalls = 0;
+	m_last_sprite_offset = 0;
+	m_cps2_last_sprite_offset = 0;
+	m_pri_ctrl = 0;
+	m_objram_bank = 0;
 
 #ifdef MAMEUIPLUSPLUS
 	state->m_region_switch_counter  = 0;
@@ -1902,32 +1901,32 @@ DRIVER_INIT( cps2_video )
 
 #ifdef KAILLERA
     state->m_nvram_type = NV_NORMAL;
-	if (!strcmp(machine.system().name, "avsp3p"))      state->m_nvram_type = NV_avsp3p;
-	if (!strcmp(machine.system().name, "avspa3p"))     state->m_nvram_type = NV_avspa3p;
-	if (!strcmp(machine.system().name, "avspu3p"))     state->m_nvram_type = NV_avspu3p;
-	if (!strcmp(machine.system().name, "avspj3p"))     state->m_nvram_type = NV_avspj3p;
-	if (!strcmp(machine.system().name, "batcir4p"))    state->m_nvram_type = NV_batcir4p;
-	if (!strcmp(machine.system().name, "batcirj4p"))   state->m_nvram_type = NV_batcirj4p;
-	if (!strcmp(machine.system().name, "ddsom4p"))     state->m_nvram_type = NV_ddsom4p;
-	if (!strcmp(machine.system().name, "ddsomr2_4p"))  state->m_nvram_type = NV_ddsomr2_4p;
-	if (!strcmp(machine.system().name, "ddsomu4p"))    state->m_nvram_type = NV_ddsomu4p;
-	if (!strcmp(machine.system().name, "ddsomur1_4p")) state->m_nvram_type = NV_ddsomur1_4p;
-	if (!strcmp(machine.system().name, "ddsomj4p"))    state->m_nvram_type = NV_ddsomj4p;
-	if (!strcmp(machine.system().name, "ddsomjr1_4p")) state->m_nvram_type = NV_ddsomjr1_4p;
-	if (!strcmp(machine.system().name, "ddsoma4p"))    state->m_nvram_type = NV_ddsoma4p;
-	if (!strcmp(machine.system().name, "sfa3p"))       state->m_nvram_type = NV_sfa3p;
-	if (!strcmp(machine.system().name, "sfa3up"))      state->m_nvram_type = NV_sfa3up;
-	if (!strcmp(machine.system().name, "sfa3ur1p"))    state->m_nvram_type = NV_sfa3ur1p;
-	if (!strcmp(machine.system().name, "sfz3jp"))      state->m_nvram_type = NV_sfz3jp;
-	if (!strcmp(machine.system().name, "sfz3jr1p"))    state->m_nvram_type = NV_sfz3jr1p;
-	if (!strcmp(machine.system().name, "sfz3jr2p"))    state->m_nvram_type = NV_sfz3jr2p;
-	if (!strcmp(machine.system().name, "sfz3ar1p"))    state->m_nvram_type = NV_sfz3ar1p;
+	if (!strcmp(machine().system().name, "avsp3p"))      state->m_nvram_type = NV_avsp3p;
+	if (!strcmp(machine().system().name, "avspa3p"))     state->m_nvram_type = NV_avspa3p;
+	if (!strcmp(machine().system().name, "avspu3p"))     state->m_nvram_type = NV_avspu3p;
+	if (!strcmp(machine().system().name, "avspj3p"))     state->m_nvram_type = NV_avspj3p;
+	if (!strcmp(machine().system().name, "batcir4p"))    state->m_nvram_type = NV_batcir4p;
+	if (!strcmp(machine().system().name, "batcirj4p"))   state->m_nvram_type = NV_batcirj4p;
+	if (!strcmp(machine().system().name, "ddsom4p"))     state->m_nvram_type = NV_ddsom4p;
+	if (!strcmp(machine().system().name, "ddsomr2_4p"))  state->m_nvram_type = NV_ddsomr2_4p;
+	if (!strcmp(machine().system().name, "ddsomu4p"))    state->m_nvram_type = NV_ddsomu4p;
+	if (!strcmp(machine().system().name, "ddsomur1_4p")) state->m_nvram_type = NV_ddsomur1_4p;
+	if (!strcmp(machine().system().name, "ddsomj4p"))    state->m_nvram_type = NV_ddsomj4p;
+	if (!strcmp(machine().system().name, "ddsomjr1_4p")) state->m_nvram_type = NV_ddsomjr1_4p;
+	if (!strcmp(machine().system().name, "ddsoma4p"))    state->m_nvram_type = NV_ddsoma4p;
+	if (!strcmp(machine().system().name, "sfa3p"))       state->m_nvram_type = NV_sfa3p;
+	if (!strcmp(machine().system().name, "sfa3up"))      state->m_nvram_type = NV_sfa3up;
+	if (!strcmp(machine().system().name, "sfa3ur1p"))    state->m_nvram_type = NV_sfa3ur1p;
+	if (!strcmp(machine().system().name, "sfz3jp"))      state->m_nvram_type = NV_sfz3jp;
+	if (!strcmp(machine().system().name, "sfz3jr1p"))    state->m_nvram_type = NV_sfz3jr1p;
+	if (!strcmp(machine().system().name, "sfz3jr2p"))    state->m_nvram_type = NV_sfz3jr2p;
+	if (!strcmp(machine().system().name, "sfz3ar1p"))    state->m_nvram_type = NV_sfz3ar1p;
 #ifdef JAPANESE
-	if (!strcmp(machine.system().name, "hsf2nb"))      state->m_nvram_type = NV_hsf2anb;
-	if (!strcmp(machine.system().name, "hsf2d"))       state->m_nvram_type = NV_hsf2anb;
+	if (!strcmp(machine().system().name, "hsf2nb"))      state->m_nvram_type = NV_hsf2anb;
+	if (!strcmp(machine().system().name, "hsf2d"))       state->m_nvram_type = NV_hsf2anb;
 #endif /* JAPANESE */
 
-	SelectMemoryHack( machine.system().name );
+	SelectMemoryHack( machine().system().name );
 #endif /* KAILLERA */
 }
 

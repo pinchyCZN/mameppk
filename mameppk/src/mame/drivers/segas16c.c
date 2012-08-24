@@ -2,18 +2,41 @@
 
     Sega System 16C hardware
 
-****************************************************************************/
+****************************************************************************
+
+    Copyright Aaron Giles
+    All rights reserved.
+
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are
+    met:
+
+        * Redistributions of source code must retain the above copyright
+          notice, this list of conditions and the following disclaimer.
+        * Redistributions in binary form must reproduce the above copyright
+          notice, this list of conditions and the following disclaimer in
+          the documentation and/or other materials provided with the
+          distribution.
+        * Neither the name 'MAME' nor the names of its contributors may be
+          used to endorse or promote products derived from this software
+          without specific prior written permission.
+
+    THIS SOFTWARE IS PROVIDED BY AARON GILES ''AS IS'' AND ANY EXPRESS OR
+    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+    DISCLAIMED. IN NO EVENT SHALL AARON GILES BE LIABLE FOR ANY DIRECT,
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+    HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+    IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGE.
+
+***************************************************************************/
 
 #include "emu.h"
-#include "cpu/z80/z80.h"
-#include "cpu/m68000/m68000.h"
-#include "cpu/mcs51/mcs51.h"
-#include "includes/segas16.h"
-#include "machine/segaic16.h"
-#include "machine/nvram.h"
-#include "sound/2151intf.h"
-#include "sound/upd7759.h"
-#include "video/segaic16.h"
+#include "includes/segas16c.h"
 
 
 /*************************************
@@ -27,159 +50,114 @@
 #define MASTER_CLOCK_25MHz		XTAL_25_1748MHz
 
 
-/*************************************
- *
- *  Statics
- *
- *************************************/
 
-static UINT16 *workram;
+//**************************************************************************
+//  MEMORY MAPPING
+//**************************************************************************
 
+//-------------------------------------------------
+//  memory_mapper - callback to handle mapping
+//  requests
+//-------------------------------------------------
 
-
-/*************************************
- *
- *  Prototypes
- *
- *************************************/
-
-static READ16_HANDLER( misc_io_r );
-static WRITE16_HANDLER( misc_io_w );
-static WRITE16_HANDLER( rom_5704_bank_w );
-
-
-
-/*************************************
- *
- *  Memory mapping tables
- *
- *************************************/
-
-static const segaic16_memory_map_entry rom_5704_custom_info[] =
+void segas16c_state::memory_mapper(sega_315_5195_mapper_device &mapper, UINT8 index)
 {
-	{ 0x3d/2, 0x00000, 0x04000, 0xffc000,      ~0, FUNC(misc_io_r), NULL,    FUNC(misc_io_w),              NULL,     NULL,                  "I/O space" },
-	{ 0x39/2, 0x00000, 0x01000, 0xfff000,      ~0, FUNC_NULL,      "bank10", FUNC(segaic16_paletteram_w),  NULL,     &segaic16_paletteram,  "color RAM" },
-	{ 0x35/2, 0x00000, 0x10000, 0xfe0000,      ~0, FUNC_NULL,      "bank11", FUNC(segaic16_tileram_0_w),   NULL,     &segaic16_tileram_0,   "tile RAM" },
-	{ 0x35/2, 0x10000, 0x01000, 0xfef000,      ~0, FUNC_NULL,      "bank12", FUNC(segaic16_textram_0_w),   NULL,     &segaic16_textram_0,   "text RAM" },
-	{ 0x31/2, 0x00000, 0x02000, 0xffe000,      ~0, FUNC_NULL,      "bank13", FUNC_NULL,                   "bank13",  &segaic16_spriteram_0, "object RAM" },
-	{ 0x2d/2, 0x00000, 0x40000, 0xfc0000,      ~0, FUNC_NULL,      "bank14", FUNC_NULL,                   "bank14",  &workram,              "work RAM" },
-	{ 0x29/2, 0x00000, 0x10000, 0xff0000,      ~0, FUNC_NULL,       NULL,    FUNC(rom_5704_bank_w),        NULL,     NULL,                  "tile bank" },
-	{ 0x25/2, 0x00000, 0x80000, 0xfc0000, 0x80000, FUNC_NULL,      "bank16", FUNC_NULL,                    NULL,     NULL,                  "ROM 1" },
-	{ 0x21/2, 0x00000, 0x80000, 0xfc0000, 0x00000, FUNC_NULL,      "bank17", FUNC_NULL,                    NULL,     NULL,                  "ROM 0" },
-	{ 0 }
-};
-
-
-
-/*************************************
- *
- *  Configuration
- *
- *************************************/
-
-static void sound_w(running_machine &machine, UINT8 data)
-{
-	segas1x_state *state = machine.driver_data<segas1x_state>();
-
-	if (state->m_soundcpu != NULL)
+	switch (index)
 	{
-		address_space *space = state->m_maincpu->memory().space(AS_PROGRAM);
-		state->soundlatch_byte_w(*space, 0, data & 0xff);
-		device_set_input_line(state->m_soundcpu, 0, HOLD_LINE);
+		case 7:	// 16k of I/O space
+			mapper.map_as_handler(0x00000, 0x04000, 0xffc000, m_custom_io_r, m_custom_io_w);
+			break;
+
+		case 6:	// 4k of paletteram
+			mapper.map_as_ram(0x00000, 0x01000, 0xfff000, "paletteram", write16_delegate(FUNC(segas16c_state::legacy_wrapper<segaic16_paletteram_w>), this));
+			break;
+
+		case 5:	// 64k of tileram + 4k of textram
+			mapper.map_as_ram(0x00000, 0x10000, 0xfe0000, "tileram", write16_delegate(FUNC(segas16c_state::legacy_wrapper<segaic16_tileram_0_w>), this));
+			mapper.map_as_ram(0x10000, 0x01000, 0xfef000, "textram", write16_delegate(FUNC(segas16c_state::legacy_wrapper<segaic16_textram_0_w>), this));
+			break;
+
+		case 4:	// 2k of spriteram
+			mapper.map_as_ram(0x00000, 0x00800, 0xfff800, "spriteram", write16_delegate());
+			break;
+
+		case 3:	// 16k or 256k of work RAM
+			mapper.map_as_ram(0x00000, m_workram.bytes(), ~(m_workram.bytes() - 1), "workram", write16_delegate());
+			break;
+
+		case 2:	// 3rd ROM base, or board-specific banking
+			switch (m_romboard)
+			{
+				case ROM_BOARD_171_5704:		mapper.map_as_handler(0x00000, 0x10000, 0xff0000, read16_delegate(), write16_delegate(FUNC(segas16c_state::rom_5704_bank_w), this)); break;
+				default:						assert(false);
+			}
+			break;
+
+		case 1:	// 2nd ROM base, banking & math, or sound for Korean games
+			switch (m_romboard)
+			{
+				case ROM_BOARD_171_5704:		mapper.map_as_rom(0x00000, 0x40000, 0xfc0000, "rom1base", 0x40000, write16_delegate());	break;
+				default:						assert(false);
+			}
+			break;
+
+		case 0:	// 1st ROM base
+			switch (m_romboard)
+			{
+				case ROM_BOARD_171_5704:		mapper.map_as_rom(0x00000, 0x40000, 0xfc0000, "rom0base", 0000000, write16_delegate());	break;
+				default:						assert(false);
+			}
+			break;
 	}
 }
 
 
-static void system16c_common_init(running_machine& machine)
+//-------------------------------------------------
+//  mapper_sound_r - sound port read from the
+//  memory mapper chip
+//-------------------------------------------------
+
+UINT8 segas16c_state::mapper_sound_r()
 {
-	segas1x_state *state = machine.driver_data<segas1x_state>();
-
-	/* reset the custom handlers and other pointers */
-	state->m_custom_io_r = NULL;
-	state->m_custom_io_w = NULL;
-	state->m_i8751_vblank_hook = NULL;
-	state->m_i8751_initial_config = NULL;
-	state->m_disable_screen_blanking = 0;
-
-	state->m_maincpu = machine.device("maincpu");
-	state->m_soundcpu = machine.device("soundcpu");
-	state->m_mcu = machine.device("mcu");
-	state->m_ymsnd = machine.device("ymsnd");
-
-	state->save_item(NAME(state->m_disable_screen_blanking));
-	state->save_item(NAME(state->m_mj_input_num));
-	state->save_item(NAME(state->m_mj_last_val));
-	state->save_item(NAME(state->m_hwc_input_value));
-	state->save_item(NAME(state->m_atomicp_sound_divisor));
-
+	return 0;
 }
 
 
-static void system16c_generic_init(running_machine &machine)
+//-------------------------------------------------
+//  mapper_sound_w - sound port write from the
+//  memory mapper chip
+//-------------------------------------------------
+
+void segas16c_state::mapper_sound_w(UINT8 data)
 {
-	system16c_common_init(machine);
-
-	/* allocate memory for regions not autmatically assigned */
-	segaic16_spriteram_0 = auto_alloc_array(machine, UINT16, 0x02000 / 2);
-	segaic16_paletteram  = auto_alloc_array(machine, UINT16, 0x01000 / 2);
-	segaic16_tileram_0   = auto_alloc_array(machine, UINT16, 0x10000 / 2);
-	segaic16_textram_0   = auto_alloc_array(machine, UINT16, 0x01000 / 2);
-	workram              = auto_alloc_array(machine, UINT16, 0x40000 / 2);
-
-	/* init the memory mapper */
-	segaic16_memory_mapper_init(machine.device("maincpu"), rom_5704_custom_info, sound_w, NULL);
-
-	machine.device<nvram_device>("nvram")->set_base(workram, 0x4000);
-
-	state_save_register_global_pointer(machine, segaic16_spriteram_0, 0x02000/2);
-	state_save_register_global_pointer(machine, segaic16_paletteram,  0x01000/2);
-	state_save_register_global_pointer(machine, segaic16_tileram_0,   0x10000/2);
-	state_save_register_global_pointer(machine, segaic16_textram_0,   0x01000/2);
-	state_save_register_global_pointer(machine, workram,              0x40000/2);
-}
-
-
-static TIMER_CALLBACK( suspend_i8751 )
-{
-	segas1x_state *state = machine.driver_data<segas1x_state>();
-	device_suspend(state->m_mcu, SUSPEND_REASON_DISABLE, 1);
+	soundlatch_write(data & 0xff);
+	if (m_soundcpu != NULL)
+		m_soundcpu->set_input_line(0, HOLD_LINE);
 }
 
 
 
-/*************************************
- *
- *  Initialization & interrupts
- *
- *************************************/
+//**************************************************************************
+//  MAIN CPU READ/WRITE HANDLERS
+//**************************************************************************
 
-static MACHINE_RESET( system16c )
+//-------------------------------------------------
+//  rom_5704_bank_w - ROM board 5704 tile bank
+//  selection
+//-------------------------------------------------
+
+WRITE16_MEMBER( segas16c_state::rom_5704_bank_w )
 {
-	segas1x_state *state = machine.driver_data<segas1x_state>();
-	static const UINT8 default_banklist[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-	int i;
-
-	segaic16_memory_mapper_reset(machine);
-	if (state->m_i8751_initial_config != NULL)
-		segaic16_memory_mapper_config(machine, state->m_i8751_initial_config);
-	segaic16_tilemap_reset(machine, 0);
-
-	/* if we have a fake i8751 handler, disable the actual 8751 */
-	if (state->m_i8751_vblank_hook != NULL)
-		machine.scheduler().synchronize(FUNC(suspend_i8751));
-
-	/* configure sprite banks */
-	for (i = 0; i < 16; i++)
-		segaic16_sprites_set_bank(machine, 0, i, default_banklist[i]);
+	if (ACCESSING_BITS_0_7)
+		segaic16_tilemap_set_bank(machine(), 0, offset & 1, data & 7);
 }
 
-/*************************************
- *
- *  I/O space
- *
- *************************************/
 
-static READ16_HANDLER( standard_io_r )
+//-------------------------------------------------
+//  standard_io_r - default I/O handler for reads
+//-------------------------------------------------
+
+READ16_MEMBER( segas16c_state::standard_io_r )
 {
 	offset &= 0x1fff;
 	switch (offset & (0x3000/2))
@@ -187,222 +165,296 @@ static READ16_HANDLER( standard_io_r )
 		case 0x1000/2:
 		{
 			static const char *const sysports[] = { "SERVICE", "P1", "UNUSED", "P2" };
-			return space->machine().root_device().ioport(sysports[offset & 3])->read();
+			return ioport(sysports[offset & 3])->read();
 		}
 
 		case 0x2000/2:
-			return space->machine().root_device().ioport((offset & 1) ? "DSW2" : "DSW1")->read();
+			return ioport((offset & 1) ? "DSW1" : "DSW2")->read();
 	}
-	logerror("%06X:standard_io_r - unknown read access to address %04X\n", cpu_get_pc(&space->device()), offset * 2);
-	return segaic16_open_bus_r(space, 0, mem_mask);
+	logerror("%06X:standard_io_r - unknown read access to address %04X\n", cpu_get_pc(&space.device()), offset * 2);
+	return segaic16_open_bus_r(&space, 0, mem_mask);
 }
 
 
-static WRITE16_HANDLER( standard_io_w )
-{
-	segas1x_state *state = space->machine().driver_data<segas1x_state>();
+//-------------------------------------------------
+//  standard_io_w - default I/O handler for writes
+//-------------------------------------------------
 
+WRITE16_MEMBER( segas16c_state::standard_io_w )
+{
 	offset &= 0x1fff;
 	switch (offset & (0x3000/2))
 	{
 		case 0x0000/2:
-			/*
-                D7 : 1 for most games, 0 for ddux, sdi, wb3
-                D6 : 1= Screen flip, 0= Normal screen display
-                D5 : 1= Display on, 0= Display off
-                D4 : 0 for most games, 1 for eswat
-                D3 : Output to lamp 2 (1= On, 0= Off)
-                D2 : Output to lamp 1 (1= On, 0= Off)
-                D1 : (Output to coin counter 2?)
-                D0 : Output to coin counter 1
-            */
-			segaic16_tilemap_set_flip(space->machine(), 0, data & 0x40);
-			segaic16_sprites_set_flip(space->machine(), 0, data & 0x40);
-			if (!state->m_disable_screen_blanking)
-				segaic16_set_display_enable(space->machine(), data & 0x20);
-			set_led_status(space->machine(), 1, data & 0x08);
-			set_led_status(space->machine(), 0, data & 0x04);
-			coin_counter_w(space->machine(), 1, data & 0x02);
-			coin_counter_w(space->machine(), 0, data & 0x01);
+			//
+            //  D7 : 1 for most games, 0 for ddux, sdi, wb3
+            //  D6 : 1= Screen flip, 0= Normal screen display
+            //  D5 : 1= Display on, 0= Display off
+            //  D4 : 0 for most games, 1 for eswat
+            //  D3 : Output to lamp 2 (1= On, 0= Off)
+            //  D2 : Output to lamp 1 (1= On, 0= Off)
+            //  D1 : (Output to coin counter 2?)
+            //  D0 : Output to coin counter 1
+            //
+			segaic16_tilemap_set_flip(machine(), 0, data & 0x40);
+			segaic16_sprites_set_flip(machine(), 0, data & 0x40);
+			if (!m_disable_screen_blanking)
+				segaic16_set_display_enable(machine(), data & 0x20);
+			set_led_status(machine(), 1, data & 0x08);
+			set_led_status(machine(), 0, data & 0x04);
+			coin_counter_w(machine(), 1, data & 0x02);
+			coin_counter_w(machine(), 0, data & 0x01);
 			return;
 	}
-	logerror("%06X:standard_io_w - unknown write access to address %04X = %04X & %04X\n", cpu_get_pc(&space->device()), offset * 2, data, mem_mask);
+	logerror("%06X:standard_io_w - unknown write access to address %04X = %04X & %04X\n", cpu_get_pc(&space.device()), offset * 2, data, mem_mask);
 }
 
 
-static READ16_HANDLER( misc_io_r )
-{
-	segas1x_state *state = space->machine().driver_data<segas1x_state>();
+//**************************************************************************
+//  CONFIGURATION
+//**************************************************************************
 
-	if (state->m_custom_io_r)
-		return (*state->m_custom_io_r)(space, offset, mem_mask);
-	else
-		return standard_io_r(space, offset, mem_mask);
+//-------------------------------------------------
+//  init_generic - common initialization
+//-------------------------------------------------
+
+void segas16c_state::init_generic(segas16c_rom_board rom_board)
+{
+	// remember the ROM board and work RAM size
+	m_romboard = rom_board;
+
+	// configure the NVRAM to point to our workram
+	m_nvram->set_base(m_workram, m_workram.bytes());
+
+	// create default read/write handlers
+	m_custom_io_r = read16_delegate(FUNC(segas16c_state::standard_io_r), this);
+	m_custom_io_w = write16_delegate(FUNC(segas16c_state::standard_io_w), this);
+
+	// point globals to allocated memory regions
+	segaic16_spriteram_0 = reinterpret_cast<UINT16 *>(memshare("spriteram")->ptr());
+	segaic16_paletteram = reinterpret_cast<UINT16 *>(memshare("paletteram")->ptr());
+	segaic16_tileram_0 = reinterpret_cast<UINT16 *>(memshare("tileram")->ptr());
+	segaic16_textram_0 = reinterpret_cast<UINT16 *>(memshare("textram")->ptr());
+
+	// save state
+	save_item(NAME(m_atomicp_sound_count));
+	save_item(NAME(m_hwc_input_value));
+	save_item(NAME(m_mj_input_num));
+	save_item(NAME(m_mj_last_val));
 }
 
 
-static WRITE16_HANDLER( misc_io_w )
+//-------------------------------------------------
+//  init_generic_* - ROM board-specific
+//  initialization
+//-------------------------------------------------
+
+DRIVER_INIT_MEMBER(segas16c_state,generic_5704) { init_generic(ROM_BOARD_171_5704); }
+
+
+
+//**************************************************************************
+//  SOUND CPU READ/WRITE HANDLERS
+//**************************************************************************
+
+//-------------------------------------------------
+//  upd7759_control_w - handle writes to the
+//  uPD7759 control register
+//-------------------------------------------------
+
+WRITE8_MEMBER( segas16c_state::upd7759_control_w )
 {
-	segas1x_state *state = space->machine().driver_data<segas1x_state>();
-
-	if (state->m_custom_io_w)
-		(*state->m_custom_io_w)(space, offset, data, mem_mask);
-	else
-		standard_io_w(space, offset, data, mem_mask);
-}
-
-
-
-/*************************************
- *
- *  Tile banking/math chips
- *
- *************************************/
-
-static WRITE16_HANDLER( rom_5704_bank_w )
-{
-	if (ACCESSING_BITS_0_7)
-		segaic16_tilemap_set_bank(space->machine(), 0, offset & 1, data & 7);
-}
-
-/*************************************
- *
- *  Sound interaction
- *
- *************************************/
-
-static WRITE8_DEVICE_HANDLER( upd7759_control_w )
-{
-	segas1x_state *state = device->machine().driver_data<segas1x_state>();
-	int size = state->memregion("soundcpu")->bytes() - 0x10000;
+	int size = memregion("soundcpu")->bytes() - 0x10000;
 	if (size > 0)
 	{
+		// it is important to write in this order: if the /START line goes low
+        // at the same time /RESET goes low, no sample should be started
+		upd7759_start_w(m_upd7759, data & 0x80);
+		upd7759_reset_w(m_upd7759, data & 0x40);
+
+		// banking depends on the ROM board
 		int bankoffs = 0;
+		switch (m_romboard)
+		{
+			case ROM_BOARD_171_5704:
+				//
+                //  D5 : Unused
+                //  D4 : Unused
+                //  D3 : ROM select 0=A11, 1=A12
+                //  D2 : A16 for all ROMs
+                //  D1 : A15 for all ROMs
+                //  D0 : A14 for all ROMs
+                //
+				bankoffs = ((data & 0x08) >> 3) * 0x20000;
+				bankoffs += (data & 0x07) * 0x4000;
+				break;
 
-		/* it is important to write in this order: if the /START line goes low
-           at the same time /RESET goes low, no sample should be started */
-		upd7759_start_w(device, data & 0x80);
-		upd7759_reset_w(device, data & 0x40);
+			default:
+				assert(false);
+		}
 
-				/*
-                    D5 : Unused
-                    D4 : A17 for all ROMs
-                    D3 : ROM select 0=A11, 1=A12
-                    D2 : A16 for all ROMs
-                    D1 : A15 for all ROMs
-                    D0 : A14 for all ROMs
-                */
-		bankoffs = ((data & 0x08) >> 3) * 0x20000;
-		bankoffs += (data & 0x07) * 0x04000;
-
-		state->membank("bank1")->set_base(device->machine().root_device().memregion("soundcpu")->base() + 0x10000 + (bankoffs % size));
+		// set the final bank
+		membank("soundbank")->set_base(memregion("soundcpu")->base() + 0x10000 + (bankoffs % size));
 	}
 }
 
 
-static READ8_DEVICE_HANDLER( upd7759_status_r )
+//-------------------------------------------------
+//  upd7759_status_r - return the uPD7759 busy
+//  bit in the top bit
+//-------------------------------------------------
+
+READ8_MEMBER( segas16c_state::upd7759_status_r )
 {
-	return upd7759_busy_r(device) << 7;
+	return upd7759_busy_r(m_upd7759) << 7;
 }
 
 
-static void upd7759_generate_nmi(device_t *device, int state)
-{
-	segas1x_state *driver = device->machine().driver_data<segas1x_state>();
 
+//**************************************************************************
+//  OTHER CALLBACKS
+//**************************************************************************
+
+//-------------------------------------------------
+//  upd7759_generate_nmi - callback to signal an
+//  NMI to the sound CPU
+//-------------------------------------------------
+
+void segas16c_state::upd7759_generate_nmi(device_t *device, int state)
+{
+	segas16c_state *driver = device->machine().driver_data<segas16c_state>();
 	if (state)
-		device_set_input_line(driver->m_soundcpu, INPUT_LINE_NMI, PULSE_LINE);
+		driver->m_soundcpu->set_input_line(INPUT_LINE_NMI, PULSE_LINE);
 }
 
 
-#if 0
-static WRITE8_HANDLER( mcu_data_w )
+//-------------------------------------------------
+//  i8751_main_cpu_vblank - update the fake i8751
+//  state if we have a handler
+//-------------------------------------------------
+
+INTERRUPT_GEN_MEMBER( segas16c_state::i8751_main_cpu_vblank )
 {
-	segas1x_state *state = space->machine().driver_data<segas1x_state>();
-	state->m_mcu_data = data;
-	generic_pulse_irq_line(state->m_mcu, 1);
+	// if we have a fake 8751 handler, call it on VBLANK
+	if (!m_i8751_vblank_hook.isnull())
+		m_i8751_vblank_hook();
 }
-#endif
 
 
-/*************************************
- *
- *  I8751 interrupt generation
- *
- *************************************/
+//**************************************************************************
+//  DRIVER OVERRIDES
+//**************************************************************************
 
-static INTERRUPT_GEN( i8751_main_cpu_vblank )
+//-------------------------------------------------
+//  machine_reset - reset the state of the machine
+//-------------------------------------------------
+
+void segas16c_state::machine_reset()
 {
-	segas1x_state *state = device->machine().driver_data<segas1x_state>();
+	// if we have a hard-coded mapping configuration, set it now
+	if (m_i8751_initial_config != NULL)
+		m_mapper->configure_explicit(m_i8751_initial_config);
 
-	/* if we have a fake 8751 handler, call it on VBLANK */
-	if (state->m_i8751_vblank_hook != NULL)
-		(*state->m_i8751_vblank_hook)(device->machine());
+	// queue up a timer to either boost interleave or disable the MCU
+	synchronize(TID_INIT_I8751);
+
+	// reset tilemap state
+	segaic16_tilemap_reset(machine(), 0);
+
+	// configure sprite banks
+	static const UINT8 default_banklist[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
+	const UINT8 *banklist = default_banklist;
+	for (int banknum = 0; banknum < 16; banknum++)
+		segaic16_sprites_set_bank(machine(), 0, banknum, banklist[banknum]);
 }
 
 
+//-------------------------------------------------
+//  device_timer - handle device timers
+//-------------------------------------------------
 
-/*************************************
- *
- *  Per-game I8751 workarounds
- *
- *************************************/
-
-static void fz2dx_i8751_sim(running_machine &machine)
+void segas16c_state::device_timer(emu_timer &timer, device_timer_id id, int param, void *ptr)
 {
-	segas1x_state *state = machine.driver_data<segas1x_state>();
-
-	/* signal a VBLANK to the main CPU */
-	device_set_input_line(state->m_maincpu, 4, HOLD_LINE);
+	switch (id)
+	{
+		// if we have a fake i8751 handler, disable the actual 8751, otherwise crank the interleave
+		case TID_INIT_I8751:
+			if (!m_i8751_vblank_hook.isnull())
+				m_mcu->suspend(SUSPEND_REASON_DISABLE, 1);
+			else if (m_mcu != NULL)
+				machine().scheduler().boost_interleave(attotime::zero, attotime::from_msec(10));
+			break;
+	}
 }
 
-/*************************************
- *
- *  Main CPU memory handlers
- *
- *************************************/
 
-static ADDRESS_MAP_START( system16c_map, AS_PROGRAM, 16, segas1x_state )
+
+//**************************************************************************
+//  I8751 SIMULATIONS
+//**************************************************************************
+
+//-------------------------------------------------
+//  fz2dx_i8751_sim - simulate the I8751
+//-------------------------------------------------
+
+void segas16c_state::fz2dx_i8751_sim()
+{
+	// signal a VBLANK to the main CPU
+	m_maincpu->set_input_line(4, HOLD_LINE);
+}
+
+
+
+//**************************************************************************
+//  MAIN CPU ADDRESS MAPS
+//**************************************************************************
+
+static ADDRESS_MAP_START( system16c_map, AS_PROGRAM, 16, segas16c_state )
 	ADDRESS_MAP_UNMAP_HIGH
-	AM_RANGE(0x000000, 0xffffff) AM_READWRITE_LEGACY(segaic16_memory_mapper_lsb_r, segaic16_memory_mapper_lsb_w)
+	AM_RANGE(0x000000, 0xffffff) AM_DEVREADWRITE8("mapper", sega_315_5195_mapper_device, read, write, 0x00ff)
+
+	// these get overwritten by the memory mapper above, but we put them here
+	// so they are properly allocated and tracked for saving
+	AM_RANGE(0x100000, 0x1007ff) AM_RAM AM_SHARE("spriteram")
+	AM_RANGE(0x200000, 0x200fff) AM_RAM AM_SHARE("paletteram")
+	AM_RANGE(0x300000, 0x30ffff) AM_RAM AM_SHARE("tileram")
+	AM_RANGE(0x400000, 0x400fff) AM_RAM AM_SHARE("textram")
+	AM_RANGE(0x500000, 0x53ffff) AM_RAM AM_SHARE("workram")	// only change from system16b_map
 ADDRESS_MAP_END
 
 
 
-/*************************************
- *
- *  Sound CPU memory handlers
- *
- *************************************/
+//**************************************************************************
+//  SOUND CPU ADDRESS MAPS
+//**************************************************************************
 
-static ADDRESS_MAP_START( sound_map, AS_PROGRAM, 8, segas1x_state )
+static ADDRESS_MAP_START( sound_map, AS_PROGRAM, 8, segas16c_state )
 	ADDRESS_MAP_UNMAP_HIGH
 	AM_RANGE(0x0000, 0x7fff) AM_ROM
-	AM_RANGE(0x8000, 0xdfff) AM_ROMBANK("bank1")
+	AM_RANGE(0x8000, 0xdfff) AM_ROMBANK("soundbank")
 	AM_RANGE(0xe800, 0xe800) AM_READ(soundlatch_byte_r)
 	AM_RANGE(0xf800, 0xffff) AM_RAM
 ADDRESS_MAP_END
 
-static ADDRESS_MAP_START( sound_portmap, AS_IO, 8, segas1x_state )
+static ADDRESS_MAP_START( sound_portmap, AS_IO, 8, segas16c_state )
 	ADDRESS_MAP_UNMAP_HIGH
 	ADDRESS_MAP_GLOBAL_MASK(0xff)
-	AM_RANGE(0x00, 0x01) AM_MIRROR(0x3e) AM_DEVREADWRITE_LEGACY("ymsnd", ym2151_r, ym2151_w)
-	AM_RANGE(0x40, 0x40) AM_MIRROR(0x3f) AM_DEVWRITE_LEGACY("upd", upd7759_control_w)
-	AM_RANGE(0x80, 0x80) AM_MIRROR(0x3f) AM_DEVREADWRITE_LEGACY("upd", upd7759_status_r, upd7759_port_w)
+	AM_RANGE(0x00, 0x01) AM_MIRROR(0x3e) AM_DEVREADWRITE_LEGACY("ym2151", ym2151_r, ym2151_w)
+	AM_RANGE(0x40, 0x40) AM_MIRROR(0x3f) AM_WRITE(upd7759_control_w)
+	AM_RANGE(0x80, 0x80) AM_MIRROR(0x3f) AM_READ(upd7759_status_r) AM_DEVWRITE_LEGACY("upd", upd7759_port_w)
 	AM_RANGE(0xc0, 0xc0) AM_MIRROR(0x3f) AM_READ(soundlatch_byte_r)
 ADDRESS_MAP_END
 
 
 
-/*************************************
- *
- *  i8751 MCU memory handlers
- *
- *************************************/
+//**************************************************************************
+//  I8751 MCU ADDRESS MAPS
+//**************************************************************************
 
-static ADDRESS_MAP_START( mcu_io_map, AS_IO, 8, segas1x_state )
+static ADDRESS_MAP_START( mcu_io_map, AS_IO, 8, segas16c_state )
 	ADDRESS_MAP_UNMAP_HIGH
-	AM_RANGE(0x0000, 0x001f) AM_MIRROR(0xff00) AM_READWRITE_LEGACY(segaic16_memory_mapper_r, segaic16_memory_mapper_w)
+	AM_RANGE(0x0000, 0x001f) AM_MIRROR(0xff00) AM_DEVREADWRITE("mapper", sega_315_5195_mapper_device, read, write)
+	AM_RANGE(MCS51_PORT_P1, MCS51_PORT_P1) AM_READ_PORT("SERVICE")
 ADDRESS_MAP_END
 
 
@@ -538,15 +590,13 @@ INPUT_PORTS_END
 
 
 
-/*************************************
- *
- *  Sound definitions
- *
- *************************************/
+//**************************************************************************
+//  SOUND CONFIGURATIONS
+//**************************************************************************
 
 static const upd7759_interface upd7759_config =
 {
-	upd7759_generate_nmi
+	&segas16c_state::upd7759_generate_nmi
 };
 
 
@@ -569,7 +619,7 @@ GFXDECODE_END
  *
  *************************************/
 
-static MACHINE_CONFIG_START( system16c, segas1x_state )
+static MACHINE_CONFIG_START( system16c, segas16c_state )
 
 	/* basic machine hardware */
 	MCFG_CPU_ADD("maincpu", M68000, MASTER_CLOCK_10MHz)
@@ -580,8 +630,9 @@ static MACHINE_CONFIG_START( system16c, segas1x_state )
 	MCFG_CPU_PROGRAM_MAP(sound_map)
 	MCFG_CPU_IO_MAP(sound_portmap)
 
-	MCFG_MACHINE_RESET(system16c)
 	MCFG_NVRAM_ADD_0FILL("nvram")
+
+	MCFG_SEGA_315_5195_MAPPER_ADD("mapper", "maincpu", segas16c_state, memory_mapper, mapper_sound_r, mapper_sound_w)
 
 	/* video hardware */
 	MCFG_GFXDECODE(segas16c)
@@ -589,9 +640,7 @@ static MACHINE_CONFIG_START( system16c, segas1x_state )
 
 	MCFG_SCREEN_ADD("screen", RASTER)
 	MCFG_SCREEN_RAW_PARAMS(MASTER_CLOCK_25MHz/4, 400, 0, 320, 262, 0, 224)
-	MCFG_SCREEN_UPDATE_STATIC(system16c)
-
-	MCFG_VIDEO_START(system16c)
+	MCFG_SCREEN_UPDATE_DRIVER(segas16c_state, screen_update)
 
 	MCFG_SEGA16SP_ADD_16B("segaspr1")
 
@@ -609,11 +658,11 @@ MACHINE_CONFIG_END
 
 static MACHINE_CONFIG_DERIVED( system16c_8751, system16c )
 	MCFG_CPU_MODIFY("maincpu")
-	MCFG_CPU_VBLANK_INT("screen", i8751_main_cpu_vblank)
+	MCFG_DEVICE_VBLANK_INT_DRIVER("screen", segas16c_state, i8751_main_cpu_vblank)
 
 	MCFG_CPU_ADD("mcu", I8751, MASTER_CLOCK_8MHz)
 	MCFG_CPU_IO_MAP(mcu_io_map)
-	MCFG_CPU_VBLANK_INT("screen", irq0_line_pulse)
+	MCFG_DEVICE_VBLANK_INT_DRIVER("screen", segas16c_state, irq0_line_pulse)
 MACHINE_CONFIG_END
 
 
@@ -650,23 +699,21 @@ ROM_START( fz2dx )
 ROM_END
 
 
-/*************************************
- *
- *  Game-specific driver inits
- *
- *************************************/
+//-------------------------------------------------
+//  init_* - game-specific initialization
+//-------------------------------------------------
 
-static DRIVER_INIT( fz2dx_8751 )
+DRIVER_INIT_MEMBER(segas16c_state,fz2dx_8751)
 {
-	segas1x_state *state = machine.driver_data<segas1x_state>();
-//	DRIVER_INIT_CALL(fz2dx_8751);
-	system16c_generic_init(machine);
-	state->m_i8751_vblank_hook = fz2dx_i8751_sim;
+	DRIVER_INIT_CALL(generic_5704);
+	m_i8751_vblank_hook = i8751_sim_delegate(FUNC(segas16c_state::fz2dx_i8751_sim), this);
 }
 
-/*************************************
- *
- *  Game driver(s)
- *
- *************************************/
-GAME( 1987, fz2dx, 0, system16c_8751, fz2dx, fz2dx_8751, ROT0, "Sega / M2", "Fantasy Zone II DX", 0 )
+
+
+//**************************************************************************
+//  GAME DRIVERS
+//**************************************************************************
+
+//    YEAR, NAME,       PARENT,   MACHINE,             INPUT,    INIT,               MONITOR,COMPANY,FULLNAME,FLAGS
+GAME( 1987, fz2dx, 0, system16c_8751, fz2dx,  segas16c_state,fz2dx_8751, ROT0, "Sega / M2", "Fantasy Zone II DX", 0 )
