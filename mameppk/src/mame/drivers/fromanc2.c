@@ -41,7 +41,7 @@ static int fromanc2_playerside;
 
 static INTERRUPT_GEN( fromanc2_interrupt )
 {
-	device_set_input_line(device, 1, HOLD_LINE);
+	device->execute().set_input_line(1, HOLD_LINE);
 }
 
 #ifdef KAILLERA
@@ -112,7 +112,7 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 		}
 	}
 
-	device_set_input_line(device, 1, HOLD_LINE);
+	device->execute().set_input_line(1, HOLD_LINE);
 }
 #endif /* KAILLERA */
 
@@ -123,7 +123,7 @@ WRITE16_MEMBER(fromanc2_state::fromanc2_sndcmd_w)
 	soundlatch_byte_w(space, offset, (data >> 8) & 0xff);	// 1P (LEFT)
 	soundlatch2_byte_w(space, offset, data & 0xff);			// 2P (RIGHT)
 
-	device_set_input_line(m_audiocpu, INPUT_LINE_NMI, PULSE_LINE);
+	m_audiocpu->set_input_line(INPUT_LINE_NMI, PULSE_LINE);
 	m_sndcpu_nmi_flag = 0;
 }
 
@@ -143,7 +143,7 @@ READ16_MEMBER(fromanc2_state::fromanc2_keymatrix_r)
 	case 0x04:	ret = ioport("KEY2")->read(); break;
 	case 0x08:	ret = ioport("KEY3")->read(); break;
 	default:	ret = 0xffff;
-			logerror("PC:%08X unknown %02X\n", cpu_get_pc(&space.device()), m_portselect);
+			logerror("PC:%08X unknown %02X\n", space.device().safe_pc(), m_portselect);
 			break;
 	}
 
@@ -190,13 +190,13 @@ WRITE16_MEMBER(fromanc2_state::fromanc2_subcpu_w)
 {
 	m_datalatch1 = data;
 
-	device_set_input_line(m_subcpu, 0, HOLD_LINE);
+	m_subcpu->set_input_line(0, HOLD_LINE);
 	m_subcpu_int_flag = 0;
 }
 
 READ16_MEMBER(fromanc2_state::fromanc2_subcpu_r)
 {
-	device_set_input_line(m_subcpu, INPUT_LINE_NMI, PULSE_LINE);
+	m_subcpu->set_input_line(INPUT_LINE_NMI, PULSE_LINE);
 	m_subcpu_nmi_flag = 0;
 
 	return (m_datalatch_2h << 8) | m_datalatch_2l;
@@ -566,7 +566,7 @@ GFXDECODE_END
 static void irqhandler(device_t *device, int irq)
 {
 	fromanc2_state *state = device->machine().driver_data<fromanc2_state>();
-	device_set_input_line(state->m_audiocpu, 0, irq ? ASSERT_LINE : CLEAR_LINE);
+	state->m_audiocpu->set_input_line(0, irq ? ASSERT_LINE : CLEAR_LINE);
 }
 
 static const ym2610_interface ym2610_config =
@@ -581,47 +581,44 @@ static const ym2610_interface ym2610_config =
  *
  *************************************/
 
-static MACHINE_START( fromanc4 )
+MACHINE_START_MEMBER(fromanc2_state,fromanc4)
 {
-	fromanc2_state *state = machine.driver_data<fromanc2_state>();
 
-	state->m_audiocpu = machine.device("audiocpu");
-	state->m_subcpu = machine.device("sub");
-	state->m_eeprom = machine.device("eeprom");
-	state->m_left_screen = machine.device("lscreen");
-	state->m_right_screen = machine.device("rscreen");
+	m_audiocpu = machine().device<cpu_device>("audiocpu");
+	m_subcpu = machine().device<cpu_device>("sub");
+	m_eeprom = machine().device("eeprom");
+	m_left_screen = machine().device("lscreen");
+	m_right_screen = machine().device("rscreen");
 
-	state->save_item(NAME(state->m_portselect));
-	state->save_item(NAME(state->m_sndcpu_nmi_flag));
-	state->save_item(NAME(state->m_datalatch1));
-	state->save_item(NAME(state->m_datalatch_2h));
-	state->save_item(NAME(state->m_datalatch_2l));
+	save_item(NAME(m_portselect));
+	save_item(NAME(m_sndcpu_nmi_flag));
+	save_item(NAME(m_datalatch1));
+	save_item(NAME(m_datalatch_2h));
+	save_item(NAME(m_datalatch_2l));
 
 	/* video-related elements are saved in VIDEO_START */
 }
 
-static MACHINE_START( fromanc2 )
+MACHINE_START_MEMBER(fromanc2_state,fromanc2)
 {
-	fromanc2_state *state = machine.driver_data<fromanc2_state>();
 
-	state->membank("bank1")->configure_entries(0, 4, state->memregion("sub")->base(), 0x4000);
-	state->membank("bank2")->configure_entry(0, state->memregion("sub")->base() + 0x08000);
-	state->membank("bank2")->configure_entries(1, 3, state->memregion("sub")->base() + 0x14000, 0x4000);
+	membank("bank1")->configure_entries(0, 4, memregion("sub")->base(), 0x4000);
+	membank("bank2")->configure_entry(0, memregion("sub")->base() + 0x08000);
+	membank("bank2")->configure_entries(1, 3, memregion("sub")->base() + 0x14000, 0x4000);
 
-	MACHINE_START_CALL(fromanc4);
+	MACHINE_START_CALL_MEMBER(fromanc4);
 
-	state->save_item(NAME(state->m_subcpu_int_flag));
-	state->save_item(NAME(state->m_subcpu_nmi_flag));
+	save_item(NAME(m_subcpu_int_flag));
+	save_item(NAME(m_subcpu_nmi_flag));
 }
 
-static MACHINE_RESET( fromanc2 )
+void fromanc2_state::machine_reset()
 {
-	fromanc2_state *state = machine.driver_data<fromanc2_state>();
 
-	state->m_portselect = 0;
-	state->m_datalatch1 = 0;
-	state->m_datalatch_2h = 0;
-	state->m_datalatch_2l = 0;
+	m_portselect = 0;
+	m_datalatch1 = 0;
+	m_datalatch_2h = 0;
+	m_datalatch_2l = 0;
 }
 
 static MACHINE_CONFIG_START( fromanc2, fromanc2_state )
@@ -639,8 +636,7 @@ static MACHINE_CONFIG_START( fromanc2, fromanc2_state )
 	MCFG_CPU_PROGRAM_MAP(fromanc2_sub_map)
 	MCFG_CPU_IO_MAP(fromanc2_sub_io_map)
 
-	MCFG_MACHINE_START(fromanc2)
-	MCFG_MACHINE_RESET(fromanc2)
+	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc2)
 
 	MCFG_EEPROM_93C46_ADD("eeprom")
 
@@ -663,7 +659,7 @@ static MACHINE_CONFIG_START( fromanc2, fromanc2_state )
 	MCFG_SCREEN_VISIBLE_AREA(0, 352-1, 0, 240-1)
 	MCFG_SCREEN_UPDATE_STATIC(fromanc2_right)
 
-	MCFG_VIDEO_START(fromanc2)
+	MCFG_VIDEO_START_OVERRIDE(fromanc2_state,fromanc2)
 
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_MONO("mono")
@@ -690,8 +686,7 @@ static MACHINE_CONFIG_START( fromancr, fromanc2_state )
 	MCFG_CPU_PROGRAM_MAP(fromanc2_sub_map)
 	MCFG_CPU_IO_MAP(fromanc2_sub_io_map)
 
-	MCFG_MACHINE_START(fromanc2)
-	MCFG_MACHINE_RESET(fromanc2)
+	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc2)
 
 	MCFG_EEPROM_93C46_ADD("eeprom")
 
@@ -714,7 +709,7 @@ static MACHINE_CONFIG_START( fromancr, fromanc2_state )
 	MCFG_SCREEN_VISIBLE_AREA(0, 352-1, 0, 240-1)
 	MCFG_SCREEN_UPDATE_STATIC(fromanc2_right)
 
-	MCFG_VIDEO_START(fromancr)
+	MCFG_VIDEO_START_OVERRIDE(fromanc2_state,fromancr)
 
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_MONO("mono")
@@ -737,8 +732,7 @@ static MACHINE_CONFIG_START( fromanc4, fromanc2_state )
 	MCFG_CPU_PROGRAM_MAP(fromanc2_sound_map)
 	MCFG_CPU_IO_MAP(fromanc2_sound_io_map)
 
-	MCFG_MACHINE_START(fromanc4)
-	MCFG_MACHINE_RESET(fromanc2)
+	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc4)
 
 	MCFG_EEPROM_93C46_ADD("eeprom")
 
@@ -762,7 +756,7 @@ static MACHINE_CONFIG_START( fromanc4, fromanc2_state )
 	MCFG_SCREEN_VISIBLE_AREA(0, 352-1, 0, 240-1)
 	MCFG_SCREEN_UPDATE_STATIC(fromanc2_right)
 
-	MCFG_VIDEO_START(fromanc4)
+	MCFG_VIDEO_START_OVERRIDE(fromanc2_state,fromanc4)
 
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_MONO("mono")
@@ -790,8 +784,7 @@ static MACHINE_CONFIG_START( fromanc2_k, fromanc2_state )
 	MCFG_CPU_PROGRAM_MAP(fromanc2_sub_map)
 	MCFG_CPU_IO_MAP(fromanc2_sub_io_map)
 
-	MCFG_MACHINE_START(fromanc2)
-	MCFG_MACHINE_RESET(fromanc2)
+	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc2)
 
 	MCFG_EEPROM_93C46_ADD("eeprom")
 
@@ -806,7 +799,7 @@ static MACHINE_CONFIG_START( fromanc2_k, fromanc2_state )
 	MCFG_SCREEN_VISIBLE_AREA(0, 352-1, 0, 240-1)
 	MCFG_SCREEN_UPDATE_STATIC(fromanc2_k)
 
-	MCFG_VIDEO_START(fromanc2)
+	MCFG_VIDEO_START_OVERRIDE(fromanc2_state,fromanc2)
 
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_MONO("mono")
@@ -833,8 +826,7 @@ static MACHINE_CONFIG_START( fromancr_k, fromanc2_state )
 	MCFG_CPU_PROGRAM_MAP(fromanc2_sub_map)
 	MCFG_CPU_IO_MAP(fromanc2_sub_io_map)
 
-	MCFG_MACHINE_START(fromanc2)
-	MCFG_MACHINE_RESET(fromanc2)
+	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc2)
 
 	MCFG_EEPROM_93C46_ADD("eeprom")
 
@@ -849,7 +841,7 @@ static MACHINE_CONFIG_START( fromancr_k, fromanc2_state )
 	MCFG_SCREEN_VISIBLE_AREA(0, 352-1, 0, 240-1)
 	MCFG_SCREEN_UPDATE_STATIC(fromanc2_k)
 
-	MCFG_VIDEO_START(fromancr)
+	MCFG_VIDEO_START_OVERRIDE(fromanc2_state,fromancr)
 
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_MONO("mono")
@@ -872,8 +864,7 @@ static MACHINE_CONFIG_START( fromanc4_k, fromanc2_state )
 	MCFG_CPU_PROGRAM_MAP(fromanc2_sound_map)
 	MCFG_CPU_IO_MAP(fromanc2_sound_io_map)
 
-	MCFG_MACHINE_START(fromanc4)
-	MCFG_MACHINE_RESET(fromanc2)
+	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc4)
 
 	MCFG_EEPROM_93C46_ADD("eeprom")
 
@@ -888,7 +879,7 @@ static MACHINE_CONFIG_START( fromanc4_k, fromanc2_state )
 	MCFG_SCREEN_VISIBLE_AREA(0, 352-1, 0, 240-1)
 	MCFG_SCREEN_UPDATE_STATIC(fromanc2_k)
 
-	MCFG_VIDEO_START(fromanc4)
+	MCFG_VIDEO_START_OVERRIDE(fromanc2_state,fromanc4)
 
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_MONO("mono")

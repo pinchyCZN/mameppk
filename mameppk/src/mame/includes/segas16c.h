@@ -43,16 +43,17 @@
 #include "sound/2151intf.h"
 #include "sound/upd7759.h"
 #include "video/segaic16.h"
+#include "video/sega16sp.h"
 
 
 // ======================> segas16c_state
 
-class segas16c_state : public driver_device
+class segas16c_state : public sega_16bit_common_base
 {
 public:
 	// construction/destruction
 	segas16c_state(const machine_config &mconfig, device_type type, const char *tag)
-		: driver_device(mconfig, type, tag),
+		: sega_16bit_common_base(mconfig, type, tag),
 		  m_mapper(*this, "mapper"),
 		  m_maincpu(*this, "maincpu"),
 		  m_soundcpu(*this, "soundcpu"),
@@ -63,6 +64,7 @@ public:
 		  m_cmptimer_1(*this, "cmptimer_1"),
 		  m_cmptimer_2(*this, "cmptimer_2"),
 		  m_nvram(*this, "nvram"),
+		  m_sprites(*this, "sprites"),
 		  m_workram(*this, "workram"),
 		  m_romboard(ROM_BOARD_INVALID),
 		  m_tilemap_type(SEGAIC16_TILEMAP_16B),
@@ -150,6 +152,7 @@ protected:
 	optional_device<sega_315_5250_compare_timer_device> m_cmptimer_1;
 	optional_device<sega_315_5250_compare_timer_device> m_cmptimer_2;
 	required_device<nvram_device> m_nvram;
+	required_device<sega_sys16c_sprite_device> m_sprites;
 
 	// memory pointers
 	required_shared_ptr<UINT16> m_workram;

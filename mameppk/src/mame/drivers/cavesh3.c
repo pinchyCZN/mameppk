@@ -5820,7 +5820,7 @@ READ8_MEMBER( cavesh3_state::flash_io_r )
 
 		default:
 		{
-			logerror("%08x FLASH: unknown read in state %s\n", cpu_get_pc(&space.device()), flash_state_name[flash_state]);
+			logerror("%08x FLASH: unknown read in state %s\n", space.device().safe_pc(), flash_state_name[flash_state]);
 		}
 	}
 
@@ -6071,7 +6071,7 @@ static const struct sh4_config sh4cpu_config = {
 
 static INTERRUPT_GEN(cavesh3_interrupt)
 {
-	device_set_input_line(device, 2, HOLD_LINE);
+	device->execute().set_input_line(2, HOLD_LINE);
 }
 
 
@@ -6447,9 +6447,9 @@ ROM_END
 static READ64_HANDLER( mushisam_speedup_r )
 {
 	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
-	int pc = cpu_get_pc(&space->device());
-	if ( pc == 0xc04a0aa ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // mushisam
-	else if (pc == 0xc04a0da)  device_spin_until_time(&space->device(), attotime::from_usec(10)); // mushitam
+	int pc = space->device().safe_pc();
+	if ( pc == 0xc04a0aa ) space->device().execute().spin_until_time(attotime::from_usec(10)); // mushisam
+	else if (pc == 0xc04a0da) space->device().execute().spin_until_time(attotime::from_usec(10)); // mushitam
 //  else printf("read %08x\n", cpu_get_pc(&space->device()));
 	return state->cavesh3_ram[0x0022f0/8];
 }
@@ -6462,7 +6462,7 @@ DRIVER_INIT_MEMBER(cavesh3_state,mushisam)
 static READ64_HANDLER( mushisama_speedup_r )
 {
 	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
-	if ( cpu_get_pc(&space->device())== 0xc04a2aa ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // mushisam
+	if ( space->device().safe_pc()== 0xc04a2aa ) space->device().execute().spin_until_time(attotime::from_usec(10)); // mushisam
 //  else printf("read %08x\n", cpu_get_pc(&space->device()));
 	return state->cavesh3_ram[0x00024d8/8];
 }
@@ -6475,11 +6475,11 @@ DRIVER_INIT_MEMBER(cavesh3_state,mushisama)
 static READ64_HANDLER( espgal2_speedup_r )
 {
 	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
-	int pc = cpu_get_pc(&space->device());
+	int pc = space->device().safe_pc();
 
-	if ( pc == 0xc05177a ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // espgal2
-	if ( pc == 0xc05176a ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // futari15 / futari15a / futari10 / futariblk / ibarablk / ibarablka / mmpork / mmmbanc
-	if ( pc == 0xc0519a2 ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // deathsml
+	if ( pc == 0xc05177a ) space->device().execute().spin_until_time(attotime::from_usec(10)); // espgal2
+	if ( pc == 0xc05176a ) space->device().execute().spin_until_time(attotime::from_usec(10)); // futari15 / futari15a / futari10 / futariblk / ibarablk / ibarablka / mmpork / mmmbanc
+	if ( pc == 0xc0519a2 ) space->device().execute().spin_until_time(attotime::from_usec(10)); // deathsml
 //  else printf("read %08x\n", cpu_get_pc(&space->device()));
 	return state->cavesh3_ram[0x002310/8];
 }

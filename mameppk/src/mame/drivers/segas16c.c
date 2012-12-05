@@ -69,7 +69,7 @@ void segas16c_state::memory_mapper(sega_315_5195_mapper_device &mapper, UINT8 in
 			break;
 
 		case 6:	// 4k of paletteram
-			mapper.map_as_ram(0x00000, 0x01000, 0xfff000, "paletteram", write16_delegate(FUNC(segas16c_state::legacy_wrapper<segaic16_paletteram_w>), this));
+			mapper.map_as_ram(0x00000, 0x01000, 0xfff000, "paletteram", write16_delegate(FUNC(segas16c_state::paletteram_w), this));
 			break;
 
 		case 5:	// 64k of tileram + 4k of textram
@@ -78,7 +78,7 @@ void segas16c_state::memory_mapper(sega_315_5195_mapper_device &mapper, UINT8 in
 			break;
 
 		case 4:	// 2k of spriteram
-			mapper.map_as_ram(0x00000, 0x00800, 0xfff800, "spriteram", write16_delegate());
+			mapper.map_as_ram(0x00000, 0x00800, 0xfff800, "sprites", write16_delegate());
 			break;
 
 		case 3:	// 16k or 256k of work RAM
@@ -171,8 +171,8 @@ READ16_MEMBER( segas16c_state::standard_io_r )
 		case 0x2000/2:
 			return ioport((offset & 1) ? "DSW1" : "DSW2")->read();
 	}
-	logerror("%06X:standard_io_r - unknown read access to address %04X\n", cpu_get_pc(&space.device()), offset * 2);
-	return segaic16_open_bus_r(&space, 0, mem_mask);
+	logerror("%06X:standard_io_r - unknown read access to address %04X\n", space.device().safe_pc(), offset * 2);
+	return open_bus_r(space, 0, mem_mask);
 }
 
 
@@ -197,7 +197,7 @@ WRITE16_MEMBER( segas16c_state::standard_io_w )
             //  D0 : Output to coin counter 1
             //
 			segaic16_tilemap_set_flip(machine(), 0, data & 0x40);
-			segaic16_sprites_set_flip(machine(), 0, data & 0x40);
+			m_sprites->set_flip(data & 0x40);
 			if (!m_disable_screen_blanking)
 				segaic16_set_display_enable(machine(), data & 0x20);
 			set_led_status(machine(), 1, data & 0x08);
@@ -206,7 +206,7 @@ WRITE16_MEMBER( segas16c_state::standard_io_w )
 			coin_counter_w(machine(), 0, data & 0x01);
 			return;
 	}
-	logerror("%06X:standard_io_w - unknown write access to address %04X = %04X & %04X\n", cpu_get_pc(&space.device()), offset * 2, data, mem_mask);
+	logerror("%06X:standard_io_w - unknown write access to address %04X = %04X & %04X\n", space.device().safe_pc(), offset * 2, data, mem_mask);
 }
 
 
@@ -231,8 +231,6 @@ void segas16c_state::init_generic(segas16c_rom_board rom_board)
 	m_custom_io_w = write16_delegate(FUNC(segas16c_state::standard_io_w), this);
 
 	// point globals to allocated memory regions
-	segaic16_spriteram_0 = reinterpret_cast<UINT16 *>(memshare("spriteram")->ptr());
-	segaic16_paletteram = reinterpret_cast<UINT16 *>(memshare("paletteram")->ptr());
 	segaic16_tileram_0 = reinterpret_cast<UINT16 *>(memshare("tileram")->ptr());
 	segaic16_textram_0 = reinterpret_cast<UINT16 *>(memshare("textram")->ptr());
 
@@ -365,7 +363,7 @@ void segas16c_state::machine_reset()
 	static const UINT8 default_banklist[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
 	const UINT8 *banklist = default_banklist;
 	for (int banknum = 0; banknum < 16; banknum++)
-		segaic16_sprites_set_bank(machine(), 0, banknum, banklist[banknum]);
+		m_sprites->set_bank(banknum, banklist[banknum]);
 }
 
 
@@ -415,7 +413,7 @@ static ADDRESS_MAP_START( system16c_map, AS_PROGRAM, 16, segas16c_state )
 
 	// these get overwritten by the memory mapper above, but we put them here
 	// so they are properly allocated and tracked for saving
-	AM_RANGE(0x100000, 0x1007ff) AM_RAM AM_SHARE("spriteram")
+	AM_RANGE(0x100000, 0x1007ff) AM_RAM AM_SHARE("sprites")
 	AM_RANGE(0x200000, 0x200fff) AM_RAM AM_SHARE("paletteram")
 	AM_RANGE(0x300000, 0x30ffff) AM_RAM AM_SHARE("tileram")
 	AM_RANGE(0x400000, 0x400fff) AM_RAM AM_SHARE("textram")
@@ -642,7 +640,7 @@ static MACHINE_CONFIG_START( system16c, segas16c_state )
 	MCFG_SCREEN_RAW_PARAMS(MASTER_CLOCK_25MHz/4, 400, 0, 320, 262, 0, 224)
 	MCFG_SCREEN_UPDATE_DRIVER(segas16c_state, screen_update)
 
-	MCFG_SEGA16SP_ADD_16B("segaspr1")
+	MCFG_SEGA_SYS16C_SPRITES_ADD("sprites")
 
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_MONO("mono")
@@ -681,20 +679,20 @@ MACHINE_CONFIG_END
     ROM Board: 171-5704 custom
 */
 ROM_START( fz2dx )
-	ROM_REGION( 0xc0000, "maincpu", 0 )					/* 68000 code */
+	ROM_REGION( 0xc0000, "maincpu", 0 ) // 68000 code
 	ROM_LOAD16_WORD_SWAP( "fz2_s16c.p00", 0x00000, 0x40000, CRC(B7D16C1D) SHA1(7587A0E4FA64664F53D7BA48D711B6D26ADD6220) )
 	ROM_LOAD16_WORD_SWAP( "fz2_s16c.p01", 0x80000, 0x40000, CRC(2C47487C) SHA1(0E3A524DAE50E5B099396EF712CE45EA147B424B) )
 
-	ROM_REGION( 0x60000, "gfx1", 0 )	/* tiles */
+	ROM_REGION( 0x60000, "gfx1", 0 ) // tiles
 	ROM_LOAD( "fz2_s16c.bg",  0x00000, 0x60000, CRC(C092DC23) SHA1(CC7980B8AF9FED7A1CDF70CBBE6A2A67BB79594F) )
 
-	ROM_REGION16_BE( 0x200000, "gfx2", 0 )				/* sprites */
+	ROM_REGION16_BE( 0x200000, "sprites", 0 ) // sprites
 	ROM_LOAD( "fz2_s16c.obj", 0x000000, 0x200000, CRC(57753F79) SHA1(7566CEF4344FBE7FB7ADC476113CD6E8780AEEF4) )
 
-	ROM_REGION( 0x50000, "soundcpu", 0 )					/* sound CPU */
+	ROM_REGION( 0x50000, "soundcpu", 0 ) // sound CPU
 	ROM_LOAD( "fz2_s16c.snd", 0x00000, 0x30000, CRC(0ED30EC1) SHA1(EDF2DBD6A35394849E0419C518C6FB0F4ACCB9D1) )
 
-	ROM_REGION( 0x1000, "mcu", 0 )	/* protection MCU */
+	ROM_REGION( 0x1000, "mcu", 0 ) // decryption key
 	ROM_LOAD( "317-0000.bin", 0x00000, 0x1000, NO_DUMP )
 ROM_END
 
