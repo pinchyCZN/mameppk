@@ -5427,10 +5427,10 @@ READ32_MEMBER( cavesh3_state::cavesh_gfx_ready_r )
 	// otherwise the games get stuck in more loops waiting for the blitter and we'd
 	// have to add even more idle skips all over the place ;-)
 
-//  cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
-//  int pc = cpu_get_pc(&space->device());
+//  cavesh3_state *state = space.machine().driver_data<cavesh3_state>();
+//  int pc = space.device().safe_pc();
 // if we're waiting for the blitter.. spin otherwise it becomes CPU intensive again
-/// if ( pc == 0xc0512d0 ) device_spin_until_time(&space->device(), attotime::from_usec(10)); // espgal2
+/// if ( pc == 0xc0512d0 ) device_spin_until_time(&space.device(), attotime::from_usec(10)); // espgal2
 //  if (state->blitter_busy) return 0x00000000;
 //  else
 		return 0x00000010;
@@ -5612,7 +5612,7 @@ static void flash_hard_reset(running_machine &machine)
 
 WRITE8_MEMBER( cavesh3_state::flash_enab_w )
 {
-	//logerror("%08x FLASH: enab = %02X\n", cpu_get_pc(&space->device()), data);
+	//logerror("%08x FLASH: enab = %02X\n", space.device().safe_pc(), data);
 	flash_enab = data;
 	//flash_enab = 1; // todo, why does it get turned off again instantly?
 }
@@ -5637,7 +5637,7 @@ WRITE8_MEMBER( cavesh3_state::flash_cmd_w )
 	if (!flash_enab)
 		return;
 
-	//logerror("%08x FLASH: cmd = %02X (prev = %02X)\n", cpu_get_pc(&space->device()), data, flash_cmd_prev);
+	//logerror("%08x FLASH: cmd = %02X (prev = %02X)\n", space.device().safe_pc(), data, flash_cmd_prev);
 
 	if (flash_cmd_prev == -1)
 	{
@@ -5692,7 +5692,7 @@ WRITE8_MEMBER( cavesh3_state::flash_cmd_w )
 
 					flash_change_state( space.machine(), STATE_READ );
 
-					//logerror("%08x FLASH: caching page = %04X\n", cpu_get_pc(&space->device()), flash_row);
+					//logerror("%08x FLASH: caching page = %04X\n", space.device().safe_pc(), flash_row);
 				}
 				break;
 
@@ -5727,7 +5727,7 @@ WRITE8_MEMBER( cavesh3_state::flash_cmd_w )
 
 			default:
 			{
-				//logerror("%08x FLASH: unknown cmd2 = %02X (cmd1 = %02X)\n", cpu_get_pc(&space->device()), data, flash_cmd_prev);
+				//logerror("%08x FLASH: unknown cmd2 = %02X (cmd1 = %02X)\n", space.device().safe_pc(), data, flash_cmd_prev);
 			}
 		}
 	}
@@ -5748,7 +5748,7 @@ WRITE8_MEMBER( cavesh3_state::flash_addr_w )
 	if (!flash_enab)
 		return;
 
-	//logerror("%08x FLASH: addr = %02X (seq = %02X)\n", cpu_get_pc(&space->device()), data, flash_addr_seq);
+	//logerror("%08x FLASH: addr = %02X (seq = %02X)\n", space.device().safe_pc(), data, flash_addr_seq);
 
 	switch( flash_addr_seq++ )
 	{
@@ -5798,7 +5798,7 @@ READ8_MEMBER( cavesh3_state::flash_io_r )
 					break;
 			}
 
-			//logerror("%08x FLASH: read %02X from id(%02X)\n", cpu_get_pc(&space->device()), data, old);
+			//logerror("%08x FLASH: read %02X from id(%02X)\n", space.device().safe_pc(), data, old);
 			break;
 
 		case STATE_READ:
@@ -5809,13 +5809,13 @@ READ8_MEMBER( cavesh3_state::flash_io_r )
 
 			data = flash_page_data[flash_page_addr++];
 
-			//logerror("%08x FLASH: read data %02X from addr %03X (page %04X)\n", cpu_get_pc(&space->device()), data, old, flash_page_index);
+			//logerror("%08x FLASH: read data %02X from addr %03X (page %04X)\n", space.device().safe_pc(), data, old, flash_page_index);
 			break;
 
 		case STATE_READ_STATUS:
 			// bit 7 = writeable, bit 6 = ready, bit 5 = ready/true ready, bit 1 = fail(N-1), bit 0 = fail
 			data = 0xe0;
-			//logerror("%08x FLASH: read status %02X\n", cpu_get_pc(&space->device()), data);
+			//logerror("%08x FLASH: read status %02X\n", space.device().safe_pc(), data);
 			break;
 
 		default:
@@ -5899,12 +5899,12 @@ READ8_MEMBER( cavesh3_state::serial_rtc_eeprom_r )
 		case 1:
 
 
-		//  return 0xfe | (input_port_read(space->machine(), "EEPROMIN") & 0x1);
+		//  return 0xfe | (input_port_read(space.machine(), "EEPROMIN") & 0x1);
 			return 0xfe | dev->read_bit();
 
 
 		default:
-		//logerror("%08x unknown serial_rtc_eeprom_r access offset %02x\n", cpu_get_pc(&space->device()), offset);
+		//logerror("%08x unknown serial_rtc_eeprom_r access offset %02x\n", space.device().safe_pc(), offset);
 			return 0;
 
 	}
@@ -6446,47 +6446,47 @@ ROM_END
 
 static READ64_HANDLER( mushisam_speedup_r )
 {
-	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
-	int pc = space->device().safe_pc();
-	if ( pc == 0xc04a0aa ) space->device().execute().spin_until_time(attotime::from_usec(10)); // mushisam
-	else if (pc == 0xc04a0da) space->device().execute().spin_until_time(attotime::from_usec(10)); // mushitam
-//  else printf("read %08x\n", cpu_get_pc(&space->device()));
+	cavesh3_state *state = space.machine().driver_data<cavesh3_state>();
+	int pc = space.device().safe_pc();
+	if ( pc == 0xc04a0aa ) space.device().execute().spin_until_time(attotime::from_usec(10)); // mushisam
+	else if (pc == 0xc04a0da) space.device().execute().spin_until_time(attotime::from_usec(10)); // mushitam
+//  else printf("read %08x\n", space.device().safe_pc());
 	return state->cavesh3_ram[0x0022f0/8];
 }
 
 DRIVER_INIT_MEMBER(cavesh3_state,mushisam)
 {
-	machine().device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(0xc0022f0, 0xc0022f7, FUNC(mushisam_speedup_r) );
+	machine().device("maincpu")->memory().space(AS_PROGRAM).install_legacy_read_handler(0xc0022f0, 0xc0022f7, FUNC(mushisam_speedup_r) );
 }
 
 static READ64_HANDLER( mushisama_speedup_r )
 {
-	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
-	if ( space->device().safe_pc()== 0xc04a2aa ) space->device().execute().spin_until_time(attotime::from_usec(10)); // mushisam
-//  else printf("read %08x\n", cpu_get_pc(&space->device()));
+	cavesh3_state *state = space.machine().driver_data<cavesh3_state>();
+	if ( space.device().safe_pc()== 0xc04a2aa ) space.device().execute().spin_until_time(attotime::from_usec(10)); // mushisam
+//  else printf("read %08x\n", space.device().safe_pc());
 	return state->cavesh3_ram[0x00024d8/8];
 }
 
 DRIVER_INIT_MEMBER(cavesh3_state,mushisama)
 {
-	machine().device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(0xc0024d8, 0xc0024df, FUNC(mushisama_speedup_r) );
+	machine().device("maincpu")->memory().space(AS_PROGRAM).install_legacy_read_handler(0xc0024d8, 0xc0024df, FUNC(mushisama_speedup_r) );
 }
 
 static READ64_HANDLER( espgal2_speedup_r )
 {
-	cavesh3_state *state = space->machine().driver_data<cavesh3_state>();
-	int pc = space->device().safe_pc();
+	cavesh3_state *state = space.machine().driver_data<cavesh3_state>();
+	int pc = space.device().safe_pc();
 
-	if ( pc == 0xc05177a ) space->device().execute().spin_until_time(attotime::from_usec(10)); // espgal2
-	if ( pc == 0xc05176a ) space->device().execute().spin_until_time(attotime::from_usec(10)); // futari15 / futari15a / futari10 / futariblk / ibarablk / ibarablka / mmpork / mmmbanc
-	if ( pc == 0xc0519a2 ) space->device().execute().spin_until_time(attotime::from_usec(10)); // deathsml
-//  else printf("read %08x\n", cpu_get_pc(&space->device()));
+	if ( pc == 0xc05177a ) space.device().execute().spin_until_time(attotime::from_usec(10)); // espgal2
+	if ( pc == 0xc05176a ) space.device().execute().spin_until_time(attotime::from_usec(10)); // futari15 / futari15a / futari10 / futariblk / ibarablk / ibarablka / mmpork / mmmbanc
+	if ( pc == 0xc0519a2 ) space.device().execute().spin_until_time(attotime::from_usec(10)); // deathsml
+//  else printf("read %08x\n", space.device().safe_pc());
 	return state->cavesh3_ram[0x002310/8];
 }
 
 DRIVER_INIT_MEMBER(cavesh3_state,espgal2)
 {
-	machine().device("maincpu")->memory().space(AS_PROGRAM)->install_legacy_read_handler(0xc002310, 0xc002317, FUNC(espgal2_speedup_r) );
+	machine().device("maincpu")->memory().space(AS_PROGRAM).install_legacy_read_handler(0xc002310, 0xc002317, FUNC(espgal2_speedup_r) );
 }
 
 
