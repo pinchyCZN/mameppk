@@ -111,6 +111,8 @@ public:
 	UINT16     m_neogeo_rng;
 	UINT16     *m_pvc_cartridge_ram;
 	int        m_fixed_layer_bank_type;
+	UINT16     m_mslugx_counter;
+	UINT16     m_mslugx_command;
 
 	/* devices */
 	cpu_device *m_maincpu;
@@ -202,6 +204,7 @@ public:
 	DECLARE_DRIVER_INIT(jockeygp);
 	DECLARE_DRIVER_INIT(vliner);
 	DECLARE_DRIVER_INIT(kog);
+	DECLARE_DRIVER_INIT(kof97oro);
 	DECLARE_DRIVER_INIT(lans2004);
 	DECLARE_DRIVER_INIT(sbp);
 	DECLARE_DRIVER_INIT(mvs);
@@ -242,16 +245,22 @@ public:
 	virtual void machine_reset();
 	virtual void video_start();
 	virtual void video_reset();
+	UINT32 screen_update_neogeo(screen_device &screen, bitmap_rgb32 &bitmap, const rectangle &cliprect);
+	TIMER_CALLBACK_MEMBER(display_position_interrupt_callback);
+	TIMER_CALLBACK_MEMBER(display_position_vblank_callback);
+	TIMER_CALLBACK_MEMBER(vblank_interrupt_callback);
+	TIMER_CALLBACK_MEMBER(auto_animation_timer_callback);
+	TIMER_CALLBACK_MEMBER(sprite_line_timer_callback);
 };
 
 
 /*----------- defined in drivers/neogeo.c -----------*/
 
 void neogeo_set_display_position_interrupt_control(running_machine &machine, UINT16 data);
-void neogeo_set_display_counter_msb(address_space *space, UINT16 data);
-void neogeo_set_display_counter_lsb(address_space *space, UINT16 data);
+void neogeo_set_display_counter_msb(address_space &space, UINT16 data);
+void neogeo_set_display_counter_lsb(address_space &space, UINT16 data);
 void neogeo_acknowledge_interrupt(running_machine &machine, UINT16 data);
-void neogeo_set_main_cpu_bank_address(address_space *space, UINT32 bank_address);
+void neogeo_set_main_cpu_bank_address(address_space &space, UINT32 bank_address);
 DEVICE_IMAGE_LOAD( neo_cartridge );
 
 
@@ -309,6 +318,7 @@ void install_pvc_protection(running_machine &machine);
 /*----------- defined in machine/neoboot.c -----------*/
 
 void kog_px_decrypt(running_machine &machine);
+void kof97oro_px_decode( running_machine &machine );
 void neogeo_bootleg_cx_decrypt(running_machine &machine);
 void install_kof10th_protection(running_machine &machine);
 void decrypt_kof10th(running_machine &machine);
@@ -355,11 +365,6 @@ void mvs_install_protection(device_image_interface& image);
 
 /*----------- defined in video/neogeo.c -----------*/
 
-
-
-SCREEN_UPDATE_RGB32( neogeo );
-
-
 void neogeo_set_palette_bank(running_machine &machine, UINT8 data);
 void neogeo_set_screen_dark(running_machine &machine, UINT8 data);
 
@@ -370,5 +375,3 @@ UINT8 neogeo_get_auto_animation_counter(running_machine &machine);
 #ifdef KAILLERA
 void neogeo_init_video(running_machine &machine);
 #endif /* KAILLERA */
-
-

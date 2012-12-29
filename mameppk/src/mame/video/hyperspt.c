@@ -204,23 +204,22 @@ static void rotscreen(running_machine &machine, bitmap_ind16 &bitmap, const rect
 }
 #endif /* KAILLERA */
 
-SCREEN_UPDATE_IND16( hyperspt )
+UINT32 hyperspt_state::screen_update_hyperspt(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-	hyperspt_state *state = screen.machine().driver_data<hyperspt_state>();
 	int row;
 
 	for (row = 0; row < 32; row++)
 	{
-		int scrollx = state->m_scroll[row * 2] + (state->m_scroll[(row * 2) + 1] & 0x01) * 256;
-		if (state->flip_screen()) scrollx = -scrollx;
-		state->m_bg_tilemap->set_scrollx(row, scrollx);
+		int scrollx = m_scroll[row * 2] + (m_scroll[(row * 2) + 1] & 0x01) * 256;
+		if (flip_screen()) scrollx = -scrollx;
+		m_bg_tilemap->set_scrollx(row, scrollx);
 	}
 
-	state->m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
-	draw_sprites(screen.machine(), bitmap, cliprect);
+	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
+	draw_sprites(machine(), bitmap, cliprect);
 
 #ifdef KAILLERA
-	if (no_flip_screen && state->flip_screen()) rotscreen(screen.machine(), bitmap, cliprect);
+	if (no_flip_screen && flip_screen()) rotscreen(screen.machine(), bitmap, cliprect);
 #endif /* KAILLERA */
 	return 0;
 }
