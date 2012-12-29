@@ -71,7 +71,7 @@ void __stdcall MemoryHackStateLoad_xmvsfregion4p(void)
 }
 void __stdcall MemoryHackUpdate_xmvsfregion4p(void)
 {
-	address_space *space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
 	unsigned short Player[2];
 	unsigned char Mode[2];
 	unsigned char Play[2];
@@ -79,10 +79,10 @@ void __stdcall MemoryHackUpdate_xmvsfregion4p(void)
 	int i;
 	for(i=0; i<2; i++)
 	{
-		Player[i]	 = space->read_byte(0xFF4220 + i*0x400);
-		Player[i]	|= (space->read_byte(0xFF4A20 + i*0x400) << 8);
-		Mode[i]		 = space->read_byte(0xFF5180 + i*0x20);
-		Play[i]		 = space->read_byte(0xFF4003 + i*0x400);
+		Player[i]	 = space.read_byte(0xFF4220 + i*0x400);
+		Player[i]	|= (space.read_byte(0xFF4A20 + i*0x400) << 8);
+		Mode[i]		 = space.read_byte(0xFF5180 + i*0x20);
+		Play[i]		 = space.read_byte(0xFF4003 + i*0x400);
 	}
 
 	for(i=0; i<2; i++)
@@ -123,7 +123,7 @@ void __stdcall MemoryHackUpdate_xmvsfregion4p(void)
 
 void __stdcall MemoryHackUpdate_mshvsfj4p(void)
 {
-	address_space *space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
 	unsigned short Player[2];
 	unsigned char Mode[2];
 	unsigned char Play[2];
@@ -131,20 +131,20 @@ void __stdcall MemoryHackUpdate_mshvsfj4p(void)
 	int i;
 	for(i=0; i<2; i++)
 	{
-		Player[i]	 = space->read_byte(0xFF3A61 + i*0x400);
-		Player[i]	|= (space->read_byte(0xFF4261 + i*0x400) << 8);
-		Mode[i]		 = space->read_byte(0xFF4980 + i*0x20);
-		Play[i]		 = space->read_byte(0xFF3803 + i*0x400);
+		Player[i]	 = space.read_byte(0xFF3A61 + i*0x400);
+		Player[i]	|= (space.read_byte(0xFF4261 + i*0x400) << 8);
+		Mode[i]		 = space.read_byte(0xFF4980 + i*0x20);
+		Play[i]		 = space.read_byte(0xFF3803 + i*0x400);
 	}
 
 	for(i=0; i<2; i++)
 	{
 		if(OldPlay[i] == 0 && Play[i] == 1)
 		{
-			unsigned char Select = space->read_byte(0xFF3A92 + (1-i)*0x400);
+			unsigned char Select = space.read_byte(0xFF3A92 + (1-i)*0x400);
 			if( Select == 0xff && Play[(1-i)] == 1)
 			{
-				space->write_byte(0xFF3A92 + (1-i)*0x400, 0);
+				space.write_byte(0xFF3A92 + (1-i)*0x400, 0);
 			}
 		}
 
@@ -183,7 +183,7 @@ void __stdcall MemoryHackUpdate_mshvsfj4p(void)
 // mvscj4p
 void __stdcall MemoryHackUpdate_mvscj4p(void)
 {
-	address_space *space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
 	unsigned short Player[2];
 	unsigned char Mode[2];
 	unsigned char Play[2];
@@ -192,13 +192,13 @@ void __stdcall MemoryHackUpdate_mvscj4p(void)
 	for(i=0; i<2; i++)
 	{
 		int p1,p2,p3;
-		Player[i]	 = space->read_byte(0xFF3281 + i*0x400);
-		Player[i]	|= (space->read_byte(0xFF3A81 + i*0x400) << 8);
-		Mode[i]		 = space->read_byte(0xFF4180 + i*0x30);
+		Player[i]	 = space.read_byte(0xFF3281 + i*0x400);
+		Player[i]	|= (space.read_byte(0xFF3A81 + i*0x400) << 8);
+		Mode[i]		 = space.read_byte(0xFF4180 + i*0x30);
 
-		p1			 = space->read_byte(0xFF3003 + i*0x400);
-		p2			 = space->read_byte(0xFF3803 + i*0x400);
-		p3			 = space->read_byte(0xFF32B0 + i*0x400);
+		p1			 = space.read_byte(0xFF3003 + i*0x400);
+		p2			 = space.read_byte(0xFF3803 + i*0x400);
+		p3			 = space.read_byte(0xFF32B0 + i*0x400);
 		if (p1 == 1 && p2 == 1 && p3 == 0x06)
 			Play[i] = 1;
 		else
@@ -248,7 +248,7 @@ void __stdcall MemoryHackStateLoad_kof98_6p(void)
 }
 void __stdcall MemoryHackUpdate_kof98_6p(void)
 {
-	address_space *space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
 	unsigned char Player[2];
 	unsigned char Play1[2];
 	unsigned char Play2[2];
@@ -260,15 +260,15 @@ void __stdcall MemoryHackUpdate_kof98_6p(void)
 	int i;
 	for(i=0; i<2; i++)
 	{
-		Player[i]	 = space->read_byte(0x10A84D + i*0x11);
-		Play1[i]	 = space->read_byte(0x10A854 + i*0x11);
-		Play2[i]	 = space->read_byte(0x10A855 + i*0x11);
-		Com[i]		 = space->read_byte(0x10A790 + i);
+		Player[i]	 = space.read_byte(0x10A84D + i*0x11);
+		Play1[i]	 = space.read_byte(0x10A854 + i*0x11);
+		Play2[i]	 = space.read_byte(0x10A855 + i*0x11);
+		Com[i]		 = space.read_byte(0x10A790 + i);
 		MemoryHack_Player[i] = -1;
 	}
 
-	SelectMode	= space->read_byte(0x10EBE7);
-	Mode		= space->read_byte(0x1085CE);
+	SelectMode	= space.read_byte(0x10EBE7);
+	Mode		= space.read_byte(0x1085CE);
 
 
 	if(Mode == 3)
@@ -330,7 +330,7 @@ void __stdcall MemoryHackUpdate_kof98_6p(void)
 // kof95_6p
 void __stdcall MemoryHackUpdate_kof95_6p(void)
 {
-	address_space *space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
 	unsigned char Player[2];
 	unsigned char Play1[2];
 	unsigned char Play2[2];
@@ -344,19 +344,19 @@ void __stdcall MemoryHackUpdate_kof95_6p(void)
 	int i;
 	for(i=0; i<2; i++)
 	{
-		Player[i]	 = space->read_byte(0x10A842 + i*0x10);
-		Play1[i]	 = space->read_byte(0x10A849 + i*0x10);
-		Play2[i]	 = space->read_byte(0x10A84A + i*0x10);
-		Com[i]		 = space->read_byte(0x10A78A + i);
-		Edit[i]		 = space->read_byte(0x10A840 + i*0x10);
+		Player[i]	 = space.read_byte(0x10A842 + i*0x10);
+		Play1[i]	 = space.read_byte(0x10A849 + i*0x10);
+		Play2[i]	 = space.read_byte(0x10A84A + i*0x10);
+		Com[i]		 = space.read_byte(0x10A78A + i);
+		Edit[i]		 = space.read_byte(0x10A840 + i*0x10);
 
 		MemoryHack_Player[i] = -1;
 	}
 
-	SelectMode	= space->read_byte(0x10F2F1);
-	Mode1		= space->read_byte(0x10A774);
-	Mode2		= space->read_byte(0x10A776);
-	Game		= space->read_byte(0x10B150);
+	SelectMode	= space.read_byte(0x10F2F1);
+	Mode1		= space.read_byte(0x10A774);
+	Mode2		= space.read_byte(0x10A776);
+	Game		= space.read_byte(0x10B150);
 
 
 	if(Game == 0)
@@ -422,13 +422,13 @@ void __stdcall MemoryHackStateLoad_lbowling4p(void)
 }
 void __stdcall MemoryHackUpdate_lbowling4p(void)
 {
-	address_space *space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
 	unsigned char Player[2];
 
 	int i;
 	for(i=0; i<2; i++)
 	{
-		Player[i]	 = space->read_byte(0x102C0C + i);
+		Player[i]	 = space.read_byte(0x102C0C + i);
 		MemoryHack_Player[i] = 0;
 	}
 
@@ -470,7 +470,7 @@ void __stdcall MemoryHackStateLoad_hyprolym4p(void)
 }
 void __stdcall MemoryHackUpdate_hyprolym4p(void)
 {
-	address_space *space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
 	unsigned char PlayerA, PlayerB;
 
 	unsigned char Name;
@@ -483,12 +483,12 @@ void __stdcall MemoryHackUpdate_hyprolym4p(void)
 		MemoryHack_Player[i] = 0;
 	}
 
-	PlayerA = space->read_byte(0x28FB);
-	PlayerB = space->read_byte(0x28DF);
+	PlayerA = space.read_byte(0x28FB);
+	PlayerB = space.read_byte(0x28DF);
 
-	Name = space->read_byte(0x299E);
-	Mode = space->read_byte(0x2800);
-	GameMode = space->read_byte(0x28E1);
+	Name = space.read_byte(0x299E);
+	Mode = space.read_byte(0x2800);
+	GameMode = space.read_byte(0x28E1);
 
 
 	switch( Mode & 0x3 )
@@ -647,7 +647,7 @@ void MemoryHack_KailleraInputVal(unsigned short *val, int numplayers)
 
 	if(	MemoryHackFunction.Update == MemoryHackUpdate_hyprolym4p	)
 	{
-		unsigned short start[4];	// X^[g{^ﾌプC[ﾊ置ﾍ変更ﾈ・
+		unsigned short start[4];	// スタートボタンのプレイヤー位置は変更しない。
 
 		switch( numplayers )
 		{
@@ -869,7 +869,7 @@ static void init_game_ram_serch(running_machine &machine, game_memory_list *Game
 		{
 			const address_map_entry *entry;
 
-			space = cpu->device().memory().space(spacenum);
+			space = &cpu->device().memory().space(spacenum);
 			map = space->map();
 
 			/* fill in base/size entries, and handle shared memory */
