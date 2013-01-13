@@ -53,26 +53,20 @@
 	MCFG_DEVICE_ADD(_tag, SEGA_315_5195_MEM_MAPPER, 0) \
 	sega_315_5195_mapper_device::static_set_cputag(*device, _cputag); \
 	sega_315_5195_mapper_device::static_set_mapper(*device, sega_315_5195_mapper_device::mapper_delegate(&_class::_mapper, #_class "::" #_mapper, NULL, (_class *)0)); \
-	sega_315_5195_mapper_device::static_set_sound_readwrite(*device, sega_315_5195_mapper_device::sound_read_delegate(&_class::_read, #_class "::" #_read, NULL, (_class *)0), sega_315_5195_mapper_device::sound_write_delegate(&_class::_write, #_class "::" #_write, NULL, (_class *)0)); \
-
+	sega_315_5195_mapper_device::static_set_sound_readwrite(*device, sega_315_5195_mapper_device::sound_read_delegate(&_class::_read, #_class "::" #_read, NULL, (_class *)0), sega_315_5195_mapper_device::sound_write_delegate(&_class::_write, #_class "::" #_write, NULL, (_class *)0));
 
 #define MCFG_SEGA_315_5248_MULTIPLIER_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_315_5248_MULTIPLIER, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_315_5248_MULTIPLIER, 0)
 
 #define MCFG_SEGA_315_5249_DIVIDER_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_315_5249_DIVIDER, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_315_5249_DIVIDER, 0)
 
 #define MCFG_SEGA_315_5250_COMPARE_TIMER_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_315_5250_COMPARE_TIMER, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_315_5250_COMPARE_TIMER, 0)
 #define MCFG_SEGA_315_5250_TIMER_ACK(_class, _func) \
-	sega_315_5250_compare_timer_device::static_set_timer_ack(*device, sega_315_5250_compare_timer_device::timer_ack_delegate(&_class::_func, #_class "::" #_func, NULL, (_class *)0)); \
-
+	sega_315_5250_compare_timer_device::static_set_timer_ack(*device, sega_315_5250_compare_timer_device::timer_ack_delegate(&_class::_func, #_class "::" #_func, NULL, (_class *)0));
 #define MCFG_SEGA_315_5250_SOUND_WRITE(_class, _func) \
-	sega_315_5250_compare_timer_device::static_set_sound_write(*device, sega_315_5250_compare_timer_device::sound_write_delegate(&_class::_func, #_class "::" #_func, NULL, (_class *)0)); \
-
+	sega_315_5250_compare_timer_device::static_set_sound_write(*device, sega_315_5250_compare_timer_device::sound_write_delegate(&_class::_func, #_class "::" #_func, NULL, (_class *)0));
 
 
 //**************************************************************************
@@ -104,11 +98,11 @@ public: // -- stupid system16.c
 protected:
 
 	// internal state
-	bool		m_open_bus_recurse;			// flag to track recursion through open_bus_r
-	UINT32		m_palette_entries;			// number of palette entries
-	UINT8		m_palette_normal[32];		// RGB translations for normal pixels
-	UINT8		m_palette_shadow[32];		// RGB translations for shadowed pixels
-	UINT8		m_palette_hilight[32];		// RGB translations for hilighted pixels
+	bool        m_open_bus_recurse;         // flag to track recursion through open_bus_r
+	UINT32      m_palette_entries;          // number of palette entries
+	UINT8       m_palette_normal[32];       // RGB translations for normal pixels
+	UINT8       m_palette_shadow[32];       // RGB translations for shadowed pixels
+	UINT8       m_palette_hilight[32];      // RGB translations for hilighted pixels
 };
 
 
@@ -150,11 +144,11 @@ private:
 	// internal region struct
 	struct region_info
 	{
-		offs_t	size_mask;
-		offs_t	base;
-		offs_t	mirror;
-		offs_t	start;
-		offs_t	end;
+		offs_t  size_mask;
+		offs_t  base;
+		offs_t  mirror;
+		offs_t  start;
+		offs_t  end;
 	};
 
 	// helper class for tracking banks mapped to ROM regions
@@ -177,14 +171,14 @@ private:
 
 	private:
 		// internal state
-		memory_bank *			m_bank;
-		offs_t					m_start;
-		offs_t					m_end;
-		offs_t					m_rgnoffs;
-		UINT8 *					m_srcptr;
-		fd1089_base_device *	m_fd1089;
-		dynamic_array<UINT16>	m_fd1089_decrypted;
-		fd1094_decryption_cache	*m_fd1094_cache;
+		memory_bank *           m_bank;
+		offs_t                  m_start;
+		offs_t                  m_end;
+		offs_t                  m_rgnoffs;
+		UINT8 *                 m_srcptr;
+		fd1089_base_device *    m_fd1089;
+		dynamic_array<UINT16>   m_fd1089_decrypted;
+		fd1094_decryption_cache *m_fd1094_cache;
 	};
 
 	// internal helpers
@@ -193,17 +187,17 @@ private:
 	void fd1094_state_change(UINT8 state);
 
 	// configuration
-	const char *				m_cputag;
-	mapper_delegate				m_mapper;
-	sound_read_delegate			m_sound_read;
-	sound_write_delegate		m_sound_write;
+	const char *                m_cputag;
+	mapper_delegate             m_mapper;
+	sound_read_delegate         m_sound_read;
+	sound_write_delegate        m_sound_write;
 
 	// internal state
-	m68000_device *				m_cpu;
-	address_space *				m_space;
-	UINT8						m_regs[0x20];
-	UINT8						m_curregion;
-	decrypt_bank				m_banks[8];
+	m68000_device *             m_cpu;
+	address_space *             m_space;
+	UINT8                       m_regs[0x20];
+	UINT8                       m_curregion;
+	decrypt_bank                m_banks[8];
 };
 
 
@@ -226,7 +220,7 @@ protected:
 
 private:
 	// internal state
-	UINT16						m_regs[4];
+	UINT16                      m_regs[4];
 };
 
 
@@ -252,7 +246,7 @@ private:
 	void execute(int mode);
 
 	// internal state
-	UINT16						m_regs[8];
+	UINT16                      m_regs[8];
 };
 
 
@@ -287,13 +281,13 @@ private:
 	void interrupt_ack() { if (!m_timer_ack.isnull()) m_timer_ack(); }
 
 	// configuration
-	timer_ack_delegate			m_timer_ack;
-	sound_write_delegate		m_sound_write;
+	timer_ack_delegate          m_timer_ack;
+	sound_write_delegate        m_sound_write;
 
 	// internal state
-	UINT16						m_regs[16];
-	UINT16						m_counter;
-	UINT8						m_bit;
+	UINT16                      m_regs[16];
+	UINT16                      m_counter;
+	UINT8                       m_bit;
 };
 
 

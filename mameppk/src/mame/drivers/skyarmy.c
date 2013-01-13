@@ -77,14 +77,12 @@ TILE_GET_INFO_MEMBER(skyarmy_state::get_skyarmy_tile_info)
 
 WRITE8_MEMBER(skyarmy_state::skyarmy_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(skyarmy_state::skyarmy_colorram_w)
 {
-
 	m_colorram[offset] = data;
 	m_tilemap->mark_tile_dirty(offset);
 }
@@ -120,7 +118,6 @@ void skyarmy_state::palette_init()
 
 void skyarmy_state::video_start()
 {
-
 	m_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(skyarmy_state::get_skyarmy_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 	m_tilemap->set_scroll_cols(32);
 }
@@ -158,14 +155,12 @@ UINT32 skyarmy_state::screen_update_skyarmy(screen_device &screen, bitmap_ind16 
 
 INTERRUPT_GEN_MEMBER(skyarmy_state::skyarmy_nmi_source)
 {
-
 	if(m_nmi) device.execute().set_input_line(INPUT_LINE_NMI, PULSE_LINE);
 }
 
 
 WRITE8_MEMBER(skyarmy_state::nmi_enable_w)
 {
-
 	m_nmi=data & 1;
 }
 
@@ -268,9 +263,9 @@ static const gfx_layout spritelayout =
 	2,
 	{ 0, 256*8*8 },
 	{ 0, 1, 2, 3, 4, 5, 6, 7,
-	  8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 },
+		8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 },
 	{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
-	 16*8,17*8,18*8,19*8,20*8,21*8,22*8,23*8 },
+		16*8,17*8,18*8,19*8,20*8,21*8,22*8,23*8 },
 	32*8
 };
 
@@ -285,7 +280,7 @@ static MACHINE_CONFIG_START( skyarmy, skyarmy_state )
 	MCFG_CPU_PROGRAM_MAP(skyarmy_map)
 	MCFG_CPU_IO_MAP(skyarmy_io_map)
 	MCFG_CPU_VBLANK_INT_DRIVER("screen", skyarmy_state,  irq0_line_hold)
-	MCFG_CPU_PERIODIC_INT_DRIVER(skyarmy_state, skyarmy_nmi_source, 650)	/* Hz */
+	MCFG_CPU_PERIODIC_INT_DRIVER(skyarmy_state, skyarmy_nmi_source, 650)    /* Hz */
 
 	/* video hardware */
 	MCFG_SCREEN_ADD("screen", RASTER)

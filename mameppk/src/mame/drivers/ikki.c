@@ -26,7 +26,6 @@ TODO:
 
 READ8_MEMBER(ikki_state::ikki_e000_r)
 {
-
 /* bit1: interrupt type?, bit0: CPU2 busack? */
 
 	return (m_irq_source << 1);
@@ -132,7 +131,7 @@ static INPUT_PORTS_START( ikki )
 	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
 	PORT_DIPSETTING(    0x80, DEF_STR( On ) )
 
-	PORT_START("P1")		/* e004 */
+	PORT_START("P1")        /* e004 */
 	PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
 	PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN )
 	PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN )
@@ -142,7 +141,7 @@ static INPUT_PORTS_START( ikki )
 	PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT ) PORT_8WAY
 	PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT ) PORT_8WAY
 
-	PORT_START("P2")		/* e005 */
+	PORT_START("P2")        /* e005 */
 	PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_UNKNOWN )
 	PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN )
 	PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN )
@@ -152,7 +151,7 @@ static INPUT_PORTS_START( ikki )
 	PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_JOYSTICK_LEFT ) PORT_8WAY PORT_COCKTAIL
 	PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_JOYSTICK_RIGHT ) PORT_8WAY PORT_COCKTAIL
 
-	PORT_START("SYSTEM")	/* e003 */
+	PORT_START("SYSTEM")    /* e003 */
 	PORT_BIT( 0x80, IP_ACTIVE_HIGH, IPT_SERVICE1 )
 	PORT_BIT( 0x40, IP_ACTIVE_HIGH, IPT_UNKNOWN )
 	PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_UNKNOWN )
@@ -215,7 +214,7 @@ GFXDECODE_END
 
 static const sn76496_config psg_intf =
 {
-    DEVCB_NULL
+	DEVCB_NULL
 };
 
 
@@ -227,7 +226,6 @@ static const sn76496_config psg_intf =
 
 void ikki_state::machine_start()
 {
-
 	save_item(NAME(m_flipscreen));
 	save_item(NAME(m_punch_through_pen));
 	save_item(NAME(m_irq_source));
@@ -235,7 +233,6 @@ void ikki_state::machine_start()
 
 void ikki_state::machine_reset()
 {
-
 	m_flipscreen = 0;
 }
 

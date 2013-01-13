@@ -202,7 +202,6 @@ char *osd_get_clipboard_text(void)
 
 	for ( i = 0; i < ARRAY_LENGTH(types); i++ )
 	{
-
 		XConvertSelection( display, XA_PRIMARY, types[i], types[i], our_win, CurrentTime );
 
 		/* wait for SelectionNotify, but no more than 100 ms */
@@ -220,8 +219,8 @@ char *osd_get_clipboard_text(void)
 
 		/* get property & check its type */
 		if ( XGetWindowProperty( display, our_win, types[i], 0, 65536, False, types[i],
-					 &data_type, &data_format, &nitems, &bytes_remaining, &prop )
-		     != Success )
+						&data_type, &data_format, &nitems, &bytes_remaining, &prop )
+				!= Success )
 			continue;
 		if ( ! prop )
 			continue;

@@ -11,21 +11,18 @@
 
 WRITE8_MEMBER(sidearms_state::sidearms_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_fg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(sidearms_state::sidearms_colorram_w)
 {
-
 	m_colorram[offset] = data;
 	m_fg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(sidearms_state::sidearms_c804_w)
 {
-
 	/* bits 0 and 1 are coin counters */
 	coin_counter_w(machine(), 0, data & 0x01);
 	coin_counter_w(machine(), 1, data & 0x02);
@@ -144,7 +141,7 @@ void sidearms_state::video_start()
 	if (!m_gameid)
 	{
 		m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(sidearms_state::get_sidearms_bg_tile_info),this), tilemap_mapper_delegate(FUNC(sidearms_state::sidearms_tilemap_scan),this),
-			 32, 32, 128, 128);
+				32, 32, 128, 128);
 
 		m_bg_tilemap->set_transparent_pen(15);
 	}
@@ -154,7 +151,7 @@ void sidearms_state::video_start()
 	}
 
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(sidearms_state::get_fg_tile_info),this), TILEMAP_SCAN_ROWS,
-		 8, 8, 64, 64);
+			8, 8, 64, 64);
 
 	m_fg_tilemap->set_transparent_pen(3);
 
@@ -249,16 +246,16 @@ static void sidearms_draw_starfield( running_machine &machine, bitmap_ind16 &bit
 
 			vadd_283 = _vcount_191 + y; // add lower 8 bits and discard carry (later)
 
-			if (!((vadd_283 ^ (x>>3)) & 4)) continue;		// logic rejection 1
-			if ((vadd_283 | (hadd_283>>1)) & 2) continue;	// logic rejection 2
+			if (!((vadd_283 ^ (x>>3)) & 4)) continue;       // logic rejection 1
+			if ((vadd_283 | (hadd_283>>1)) & 2) continue;   // logic rejection 2
 
 			// latch data from starfield EPROM on rising edge of 74LS374's clock input
 			if (!(~i & 0x1f))
 			{
-				i = vadd_283<<4 & 0xff0;				// to starfield EPROM A04-A11 (8 bits)
-				i |= (_hflop_74a_n^(hadd_283>>8)) << 3;	// to starfield EPROM A03     (1 bit)
-				i |= hadd_283>>5 & 7;					// to starfield EPROM A00-A02 (3 bits)
-				latch_374 = sf_rom[i + 0x3000];			// lines A12-A13 are always high
+				i = vadd_283<<4 & 0xff0;                // to starfield EPROM A04-A11 (8 bits)
+				i |= (_hflop_74a_n^(hadd_283>>8)) << 3; // to starfield EPROM A03     (1 bit)
+				i |= hadd_283>>5 & 7;                   // to starfield EPROM A00-A02 (3 bits)
+				latch_374 = sf_rom[i + 0x3000];         // lines A12-A13 are always high
 			}
 
 			if ((~((latch_374^hadd_283)^1) & 0x1f)) continue; // logic rejection 3
@@ -287,29 +284,29 @@ static void sidearms_draw_starfield( running_machine &machine, bitmap_ind16 &bit
 		hadd_283 = (_hcount_191 + 64) & ~0x1f;
 		vadd_283 = _vcount_191 + y;
 
-		i = vadd_283<<4 & 0xff0;				// to starfield EPROM A04-A11 (8 bits)
-		i |= (_hflop_74a_n^(hadd_283>>8)) << 3;	// to starfield EPROM A03     (1 bit)
-		i |= hadd_283>>5 & 7;					// to starfield EPROM A00-A02 (3 bits)
-		state->m_latch_374 = sf_rom[i + 0x3000];			// lines A12-A13 are always high
+		i = vadd_283<<4 & 0xff0;                // to starfield EPROM A04-A11 (8 bits)
+		i |= (_hflop_74a_n^(hadd_283>>8)) << 3; // to starfield EPROM A03     (1 bit)
+		i |= hadd_283>>5 & 7;                   // to starfield EPROM A00-A02 (3 bits)
+		state->m_latch_374 = sf_rom[i + 0x3000];            // lines A12-A13 are always high
 
 		hadd_283 = _hcount_191 + 63;
 
 		for (x=64; x<448; lineptr+=pixadv,x++) // 9-bit H-clock input (clipped against horizontal visible area)
 		{
-			i = hadd_283;							// store horizontal adder's previous state in i
-			hadd_283 = _hcount_191 + (x & 0xff);	// add lower 8 bits and preserve carry
-			vadd_283 = _vcount_191 + y;				// add lower 8 bits and discard carry (later)
+			i = hadd_283;                           // store horizontal adder's previous state in i
+			hadd_283 = _hcount_191 + (x & 0xff);    // add lower 8 bits and preserve carry
+			vadd_283 = _vcount_191 + y;             // add lower 8 bits and discard carry (later)
 
-			if (!((vadd_283 ^ (x>>3)) & 4)) continue;		// logic rejection 1
-			if ((vadd_283 | (hadd_283>>1)) & 2) continue;	// logic rejection 2
+			if (!((vadd_283 ^ (x>>3)) & 4)) continue;       // logic rejection 1
+			if ((vadd_283 | (hadd_283>>1)) & 2) continue;   // logic rejection 2
 
 			// latch data from starfield EPROM on rising edge of 74LS374's clock input
 			if (!(~i & 0x1f))
 			{
-				i = vadd_283<<4 & 0xff0;				// to starfield EPROM A04-A11 (8 bits)
-				i |= (_hflop_74a_n^(hadd_283>>8)) << 3;	// to starfield EPROM A03     (1 bit)
-				i |= hadd_283>>5 & 7;					// to starfield EPROM A00-A02 (3 bits)
-				state->m_latch_374 = sf_rom[i + 0x3000];			// lines A12-A13 are always high
+				i = vadd_283<<4 & 0xff0;                // to starfield EPROM A04-A11 (8 bits)
+				i |= (_hflop_74a_n^(hadd_283>>8)) << 3; // to starfield EPROM A03     (1 bit)
+				i |= hadd_283>>5 & 7;                   // to starfield EPROM A00-A02 (3 bits)
+				state->m_latch_374 = sf_rom[i + 0x3000];            // lines A12-A13 are always high
 			}
 
 			if ((~((state->m_latch_374^hadd_283)^1) & 0x1f)) continue; // logic rejection 3
@@ -338,7 +335,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 
 UINT32 sidearms_state::screen_update_sidearms(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	sidearms_draw_starfield(machine(), bitmap);
 
 	m_bg_tilemap->set_scrollx(0, m_bg_scrollx[0] + (m_bg_scrollx[1] << 8 & 0xf00));

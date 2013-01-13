@@ -39,21 +39,18 @@ void scotrsht_state::palette_init()
 
 WRITE8_MEMBER(scotrsht_state::scotrsht_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(scotrsht_state::scotrsht_colorram_w)
 {
-
 	m_colorram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(scotrsht_state::scotrsht_charbank_w)
 {
-
 	if (m_charbank != (data & 0x01))
 	{
 		m_charbank = data & 0x01;
@@ -65,7 +62,6 @@ WRITE8_MEMBER(scotrsht_state::scotrsht_charbank_w)
 
 WRITE8_MEMBER(scotrsht_state::scotrsht_palettebank_w)
 {
-
 	if (m_palette_bank != ((data & 0x70) >> 4))
 	{
 		m_palette_bank = ((data & 0x70) >> 4);
@@ -86,8 +82,8 @@ TILE_GET_INFO_MEMBER(scotrsht_state::scotrsht_get_bg_tile_info)
 	int color = (attr & 0x0f) + m_palette_bank * 16;
 	int flag = 0;
 
-	if(attr & 0x10)	flag |= TILE_FLIPX;
-	if(attr & 0x20)	flag |= TILE_FLIPY;
+	if(attr & 0x10) flag |= TILE_FLIPX;
+	if(attr & 0x20) flag |= TILE_FLIPY;
 
 	// data & 0x80 -> tile priority?
 
@@ -103,7 +99,7 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 
 	for (i = 0; i < state->m_spriteram.bytes(); i += 4)
 	{
-		int attr = spriteram[i + 1];	// attributes = ?tyxcccc
+		int attr = spriteram[i + 1];    // attributes = ?tyxcccc
 		int code = spriteram[i] + ((attr & 0x40) << 2);
 		int color = (attr & 0x0f) + state->m_palette_bank * 16;
 		int flipx = attr & 0x10;
@@ -127,7 +123,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 
 void scotrsht_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(scotrsht_state::scotrsht_get_bg_tile_info),this), TILEMAP_SCAN_ROWS,  8, 8, 64, 32);
 
 	m_bg_tilemap->set_scroll_cols(64);

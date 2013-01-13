@@ -202,7 +202,7 @@ TILE_GET_INFO_MEMBER(travrusa_state::get_tile_info)
 	UINT8 attr = m_videoram[2 * tile_index + 1];
 	int flags = TILE_FLIPXY((attr & 0x30) >> 4);
 
-	tileinfo.group = ((attr & 0x0f) == 0x0f) ? 1 : 0;	/* tunnels */
+	tileinfo.group = ((attr & 0x0f) == 0x0f) ? 1 : 0;   /* tunnels */
 
 	SET_TILE_INFO_MEMBER(
 			0,
@@ -221,7 +221,6 @@ TILE_GET_INFO_MEMBER(travrusa_state::get_tile_info)
 
 void travrusa_state::video_start()
 {
-
 	save_item(NAME(m_scrollx));
 
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(travrusa_state::get_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 64, 32);

@@ -15,8 +15,7 @@ INPUT_PORTS_EXTERN( mpu4 );
 
 #define M4FRKSTN_SOUND \
 	ROM_REGION( 0x40000, "upd", 0 ) \
-	ROM_LOAD("fr1snd.bin",	0x00000, 0x40000, CRC(2d77bbde) SHA1(0397ede538e913dc2972e260589022564fcd8fe4) ) \
-
+	ROM_LOAD("fr1snd.bin",  0x00000, 0x40000, CRC(2d77bbde) SHA1(0397ede538e913dc2972e260589022564fcd8fe4) )
 
 ROM_START( m4frkstn )
 	ROM_REGION( 0x10000, "maincpu", ROMREGION_ERASE00  )
@@ -75,8 +74,7 @@ ROM_END
 
 #define M4ALADN_SOUND \
 	ROM_REGION( 0x80000, "upd", 0 ) \
-	ROM_LOAD( "alladinscavesnd.bin", 0x0000, 0x080000, CRC(e3831190) SHA1(3dd0e8beafb628f5138a6943518b477095ac2e56) ) \
-
+	ROM_LOAD( "alladinscavesnd.bin", 0x0000, 0x080000, CRC(e3831190) SHA1(3dd0e8beafb628f5138a6943518b477095ac2e56) )
 
 ROM_START( m4aladn )
 	ROM_REGION( 0x10000, "maincpu", ROMREGION_ERASE00  )
@@ -141,8 +139,7 @@ ROM_END
 
 #define M4BASCSH_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( m4bagcsh )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "cg27.bin", 0x8000, 0x008000, CRC(2e1ce880) SHA1(fcfbbba832ae7d9e79066b27305b3406207caefc) )
@@ -157,8 +154,7 @@ ROM_END
 
 #define M4BUCCLB_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( m4bucclb )
 	ROM_REGION( 0x10000, "maincpu", 0 )
@@ -184,8 +180,7 @@ ROM_END
 
 #define M4BULLIO_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( m4bullio )
 	ROM_REGION( 0x10000, "maincpu", 0 )
@@ -208,8 +203,7 @@ ROM_END
 
 #define M4CAROU_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "fa_sound.bin", 0x0000, 0x080000, CRC(39837e76) SHA1(74b66f77d9af47a5caab5b6441563b196fdadb37) ) \
-
+	ROM_LOAD( "fa_sound.bin", 0x0000, 0x080000, CRC(39837e76) SHA1(74b66f77d9af47a5caab5b6441563b196fdadb37) )
 ROM_START( m4carou )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "fa110.bin", 0x0000, 0x010000, CRC(ade2a7f8) SHA1(18b9287ab9747ee623e58afa2a4e6f517ff7a8ca) )
@@ -237,8 +231,7 @@ ROM_END
 
 #define M4CCLIMB_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( m4cclimb )
 	ROM_REGION( 0x10000, "maincpu", 0 )
@@ -254,8 +247,7 @@ ROM_END
 
 #define M4CRZCL_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( m4crzcl )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "fu105.bin", 0x0000, 0x010000, CRC(d7ae1644) SHA1(d04c6f96c0f59c782a170bfabfbf670be28c9d3a) )
@@ -288,8 +280,7 @@ ROM_END
 
 #define M4ELITC_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( m4elitc )
 	ROM_REGION( 0x10000, "maincpu", 0 )
@@ -306,8 +297,7 @@ ROM_END
 
 #define M4FAIRG_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "fairgroundcrysv2-1snd.bin", 0x0000, 0x040000, CRC(9b09f98a) SHA1(e980bb0039f087ee563165a3aeb66e627fc3afe9) ) \
-
+	ROM_LOAD( "fairgroundcrysv2-1snd.bin", 0x0000, 0x040000, CRC(9b09f98a) SHA1(e980bb0039f087ee563165a3aeb66e627fc3afe9) )
 ROM_START( m4fairg )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "fairgroundcrysv2-16cash.bin", 0x0000, 0x010000, CRC(4a6c6470) SHA1(3211fb0245343d0fcf4581352faf606b7785f00c) )
@@ -317,8 +307,7 @@ ROM_END
 
 #define M4FRMANI_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( m4frmani )
 	ROM_REGION( 0x10000, "maincpu", 0 )
@@ -348,8 +337,7 @@ ROM_END
 
 #define M4GOLDXC_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( m4goldxc )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "gx105.b8", 0x0000, 0x010000, CRC(3a94ea0d) SHA1(e81f5edec6bca1d098d2c72e063b2c7456c99eda) )
@@ -389,8 +377,7 @@ ROM_END
 
 #define M4GOLDFC_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "goldfeversamplesound.bin", 0x0000, 0x080000, CRC(eb7d3c7b) SHA1(53b7c048e78506f0188b4dd2750c8dc31a625523) ) \
-
+	ROM_LOAD( "goldfeversamplesound.bin", 0x0000, 0x080000, CRC(eb7d3c7b) SHA1(53b7c048e78506f0188b4dd2750c8dc31a625523) )
 
 
 ROM_START( m4goldfc )
@@ -415,8 +402,7 @@ ROM_END
 
 #define M4HIROL_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( m4hirol )
 	ROM_REGION( 0x10000, "maincpu", 0 )
@@ -433,8 +419,7 @@ ROM_END
 
 #define M4KINGQN_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "kingsandqueenscrystalsnd.bin", 0x0000, 0x080000, CRC(93e4b644) SHA1(920579db52c5bb820437023e35707780ed503acc) ) \
-
+	ROM_LOAD( "kingsandqueenscrystalsnd.bin", 0x0000, 0x080000, CRC(93e4b644) SHA1(920579db52c5bb820437023e35707780ed503acc) )
 
 ROM_START( m4kingqn )
 	ROM_REGION( 0x10000, "maincpu", 0 )
@@ -452,8 +437,7 @@ ROM_END
 
 #define M4LOTCLB_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( m4lotclb )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "ds14.bin", 0x0000, 0x010000, CRC(a7e9969b) SHA1(daa1b38002c75cf4802078789955ae58d0cf163e) )
@@ -472,8 +456,7 @@ ROM_END
 
 #define M4MONTRL_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "moneytrailsnd.bin", 0x0000, 0x040000, CRC(0f0d52dc) SHA1(79e1a89858f95006a1d2a0dd18d677c84a3087c6) ) \
-
+	ROM_LOAD( "moneytrailsnd.bin", 0x0000, 0x040000, CRC(0f0d52dc) SHA1(79e1a89858f95006a1d2a0dd18d677c84a3087c6) )
 
 ROM_START( m4montrl )
 	ROM_REGION( 0x10000, "maincpu", 0 )
@@ -510,8 +493,7 @@ ROM_END
 
 #define M4MYSTIQ_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( m4mystiq )
 	ROM_REGION( 0x10000, "maincpu", 0 )
@@ -540,8 +522,7 @@ ROM_END
 
 #define M4NUDWIN_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( m4nudwin )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "dn56.bin", 0x8000, 0x008000, CRC(ca90f7a8) SHA1(1ae92162f02feb5f391617d4180ef1c154e10d1a) )
@@ -557,8 +538,7 @@ ROM_END
 
 #define M4PARACL_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 
 ROM_START( m4paracl )
@@ -576,8 +556,7 @@ ROM_END
 
 #define M4RLPICK_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( m4rlpick )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "fh15a.bin", 0x0000, 0x010000, CRC(ac448a6e) SHA1(4a99f7b293476e3e477f37cbd28f1e2a99b0f2d2) )
@@ -606,8 +585,7 @@ ROM_END
 
 #define M4TWSTR_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "twistersound.bin", 0x000000, 0x100000, CRC(5aa2729b) SHA1(cf490ec6c75c038addcff24655cd6e498cad60c1) ) \
-
+	ROM_LOAD( "twistersound.bin", 0x000000, 0x100000, CRC(5aa2729b) SHA1(cf490ec6c75c038addcff24655cd6e498cad60c1) )
 
 ROM_START( m4twstr )
 	ROM_REGION( 0x10000, "maincpu", 0 )
@@ -645,8 +623,7 @@ ROM_END
 
 #define M4TWSTCL_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "twistersound.bin", 0x000000, 0x100000, CRC(5aa2729b) SHA1(cf490ec6c75c038addcff24655cd6e498cad60c1) )/* From original, may be wrong */ \
-
+	ROM_LOAD( "twistersound.bin", 0x000000, 0x100000, CRC(5aa2729b) SHA1(cf490ec6c75c038addcff24655cd6e498cad60c1) )/* From original, may be wrong */
 ROM_START( m4twstcl )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "fl106.bin", 0x0000, 0x010000, CRC(d43f06a6) SHA1(d3762853dee2779a06a02ad3c1dfd804053d7f7d) )
@@ -670,8 +647,7 @@ ROM_END
 
 #define M4DZ_SOUND \
 	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "dangerzonesnd.bin", 0x0000, 0x080000, CRC(bdfcffa2) SHA1(9e3be8fd1c42fd19afcde682662bef82f7e0f7e9) ) \
-
+	ROM_LOAD( "dangerzonesnd.bin", 0x0000, 0x080000, CRC(bdfcffa2) SHA1(9e3be8fd1c42fd19afcde682662bef82f7e0f7e9) )
 ROM_START( m4dz )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "dangerzone1_2.bin", 0x8000, 0x08000, CRC(eb4582f8) SHA1(df4cbbbb927b512b1ace34986ce29b17d7815e49) )
@@ -680,8 +656,7 @@ ROM_END
 
 #define M4TYLB_SOUND \
 	ROM_REGION( 0x080000, "msm6376", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "tylbsnd.bin", 0x0000, 0x080000, CRC(781175c7) SHA1(43cf6fe91c756cdd4acc735411ac166647bf29e7) ) \
-
+	ROM_LOAD( "tylbsnd.bin", 0x0000, 0x080000, CRC(781175c7) SHA1(43cf6fe91c756cdd4acc735411ac166647bf29e7) )
 
 ROM_START( m4tylb )
 	ROM_REGION( 0x010000, "maincpu", 0 )
@@ -698,8 +673,7 @@ ROM_END
 
 #define M4MAGI7_SOUND \
 	ROM_REGION( 0x080000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( m4magi7 )
 	ROM_REGION( 0x010000, "maincpu", 0 )
 	ROM_LOAD( "m716.bin", 0x0000, 0x010000, CRC(a26d52a8) SHA1(34228654a922f6c2b01c3fbf1a58755ec6968cbc) ) /* only 0x8000-0xffff used */
@@ -715,8 +689,7 @@ ROM_END
 
 #define M4RAGS_SOUND \
 	ROM_REGION( 0x080000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( m4rags )
 	ROM_REGION( 0x010000, "maincpu", 0 )
 	ROM_LOAD( "ct15.bin", 0x8000, 0x008000, CRC(27eab355) SHA1(0ad6a09015b2ddfe87563f3d88f84d2d5b3c74a0) )
@@ -743,8 +716,7 @@ ROM_END
 
 #define M4RIOCR_SOUND \
 	ROM_REGION( 0x080000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( m4riocr )
 	ROM_REGION( 0x010000, "maincpu", 0 )
@@ -760,8 +732,7 @@ ROM_END
 
 #define M4NDUP_SOUND \
 	ROM_REGION( 0x080000, "msm6376", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( m4ndup )
 	ROM_REGION( 0x010000, "maincpu", 0 )
 	ROM_LOAD( "ndu26n.bin", 0x8000, 0x008000, CRC(562668f6) SHA1(aaebdb649e0399551f32520d28b27d7654271fee) )
@@ -788,105 +759,104 @@ ROM_END
 
 
 
-GAME(199?, m4frkstn	,0			,mpu4crys	,mpu4		, mpu4_state,m_frkstn,	ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frkstna,m4frkstn	,mpu4crys	,mpu4		, mpu4_state,m_frkstn,	ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frkstnb,m4frkstn	,mpu4crys	,mpu4		, mpu4_state,m_frkstn,	ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frkstnc,m4frkstn	,mpu4crys	,mpu4		, mpu4_state,m_frkstn,	ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frkstnd,m4frkstn	,mpu4crys	,mpu4		, mpu4_state,m_frkstn,	ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 5)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frkstne,m4frkstn	,mpu4crys	,mpu4		, mpu4_state,m_frkstn,	ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 6)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frkstnf,m4frkstn	,mpu4crys	,mpu4		, mpu4_state,m_frkstn,	ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 7)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frkstng,m4frkstn	,mpu4crys	,mpu4		, mpu4_state,m_frkstn,	ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 8)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frkstnh,m4frkstn	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 9)",   GAME_FLAGS|GAME_NO_SOUND ) // this set is encrypted
-GAME(199?, m4aladn	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4aladna	,m4aladn	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4aladnb	,m4aladn	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4aladnc	,m4aladn	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4aladnd	,m4aladn	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 5)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4aladne	,m4aladn	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 6)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4aladnf	,m4aladn	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 7)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4aladng	,m4aladn	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 8)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4aladnh	,m4aladn	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 9)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4aladni	,m4aladn	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 10)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4bagcsh	,0      	,mpu4crys	,mpu4		, mpu4_state,m_frkstn,	ROT0,   "Crystal","Bags Of Cash Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4bagcsha,m4bagcsh	,mpu4crys	,mpu4		, mpu4_state,m_frkstn,	ROT0,   "Crystal","Bags Of Cash Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4bucclb	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Buccaneer Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4bucclba,m4bucclb	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Buccaneer Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4bucclbb,m4bucclb	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Buccaneer Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4bucclbc,m4bucclb	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Buccaneer Club (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4bullio	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Bullion Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4bullioa,m4bullio	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Bullion Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4bulliob,m4bullio	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Bullion Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4carou	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Carousel Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4caroua	,m4carou	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Carousel Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4caroub	,m4carou	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Carousel Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4carouc	,m4carou	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Carousel Club (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4cclimb	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Crazy Climber (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4cclimba,m4cclimb	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Crazy Climber (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4crzcl	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Crazy Climber Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4crzcla	,m4crzcl	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Crazy Climber Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4crzclb	,m4crzcl	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Crazy Climber Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4crzclc	,m4crzcl	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Crazy Climber Club (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4crzcld	,m4crzcl	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Crazy Climber Club (Crystal) (MPU4) (set 5)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4elitc	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Elite Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4elitca	,m4elitc	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Elite Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4fairg	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Fairground (Crystal) (MPU4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frmani	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Fruit Mania (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frmania,m4frmani	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Fruit Mania (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frmanib,m4frmani	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Fruit Mania (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4frmanic,m4frmani	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Fruit Mania (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4goldxc	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4goldxca,m4goldxc   ,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4goldxcb,m4goldxc   ,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4goldxcc,m4goldxc   ,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4goldxcd,m4goldxc   ,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 5)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4goldxce,m4goldxc   ,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 6)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4goldfc	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Gold Fever (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4goldfca,m4goldfc	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Gold Fever (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4goldfcb,m4goldfc	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Gold Fever (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4hirol	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Hi Roller Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4hirola	,m4hirol	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Hi Roller Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4kingqn	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Kings & Queens Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4kingqna,m4kingqn   ,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Kings & Queens Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4lotclb	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Lottery Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4lotclba,m4lotclb	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Lottery Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4montrl	,0      	,mpu4crys	,mpu4		, mpu4_state,crystali,	ROT0,   "Crystal","Money Trail (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND ) // encryption is inverted!
-GAME(199?, m4montrla,m4montrl	,mpu4crys	,mpu4		, mpu4_state,crystali,	ROT0,   "Crystal","Money Trail (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND ) // encryption is inverted!
-GAME(199?, m4montrlb,m4montrl	,mpu4crys	,mpu4		, mpu4_state,crystali,	ROT0,   "Crystal","Money Trail (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND ) // encryption is inverted!
-GAME(199?, m4montrlc,m4montrl	,mpu4crys	,mpu4		, mpu4_state,crystali,	ROT0,   "Crystal","Money Trail (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND ) // encryption is inverted!
-GAME(199?, m4montrld,m4montrl	,mpu4crys	,mpu4		, mpu4_state,crystali,	ROT0,   "Crystal","Money Trail (Crystal) (MPU4) (set 5)",   GAME_FLAGS|GAME_NO_SOUND ) // encryption is inverted!
-GAME(199?, m4mystiq	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Mystique Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4mystiqa,m4mystiq	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Mystique Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4mystiqb,m4mystiq	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Mystique Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4mystiqc,m4mystiq	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Mystique Club (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4nudwin	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Nudge & Win (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4nudwina,m4nudwin   ,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Nudge & Win (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4paracl	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Paradise Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4paracla,m4paracl	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Paradise Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4rlpick	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Reel Picks (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4rlpicka,m4rlpick   ,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Reel Picks (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4rlpickb,m4rlpick   ,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Reel Picks (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4rlpickc,m4rlpick   ,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Reel Picks (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4twstr	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Twister (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4twstra	,m4twstr	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Twister (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4twstrb	,m4twstr	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Twister (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4twstrc	,m4twstr	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Twister (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4twstrd	,m4twstr	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Twister (Crystal) (MPU4) (set 5)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4twstcl	,0      	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Twister Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4twstcla,m4twstcl	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Twister Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4twstclb,m4twstcl	,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Twister Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4dz		,0			,mpu4crys	,mpu4		, mpu4_state,crystal,	ROT0,   "Crystal","Danger Zone (Crystal) (MPU4)",   GAME_FLAGS|GAME_NO_SOUND )
-GAME(199?, m4tylb	,0			,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Thank Your Lucky Bars (Crystal) (MPU4) (set 1)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4tylba	,m4tylb		,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Thank Your Lucky Bars (Crystal) (MPU4) (set 2)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4magi7	,0			,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Magic 7's (Crystal) (MPU4) (set 1)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4magi7a	,m4magi7	,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Magic 7's (Crystal) (MPU4) (set 2)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4rags	,0			,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Rags To Riches Club (Crystal) (MPU4) (set 1)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4ragsa	,m4rags		,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Rags To Riches Club (Crystal) (MPU4) (set 2)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4ragsb	,m4rags		,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Rags To Riches Club (Crystal) (MPU4) (set 3)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4ragsc	,m4rags		,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Rags To Riches Club (Crystal) (MPU4) (set 4)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4riocr	,0			,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Rio Grande (Crystal) (MPU4) (set 1)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4riocra	,m4riocr	,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Rio Grande (Crystal) (MPU4) (set 2)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4ndup	,0			,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Nudge Double Up Deluxe (Crystal) (MPU4) (set 1)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4ndupa	,m4ndup		,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Nudge Double Up Deluxe (Crystal) (MPU4) (set 2)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4ndupb	,m4ndup		,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Nudge Double Up Deluxe (Crystal) (MPU4) (set 3)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-GAME(199?, m4ndupc	,m4ndup		,mod4oki	,mpu4		, mpu4_state,m4default,	ROT0,   "Crystal","Nudge Double Up Deluxe (Crystal) (MPU4) (set 4)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
-
+GAME(199?, m4frkstn ,0          ,mpu4crys   ,mpu4       , mpu4_state,m_frkstn,  ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frkstna,m4frkstn   ,mpu4crys   ,mpu4       , mpu4_state,m_frkstn,  ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frkstnb,m4frkstn   ,mpu4crys   ,mpu4       , mpu4_state,m_frkstn,  ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frkstnc,m4frkstn   ,mpu4crys   ,mpu4       , mpu4_state,m_frkstn,  ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frkstnd,m4frkstn   ,mpu4crys   ,mpu4       , mpu4_state,m_frkstn,  ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 5)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frkstne,m4frkstn   ,mpu4crys   ,mpu4       , mpu4_state,m_frkstn,  ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 6)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frkstnf,m4frkstn   ,mpu4crys   ,mpu4       , mpu4_state,m_frkstn,  ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 7)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frkstng,m4frkstn   ,mpu4crys   ,mpu4       , mpu4_state,m_frkstn,  ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 8)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frkstnh,m4frkstn   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Frank 'n' Stein (Crystal) (MPU4, set 9)",   GAME_FLAGS|GAME_NO_SOUND ) // this set is encrypted
+GAME(199?, m4aladn  ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4aladna ,m4aladn    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4aladnb ,m4aladn    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4aladnc ,m4aladn    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4aladnd ,m4aladn    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 5)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4aladne ,m4aladn    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 6)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4aladnf ,m4aladn    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 7)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4aladng ,m4aladn    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 8)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4aladnh ,m4aladn    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 9)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4aladni ,m4aladn    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Aladdin's Cave (Crystal) (MPU4) (set 10)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4bagcsh ,0          ,mpu4crys   ,mpu4       , mpu4_state,m_frkstn,  ROT0,   "Crystal","Bags Of Cash Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4bagcsha,m4bagcsh   ,mpu4crys   ,mpu4       , mpu4_state,m_frkstn,  ROT0,   "Crystal","Bags Of Cash Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4bucclb ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Buccaneer Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4bucclba,m4bucclb   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Buccaneer Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4bucclbb,m4bucclb   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Buccaneer Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4bucclbc,m4bucclb   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Buccaneer Club (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4bullio ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Bullion Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4bullioa,m4bullio   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Bullion Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4bulliob,m4bullio   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Bullion Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4carou  ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Carousel Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4caroua ,m4carou    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Carousel Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4caroub ,m4carou    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Carousel Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4carouc ,m4carou    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Carousel Club (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4cclimb ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Crazy Climber (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4cclimba,m4cclimb   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Crazy Climber (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4crzcl  ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Crazy Climber Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4crzcla ,m4crzcl    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Crazy Climber Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4crzclb ,m4crzcl    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Crazy Climber Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4crzclc ,m4crzcl    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Crazy Climber Club (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4crzcld ,m4crzcl    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Crazy Climber Club (Crystal) (MPU4) (set 5)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4elitc  ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Elite Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4elitca ,m4elitc    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Elite Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4fairg  ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Fairground (Crystal) (MPU4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frmani ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Fruit Mania (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frmania,m4frmani   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Fruit Mania (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frmanib,m4frmani   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Fruit Mania (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4frmanic,m4frmani   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Fruit Mania (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4goldxc ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4goldxca,m4goldxc   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4goldxcb,m4goldxc   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4goldxcc,m4goldxc   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4goldxcd,m4goldxc   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 5)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4goldxce,m4goldxc   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Gold Exchange Club (Crystal) (MPU4) (set 6)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4goldfc ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Gold Fever (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4goldfca,m4goldfc   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Gold Fever (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4goldfcb,m4goldfc   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Gold Fever (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4hirol  ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Hi Roller Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4hirola ,m4hirol    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Hi Roller Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4kingqn ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Kings & Queens Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4kingqna,m4kingqn   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Kings & Queens Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4lotclb ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Lottery Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4lotclba,m4lotclb   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Lottery Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4montrl ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystali,  ROT0,   "Crystal","Money Trail (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND ) // encryption is inverted!
+GAME(199?, m4montrla,m4montrl   ,mpu4crys   ,mpu4       , mpu4_state,crystali,  ROT0,   "Crystal","Money Trail (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND ) // encryption is inverted!
+GAME(199?, m4montrlb,m4montrl   ,mpu4crys   ,mpu4       , mpu4_state,crystali,  ROT0,   "Crystal","Money Trail (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND ) // encryption is inverted!
+GAME(199?, m4montrlc,m4montrl   ,mpu4crys   ,mpu4       , mpu4_state,crystali,  ROT0,   "Crystal","Money Trail (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND ) // encryption is inverted!
+GAME(199?, m4montrld,m4montrl   ,mpu4crys   ,mpu4       , mpu4_state,crystali,  ROT0,   "Crystal","Money Trail (Crystal) (MPU4) (set 5)",   GAME_FLAGS|GAME_NO_SOUND ) // encryption is inverted!
+GAME(199?, m4mystiq ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Mystique Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4mystiqa,m4mystiq   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Mystique Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4mystiqb,m4mystiq   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Mystique Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4mystiqc,m4mystiq   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Mystique Club (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4nudwin ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Nudge & Win (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4nudwina,m4nudwin   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Nudge & Win (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4paracl ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Paradise Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4paracla,m4paracl   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Paradise Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4rlpick ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Reel Picks (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4rlpicka,m4rlpick   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Reel Picks (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4rlpickb,m4rlpick   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Reel Picks (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4rlpickc,m4rlpick   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Reel Picks (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4twstr  ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Twister (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4twstra ,m4twstr    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Twister (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4twstrb ,m4twstr    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Twister (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4twstrc ,m4twstr    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Twister (Crystal) (MPU4) (set 4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4twstrd ,m4twstr    ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Twister (Crystal) (MPU4) (set 5)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4twstcl ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Twister Club (Crystal) (MPU4) (set 1)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4twstcla,m4twstcl   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Twister Club (Crystal) (MPU4) (set 2)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4twstclb,m4twstcl   ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Twister Club (Crystal) (MPU4) (set 3)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4dz     ,0          ,mpu4crys   ,mpu4       , mpu4_state,crystal,   ROT0,   "Crystal","Danger Zone (Crystal) (MPU4)",   GAME_FLAGS|GAME_NO_SOUND )
+GAME(199?, m4tylb   ,0          ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Thank Your Lucky Bars (Crystal) (MPU4) (set 1)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4tylba  ,m4tylb     ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Thank Your Lucky Bars (Crystal) (MPU4) (set 2)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4magi7  ,0          ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Magic 7's (Crystal) (MPU4) (set 1)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4magi7a ,m4magi7    ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Magic 7's (Crystal) (MPU4) (set 2)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4rags   ,0          ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Rags To Riches Club (Crystal) (MPU4) (set 1)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4ragsa  ,m4rags     ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Rags To Riches Club (Crystal) (MPU4) (set 2)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4ragsb  ,m4rags     ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Rags To Riches Club (Crystal) (MPU4) (set 3)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4ragsc  ,m4rags     ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Rags To Riches Club (Crystal) (MPU4) (set 4)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4riocr  ,0          ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Rio Grande (Crystal) (MPU4) (set 1)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4riocra ,m4riocr    ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Rio Grande (Crystal) (MPU4) (set 2)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4ndup   ,0          ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Nudge Double Up Deluxe (Crystal) (MPU4) (set 1)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4ndupa  ,m4ndup     ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Nudge Double Up Deluxe (Crystal) (MPU4) (set 2)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4ndupb  ,m4ndup     ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Nudge Double Up Deluxe (Crystal) (MPU4) (set 3)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )
+GAME(199?, m4ndupc  ,m4ndup     ,mod4oki    ,mpu4       , mpu4_state,m4default, ROT0,   "Crystal","Nudge Double Up Deluxe (Crystal) (MPU4) (set 4)",GAME_FLAGS|GAME_NO_SOUND|GAME_MECHANICAL )

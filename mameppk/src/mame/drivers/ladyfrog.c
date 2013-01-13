@@ -72,7 +72,6 @@ WRITE8_MEMBER(ladyfrog_state::sound_cpu_reset_w)
 
 TIMER_CALLBACK_MEMBER(ladyfrog_state::nmi_callback)
 {
-
 	if (m_sound_nmi_enable)
 		m_audiocpu->set_input_line(INPUT_LINE_NMI, PULSE_LINE);
 	else
@@ -92,7 +91,6 @@ WRITE8_MEMBER(ladyfrog_state::nmi_disable_w)
 
 WRITE8_MEMBER(ladyfrog_state::nmi_enable_w)
 {
-
 	m_sound_nmi_enable = 1;
 	if (m_pending_nmi)
 	{
@@ -103,7 +101,6 @@ WRITE8_MEMBER(ladyfrog_state::nmi_enable_w)
 
 WRITE8_MEMBER(ladyfrog_state::unk_w)
 {
-
 }
 
 static const ay8910_interface ay8910_config =
@@ -278,7 +275,6 @@ GFXDECODE_END
 
 void ladyfrog_state::machine_start()
 {
-
 	m_audiocpu = machine().device<cpu_device>("audiocpu");
 
 	save_item(NAME(m_tilebank));
@@ -291,7 +287,6 @@ void ladyfrog_state::machine_start()
 
 void ladyfrog_state::machine_reset()
 {
-
 	m_tilebank = 0;
 	m_palette_bank = 0;
 	m_sound_nmi_enable = 0;
@@ -335,14 +330,14 @@ static MACHINE_CONFIG_START( ladyfrog, ladyfrog_state )
 
 	MCFG_SOUND_ADD("msm", MSM5232, 2000000)
 	MCFG_SOUND_CONFIG(msm5232_config)
-	MCFG_SOUND_ROUTE(0, "mono", 1.0)	// pin 28  2'-1
-	MCFG_SOUND_ROUTE(1, "mono", 1.0)	// pin 29  4'-1
-	MCFG_SOUND_ROUTE(2, "mono", 1.0)	// pin 30  8'-1
-	MCFG_SOUND_ROUTE(3, "mono", 1.0)	// pin 31 16'-1
-	MCFG_SOUND_ROUTE(4, "mono", 1.0)	// pin 36  2'-2
-	MCFG_SOUND_ROUTE(5, "mono", 1.0)	// pin 35  4'-2
-	MCFG_SOUND_ROUTE(6, "mono", 1.0)	// pin 34  8'-2
-	MCFG_SOUND_ROUTE(7, "mono", 1.0)	// pin 33 16'-2
+	MCFG_SOUND_ROUTE(0, "mono", 1.0)    // pin 28  2'-1
+	MCFG_SOUND_ROUTE(1, "mono", 1.0)    // pin 29  4'-1
+	MCFG_SOUND_ROUTE(2, "mono", 1.0)    // pin 30  8'-1
+	MCFG_SOUND_ROUTE(3, "mono", 1.0)    // pin 31 16'-1
+	MCFG_SOUND_ROUTE(4, "mono", 1.0)    // pin 36  2'-2
+	MCFG_SOUND_ROUTE(5, "mono", 1.0)    // pin 35  4'-2
+	MCFG_SOUND_ROUTE(6, "mono", 1.0)    // pin 34  8'-2
+	MCFG_SOUND_ROUTE(7, "mono", 1.0)    // pin 33 16'-2
 	// pin 1 SOLO  8'       not mapped
 	// pin 2 SOLO 16'       not mapped
 	// pin 22 Noise Output  not mapped

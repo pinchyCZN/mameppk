@@ -221,15 +221,15 @@ static INPUT_PORTS_START( mgolf )
 
 	PORT_START("40")
 	PORT_DIPNAME( 0x30, 0x00, DEF_STR( Language ) )
-	PORT_DIPSETTING(	0x00, DEF_STR( English ) )
-	PORT_DIPSETTING(	0x10, DEF_STR( French ) )
-	PORT_DIPSETTING(	0x20, DEF_STR( Spanish ) )
-	PORT_DIPSETTING(	0x30, DEF_STR( German ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( English ) )
+	PORT_DIPSETTING(    0x10, DEF_STR( French ) )
+	PORT_DIPSETTING(    0x20, DEF_STR( Spanish ) )
+	PORT_DIPSETTING(    0x30, DEF_STR( German ) )
 	PORT_DIPNAME( 0xc0, 0x40, "Shots per Coin" )
-	PORT_DIPSETTING(	0x00, "25" )
-	PORT_DIPSETTING(	0x40, "30" )
-	PORT_DIPSETTING(	0x80, "35" )
-	PORT_DIPSETTING(	0xc0, "40" )
+	PORT_DIPSETTING(    0x00, "25" )
+	PORT_DIPSETTING(    0x40, "30" )
+	PORT_DIPSETTING(    0x80, "35" )
+	PORT_DIPSETTING(    0xc0, "40" )
 
 	PORT_START("41")
 	PORT_BIT ( 0x01, IP_ACTIVE_HIGH, IPT_SPECIAL ) /* DIAL A */
@@ -307,7 +307,6 @@ GFXDECODE_END
 
 void mgolf_state::machine_start()
 {
-
 	m_maincpu = machine().device<cpu_device>("maincpu");
 
 	save_item(NAME(m_prev));

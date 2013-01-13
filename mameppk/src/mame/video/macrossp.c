@@ -8,7 +8,6 @@
 
 WRITE32_MEMBER(macrossp_state::macrossp_scra_videoram_w)
 {
-
 	COMBINE_DATA(&m_scra_videoram[offset]);
 
 	m_scra_tilemap->mark_tile_dirty(offset);
@@ -44,7 +43,6 @@ TILE_GET_INFO_MEMBER(macrossp_state::get_macrossp_scra_tile_info)
 
 WRITE32_MEMBER(macrossp_state::macrossp_scrb_videoram_w)
 {
-
 	COMBINE_DATA(&m_scrb_videoram[offset]);
 
 	m_scrb_tilemap->mark_tile_dirty(offset);
@@ -80,7 +78,6 @@ TILE_GET_INFO_MEMBER(macrossp_state::get_macrossp_scrb_tile_info)
 
 WRITE32_MEMBER(macrossp_state::macrossp_scrc_videoram_w)
 {
-
 	COMBINE_DATA(&m_scrc_videoram[offset]);
 
 	m_scrc_tilemap->mark_tile_dirty(offset);
@@ -116,7 +113,6 @@ TILE_GET_INFO_MEMBER(macrossp_state::get_macrossp_scrc_tile_info)
 
 WRITE32_MEMBER(macrossp_state::macrossp_text_videoram_w)
 {
-
 	COMBINE_DATA(&m_text_videoram[offset]);
 
 	m_text_tilemap->mark_tile_dirty(offset);
@@ -139,7 +135,6 @@ TILE_GET_INFO_MEMBER(macrossp_state::get_macrossp_text_tile_info)
 
 void macrossp_state::video_start()
 {
-
 	m_spriteram_old = auto_alloc_array_clear(machine(), UINT32, m_spriteram.bytes() / 4);
 	m_spriteram_old2 = auto_alloc_array_clear(machine(), UINT32, m_spriteram.bytes() / 4);
 
@@ -174,16 +169,15 @@ static void draw_sprites(running_machine &machine, bitmap_rgb32 &bitmap, const r
 
 	while (source < finish)
 	{
-
 		/*
 
-         --hh hhyy yyyy yyyy   CCww wwxx xxxx xxxx
+		 --hh hhyy yyyy yyyy   CCww wwxx xxxx xxxx
 
-         ---- --zz zzzz zzzz   ---- --ZZ ZZZZ ZZZZ
+		 ---- --zz zzzz zzzz   ---- --ZZ ZZZZ ZZZZ
 
-         fFa- pp-- cccc c---   tttt tttt tttt tttt
+		 fFa- pp-- cccc c---   tttt tttt tttt tttt
 
-         */
+		 */
 
 
 		int wide = (source[0] & 0x00003c00) >> 10;
@@ -336,7 +330,7 @@ static void draw_layer( running_machine &machine, bitmap_rgb32 &bitmap, const re
 			break;
 	}
 
-	if ((vr[2] & 0xf0000000) == 0xe0000000)	/* zoom enable (guess, surely wrong) */
+	if ((vr[2] & 0xf0000000) == 0xe0000000) /* zoom enable (guess, surely wrong) */
 	{
 		int startx, starty, inc;
 
@@ -351,7 +345,7 @@ static void draw_layer( running_machine &machine, bitmap_rgb32 &bitmap, const re
 
 		tm->draw_roz(bitmap, cliprect,
 				startx,starty,inc,0,0,inc,
-				1,	/* wraparound */
+				1,  /* wraparound */
 				0,0);
 	}
 	else
@@ -403,7 +397,7 @@ UINT32 macrossp_state::screen_update_macrossp(screen_device &screen, bitmap_rgb3
 	m_text_tilemap->draw(bitmap, cliprect, 0, 0);
 
 #if 0
-popmessage	("scra - %08x %08x %08x\nscrb - %08x %08x %08x\nscrc - %08x %08x %08x",
+popmessage  ("scra - %08x %08x %08x\nscrb - %08x %08x %08x\nscrc - %08x %08x %08x",
 m_scra_videoregs[0]&0xffff33ff, // yyyyxxxx
 m_scra_videoregs[1], // ??? more scrolling?
 m_scra_videoregs[2], // 08 - 0b
@@ -424,7 +418,6 @@ void macrossp_state::screen_eof_macrossp(screen_device &screen, bool state)
 	// rising edge
 	if (state)
 	{
-
 		/* looks like sprites are *two* frames ahead, like nmk16 */
 		memcpy(m_spriteram_old2, m_spriteram_old, m_spriteram.bytes());
 		memcpy(m_spriteram_old, m_spriteram, m_spriteram.bytes());

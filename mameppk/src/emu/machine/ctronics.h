@@ -54,7 +54,7 @@ struct centronics_interface
 };
 
 // ======================> centronics_device
-class centronics_device :	public device_t,
+class centronics_device :   public device_t,
 							public centronics_interface,
 							public device_slot_interface
 {
@@ -95,7 +95,7 @@ public:
 
 protected:
 	// device-level overrides
-    virtual void device_config_complete();
+	virtual void device_config_complete();
 	virtual void device_start();
 private:
 	device_centronics_peripheral_interface *m_dev;
@@ -115,8 +115,8 @@ class centronics_printer_device :
 		public device_centronics_peripheral_interface
 {
 public:
-    // construction/destruction
-    centronics_printer_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock);
+	// construction/destruction
+	centronics_printer_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock);
 
 	// optional information overrides
 	virtual machine_config_constructor device_mconfig_additions() const;
@@ -131,9 +131,9 @@ public:
 	virtual void init_prime_w(UINT8 state);
 	virtual UINT8 read() {  return 0x00; }
 protected:
-    // device-level overrides
-    virtual void device_start();
-    virtual void device_reset();
+	// device-level overrides
+	virtual void device_start();
+	virtual void device_reset();
 	virtual void device_config_complete() { m_shortname = "centronics_printer"; }
 private:
 	printer_image_device *m_printer;
@@ -151,11 +151,9 @@ SLOT_INTERFACE_EXTERN(centronics_printer);
 #define MCFG_CENTRONICS_ADD(_tag, _intf, _slot_intf, _def_slot, _def_inp) \
 	MCFG_DEVICE_ADD(_tag, CENTRONICS, 0) \
 	MCFG_DEVICE_CONFIG(_intf) \
-	MCFG_DEVICE_SLOT_INTERFACE(_slot_intf, _def_slot, _def_inp, false) \
-
+	MCFG_DEVICE_SLOT_INTERFACE(_slot_intf, _def_slot, _def_inp, false)
 #define MCFG_CENTRONICS_PRINTER_ADD(_tag, _intf) \
-	MCFG_CENTRONICS_ADD(_tag, _intf, centronics_printer, "printer", NULL) \
-
+	MCFG_CENTRONICS_ADD(_tag, _intf, centronics_printer, "printer", NULL)
 
 /***************************************************************************
     DEFAULT INTERFACES

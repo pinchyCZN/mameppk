@@ -73,10 +73,10 @@ const ppu2c0x_interface playch10_ppu_interface =
 {
 	"cart",
 	"bottom",
-	1,					/* gfxlayout num */
-	256,				/* color base */
-	PPU_MIRROR_NONE,	/* mirroring */
-	ppu_irq				/* irq */
+	1,                  /* gfxlayout num */
+	256,                /* color base */
+	PPU_MIRROR_NONE,    /* mirroring */
+	ppu_irq             /* irq */
 };
 
 TILE_GET_INFO_MEMBER(playch10_state::get_bg_tile_info)
@@ -95,7 +95,7 @@ void playch10_state::video_start()
 	m_pc10_bios = (bios[3] == 0x2a) ? 1 : 2;
 
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(playch10_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS,
-		 8, 8, 32, 32);
+			8, 8, 32, 32);
 }
 
 VIDEO_START_MEMBER(playch10_state,playch10_hboard)
@@ -104,7 +104,7 @@ VIDEO_START_MEMBER(playch10_state,playch10_hboard)
 	m_pc10_bios = (bios[3] == 0x2a) ? 1 : 2;
 
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(playch10_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS,
-		 8, 8, 32, 32);
+			8, 8, 32, 32);
 }
 
 /***************************************************************************
@@ -160,7 +160,6 @@ UINT32 playch10_state::screen_update_playch10_top(screen_device &screen, bitmap_
 
 UINT32 playch10_state::screen_update_playch10_bottom(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	/* Single Monitor version */
 	if (m_pc10_bios != 1)
 		return screen_update_playch10_single(screen, bitmap, cliprect);

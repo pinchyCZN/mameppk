@@ -89,10 +89,10 @@ TODO:
 #include "sound/2203intf.h"
 #include "includes/lkage.h"
 
-#define MAIN_CPU_CLOCK		(XTAL_12MHz/2)
-#define SOUND_CPU_CLOCK		(XTAL_8MHz/2)
-#define AUDIO_CLOCK			(XTAL_8MHz/2)
-#define MCU_CLOCK			(XTAL_12MHz/4)
+#define MAIN_CPU_CLOCK      (XTAL_12MHz/2)
+#define SOUND_CPU_CLOCK     (XTAL_8MHz/2)
+#define AUDIO_CLOCK         (XTAL_8MHz/2)
+#define MCU_CLOCK           (XTAL_12MHz/4)
 
 
 TIMER_CALLBACK_MEMBER(lkage_state::nmi_callback)
@@ -116,7 +116,6 @@ WRITE8_MEMBER(lkage_state::lkage_sh_nmi_disable_w)
 
 WRITE8_MEMBER(lkage_state::lkage_sh_nmi_enable_w)
 {
-
 	m_sound_nmi_enable = 1;
 	if (m_pending_nmi)
 	{
@@ -186,11 +185,11 @@ static ADDRESS_MAP_START( lkage_sound_map, AS_PROGRAM, 8, lkage_state )
 	AM_RANGE(0x8000, 0x87ff) AM_RAM
 	AM_RANGE(0x9000, 0x9001) AM_DEVREADWRITE_LEGACY("ym1", ym2203_r,ym2203_w)
 	AM_RANGE(0xa000, 0xa001) AM_DEVREADWRITE_LEGACY("ym2", ym2203_r,ym2203_w)
-	AM_RANGE(0xb000, 0xb000) AM_READ(soundlatch_byte_r) AM_WRITENOP	/* ??? */
-	AM_RANGE(0xb001, 0xb001) AM_READNOP	/* ??? */ AM_WRITE(lkage_sh_nmi_enable_w)
+	AM_RANGE(0xb000, 0xb000) AM_READ(soundlatch_byte_r) AM_WRITENOP /* ??? */
+	AM_RANGE(0xb001, 0xb001) AM_READNOP /* ??? */ AM_WRITE(lkage_sh_nmi_enable_w)
 	AM_RANGE(0xb002, 0xb002) AM_WRITE(lkage_sh_nmi_disable_w)
 	AM_RANGE(0xb003, 0xb003) AM_WRITENOP
-	AM_RANGE(0xe000, 0xefff) AM_ROM	/* space for diagnostic ROM? */
+	AM_RANGE(0xe000, 0xefff) AM_ROM /* space for diagnostic ROM? */
 ADDRESS_MAP_END
 
 /***************************************************************************/
@@ -209,7 +208,7 @@ static INPUT_PORTS_START( lkage )
 	PORT_DIPSETTING(    0x18, "3" )
 	PORT_DIPSETTING(    0x10, "4" )
 	PORT_DIPSETTING(    0x08, "5" )
-	PORT_DIPSETTING(	0x00, "255 (Cheat)")
+	PORT_DIPSETTING(    0x00, "255 (Cheat)")
 	PORT_DIPUNUSED( 0x20, IP_ACTIVE_LOW )
 	PORT_DIPNAME( 0x40, 0x40, DEF_STR( Flip_Screen ) )
 	PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
@@ -341,7 +340,7 @@ static INPUT_PORTS_START( bygone )
 	PORT_DIPSETTING(    0x18, "3" )
 	PORT_DIPSETTING(    0x10, "4" )
 	PORT_DIPSETTING(    0x08, "5" )
-	PORT_DIPSETTING(	0x00, "255 (Cheat)")
+	PORT_DIPSETTING(    0x00, "255 (Cheat)")
 	PORT_DIPUNUSED( 0x20, IP_ACTIVE_LOW )
 	PORT_DIPNAME( 0x40, 0x00, DEF_STR( Flip_Screen ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
@@ -493,7 +492,6 @@ static const ym2203_interface ym2203_config =
 
 void lkage_state::machine_start()
 {
-
 	m_maincpu = machine().device<cpu_device>("maincpu");
 	m_audiocpu = machine().device<cpu_device>("audiocpu");
 	m_mcu = machine().device("mcu");
@@ -526,7 +524,6 @@ void lkage_state::machine_start()
 
 void lkage_state::machine_reset()
 {
-
 	m_bg_tile_bank = m_fg_tile_bank = m_tx_tile_bank =0;
 
 	m_mcu_ready = 3;
@@ -658,7 +655,7 @@ ROM_START( lkage )
 	ROM_LOAD( "a54-08-1.87", 0xc000, 0x4000, CRC(3ff3b230) SHA1(ffcd964efb0af32b5d7a70305dfda615ea95acbe) )
 
 	ROM_REGION( 0x0200, "proms", 0 )
-	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) )	/* unknown */
+	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) ) /* unknown */
 
 	ROM_REGION( 0x0800, "plds", 0 )
 	ROM_LOAD( "pal16l8-a54-11.34",  0x0000, 0x0104, CRC(56232113) SHA1(4cdc6732aa3e7fbe8df51966a1295253711ecc8f) )
@@ -688,7 +685,7 @@ ROM_START( lkageo )
 	ROM_LOAD( "a54-08-1.87", 0xc000, 0x4000, CRC(3ff3b230) SHA1(ffcd964efb0af32b5d7a70305dfda615ea95acbe) )
 
 	ROM_REGION( 0x0200, "proms", 0 )
-	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) )	/* unknown */
+	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) ) /* unknown */
 
 	ROM_REGION( 0x0800, "plds", 0 )
 	ROM_LOAD( "pal16l8-a54-11.34",  0x0000, 0x0104, CRC(56232113) SHA1(4cdc6732aa3e7fbe8df51966a1295253711ecc8f) )
@@ -718,7 +715,7 @@ ROM_START( lkageoo )
 	ROM_LOAD( "a54-08.87", 0xc000, 0x4000, CRC(4ef5f073) SHA1(dfd234542b28cff74692a1c381772da01e8bb4a7) )
 
 	ROM_REGION( 0x0200, "proms", 0 )
-	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) )	/* unknown */
+	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) ) /* unknown */
 
 	ROM_REGION( 0x0800, "plds", 0 )
 	ROM_LOAD( "pal16l8-a54-11.34",  0x0000, 0x0104, CRC(56232113) SHA1(4cdc6732aa3e7fbe8df51966a1295253711ecc8f) )
@@ -745,7 +742,7 @@ ROM_START( lkageb )
 	ROM_LOAD( "ic96_8",      0xc000, 0x4000, CRC(4ef5f073) SHA1(dfd234542b28cff74692a1c381772da01e8bb4a7) )
 
 	ROM_REGION( 0x0200, "proms", 0 )
-	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) )	/* unknown */
+	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) ) /* unknown */
 ROM_END
 
 ROM_START( lkageb2 )
@@ -766,7 +763,7 @@ ROM_START( lkageb2 )
 	ROM_LOAD( "ic96_8",      0xc000, 0x4000, CRC(4ef5f073) SHA1(dfd234542b28cff74692a1c381772da01e8bb4a7) )
 
 	ROM_REGION( 0x0200, "proms", 0 )
-	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) )	/* unknown */
+	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) ) /* unknown */
 ROM_END
 
 ROM_START( lkageb3 )
@@ -787,7 +784,7 @@ ROM_START( lkageb3 )
 	ROM_LOAD( "ic96_8",      0xc000, 0x4000, CRC(4ef5f073) SHA1(dfd234542b28cff74692a1c381772da01e8bb4a7) )
 
 	ROM_REGION( 0x0200, "proms", 0 )
-	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) )	/* unknown */
+	ROM_LOAD( "a54-10.2",    0x0000, 0x0200, CRC(17dfbd14) SHA1(f8f0b6dfedd4ba108dad43ccc7697ef4ab9cbf86) ) /* unknown */
 ROM_END
 
 /*
@@ -901,7 +898,7 @@ ROM_START( bygone )
 	ROM_LOAD( "a53_04.ic87", 0xc000, 0x4000, CRC(65af72d3) SHA1(759a1dd7548075630ddb9c692bdb32ad4712c579) )
 
 	ROM_REGION( 0x0400, "proms", 0 )
-	ROM_LOAD( "a54-10.ic2",    0x0000, 0x0400, CRC(369722d9) SHA1(2df9932ad8ce87c0a9d2c89222a4cec12c29046d) )	/* unknown */
+	ROM_LOAD( "a54-10.ic2",    0x0000, 0x0400, CRC(369722d9) SHA1(2df9932ad8ce87c0a9d2c89222a4cec12c29046d) )   /* unknown */
 ROM_END
 
 
@@ -977,4 +974,3 @@ GAME( 1984, lkageb,   lkage,    lkageb,   lkageb, lkage_state,   lkageb,   ROT0,
 GAME( 1984, lkageb2,  lkage,    lkageb,   lkageb, lkage_state,   lkageb,   ROT0, "bootleg", "The Legend of Kage (bootleg set 2)", GAME_NO_COCKTAIL | GAME_SUPPORTS_SAVE )
 GAME( 1984, lkageb3,  lkage,    lkageb,   lkageb, lkage_state,   lkageb,   ROT0, "bootleg", "The Legend of Kage (bootleg set 3)", GAME_NO_COCKTAIL | GAME_SUPPORTS_SAVE )
 GAME( 1985, bygone,   0,        lkage,    bygone, lkage_state,   bygone,   ROT0, "Taito Corporation", "Bygone", GAME_IMPERFECT_SOUND | GAME_IMPERFECT_GRAPHICS | GAME_NO_COCKTAIL | GAME_SUPPORTS_SAVE )
-

@@ -96,7 +96,7 @@ void _1943_state::palette_init()
 	for (i = 0x80; i < 0x180; i++)
 	{
 		UINT8 ctabentry = ((color_prom[0x200 + (i - 0x080)] & 0x03) << 4) |
-						  ((color_prom[0x100 + (i - 0x080)] & 0x0f) << 0);
+							((color_prom[0x100 + (i - 0x080)] & 0x0f) << 0);
 		colortable_entry_set_value(machine().colortable, i, ctabentry);
 	}
 
@@ -104,38 +104,35 @@ void _1943_state::palette_init()
 	for (i = 0x180; i < 0x280; i++)
 	{
 		UINT8 ctabentry = ((color_prom[0x400 + (i - 0x180)] & 0x03) << 4) |
-						  ((color_prom[0x300 + (i - 0x180)] & 0x0f) << 0);
+							((color_prom[0x300 + (i - 0x180)] & 0x0f) << 0);
 		colortable_entry_set_value(machine().colortable, i, ctabentry);
 	}
 
 	/* sprites use colors 0x80-0xff
-       bit 3 of BMPROM.07 selects priority over the background,
-       but we handle it differently for speed reasons */
+	   bit 3 of BMPROM.07 selects priority over the background,
+	   but we handle it differently for speed reasons */
 	for (i = 0x280; i < 0x380; i++)
 	{
 		UINT8 ctabentry = ((color_prom[0x600 + (i - 0x280)] & 0x07) << 4) |
-						  ((color_prom[0x500 + (i - 0x280)] & 0x0f) << 0) | 0x80;
+							((color_prom[0x500 + (i - 0x280)] & 0x0f) << 0) | 0x80;
 		colortable_entry_set_value(machine().colortable, i, ctabentry);
 	}
 }
 
 WRITE8_MEMBER(_1943_state::c1943_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_fg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(_1943_state::c1943_colorram_w)
 {
-
 	m_colorram[offset] = data;
 	m_fg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(_1943_state::c1943_c804_w)
 {
-
 	/* bits 0 and 1 are coin counters */
 	coin_counter_w(machine(), 0, data & 0x01);
 	coin_counter_w(machine(), 1, data & 0x02);
@@ -154,7 +151,6 @@ WRITE8_MEMBER(_1943_state::c1943_c804_w)
 
 WRITE8_MEMBER(_1943_state::c1943_d806_w)
 {
-
 	/* bit 4 enables bg 1 */
 	m_bg1_on = data & 0x10;
 

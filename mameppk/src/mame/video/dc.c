@@ -11,9 +11,9 @@
 #include "video/rgbutil.h"
 
 #define DEBUG_FIFO_POLY (0)
-#define DEBUG_PVRTA	(0)
+#define DEBUG_PVRTA (0)
 #define DEBUG_PVRTA_REGS (0)
-#define DEBUG_PVRDLIST	(0)
+#define DEBUG_PVRDLIST  (0)
 #define DEBUG_PALRAM (1)
 
 #define NUM_BUFFERS 4
@@ -145,7 +145,7 @@ struct texinfo  {
 	int palbase, cd;
 };
 
-typedef	struct
+typedef struct
 {
 	float x, y, w, u, v;
 } vert;
@@ -702,7 +702,7 @@ static void tex_get_info(running_machine &machine,texinfo *t, pvrta_state *sa)
 
 	t->address     = sa->textureaddress;
 	t->pf          = sa->pixelformat;
-	t->palette	   = 0;
+	t->palette     = 0;
 
 	t->mode = (sa->vqcompressed<<1);
 
@@ -931,7 +931,6 @@ static void tex_get_info(running_machine &machine,texinfo *t, pvrta_state *sa)
 
 		switch (miptype)
 		{
-
 			case 0: // 4bpp
 				//printf("4bpp\n");
 				t->address += mipmap_4_8_offset[(t->sizes)&7]>>1;
@@ -1055,7 +1054,6 @@ WRITE64_HANDLER( pvr_ta_w )
 		}
 		if (dat & 2)
 		{
-
 			#if DEBUG_PVRTA
 			mame_printf_verbose("pvr_ta_w:  Core Pipeline soft reset\n");
 			#endif
@@ -1294,35 +1292,30 @@ WRITE64_HANDLER( pvr_ta_w )
 
 TIMER_CALLBACK_MEMBER(dc_state::transfer_opaque_list_irq)
 {
-
 	dc_sysctrl_regs[SB_ISTNRM] |= IST_EOXFER_OPLST;
 	dc_update_interrupt_status(machine());
 }
 
 TIMER_CALLBACK_MEMBER(dc_state::transfer_opaque_modifier_volume_list_irq)
 {
-
 	dc_sysctrl_regs[SB_ISTNRM] |= IST_EOXFER_OPMV;
 	dc_update_interrupt_status(machine());
 }
 
 TIMER_CALLBACK_MEMBER(dc_state::transfer_translucent_list_irq)
 {
-
 	dc_sysctrl_regs[SB_ISTNRM] |= IST_EOXFER_TRLST;
 	dc_update_interrupt_status(machine());
 }
 
 TIMER_CALLBACK_MEMBER(dc_state::transfer_translucent_modifier_volume_list_irq)
 {
-
 	dc_sysctrl_regs[SB_ISTNRM] |= IST_EOXFER_TRMV;
 	dc_update_interrupt_status(machine());
 }
 
 TIMER_CALLBACK_MEMBER(dc_state::transfer_punch_through_list_irq)
 {
-
 	dc_sysctrl_regs[SB_ISTNRM] |= (1 << 21);
 	dc_update_interrupt_status(machine());
 }
@@ -1333,13 +1326,13 @@ static void process_ta_fifo(running_machine& machine)
 
 	/* first byte in the buffer is the Parameter Control Word
 
-     pppp pppp gggg gggg oooo oooo oooo oooo
+	 pppp pppp gggg gggg oooo oooo oooo oooo
 
-     p = para control
-     g = group control
-     o = object control
+	 p = para control
+	 g = group control
+	 o = object control
 
-    */
+	*/
 
 	receiveddata *rd = &state_ta.grab[state_ta.grabsel];
 
@@ -1605,7 +1598,7 @@ static void process_ta_fifo(running_machine& machine)
 
 
 					if((!rd->strips_size) ||
-					   rd->strips[rd->strips_size-1].evert != -1)
+						rd->strips[rd->strips_size-1].evert != -1)
 					{
 						strip *ts = &rd->strips[rd->strips_size++];
 						tex_get_info(machine, &ts->ti, &state_ta);
@@ -1625,7 +1618,7 @@ WRITE64_HANDLER( ta_fifo_poly_w )
 {
 	dc_state *state = space.machine().driver_data<dc_state>();
 
-	if (mem_mask == U64(0xffffffffffffffff))	// 64 bit
+	if (mem_mask == U64(0xffffffffffffffff))    // 64 bit
 	{
 		state->tafifo_buff[state_ta.tafifo_pos]=(UINT32)data;
 		state->tafifo_buff[state_ta.tafifo_pos+1]=(UINT32)(data >> 32);
@@ -1755,15 +1748,15 @@ static void render_hline(running_machine &machine,bitmap_rgb32 &bitmap, texinfo 
 			float v = vl/wl;
 
 			/*
-            if(ti->flip_u)
-            {
-                u = ti->sizex - u;
-            }
+			if(ti->flip_u)
+			{
+			    u = ti->sizex - u;
+			}
 
-            if(ti->flip_v)
-            {
-                v = ti->sizey - v;
-            }*/
+			if(ti->flip_v)
+			{
+			    v = ti->sizey - v;
+			}*/
 
 			c = ti->r(machine, ti, u, v);
 
@@ -1795,15 +1788,15 @@ static void render_hline(running_machine &machine,bitmap_rgb32 &bitmap, texinfo 
 }
 
 static void render_span(running_machine &machine, bitmap_rgb32 &bitmap, texinfo *ti,
-                 float y0, float y1,
-                 float xl, float xr,
-                 float ul, float ur,
-                 float vl, float vr,
-                 float wl, float wr,
-                 float dxldy, float dxrdy,
-                 float duldy, float durdy,
-                 float dvldy, float dvrdy,
-                 float dwldy, float dwrdy)
+					float y0, float y1,
+					float xl, float xr,
+					float ul, float ur,
+					float vl, float vr,
+					float wl, float wr,
+					float dxldy, float dxrdy,
+					float duldy, float durdy,
+					float dvldy, float dvrdy,
+					float dwldy, float dwrdy)
 {
 	float dy;
 	int yy0, yy1;
@@ -1933,7 +1926,6 @@ static void render_tri_sorted(running_machine &machine, bitmap_rgb32 &bitmap, te
 			render_span(machine, bitmap, ti, v1->y, v2->y, v1->x, v0->x, v1->u, v0->u, v1->v, v0->v, v1->w, v0->w, dx12dy, dx02dy, du12dy, du02dy, dv12dy, dv02dy, dw12dy, dw02dy);
 
 	} else if(!dy12) {
-
 		if(v2->x > v1->x)
 			render_span(machine, bitmap, ti, v0->y, v1->y, v0->x, v0->x, v0->u, v0->u, v0->v, v0->v, v0->w, v0->w, dx01dy, dx02dy, du01dy, du02dy, dv01dy, dv02dy, dw01dy, dw02dy);
 		else
@@ -1948,7 +1940,6 @@ static void render_tri_sorted(running_machine &machine, bitmap_rgb32 &bitmap, te
 						v1->x, v0->x + dx02dy*dy01, v1->u, v0->u + du02dy*dy01, v1->v, v0->v + dv02dy*dy01, v1->w, v0->w + dw02dy*dy01,
 						dx12dy, dx02dy, du12dy, du02dy, dv12dy, dv02dy, dw12dy, dw02dy);
 		} else {
-
 			render_span(machine, bitmap, ti, v0->y, v1->y,
 						v0->x, v0->x, v0->u, v0->u, v0->v, v0->v, v0->w, v0->w,
 						dx02dy, dx01dy, du02dy, du01dy, dv02dy, dv01dy, dw02dy, dw01dy);
@@ -2075,7 +2066,7 @@ static void pvr_accumulationbuffer_to_framebuffer(address_space &space, int x,in
 					// data starts in 8888 format, downsample it
 					UINT32 data = src[xcnt];
 					UINT16 newdat = ((((data & 0x000000f8) >> 3)) << 0)   |
-					                ((((data & 0x0000f800) >> 11)) << 5)  |
+									((((data & 0x0000f800) >> 11)) << 5)  |
 									((((data & 0x00f80000) >> 19)) << 10);
 
 					space.write_word(realwriteoffs+xcnt*2, newdat);
@@ -2099,7 +2090,7 @@ static void pvr_accumulationbuffer_to_framebuffer(address_space &space, int x,in
 					// data starts in 8888 format, downsample it
 					UINT32 data = src[xcnt];
 					UINT16 newdat = ((((data & 0x000000f8) >> 3)) << 0)   |
-					                ((((data & 0x0000fc00) >> 10)) << 5)  |
+									((((data & 0x0000fc00) >> 10)) << 5)  |
 									((((data & 0x00f80000) >> 19)) << 11);
 
 					space.write_word(realwriteoffs+xcnt*2, newdat);
@@ -2126,7 +2117,7 @@ static void pvr_accumulationbuffer_to_framebuffer(address_space &space, int x,in
 					// data starts in 8888 format, downsample it
 					UINT32 data = src[xcnt];
 					UINT16 newdat = ((((data & 0x000000f8) >> 3)) << 0)   |
-					                ((((data & 0x0000f800) >> 11)) << 5)  |
+									((((data & 0x0000f800) >> 11)) << 5)  |
 									((((data & 0x00f80000) >> 19)) << 10);
 					// alpha?
 
@@ -2151,7 +2142,7 @@ static void pvr_accumulationbuffer_to_framebuffer(address_space &space, int x,in
 					// data is 8888 format
 					UINT32 data = src[xcnt];
 					UINT16 newdat = ((((data & 0x000000f8) >> 3)) << 0)   |
-					                ((((data & 0x0000fc00) >> 10)) << 5)  |
+									((((data & 0x0000fc00) >> 10)) << 5)  |
 									((((data & 0x00f80000) >> 19)) << 11);
 
 					space.write_word(realwriteoffs+xcnt*2, newdat);
@@ -2178,7 +2169,7 @@ static void pvr_accumulationbuffer_to_framebuffer(address_space &space, int x,in
 					// data is 8888 format
 					UINT32 data = src[xcnt];
 					UINT16 newdat = ((((data & 0x000000f8) >> 3)) << 0)   |
-					                ((((data & 0x0000fc00) >> 10)) << 5)  |
+									((((data & 0x0000fc00) >> 10)) << 5)  |
 									((((data & 0x00f80000) >> 19)) << 11);
 
 					space.write_word(realwriteoffs+xcnt*2, newdat);
@@ -2556,7 +2547,7 @@ TIMER_CALLBACK_MEMBER(dc_state::endofrender_video)
 
 TIMER_CALLBACK_MEMBER(dc_state::endofrender_tsp)
 {
-	dc_sysctrl_regs[SB_ISTNRM] |= IST_EOR_TSP;	// TSP end of render
+	dc_sysctrl_regs[SB_ISTNRM] |= IST_EOR_TSP;  // TSP end of render
 	dc_update_interrupt_status(machine());
 
 	endofrender_timer_tsp->adjust(attotime::never);
@@ -2565,7 +2556,7 @@ TIMER_CALLBACK_MEMBER(dc_state::endofrender_tsp)
 
 TIMER_CALLBACK_MEMBER(dc_state::endofrender_isp)
 {
-	dc_sysctrl_regs[SB_ISTNRM] |= IST_EOR_ISP;	// ISP end of render
+	dc_sysctrl_regs[SB_ISTNRM] |= IST_EOR_ISP;  // ISP end of render
 	dc_update_interrupt_status(machine());
 
 	endofrender_timer_isp->adjust(attotime::never);
@@ -2575,7 +2566,6 @@ TIMER_CALLBACK_MEMBER(dc_state::endofrender_isp)
 
 void dc_state::video_start()
 {
-
 	memset(pvrctrl_regs, 0, sizeof(pvrctrl_regs));
 	memset(pvrta_regs, 0, sizeof(pvrta_regs));
 	memset(state_ta.grab, 0, sizeof(state_ta.grab));
@@ -2585,15 +2575,15 @@ void dc_state::video_start()
 	pvrta_regs[PVRID]=0x17fd11db;
 	pvrta_regs[REVISION]=0x11;
 	/* FIXME: move the following regs inside MACHINE_RESET */
-	pvrta_regs[VO_CONTROL]=		0x00000108;
-	pvrta_regs[SOFTRESET]=		0x00000007;
-	pvrta_regs[VO_STARTX]=		0x0000009d;
-	pvrta_regs[VO_STARTY]=		0x00150015;
-	pvrta_regs[SPG_HBLANK]=		0x007e0345;
-	pvrta_regs[SPG_LOAD]=		0x01060359;
-	pvrta_regs[SPG_VBLANK]=		0x01500104;
-	pvrta_regs[SPG_HBLANK_INT]=	0x031d0000;
-	pvrta_regs[SPG_VBLANK_INT]=	0x01500104;
+	pvrta_regs[VO_CONTROL]=     0x00000108;
+	pvrta_regs[SOFTRESET]=      0x00000007;
+	pvrta_regs[VO_STARTX]=      0x0000009d;
+	pvrta_regs[VO_STARTY]=      0x00150015;
+	pvrta_regs[SPG_HBLANK]=     0x007e0345;
+	pvrta_regs[SPG_LOAD]=       0x01060359;
+	pvrta_regs[SPG_VBLANK]=     0x01500104;
+	pvrta_regs[SPG_HBLANK_INT]= 0x031d0000;
+	pvrta_regs[SPG_VBLANK_INT]= 0x01500104;
 
 	state_ta.tafifo_pos=0;
 	state_ta.tafifo_mask=7;
@@ -2631,19 +2621,18 @@ void dc_state::video_start()
 
 UINT32 dc_state::screen_update_dc(screen_device &screen, bitmap_rgb32 &bitmap, const rectangle &cliprect)
 {
-
 	/******************
-      MAME note
-    *******************
+	  MAME note
+	*******************
 
-    The video update function should NOT be generating interrupts, setting timers or doing _anything_ the game might be able to detect
-    as it will be called at different times depending on frameskip etc.
+	The video update function should NOT be generating interrupts, setting timers or doing _anything_ the game might be able to detect
+	as it will be called at different times depending on frameskip etc.
 
-    Rendering should happen when the hardware requests it, to the framebuffer(s)
+	Rendering should happen when the hardware requests it, to the framebuffer(s)
 
-    Everything else should depend on timers.
+	Everything else should depend on timers.
 
-    ******************/
+	******************/
 
 //  static int useframebuffer=1;
 //  const rectangle &visarea = screen.visible_area();

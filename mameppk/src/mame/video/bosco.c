@@ -63,8 +63,8 @@ PALETTE_INIT_MEMBER(bosco_state,bosco)
 	/* characters / sprites */
 	for (i = 0;i < 64*4;i++)
 	{
-		colortable_entry_set_value(machine().colortable, i, (color_prom[i] & 0x0f) + 0x10);	/* chars */
-		colortable_entry_set_value(machine().colortable, i+64*4, color_prom[i] & 0x0f);	/* sprites */
+		colortable_entry_set_value(machine().colortable, i, (color_prom[i] & 0x0f) + 0x10); /* chars */
+		colortable_entry_set_value(machine().colortable, i+64*4, color_prom[i] & 0x0f); /* sprites */
 	}
 
 	/* bullets lookup table */
@@ -126,7 +126,6 @@ TILE_GET_INFO_MEMBER(bosco_state::fg_get_tile_info )
 
 VIDEO_START_MEMBER(bosco_state,bosco)
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(bosco_state::bg_get_tile_info),this),TILEMAP_SCAN_ROWS,8,8,32,32);
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(bosco_state::fg_get_tile_info),this),tilemap_mapper_delegate(FUNC(bosco_state::fg_tilemap_scan),this),  8,8, 8,32);
 
@@ -283,9 +282,8 @@ static void draw_stars(running_machine &machine, bitmap_ind16 &bitmap, const rec
 
 UINT32 bosco_state::screen_update_bosco(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	/* the radar tilemap is just 8x32. We rely on the tilemap code to repeat it across
-       the screen, and clip it to only the position where it is supposed to be shown */
+	   the screen, and clip it to only the position where it is supposed to be shown */
 	rectangle fg_clip = cliprect;
 	rectangle bg_clip = cliprect;
 	if (flip_screen())

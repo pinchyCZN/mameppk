@@ -65,14 +65,14 @@ READ8_MEMBER(battlera_state::HuC6270_register_r)
 
 	if ((m_current_scanline+56)==m_HuC6270_registers[6]) rr=1; else rr=0;
 
-	return 0		/* CR flag */
-		| (0 << 1)	/* OR flag */
-		| (rr << 2)	/* RR flag */
-		| (0 << 3)	/* DS flag */
-		| (0 << 4)	/* DV flag */
-		| (m_bldwolf_vblank << 5)	/* VD flag (1 when vblank else 0) */
-		| (0 << 6)	/* BSY flag (1 when dma active, else 0) */
-		| (0 << 7);	/* Always zero */
+	return 0        /* CR flag */
+		| (0 << 1)  /* OR flag */
+		| (rr << 2) /* RR flag */
+		| (0 << 3)  /* DS flag */
+		| (0 << 4)  /* DV flag */
+		| (m_bldwolf_vblank << 5)   /* VD flag (1 when vblank else 0) */
+		| (0 << 6)  /* BSY flag (1 when dma active, else 0) */
+		| (0 << 7); /* Always zero */
 }
 
 WRITE8_MEMBER(battlera_state::HuC6270_register_w)
@@ -112,7 +112,6 @@ WRITE8_MEMBER(battlera_state::HuC6270_data_w)
 	switch (offset) {
 		case 0: /* LSB */
 			switch (m_VDC_register) {
-
 			case 0: /* MAWR */
 				m_HuC6270_registers[0]=(m_HuC6270_registers[0]&0xff00) | (data);
 				return;
@@ -172,7 +171,6 @@ WRITE8_MEMBER(battlera_state::HuC6270_data_w)
 
 		case 1: /* MSB (Autoincrement on this write) */
 			switch (m_VDC_register) {
-
 			case 0: /* MAWR - Memory Address Write Register */
 				m_HuC6270_registers[0]=(m_HuC6270_registers[0]&0xff) | (data<<8);
 				return;
@@ -328,7 +326,7 @@ UINT32 battlera_state::screen_update_battlera(screen_device &screen, bitmap_ind1
 					8*mx,8*my);
 			drawgfx_opaque(*m_front_bitmap,m_tile_bitmap->cliprect(),machine().gfx[2],
 					0,
-					0,	/* fill the spot with pen 256 */
+					0,  /* fill the spot with pen 256 */
 					0,0,
 					8*mx,8*my);
 			drawgfx_transmask(*m_front_bitmap,m_tile_bitmap->cliprect(),machine().gfx[0],

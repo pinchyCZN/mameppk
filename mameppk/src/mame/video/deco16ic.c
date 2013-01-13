@@ -650,20 +650,19 @@ static int deco16_pf_update(
 	/* Rowscroll enable */
 	if (rowscroll_ptr && (control1 & 0x60) == 0x40)
 	{
-
 		/* Several different rowscroll styles */
 		switch ((control0 >> 3) & 0xf)
 		{
-			case 0: 	rows = 512; 	break;/* Every line of 512 height bitmap */
-			case 1: 	rows = 256; 	break;
-			case 2: 	rows = 128; 	break;
-			case 3: 	rows = 64;		break;
-			case 4: 	rows = 32;		break;
-			case 5: 	rows = 16;		break;
-			case 6: 	rows = 8;		break;
-			case 7: 	rows = 4;		break;
-			case 8: 	rows = 2;		break;
-			default:	rows = 1;		break;
+			case 0:     rows = 512;     break;/* Every line of 512 height bitmap */
+			case 1:     rows = 256;     break;
+			case 2:     rows = 128;     break;
+			case 3:     rows = 64;      break;
+			case 4:     rows = 32;      break;
+			case 5:     rows = 16;      break;
+			case 6:     rows = 8;       break;
+			case 7:     rows = 4;       break;
+			case 8:     rows = 2;       break;
+			default:    rows = 1;       break;
 		}
 
 		if (tilemap_16x16)
@@ -688,7 +687,6 @@ static int deco16_pf_update(
 	}
 	else if (rowscroll_ptr && (control1 & 0x60) == 0x20)  /* Column scroll */
 	{
-
 		/* Column scroll ranges from 8 pixel columns to 512 pixel columns */
 		int mask = (0x40 >> (control0 & 7)) - 1;
 		if (mask == -1)
@@ -1005,5 +1003,3 @@ void deco16ic_device::device_reset()
 	deco16ic->pf1_rowscroll_ptr = 0;
 	deco16ic->pf2_rowscroll_ptr = 0;
 }
-
-

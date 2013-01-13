@@ -16,8 +16,8 @@
 #include "sound/flt_vol.h"
 #include "includes/lockon.h"
 
-#define V30_GND_ADDR	((m_ctrl_reg & 0x3) << 16)
-#define V30_OBJ_ADDR	((m_ctrl_reg & 0x18) << 13)
+#define V30_GND_ADDR    ((m_ctrl_reg & 0x3) << 16)
+#define V30_OBJ_ADDR    ((m_ctrl_reg & 0x18) << 13)
 
 
 /*************************************
@@ -95,7 +95,6 @@ WRITE16_MEMBER(lockon_state::main_obj_w)
 
 WRITE16_MEMBER(lockon_state::tst_w)
 {
-
 	if (offset < 0x800)
 	{
 		address_space &gndspace = m_ground->memory().space(AS_PROGRAM);
@@ -259,10 +258,10 @@ static INPUT_PORTS_START( lockon )
 	PORT_DIPSETTING(      0x3800, DEF_STR( 1C_6C ) )
 
 	/*
-        Wire jumper beside the dipswitches on PCB TF011.
-        To access the menu, press the service coin during
-        test mode.
-    */
+	    Wire jumper beside the dipswitches on PCB TF011.
+	    To access the menu, press the service coin during
+	    test mode.
+	*/
 	PORT_DIPNAME( 0x4000, 0x4000, "Enable H/W Tests Menu" )
 	PORT_DIPSETTING(      0x4000, DEF_STR( Off ) )
 	PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
@@ -370,17 +369,17 @@ GFXDECODE_END
 
 WRITE8_MEMBER(lockon_state::sound_vol)
 {
-#define LO_SHUNT	250.0
-#define LO_R0		5600.0
-#define LO_R1		10000.0
-#define LO_R2		22000.0
-#define LO_R3		47000.0
-#define LO_R0S		(1/(1/LO_SHUNT + 1/LO_R0))
-#define LO_R1S		(1/(1/LO_SHUNT + 1/LO_R1))
-#define LO_R2S		(1/(1/LO_SHUNT + 1/LO_R2))
-#define LO_R3S		(1/(1/LO_SHUNT + 1/LO_R3))
-#define LO_RI		100000.0
-#define LO_RP		100000.0
+#define LO_SHUNT    250.0
+#define LO_R0       5600.0
+#define LO_R1       10000.0
+#define LO_R2       22000.0
+#define LO_R3       47000.0
+#define LO_R0S      (1/(1/LO_SHUNT + 1/LO_R0))
+#define LO_R1S      (1/(1/LO_SHUNT + 1/LO_R1))
+#define LO_R2S      (1/(1/LO_SHUNT + 1/LO_R2))
+#define LO_R3S      (1/(1/LO_SHUNT + 1/LO_R3))
+#define LO_RI       100000.0
+#define LO_RP       100000.0
 
 
 	static const double gains[16] =
@@ -453,7 +452,6 @@ static const ym2203_interface ym2203_config =
 
 void lockon_state::machine_start()
 {
-
 	m_maincpu = machine().device<cpu_device>("maincpu");
 	m_audiocpu = machine().device<cpu_device>("audiocpu");
 	m_ground = machine().device("ground");
@@ -485,7 +483,6 @@ void lockon_state::machine_start()
 
 void lockon_state::machine_reset()
 {
-
 	m_ground_ctrl = 0;
 	m_scroll_h = 0;
 	m_scroll_v = 0;

@@ -37,7 +37,7 @@ static void palette_init_common( running_machine &machine, const UINT8 *color_pr
 	int i;
 
 	/* compute the color output resistor weights */
-	compute_resistor_weights(0,	255, -1.0,
+	compute_resistor_weights(0, 255, -1.0,
 			2, resistances, rweights, 470, 0,
 			2, resistances, gweights, 470, 0,
 			2, resistances, bweights, 470, 0);
@@ -160,7 +160,6 @@ WRITE8_MEMBER(ladybug_state::ladybug_flipscreen_w)
 
 WRITE8_MEMBER(ladybug_state::sraider_io_w)
 {
-
 	// bit7 = flip
 	// bit6 = grid red
 	// bit5 = grid green
@@ -179,10 +178,10 @@ WRITE8_MEMBER(ladybug_state::sraider_io_w)
 	redclash_set_stars_enable(machine(), (data & 0x08) >> 3);
 
 	/*
-     * There must be a subtle clocking difference between
-     * Space Raider and the other games using this star generator,
-     * hence the -1 here
-     */
+	 * There must be a subtle clocking difference between
+	 * Space Raider and the other games using this star generator,
+	 * hence the -1 here
+	 */
 
 	redclash_set_stars_speed(machine(), (data & 0x07) - 1);
 }
@@ -209,7 +208,6 @@ TILE_GET_INFO_MEMBER(ladybug_state::get_grid_tile_info)
 
 VIDEO_START_MEMBER(ladybug_state,ladybug)
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ladybug_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 	m_bg_tilemap->set_scroll_rows(32);
 	m_bg_tilemap->set_transparent_pen(0);
@@ -217,7 +215,6 @@ VIDEO_START_MEMBER(ladybug_state,ladybug)
 
 VIDEO_START_MEMBER(ladybug_state,sraider)
 {
-
 	m_grid_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ladybug_state::get_grid_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 	m_grid_tilemap->set_scroll_rows(32);
 	m_grid_tilemap->set_transparent_pen(0);
@@ -259,14 +256,14 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 			if (spriteram[offs + i] & 0x80)
 			{
-				if (spriteram[offs + i] & 0x40)	/* 16x16 */
+				if (spriteram[offs + i] & 0x40) /* 16x16 */
 					drawgfx_transpen(bitmap,cliprect,machine.gfx[1],
 							(spriteram[offs + i + 1] >> 2) + 4 * (spriteram[offs + i + 2] & 0x10),
 							spriteram[offs + i + 2] & 0x0f,
 							spriteram[offs + i] & 0x20,spriteram[offs + i] & 0x10,
 							spriteram[offs + i + 3],
 							offs / 4 - 8 + (spriteram[offs + i] & 0x0f),0);
-				else	/* 8x8 */
+				else    /* 8x8 */
 					drawgfx_transpen(bitmap,cliprect,machine.gfx[2],
 							spriteram[offs + i + 1] + 16 * (spriteram[offs + i + 2] & 0x10),
 							spriteram[offs + i + 2] & 0x0f,
@@ -310,7 +307,6 @@ void ladybug_state::screen_eof_sraider(screen_device &screen, bool state)/* upda
 
 UINT32 ladybug_state::screen_update_sraider(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	// this part is boilerplate from ladybug, not sure if hardware does this,
 	// since it's not used
 
@@ -339,8 +335,8 @@ UINT32 ladybug_state::screen_update_sraider(screen_device &screen, bitmap_ind16 
 
 	// draw the gridlines
 	colortable_palette_set_color(machine().colortable, 0x40, MAKE_RGB(m_grid_color & 0x40 ? 0xff : 0,
-		            														 m_grid_color & 0x20 ? 0xff : 0,
-		            														 m_grid_color & 0x10 ? 0xff : 0));
+																				m_grid_color & 0x20 ? 0xff : 0,
+																				m_grid_color & 0x10 ? 0xff : 0));
 	m_grid_tilemap->draw(bitmap, cliprect, 0, flip_screen());
 
 	for (i = 0; i < 0x100; i++)

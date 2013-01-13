@@ -15,18 +15,18 @@
 ***************************************************************************/
 
 TILEMAP_MAPPER_MEMBER(armedf_state::armedf_scan_type1)
-{	/* col: 0..63; row: 0..31 */
+{   /* col: 0..63; row: 0..31 */
 	/* armed formation */
 	return col * 32 + row;
 }
 
 TILEMAP_MAPPER_MEMBER(armedf_state::armedf_scan_type2)
-{	/* col: 0..63; row: 0..31 */
+{   /* col: 0..63; row: 0..31 */
 	return 32 * (31 - row) + (col & 0x1f) + 0x800 * (col / 32);
 }
 
 TILEMAP_MAPPER_MEMBER(armedf_state::armedf_scan_type3)
-{	/* col: 0..63; row: 0..31 */
+{   /* col: 0..63; row: 0..31 */
 	/* legion & legiono */
 	return (col & 0x1f) * 32 + row + 0x800 * (col / 32);
 }
@@ -115,7 +115,6 @@ TILE_GET_INFO_MEMBER(armedf_state::get_bg_tile_info)
 
 VIDEO_START_MEMBER(armedf_state,terraf)
 {
-
 	m_sprite_offy = (m_scroll_type & 2 ) ? 0 : 128;  /* legion, legiono, crazy climber 2 */
 
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(armedf_state::get_bg_tile_info),this), TILEMAP_SCAN_COLS, 16, 16, 64, 32);
@@ -137,7 +136,6 @@ VIDEO_START_MEMBER(armedf_state,terraf)
 
 VIDEO_START_MEMBER(armedf_state,armedf)
 {
-
 	m_sprite_offy = (m_scroll_type & 2 ) ? 0 : 128;  /* legion, legiono, crazy climber 2 */
 
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(armedf_state::get_bg_tile_info),this), TILEMAP_SCAN_COLS, 16, 16, 64, 32);
@@ -164,20 +162,17 @@ VIDEO_START_MEMBER(armedf_state,armedf)
 
 READ8_MEMBER(armedf_state::nb1414m4_text_videoram_r)
 {
-
 	return m_text_videoram[offset];
 }
 
 WRITE8_MEMBER(armedf_state::nb1414m4_text_videoram_w)
 {
-
 	m_text_videoram[offset] = data;
 	m_tx_tilemap->mark_tile_dirty(offset & 0x7ff);
 }
 
 READ8_MEMBER(armedf_state::armedf_text_videoram_r)
 {
-
 	return m_text_videoram[offset];
 }
 
@@ -350,10 +345,10 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 		if (state->flip_screen())
 		{
-			sx = 320 - sx + 176;	/* don't ask where 176 comes from, just tried it out */
-			sy = 240 - sy + 1;	/* don't ask where 1 comes from, just tried it out */
-			flipx = !flipx;		/* the values seem to result in pixel-correct placement */
-			flipy = !flipy;		/* in all the games supported by this driver */
+			sx = 320 - sx + 176;    /* don't ask where 176 comes from, just tried it out */
+			sy = 240 - sy + 1;  /* don't ask where 1 comes from, just tried it out */
+			flipx = !flipx;     /* the values seem to result in pixel-correct placement */
+			flipy = !flipy;     /* in all the games supported by this driver */
 		}
 
 		if (((buffered_spriteram[offs + 0] & 0x3000) >> 12) == priority)
@@ -377,9 +372,9 @@ UINT32 armedf_state::screen_update_armedf(screen_device &screen, bitmap_ind16 &b
 
 	switch (m_scroll_type)
 	{
-		case 0:	/* terra force, kozure ookami */
+		case 0: /* terra force, kozure ookami */
 		case 2: /* legion */
-		case 3:	/* crazy climber */
+		case 3: /* crazy climber */
 			m_fg_tilemap->set_scrollx(0, (m_fg_scrollx & 0x3ff));
 			m_fg_tilemap->set_scrolly(0, (m_fg_scrolly & 0x3ff));
 			break;

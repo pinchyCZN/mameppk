@@ -87,8 +87,7 @@ ROM_END
 
 #define j6arcade_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "arca-snd.bin", 0x000000, 0x080000, CRC(111c3c40) SHA1(9ce6da8101eb9c26c7ff5616ef24e7c119803777) ) \
-
+	ROM_LOAD( "arca-snd.bin", 0x000000, 0x080000, CRC(111c3c40) SHA1(9ce6da8101eb9c26c7ff5616ef24e7c119803777) )
 
 ROM_START( j6arcade )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -135,7 +134,7 @@ ROM_END
 ROM_START( j6arcadef )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "arca10_1.bin", 0x000000, 0x020000, CRC(4c632e9e) SHA1(1e76e26941b164ba3a51c1c3caaa3b4d384a90d3) )
-	ROM_LOAD16_BYTE( "arcadia.p2",	 0x000001, 0x020000, CRC(1533ea6f) SHA1(0dff53bcee961781312eb108cd705664f772ce1d) ) //differs by 2 bytes from arca10_2.bin, one is probably bad (or hacked)
+	ROM_LOAD16_BYTE( "arcadia.p2",   0x000001, 0x020000, CRC(1533ea6f) SHA1(0dff53bcee961781312eb108cd705664f772ce1d) ) //differs by 2 bytes from arca10_2.bin, one is probably bad (or hacked)
 	j6arcade_sound
 ROM_END
 
@@ -177,8 +176,7 @@ ROM_END
 
 #define j6bnkrcl_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "cbsnd.bin", 0x000000, 0x080000, CRC(e7e587c9) SHA1(fde7a7761253dc4133340b766d220873731c11c7) ) \
-
+	ROM_LOAD( "cbsnd.bin", 0x000000, 0x080000, CRC(e7e587c9) SHA1(fde7a7761253dc4133340b766d220873731c11c7) )
 ROM_START( j6bnkrcl )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "clba-6_1.bin", 0x000000, 0x020000, CRC(b0407200) SHA1(88792a7cc71be3830a0156fa10195bad3cc58066) )
@@ -210,8 +208,7 @@ ROM_END
 
 #define j6big50_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "1386.bin", 0x000000, 0x080000, CRC(72ddabc9) SHA1(c68b0896b4c25b591029231dff045b16eab61ac4) ) \
-
+	ROM_LOAD( "1386.bin", 0x000000, 0x080000, CRC(72ddabc9) SHA1(c68b0896b4c25b591029231dff045b16eab61ac4) )
 
 ROM_START( j6big50 )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -250,8 +247,7 @@ ROM_END
 
 #define j6bigbnk_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "1109.bin", 0x000000, 0x080000, CRC(b4d7ac12) SHA1(ac194d15e9d4e5cdadddbf2dc3c9660b52f116c2) ) \
-
+	ROM_LOAD( "1109.bin", 0x000000, 0x080000, CRC(b4d7ac12) SHA1(ac194d15e9d4e5cdadddbf2dc3c9660b52f116c2) )
 
 ROM_START( j6bigbnk )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -384,8 +380,7 @@ ROM_END
 
 #define j6bigbuk_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "bb_snd.bin", 0x000000, 0x080000, CRC(d4d57f9f) SHA1(2ec38b62928d8c208880015b3a5e348e9b1c2079) ) \
-
+	ROM_LOAD( "bb_snd.bin", 0x000000, 0x080000, CRC(d4d57f9f) SHA1(2ec38b62928d8c208880015b3a5e348e9b1c2079) )
 
 ROM_START( j6bigbuk )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -478,34 +473,32 @@ ROM_END
 
 #define j6bigpct_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6bigpct )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "big11nsk.1", 0x000000, 0x020000, CRC(fabe2c0d) SHA1(522cd19e6e947afb485e6fd81e3589a97ec5ba0b) )
-	ROM_LOAD16_BYTE( "big11.2",	   0x000001, 0x020000, CRC(34c3695e) SHA1(c3ab8710ebdc4d5f368d5b2a0c4803e939bc8bd8) )
+	ROM_LOAD16_BYTE( "big11.2",    0x000001, 0x020000, CRC(34c3695e) SHA1(c3ab8710ebdc4d5f368d5b2a0c4803e939bc8bd8) )
 	j6bigpct_sound
 ROM_END
 
 ROM_START( j6bigpcta )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "big11dsk.1", 0x000000, 0x020000, CRC(11207835) SHA1(6e175d6fbe27446b058f885ae1a1ca98dc3ef409) )
-	ROM_LOAD16_BYTE( "big11.2",	   0x000001, 0x020000, CRC(34c3695e) SHA1(c3ab8710ebdc4d5f368d5b2a0c4803e939bc8bd8) )
+	ROM_LOAD16_BYTE( "big11.2",    0x000001, 0x020000, CRC(34c3695e) SHA1(c3ab8710ebdc4d5f368d5b2a0c4803e939bc8bd8) )
 	j6bigpct_sound
 ROM_END
 
 ROM_START( j6bigpctb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "big11nak.1", 0x000000, 0x020000, CRC(a87aec6c) SHA1(1893f89e673a05926d20f6b6c318af09859d8f7d) )
-	ROM_LOAD16_BYTE( "big11.2",	   0x000001, 0x020000, CRC(34c3695e) SHA1(c3ab8710ebdc4d5f368d5b2a0c4803e939bc8bd8) )
+	ROM_LOAD16_BYTE( "big11.2",    0x000001, 0x020000, CRC(34c3695e) SHA1(c3ab8710ebdc4d5f368d5b2a0c4803e939bc8bd8) )
 	j6bigpct_sound
 ROM_END
 
 
 #define j6bigtop_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "btcl-snd.bin", 0x000000, 0x080000, CRC(160d0317) SHA1(bb111b0a96fde85acd197ef9147eae2b7059da36) ) \
-
+	ROM_LOAD( "btcl-snd.bin", 0x000000, 0x080000, CRC(160d0317) SHA1(bb111b0a96fde85acd197ef9147eae2b7059da36) )
 
 ROM_START( j6bigtop )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -538,8 +531,7 @@ ROM_END
 
 #define j6bigwhl_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "bigwheelsnd.bin", 0x000000, 0x080000, CRC(90a19aaa) SHA1(7b17e9fda01d4fb163e09107759a6bf473fc6dc0) ) \
-
+	ROM_LOAD( "bigwheelsnd.bin", 0x000000, 0x080000, CRC(90a19aaa) SHA1(7b17e9fda01d4fb163e09107759a6bf473fc6dc0) )
 
 ROM_START( j6bigwhl )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -586,8 +578,7 @@ ROM_END
 
 #define j6bnza_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "1064.bin", 0x000000, 0x080000, CRC(266edecb) SHA1(c985081bd2a4500889aae0dc7ecd7d8e4cbd1591) ) \
-
+	ROM_LOAD( "1064.bin", 0x000000, 0x080000, CRC(266edecb) SHA1(c985081bd2a4500889aae0dc7ecd7d8e4cbd1591) )
 
 ROM_START( j6bnza )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -676,8 +667,7 @@ ROM_END
 
 #define j6brkout_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "bksnd.bin", 0x000000, 0x080000, CRC(f72bd4f4) SHA1(ef8651fe7bb5f5340e41d35ca0669cba7d9c1372) ) \
-
+	ROM_LOAD( "bksnd.bin", 0x000000, 0x080000, CRC(f72bd4f4) SHA1(ef8651fe7bb5f5340e41d35ca0669cba7d9c1372) )
 
 ROM_START( j6brkout )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -710,8 +700,7 @@ ROM_END
 
 #define j6cpclb_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "cpalaceclubsnd", 0x000000, 0x080000, CRC(ef433c44) SHA1(049bdbbe8d88fb77dbfc9c2690e62982e7fe20ea) ) \
-
+	ROM_LOAD( "cpalaceclubsnd", 0x000000, 0x080000, CRC(ef433c44) SHA1(049bdbbe8d88fb77dbfc9c2690e62982e7fe20ea) )
 
 ROM_START( j6cpclb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -739,8 +728,7 @@ ROM_END
 
 #define j6camelt_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "camsound.bin", 0x000000, 0x080000, CRC(70d5a16f) SHA1(0e8ec67387274298637598bf1ab8c479aa108c54) ) \
-
+	ROM_LOAD( "camsound.bin", 0x000000, 0x080000, CRC(70d5a16f) SHA1(0e8ec67387274298637598bf1ab8c479aa108c54) )
 
 ROM_START( j6camelt )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -789,8 +777,7 @@ ROM_END
 
 #define j6cshbox_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "cbcsnd.bin", 0x000000, 0x080000, CRC(bf209b9b) SHA1(d2c079b05baeae80ed772509c3d9640e682addcd) ) \
-
+	ROM_LOAD( "cbcsnd.bin", 0x000000, 0x080000, CRC(bf209b9b) SHA1(d2c079b05baeae80ed772509c3d9640e682addcd) )
 
 ROM_START( j6cshbox )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -826,8 +813,7 @@ ROM_END
 
 #define j6cshbst_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "as1.bin", 0x000000, 0x080000, CRC(96127e49) SHA1(58bec4a024eb557995c67ac81880ad3a9de84ac0) ) \
-
+	ROM_LOAD( "as1.bin", 0x000000, 0x080000, CRC(96127e49) SHA1(58bec4a024eb557995c67ac81880ad3a9de84ac0) )
 
 ROM_START( j6cshbst )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -867,8 +853,7 @@ ROM_END
 
 #define j6cshcnt_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "cd75snd.bin", 0x000000, 0x080000, CRC(352e28cd) SHA1(c98307f5eaf511c9d281151d1c07ffd83f24244c) ) \
-
+	ROM_LOAD( "cd75snd.bin", 0x000000, 0x080000, CRC(352e28cd) SHA1(c98307f5eaf511c9d281151d1c07ffd83f24244c) )
 
 ROM_START( j6cshcnt )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -886,8 +871,7 @@ ROM_END
 
 #define j6cshrd_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "cashraider8b11as1 24-9-98.bin", 0x000000, 0x080000, CRC(8d28ba3c) SHA1(5d403bdc4cfd6a3e14c1e9458dcda112ed1770c5) ) /* aka carasnd.bin */  \
-
+	ROM_LOAD( "cashraider8b11as1 24-9-98.bin", 0x000000, 0x080000, CRC(8d28ba3c) SHA1(5d403bdc4cfd6a3e14c1e9458dcda112ed1770c5) ) /* aka carasnd.bin */
 
 ROM_START( j6cshrd )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -939,8 +923,7 @@ ROM_END
 
 #define j6cshvgs_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "cvssnd.bin", 0x000000, 0x080000, CRC(f2f828f5) SHA1(3d141884ea68d3e440ac43eaec3e8133fa8ae776) ) \
-
+	ROM_LOAD( "cvssnd.bin", 0x000000, 0x080000, CRC(f2f828f5) SHA1(3d141884ea68d3e440ac43eaec3e8133fa8ae776) )
 
 ROM_START( j6cshvgs )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -1077,8 +1060,7 @@ ROM_END
 
 #define j6cas5_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "cfl-snd.bin", 0x000000, 0x080000, CRC(0016ab04) SHA1(82d133f485b325b29db901f6254c80ca959abd3e) ) \
-
+	ROM_LOAD( "cfl-snd.bin", 0x000000, 0x080000, CRC(0016ab04) SHA1(82d133f485b325b29db901f6254c80ca959abd3e) )
 
 ROM_START( j6cas5 )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -1177,8 +1159,7 @@ ROM_END
 #define j6cascz_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "1274.bin", 0x000000, 0x080000, CRC(90a19aaa) SHA1(7b17e9fda01d4fb163e09107759a6bf473fc6dc0) ) \
-	ROM_LOAD( "crazycasinosnd.bin", 0x000000, 0x080000, CRC(d10b8005) SHA1(e499e4e119956c7831dcec8dc8a6e338423afafb) ) \
-
+	ROM_LOAD( "crazycasinosnd.bin", 0x000000, 0x080000, CRC(d10b8005) SHA1(e499e4e119956c7831dcec8dc8a6e338423afafb) )
 // check hw for j6cascz sets
 
 
@@ -1284,8 +1265,7 @@ ROM_END
 
 #define j6cccla_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6cccla )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -1375,8 +1355,7 @@ ROM_END
 
 #define j6cascla_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6cascla )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -1529,8 +1508,7 @@ ROM_END
 #define j6casclb_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "1274.bin", 0x000000, 0x080000, CRC(90a19aaa) SHA1(7b17e9fda01d4fb163e09107759a6bf473fc6dc0) ) \
-	ROM_LOAD( "cccsnd.bin", 0x000000, 0x080000, CRC(facc0580) SHA1(4f0307a6439e5df97ee4e80f6300e7bf056f3dad) ) \
-
+	ROM_LOAD( "cccsnd.bin", 0x000000, 0x080000, CRC(facc0580) SHA1(4f0307a6439e5df97ee4e80f6300e7bf056f3dad) )
 
 ROM_START( j6casclb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -1550,8 +1528,7 @@ ROM_END
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "clve-snd.bin", 0x000000, 0x020000, CRC(f77c12c7) SHA1(a2084be41949949aed787c1dccb64b969de81c86) ) /* looks like a bad dump, most missing */ \
 	ROM_LOAD( "cas_las_vegas_snd.bin", 0x000000, 0x080000, CRC(d49c212e) SHA1(e4ddd743bdb9404afb5d6c3d2ae4ea1d625c331d) ) \
-	ROM_LOAD( "caslasvegas30-06-97-4133as1.bin", 0x000000, 0x080000, CRC(d49c212e) SHA1(e4ddd743bdb9404afb5d6c3d2ae4ea1d625c331d) ) \
-
+	ROM_LOAD( "caslasvegas30-06-97-4133as1.bin", 0x000000, 0x080000, CRC(d49c212e) SHA1(e4ddd743bdb9404afb5d6c3d2ae4ea1d625c331d) )
 
 
 ROM_START( j6caslas )
@@ -1597,8 +1574,7 @@ ROM_END
 
 #define j6cluclb_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "clubcluedosnd.bin", 0x000000, 0x080000, CRC(80491c1b) SHA1(432ce61b26f77da10f5dc9230d8e3d4d988db4b4) ) \
-
+	ROM_LOAD( "clubcluedosnd.bin", 0x000000, 0x080000, CRC(80491c1b) SHA1(432ce61b26f77da10f5dc9230d8e3d4d988db4b4) )
 
 ROM_START( j6cluclb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -1694,8 +1670,7 @@ ROM_END
 
 #define j6col_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "coli_snd.bin", 0x000000, 0x080000, CRC(0f75b32e) SHA1(29e9e04d9a1686dfdf6cbdcd3acca23d6e64a048) ) \
-
+	ROM_LOAD( "coli_snd.bin", 0x000000, 0x080000, CRC(0f75b32e) SHA1(29e9e04d9a1686dfdf6cbdcd3acca23d6e64a048) )
 
 ROM_START( j6col )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -1749,8 +1724,7 @@ ROM_END
 
 #define j6colcsh_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "coli-snd.bin", 0x000000, 0x080000, CRC(a194e5af) SHA1(649d6ecc4e15afd60c2f57d082a6d9846013c107) ) \
-
+	ROM_LOAD( "coli-snd.bin", 0x000000, 0x080000, CRC(a194e5af) SHA1(649d6ecc4e15afd60c2f57d082a6d9846013c107) )
 ROM_START( j6colcsh )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "coli-6_1.bin", 0x000000, 0x020000, CRC(e560f327) SHA1(48c619dc65e023621a530419ef6363865ff59c2a) )
@@ -1790,8 +1764,7 @@ ROM_END
 
 #define j6colmon_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "colourofmoneysnd.bin", 0x000000, 0x080000, CRC(289d74c8) SHA1(04938d526e4a3079e9570fa946e5c6b9cc0ba311) ) \
-
+	ROM_LOAD( "colourofmoneysnd.bin", 0x000000, 0x080000, CRC(289d74c8) SHA1(04938d526e4a3079e9570fa946e5c6b9cc0ba311) )
 
 ROM_START( j6colmon )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -1873,8 +1846,7 @@ ROM_END
 
 #define j6coprob_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "crsound.bin", 0x000000, 0x080000, CRC(d39dd4f1) SHA1(9ce7870c00f9ccb797182af41a7d22e41624c8ce) ) \
-
+	ROM_LOAD( "crsound.bin", 0x000000, 0x080000, CRC(d39dd4f1) SHA1(9ce7870c00f9ccb797182af41a7d22e41624c8ce) )
 
 ROM_START( j6coprob )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -1921,8 +1893,7 @@ ROM_END
 
 #define j6crack_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "crck_snd.hex", 0x000000, 0x080000, CRC(106bb6b5) SHA1(a2e109fd71575dcceec190efed0a9c81ec1f4048) ) \
-
+	ROM_LOAD( "crck_snd.hex", 0x000000, 0x080000, CRC(106bb6b5) SHA1(a2e109fd71575dcceec190efed0a9c81ec1f4048) )
 
 ROM_START( j6crack )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2004,8 +1975,7 @@ ROM_END
 
 #define j6crzclb_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6crzclb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2038,8 +2008,7 @@ ROM_END
 
 #define j6crsfir_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "crossfiresnd.bin", 0x000000, 0x080000, CRC(266edecb) SHA1(c985081bd2a4500889aae0dc7ecd7d8e4cbd1591) ) \
-
+	ROM_LOAD( "crossfiresnd.bin", 0x000000, 0x080000, CRC(266edecb) SHA1(c985081bd2a4500889aae0dc7ecd7d8e4cbd1591) )
 
 ROM_START( j6crsfir )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2059,8 +2028,7 @@ ROM_END
 #define j6daygld_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
 	/* dgsnd.bin = popsnd.bin            m_popeye   Popeye (20p/8 GBP Token) */ \
-	ROM_LOAD( "dgsnd2.b8", 0x000000, 0x080000, CRC(7e8c05ce) SHA1(616b0f94b94331f86d7b1fec11dd05cf9b0968cf) ) \
-
+	ROM_LOAD( "dgsnd2.b8", 0x000000, 0x080000, CRC(7e8c05ce) SHA1(616b0f94b94331f86d7b1fec11dd05cf9b0968cf) )
 ROM_START( j6daygld )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "dg30cz04_1.b8", 0x000000, 0x020000, CRC(ff3aefc9) SHA1(80e5485f0f6e67dac3bfaa5b3ba947ff63f9b745) )
@@ -2106,8 +2074,7 @@ ROM_END
 
 #define j6dayml_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "daytona-sound_4m.epr", 0x000000, 0x080000, CRC(a74fa29c) SHA1(3db3322910717d4eda81b5df5988453fdebec7bf) ) \
-
+	ROM_LOAD( "daytona-sound_4m.epr", 0x000000, 0x080000, CRC(a74fa29c) SHA1(3db3322910717d4eda81b5df5988453fdebec7bf) )
 ROM_START( j6dayml )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "dm30cz08_1.b8", 0x000000, 0x020000, CRC(488a9da7) SHA1(604a2a6f7f07a9506906abeea79066459f375e61) )
@@ -2132,8 +2099,7 @@ ROM_END
 
 #define j6dmnjkr_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "demonjocker-sound_4m.epr", 0x000000, 0x04a018, CRC(796e1b35) SHA1(e9c8e5a350823275c9ba9238781872ea359d5049) ) \
-
+	ROM_LOAD( "demonjocker-sound_4m.epr", 0x000000, 0x04a018, CRC(796e1b35) SHA1(e9c8e5a350823275c9ba9238781872ea359d5049) )
 
 ROM_START( j6dmnjkr )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2197,8 +2163,7 @@ ROM_END
 
 #define j6dyfl_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "doyoufeelluckysnd.bin", 0x000000, 0x080000, CRC(9148112e) SHA1(8976a03eb68b1f08c6260c095bddb8d8731539af) ) \
-
+	ROM_LOAD( "doyoufeelluckysnd.bin", 0x000000, 0x080000, CRC(9148112e) SHA1(8976a03eb68b1f08c6260c095bddb8d8731539af) )
 
 ROM_START( j6dyfl )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2292,8 +2257,7 @@ ROM_END
 
 #define j6euphor_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "euphoriasnd.bin", 0x000000, 0x080000, CRC(d3097d34) SHA1(3db500b5ee38dfa580336b4bac43b139a31d2638) ) \
-
+	ROM_LOAD( "euphoriasnd.bin", 0x000000, 0x080000, CRC(d3097d34) SHA1(3db500b5ee38dfa580336b4bac43b139a31d2638) )
 
 ROM_START( j6euphor )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2346,8 +2310,7 @@ ROM_END
 
 #define j6fastfr_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "cffsnd.bin", 0x000000, 0x080000, CRC(29355a37) SHA1(5810f0eafe58b5d03cd104381eb92f55b1e08baa) ) \
-
+	ROM_LOAD( "cffsnd.bin", 0x000000, 0x080000, CRC(29355a37) SHA1(5810f0eafe58b5d03cd104381eb92f55b1e08baa) )
 
 ROM_START( j6fastfr )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2367,30 +2330,29 @@ ROM_END
 
 #define j6fasttk_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
- ROM_START( j6fasttk )
+	/* missing? */
+	ROM_START( j6fasttk )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "9331.bin", 0x000000, 0x020000, CRC(54dbf894) SHA1(a3ffff82883cc192108f44d36a7465d4afeaf114) )
 	ROM_LOAD16_BYTE( "9332.bin", 0x000001, 0x020000, CRC(ecf1632a) SHA1(5d82a46672adceb29744e82de1b0fa5fcf4dbc51) )
 	j6fasttk_sound
 ROM_END
 
- ROM_START( j6fasttka )
+	ROM_START( j6fasttka )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "9333.bin", 0x000000, 0x020000, CRC(bf45acac) SHA1(ec624bc2d135901ecbdb6c6b3dbd9cc4b618b4de) )
 	ROM_LOAD16_BYTE( "9332.bin", 0x000001, 0x020000, CRC(ecf1632a) SHA1(5d82a46672adceb29744e82de1b0fa5fcf4dbc51) )
 	j6fasttk_sound
 ROM_END
 
- ROM_START( j6fasttkb )
+	ROM_START( j6fasttkb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "9334.bin", 0x000000, 0x020000, CRC(061f38f5) SHA1(459b39d2380fcfdb763eeb6937752be192cb8244) )
 	ROM_LOAD16_BYTE( "9332.bin", 0x000001, 0x020000, CRC(ecf1632a) SHA1(5d82a46672adceb29744e82de1b0fa5fcf4dbc51) )
 	j6fasttk_sound
 ROM_END
 
- ROM_START( j6fasttkc )
+	ROM_START( j6fasttkc )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "9335.bin", 0x000000, 0x020000, CRC(36b6891c) SHA1(013b663f2dc59a4d2834ef2f7e86bcc608e98b39) )
 	ROM_LOAD16_BYTE( "9332.bin", 0x000001, 0x020000, CRC(ecf1632a) SHA1(5d82a46672adceb29744e82de1b0fa5fcf4dbc51) )
@@ -2401,8 +2363,7 @@ ROM_END
 #define j6filth_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "1151.bin", 0x000000, 0x080000, CRC(c3a2bf9b) SHA1(31536613fd9dcce0878109d460344591570c4334) ) \
-/*  ROM_LOAD( "frcl-snd.bin", 0x000000, 0x080000, CRC(c3a2bf9b) SHA1(31536613fd9dcce0878109d460344591570c4334) ) */ \
-
+/*  ROM_LOAD( "frcl-snd.bin", 0x000000, 0x080000, CRC(c3a2bf9b) SHA1(31536613fd9dcce0878109d460344591570c4334) ) */
 
 ROM_START( j6filth )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2436,8 +2397,7 @@ ROM_END
 
 #define j6firbl_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "fireballsnd.bin", 0x000000, 0x080000, CRC(e47444c7) SHA1(535ae2abdf5f9a1931c8b2afccf9a63b0778e5e3) ) \
-
+	ROM_LOAD( "fireballsnd.bin", 0x000000, 0x080000, CRC(e47444c7) SHA1(535ae2abdf5f9a1931c8b2afccf9a63b0778e5e3) )
 
 ROM_START( j6firbl )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2477,8 +2437,7 @@ ROM_END
 
 #define j6fireck_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "fccs1.bin", 0x000000, 0x080000, CRC(0421526d) SHA1(9dad850c208cb9f4a3a4c62e05a18217466d227e) ) \
-
+	ROM_LOAD( "fccs1.bin", 0x000000, 0x080000, CRC(0421526d) SHA1(9dad850c208cb9f4a3a4c62e05a18217466d227e) )
 ROM_START( j6fireck )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "ficr-11.bin", 0x000000, 0x020000, CRC(655efa46) SHA1(f861bb97cd029353027379ab1a049218c3c987f5) )
@@ -2524,8 +2483,7 @@ ROM_END
 
 #define j6firclb_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "firecracker_club_sound.bin", 0x000000, 0x080000, CRC(0421526d) SHA1(9dad850c208cb9f4a3a4c62e05a18217466d227e) ) \
-
+	ROM_LOAD( "firecracker_club_sound.bin", 0x000000, 0x080000, CRC(0421526d) SHA1(9dad850c208cb9f4a3a4c62e05a18217466d227e) )
 ROM_START( j6firclb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "35ff", 0x000000, 0x020000, CRC(b0655026) SHA1(b0e556bbd1450035dd0a373eaf01a09d9cf90c60) ) // aka firecracker_club.p1
@@ -2557,8 +2515,7 @@ ROM_END
 
 #define j6fivalv_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "fivealivesnd.bin", 0x000000, 0x080000, CRC(4e4e94d9) SHA1(b8d1f241c4257436fd0e552494d2c9af1c8661dd) ) \
-
+	ROM_LOAD( "fivealivesnd.bin", 0x000000, 0x080000, CRC(4e4e94d9) SHA1(b8d1f241c4257436fd0e552494d2c9af1c8661dd) )
 
 ROM_START( j6fivalv )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2584,8 +2541,7 @@ ROM_END
 
 #define j6fiveln_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "c-snd.bin", 0x000000, 0x080000, CRC(0016ab04) SHA1(82d133f485b325b29db901f6254c80ca959abd3e) ) \
-
+	ROM_LOAD( "c-snd.bin", 0x000000, 0x080000, CRC(0016ab04) SHA1(82d133f485b325b29db901f6254c80ca959abd3e) )
 ROM_START( j6fiveln )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "39.bin", 0x000000, 0x020000, CRC(f960d6dd) SHA1(d69f868201e1cd7ccceb155f6c219aa81791e3a3) )
@@ -2618,8 +2574,7 @@ ROM_END
 
 #define j6frc10_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "force10snd.bin", 0x000000, 0x080000, CRC(e7e587c9) SHA1(fde7a7761253dc4133340b766d220873731c11c7) ) /* aka fo10-snd.bin */ \
-
+	ROM_LOAD( "force10snd.bin", 0x000000, 0x080000, CRC(e7e587c9) SHA1(fde7a7761253dc4133340b766d220873731c11c7) ) /* aka fo10-snd.bin */
 
 ROM_START( j6frc10 )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2680,8 +2635,7 @@ ROM_END
 
 #define j6frtpot_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "fruitpotssnd.bin", 0x000000, 0x080000, CRC(1aacc429) SHA1(7ee38a34087a05d06fbfff78b57bf794c4f25d0c) ) \
-
+	ROM_LOAD( "fruitpotssnd.bin", 0x000000, 0x080000, CRC(1aacc429) SHA1(7ee38a34087a05d06fbfff78b57bf794c4f25d0c) )
 
 ROM_START( j6frtpot )
 	ROM_REGION( PRGSIZE_LARGE, "maincpu", 0 ) // not overdumps? legit larger game?
@@ -2714,8 +2668,7 @@ ROM_END
 
 #define j6gforce_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "gfor-snd.bin", 0x000000, 0x080000, CRC(4b710c8a) SHA1(af93c795d4c46cb95d92c48ac60a48db7f6724ac) ) \
-
+	ROM_LOAD( "gfor-snd.bin", 0x000000, 0x080000, CRC(4b710c8a) SHA1(af93c795d4c46cb95d92c48ac60a48db7f6724ac) )
 
 ROM_START( j6gforce )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2764,8 +2717,7 @@ ROM_END
 
 #define j6guab_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "guabs.hex", 0x000000, 0x080000, CRC(fc041c87) SHA1(bd2606e3a67e13ce937b8cb4d5fcda9fa13842a1) ) \
-
+	ROM_LOAD( "guabs.hex", 0x000000, 0x080000, CRC(fc041c87) SHA1(bd2606e3a67e13ce937b8cb4d5fcda9fa13842a1) )
 
 ROM_START( j6guab )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2819,8 +2771,7 @@ ROM_END
 
 #define j6guabcl_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "guabs.hex", 0x000000, 0x080000, CRC(fc041c87) SHA1(bd2606e3a67e13ce937b8cb4d5fcda9fa13842a1) ) \
-
+	ROM_LOAD( "guabs.hex", 0x000000, 0x080000, CRC(fc041c87) SHA1(bd2606e3a67e13ce937b8cb4d5fcda9fa13842a1) )
 
 ROM_START( j6guabcl )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2838,8 +2789,7 @@ ROM_END
 
 #define j6gldclb_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "gladiatorsnd.bin", 0x000000, 0x080000, CRC(13bd21c7) SHA1(3e0e087fdf8566ca6803f8f9f75597e19433fd0b) ) \
-
+	ROM_LOAD( "gladiatorsnd.bin", 0x000000, 0x080000, CRC(13bd21c7) SHA1(3e0e087fdf8566ca6803f8f9f75597e19433fd0b) )
 
 ROM_START( j6gldclb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2865,8 +2815,7 @@ ROM_END
 
 #define j6gogold_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "gfgoldsnd.bin", 0x000000, 0x080000, CRC(1ccc9b9b) SHA1(d6c7d4285b569c8ed77f732d6e42e6b763d200d4) ) \
-
+	ROM_LOAD( "gfgoldsnd.bin", 0x000000, 0x080000, CRC(1ccc9b9b) SHA1(d6c7d4285b569c8ed77f732d6e42e6b763d200d4) )
 ROM_START( j6gogold )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "20702.bin", 0x000000, 0x020000, CRC(c274df22) SHA1(f623bb8ba2afcc3ad7c58a4cf56ea8d8f9d1308a) )
@@ -2912,8 +2861,7 @@ ROM_END
 
 #define j6golddm_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "gdsnd.bin", 0x000000, 0x04a018, CRC(796e1b35) SHA1(e9c8e5a350823275c9ba9238781872ea359d5049) ) \
-
+	ROM_LOAD( "gdsnd.bin", 0x000000, 0x04a018, CRC(796e1b35) SHA1(e9c8e5a350823275c9ba9238781872ea359d5049) )
 
 ROM_START( j6golddm )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -2931,8 +2879,7 @@ ROM_END
 
 #define j6goldgl_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "goldengoalsnd.bin", 0x000000, 0x080000, CRC(3af9ccdb) SHA1(4a911a48816bc69743ba1ba18fdd913041636ae1) ) \
-
+	ROM_LOAD( "goldengoalsnd.bin", 0x000000, 0x080000, CRC(3af9ccdb) SHA1(4a911a48816bc69743ba1ba18fdd913041636ae1) )
 
 ROM_START( j6goldgl )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3029,8 +2976,7 @@ ROM_END
 
 #define j6hapyhr_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "happyhoursnd.bin", 0x000000, 0x080000, CRC(ef80bbfd) SHA1(66dc0bd35054a506dc75972ac59f9ca03d886e1b) ) \
-
+	ROM_LOAD( "happyhoursnd.bin", 0x000000, 0x080000, CRC(ef80bbfd) SHA1(66dc0bd35054a506dc75972ac59f9ca03d886e1b) )
 
 ROM_START( j6hapyhr )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3066,8 +3012,7 @@ ROM_END
 
 #define j6impact_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "hiim-snd.bin", 0x000000, 0x080000, CRC(3f54a54c) SHA1(fb3b2561f10391f01ee97e4501e8492fcfe4fd2b) ) \
-
+	ROM_LOAD( "hiim-snd.bin", 0x000000, 0x080000, CRC(3f54a54c) SHA1(fb3b2561f10391f01ee97e4501e8492fcfe4fd2b) )
 
 ROM_START( j6impact )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3099,8 +3044,7 @@ ROM_END
 
 #define j6hilosv_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "hi_lo_silver_snd.bin", 0x000000, 0x080000, CRC(fd88e3a6) SHA1(07c2fec617faea189ceddc46ec477fb09c0ec4a9) ) \
-
+	ROM_LOAD( "hi_lo_silver_snd.bin", 0x000000, 0x080000, CRC(fd88e3a6) SHA1(07c2fec617faea189ceddc46ec477fb09c0ec4a9) )
 
 ROM_START( j6hilosv )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3148,8 +3092,7 @@ ROM_END
 
 #define j6hirol_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "hiro-snd.bin", 0x000000, 0x080000, CRC(5843c195) SHA1(0665e913e4c1a919aa5331cce7a467c841722388) ) \
-
+	ROM_LOAD( "hiro-snd.bin", 0x000000, 0x080000, CRC(5843c195) SHA1(0665e913e4c1a919aa5331cce7a467c841722388) )
 
 ROM_START( j6hirol )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3188,8 +3131,7 @@ ROM_END
 
 #define j6hirlcl_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "hrcl-snd.bin", 0x000000, 0x080000, CRC(5843c195) SHA1(0665e913e4c1a919aa5331cce7a467c841722388) ) \
-
+	ROM_LOAD( "hrcl-snd.bin", 0x000000, 0x080000, CRC(5843c195) SHA1(0665e913e4c1a919aa5331cce7a467c841722388) )
 ROM_START( j6hirlcl )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "hrcl-3_1.bin", 0x000000, 0x020000, CRC(680182bf) SHA1(54e1b6db179934a29453ff5c5664fd00352377ea) )
@@ -3220,8 +3162,7 @@ ROM_END
 
 #define j6histk_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "histakessnd.bin", 0x000000, 0x080000, CRC(7bffa191) SHA1(e3a4a4eef878fb093240a3e145cf405d266bec74) ) \
-
+	ROM_LOAD( "histakessnd.bin", 0x000000, 0x080000, CRC(7bffa191) SHA1(e3a4a4eef878fb093240a3e145cf405d266bec74) )
 
 ROM_START( j6histk )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3239,8 +3180,7 @@ ROM_END
 
 #define j6hiphop_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6hiphop )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3280,8 +3220,7 @@ ROM_END
 
 #define j6hotsht_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "hosh-snd.bin", 0x000000, 0x080000, CRC(f5bcfe63) SHA1(4983cb4c2d69730d7f1984d648c2801b46b4ab70) ) \
-
+	ROM_LOAD( "hosh-snd.bin", 0x000000, 0x080000, CRC(f5bcfe63) SHA1(4983cb4c2d69730d7f1984d648c2801b46b4ab70) )
 
 ROM_START( j6hotsht )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3377,8 +3316,7 @@ ROM_END
 
 #define j6impuls_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "impu-snd.bin", 0x000000, 0x080000, CRC(0551d030) SHA1(7a8d012690bcea707710bf39c8069d7c074912ce) ) \
-
+	ROM_LOAD( "impu-snd.bin", 0x000000, 0x080000, CRC(0551d030) SHA1(7a8d012690bcea707710bf39c8069d7c074912ce) )
 
 ROM_START( j6impuls )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3435,8 +3373,7 @@ ROM_END
 #define j6indy_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "6706.bin", 0x000000, 0x080000, CRC(674c5b21) SHA1(12e12e362ae8c99414cd474a34fa13acd8f6bcb3) ) \
-	ROM_LOAD( "indisnd.bin", 0x0000, 0x080000, CRC(90ff139b) SHA1(9555553dc01055c311d4917e6ed7f5d3b6bf3b71) ) \
-
+	ROM_LOAD( "indisnd.bin", 0x0000, 0x080000, CRC(90ff139b) SHA1(9555553dc01055c311d4917e6ed7f5d3b6bf3b71) )
 
 ROM_START( j6indy )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3447,57 +3384,57 @@ ROM_END
 
 ROM_START( j6indya )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
-    ROM_LOAD16_BYTE( "6812.bin", 0x000000, 0x020000, CRC(8c679b52) SHA1(781ddd1a1cbfe96f0a7100a9aaa7a8d4641295fd) )
+	ROM_LOAD16_BYTE( "6812.bin", 0x000000, 0x020000, CRC(8c679b52) SHA1(781ddd1a1cbfe96f0a7100a9aaa7a8d4641295fd) )
 	ROM_LOAD16_BYTE( "6811.bin", 0x000001, 0x020000, CRC(6efc0ce8) SHA1(2f1bc1dfd6d1df019f180e6477e524811bf7295c) )
 	j6indy_sound
 ROM_END
 
 ROM_START( j6indyb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
-    ROM_LOAD16_BYTE( "6814.bin", 0x000000, 0x020000, CRC(6bb4615b) SHA1(df46a5fe7a4a24feb0422dcb9ca6c8a4a1d57cd2) )
+	ROM_LOAD16_BYTE( "6814.bin", 0x000000, 0x020000, CRC(6bb4615b) SHA1(df46a5fe7a4a24feb0422dcb9ca6c8a4a1d57cd2) )
 	ROM_LOAD16_BYTE( "6811.bin", 0x000001, 0x020000, CRC(6efc0ce8) SHA1(2f1bc1dfd6d1df019f180e6477e524811bf7295c) )
 	j6indy_sound
 ROM_END
 
 ROM_START( j6indyc )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
-    ROM_LOAD16_BYTE( "6823.bin", 0x000000, 0x020000, CRC(c0cf1be5) SHA1(0cd5189e896f2e000c9ce3a7a1d85cd17efc5f84) )
-    ROM_LOAD16_BYTE( "6824.bin", 0x000001, 0x020000, CRC(191bf6c9) SHA1(d33c330eb6b7bdb3fef98a97a9a6af8ec6910a62) )
+	ROM_LOAD16_BYTE( "6823.bin", 0x000000, 0x020000, CRC(c0cf1be5) SHA1(0cd5189e896f2e000c9ce3a7a1d85cd17efc5f84) )
+	ROM_LOAD16_BYTE( "6824.bin", 0x000001, 0x020000, CRC(191bf6c9) SHA1(d33c330eb6b7bdb3fef98a97a9a6af8ec6910a62) )
 	j6indy_sound
 ROM_END
 
 ROM_START( j6indyd )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
-    ROM_LOAD16_BYTE( "6825.bin", 0x000000, 0x020000, CRC(2b514fdd) SHA1(732ce399720a7e4e2bc0daf226eb8a1d5a229531) )
-    ROM_LOAD16_BYTE( "6824.bin", 0x000001, 0x020000, CRC(191bf6c9) SHA1(d33c330eb6b7bdb3fef98a97a9a6af8ec6910a62) )
+	ROM_LOAD16_BYTE( "6825.bin", 0x000000, 0x020000, CRC(2b514fdd) SHA1(732ce399720a7e4e2bc0daf226eb8a1d5a229531) )
+	ROM_LOAD16_BYTE( "6824.bin", 0x000001, 0x020000, CRC(191bf6c9) SHA1(d33c330eb6b7bdb3fef98a97a9a6af8ec6910a62) )
 	j6indy_sound
 ROM_END
 
 ROM_START( j6indye )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
-    ROM_LOAD16_BYTE( "7038.bin", 0x000000, 0x020000, CRC(6e209529) SHA1(a134eb4f4a20f3ec5e71c1fc6d0fdef7a7358f4c) )
-    ROM_LOAD16_BYTE( "7039.bin", 0x000001, 0x020000, CRC(32e6bfe4) SHA1(71e9030b0c2752df4a78d6f561549c3da6ce3ea3) )
+	ROM_LOAD16_BYTE( "7038.bin", 0x000000, 0x020000, CRC(6e209529) SHA1(a134eb4f4a20f3ec5e71c1fc6d0fdef7a7358f4c) )
+	ROM_LOAD16_BYTE( "7039.bin", 0x000001, 0x020000, CRC(32e6bfe4) SHA1(71e9030b0c2752df4a78d6f561549c3da6ce3ea3) )
 	j6indy_sound
 ROM_END
 
 ROM_START( j6indyf )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
-    ROM_LOAD16_BYTE( "7040.bin", 0x000000, 0x020000, CRC(85bec111) SHA1(f259553c226cfbf43ab9d35a6e82a19db82405ce) )
-    ROM_LOAD16_BYTE( "7039.bin", 0x000001, 0x020000, CRC(32e6bfe4) SHA1(71e9030b0c2752df4a78d6f561549c3da6ce3ea3) )
+	ROM_LOAD16_BYTE( "7040.bin", 0x000000, 0x020000, CRC(85bec111) SHA1(f259553c226cfbf43ab9d35a6e82a19db82405ce) )
+	ROM_LOAD16_BYTE( "7039.bin", 0x000001, 0x020000, CRC(32e6bfe4) SHA1(71e9030b0c2752df4a78d6f561549c3da6ce3ea3) )
 	j6indy_sound
 ROM_END
 
 ROM_START( j6indyg )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
-    ROM_LOAD16_BYTE( "7041.bin", 0x000000, 0x020000, CRC(3ce45548) SHA1(670c9e1a07db72510cd713f10639624334b3f386) )
-    ROM_LOAD16_BYTE( "7039.bin", 0x000001, 0x020000, CRC(32e6bfe4) SHA1(71e9030b0c2752df4a78d6f561549c3da6ce3ea3) )
+	ROM_LOAD16_BYTE( "7041.bin", 0x000000, 0x020000, CRC(3ce45548) SHA1(670c9e1a07db72510cd713f10639624334b3f386) )
+	ROM_LOAD16_BYTE( "7039.bin", 0x000001, 0x020000, CRC(32e6bfe4) SHA1(71e9030b0c2752df4a78d6f561549c3da6ce3ea3) )
 	j6indy_sound
 ROM_END
 
 ROM_START( j6indyh )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
-    ROM_LOAD16_BYTE( "7256.bin", 0x000000, 0x020000, CRC(626d3b18) SHA1(78ab605a755b63b95be5c2b4b48aa4eb282aeb69) )
-    ROM_LOAD16_BYTE( "7039.bin", 0x000001, 0x020000, CRC(32e6bfe4) SHA1(71e9030b0c2752df4a78d6f561549c3da6ce3ea3) )
+	ROM_LOAD16_BYTE( "7256.bin", 0x000000, 0x020000, CRC(626d3b18) SHA1(78ab605a755b63b95be5c2b4b48aa4eb282aeb69) )
+	ROM_LOAD16_BYTE( "7039.bin", 0x000001, 0x020000, CRC(32e6bfe4) SHA1(71e9030b0c2752df4a78d6f561549c3da6ce3ea3) )
 	j6indy_sound
 ROM_END
 
@@ -3538,8 +3475,7 @@ ROM_END
 
 #define j6showtm_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "itsshowtimesnd.bin", 0x000000, 0x080000, CRC(7a2264fa) SHA1(55d5a15ff8c6a76c5403856bb8e64cbfdafb7a55) ) \
-
+	ROM_LOAD( "itsshowtimesnd.bin", 0x000000, 0x080000, CRC(7a2264fa) SHA1(55d5a15ff8c6a76c5403856bb8e64cbfdafb7a55) )
 
 ROM_START( j6showtm )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3636,8 +3572,7 @@ ROM_END
 
 #define j6jackjs_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "jackpotjusticesnd.bin", 0x000000, 0x080000, CRC(379e1a3d) SHA1(3b455a812284e716a831aadbaa592ee0ddab1a9d) ) \
-
+	ROM_LOAD( "jackpotjusticesnd.bin", 0x000000, 0x080000, CRC(379e1a3d) SHA1(3b455a812284e716a831aadbaa592ee0ddab1a9d) )
 ROM_START( j6jackjs ) // not overdumps? legit larger game?
 	ROM_REGION( PRGSIZE_LARGE, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "60000150.evn", 0x000000, 0x080000, CRC(358d59c8) SHA1(9212565a1f9d50d26d4ccfff747824c42e878e52) )
@@ -3680,8 +3615,7 @@ ROM_END
 
 #define j6jkrpls_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6jkrpls )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "jp30cz04_1.b8", 0x000000, 0x020000, CRC(096baa03) SHA1(d9d3aa5616e253b49adda9254dbdaedb3e7ee72a) )
@@ -3728,8 +3662,7 @@ ROM_END
 
 #define j6jkpldx_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6jkpldx )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "jpd75cz03_1.b8", 0x000000, 0x020000, CRC(f48c26c5) SHA1(5a46a24a4575da3360eab54059ea994b7e8e4f8d) )
@@ -3778,8 +3711,7 @@ ROM_END
 
 #define j6kungfu_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "kufu-snd.bin", 0x000000, 0x080000, CRC(95360279) SHA1(f86c5ef3f7e790e3062ebda5150d2384ea341651) ) \
-
+	ROM_LOAD( "kufu-snd.bin", 0x000000, 0x080000, CRC(95360279) SHA1(f86c5ef3f7e790e3062ebda5150d2384ea341651) )
 ROM_START( j6kungfu )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "kfu20p1", 0x000000, 0x020000, CRC(f8dc50fb) SHA1(8beca856ac604d568e162d26c83f1d2984eccd6d) )
@@ -3819,8 +3751,7 @@ ROM_END
 
 #define j6luckla_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6luckla )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3846,8 +3777,7 @@ ROM_END
 
 #define j6magcir_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "f098.bin", 0x000000, 0x080000, CRC(a4431105) SHA1(2dad84011ccf08be5b642884b2353718ebb4a6c7) ) \
-
+	ROM_LOAD( "f098.bin", 0x000000, 0x080000, CRC(a4431105) SHA1(2dad84011ccf08be5b642884b2353718ebb4a6c7) )
 ROM_START( j6magcir )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "magic1.bin", 0x000000, 0x020000, CRC(c7a646dc) SHA1(c4c6e2ecccdccb66421a4c926b9cac5260f855e3) )
@@ -3885,8 +3815,7 @@ ROM_END
 
 #define j6mavrk_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "1431.bin", 0x000000, 0x080000, CRC(2c95a586) SHA1(81f27d408f29bec0c79a7ac635e74a11cc93f2cc) ) \
-
+	ROM_LOAD( "1431.bin", 0x000000, 0x080000, CRC(2c95a586) SHA1(81f27d408f29bec0c79a7ac635e74a11cc93f2cc) )
 
 ROM_START( j6mavrk )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3925,8 +3854,7 @@ ROM_END
 
 #define j6maxod_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "maov-snd.bin", 0x000000, 0x080000, CRC(9b527476) SHA1(6a6333aea592a1a7331a79372bbd6a16ff35c252) ) \
-
+	ROM_LOAD( "maov-snd.bin", 0x000000, 0x080000, CRC(9b527476) SHA1(6a6333aea592a1a7331a79372bbd6a16ff35c252) )
 
 ROM_START( j6maxod )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -3970,8 +3898,7 @@ ROM_END
 
 #define j6medal_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "medjob.bin", 0x000000, 0x080000, CRC(dd8296bf) SHA1(c9209abf4276d81897476420177d24e739f0441e) ) \
-
+	ROM_LOAD( "medjob.bin", 0x000000, 0x080000, CRC(dd8296bf) SHA1(c9209abf4276d81897476420177d24e739f0441e) )
 
 ROM_START( j6medal ) // not overdumps? legit larger game?
 	ROM_REGION( PRGSIZE_LARGE, "maincpu", 0 )
@@ -4011,8 +3938,7 @@ ROM_END
 
 #define j6megbck_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "mebu-snd.bin", 0x000000, 0x080000, CRC(20bce62c) SHA1(50c5959eb5a5f8436a08f9a6a096b18cbf49970e) ) \
-
+	ROM_LOAD( "mebu-snd.bin", 0x000000, 0x080000, CRC(20bce62c) SHA1(50c5959eb5a5f8436a08f9a6a096b18cbf49970e) )
 ROM_START( j6megbck )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "mebu-4_1.bin", 0x000000, 0x020000, CRC(85080234) SHA1(9a65e7adbf4f5f4832f7daebc2ff9abd430b74a2) )
@@ -4066,8 +3992,7 @@ ROM_END
 #define j6montlk_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
 /*  ROM_LOAD( "1109.bin", 0x000000, 0x080000, CRC(b4d7ac12) SHA1(ac194d15e9d4e5cdadddbf2dc3c9660b52f116c2) ) */  \
-	ROM_LOAD( "mtsnd.bin", 0x000000, 0x080000, CRC(b4d7ac12) SHA1(ac194d15e9d4e5cdadddbf2dc3c9660b52f116c2) ) \
-
+	ROM_LOAD( "mtsnd.bin", 0x000000, 0x080000, CRC(b4d7ac12) SHA1(ac194d15e9d4e5cdadddbf2dc3c9660b52f116c2) )
 
 ROM_START( j6montlk )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4135,8 +4060,7 @@ ROM_END
 
 #define j6mono60_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "monop60.snd", 0x000000, 0x080000, CRC(c79af6d0) SHA1(518a7b16978a843bdb83938279b11f446503361e) ) /* aka mon60_snd.bin */ \
-
+	ROM_LOAD( "monop60.snd", 0x000000, 0x080000, CRC(c79af6d0) SHA1(518a7b16978a843bdb83938279b11f446503361e) ) /* aka mon60_snd.bin */
 
 ROM_START( j6mono60 )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4233,8 +4157,7 @@ ROM_END
 
 #define j6monobn_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6monobn )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4262,8 +4185,7 @@ ROM_END
 
 #define j6outlaw_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "outlawsnd.bin", 0x000000, 0x080000, CRC(9b9f21dc) SHA1(aca23a525f1288f49a18a74eb36ac3a67efa7e20) ) \
-
+	ROM_LOAD( "outlawsnd.bin", 0x000000, 0x080000, CRC(9b9f21dc) SHA1(aca23a525f1288f49a18a74eb36ac3a67efa7e20) )
 ROM_START( j6outlaw )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "7547.bin", 0x000000, 0x020000, CRC(7a4efbf1) SHA1(5e184e172a129aad6ad34409f63de25916414146) )
@@ -4287,8 +4209,7 @@ ROM_END
 
 #define j6oxo_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "oxo_bingo_snd.bin", 0x000000, 0x080000, CRC(008a2d6a) SHA1(a89114154489142556b373ab24cd32fadf5856b3) ) \
-
+	ROM_LOAD( "oxo_bingo_snd.bin", 0x000000, 0x080000, CRC(008a2d6a) SHA1(a89114154489142556b373ab24cd32fadf5856b3) )
 ROM_START( j6oxo )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "7613.bin", 0x000000, 0x020000, CRC(0621762a) SHA1(ec09cfed79158b09093a162785b6bdd1916ce50c) )
@@ -4334,8 +4255,7 @@ ROM_END
 
 #define j6oxobin_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "oxo_bingo_snd.bin", 0x000000, 0x080000, CRC(008a2d6a) SHA1(a89114154489142556b373ab24cd32fadf5856b3) ) \
-
+	ROM_LOAD( "oxo_bingo_snd.bin", 0x000000, 0x080000, CRC(008a2d6a) SHA1(a89114154489142556b373ab24cd32fadf5856b3) )
 
 ROM_START( j6oxobin )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4400,8 +4320,7 @@ ROM_END
 
 #define j6papa_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "papasnd.bin", 0x000000, 0x080000, CRC(c2de3abc) SHA1(2885817e7d6b11c0a2b35507b5654902257db32c) ) \
-
+	ROM_LOAD( "papasnd.bin", 0x000000, 0x080000, CRC(c2de3abc) SHA1(2885817e7d6b11c0a2b35507b5654902257db32c) )
 
 ROM_START( j6papa )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4455,8 +4374,7 @@ ROM_END
 
 #define j6phxgld_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "pgsnd2.b8", 0x000000, 0x080000, CRC(c63cf006) SHA1(f204da5e744dd2ade662ac8d9f7d1896513cb38a) ) \
-
+	ROM_LOAD( "pgsnd2.b8", 0x000000, 0x080000, CRC(c63cf006) SHA1(f204da5e744dd2ade662ac8d9f7d1896513cb38a) )
 ROM_START( j6phxgld )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "pg30cz05_1.b8", 0x000000, 0x020000, CRC(9eb4716a) SHA1(459db543d20e5ddd03d0be917d8d4e153cb97183) )
@@ -4526,8 +4444,7 @@ ROM_END
 #define j6pnxmil_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "phmill7_snd2", 0x000000, 0x014008, CRC(12086987) SHA1(ca6d74b844a0c042d66940f5d39fdef9d5591651) ) /* bad? */ \
-	ROM_LOAD( "phmill7_snd.bin", 0x000000, 0x080000, CRC(e7332f6d) SHA1(c2457be9a7a37184bacd4199a5c347896ecfeb1c) ) \
-
+	ROM_LOAD( "phmill7_snd.bin", 0x000000, 0x080000, CRC(e7332f6d) SHA1(c2457be9a7a37184bacd4199a5c347896ecfeb1c) )
 
 ROM_START( j6pnxmil )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4560,8 +4477,7 @@ ROM_END
 #define j6pinwzd_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "pbwzsnd.bin", 0x000000, 0x020000, CRC(ee9df577) SHA1(bdc6ecba5b7ad9c7b012342c7710266ec6eeb0ab) ) \
-	ROM_LOAD( "piwi-snd.bin", 0x000000, 0x080000, CRC(ba98eecc) SHA1(39edb9524c23a78f89077215bef8f43a47605b47) ) \
-
+	ROM_LOAD( "piwi-snd.bin", 0x000000, 0x080000, CRC(ba98eecc) SHA1(39edb9524c23a78f89077215bef8f43a47605b47) )
 
 ROM_START( j6pinwzd )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4634,8 +4550,7 @@ ROM_END
 
 #define j6pirgld_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "pirat6_snd.bin", 0x000000, 0x080000, CRC(5c60a3f8) SHA1(9d83aca9e5ecd230f6ca98f033f5274dbefe9feb) ) \
-
+	ROM_LOAD( "pirat6_snd.bin", 0x000000, 0x080000, CRC(5c60a3f8) SHA1(9d83aca9e5ecd230f6ca98f033f5274dbefe9feb) )
 ROM_START( j6pirgld )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "pirat_113001.b8", 0x000000, 0x020000, CRC(58c488b8) SHA1(bd2cf3f604a1fd075d2077c8e38d75c0c3325cb8) )
@@ -4652,8 +4567,7 @@ ROM_END
 
 #define j6popoli_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "popoli_snd.bin", 0x000000, 0x080000, CRC(e982a788) SHA1(3c6aed29892011c3d7d076ea9bef5882f7ded055) ) \
-
+	ROM_LOAD( "popoli_snd.bin", 0x000000, 0x080000, CRC(e982a788) SHA1(3c6aed29892011c3d7d076ea9bef5882f7ded055) )
 ROM_START( j6popoli )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "7604.bin", 0x000000, 0x020000, CRC(7b44b69e) SHA1(8bbc3caa889d539646198c9b7f54cd31ab715c6d) )
@@ -4670,8 +4584,7 @@ ROM_END
 
 #define j6pog_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "pog10snd.bin", 0x000000, 0x080000, CRC(00f6d1f6) SHA1(66581a6391e9ddc931cb102b00f38720ab125f5c) ) \
-
+	ROM_LOAD( "pog10snd.bin", 0x000000, 0x080000, CRC(00f6d1f6) SHA1(66581a6391e9ddc931cb102b00f38720ab125f5c) )
 
 ROM_START( j6pog )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4719,8 +4632,7 @@ ROM_END
 
 #define j6pogcls_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6pogcls )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "clpg-31.bin", 0x000000, 0x020000, CRC(07102281) SHA1(a7760c78f4848d7eec175027485d19d38307ccf9) )
@@ -4745,8 +4657,7 @@ ROM_END
 
 #define j6pwrlin_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6pwrlin )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4764,8 +4675,7 @@ ROM_END
 
 #define j6pwrspn_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "posp-snd.bin", 0x000000, 0x080000, CRC(861a0d14) SHA1(ea5eef793ad682dbf660ed7e77f93a7b900c97cc) ) \
-
+	ROM_LOAD( "posp-snd.bin", 0x000000, 0x080000, CRC(861a0d14) SHA1(ea5eef793ad682dbf660ed7e77f93a7b900c97cc) )
 ROM_START( j6pwrspn )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "posp-5s1.bin", 0x000000, 0x020000, CRC(4184881b) SHA1(fb4dfb2e5b5c2cebd15b908a38014b56bb311eef) )
@@ -4810,8 +4720,7 @@ ROM_END
 
 #define j6quantm_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "qule-snd.bin", 0x000000, 0x080000, CRC(eb8c692d) SHA1(384b73573d64d67547d1c04f279bda6c02f78450) ) \
-
+	ROM_LOAD( "qule-snd.bin", 0x000000, 0x080000, CRC(eb8c692d) SHA1(384b73573d64d67547d1c04f279bda6c02f78450) )
 ROM_START( j6quantm )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "20717.bin", 0x000000, 0x020000, CRC(31435fe1) SHA1(d42fe30367ded93562d4e1739307a47423f4dd51) )
@@ -4863,8 +4772,7 @@ ROM_END
 
 #define j6ra_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "realsnd.bin", 0x000000, 0x080000, CRC(8bc92c90) SHA1(bcbbe270ce42d5960ac37a2324e3fb37ff513147) ) \
-
+	ROM_LOAD( "realsnd.bin", 0x000000, 0x080000, CRC(8bc92c90) SHA1(bcbbe270ce42d5960ac37a2324e3fb37ff513147) )
 
 ROM_START( j6ra )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4903,8 +4811,7 @@ ROM_END
 
 #define j6raclb_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "realsnd.bin", 0x000000, 0x080000, CRC(8bc92c90) SHA1(bcbbe270ce42d5960ac37a2324e3fb37ff513147) ) \
-
+	ROM_LOAD( "realsnd.bin", 0x000000, 0x080000, CRC(8bc92c90) SHA1(bcbbe270ce42d5960ac37a2324e3fb37ff513147) )
 
 ROM_START( j6raclb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -4944,8 +4851,7 @@ ROM_END
 
 #define j6redarw_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "rear-snd.bin", 0x000000, 0x080000, CRC(7e8c05ce) SHA1(616b0f94b94331f86d7b1fec11dd05cf9b0968cf) ) \
-
+	ROM_LOAD( "rear-snd.bin", 0x000000, 0x080000, CRC(7e8c05ce) SHA1(616b0f94b94331f86d7b1fec11dd05cf9b0968cf) )
 
 ROM_START( j6redarw )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -5035,8 +4941,7 @@ ROM_END
 
 #define j6rh6_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6rh6 )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -5083,8 +4988,7 @@ ROM_END
 
 #define j6rhchil_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "rhcssnd.bin", 0x000000, 0x080000, CRC(60b336b1) SHA1(53d04bec9cbba4a0e89d34329ed41f89945e283b) ) \
-
+	ROM_LOAD( "rhcssnd.bin", 0x000000, 0x080000, CRC(60b336b1) SHA1(53d04bec9cbba4a0e89d34329ed41f89945e283b) )
 ROM_START( j6rhchil )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "rhcst.p1", 0x000000, 0x020000, CRC(334fdbcc) SHA1(194c226e1c41eb326841cf022e8a1b28088a7073) )
@@ -5123,8 +5027,7 @@ ROM_END
 
 #define j6rh6cl_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "rh6s1.bin", 0x000000, 0x080000, CRC(86b4c970) SHA1(0ce214ee406b1c325693b2b615498bdb2c3a16eb) ) \
-
+	ROM_LOAD( "rh6s1.bin", 0x000000, 0x080000, CRC(86b4c970) SHA1(0ce214ee406b1c325693b2b615498bdb2c3a16eb) )
 
 ROM_START( j6rh6cl )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -5164,8 +5067,7 @@ ROM_END
 
 #define j6reelmn_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "1360.bin", 0x000000, 0x080000, CRC(3a1a5f09) SHA1(807cf2cf7a4738c1904990b281f7d4c9a86c78e7) ) \
-
+	ROM_LOAD( "1360.bin", 0x000000, 0x080000, CRC(3a1a5f09) SHA1(807cf2cf7a4738c1904990b281f7d4c9a86c78e7) )
 ROM_START( j6reelmn )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "9485.bin", 0x000000, 0x020000, CRC(1a729666) SHA1(d4389ff5a16b994ca1480fe0ff097c7601b2ef6b) )
@@ -5214,8 +5116,7 @@ ROM_END
 
 #define j6reelth_alt_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "reel-snd.bin", 0x000000, 0x080000, CRC(3178ddb0) SHA1(60be12e6198bd8b7cf021b54c3cd858ff5bac127) ) \
-
+	ROM_LOAD( "reel-snd.bin", 0x000000, 0x080000, CRC(3178ddb0) SHA1(60be12e6198bd8b7cf021b54c3cd858ff5bac127) )
 ROM_START( j6reeltha )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "reel-31.bin", 0x000000, 0x020000, CRC(3e8020f8) SHA1(479f9e157eba570d0fa670f0f9ea7dbd3d94ca1f) )
@@ -5244,8 +5145,7 @@ ROM_END
 
 #define j6rico_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "ricochet_snd.bin", 0x000000, 0x080000, CRC(b24522fe) SHA1(1546edee6cf483abdbc761c715dcbc696209d429) ) \
-
+	ROM_LOAD( "ricochet_snd.bin", 0x000000, 0x080000, CRC(b24522fe) SHA1(1546edee6cf483abdbc761c715dcbc696209d429) )
 
 ROM_START( j6rico )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -5292,8 +5192,7 @@ ROM_END
 
 #define j6robin_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "robin_snd.bin", 0x000000, 0x080000, CRC(bbddccf9) SHA1(33f3d14d4898f9ba4ba2c2a88621cf3e2c828a8f) ) \
-
+	ROM_LOAD( "robin_snd.bin", 0x000000, 0x080000, CRC(bbddccf9) SHA1(33f3d14d4898f9ba4ba2c2a88621cf3e2c828a8f) )
 ROM_START( j6robin )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "9425.bin", 0x000000, 0x020000, CRC(0b9f9c83) SHA1(2004b7fc3a0fd8ba424d0e293cd53b57a653f6e3) )
@@ -5326,8 +5225,7 @@ ROM_END
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) /* which is correct? or are these for regular/classic/club? */ \
 	ROM_LOAD( "rocosnd.bin", 0x000000, 0x080000, CRC(60236e81) SHA1(9546c92d8a42d911e5b462c598a0b42987c0ba03) ) \
 	ROM_LOAD( "rcstrsnd.bin", 0x000000, 0x080000, CRC(b0753c1d) SHA1(b111ca10c01ee2089cbc613ad91235d429272ab8) ) \
-	ROM_LOAD( "rcoastersoundalt.bin", 0x000000, 0x080000, CRC(e7e587c9) SHA1(fde7a7761253dc4133340b766d220873731c11c7) ) /* very different */ \
-
+	ROM_LOAD( "rcoastersoundalt.bin", 0x000000, 0x080000, CRC(e7e587c9) SHA1(fde7a7761253dc4133340b766d220873731c11c7) ) /* very different */
 
 ROM_START( j6roller )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -5450,8 +5348,7 @@ ROM_END
 
 #define j6rccls_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6rccls )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "clrc-41.bin", 0x000000, 0x020000, CRC(6f312407) SHA1(c077276d18f50340989a20fe208ac84801895dc1) )
@@ -5476,8 +5373,7 @@ ROM_END
 
 #define j6royfls_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "rofl-so.bin", 0x000000, 0x080000, CRC(c86bce52) SHA1(ba9b3f73e7418710737d3ace25ee2747d5685d8e) ) /* aka rflushc.as1 */ \
-
+	ROM_LOAD( "rofl-so.bin", 0x000000, 0x080000, CRC(c86bce52) SHA1(ba9b3f73e7418710737d3ace25ee2747d5685d8e) ) /* aka rflushc.as1 */
 
 ROM_START( j6royfls )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -5523,8 +5419,7 @@ ROM_END
 
 #define j6samur_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6samur )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -5564,8 +5459,7 @@ ROM_END
 
 #define j6sidewd_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "sidewindersnd.bin", 0x000000, 0x080000, CRC(6e49b83b) SHA1(cba9ce8cc5dbaa0b498b2314165d4cc64c0a3881) ) \
-
+	ROM_LOAD( "sidewindersnd.bin", 0x000000, 0x080000, CRC(6e49b83b) SHA1(cba9ce8cc5dbaa0b498b2314165d4cc64c0a3881) )
 ROM_START( j6sidewd )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "siw-11s1.bin", 0x000000, 0x020000, CRC(d24e9e75) SHA1(22d21eb5bfe92fc61e1667345aafe7b3214c9218) )
@@ -5611,8 +5505,7 @@ ROM_END
 
 #define j6snakes_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "snla-snd.bin", 0x000000, 0x080000, CRC(7902d8ef) SHA1(222b0a18902619c9b4b29fa2485cb4e143c21bab) ) \
-
+	ROM_LOAD( "snla-snd.bin", 0x000000, 0x080000, CRC(7902d8ef) SHA1(222b0a18902619c9b4b29fa2485cb4e143c21bab) )
 ROM_START( j6snakes )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "20351.bin", 0x000000, 0x020000, CRC(7f9685fd) SHA1(b55c39ebbabd59a4c9aeea0f4337b8a629bad664) ) // aka snla.p1
@@ -5672,8 +5565,7 @@ ROM_END
 
 #define j6sonic_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "son_snd.bin", 0x000000, 0x080000, CRC(5cd8cf21) SHA1(82f875a59d678ef548173ee2c202e3963bc13116) ) \
-
+	ROM_LOAD( "son_snd.bin", 0x000000, 0x080000, CRC(5cd8cf21) SHA1(82f875a59d678ef548173ee2c202e3963bc13116) )
 ROM_START( j6sonic )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "9440.bin", 0x000000, 0x020000, CRC(384f931e) SHA1(12bddb3dc2c1bc6c51c5ef4002673c6f45fa335c) )
@@ -5752,8 +5644,7 @@ ROM_END
 
 #define j6stards_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "star-snd.bin", 0x000000, 0x080000, CRC(d2dcd6cc) SHA1(f5a290befd41014b6aabae9fdb601d5a9766f1ba) ) \
-
+	ROM_LOAD( "star-snd.bin", 0x000000, 0x080000, CRC(d2dcd6cc) SHA1(f5a290befd41014b6aabae9fdb601d5a9766f1ba) )
 
 
 ROM_START( j6stards )
@@ -5787,8 +5678,7 @@ ROM_END
 
 #define j6start_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6start )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -5807,8 +5697,7 @@ ROM_END
 
 #define j6strk10_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6strk10 )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "20178.bin", 0x000000, 0x020000, CRC(35135814) SHA1(250c0835611be4eaabab4c59288d9fdeafdc6ca5) )
@@ -5896,8 +5785,7 @@ ROM_END
 
 #define j6supbrk_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "subr-snd.bin", 0x000000, 0x080000, CRC(d2439c80) SHA1(8c80927e0d0c139293bd588fad15941bfb54674d) ) \
-
+	ROM_LOAD( "subr-snd.bin", 0x000000, 0x080000, CRC(d2439c80) SHA1(8c80927e0d0c139293bd588fad15941bfb54674d) )
 ROM_START( j6supbrk )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "subr-2_1.bin", 0x000000, 0x020000, CRC(85222c75) SHA1(1fbed0f474a7ccfb523270b913a8adb41c8be388) )
@@ -5998,8 +5886,7 @@ ROM_END
 
 #define j6roof_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6roof )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -6018,8 +5905,7 @@ ROM_END
 
 #define j6tbirds_sound \
 	ROM_REGION( 0x80000, "upd", 0 ) \
-	ROM_LOAD( "tbcl-snd.bin", 0x000000, 0x80000, CRC(1cc197be) SHA1(2247aa1a0e6aab7389b3222f373890f54e907361) ) \
-
+	ROM_LOAD( "tbcl-snd.bin", 0x000000, 0x80000, CRC(1cc197be) SHA1(2247aa1a0e6aab7389b3222f373890f54e907361) )
 ROM_START( j6tbirds )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "thbi-2_1.bin", 0x000000, 0x020000, CRC(a1ca874a) SHA1(0a12f387a9a3e261c1017922b8d6a652c696855a) )
@@ -6160,8 +6046,7 @@ ROM_END
 
 #define j6tbrdcl_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "tbcl-snd.bin", 0x000000, 0x80000, CRC(1cc197be) SHA1(2247aa1a0e6aab7389b3222f373890f54e907361) ) \
-
+	ROM_LOAD( "tbcl-snd.bin", 0x000000, 0x80000, CRC(1cc197be) SHA1(2247aa1a0e6aab7389b3222f373890f54e907361) )
 
 ROM_START( j6tbrdcl )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -6257,8 +6142,7 @@ ROM_END
 
 #define j6tomb_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "tr_snd.bin", 0x000000, 0x080000, CRC(6cd91050) SHA1(6818e59fc52b9776ee40bf7f2a8fca2f74343335) ) \
-
+	ROM_LOAD( "tr_snd.bin", 0x000000, 0x080000, CRC(6cd91050) SHA1(6818e59fc52b9776ee40bf7f2a8fca2f74343335) )
 ROM_START( j6tomb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "tora-41.bin", 0x000000, 0x020000, CRC(80956d40) SHA1(0864e5fa7bb41dca2128566ccd80c1208dea0157) )
@@ -6340,8 +6224,7 @@ ROM_END
 
 #define j6twst_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "twistersnd.bin", 0x000000, 0x080000, CRC(421a7a81) SHA1(d47caeb209eb6cfc47f82162b03563b25bbdf017) ) \
-
+	ROM_LOAD( "twistersnd.bin", 0x000000, 0x080000, CRC(421a7a81) SHA1(d47caeb209eb6cfc47f82162b03563b25bbdf017) )
 
 ROM_START( j6twst )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -6433,8 +6316,7 @@ ROM_END
 
 #define j6untch_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6untch )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -6455,8 +6337,7 @@ ROM_END
 
 #define j6pompay_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "uppo-so1.bin", 0x000000, 0x080000, CRC(60e370f8) SHA1(6b528f64ee5d00491655169bc108a7a6d383eaa5) ) \
-
+	ROM_LOAD( "uppo-so1.bin", 0x000000, 0x080000, CRC(60e370f8) SHA1(6b528f64ee5d00491655169bc108a7a6d383eaa5) )
 ROM_START( j6pompay )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "20270.bin", 0x000000, 0x020000, CRC(c214a067) SHA1(9e4d26727b32051b188c361b8ad8922cbd7a10b2) )
@@ -6500,8 +6381,7 @@ ROM_END
 
 #define j6vivark_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "vrve-snd.bin", 0x000000, 0x080000, CRC(40374f0b) SHA1(607eac4d3caee022e61531655ded137644602939) ) \
-
+	ROM_LOAD( "vrve-snd.bin", 0x000000, 0x080000, CRC(40374f0b) SHA1(607eac4d3caee022e61531655ded137644602939) )
 ROM_START( j6vivark )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "vrve-2_1.bin", 0x000000, 0x020000, CRC(fea54f1c) SHA1(d5fcaa6417f0961bf370c90a468b5d59a17b62ba) )
@@ -6588,8 +6468,7 @@ ROM_END
 
 #define j6vivrkc_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "vrcl-snds.bin", 0x000000, 0x080000, CRC(c4267ccf) SHA1(f299b63f762b420eaa5ddb024f357d7abb9fc21e) ) \
-
+	ROM_LOAD( "vrcl-snds.bin", 0x000000, 0x080000, CRC(c4267ccf) SHA1(f299b63f762b420eaa5ddb024f357d7abb9fc21e) )
 ROM_START( j6vivrkc )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "vrcl-d_1s.bin", 0x000000, 0x020000, CRC(ba6a1f04) SHA1(4fbb326386d4d5dfc16e64b824b042932e0497ee) )
@@ -6614,8 +6493,7 @@ ROM_END
 
 #define j6wldkng_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "wiki-snds.bin", 0x000000, 0x080000, CRC(2ba0529c) SHA1(c4b4b80fcbb867650649a42a4abe7675eea8f848) ) \
-
+	ROM_LOAD( "wiki-snds.bin", 0x000000, 0x080000, CRC(2ba0529c) SHA1(c4b4b80fcbb867650649a42a4abe7675eea8f848) )
 
 ROM_START( j6wldkng )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -6635,8 +6513,7 @@ ROM_END
 
 #define j6wthing_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "wildsnd.bin", 0x000000, 0x080000, CRC(a2c08185) SHA1(9ee589df284f1b803ca015fff599d229358530d4) ) \
-
+	ROM_LOAD( "wildsnd.bin", 0x000000, 0x080000, CRC(a2c08185) SHA1(9ee589df284f1b803ca015fff599d229358530d4) )
 
 ROM_START( j6wthing )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -6662,8 +6539,7 @@ ROM_END
 
 #define j6wildw_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "wwe10snd.bin", 0x000000, 0x080000, CRC(00c8c428) SHA1(2e10b10093acd4c2f7051aff28a8ae976bb1425b) ) \
-
+	ROM_LOAD( "wwe10snd.bin", 0x000000, 0x080000, CRC(00c8c428) SHA1(2e10b10093acd4c2f7051aff28a8ae976bb1425b) )
 ROM_START( j6wildw )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "9379.bin", 0x000000, 0x020000, CRC(533dcf84) SHA1(b1b973fc4dc0601da7587d9079e24319ecca5f1b) )
@@ -6723,8 +6599,7 @@ ROM_END
 
 #define j6wizard_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "woosnd.bin", 0x000000, 0x080000, CRC(f72bd4f4) SHA1(ef8651fe7bb5f5340e41d35ca0669cba7d9c1372) ) \
-
+	ROM_LOAD( "woosnd.bin", 0x000000, 0x080000, CRC(f72bd4f4) SHA1(ef8651fe7bb5f5340e41d35ca0669cba7d9c1372) )
 
 ROM_START( j6wizard )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -6771,8 +6646,7 @@ ROM_END
 
 #define j6knight_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "yourluckynightsnd.bin", 0x000000, 0x080000, CRC(53c20160) SHA1(6295797d384fd00b4d982c924a4cfbaa079e93a1) ) \
-
+	ROM_LOAD( "yourluckynightsnd.bin", 0x000000, 0x080000, CRC(53c20160) SHA1(6295797d384fd00b4d982c924a4cfbaa079e93a1) )
 ROM_START( j6knight )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "yourluckynight.p1", 0x000000, 0x020000, CRC(fbf7d7d9) SHA1(885a8a5acd06bafe7df01d9e36c5315f9a7f518c) )
@@ -6841,8 +6715,7 @@ ROM_END
 
 #define j6hikar_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 
 ROM_START( j6hikar )
@@ -6880,8 +6753,7 @@ ROM_END
 // correct rom might be in the j6roller sets
 #define j6rcclub_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6rcclub )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -6907,8 +6779,7 @@ ROM_END
 
 #define j6slvgst_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6slvgst )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -6968,8 +6839,7 @@ ROM_END
 
 #define j6footy_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "ffsnd.bin", 0x000000, 0x080000, CRC(99b8f4bd) SHA1(afc8e24db67f841a570b4cdd780a759a8fa13055) ) \
-
+	ROM_LOAD( "ffsnd.bin", 0x000000, 0x080000, CRC(99b8f4bd) SHA1(afc8e24db67f841a570b4cdd780a759a8fa13055) )
 // note: rom2 gets replaced between sets instead of rom1 (it's by Empire, not JPM)
 ROM_START( j6footy )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -6999,8 +6869,7 @@ ROM_END
 
 #define j6bmc_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "bigmoneysnd.bin", 0x0000, 0x080000, CRC(dd0a88c6) SHA1(22206fcba097a4f7dc6ae84d496d149a4206e0f0) ) \
-
+	ROM_LOAD(  "bigmoneysnd.bin", 0x0000, 0x080000, CRC(dd0a88c6) SHA1(22206fcba097a4f7dc6ae84d496d149a4206e0f0) )
 ROM_START( j6bmc )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "bimo-91.bin", 0x00000, 0x020000, CRC(691a15b8) SHA1(d48d80ed59b7d20a4910a5b0554e64f8fe324bef) )
@@ -7018,8 +6887,7 @@ ROM_END
 
 #define j6bno_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "bignightoutsnd.bin", 0x0000, 0x080000, CRC(e4da3e2e) SHA1(9751dfa7f9ca11b7073742b0ba2bf90fb483452b) ) /* aka bignite.as1 */ \
-
+	ROM_LOAD(  "bignightoutsnd.bin", 0x0000, 0x080000, CRC(e4da3e2e) SHA1(9751dfa7f9ca11b7073742b0ba2bf90fb483452b) ) /* aka bignite.as1 */
 ROM_START( j6bno )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "bignightout.p1", 0x00000, 0x020000, CRC(d9a9858f) SHA1(103a31682eb28f0585e948ad8f59887ad2976f40) )
@@ -7050,8 +6918,7 @@ ROM_END
 
 #define j6btbw_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "borntobewildsnd.bin", 0x0000, 0x080000, CRC(2c590926) SHA1(d5f56624d1f8f9692004937f98cadde78c2606bc) ) \
-
+	ROM_LOAD(  "borntobewildsnd.bin", 0x0000, 0x080000, CRC(2c590926) SHA1(d5f56624d1f8f9692004937f98cadde78c2606bc) )
 
 ROM_START( j6btbw )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7093,8 +6960,7 @@ ROM_END
 #define j6cpal_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "cpalace22-06-98 68d0a91.bin", 0x0000, 0x080000, CRC(56d581e0) SHA1(d22796ec6d96f4d4ea10dfdb925ceaff032fe7d0) ) \
-	ROM_LOAD( "capa-snd.bin", 0x0000, 0x080000, CRC(56d581e0) SHA1(d22796ec6d96f4d4ea10dfdb925ceaff032fe7d0) ) \
-
+	ROM_LOAD( "capa-snd.bin", 0x0000, 0x080000, CRC(56d581e0) SHA1(d22796ec6d96f4d4ea10dfdb925ceaff032fe7d0) )
 
 ROM_START( j6cpal )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7165,8 +7031,7 @@ ROM_END
 
 #define j6ccc_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6ccc )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "ccb1.bin", 0x00000, 0x020000, CRC(38a9b16e) SHA1(2ee0e1c67064e537b4459a69dc9ebf8be89f9051) )
@@ -7198,8 +7063,7 @@ ROM_END
 
 #define j6colic_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6colic )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7240,8 +7104,7 @@ ROM_END
 
 #define j6crakr_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6crakr )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "crac-11.bin", 0x00000, 0x020000, CRC(facb09cd) SHA1(3f70f3616a2201d25d3712012b4c56cfa09c1411) )
@@ -7267,8 +7130,7 @@ ROM_END
 
 #define j6ewndg_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6ewndg )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7294,8 +7156,7 @@ ROM_END
 
 #define j6easy_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "easymoneysnd.bin", 0x0000, 0x080000, CRC(aee5bc30) SHA1(071038e7fc7767b7b11c9b97b41e079fbbe11291) ) \
-
+	ROM_LOAD(  "easymoneysnd.bin", 0x0000, 0x080000, CRC(aee5bc30) SHA1(071038e7fc7767b7b11c9b97b41e079fbbe11291) )
 
 ROM_START( j6easy )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7328,8 +7189,7 @@ ROM_END
 
 #define j6ffc_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6ffc )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7375,8 +7235,7 @@ ROM_END
 
 #define j6grc_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 
 ROM_START( j6grc )
@@ -7396,8 +7255,7 @@ ROM_END
 
 #define j6hdc_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "club-hotdogssnd.bin", 0x0000, 0x080000, CRC(2bd7871f) SHA1(dc129f64f7186c02f4283229b579275ecb3a1165) ) \
-
+	ROM_LOAD(  "club-hotdogssnd.bin", 0x0000, 0x080000, CRC(2bd7871f) SHA1(dc129f64f7186c02f4283229b579275ecb3a1165) )
 
 ROM_START( j6hdc )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7470,8 +7328,7 @@ ROM_END
 
 #define j6kapang_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6kapang )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "kapa-41.bin", 0x00000, 0x020000, CRC(34509f12) SHA1(b7de8c6004b9638365dceed79d9a829587c45ab4) )
@@ -7489,8 +7346,7 @@ ROM_END
 
 #define j6kfc_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "kungfuclubsound.bin", 0x0000, 0x080000, CRC(659dfb1a) SHA1(0094cdee97c82a05358e8fcc6157f761c51c3655) ) \
-
+	ROM_LOAD(  "kungfuclubsound.bin", 0x0000, 0x080000, CRC(659dfb1a) SHA1(0094cdee97c82a05358e8fcc6157f761c51c3655) )
 ROM_START( j6kfc )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "kfcl-e1.bin", 0x00000, 0x020000, CRC(f16857a0) SHA1(5cff87bf3857593c7d032315b7555e16c3849d08) )
@@ -7516,8 +7372,7 @@ ROM_END
 
 #define j6lucklo_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6lucklo )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7536,8 +7391,7 @@ ROM_END
 
 #define j6monst_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "bad1snd.bin", 0x0000, 0x080000, CRC(1b61dcf9) SHA1(3ba4c8d9b77c86fbb931af0c0d9808ac68d0aa25) ) \
-
+	ROM_LOAD(  "bad1snd.bin", 0x0000, 0x080000, CRC(1b61dcf9) SHA1(3ba4c8d9b77c86fbb931af0c0d9808ac68d0aa25) )
 ROM_START( j6monst )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "monster.p1", 0x00000, 0x020000, CRC(979ba29d) SHA1(44258fc5c41794c84d0b034cc5bc789d2365f641) )
@@ -7595,8 +7449,7 @@ ROM_END
 
 #define j6potg_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6potg )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7623,8 +7476,7 @@ ROM_END
 
 #define j6ramese_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "ramesesrichessnd.bin", 0x0000, 0x080000, CRC(0173169e) SHA1(ccba7f6d41193f556af8ef6c827b482277ee0ee2) ) \
-
+	ROM_LOAD(  "ramesesrichessnd.bin", 0x0000, 0x080000, CRC(0173169e) SHA1(ccba7f6d41193f556af8ef6c827b482277ee0ee2) )
 ROM_START( j6ramese )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "rari-b1.bin", 0x00000, 0x020000, CRC(a9d6f938) SHA1(ab0f9fb178708ff8660f37495f1c2579c9370b27) )
@@ -7678,8 +7530,7 @@ ROM_END
 
 #define j6r2rum_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "rtrsnd.bin", 0x0000, 0x080000, CRC(ba72e377) SHA1(99e123eebb8e7ceb2fb36fd17f1c23d3ce04d2d6) ) \
-
+	ROM_LOAD(  "rtrsnd.bin", 0x0000, 0x080000, CRC(ba72e377) SHA1(99e123eebb8e7ceb2fb36fd17f1c23d3ce04d2d6) )
 
 ROM_START( j6r2rum )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7727,8 +7578,7 @@ ROM_END
 
 #define j6redal_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6redal )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "real-c1.bin", 0x00000, 0x020000, CRC(eabec7ae) SHA1(5722dc489b3cf5ff90d9688d52fd8489d80b9c96) )
@@ -7746,8 +7596,7 @@ ROM_END
 
 #define j6reelb_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 ROM_START( j6reelb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "fg81.bin", 0x00000, 0x020000, CRC(570cd8b3) SHA1(91563b30d2ff229a000dfb3299a9cf343517fc72) )
@@ -7766,8 +7615,7 @@ ROM_END
 
 #define j6slagn_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "snlsasnd.bin", 0x0000, 0x080000, CRC(288e4ce1) SHA1(6690eccb1af94731af160d73b4d8903a98fa27bb) ) \
-
+	ROM_LOAD(  "snlsasnd.bin", 0x0000, 0x080000, CRC(288e4ce1) SHA1(6690eccb1af94731af160d73b4d8903a98fa27bb) )
 ROM_START( j6slagn )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "s&l31.b8", 0x00000, 0x020000, CRC(e8cadadb) SHA1(e7edfa79e1648658e200ddbbb1d280641e03b93e) )
@@ -7839,8 +7687,7 @@ ROM_END
 
 #define j6thril_sound \
 	ROM_LOAD(  "thlr-snd.bin", 0x0000, 0x020000, CRC(03771692) SHA1(2f42859d09e4354689887f1e40f9fce1eb858e3e) ) /* probably bad */ \
-	ROM_LOAD(  "thrillersnd.bin", 0x0000, 0x080000, CRC(c93bc625) SHA1(ecceddd90a721c39ef3da8cef442c0d78dacaed2) ) \
-
+	ROM_LOAD(  "thrillersnd.bin", 0x0000, 0x080000, CRC(c93bc625) SHA1(ecceddd90a721c39ef3da8cef442c0d78dacaed2) )
 ROM_START( j6thril )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "fpe1.bin", 0x00000, 0x020000, CRC(d2e60e6f) SHA1(525022907858021a2a274a870336de6b414c0b05) )
@@ -7857,8 +7704,7 @@ ROM_END
 
 #define j6tqust_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	ROM_LOAD(  "tresquestsnd.bin", 0x0000, 0x080000, CRC(c7254d62) SHA1(9b97c7d1a844cd39c3dcfd984e1908ece47db00e) ) \
-
+	ROM_LOAD(  "tresquestsnd.bin", 0x0000, 0x080000, CRC(c7254d62) SHA1(9b97c7d1a844cd39c3dcfd984e1908ece47db00e) )
 ROM_START( j6tqust )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
 	ROM_LOAD16_BYTE(  "tq21.b8", 0x00000, 0x020000, CRC(b114c904) SHA1(bf4d2f13525aa9b91bd5985eb62e022751bba596) )
@@ -7901,8 +7747,7 @@ ROM_END
 
 #define j6h5clb_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6h5clb )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7920,8 +7765,7 @@ ROM_END
 
 #define j6milln_sound \
 	ROM_REGION( 0x80000, "upd", ROMREGION_ERASE00 ) \
-	/* missing? */ \
-
+	/* missing? */
 
 ROM_START( j6milln )
 	ROM_REGION( PRGSIZE_REGULAR, "maincpu", 0 )
@@ -7963,1276 +7807,1275 @@ ROM_END
 /* Mechanical Below */
 #define GAME_FLAGS GAME_NOT_WORKING|GAME_REQUIRES_ARTWORK|GAME_MECHANICAL|GAME_NO_SOUND
 
-GAME( 199?, j6fifth		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "5th Dimension (Ace) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6fifth     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "5th Dimension (Ace) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6aceclb	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ace Of Clubs (Crystal) (IMPACT, set 1)", GAME_FLAGS )
-GAME( 199?, j6aceclba	, j6aceclb	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ace Of Clubs (Crystal) (IMPACT, set 2)", GAME_FLAGS )
+GAME( 199?, j6aceclb    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ace Of Clubs (Crystal) (IMPACT, set 1)", GAME_FLAGS )
+GAME( 199?, j6aceclba   , j6aceclb  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ace Of Clubs (Crystal) (IMPACT, set 2)", GAME_FLAGS )
 
-GAME( 199?, j6acehi		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Aces High (Ace) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6acehi     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Aces High (Ace) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6amdrm		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "American Dream (Mdm) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6amdrm     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "American Dream (Mdm) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6arcade	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V9, set 1)", GAME_FLAGS )
-GAME( 199?, j6arcadea	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V9, set 2)", GAME_FLAGS )
-GAME( 199?, j6arcadeb	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V9, set 3)", GAME_FLAGS )
-GAME( 199?, j6arcadec	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V9, set 4)", GAME_FLAGS )
-GAME( 199?, j6arcaded	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V9, set 5)", GAME_FLAGS )
-GAME( 199?, j6arcadee	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 1)", GAME_FLAGS )
-GAME( 199?, j6arcadef	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 2)", GAME_FLAGS )
-GAME( 199?, j6arcadeg	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 3)", GAME_FLAGS )
-GAME( 199?, j6arcadeh	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 4)", GAME_FLAGS )
-GAME( 199?, j6arcadei	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 5)", GAME_FLAGS )
-GAME( 199?, j6arcadej	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 6)", GAME_FLAGS )
-GAME( 199?, j6arcadek	, j6arcade	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 7)", GAME_FLAGS )
+GAME( 199?, j6arcade    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V9, set 1)", GAME_FLAGS )
+GAME( 199?, j6arcadea   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V9, set 2)", GAME_FLAGS )
+GAME( 199?, j6arcadeb   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V9, set 3)", GAME_FLAGS )
+GAME( 199?, j6arcadec   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V9, set 4)", GAME_FLAGS )
+GAME( 199?, j6arcaded   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V9, set 5)", GAME_FLAGS )
+GAME( 199?, j6arcadee   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 1)", GAME_FLAGS )
+GAME( 199?, j6arcadef   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 2)", GAME_FLAGS )
+GAME( 199?, j6arcadeg   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 3)", GAME_FLAGS )
+GAME( 199?, j6arcadeh   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 4)", GAME_FLAGS )
+GAME( 199?, j6arcadei   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 5)", GAME_FLAGS )
+GAME( 199?, j6arcadej   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 6)", GAME_FLAGS )
+GAME( 199?, j6arcadek   , j6arcade  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Arcadia (JPM) (IMPACT) (V10, set 7)", GAME_FLAGS )
 
-GAME( 199?, j6bnkrcl	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Banker Club (JPM) (IMPACT) (V6, set 1)", GAME_FLAGS )
-GAME( 199?, j6bnkrcla	, j6bnkrcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Banker Club (JPM) (IMPACT) (V6, set 2)", GAME_FLAGS )
-GAME( 199?, j6bnkrclb	, j6bnkrcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Banker Club (JPM) (IMPACT) (V6, set 3)", GAME_FLAGS )
-GAME( 199?, j6bnkrclc	, j6bnkrcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Banker Club (JPM) (IMPACT) (V2)", GAME_FLAGS )
+GAME( 199?, j6bnkrcl    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Banker Club (JPM) (IMPACT) (V6, set 1)", GAME_FLAGS )
+GAME( 199?, j6bnkrcla   , j6bnkrcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Banker Club (JPM) (IMPACT) (V6, set 2)", GAME_FLAGS )
+GAME( 199?, j6bnkrclb   , j6bnkrcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Banker Club (JPM) (IMPACT) (V6, set 3)", GAME_FLAGS )
+GAME( 199?, j6bnkrclc   , j6bnkrcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Banker Club (JPM) (IMPACT) (V2)", GAME_FLAGS )
 
 // all ERROR 5.5
-GAME( 199?, j6big50		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big 50 (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6big50a	, j6big50	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big 50 (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6big50b	, j6big50	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big 50 (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6big50c	, j6big50	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big 50 (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6big50d	, j6big50	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big 50 (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6big50     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big 50 (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6big50a    , j6big50   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big 50 (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6big50b    , j6big50   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big 50 (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6big50c    , j6big50   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big 50 (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6big50d    , j6big50   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big 50 (JPM) (IMPACT) (set 5)", GAME_FLAGS )
 
 // all ERROR 2.9
 // the code in brackets is just what it shows at startup, not sure what it means at the moment
-GAME( 199?, j6bigbnk	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB10C  20) (set 1)", GAME_FLAGS )
-GAME( 199?, j6bigbnka	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB10C  20) (set 2)", GAME_FLAGS )
-GAME( 199?, j6bigbnkb	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB10C  20) (set 3)", GAME_FLAGS )
-GAME( 199?, j6bigbnkc	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB10C  20) (set 4)", GAME_FLAGS )
-GAME( 199?, j6bigbnkd	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB8   H18)", GAME_FLAGS )
-GAME( 199?, j6bigbnke	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB8 P H18)", GAME_FLAGS )
-GAME( 199?, j6bigbnkf	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB8  AH18)", GAME_FLAGS )
-GAME( 199?, j6bigbnkg	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB6 C  16) (set 1)", GAME_FLAGS )
-GAME( 199?, j6bigbnkh	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB6 C  16) (set 2)", GAME_FLAGS )
-GAME( 199?, j6bigbnki	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB2B  H11)", GAME_FLAGS )
-GAME( 199?, j6bigbnkj	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB2BP H11)", GAME_FLAGS )
-GAME( 199?, j6bigbnkk	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB2B AH11)", GAME_FLAGS )
-GAME( 199?, j6bigbnkl	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB2BI H11)", GAME_FLAGS )
-GAME( 199?, j6bigbnkm	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB2II H08)", GAME_FLAGS )
-GAME( 199?, j6bigbnkn	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB 9C  19)", GAME_FLAGS )
-GAME( 199?, j6bigbnko	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB5 I H15)", GAME_FLAGS )
-GAME( 199?, j6bigbnkp	, j6bigbnk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB4 I H09)", GAME_FLAGS )
-GAME( 199?, j6bbankr	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Banker (Crystal) (IMPACT) (BB 2  T 2)", GAME_FLAGS ) // same game as above or not?
+GAME( 199?, j6bigbnk    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB10C  20) (set 1)", GAME_FLAGS )
+GAME( 199?, j6bigbnka   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB10C  20) (set 2)", GAME_FLAGS )
+GAME( 199?, j6bigbnkb   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB10C  20) (set 3)", GAME_FLAGS )
+GAME( 199?, j6bigbnkc   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB10C  20) (set 4)", GAME_FLAGS )
+GAME( 199?, j6bigbnkd   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB8   H18)", GAME_FLAGS )
+GAME( 199?, j6bigbnke   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB8 P H18)", GAME_FLAGS )
+GAME( 199?, j6bigbnkf   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB8  AH18)", GAME_FLAGS )
+GAME( 199?, j6bigbnkg   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB6 C  16) (set 1)", GAME_FLAGS )
+GAME( 199?, j6bigbnkh   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB6 C  16) (set 2)", GAME_FLAGS )
+GAME( 199?, j6bigbnki   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB2B  H11)", GAME_FLAGS )
+GAME( 199?, j6bigbnkj   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB2BP H11)", GAME_FLAGS )
+GAME( 199?, j6bigbnkk   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB2B AH11)", GAME_FLAGS )
+GAME( 199?, j6bigbnkl   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB2BI H11)", GAME_FLAGS )
+GAME( 199?, j6bigbnkm   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB2II H08)", GAME_FLAGS )
+GAME( 199?, j6bigbnkn   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB 9C  19)", GAME_FLAGS )
+GAME( 199?, j6bigbnko   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB5 I H15)", GAME_FLAGS )
+GAME( 199?, j6bigbnkp   , j6bigbnk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Banker (JPM) (IMPACT) (BB4 I H09)", GAME_FLAGS )
+GAME( 199?, j6bbankr    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Banker (Crystal) (IMPACT) (BB 2  T 2)", GAME_FLAGS ) // same game as above or not?
 
 
-GAME( 199?, j6bigbuk	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6bigbuka	, j6bigbuk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6bigbukb	, j6bigbuk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6bigbukc	, j6bigbuk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6bigbukd	, j6bigbuk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6bigbuke	, j6bigbuk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6bigbukf	, j6bigbuk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6bigbukg	, j6bigbuk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6bigbukh	, j6bigbuk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6bigbuki	, j6bigbuk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6bigbukj	, j6bigbuk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6bigbuk    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6bigbuka   , j6bigbuk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6bigbukb   , j6bigbuk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6bigbukc   , j6bigbuk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6bigbukd   , j6bigbuk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6bigbuke   , j6bigbuk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6bigbukf   , j6bigbuk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6bigbukg   , j6bigbuk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6bigbukh   , j6bigbuk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6bigbuki   , j6bigbuk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6bigbukj   , j6bigbuk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Bucks (JPM) (IMPACT) (set 11)", GAME_FLAGS )
 
-GAME( 199?, j6bigcsh	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Big Cash Machine (Empire) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6bigcsh    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Big Cash Machine (Empire) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6bigpct	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Big Picture (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6bigpcta	, j6bigpct	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Big Picture (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6bigpctb	, j6bigpct	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Big Picture (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6bigpct    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Big Picture (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6bigpcta   , j6bigpct  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Big Picture (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6bigpctb   , j6bigpct  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Big Picture (Ace) (IMPACT) (set 3)", GAME_FLAGS )
 
-GAME( 199?, j6bigtop	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Top Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6bigtopa	, j6bigtop	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Top Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6bigtopb	, j6bigtop	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Top Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6bigtopc	, j6bigtop	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Top Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6bigtop    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Top Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6bigtopa   , j6bigtop  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Top Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6bigtopb   , j6bigtop  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Top Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6bigtopc   , j6bigtop  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Top Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
 
-GAME( 199?, j6bigwhl	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6bigwhla	, j6bigwhl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6bigwhlb	, j6bigwhl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6bigwhlc	, j6bigwhl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6bigwhld	, j6bigwhl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6bigwhle	, j6bigwhl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6bigwhl    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6bigwhla   , j6bigwhl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6bigwhlb   , j6bigwhl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6bigwhlc   , j6bigwhl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6bigwhld   , j6bigwhl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6bigwhle   , j6bigwhl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Big Wheel (JPM) (IMPACT) (set 6)", GAME_FLAGS )
 
 // ERROR 8.3
-GAME( 199?, j6bnza		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO1   H06)", GAME_FLAGS )
-GAME( 199?, j6bnzaa		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO1 P H06)", GAME_FLAGS )
-GAME( 199?, j6bnzab		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO1  AH06)", GAME_FLAGS )
-GAME( 199?, j6bnzac		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO1 I H06)", GAME_FLAGS )
-GAME( 199?, j6bnzad		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO 9   14)", GAME_FLAGS )
-GAME( 199?, j6bnzae		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO 9P  14)", GAME_FLAGS )
-GAME( 199?, j6bnzaf		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO 9 A 14)", GAME_FLAGS )
-GAME( 199?, j6bnzag		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO 9I  14)", GAME_FLAGS )
-GAME( 199?, j6bnzah		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO5   H10)", GAME_FLAGS )
-GAME( 199?, j6bnzai		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO5 I H10)", GAME_FLAGS )
-GAME( 199?, j6bnzaj		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (incomplete pair)", GAME_FLAGS )
-GAME( 199?, j6bnzak		, j6bnza	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO06   11)", GAME_FLAGS )
+GAME( 199?, j6bnza      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO1   H06)", GAME_FLAGS )
+GAME( 199?, j6bnzaa     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO1 P H06)", GAME_FLAGS )
+GAME( 199?, j6bnzab     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO1  AH06)", GAME_FLAGS )
+GAME( 199?, j6bnzac     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO1 I H06)", GAME_FLAGS )
+GAME( 199?, j6bnzad     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO 9   14)", GAME_FLAGS )
+GAME( 199?, j6bnzae     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO 9P  14)", GAME_FLAGS )
+GAME( 199?, j6bnzaf     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO 9 A 14)", GAME_FLAGS )
+GAME( 199?, j6bnzag     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO 9I  14)", GAME_FLAGS )
+GAME( 199?, j6bnzah     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO5   H10)", GAME_FLAGS )
+GAME( 199?, j6bnzai     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO5 I H10)", GAME_FLAGS )
+GAME( 199?, j6bnzaj     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (incomplete pair)", GAME_FLAGS )
+GAME( 199?, j6bnzak     , j6bnza    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Bonanza (JPM) (IMPACT) (BO06   11)", GAME_FLAGS )
 
-GAME( 199?, j6brkout	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Breakout (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6brkouta	, j6brkout	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Breakout (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6brkout    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Breakout (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6brkouta   , j6brkout  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Breakout (JPM) (IMPACT) (set 2)", GAME_FLAGS )
 
-GAME( 199?, j6bucks		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Bucks Fizz (Ace) (IMPACT)", GAME_FLAGS )
-
-
-GAME( 199?, j6cpclb		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Caesar's Palace Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cpclba	, j6cpclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Caesar's Palace Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6cpclbb	, j6cpclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Caesar's Palace Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6bucks     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Bucks Fizz (Ace) (IMPACT)", GAME_FLAGS )
 
 
-GAME( 199?, j6camelt	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Camelot (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6camelta	, j6camelt	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Camelot (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6cameltb	, j6camelt	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Camelot (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6cameltc	, j6camelt	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Camelot (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6cameltd	, j6camelt	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Camelot (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6cpclb     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Caesar's Palace Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cpclba    , j6cpclb   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Caesar's Palace Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6cpclbb    , j6cpclb   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Caesar's Palace Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
 
-GAME( 199?, j6scarlt	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Captain Scarlet (Ace) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6cshbox	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Cash Box Club (Empire) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cshboxa	, j6cshbox	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Cash Box Club (Empire) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6cshboxb	, j6cshbox	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Cash Box Club (Empire) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6camelt    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Camelot (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6camelta   , j6camelt  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Camelot (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6cameltb   , j6camelt  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Camelot (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6cameltc   , j6camelt  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Camelot (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6cameltd   , j6camelt  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Camelot (JPM) (IMPACT) (set 5)", GAME_FLAGS )
 
-GAME( 199?, j6cshbeu	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Cash Box Club (Empire) (Euro) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6scarlt    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Captain Scarlet (Ace) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6cshbox    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Cash Box Club (Empire) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cshboxa   , j6cshbox  , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Cash Box Club (Empire) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6cshboxb   , j6cshbox  , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Cash Box Club (Empire) (IMPACT) (set 3)", GAME_FLAGS )
+
+GAME( 199?, j6cshbeu    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Cash Box Club (Empire) (Euro) (IMPACT)", GAME_FLAGS )
 
 // ERROR 5.5
-GAME( 199?, j6cshbst	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Buster (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cshbsta	, j6cshbst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Buster (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6cshbstb	, j6cshbst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Buster (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6cshbstc	, j6cshbst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Buster (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6cshbstd	, j6cshbst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Buster (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6cshbst    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Buster (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cshbsta   , j6cshbst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Buster (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6cshbstb   , j6cshbst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Buster (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6cshbstc   , j6cshbst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Buster (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6cshbstd   , j6cshbst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Buster (JPM) (IMPACT) (set 5)", GAME_FLAGS )
 
 
-GAME( 199?, j6cshcnt	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Countdown (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cshcnta	, j6cshcnt	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Countdown (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6cshcnt    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Countdown (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cshcnta   , j6cshcnt  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Countdown (JPM) (IMPACT) (set 2)", GAME_FLAGS )
 
-GAME( 199?, j6cshrd		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Cash Raider (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cshrda	, j6cshrd	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Cash Raider (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6cshrdb	, j6cshrd	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Cash Raider (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6cshrdc	, j6cshrd	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Cash Raider (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6cshrdd	, j6cshrd	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Cash Raider (Ace) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6cshrd     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Cash Raider (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cshrda    , j6cshrd   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Cash Raider (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6cshrdb    , j6cshrd   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Cash Raider (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6cshrdc    , j6cshrd   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Cash Raider (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6cshrdd    , j6cshrd   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Cash Raider (Ace) (IMPACT) (set 5)", GAME_FLAGS )
 
-GAME( 199?, j6cshtwr	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Towers (JPM) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6cshtwr    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Towers (JPM) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6cshvgs	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cshvgsa	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6cshvgsb	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6cshvgsc	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6cshvgsd	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6cshvgse	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6cshvgsf	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6cshvgsg	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6cshvgsh	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6cshvgsi	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6cshvgsj	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6cshvgsk	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6cshvgsl	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 13)", GAME_FLAGS )
-GAME( 199?, j6cshvgsm	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 14)", GAME_FLAGS )
-GAME( 199?, j6cshvgsn	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 15)", GAME_FLAGS )
-GAME( 199?, j6cshvgso	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 16)", GAME_FLAGS )
-GAME( 199?, j6cshvgsp	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 17)", GAME_FLAGS )
-GAME( 199?, j6cshvgsq	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 18)", GAME_FLAGS )
-GAME( 199?, j6cshvgsr	, j6cshvgs	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 19)", GAME_FLAGS )
-
-
-GAME( 199?, j6cas5		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cas5a		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6cas5b		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6cas5c		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6cas5d		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6cas5e		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6cas5f		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6cas5g		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6cas5h		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6cas5i		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6cas5j		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6cas5k		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6cas5l		, j6cas5	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+GAME( 199?, j6cshvgs    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cshvgsa   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6cshvgsb   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6cshvgsc   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6cshvgsd   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6cshvgse   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6cshvgsf   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6cshvgsg   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6cshvgsh   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6cshvgsi   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6cshvgsj   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6cshvgsk   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6cshvgsl   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+GAME( 199?, j6cshvgsm   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 14)", GAME_FLAGS )
+GAME( 199?, j6cshvgsn   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 15)", GAME_FLAGS )
+GAME( 199?, j6cshvgso   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 16)", GAME_FLAGS )
+GAME( 199?, j6cshvgsp   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 17)", GAME_FLAGS )
+GAME( 199?, j6cshvgsq   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 18)", GAME_FLAGS )
+GAME( 199?, j6cshvgsr   , j6cshvgs  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cash Vegas Strip (JPM) (IMPACT) (set 19)", GAME_FLAGS )
 
 
-GAME( 199?, j6cascz		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cascza	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6casczb	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6casczc	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6casczd	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6cascze	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6casczf	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6casczg	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6casczh	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6casczi	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6casczj	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6casczk	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6casczl	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 13)", GAME_FLAGS )
-GAME( 199?, j6casczm	, j6cascz	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 14)", GAME_FLAGS )
+GAME( 199?, j6cas5      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cas5a     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6cas5b     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6cas5c     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6cas5d     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6cas5e     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6cas5f     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6cas5g     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6cas5h     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6cas5i     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6cas5j     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6cas5k     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6cas5l     , j6cas5    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino 5ive Liner (JPM) (IMPACT) (set 13)", GAME_FLAGS )
 
 
-GAME( 199?, j6cccla		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6ccclaa	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6ccclab	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6ccclac	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6ccclad	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6ccclae	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6ccclaf	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6ccclag	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6ccclah	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6ccclai	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6ccclaj	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6ccclak	, j6cccla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-
-GAME( 199?, j6cascla	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6casclaa	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6casclab	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6casclac	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6casclad	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6casclae	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6casclaf	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6casclag	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6casclah	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6casclai	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6casclaj	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6casclak	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6casclal	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 13)", GAME_FLAGS )
-GAME( 199?, j6casclam	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 14)", GAME_FLAGS )
-GAME( 199?, j6casclan	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 15)", GAME_FLAGS )
-GAME( 199?, j6casclao	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 16)", GAME_FLAGS )
-GAME( 199?, j6casclap	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 17)", GAME_FLAGS )
-GAME( 199?, j6casclaq	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 18)", GAME_FLAGS )
-GAME( 199?, j6casclar	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 19)", GAME_FLAGS )
-GAME( 199?, j6casclas	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 20)", GAME_FLAGS )
-GAME( 199?, j6casclat	, j6cascla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 21)", GAME_FLAGS )
-
-GAME( 199?, j6casclb	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6casclba	, j6casclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
-GAME( 199?, j6caslas	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Las Vegas (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6caslasa	, j6caslas	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Las Vegas (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6caslasb	, j6caslas	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Las Vegas (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6caslasc	, j6caslas	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Las Vegas (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-
-GAME( 199?, j6cheque	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cheque Mate (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6cluclb	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cluclba	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6cluclbb	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6cluclbc	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6cluclbd	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6cluclbe	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6cluclbf	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6cluclbg	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6cluclbh	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6cluclbi	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6cluclbj	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6cluclbk	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6cluclbl	, j6cluclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+GAME( 199?, j6cascz     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cascza    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6casczb    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6casczc    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6casczd    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6cascze    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6casczf    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6casczg    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6casczh    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6casczi    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6casczj    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6casczk    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6casczl    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+GAME( 199?, j6casczm    , j6cascz   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy (JPM) (IMPACT) (set 14)", GAME_FLAGS )
 
 
-GAME( 199?, j6col		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cola		, j6col		, impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6colb		, j6col		, impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6colc		, j6col		, impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6cold		, j6col		, impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6cole		, j6col		, impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6colf		, j6col		, impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6cccla     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6ccclaa    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6ccclab    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6ccclac    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6ccclad    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6ccclae    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6ccclaf    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6ccclag    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6ccclah    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6ccclai    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6ccclaj    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6ccclak    , j6cccla   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+
+GAME( 199?, j6cascla    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6casclaa   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6casclab   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6casclac   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6casclad   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6casclae   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6casclaf   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6casclag   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6casclah   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6casclai   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6casclaj   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6casclak   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6casclal   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+GAME( 199?, j6casclam   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 14)", GAME_FLAGS )
+GAME( 199?, j6casclan   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 15)", GAME_FLAGS )
+GAME( 199?, j6casclao   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 16)", GAME_FLAGS )
+GAME( 199?, j6casclap   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 17)", GAME_FLAGS )
+GAME( 199?, j6casclaq   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 18)", GAME_FLAGS )
+GAME( 199?, j6casclar   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 19)", GAME_FLAGS )
+GAME( 199?, j6casclas   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 20)", GAME_FLAGS )
+GAME( 199?, j6casclat   , j6cascla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Classic Club (JPM) (IMPACT) (set 21)", GAME_FLAGS )
+
+GAME( 199?, j6casclb    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6casclba   , j6casclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Crazy Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+
+GAME( 199?, j6caslas    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Las Vegas (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6caslasa   , j6caslas  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Las Vegas (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6caslasb   , j6caslas  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Las Vegas (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6caslasc   , j6caslas  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Casino Las Vegas (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+
+GAME( 199?, j6cheque    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cheque Mate (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6cluclb    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cluclba   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6cluclbb   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6cluclbc   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6cluclbd   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6cluclbe   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6cluclbf   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6cluclbg   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6cluclbh   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6cluclbi   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6cluclbj   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6cluclbk   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6cluclbl   , j6cluclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cluedo Club (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+
+
+GAME( 199?, j6col       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cola      , j6col     , impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6colb      , j6col     , impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6colc      , j6col     , impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6cold      , j6col     , impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6cole      , j6col     , impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6colf      , j6col     , impctawp, tbirds, driver_device, 0, ROT0, "Mdm", "Coliseum (Mdm) (IMPACT) (set 7)", GAME_FLAGS )
 
 // seems like the same game as some of the roms in the above, they're probably mixed up, or the same thing
-GAME( 199?, j6colcsh	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Coliseum Cash (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6colcsha	, j6colcsh	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Coliseum Cash (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6colcshb	, j6colcsh	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Coliseum Cash (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6colcshc	, j6colcsh	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Coliseum Cash (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6colcshd	, j6colcsh	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Coliseum Cash (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6colcsh    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Coliseum Cash (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6colcsha   , j6colcsh  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Coliseum Cash (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6colcshb   , j6colcsh  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Coliseum Cash (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6colcshc   , j6colcsh  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Coliseum Cash (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6colcshd   , j6colcsh  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Coliseum Cash (JPM) (IMPACT) (set 5)", GAME_FLAGS )
 
 
-GAME( 199?, j6colmon	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6colmona	, j6colmon	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6colmonb	, j6colmon	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6colmonc	, j6colmon	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6colmond	, j6colmon	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6colmone	, j6colmon	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6colmonf	, j6colmon	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6colmong	, j6colmon	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6colmonh	, j6colmon	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6colmoni	, j6colmon	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6colmonj	, j6colmon	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6colmon    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6colmona   , j6colmon  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6colmonb   , j6colmon  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6colmonc   , j6colmon  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6colmond   , j6colmon  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6colmone   , j6colmon  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6colmonf   , j6colmon  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6colmong   , j6colmon  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6colmonh   , j6colmon  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6colmoni   , j6colmon  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6colmonj   , j6colmon  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Colour Of Money (JPM) (IMPACT) (set 11)", GAME_FLAGS )
 
 
-GAME( 199?, j6coprob	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6coproba	, j6coprob	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6coprobb	, j6coprob	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6coprobc	, j6coprob	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6coprobd	, j6coprob	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6coprobe	, j6coprob	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6coprob    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6coproba   , j6coprob  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6coprobb   , j6coprob  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6coprobc   , j6coprob  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6coprobd   , j6coprob  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6coprobe   , j6coprob  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Cops 'n' Robbers (Qps) (IMPACT) (set 6)", GAME_FLAGS )
 
-GAME( 199?, j6crack		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cracka	, j6crack	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6crackb	, j6crack	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6crackc	, j6crack	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6crackd	, j6crack	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6cracke	, j6crack	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6crackf	, j6crack	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6crackg	, j6crack	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6crackh	, j6crack	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6cracki	, j6crack	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6crackj	, j6crack	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-
-
-GAME( 199?, j6crzclb	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Crazy Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6crzclba	, j6crzclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Crazy Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6crzclbb	, j6crzclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Crazy Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6crzclbc	, j6crzclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Crazy Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6crack     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cracka    , j6crack   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6crackb    , j6crack   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6crackc    , j6crack   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6crackd    , j6crack   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6cracke    , j6crack   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6crackf    , j6crack   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6crackg    , j6crack   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6crackh    , j6crack   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6cracki    , j6crack   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6crackj    , j6crack   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cracker (JPM) (IMPACT) (set 11)", GAME_FLAGS )
 
 
-GAME( 199?, j6crsfir	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cross Fire (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6crsfira	, j6crsfir	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cross Fire (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6crzclb    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Crazy Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6crzclba   , j6crzclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Crazy Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6crzclbb   , j6crzclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Crazy Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6crzclbc   , j6crzclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Crazy Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
 
 
-GAME( 199?, j6daygld	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6dayglda	, j6daygld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6daygldb	, j6daygld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6daygldc	, j6daygld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6daygldd	, j6daygld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6dayglde	, j6daygld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6crsfir    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cross Fire (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6crsfira   , j6crsfir  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Cross Fire (JPM) (IMPACT) (set 2)", GAME_FLAGS )
 
 
-GAME( 199?, j6dayml		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Millennium (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6daymla	, j6dayml	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Millennium (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6daymlb	, j6dayml	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Millennium (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6daygld    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6dayglda   , j6daygld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6daygldb   , j6daygld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6daygldc   , j6daygld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6daygldd   , j6daygld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6dayglde   , j6daygld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Gold (JPM) (IMPACT) (set 6)", GAME_FLAGS )
 
 
-GAME( 199?, j6dmnjkr	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Demon Jokers (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6dmnjkra	, j6dmnjkr	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Demon Jokers (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6dmnjkrb	, j6dmnjkr	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Demon Jokers (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6dmnjkrc	, j6dmnjkr	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Demon Jokers (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6dayml     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Millennium (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6daymla    , j6dayml   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Millennium (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6daymlb    , j6dayml   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Daytona Millennium (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+
+
+GAME( 199?, j6dmnjkr    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Demon Jokers (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6dmnjkra   , j6dmnjkr  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Demon Jokers (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6dmnjkrb   , j6dmnjkr  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Demon Jokers (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6dmnjkrc   , j6dmnjkr  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Demon Jokers (JPM) (IMPACT) (set 4)", GAME_FLAGS )
 // GAME( 199?, j6gldday , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Day (JPM) (IMPACT)", GAME_FLAGS ) // this is the same as j6dmnjkra
- GAME( 199?, j6reddmn	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Demon (JPM) (IMPACT)", GAME_FLAGS ) // the same as Demon Jokers but with a different sound rom?
+	GAME( 199?, j6reddmn    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Demon (JPM) (IMPACT)", GAME_FLAGS ) // the same as Demon Jokers but with a different sound rom?
 
 
 
-GAME( 199?, j6dmngz		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Diamond Geezer (JPM) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6dmngz     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Diamond Geezer (JPM) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6dyfl		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6dyfla		, j6dyfl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6dyflb		, j6dyfl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6dyflc		, j6dyfl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6dyfld		, j6dyfl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6dyfle		, j6dyfl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6dyflf		, j6dyfl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6dyflg		, j6dyfl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6dyflh		, j6dyfl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6dyfli		, j6dyfl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6dyflj		, j6dyfl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6dyfl      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6dyfla     , j6dyfl    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6dyflb     , j6dyfl    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6dyflc     , j6dyfl    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6dyfld     , j6dyfl    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6dyfle     , j6dyfl    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6dyflf     , j6dyfl    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6dyflg     , j6dyfl    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6dyflh     , j6dyfl    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6dyfli     , j6dyfl    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6dyflj     , j6dyfl    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Do You Feel Lucky (JPM) (IMPACT) (set 11)", GAME_FLAGS )
 
-GAME( 199?, j6drdogh	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Dr Dough (Qps) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6drdogh    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Dr Dough (Qps) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6euphor	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6euphora	, j6euphor	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6euphorb	, j6euphor	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6euphorc	, j6euphor	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6euphord	, j6euphor	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6euphore	, j6euphor	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6euphorf	, j6euphor	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6euphor    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6euphora   , j6euphor  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6euphorb   , j6euphor  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6euphorc   , j6euphor  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6euphord   , j6euphor  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6euphore   , j6euphor  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6euphorf   , j6euphor  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Euphoria (Ace) (IMPACT) (set 7)", GAME_FLAGS )
 
 
-GAME( 199?, j6fastfr	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fast Fruits Club (Qps) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6fastfra	, j6fastfr	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fast Fruits Club (Qps) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6fastfr    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fast Fruits Club (Qps) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6fastfra   , j6fastfr  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fast Fruits Club (Qps) (IMPACT) (set 2)", GAME_FLAGS )
 
 
-GAME( 199?, j6fasttk	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fast Trak (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6fasttka	, j6fasttk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fast Trak (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6fasttkb	, j6fasttk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fast Trak (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6fasttkc	, j6fasttk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fast Trak (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6fasttk    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fast Trak (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6fasttka   , j6fasttk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fast Trak (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6fasttkb   , j6fasttk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fast Trak (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6fasttkc   , j6fasttk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fast Trak (JPM) (IMPACT) (set 4)", GAME_FLAGS )
 
 
-GAME( 199?, j6filth		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Filthy Rich Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6filtha	, j6filth	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Filthy Rich Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6filthb	, j6filth	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Filthy Rich Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6filthc	, j6filth	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Filthy Rich Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6filth     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Filthy Rich Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6filtha    , j6filth   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Filthy Rich Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6filthb    , j6filth   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Filthy Rich Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6filthc    , j6filth   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Filthy Rich Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
 
 
-GAME( 199?, j6firbl		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fireball (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6firbla	, j6firbl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fireball (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6firblb	, j6firbl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fireball (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6firblc	, j6firbl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fireball (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6firbld	, j6firbl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fireball (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6firbl     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fireball (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6firbla    , j6firbl   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fireball (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6firblb    , j6firbl   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fireball (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6firblc    , j6firbl   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fireball (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6firbld    , j6firbl   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Fireball (JPM) (IMPACT) (set 5)", GAME_FLAGS )
 
 
-GAME( 199?, j6fireck	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6firecka	, j6fireck	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6fireckb	, j6fireck	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6fireckc	, j6fireck	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6fireckd	, j6fireck	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6firecke	, j6fireck	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6fireck    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6firecka   , j6fireck  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6fireckb   , j6fireck  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6fireckc   , j6fireck  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6fireckd   , j6fireck  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6firecke   , j6fireck  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker (JPM) (IMPACT) (set 6)", GAME_FLAGS )
 
 
-GAME( 199?, j6firclb	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6firclba	, j6firclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6firclbb	, j6firclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6firclbc	, j6firclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6firclb    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6firclba   , j6firclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6firclbb   , j6firclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6firclbc   , j6firclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Firecracker Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
 
 
-GAME( 199?, j6fivalv	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Alive Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6fivalva	, j6fivalv	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Alive Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6fivalvb	, j6fivalv	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Alive Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6fivalv    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Alive Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6fivalva   , j6fivalv  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Alive Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6fivalvb   , j6fivalv  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Alive Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
 
 
-GAME( 199?, j6fiveln	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Liner (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6fivelna	, j6fiveln	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Liner (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6fivelnb	, j6fiveln	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Liner (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6fivelnc	, j6fiveln	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Liner (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6fiveln    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Liner (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6fivelna   , j6fiveln  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Liner (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6fivelnb   , j6fiveln  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Liner (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6fivelnc   , j6fiveln  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Five Liner (JPM) (IMPACT) (set 4)", GAME_FLAGS )
 
 
-GAME( 199?, j6frc10		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Force 10 (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6frc10a	, j6frc10	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Force 10 (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6frc10b	, j6frc10	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Force 10 (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6frc10c	, j6frc10	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Force 10 (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6frc10d	, j6frc10	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Force 10 (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6frc10     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Force 10 (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6frc10a    , j6frc10   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Force 10 (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6frc10b    , j6frc10   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Force 10 (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6frc10c    , j6frc10   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Force 10 (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6frc10d    , j6frc10   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Force 10 (JPM) (IMPACT) (set 5)", GAME_FLAGS )
 
 
-GAME( 199?, j6framft	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Frame & Fortune Club (JPM) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6framft    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Frame & Fortune Club (JPM) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6frtmch	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "The Fruit Machine (JPM) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6frtmch    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "The Fruit Machine (JPM) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6frtpot	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fruitpots (Qps) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6frtpota	, j6frtpot	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fruitpots (Qps) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6frtpotb	, j6frtpot	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fruitpots (Qps) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6frtpotc	, j6frtpot	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fruitpots (Qps) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6frtpot    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fruitpots (Qps) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6frtpota   , j6frtpot  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fruitpots (Qps) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6frtpotb   , j6frtpot  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fruitpots (Qps) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6frtpotc   , j6frtpot  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Fruitpots (Qps) (IMPACT) (set 4)", GAME_FLAGS )
 
 
-GAME( 199?, j6gforce	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G Force (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6gforcea	, j6gforce	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G Force (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6gforceb	, j6gforce	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G Force (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6gforcec	, j6gforce	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G Force (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6gforced	, j6gforce	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G Force (JPM) (IMPACT) (15GBP Jackpot)", GAME_FLAGS )
+GAME( 199?, j6gforce    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G Force (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6gforcea   , j6gforce  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G Force (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6gforceb   , j6gforce  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G Force (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6gforcec   , j6gforce  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G Force (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6gforced   , j6gforce  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G Force (JPM) (IMPACT) (15GBP Jackpot)", GAME_FLAGS )
 
-GAME( 199?, j6gidogh	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G.I. Dough (Ace) (IMPACT)", GAME_FLAGS )
+GAME( 199?, j6gidogh    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "G.I. Dough (Ace) (IMPACT)", GAME_FLAGS )
 
-GAME( 199?, j6guab		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6guaba		, j6guab	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6guabb		, j6guab	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6guabc		, j6guab	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6guabd		, j6guab	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6guabe		, j6guab	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6guabf		, j6guab	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6guab      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6guaba     , j6guab    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6guabb     , j6guab    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6guabc     , j6guab    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6guabd     , j6guab    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6guabe     , j6guab    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6guabf     , j6guab    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break (JPM) (IMPACT) (set 7)", GAME_FLAGS )
 
-GAME( 199?, j6guabcl	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6guabcla	, j6guabcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6guabcl    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6guabcla   , j6guabcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Give Us A Break Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
 
 
-GAME( 199?, j6gldclb	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Gladiator Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6gldclba	, j6gldclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Gladiator Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6gldclbb	, j6gldclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Gladiator Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6gldclb    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Gladiator Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6gldclba   , j6gldclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Gladiator Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6gldclbb   , j6gldclb  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Gladiator Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
 
-GAME( 199?, j6gogold	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Go For Gold (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6gogolda	, j6gogold	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Go For Gold (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6gogoldb	, j6gogold	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Go For Gold (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6gogoldc	, j6gogold	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Go For Gold (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-
-GAME( 199?, j6gldmin	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Gold Mine (Empire) (IMPACT)", GAME_FLAGS )
-
-
-GAME( 199?, j6golddm	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Demons (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6golddma	, j6golddm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Demons (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6goldgl	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6goldgla	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6goldglb	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6goldglc	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6goldgld	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6goldgle	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6goldglf	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6goldglg	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6goldglh	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6goldgli	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6goldglj	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6goldglk	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6goldgll	, j6goldgl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 13)", GAME_FLAGS )
-
-
-GAME( 199?, j6hapyhr	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Happy Hour (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6hapyhra	, j6hapyhr	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Happy Hour (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6hapyhrb	, j6hapyhr	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Happy Hour (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-
-GAME( 199?, j6hifly		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hi Flyer (Crystal) (IMPACT)", GAME_FLAGS )
-
-
-GAME( 199?, j6impact	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Impact (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6impacta	, j6impact	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Impact (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6impactb	, j6impact	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Impact (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6impactc	, j6impact	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Impact (JPM) (IMPACT) (15GBP Jackpot)", GAME_FLAGS )
-
-GAME( 199?, j6hilosv	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6hilosva	, j6hilosv	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6hilosvb	, j6hilosv	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6hilosvc	, j6hilosv	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6hilosvd	, j6hilosv	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 5)", GAME_FLAGS ) // incomplete pair
-GAME( 199?, j6hilosve	, j6hilosv	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 6)", GAME_FLAGS ) // incomplete pair
-
-
-GAME( 199?, j6hirol		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6hirola	, j6hirol	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6hirolb	, j6hirol	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6hirolc	, j6hirol	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6hirold	, j6hirol	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6hirlcl	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6hirlcla	, j6hirlcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6hirlclb	, j6hirlcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6hirlclc	, j6hirlcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-
-
-GAME( 199?, j6histk		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Hi Stakes (Qps) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6histka	, j6histk	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Hi Stakes (Qps) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6hiphop	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hip Hopper (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6hiphopa	, j6hiphop	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hip Hopper (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6hiphopb	, j6hiphop	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hip Hopper (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6hiphopc	, j6hiphop	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hip Hopper (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6hiphopd	, j6hiphop	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hip Hopper (Ace) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6hotsht	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6hotshta	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6hotshtb	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6hotshtc	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6hotshtd	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6hotshte	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6hotshtf	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6hotshtg	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6hotshth	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6hotshti	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6hotshtj	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6hotshtk	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6hotshtl	, j6hotsht	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 13)", GAME_FLAGS )
-
-
-GAME( 199?, j6impuls	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6impulsa	, j6impuls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6impulsb	, j6impuls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6impulsc	, j6impuls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6impulsd	, j6impuls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6impulse	, j6impuls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6impulsf	, j6impuls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-
+GAME( 199?, j6gogold    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Go For Gold (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6gogolda   , j6gogold  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Go For Gold (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6gogoldb   , j6gogold  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Go For Gold (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6gogoldc   , j6gogold  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Go For Gold (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+
+GAME( 199?, j6gldmin    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Gold Mine (Empire) (IMPACT)", GAME_FLAGS )
+
+
+GAME( 199?, j6golddm    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Demons (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6golddma   , j6golddm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Demons (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6goldgl    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6goldgla   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6goldglb   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6goldglc   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6goldgld   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6goldgle   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6goldglf   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6goldglg   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6goldglh   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6goldgli   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6goldglj   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6goldglk   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6goldgll   , j6goldgl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Golden Goal (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+
+
+GAME( 199?, j6hapyhr    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Happy Hour (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6hapyhra   , j6hapyhr  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Happy Hour (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6hapyhrb   , j6hapyhr  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Happy Hour (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+
+GAME( 199?, j6hifly     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hi Flyer (Crystal) (IMPACT)", GAME_FLAGS )
+
+
+GAME( 199?, j6impact    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Impact (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6impacta   , j6impact  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Impact (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6impactb   , j6impact  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Impact (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6impactc   , j6impact  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Impact (JPM) (IMPACT) (15GBP Jackpot)", GAME_FLAGS )
+
+GAME( 199?, j6hilosv    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6hilosva   , j6hilosv  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6hilosvb   , j6hilosv  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6hilosvc   , j6hilosv  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6hilosvd   , j6hilosv  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 5)", GAME_FLAGS ) // incomplete pair
+GAME( 199?, j6hilosve   , j6hilosv  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Lo Silver (JPM) (IMPACT) (set 6)", GAME_FLAGS ) // incomplete pair
+
+
+GAME( 199?, j6hirol     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6hirola    , j6hirol   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6hirolb    , j6hirol   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6hirolc    , j6hirol   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6hirold    , j6hirol   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6hirlcl    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6hirlcla   , j6hirlcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6hirlclb   , j6hirlcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6hirlclc   , j6hirlcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Hi Roller Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+
+
+GAME( 199?, j6histk     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Hi Stakes (Qps) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6histka    , j6histk   , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Hi Stakes (Qps) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6hiphop    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hip Hopper (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6hiphopa   , j6hiphop  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hip Hopper (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6hiphopb   , j6hiphop  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hip Hopper (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6hiphopc   , j6hiphop  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hip Hopper (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6hiphopd   , j6hiphop  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hip Hopper (Ace) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6hotsht    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6hotshta   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6hotshtb   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6hotshtc   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6hotshtd   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6hotshte   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6hotshtf   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6hotshtg   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6hotshth   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6hotshti   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6hotshtj   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6hotshtk   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6hotshtl   , j6hotsht  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Hot Shot (Ace) (IMPACT) (set 13)", GAME_FLAGS )
+
+
+GAME( 199?, j6impuls    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6impulsa   , j6impuls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6impulsb   , j6impuls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6impulsc   , j6impuls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6impulsd   , j6impuls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6impulse   , j6impuls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6impulsf   , j6impuls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Impulse (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+
 
-GAME( 199?, j6indy		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6indya		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6indyb		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6indyc		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6indyd		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6indye		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6indyf		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6indyg		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6indyh		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6indyi		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6indyj		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6indyk		, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6indyge	, j6indy	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT, German)", GAME_FLAGS ) // was marked as Sys5 'Indy 500' but is clearly IMPACT and has Indiana Jones / Holy Grail strings (might be a different game to the english set)
-
-GAME( 199?, j6showtm	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6showtma	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6showtmb	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6showtmc	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6showtmd	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6showtme	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6showtmf	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6showtmg	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6showtmh	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6showtmi	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6showtmj	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6showtmk	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6showtml	, j6showtm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 13)", GAME_FLAGS )
-
-GAME( 199?, j6jackjs	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Jackpot Justice (Qps) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6jackjsa	, j6jackjs	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Jackpot Justice (Qps) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6jackjsb	, j6jackjs	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Jackpot Justice (Qps) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6jackjsc	, j6jackjs	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Jackpot Justice (Qps) (IMPACT) (set 4)", GAME_FLAGS )
-
-GAME( 199?, j6jkrgld	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Gold (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6jkrpls	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6jkrplsa	, j6jkrpls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6jkrplsb	, j6jkrpls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6jkrplsc	, j6jkrpls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6jkrplsd	, j6jkrpls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6jkrplse	, j6jkrpls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-
-GAME( 199?, j6jkpldx	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus Deluxe (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6jkpldxa	, j6jkpldx	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus Deluxe (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6jkwld		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Wild (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6jungfv	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Jungle Fever (Ace) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6kamel		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Kameleon (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6kungfu	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Kung Fu (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6kungfua	, j6kungfu	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Kung Fu (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6kungfub	, j6kungfu	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Kung Fu (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6kungfuc	, j6kungfu	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Kung Fu (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6kungfud	, j6kungfu	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Kung Fu (Ace) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6luckla	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Lucky Las Vegas (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6lucklaa	, j6luckla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Lucky Las Vegas (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6lucklab	, j6luckla	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Lucky Las Vegas (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-
-GAME( 199?, j6magcir	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Magic Circle Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6magcira	, j6magcir	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Magic Circle Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6magcirb	, j6magcir	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Magic Circle Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6magcirc	, j6magcir	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Magic Circle Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6magcird	, j6magcir	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Magic Circle Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6mavrk		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maverick (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6mavrka	, j6mavrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maverick (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6mavrkb	, j6mavrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maverick (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6mavrkc	, j6mavrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maverick (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6mavrkd	, j6mavrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maverick (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-
-GAME( 199?, j6maxod		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maximum Overdrive (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6maxoda	, j6maxod	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maximum Overdrive (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6maxodb	, j6maxod	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maximum Overdrive (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6maxodc	, j6maxod	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maximum Overdrive (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-
-GAME( 199?, j6maxcsh	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maximus Cash (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6medal		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Medallion Job (Qps) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6medala	, j6medal	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Medallion Job (Qps) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6medalb	, j6medal	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Medallion Job (Qps) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6medalc	, j6medal	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Medallion Job (Qps) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6medald	, j6medal	, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Medallion Job (Qps) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6megbck	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Mega Bucks (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6megbcka	, j6megbck	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Mega Bucks (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6megbckb	, j6megbck	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Mega Bucks (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6megbckc	, j6megbck	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Mega Bucks (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6megbckd	, j6megbck	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Mega Bucks (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-
-GAME( 199?, j6monmad	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Money Madness (Ace) (IMPACT)", GAME_FLAGS )
-
-
-GAME( 199?, j6montlk	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6montlka	, j6montlk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6montlkb	, j6montlk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6montlkc	, j6montlk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6montlkd	, j6montlk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6montlke	, j6montlk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6montlkf	, j6montlk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6montlkg	, j6montlk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6montlkh	, j6montlk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-
-
-GAME( 199?, j6mono60	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6mono60a	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6mono60b	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6mono60c	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6mono60d	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6mono60e	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6mono60f	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6mono60g	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6mono60h	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6mono60i	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6mono60j	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6mono60k	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6mono60l	, j6mono60	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 13)", GAME_FLAGS )
-
-GAME( 199?, j6monobn	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly Bingo (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6monobna	, j6monobn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly Bingo (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6monobnb	, j6monobn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly Bingo (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-
-GAME( 199?, j6outlaw	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Outlaw (JPM) (IMPACT, v3)", GAME_FLAGS )
-GAME( 199?, j6outlawd	, j6outlaw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Outlaw (JPM) (IMPACT, v3) (Protocol)", GAME_FLAGS )
-GAME( 199?, j6outlawc	, j6outlaw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Outlaw (JPM) (IMPACT, Club?)", GAME_FLAGS )
-
-
-GAME( 199?, j6oxo		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6oxoa		, j6oxo		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6oxob		, j6oxo		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6oxoc		, j6oxo		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6oxod		, j6oxo		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6oxoe		, j6oxo		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-
-GAME( 199?, j6oxobin	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6oxobina	, j6oxobin	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6oxobinb	, j6oxobin	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6oxobinc	, j6oxobin	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6oxobind	, j6oxobin	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6oxobine	, j6oxobin	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6oxobinf	, j6oxobin	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-
-
-GAME( 199?, j6pacman	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Pac Man Plus (Qps) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6papa		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6papaa		, j6papa	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6papab		, j6papa	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6papac		, j6papa	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6papad		, j6papa	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6papae		, j6papa	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6papaf		, j6papa	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 7)", GAME_FLAGS )
-
-
-GAME( 199?, j6phxgld	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6phxglda	, j6phxgld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6phxgldb	, j6phxgld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6phxgldc	, j6phxgld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6phxgldd	, j6phxgld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6phxglde	, j6phxgld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6phxgldf	, j6phxgld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6phxgldg	, j6phxgld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-
-GAME( 199?, j6pnxgd		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold De Luxe (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6pnxmil	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Millennium (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6pnxmila	, j6pnxmil	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Millennium (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6pnxmilb	, j6pnxmil	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Millennium (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6pnxmilc	, j6pnxmil	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Millennium (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-
-
-GAME( 199?, j6pinwzd	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6pinwzda	, j6pinwzd	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6pinwzdb	, j6pinwzd	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6pinwzdc	, j6pinwzd	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6pinwzdd	, j6pinwzd	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6pinwzde	, j6pinwzd	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6pinwzc	, j6pinwzd	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pinball Wizard (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6pinwzca	, j6pinwzd	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pinball Wizard (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6pinwzcb	, j6pinwzd	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pinball Wizard (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-
-GAME( 199?, j6pirgld	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pirates Gold (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6pirglda	, j6pirgld	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pirates Gold (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
-GAME( 199?, j6popoli	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Popeye & Olive (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6popolia	, j6popoli	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Popeye & Olive (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6pog		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Pot Of Gold (Ace) (IMPACT) (set 1)", GAME_FLAGS ) // has video roms, why? (misplaced? hybrid?)
-GAME( 199?, j6poga		, j6pog		, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Pot Of Gold (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6pogb		, j6pog		, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Pot Of Gold (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6pogc		, j6pog		, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Pot Of Gold (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6pogd		, j6pog		, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Pot Of Gold (Ace) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6pogcls	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pot Of Gold Classic (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6pogclsa	, j6pogcls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pot Of Gold Classic (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6pogclsb	, j6pogcls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pot Of Gold Classic (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-
-
-GAME( 199?, j6pwrlin	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Power Lines (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6pwrlina	, j6pwrlin	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Power Lines (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6pwrspn	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6pwrspna	, j6pwrspn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6pwrspnb	, j6pwrspn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6pwrspnc	, j6pwrspn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6pwrspnd	, j6pwrspn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6pwrspne	, j6pwrspn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-
-
-GAME( 199?, j6quantm	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Quantum Leap (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6quantma	, j6quantm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Quantum Leap (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6quantmb	, j6quantm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Quantum Leap (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6quantmc	, j6quantm	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Quantum Leap (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-
-GAME( 199?, j6quick		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "RAL", "Quicksilver (RAL) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6rager		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) [German] (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6ra		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6raa		, j6ra		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6rab		, j6ra		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6rac		, j6ra		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6rad		, j6ra		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-
-GAME( 199?, j6raclb		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6raclba	, j6raclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6raclbb	, j6raclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6raclbc	, j6raclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6raclbd	, j6raclb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6redarw	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6redarwa	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6redarwb	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6redarwc	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6redarwd	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6redarwe	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6redarwf	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6redarwg	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6redarwh	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6redarwi	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6redarwj	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6redarww	, j6redarw	, impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / JPM", "Red Arrow (Whitbread / JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 2002, j6rh6		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 2002, j6rh6a		, j6rh6		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 2002, j6rh6b		, j6rh6		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 2002, j6rh6c		, j6rh6		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 2002, j6rh6d		, j6rh6		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 2002, j6rh6e		, j6rh6		, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-
-
-GAME( 199?, j6rhchil	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Red Hot Chili Stepper (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6rhchila	, j6rhchil	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Red Hot Chili Stepper (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6rhchilb	, j6rhchil	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Red Hot Chili Stepper (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6rhchilc	, j6rhchil	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Red Hot Chili Stepper (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6rhchild	, j6rhchil	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Red Hot Chili Stepper (Ace) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6rh6cl		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot Six Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6rh6cla	, j6rh6cl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot Six Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6rh6clb	, j6rh6cl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot Six Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6rh6clc	, j6rh6cl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot Six Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6rh6cld	, j6rh6cl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot Six Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6reelmn	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Reel Money (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6reelmna	, j6reelmn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Reel Money (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6reelmnb	, j6reelmn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Reel Money (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6reelmnc	, j6reelmn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Reel Money (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6reelmnd	, j6reelmn	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Reel Money (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-
-GAME( 199?, j6reelth	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Reel Thing (Ace) (IMPACT) set 1)", GAME_FLAGS )
-GAME( 199?, j6reeltha	, j6reelth	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Reel Thing (Ace) (IMPACT) set 2)", GAME_FLAGS )
-GAME( 199?, j6reelthb	, j6reelth	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Reel Thing (Ace) (IMPACT) set 3)", GAME_FLAGS )
-
-GAME( 199?, j6richpk	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Rich Pickings (Ace) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6rico		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6ricoa		, j6rico	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6ricob		, j6rico	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6ricoc		, j6rico	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6ricod		, j6rico	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6ricoe		, j6rico	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-
-GAME( 199?, j6robin		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Robin Hood (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6robina	, j6robin	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Robin Hood (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6robinb	, j6robin	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Robin Hood (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6robinc	, j6robin	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Robin Hood (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-
-
-GAME( 199?, j6roller	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6rollera	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6rollerb	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6rollerc	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6rollerd	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6rollere	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6rollerf	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6rollerg	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6rollerh	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6rolleri	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6rollerj	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6rollerk	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6rollerl	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 13)", GAME_FLAGS )
-GAME( 199?, j6rollerm	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 14)", GAME_FLAGS )
-GAME( 199?, j6rollern	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 15)", GAME_FLAGS )
-GAME( 199?, j6rollero	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 16)", GAME_FLAGS )
-GAME( 199?, j6rollerp	, j6roller	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 17)", GAME_FLAGS )
-
-
-GAME( 199?, j6rccls		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Classic (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6rcclsa	, j6rccls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Classic (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6rcclsb	, j6rccls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Classic (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-
-GAME( 199?, j6royfls	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6royflsa	, j6royfls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6royflsb	, j6royfls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6royflsc	, j6royfls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6royflsd	, j6royfls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6royflse	, j6royfls	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-
-
-GAME( 199?, j6samur		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Samurai Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6samura	, j6samur	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Samurai Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6samurb	, j6samur	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Samurai Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6samurc	, j6samur	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Samurai Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6samurd	, j6samur	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Samurai Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6sidewd	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6sidewda	, j6sidewd	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6sidewdb	, j6sidewd	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6sidewdc	, j6sidewd	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6sidewdd	, j6sidewd	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6sidewde	, j6sidewd	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-
-
-GAME( 199?, j6snakes	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6snakesa	, j6snakes	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6snakesb	, j6snakes	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6snakesc	, j6snakes	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6snakesd	, j6snakes	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6snakese	, j6snakes	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6snakesf	, j6snakes	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6snakesg	, j6snakes	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-
-
-GAME( 199?, j6sonic		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6sonica	, j6sonic	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6sonicb	, j6sonic	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6sonicc	, j6sonic	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6sonicd	, j6sonic	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6sonice	, j6sonic	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6sonicf	, j6sonic	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6sonicg	, j6sonic	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6sonich	, j6sonic	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 9)", GAME_FLAGS ) // incomplete pair
-
-GAME( 199?, j6spcinv	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Space Invaders (Crystal) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6stards	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Stardust (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6stardsa	, j6stards	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Stardust (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6stardsb	, j6stards	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Stardust (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6stardsc	, j6stards	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Stardust (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-
-
-GAME( 199?, j6start		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Starturn (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6starta	, j6start	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Starturn (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
-GAME( 199?, j6strk10	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6strk10a	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6strk10b	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6strk10c	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6strk10d	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6strk10e	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6strk10f	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6strk10g	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6strk10h	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6strk10i	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6strk10j	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6strk10k	, j6strk10	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 12)", GAME_FLAGS )
-
-
-GAME( 199?, j6supbrk	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6supbrka	, j6supbrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6supbrkb	, j6supbrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6supbrkc	, j6supbrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6supbrkd	, j6supbrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6supbrke	, j6supbrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6supbrkf	, j6supbrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6supbrkg	, j6supbrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6supbrkh	, j6supbrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6supbrki	, j6supbrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6supbrkj	, j6supbrk	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-
-
-GAME( 199?, j6swpdrp	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Swop Till Ya Drop (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6bags		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Three Bags Full (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6roof		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Thru' The Roof (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6roofa		, j6roof	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Thru' The Roof (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-
-GAME( 199?, j6tbirds	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6tbirdsa	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6tbirdsb	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6tbirdsc	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6tbirdsd	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6tbirdse	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6tbirdsf	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6tbirdsg	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6tbirdsh	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6tbirdsi	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6tbirdsj	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6tbirdsk	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6tbirdsl	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 13)", GAME_FLAGS )
-GAME( 199?, j6tbirdsm	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 14)", GAME_FLAGS )
-GAME( 199?, j6tbirdsn	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 15)", GAME_FLAGS )
-GAME( 199?, j6tbirdso	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 16)", GAME_FLAGS )
-GAME( 199?, j6tbirdsp	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 17)", GAME_FLAGS )
-GAME( 199?, j6tbirdsq	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 18)", GAME_FLAGS )
-GAME( 199?, j6tbirdsr	, j6tbirds	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 19)", GAME_FLAGS )
-
-GAME( 199?, j6tbrdcl	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6tbrdcla	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6tbrdclb	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6tbrdclc	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6tbrdcld	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6tbrdcle	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6tbrdclf	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6tbrdclg	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6tbrdclh	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6tbrdcli	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6tbrdclj	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6tbrdclk	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-GAME( 199?, j6tbrdcll	, j6tbrdcl	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 13)", GAME_FLAGS )
-
-
-GAME( 199?, j6tomb		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6tomba		, j6tomb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6tombb		, j6tomb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6tombc		, j6tomb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6tombd		, j6tomb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6tombe		, j6tomb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6tombf		, j6tomb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6tombg		, j6tomb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-
-GAME( 199?, j6topflg	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Top Flight (Ace) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6tutti		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Tutti Frutti (Qps) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6twst		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6twsta		, j6twst	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6twstb		, j6twst	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6twstc		, j6twst	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6twstd		, j6twst	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6twste		, j6twst	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6twstf		, j6twst	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6twstg		, j6twst	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6twsth		, j6twst	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6twsti		, j6twst	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6twstj		, j6twst	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 11)", GAME_FLAGS )
-
-GAME( 199?, j6twstdt	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Twister (JPM) [Dutch] (IMPACT)", GAME_FLAGS )
-
-
-GAME( 199?, j6untch		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Untouchables (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6untcha	, j6untch	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Untouchables (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6pompay	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Up Pompay (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6pompaya	, j6pompay	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Up Pompay (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6pompayb	, j6pompay	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Up Pompay (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6pompayc	, j6pompay	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Up Pompay (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-
-GAME( 199?, j6vindal	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Vindaloot (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6vivark	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6vivarka	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6vivarkb	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6vivarkc	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6vivarkd	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6vivarke	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6vivarkf	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6vivarkg	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6vivarkh	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 9)", GAME_FLAGS )
-GAME( 199?, j6vivarki	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 10)", GAME_FLAGS )
-GAME( 199?, j6vivarkj	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 11)", GAME_FLAGS )
-GAME( 199?, j6vivarkk	, j6vivark	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 12)", GAME_FLAGS )
-
-GAME( 199?, j6vivrkc	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6vivrkca	, j6vivrkc	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6vivrkcb	, j6vivrkc	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-
-
-GAME( 199?, j6wldkng	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wild King Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6wldknga	, j6wldkng	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wild King Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6wthing	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Wild Thing (Empire) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6wthinga	, j6wthing	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Wild Thing (Empire) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6wthingb	, j6wthing	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Wild Thing (Empire) (IMPACT) (set 3)", GAME_FLAGS )
-
-GAME( 199?, j6wildw		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6wildwa	, j6wildw	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6wildwb	, j6wildw	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6wildwc	, j6wildw	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6wildwd	, j6wildw	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6wildwe	, j6wildw	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6wildwf	, j6wildw	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6wildwg	, j6wildw	, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 8)", GAME_FLAGS )
-
-
-GAME( 199?, j6wizard	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6wizarda	, j6wizard	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6wizardb	, j6wizard	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6wizardc	, j6wizard	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6wizardd	, j6wizard	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6wizarde	, j6wizard	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-
-
-GAME( 199?, j6knight	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6knighta	, j6knight	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6knightb	, j6knight	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6knightc	, j6knight	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6knightd	, j6knight	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6knighte	, j6knight	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-
-
-GAME( 199?, j6svndb		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Ace", "7 Deadly Bins (Ace) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6ewn		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Each Way Nudger (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6hikar		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hi Karate (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6hikara	, j6hikar	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hi Karate (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6hikarb	, j6hikar	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hi Karate (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-
-GAME( 199?, j6hisprt	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "High Spirits (Empire) (IMPACT) (prototype?)", GAME_FLAGS ) // roms are marked 'DEMO'
-
-GAME( 199?, j6rcclub	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6rccluba	, j6rcclub	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6rcclubb	, j6rcclub	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-
-
-GAME( 199?, j6slvgst	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6slvgsta	, j6slvgst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6slvgstb	, j6slvgst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6slvgstc	, j6slvgst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6slvgstd	, j6slvgst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6slvgste	, j6slvgst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6slvgstf	, j6slvgst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6slvgstg	, j6slvgst	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 8)", GAME_FLAGS )
-
-
-GAME( 199?, j6footy		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Football Fever (Empire) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6footya	, j6footy	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Football Fever (Empire) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6footyb	, j6footy	, impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Football Fever (Empire) (IMPACT) (set 3)", GAME_FLAGS )
-
-GAME( 199?, j6fbcrz		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Football Crazy (JPM) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6h5clb		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "High Five Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6h5clba	, j6h5clb	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "High Five Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6bmc		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Money Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6bmca		, j6bmc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Money Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-
-GAME( 199?, j6bno		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Nite Out (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6bnoa		, j6bno		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Nite Out (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6bnob		, j6bno		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Nite Out (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6bnoc		, j6bno		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Nite Out (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-
-
-GAME( 199?, j6btbw		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Born To Be Wild Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6btbwa		, j6btbw	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Born To Be Wild Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6btbwb		, j6btbw	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Born To Be Wild Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6btbwc		, j6btbw	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Born To Be Wild Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6btbwd		, j6btbw	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Born To Be Wild Club (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6cpal		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6cpala		, j6cpal	, impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 2)", GAME_FLAGS ) // marked as ACE
-GAME( 1998, j6cpalb		, j6cpal	, impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 1998, j6cpalc		, j6cpal	, impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 1998, j6cpald		, j6cpal	, impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 1998, j6cpale		, j6cpal	, impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 1998, j6cpalf		, j6cpal	, impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 1998, j6cpalg		, j6cpal	, impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 8)", GAME_FLAGS )
-
-GAME( 199?, j6cdivr		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Cash Diver (Crystal) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6ccc		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Casino Crazy Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6ccca		, j6ccc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Casino Crazy Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6cccb		, j6ccc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Casino Crazy Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6cccc		, j6ccc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Casino Crazy Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-
-GAME( 199?, j6colic		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Coliseum (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6colica	, j6colic	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Coliseum (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6colicb	, j6colic	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Coliseum (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6colicc	, j6colic	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Coliseum (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6colicd	, j6colic	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Coliseum (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
-
-GAME( 199?, j6crakr		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Cracker (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6crakra	, j6crakr	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Cracker (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6crakrb	, j6crakr	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Cracker (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-
-
-GAME( 199?, j6ewndg		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Each Way Nudger (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6ewndga	, j6ewndg	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Each Way Nudger (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6ewndgb	, j6ewndg	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Each Way Nudger (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-
-
-GAME( 199?, j6easy		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Easy Money (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6easya		, j6easy	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Easy Money (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6easyb		, j6easy	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Easy Money (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6easyc		, j6easy	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Easy Money (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-
-
-GAME( 199?, j6ffc		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6ffca		, j6ffc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6ffcb		, j6ffc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6ffcc		, j6ffc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6ffcd		, j6ffc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6ffce		, j6ffc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 6)", GAME_FLAGS )
-
-
-GAME( 199?, j6grc		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Gold Rush Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6grca		, j6grc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Gold Rush Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6hdc		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6hdca		, j6hdc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6hdcb		, j6hdc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6hdcc		, j6hdc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6hdcd		, j6hdc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6hdce		, j6hdc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6hdcf		, j6hdc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6hdcg		, j6hdc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 8)", GAME_FLAGS )
-
-GAME( 199?, j6impls		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Impulse (Crystal) (IMPACT)", GAME_FLAGS )
-
-
-GAME( 199?, j6kapang	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Kapang! (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6kapanga	, j6kapang	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Kapang! (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-
-GAME( 199?, j6kfc		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Kung Fu Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6kfca		, j6kfc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Kung Fu Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6kfcb		, j6kfc		, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Kung Fu Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-
-
-GAME( 199?, j6lucklo	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Lucky Lottery Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6luckloa	, j6lucklo	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Lucky Lottery Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6monst		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Monster Cash Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6monsta	, j6monst	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Monster Cash Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6monstb	, j6monst	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Monster Cash Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6monstc	, j6monst	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Monster Cash Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6monstd	, j6monst	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Monster Cash Club (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
-
-
-GAME( 199?, j6pinfvr	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pinball Fever (Crystal) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6potg		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pot Of Gold (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6potga		, j6potg	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pot Of Gold (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6potgb		, j6potg	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pot Of Gold (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-
-
-GAME( 199?, j6ramese	, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6ramesea	, j6ramese	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6rameseb	, j6ramese	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6ramesec	, j6ramese	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6ramesed	, j6ramese	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6ramesee	, j6ramese	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6ramesef	, j6ramese	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 7)", GAME_FLAGS )
-
-
-GAME( 199?, j6r2rum		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6r2ruma	, j6r2rum	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6r2rumb	, j6r2rum	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6r2rumc	, j6r2rum	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6r2rumd	, j6r2rum	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6r2rume	, j6r2rum	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 6)", GAME_FLAGS )
-
-
-GAME( 199?, j6redal		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Red Alert (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6redala	, j6redal	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Red Alert (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6reelb		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Reel Bingo Classic Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6reelba	, j6reelb	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Reel Bingo Classic Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-
-GAME( 199?, j6slagn		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6slagna	, j6slagn	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6slagnb	, j6slagn	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6slagnc	, j6slagn	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-GAME( 199?, j6slagnd	, j6slagn	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
-GAME( 199?, j6slagne	, j6slagn	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 6)", GAME_FLAGS )
-GAME( 199?, j6slagnf	, j6slagn	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 7)", GAME_FLAGS )
-GAME( 199?, j6slagng	, j6slagn	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 8)", GAME_FLAGS )
-GAME( 199?, j6slagnh	, j6slagn	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 9)", GAME_FLAGS )
-
-
-GAME( 199?, j6thril		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Thriller (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6thrila	, j6thril	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Thriller (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-
-
-GAME( 199?, j6tqust		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Treasure Quest (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
-GAME( 199?, j6tqusta	, j6tqust	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Treasure Quest (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
-GAME( 199?, j6tqustb	, j6tqust	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Treasure Quest (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
-GAME( 199?, j6tqustc	, j6tqust	, impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Treasure Quest (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
-
-GAME( 199?, j6gldpl		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Golden Palace (Qps) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6shoot		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM / Whitbread", "ShootOut (JPM / Whitbread) (IMPACT)", GAME_FLAGS )
-
-GAME( 199?, j6milln		, 0			, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Millionaire (JPM) (IMPACT) (set 1)", GAME_FLAGS ) // was marked as SWP, should this be a video game? - Apparently it's just a link box using the same hardware, but for 3 PC based units which aren't dumped
-GAME( 199?, j6millna	, j6milln	, impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Millionaire (JPM) (IMPACT) (set 2)", GAME_FLAGS )
-
+GAME( 199?, j6indy      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6indya     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6indyb     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6indyc     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6indyd     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6indye     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6indyf     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6indyg     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6indyh     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6indyi     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6indyj     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6indyk     , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6indyge    , j6indy    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Indiana Jones (JPM) (IMPACT, German)", GAME_FLAGS ) // was marked as Sys5 'Indy 500' but is clearly IMPACT and has Indiana Jones / Holy Grail strings (might be a different game to the english set)
+
+GAME( 199?, j6showtm    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6showtma   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6showtmb   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6showtmc   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6showtmd   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6showtme   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6showtmf   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6showtmg   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6showtmh   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6showtmi   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6showtmj   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6showtmk   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6showtml   , j6showtm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "It's Showtime (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+
+GAME( 199?, j6jackjs    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Jackpot Justice (Qps) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6jackjsa   , j6jackjs  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Jackpot Justice (Qps) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6jackjsb   , j6jackjs  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Jackpot Justice (Qps) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6jackjsc   , j6jackjs  , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Jackpot Justice (Qps) (IMPACT) (set 4)", GAME_FLAGS )
+
+GAME( 199?, j6jkrgld    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Gold (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6jkrpls    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6jkrplsa   , j6jkrpls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6jkrplsb   , j6jkrpls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6jkrplsc   , j6jkrpls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6jkrplsd   , j6jkrpls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6jkrplse   , j6jkrpls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+
+GAME( 199?, j6jkpldx    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus Deluxe (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6jkpldxa   , j6jkpldx  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Plus Deluxe (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6jkwld     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Jokers Wild (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6jungfv    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Jungle Fever (Ace) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6kamel     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Kameleon (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6kungfu    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Kung Fu (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6kungfua   , j6kungfu  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Kung Fu (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6kungfub   , j6kungfu  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Kung Fu (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6kungfuc   , j6kungfu  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Kung Fu (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6kungfud   , j6kungfu  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Kung Fu (Ace) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6luckla    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Lucky Las Vegas (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6lucklaa   , j6luckla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Lucky Las Vegas (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6lucklab   , j6luckla  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Lucky Las Vegas (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+
+GAME( 199?, j6magcir    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Magic Circle Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6magcira   , j6magcir  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Magic Circle Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6magcirb   , j6magcir  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Magic Circle Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6magcirc   , j6magcir  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Magic Circle Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6magcird   , j6magcir  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Magic Circle Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6mavrk     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maverick (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6mavrka    , j6mavrk   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maverick (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6mavrkb    , j6mavrk   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maverick (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6mavrkc    , j6mavrk   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maverick (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6mavrkd    , j6mavrk   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maverick (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+
+GAME( 199?, j6maxod     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maximum Overdrive (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6maxoda    , j6maxod   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maximum Overdrive (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6maxodb    , j6maxod   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maximum Overdrive (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6maxodc    , j6maxod   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maximum Overdrive (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+
+GAME( 199?, j6maxcsh    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Maximus Cash (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6medal     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Medallion Job (Qps) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6medala    , j6medal   , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Medallion Job (Qps) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6medalb    , j6medal   , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Medallion Job (Qps) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6medalc    , j6medal   , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Medallion Job (Qps) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6medald    , j6medal   , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Medallion Job (Qps) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6megbck    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Mega Bucks (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6megbcka   , j6megbck  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Mega Bucks (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6megbckb   , j6megbck  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Mega Bucks (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6megbckc   , j6megbck  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Mega Bucks (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6megbckd   , j6megbck  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Mega Bucks (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+
+GAME( 199?, j6monmad    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Money Madness (Ace) (IMPACT)", GAME_FLAGS )
+
+
+GAME( 199?, j6montlk    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6montlka   , j6montlk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6montlkb   , j6montlk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6montlkc   , j6montlk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6montlkd   , j6montlk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6montlke   , j6montlk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6montlkf   , j6montlk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6montlkg   , j6montlk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6montlkh   , j6montlk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Money Talks (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+
+
+GAME( 199?, j6mono60    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6mono60a   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6mono60b   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6mono60c   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6mono60d   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6mono60e   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6mono60f   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6mono60g   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6mono60h   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6mono60i   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6mono60j   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6mono60k   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6mono60l   , j6mono60  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly 60th Anniversary Edition (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+
+GAME( 199?, j6monobn    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly Bingo (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6monobna   , j6monobn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly Bingo (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6monobnb   , j6monobn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Monopoly Bingo (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+
+GAME( 199?, j6outlaw    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Outlaw (JPM) (IMPACT, v3)", GAME_FLAGS )
+GAME( 199?, j6outlawd   , j6outlaw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Outlaw (JPM) (IMPACT, v3) (Protocol)", GAME_FLAGS )
+GAME( 199?, j6outlawc   , j6outlaw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Outlaw (JPM) (IMPACT, Club?)", GAME_FLAGS )
+
+
+GAME( 199?, j6oxo       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6oxoa      , j6oxo     , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6oxob      , j6oxo     , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6oxoc      , j6oxo     , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6oxod      , j6oxo     , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6oxoe      , j6oxo     , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+
+GAME( 199?, j6oxobin    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6oxobina   , j6oxobin  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6oxobinb   , j6oxobin  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6oxobinc   , j6oxobin  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6oxobind   , j6oxobin  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6oxobine   , j6oxobin  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6oxobinf   , j6oxobin  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Oxo Bingo (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+
+
+GAME( 199?, j6pacman    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Pac Man Plus (Qps) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6papa      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6papaa     , j6papa    , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6papab     , j6papa    , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6papac     , j6papa    , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6papad     , j6papa    , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6papae     , j6papa    , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6papaf     , j6papa    , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Paparazzi (Empire) (IMPACT) (set 7)", GAME_FLAGS )
+
+
+GAME( 199?, j6phxgld    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6phxglda   , j6phxgld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6phxgldb   , j6phxgld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6phxgldc   , j6phxgld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6phxgldd   , j6phxgld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6phxglde   , j6phxgld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6phxgldf   , j6phxgld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6phxgldg   , j6phxgld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+
+GAME( 199?, j6pnxgd     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Gold De Luxe (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6pnxmil    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Millennium (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6pnxmila   , j6pnxmil  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Millennium (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6pnxmilb   , j6pnxmil  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Millennium (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6pnxmilc   , j6pnxmil  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Phoenix Millennium (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+
+
+GAME( 199?, j6pinwzd    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6pinwzda   , j6pinwzd  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6pinwzdb   , j6pinwzd  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6pinwzdc   , j6pinwzd  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6pinwzdd   , j6pinwzd  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6pinwzde   , j6pinwzd  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pinball Wizard (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6pinwzc    , j6pinwzd  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pinball Wizard (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6pinwzca   , j6pinwzd  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pinball Wizard (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6pinwzcb   , j6pinwzd  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pinball Wizard (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+
+GAME( 199?, j6pirgld    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pirates Gold (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6pirglda   , j6pirgld  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pirates Gold (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+
+GAME( 199?, j6popoli    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Popeye & Olive (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6popolia   , j6popoli  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Popeye & Olive (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6pog       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Pot Of Gold (Ace) (IMPACT) (set 1)", GAME_FLAGS ) // has video roms, why? (misplaced? hybrid?)
+GAME( 199?, j6poga      , j6pog     , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Pot Of Gold (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6pogb      , j6pog     , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Pot Of Gold (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6pogc      , j6pog     , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Pot Of Gold (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6pogd      , j6pog     , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Pot Of Gold (Ace) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6pogcls    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pot Of Gold Classic (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6pogclsa   , j6pogcls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pot Of Gold Classic (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6pogclsb   , j6pogcls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Pot Of Gold Classic (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+
+
+GAME( 199?, j6pwrlin    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Power Lines (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6pwrlina   , j6pwrlin  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Power Lines (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6pwrspn    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6pwrspna   , j6pwrspn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6pwrspnb   , j6pwrspn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6pwrspnc   , j6pwrspn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6pwrspnd   , j6pwrspn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6pwrspne   , j6pwrspn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Powerspin (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+
+
+GAME( 199?, j6quantm    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Quantum Leap (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6quantma   , j6quantm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Quantum Leap (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6quantmb   , j6quantm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Quantum Leap (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6quantmc   , j6quantm  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Quantum Leap (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+
+GAME( 199?, j6quick     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "RAL", "Quicksilver (RAL) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6rager     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) [German] (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6ra        , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6raa       , j6ra      , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6rab       , j6ra      , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6rac       , j6ra      , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6rad       , j6ra      , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+
+GAME( 199?, j6raclb     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6raclba    , j6raclb   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6raclbb    , j6raclb   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6raclbc    , j6raclb   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6raclbd    , j6raclb   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Alert Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6redarw    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6redarwa   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6redarwb   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6redarwc   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6redarwd   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6redarwe   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6redarwf   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6redarwg   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6redarwh   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6redarwi   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6redarwj   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Arrow (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6redarww   , j6redarw  , impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / JPM", "Red Arrow (Whitbread / JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 2002, j6rh6       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 2002, j6rh6a      , j6rh6     , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 2002, j6rh6b      , j6rh6     , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 2002, j6rh6c      , j6rh6     , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 2002, j6rh6d      , j6rh6     , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 2002, j6rh6e      , j6rh6     , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot 6 (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+
+
+GAME( 199?, j6rhchil    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Red Hot Chili Stepper (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6rhchila   , j6rhchil  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Red Hot Chili Stepper (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6rhchilb   , j6rhchil  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Red Hot Chili Stepper (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6rhchilc   , j6rhchil  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Red Hot Chili Stepper (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6rhchild   , j6rhchil  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Red Hot Chili Stepper (Ace) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6rh6cl     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot Six Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6rh6cla    , j6rh6cl   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot Six Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6rh6clb    , j6rh6cl   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot Six Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6rh6clc    , j6rh6cl   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot Six Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6rh6cld    , j6rh6cl   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Red Hot Six Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6reelmn    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Reel Money (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6reelmna   , j6reelmn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Reel Money (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6reelmnb   , j6reelmn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Reel Money (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6reelmnc   , j6reelmn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Reel Money (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6reelmnd   , j6reelmn  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Reel Money (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+
+GAME( 199?, j6reelth    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Reel Thing (Ace) (IMPACT) set 1)", GAME_FLAGS )
+GAME( 199?, j6reeltha   , j6reelth  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Reel Thing (Ace) (IMPACT) set 2)", GAME_FLAGS )
+GAME( 199?, j6reelthb   , j6reelth  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Reel Thing (Ace) (IMPACT) set 3)", GAME_FLAGS )
+
+GAME( 199?, j6richpk    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Rich Pickings (Ace) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6rico      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6ricoa     , j6rico    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6ricob     , j6rico    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6ricoc     , j6rico    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6ricod     , j6rico    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6ricoe     , j6rico    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Ricochet (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+
+GAME( 199?, j6robin     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Robin Hood (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6robina    , j6robin   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Robin Hood (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6robinb    , j6robin   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Robin Hood (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6robinc    , j6robin   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Robin Hood (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+
+
+GAME( 199?, j6roller    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6rollera   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6rollerb   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6rollerc   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6rollerd   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6rollere   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6rollerf   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6rollerg   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6rollerh   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6rolleri   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6rollerj   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6rollerk   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6rollerl   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+GAME( 199?, j6rollerm   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 14)", GAME_FLAGS )
+GAME( 199?, j6rollern   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 15)", GAME_FLAGS )
+GAME( 199?, j6rollero   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 16)", GAME_FLAGS )
+GAME( 199?, j6rollerp   , j6roller  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster (JPM) (IMPACT) (set 17)", GAME_FLAGS )
+
+
+GAME( 199?, j6rccls     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Classic (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6rcclsa    , j6rccls   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Classic (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6rcclsb    , j6rccls   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Classic (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+
+GAME( 199?, j6royfls    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6royflsa   , j6royfls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6royflsb   , j6royfls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6royflsc   , j6royfls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6royflsd   , j6royfls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6royflse   , j6royfls  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Royal Flush Club (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+
+
+GAME( 199?, j6samur     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Samurai Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6samura    , j6samur   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Samurai Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6samurb    , j6samur   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Samurai Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6samurc    , j6samur   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Samurai Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6samurd    , j6samur   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Samurai Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6sidewd    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6sidewda   , j6sidewd  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6sidewdb   , j6sidewd  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6sidewdc   , j6sidewd  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6sidewdd   , j6sidewd  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6sidewde   , j6sidewd  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sidewinder (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+
+
+GAME( 199?, j6snakes    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6snakesa   , j6snakes  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6snakesb   , j6snakes  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6snakesc   , j6snakes  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6snakesd   , j6snakes  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6snakese   , j6snakes  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6snakesf   , j6snakes  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6snakesg   , j6snakes  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Snakes & Ladders (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+
+
+GAME( 199?, j6sonic     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6sonica    , j6sonic   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6sonicb    , j6sonic   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6sonicc    , j6sonic   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6sonicd    , j6sonic   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6sonice    , j6sonic   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6sonicf    , j6sonic   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6sonicg    , j6sonic   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6sonich    , j6sonic   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Sonic The Hedgehog (JPM) (IMPACT) (set 9)", GAME_FLAGS ) // incomplete pair
+
+GAME( 199?, j6spcinv    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Space Invaders (Crystal) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6stards    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Stardust (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6stardsa   , j6stards  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Stardust (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6stardsb   , j6stards  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Stardust (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6stardsc   , j6stards  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Stardust (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+
+
+GAME( 199?, j6start     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Starturn (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6starta    , j6start   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Starturn (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+
+GAME( 199?, j6strk10    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6strk10a   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6strk10b   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6strk10c   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6strk10d   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6strk10e   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6strk10f   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6strk10g   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6strk10h   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6strk10i   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6strk10j   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6strk10k   , j6strk10  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Strike 10 (Ace) (IMPACT) (set 12)", GAME_FLAGS )
+
+
+GAME( 199?, j6supbrk    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6supbrka   , j6supbrk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6supbrkb   , j6supbrk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6supbrkc   , j6supbrk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6supbrkd   , j6supbrk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6supbrke   , j6supbrk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6supbrkf   , j6supbrk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6supbrkg   , j6supbrk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6supbrkh   , j6supbrk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6supbrki   , j6supbrk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6supbrkj   , j6supbrk  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Super Breakout (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+
+
+GAME( 199?, j6swpdrp    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Swop Till Ya Drop (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6bags      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Three Bags Full (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6roof      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Thru' The Roof (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6roofa     , j6roof    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Thru' The Roof (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+
+GAME( 199?, j6tbirds    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6tbirdsa   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6tbirdsb   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6tbirdsc   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6tbirdsd   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6tbirdse   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6tbirdsf   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6tbirdsg   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6tbirdsh   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6tbirdsi   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6tbirdsj   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6tbirdsk   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6tbirdsl   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+GAME( 199?, j6tbirdsm   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 14)", GAME_FLAGS )
+GAME( 199?, j6tbirdsn   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 15)", GAME_FLAGS )
+GAME( 199?, j6tbirdso   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 16)", GAME_FLAGS )
+GAME( 199?, j6tbirdsp   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 17)", GAME_FLAGS )
+GAME( 199?, j6tbirdsq   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 18)", GAME_FLAGS )
+GAME( 199?, j6tbirdsr   , j6tbirds  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds (JPM) (IMPACT) (set 19)", GAME_FLAGS )
+
+GAME( 199?, j6tbrdcl    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6tbrdcla   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6tbrdclb   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6tbrdclc   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6tbrdcld   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6tbrdcle   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6tbrdclf   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6tbrdclg   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6tbrdclh   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6tbrdcli   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6tbrdclj   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6tbrdclk   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+GAME( 199?, j6tbrdcll   , j6tbrdcl  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Thunderbirds Club (JPM) (IMPACT) (set 13)", GAME_FLAGS )
+
+
+GAME( 199?, j6tomb      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6tomba     , j6tomb    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6tombb     , j6tomb    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6tombc     , j6tomb    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6tombd     , j6tomb    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6tombe     , j6tomb    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6tombf     , j6tomb    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6tombg     , j6tomb    , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Tomb Raider (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+
+GAME( 199?, j6topflg    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Top Flight (Ace) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6tutti     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Tutti Frutti (Qps) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6twst      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6twsta     , j6twst    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6twstb     , j6twst    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6twstc     , j6twst    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6twstd     , j6twst    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6twste     , j6twst    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6twstf     , j6twst    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6twstg     , j6twst    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6twsth     , j6twst    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6twsti     , j6twst    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6twstj     , j6twst    , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Twister (Ace) (IMPACT) (set 11)", GAME_FLAGS )
+
+GAME( 199?, j6twstdt    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Twister (JPM) [Dutch] (IMPACT)", GAME_FLAGS )
+
+
+GAME( 199?, j6untch     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Untouchables (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6untcha    , j6untch   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Untouchables (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6pompay    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Up Pompay (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6pompaya   , j6pompay  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Up Pompay (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6pompayb   , j6pompay  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Up Pompay (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6pompayc   , j6pompay  , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Up Pompay (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+
+GAME( 199?, j6vindal    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Vindaloot (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6vivark    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6vivarka   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6vivarkb   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6vivarkc   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6vivarkd   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6vivarke   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6vivarkf   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6vivarkg   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6vivarkh   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 9)", GAME_FLAGS )
+GAME( 199?, j6vivarki   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 10)", GAME_FLAGS )
+GAME( 199?, j6vivarkj   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 11)", GAME_FLAGS )
+GAME( 199?, j6vivarkk   , j6vivark  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas (JPM) (IMPACT) (set 12)", GAME_FLAGS )
+
+GAME( 199?, j6vivrkc    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6vivrkca   , j6vivrkc  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6vivrkcb   , j6vivrkc  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Viva Rock Vegas Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+
+
+GAME( 199?, j6wldkng    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wild King Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6wldknga   , j6wldkng  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wild King Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6wthing    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Wild Thing (Empire) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6wthinga   , j6wthing  , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Wild Thing (Empire) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6wthingb   , j6wthing  , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Wild Thing (Empire) (IMPACT) (set 3)", GAME_FLAGS )
+
+GAME( 199?, j6wildw     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6wildwa    , j6wildw   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6wildwb    , j6wildw   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6wildwc    , j6wildw   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6wildwd    , j6wildw   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6wildwe    , j6wildw   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6wildwf    , j6wildw   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6wildwg    , j6wildw   , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "Wild West (Ace) (IMPACT) (set 8)", GAME_FLAGS )
+
+
+GAME( 199?, j6wizard    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6wizarda   , j6wizard  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6wizardb   , j6wizard  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6wizardc   , j6wizard  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6wizardd   , j6wizard  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6wizarde   , j6wizard  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Wizard Of Odds (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+
+
+GAME( 199?, j6knight    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6knighta   , j6knight  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6knightb   , j6knight  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6knightc   , j6knight  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6knightd   , j6knight  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6knighte   , j6knight  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Your Lucky Knight (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+
+
+GAME( 199?, j6svndb     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Ace", "7 Deadly Bins (Ace) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6ewn       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Each Way Nudger (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6hikar     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hi Karate (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6hikara    , j6hikar   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hi Karate (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6hikarb    , j6hikar   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hi Karate (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+
+GAME( 199?, j6hisprt    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "High Spirits (Empire) (IMPACT) (prototype?)", GAME_FLAGS ) // roms are marked 'DEMO'
+
+GAME( 199?, j6rcclub    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6rccluba   , j6rcclub  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6rcclubb   , j6rcclub  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Roller Coaster Club (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+
+
+GAME( 199?, j6slvgst    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6slvgsta   , j6slvgst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6slvgstb   , j6slvgst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6slvgstc   , j6slvgst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6slvgstd   , j6slvgst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6slvgste   , j6slvgst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6slvgstf   , j6slvgst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6slvgstg   , j6slvgst  , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Silver Ghost (JPM) (IMPACT) (set 8)", GAME_FLAGS )
+
+
+GAME( 199?, j6footy     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Football Fever (Empire) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6footya    , j6footy   , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Football Fever (Empire) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6footyb    , j6footy   , impctawp, tbirds, driver_device, 0, ROT0, "Empire", "Football Fever (Empire) (IMPACT) (set 3)", GAME_FLAGS )
+
+GAME( 199?, j6fbcrz     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Football Crazy (JPM) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6h5clb     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "High Five Club (JPM) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6h5clba    , j6h5clb   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "High Five Club (JPM) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6bmc       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Money Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6bmca      , j6bmc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Money Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+
+GAME( 199?, j6bno       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Nite Out (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6bnoa      , j6bno     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Nite Out (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6bnob      , j6bno     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Nite Out (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6bnoc      , j6bno     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Big Nite Out (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+
+
+GAME( 199?, j6btbw      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Born To Be Wild Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6btbwa     , j6btbw    , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Born To Be Wild Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6btbwb     , j6btbw    , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Born To Be Wild Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6btbwc     , j6btbw    , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Born To Be Wild Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6btbwd     , j6btbw    , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Born To Be Wild Club (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6cpal      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6cpala     , j6cpal    , impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 2)", GAME_FLAGS ) // marked as ACE
+GAME( 1998, j6cpalb     , j6cpal    , impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 1998, j6cpalc     , j6cpal    , impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 1998, j6cpald     , j6cpal    , impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 1998, j6cpale     , j6cpal    , impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 1998, j6cpalf     , j6cpal    , impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 1998, j6cpalg     , j6cpal    , impctawp, tbirds, driver_device, 0, ROT0, "Whitbread / Crystal", "Caesars Palace (Whitbread / Crystal) (IMPACT) (set 8)", GAME_FLAGS )
+
+GAME( 199?, j6cdivr     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Cash Diver (Crystal) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6ccc       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Casino Crazy Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6ccca      , j6ccc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Casino Crazy Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6cccb      , j6ccc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Casino Crazy Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6cccc      , j6ccc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Casino Crazy Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+
+GAME( 199?, j6colic     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Coliseum (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6colica    , j6colic   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Coliseum (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6colicb    , j6colic   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Coliseum (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6colicc    , j6colic   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Coliseum (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6colicd    , j6colic   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Coliseum (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
+
+GAME( 199?, j6crakr     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Cracker (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6crakra    , j6crakr   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Cracker (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6crakrb    , j6crakr   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Cracker (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+
+
+GAME( 199?, j6ewndg     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Each Way Nudger (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6ewndga    , j6ewndg   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Each Way Nudger (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6ewndgb    , j6ewndg   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Each Way Nudger (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+
+
+GAME( 199?, j6easy      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Easy Money (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6easya     , j6easy    , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Easy Money (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6easyb     , j6easy    , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Easy Money (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6easyc     , j6easy    , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Easy Money (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+
+
+GAME( 199?, j6ffc       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6ffca      , j6ffc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6ffcb      , j6ffc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6ffcc      , j6ffc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6ffcd      , j6ffc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6ffce      , j6ffc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Frame & Fortune Club (Crystal) (IMPACT) (set 6)", GAME_FLAGS )
+
+
+GAME( 199?, j6grc       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Gold Rush Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6grca      , j6grc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Gold Rush Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6hdc       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6hdca      , j6hdc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6hdcb      , j6hdc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6hdcc      , j6hdc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6hdcd      , j6hdc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6hdce      , j6hdc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6hdcf      , j6hdc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6hdcg      , j6hdc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Hot Dogs Club (Crystal) (IMPACT) (set 8)", GAME_FLAGS )
+
+GAME( 199?, j6impls     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Impulse (Crystal) (IMPACT)", GAME_FLAGS )
+
+
+GAME( 199?, j6kapang    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Kapang! (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6kapanga   , j6kapang  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Kapang! (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+
+GAME( 199?, j6kfc       , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Kung Fu Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6kfca      , j6kfc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Kung Fu Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6kfcb      , j6kfc     , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Kung Fu Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+
+
+GAME( 199?, j6lucklo    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Lucky Lottery Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6luckloa   , j6lucklo  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Lucky Lottery Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6monst     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Monster Cash Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6monsta    , j6monst   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Monster Cash Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6monstb    , j6monst   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Monster Cash Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6monstc    , j6monst   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Monster Cash Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6monstd    , j6monst   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Monster Cash Club (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
+
+
+GAME( 199?, j6pinfvr    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pinball Fever (Crystal) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6potg      , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pot Of Gold (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6potga     , j6potg    , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pot Of Gold (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6potgb     , j6potg    , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Pot Of Gold (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+
+
+GAME( 199?, j6ramese    , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6ramesea   , j6ramese  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6rameseb   , j6ramese  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6ramesec   , j6ramese  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6ramesed   , j6ramese  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6ramesee   , j6ramese  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6ramesef   , j6ramese  , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Rameses' Riches Club (Crystal) (IMPACT) (set 7)", GAME_FLAGS )
+
+
+GAME( 199?, j6r2rum     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6r2ruma    , j6r2rum   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6r2rumb    , j6r2rum   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6r2rumc    , j6r2rum   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6r2rumd    , j6r2rum   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6r2rume    , j6r2rum   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Ready To Rumble (Crystal) (IMPACT) (set 6)", GAME_FLAGS )
+
+
+GAME( 199?, j6redal     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Red Alert (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6redala    , j6redal   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Red Alert (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6reelb     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Reel Bingo Classic Club (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6reelba    , j6reelb   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Reel Bingo Classic Club (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+
+GAME( 199?, j6slagn     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6slagna    , j6slagn   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6slagnb    , j6slagn   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6slagnc    , j6slagn   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+GAME( 199?, j6slagnd    , j6slagn   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 5)", GAME_FLAGS )
+GAME( 199?, j6slagne    , j6slagn   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 6)", GAME_FLAGS )
+GAME( 199?, j6slagnf    , j6slagn   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 7)", GAME_FLAGS )
+GAME( 199?, j6slagng    , j6slagn   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 8)", GAME_FLAGS )
+GAME( 199?, j6slagnh    , j6slagn   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Snakes & Ladders Slides Again (Crystal) (IMPACT) (set 9)", GAME_FLAGS )
+
+
+GAME( 199?, j6thril     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Thriller (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6thrila    , j6thril   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Thriller (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+
+
+GAME( 199?, j6tqust     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Treasure Quest (Crystal) (IMPACT) (set 1)", GAME_FLAGS )
+GAME( 199?, j6tqusta    , j6tqust   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Treasure Quest (Crystal) (IMPACT) (set 2)", GAME_FLAGS )
+GAME( 199?, j6tqustb    , j6tqust   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Treasure Quest (Crystal) (IMPACT) (set 3)", GAME_FLAGS )
+GAME( 199?, j6tqustc    , j6tqust   , impctawp, tbirds, driver_device, 0, ROT0, "Crystal", "Treasure Quest (Crystal) (IMPACT) (set 4)", GAME_FLAGS )
+
+GAME( 199?, j6gldpl     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "Qps", "Golden Palace (Qps) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6shoot     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM / Whitbread", "ShootOut (JPM / Whitbread) (IMPACT)", GAME_FLAGS )
+
+GAME( 199?, j6milln     , 0         , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Millionaire (JPM) (IMPACT) (set 1)", GAME_FLAGS ) // was marked as SWP, should this be a video game? - Apparently it's just a link box using the same hardware, but for 3 PC based units which aren't dumped
+GAME( 199?, j6millna    , j6milln   , impctawp, tbirds, driver_device, 0, ROT0, "JPM", "Millionaire (JPM) (IMPACT) (set 2)", GAME_FLAGS )

@@ -122,28 +122,24 @@ WRITE8_MEMBER(xain_state::xain_charram_w)
 
 WRITE8_MEMBER(xain_state::xain_scrollxP0_w)
 {
-
 	m_scrollxP0[offset] = data;
 	m_bgram0_tilemap->set_scrollx(0, m_scrollxP0[0]|(m_scrollxP0[1]<<8));
 }
 
 WRITE8_MEMBER(xain_state::xain_scrollyP0_w)
 {
-
 	m_scrollyP0[offset] = data;
 	m_bgram0_tilemap->set_scrolly(0, m_scrollyP0[0]|(m_scrollyP0[1]<<8));
 }
 
 WRITE8_MEMBER(xain_state::xain_scrollxP1_w)
 {
-
 	m_scrollxP1[offset] = data;
 	m_bgram1_tilemap->set_scrollx(0, m_scrollxP1[0]|(m_scrollxP1[1]<<8));
 }
 
 WRITE8_MEMBER(xain_state::xain_scrollyP1_w)
 {
-
 	m_scrollyP1[offset] = data;
 	m_bgram1_tilemap->set_scrolly(0, m_scrollyP1[0]|(m_scrollyP1[1]<<8));
 }
@@ -188,7 +184,7 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap,const re
 			flipy = !flipy;
 		}
 
-		if (attr & 0x80)	/* double height */
+		if (attr & 0x80)    /* double height */
 		{
 			drawgfx_transpen(bitmap,cliprect,machine.gfx[3],
 					numtile,

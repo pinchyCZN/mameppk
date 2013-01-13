@@ -15,8 +15,8 @@ Driver by Takahiro Nogi (nogi@kt.rim.or.jp) 1999/10/04
 void ssozumo_state::palette_init()
 {
 	const UINT8 *color_prom = machine().root_device().memregion("proms")->base();
-	int	bit0, bit1, bit2, bit3, r, g, b;
-	int	i;
+	int bit0, bit1, bit2, bit3, r, g, b;
+	int i;
 
 	for (i = 0 ; i < 64 ; i++)
 	{
@@ -43,37 +43,33 @@ void ssozumo_state::palette_init()
 
 WRITE8_MEMBER(ssozumo_state::ssozumo_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(ssozumo_state::ssozumo_colorram_w)
 {
-
 	m_colorram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(ssozumo_state::ssozumo_videoram2_w)
 {
-
 	m_videoram2[offset] = data;
 	m_fg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(ssozumo_state::ssozumo_colorram2_w)
 {
-
 	m_colorram2[offset] = data;
 	m_fg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(ssozumo_state::ssozumo_paletteram_w)
 {
-	int	bit0, bit1, bit2, bit3, val;
-	int	r, g, b;
-	int	offs2;
+	int bit0, bit1, bit2, bit3, val;
+	int r, g, b;
+	int offs2;
 
 	m_paletteram[offset] = data;
 	offs2 = offset & 0x0f;
@@ -104,7 +100,6 @@ WRITE8_MEMBER(ssozumo_state::ssozumo_paletteram_w)
 
 WRITE8_MEMBER(ssozumo_state::ssozumo_scroll_w)
 {
-
 	m_bg_tilemap->set_scrolly(0, data);
 }
 
@@ -132,12 +127,11 @@ TILE_GET_INFO_MEMBER(ssozumo_state::get_fg_tile_info)
 
 void ssozumo_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ssozumo_state::get_bg_tile_info),this), TILEMAP_SCAN_COLS_FLIP_X,
-		 16, 16, 16, 32);
+			16, 16, 16, 32);
 
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ssozumo_state::get_fg_tile_info),this), TILEMAP_SCAN_COLS_FLIP_X,
-		 8, 8, 32, 32);
+			8, 8, 32, 32);
 
 	m_fg_tilemap->set_transparent_pen(0);
 }
@@ -178,7 +172,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 
 UINT32 ssozumo_state::screen_update_ssozumo(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	m_fg_tilemap->draw(bitmap, cliprect, 0, 0);
 	draw_sprites(machine(), bitmap, cliprect);

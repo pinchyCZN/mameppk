@@ -12,13 +12,13 @@
 #include "includes/naomi.h"
 #include "machine/mie.h"
 
-#define DEBUG_REGISTERS	(1)
+#define DEBUG_REGISTERS (1)
 
 #if DEBUG_REGISTERS
 
-#define DEBUG_SYSCTRL	(0)
+#define DEBUG_SYSCTRL   (0)
 #define DEBUG_AICA_DMA (0)
-#define DEBUG_PVRCTRL	(0)
+#define DEBUG_PVRCTRL   (0)
 
 #if DEBUG_SYSCTRL
 static const char *const sysctrl_names[] =
@@ -78,7 +78,6 @@ static const char *const sysctrl_names[] =
 
 TIMER_CALLBACK_MEMBER(dc_state::aica_dma_irq)
 {
-
 	m_wave_dma.start = g2bus_regs[SB_ADST] = 0;
 	dc_sysctrl_regs[SB_ISTNRM] |= IST_DMA_AICA;
 	dc_update_interrupt_status(machine());
@@ -86,7 +85,6 @@ TIMER_CALLBACK_MEMBER(dc_state::aica_dma_irq)
 
 TIMER_CALLBACK_MEMBER(dc_state::pvr_dma_irq)
 {
-
 	m_pvr_dma.start = pvrctrl_regs[SB_PDST] = 0;
 	dc_sysctrl_regs[SB_ISTNRM] |= IST_DMA_PVR;
 	dc_update_interrupt_status(machine());
@@ -110,7 +108,6 @@ void dc_maple_irq(running_machine &machine)
 
 TIMER_CALLBACK_MEMBER(dc_state::ch2_dma_irq)
 {
-
 	dc_sysctrl_regs[SB_C2DLEN]=0;
 	dc_sysctrl_regs[SB_C2DST]=0;
 	dc_sysctrl_regs[SB_ISTNRM] |= IST_DMA_CH2;
@@ -119,7 +116,6 @@ TIMER_CALLBACK_MEMBER(dc_state::ch2_dma_irq)
 
 TIMER_CALLBACK_MEMBER(dc_state::yuv_fifo_irq)
 {
-
 	dc_sysctrl_regs[SB_ISTNRM] |= IST_EOXFER_YUV;
 	dc_update_interrupt_status(machine());
 }
@@ -239,7 +235,7 @@ INLINE int decode_reg3216_64(running_machine &machine, UINT32 offset, UINT64 mem
 
 	// non 16&32-bit accesses have not yet been seen here, we need to know when they are
 	if ((mem_mask != U64(0x0000ffff00000000)) && (mem_mask != U64(0x000000000000ffff)) &&
-	    (mem_mask != U64(0xffffffff00000000)) && (mem_mask != U64(0x00000000ffffffff)))
+		(mem_mask != U64(0xffffffff00000000)) && (mem_mask != U64(0x00000000ffffffff)))
 	{
 		mame_printf_verbose("%s:Wrong mask!\n", machine.describe_context());
 //      debugger_break(machine);
@@ -347,7 +343,7 @@ READ64_HANDLER( dc_sysctrl_r )
 	reg = decode_reg32_64(space.machine(), offset, mem_mask, &shift);
 
 	#if DEBUG_SYSCTRL
-	if ((reg != 0x40) && (reg != 0x41) && (reg != 0x42) && (reg != 0x23) && (reg > 2))	// filter out IRQ status reads
+	if ((reg != 0x40) && (reg != 0x41) && (reg != 0x42) && (reg != 0x23) && (reg > 2))  // filter out IRQ status reads
 	{
 		mame_printf_verbose("SYSCTRL: [%08x] read %x @ %x (reg %x: %s), mask %" I64FMT "x (PC=%x)\n", 0x5f6800+reg*4, state->dc_sysctrl_regs[reg], offset, reg, sysctrl_names[reg], mem_mask, space.device().safe_pc());
 	}
@@ -450,7 +446,7 @@ WRITE64_HANDLER( dc_sysctrl_w )
 	}
 
 	#if DEBUG_SYSCTRL
-	if ((reg != 0x40) && (reg != 0x42) && (reg > 2))	// filter out IRQ acks and ch2 dma
+	if ((reg != 0x40) && (reg != 0x42) && (reg > 2))    // filter out IRQ acks and ch2 dma
 	{
 		mame_printf_verbose("SYSCTRL: write %" I64FMT "x to %x (reg %x), mask %" I64FMT "x\n", data>>shift, offset, reg, /*sysctrl_names[reg],*/ mem_mask);
 	}
@@ -528,7 +524,7 @@ WRITE64_HANDLER( dc_g2_ctrl_w )
 		/*AICA Address register*/
 		case SB_ADSTAG: state->m_wave_dma.aica_addr = dat; break;
 		/*Root address (work ram)*/
-		case SB_ADSTAR:	state->m_wave_dma.root_addr = dat; break;
+		case SB_ADSTAR: state->m_wave_dma.root_addr = dat; break;
 		/*DMA size (in dword units, bit 31 is "set dma initiation enable setting to 0"*/
 		case SB_ADLEN:
 			state->m_wave_dma.size = dat & 0x7fffffff;
@@ -539,9 +535,9 @@ WRITE64_HANDLER( dc_g2_ctrl_w )
 		/*dma flag (active HIGH, bug in docs)*/
 		case SB_ADEN: state->m_wave_dma.flag = (dat & 1); break;
 		/*
-        SB_ADTSEL
-        bit 1: (0) Wave DMA through SB_ADST flag (1) Wave DMA through irq trigger, defined by SB_G2DTNRM / SB_G2DTEXT
-        */
+		SB_ADTSEL
+		bit 1: (0) Wave DMA through SB_ADST flag (1) Wave DMA through irq trigger, defined by SB_G2DTNRM / SB_G2DTEXT
+		*/
 		case SB_ADTSEL: state->m_wave_dma.sel = dat & 7; break;
 		/*ready for dma'ing*/
 		case SB_ADST:
@@ -735,10 +731,9 @@ WRITE64_HANDLER( dc_rtc_w )
 
 TIMER_CALLBACK_MEMBER(dc_state::dc_rtc_increment)
 {
-
-    dc_rtcregister[RTC2] = (dc_rtcregister[RTC2] + 1) & 0xFFFF;
-    if (dc_rtcregister[RTC2] == 0)
-        dc_rtcregister[RTC1] = (dc_rtcregister[RTC1] + 1) & 0xFFFF;
+	dc_rtcregister[RTC2] = (dc_rtcregister[RTC2] + 1) & 0xFFFF;
+	if (dc_rtcregister[RTC2] == 0)
+		dc_rtcregister[RTC1] = (dc_rtcregister[RTC1] + 1) & 0xFFFF;
 }
 
 /* fill the RTC registers with the proper start-up values */
@@ -784,7 +779,6 @@ static void rtc_initial_setup(running_machine &machine)
 
 void dc_state::machine_start()
 {
-
 	rtc_initial_setup(machine());
 
 	// save states
@@ -817,7 +811,6 @@ void dc_state::machine_start()
 
 void dc_state::machine_reset()
 {
-
 	/* halt the ARM7 */
 	machine().device("soundcpu")->execute().set_input_line(INPUT_LINE_RESET, ASSERT_LINE);
 
@@ -861,7 +854,7 @@ WRITE64_MEMBER(dc_state::dc_aica_reg_w)
 			/* it's alive ! */
 			machine().device("soundcpu")->execute().set_input_line(INPUT_LINE_RESET, CLEAR_LINE);
 		}
-    }
+	}
 
 	aica_w(machine().device("aica"), space, offset*2, dat, shift ? ((mem_mask>>32)&0xffff) : (mem_mask & 0xffff));
 
@@ -877,4 +870,3 @@ WRITE32_MEMBER(dc_state::dc_arm_aica_w)
 {
 	aica_w(machine().device("aica"), space, offset*2, data, mem_mask&0xffff);
 }
-

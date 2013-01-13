@@ -18,14 +18,12 @@
 //**************************************************************************
 
 #define MCFG_X2212_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, X2212, 0) \
-
+	MCFG_DEVICE_ADD(_tag, X2212, 0)
 // some systems (like many early Atari games) wire up the /STORE signal
 // to fire on power-down, effectively creating an "auto-save" functionality
 #define MCFG_X2212_ADD_AUTOSAVE(_tag) \
 	MCFG_DEVICE_ADD(_tag, X2212, 0) \
-	x2212_device::static_set_auto_save(*device); \
-
+	x2212_device::static_set_auto_save(*device);
 
 
 //**************************************************************************
@@ -35,7 +33,7 @@
 
 // ======================> x2212_device
 
-class x2212_device :	public device_t,
+class x2212_device :    public device_t,
 						public device_memory_interface,
 						public device_nvram_interface
 {
@@ -72,18 +70,18 @@ protected:
 	static const int SIZE_DATA = 0x100;
 
 	// configuration state
-	bool						m_auto_save;
+	bool                        m_auto_save;
 
 	// device-specific configuration
-	address_space_config		m_sram_space_config;
-	address_space_config		m_e2prom_space_config;
+	address_space_config        m_sram_space_config;
+	address_space_config        m_e2prom_space_config;
 
 	// internal state
-	address_space *	m_sram;
-	address_space *	m_e2prom;
+	address_space * m_sram;
+	address_space * m_e2prom;
 
-	bool		m_store;
-	bool		m_array_recall;
+	bool        m_store;
+	bool        m_array_recall;
 };
 
 

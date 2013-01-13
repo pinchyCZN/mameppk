@@ -154,7 +154,7 @@ MACHINE_CONFIG_START( pgm_arm_type2, pgm_arm_type2_state )
 	MCFG_CPU_PROGRAM_MAP(kov2_mem)
 
 	/* protection CPU */
-	MCFG_CPU_ADD("prot", ARM7, 20000000)	// 55857F
+	MCFG_CPU_ADD("prot", ARM7, 20000000)    // 55857F
 	MCFG_CPU_PROGRAM_MAP(55857F_arm7_map)
 MACHINE_CONFIG_END
 
@@ -371,7 +371,7 @@ DRIVER_INIT_MEMBER(pgm_arm_type2_state,dwpc)
 INPUT_PORTS_START( ddp2 )
 	PORT_INCLUDE ( pgm )
 
-	PORT_START("RegionHack")	/* Region - actually supplied by protection device */
+	PORT_START("RegionHack")    /* Region - actually supplied by protection device */
 	PORT_CONFNAME( 0x00ff, 0x00ff, DEF_STR( Region ) )
 	PORT_CONFSETTING(      0x0000, DEF_STR( China ) )
 	PORT_CONFSETTING(      0x0001, DEF_STR( Taiwan ) )
@@ -385,7 +385,7 @@ INPUT_PORTS_END
 INPUT_PORTS_START( kov2 )
 	PORT_INCLUDE ( pgm )
 
-	PORT_START("RegionHack")	/* Region - actually supplied by protection device */
+	PORT_START("RegionHack")    /* Region - actually supplied by protection device */
 	PORT_CONFNAME( 0x00ff, 0x00ff, DEF_STR( Region ) )
 	PORT_CONFSETTING(      0x0000, DEF_STR( China ) )
 	PORT_CONFSETTING(      0x0001, DEF_STR( Taiwan ) )
@@ -399,7 +399,7 @@ INPUT_PORTS_END
 INPUT_PORTS_START( martmast )
 	PORT_INCLUDE ( pgm )
 
-	PORT_START("RegionHack")	/* Region - actually supplied by protection device */
+	PORT_START("RegionHack")    /* Region - actually supplied by protection device */
 	PORT_CONFNAME( 0x00ff, 0x00ff, DEF_STR( Region ) )
 	PORT_CONFSETTING(      0x0000, DEF_STR( China ) )
 	PORT_CONFSETTING(      0x0001, DEF_STR( Taiwan ) )
@@ -415,7 +415,7 @@ INPUT_PORTS_END
 INPUT_PORTS_START( dw2001 )
 	PORT_INCLUDE ( pgm )
 
-	PORT_MODIFY("Region")	/* Region - supplied by protection device */
+	PORT_MODIFY("Region")   /* Region - supplied by protection device */
 	PORT_CONFNAME( 0x000f, 0x0005, DEF_STR( Region ) )
 	PORT_CONFSETTING(      0x0000, DEF_STR( China ) )
 	PORT_CONFSETTING(      0x0001, DEF_STR( Taiwan ) )

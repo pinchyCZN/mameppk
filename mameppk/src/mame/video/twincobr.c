@@ -22,16 +22,16 @@ static void twincobr_restore_screen(running_machine &machine);
 /* 6845 used for video sync signals only */
 const mc6845_interface twincobr_mc6845_intf =
 {
-	"screen",	/* screen we are acting on */
-	2,			/* number of pixels per video memory address */ /* Horizontal Display programmed to 160 characters */
-	NULL,		/* before pixel update callback */
-	NULL,		/* row update callback */
-	NULL,		/* after pixel update callback */
-	DEVCB_NULL,	/* callback for display state changes */
-	DEVCB_NULL,	/* callback for cursor state changes */
-	DEVCB_NULL,	/* HSYNC callback */
-	DEVCB_NULL,	/* VSYNC callback */
-	NULL		/* update address callback */
+	"screen",   /* screen we are acting on */
+	2,          /* number of pixels per video memory address */ /* Horizontal Display programmed to 160 characters */
+	NULL,       /* before pixel update callback */
+	NULL,       /* row update callback */
+	NULL,       /* after pixel update callback */
+	DEVCB_NULL, /* callback for display state changes */
+	DEVCB_NULL, /* callback for cursor state changes */
+	DEVCB_NULL, /* HSYNC callback */
+	DEVCB_NULL, /* VSYNC callback */
+	NULL        /* update address callback */
 };
 
 
@@ -100,10 +100,9 @@ static void twincobr_create_tilemaps(running_machine &machine)
 
 VIDEO_START_MEMBER(twincobr_state,toaplan0)
 {
-
 	/* the video RAM is accessed via ports, it's not memory mapped */
 	m_txvideoram_size = 0x0800;
-	m_bgvideoram_size = 0x2000;	/* banked two times 0x1000 */
+	m_bgvideoram_size = 0x2000; /* banked two times 0x1000 */
 	m_fgvideoram_size = 0x1000;
 
 	twincobr_create_tilemaps(machine());
@@ -179,54 +178,45 @@ void twincobr_flipscreen(running_machine &machine, int flip)
 
 WRITE16_MEMBER(twincobr_state::twincobr_txoffs_w)
 {
-
 	COMBINE_DATA(&m_txoffs);
 	m_txoffs %= m_txvideoram_size;
 }
 READ16_MEMBER(twincobr_state::twincobr_txram_r)
 {
-
 	return m_txvideoram16[m_txoffs];
 }
 WRITE16_MEMBER(twincobr_state::twincobr_txram_w)
 {
-
 	COMBINE_DATA(&m_txvideoram16[m_txoffs]);
 	m_tx_tilemap->mark_tile_dirty(m_txoffs);
 }
 
 WRITE16_MEMBER(twincobr_state::twincobr_bgoffs_w)
 {
-
 	COMBINE_DATA(&m_bgoffs);
 	m_bgoffs %= (m_bgvideoram_size >> 1);
 }
 READ16_MEMBER(twincobr_state::twincobr_bgram_r)
 {
-
 	return m_bgvideoram16[m_bgoffs+m_bg_ram_bank];
 }
 WRITE16_MEMBER(twincobr_state::twincobr_bgram_w)
 {
-
 	COMBINE_DATA(&m_bgvideoram16[m_bgoffs+m_bg_ram_bank]);
 	m_bg_tilemap->mark_tile_dirty((m_bgoffs+m_bg_ram_bank));
 }
 
 WRITE16_MEMBER(twincobr_state::twincobr_fgoffs_w)
 {
-
 	COMBINE_DATA(&m_fgoffs);
 	m_fgoffs %= m_fgvideoram_size;
 }
 READ16_MEMBER(twincobr_state::twincobr_fgram_r)
 {
-
 	return m_fgvideoram16[m_fgoffs];
 }
 WRITE16_MEMBER(twincobr_state::twincobr_fgram_w)
 {
-
 	COMBINE_DATA(&m_fgvideoram16[m_fgoffs]);
 	m_fg_tilemap->mark_tile_dirty(m_fgoffs);
 }
@@ -234,7 +224,6 @@ WRITE16_MEMBER(twincobr_state::twincobr_fgram_w)
 
 WRITE16_MEMBER(twincobr_state::twincobr_txscroll_w)
 {
-
 	if (offset == 0) {
 		COMBINE_DATA(&m_txscrollx);
 		m_tx_tilemap->set_scrollx(0,(m_txscrollx+m_scroll_x) & 0x1ff);
@@ -247,7 +236,6 @@ WRITE16_MEMBER(twincobr_state::twincobr_txscroll_w)
 
 WRITE16_MEMBER(twincobr_state::twincobr_bgscroll_w)
 {
-
 	if (offset == 0) {
 		COMBINE_DATA(&m_bgscrollx);
 		m_bg_tilemap->set_scrollx(0,(m_bgscrollx+m_scroll_x) & 0x1ff);
@@ -260,7 +248,6 @@ WRITE16_MEMBER(twincobr_state::twincobr_bgscroll_w)
 
 WRITE16_MEMBER(twincobr_state::twincobr_fgscroll_w)
 {
-
 	if (offset == 0) {
 		COMBINE_DATA(&m_fgscrollx);
 		m_fg_tilemap->set_scrollx(0,(m_fgscrollx+m_scroll_x) & 0x1ff);
@@ -318,10 +305,10 @@ WRITE8_MEMBER(twincobr_state::wardner_exscroll_w)/* Extra unused video layer */
 {
 	switch (offset)
 	{
-		case 01:	//data <<= 8;
-		case 00:	logerror("PC - write %04x to unknown video scroll X register\n",data); break;
-		case 03:	//data <<= 8;
-		case 02:	logerror("PC - write %04x to unknown video scroll Y register\n",data); break;
+		case 01:    //data <<= 8;
+		case 00:    logerror("PC - write %04x to unknown video scroll X register\n",data); break;
+		case 03:    //data <<= 8;
+		case 02:    logerror("PC - write %04x to unknown video scroll Y register\n",data); break;
 	}
 }
 
@@ -374,13 +361,13 @@ static void wardner_sprite_priority_hack(running_machine &machine)
 
 	if (state->m_fgscrollx != state->m_bgscrollx) {
 		UINT16 *buffered_spriteram16 = reinterpret_cast<UINT16 *>(state->m_spriteram8->buffer());
-		if ((state->m_fgscrollx==0x1c9) || (state->m_flip_screen && (state->m_fgscrollx==0x17a))) {	/* in the shop ? */
+		if ((state->m_fgscrollx==0x1c9) || (state->m_flip_screen && (state->m_fgscrollx==0x17a))) { /* in the shop ? */
 			int wardner_hack = buffered_spriteram16[0x0b04/2];
 		/* sprite position 0x6300 to 0x8700 -- hero on shop keeper (normal) */
 		/* sprite position 0x3900 to 0x5e00 -- hero on shop keeper (flip) */
-			if ((wardner_hack > 0x3900) && (wardner_hack < 0x8700)) {	/* hero at shop keeper ? */
+			if ((wardner_hack > 0x3900) && (wardner_hack < 0x8700)) {   /* hero at shop keeper ? */
 				wardner_hack = buffered_spriteram16[0x0b02/2];
-				wardner_hack |= 0x0400;			/* make hero top priority */
+				wardner_hack |= 0x0400;         /* make hero top priority */
 				buffered_spriteram16[0x0b02/2] = wardner_hack;
 				wardner_hack = buffered_spriteram16[0x0b0a/2];
 				wardner_hack |= 0x0400;
@@ -468,14 +455,14 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 			int sprite, color;
 
 			attribute = buffered_spriteram16[offs + 1];
-			if ((attribute & 0x0c00) == priority) {	/* low priority */
+			if ((attribute & 0x0c00) == priority) { /* low priority */
 				sy = buffered_spriteram16[offs + 3] >> 7;
-				if (sy != 0x0100) {		/* sx = 0x01a0 or 0x0040*/
+				if (sy != 0x0100) {     /* sx = 0x01a0 or 0x0040*/
 					sprite = buffered_spriteram16[offs] & 0x7ff;
 					color  = attribute & 0x3f;
 					sx = buffered_spriteram16[offs + 2] >> 7;
 					flipx = attribute & 0x100;
-					if (flipx) sx -= 14;		/* should really be 15 */
+					if (flipx) sx -= 14;        /* should really be 15 */
 					flipy = attribute & 0x200;
 					drawgfx_transpen(bitmap,cliprect,machine.gfx[3],
 						sprite,

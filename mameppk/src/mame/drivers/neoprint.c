@@ -143,12 +143,11 @@ READ16_MEMBER(neoprint_state::neoprint_calendar_r)
 
 WRITE16_MEMBER(neoprint_state::neoprint_calendar_w)
 {
-	 upd4990a_control_16_w(machine().device("upd4990a"), space, 0, ((data >> 8) & 7), mem_mask);
+		upd4990a_control_16_w(machine().device("upd4990a"), space, 0, ((data >> 8) & 7), mem_mask);
 }
 
 READ8_MEMBER(neoprint_state::neoprint_unk_r)
 {
-
 	/* ---x ---- tested in irq routine, odd/even field number? */
 	/* ---- xx-- one of these two must be high */
 	/* ---- --xx checked right before entering into attract mode, presumably printer/camera related */
@@ -210,8 +209,6 @@ READ8_MEMBER(neoprint_state::audio_command_r)
 
 WRITE8_MEMBER(neoprint_state::audio_result_w)
 {
-
-
 	//if (LOG_CPU_COMM && (m_audio_result != data)) logerror(" AUD CPU PC   %04x: audio_result_w %02x\n", space.device().safe_pc(), data);
 
 	m_audio_result = data;
@@ -330,7 +327,7 @@ ADDRESS_MAP_END
  *************************************/
 
 static ADDRESS_MAP_START( neoprint_audio_io_map, AS_IO, 8, neoprint_state )
-  /*AM_RANGE(0x00, 0x00) AM_MIRROR(0xff00) AM_READWRITE(audio_command_r, audio_cpu_clear_nmi_w);*/  /* may not and NMI clear */
+	/*AM_RANGE(0x00, 0x00) AM_MIRROR(0xff00) AM_READWRITE(audio_command_r, audio_cpu_clear_nmi_w);*/  /* may not and NMI clear */
 	AM_RANGE(0x00, 0x00) AM_MIRROR(0xff00) AM_READ(audio_command_r) AM_WRITENOP
 	AM_RANGE(0x04, 0x07) AM_MIRROR(0xff00) AM_DEVREADWRITE_LEGACY("ymsnd", ym2610_r, ym2610_w)
 //  AM_RANGE(0x08, 0x08) AM_MIRROR(0xff00) /* write - NMI enable / acknowledge? (the data written doesn't matter) */
@@ -471,7 +468,7 @@ static MACHINE_CONFIG_START( neoprint, neoprint_state )
 	MCFG_CPU_PROGRAM_MAP(neoprint_audio_map)
 	MCFG_CPU_IO_MAP(neoprint_audio_io_map)
 
-	MCFG_UPD4990A_ADD("upd4990a")
+	MCFG_UPD4990A_OLD_ADD("upd4990a")
 	MCFG_NVRAM_ADD_0FILL("nvram")
 
 	MCFG_GFXDECODE(neoprint)
@@ -511,7 +508,7 @@ static MACHINE_CONFIG_START( nprsp, neoprint_state )
 	MCFG_CPU_PROGRAM_MAP(neoprint_audio_map)
 	MCFG_CPU_IO_MAP(neoprint_audio_io_map)
 
-	MCFG_UPD4990A_ADD("upd4990a")
+	MCFG_UPD4990A_OLD_ADD("upd4990a")
 	MCFG_NVRAM_ADD_0FILL("nvram")
 
 	MCFG_GFXDECODE(neoprint)
@@ -556,9 +553,9 @@ ROM_START( npcartv1 )
 ROM_END
 
 	/* logo: Neo Print
-    small text: Cassette supporting Neo Print and Neo Print Multi
-    (cassette=cartridge)
-    title: '98 NeoPri Best 44 version */
+	small text: Cassette supporting Neo Print and Neo Print Multi
+	(cassette=cartridge)
+	title: '98 NeoPri Best 44 version */
 
 ROM_START( 98best44 )
 	ROM_REGION( 0x200000, "maincpu", ROMREGION_ERASEFF )

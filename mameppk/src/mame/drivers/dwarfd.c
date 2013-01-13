@@ -393,7 +393,6 @@ enum
 
 WRITE8_MEMBER(dwarfd_state::i8275_preg_w)//param reg
 {
-
 	switch (m_i8275Command)
 	{
 		case I8275_COMMAND_RESET:
@@ -470,10 +469,10 @@ WRITE8_MEMBER(dwarfd_state::i8275_preg_w)//param reg
 
 					switch (m_i8275CursorFormat)
 					{
-						case 0:	{logerror("i8275 cursor format - blinking reverse video block\n");}	break;
-						case 1:	{logerror("i8275 cursor format - blinking underline\n");}break;
-						case 2:	{logerror("i8275 cursor format - nonblinking reverse video block\n");}break;
-						case 3:	{logerror("i8275 cursor format - nonblinking underline\n");}break;
+						case 0: {logerror("i8275 cursor format - blinking reverse video block\n");} break;
+						case 1: {logerror("i8275 cursor format - blinking underline\n");}break;
+						case 2: {logerror("i8275 cursor format - nonblinking reverse video block\n");}break;
+						case 3: {logerror("i8275 cursor format - nonblinking underline\n");}break;
 					}
 
 					logerror("i8275 %d chars for horizontal retrace\n",m_i8275HorizontalRetrace );
@@ -492,13 +491,11 @@ WRITE8_MEMBER(dwarfd_state::i8275_preg_w)//param reg
 
 		case I8275_COMMAND_START:
 		{
-
 		}
 		break;
 
 		case I8275_COMMAND_STOP:
 		{
-
 		}
 		break;
 
@@ -513,7 +510,6 @@ READ8_MEMBER(dwarfd_state::i8275_preg_r)//param reg
 
 WRITE8_MEMBER(dwarfd_state::i8275_creg_w)//comand reg
 {
-
 	switch (data>>5)
 	{
 		case 0:
@@ -557,7 +553,6 @@ READ8_MEMBER(dwarfd_state::i8275_sreg_r)//status
 
 READ8_MEMBER(dwarfd_state::dwarfd_ram_r)
 {
-
 	if (m_crt_access == 0)
 	{
 		return m_dw_ram[offset];
@@ -656,19 +651,19 @@ static INPUT_PORTS_START( dwarfd )
 	PORT_DIPSETTING(    0x00, "Changes Locked/Preset #1" )
 	PORT_BIT( 0xf0, IP_ACTIVE_LOW, IPT_UNKNOWN )
 	/*PORT_DIPNAME( 0x18, 0x00, "Operator Settings Mode" ) PORT_DIPLOCATION("SW1:4,5")
-    PORT_DIPSETTING(    0x18, "Changes Allowed" )
-    PORT_DIPSETTING(    0x10, "Preset #1" )
-    PORT_DIPSETTING(    0x08, "Preset #2" )
-    PORT_DIPSETTING(    0x00, "Changes locked" )
-    PORT_DIPNAME( 0x20, 0x00, "Dwarf's Den Gfx" ) PORT_DIPLOCATION("SW1:6")
-    PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
-    PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-    PORT_DIPNAME( 0x40, 0x00, "Large Character Gfx" ) PORT_DIPLOCATION("SW1:7")
-    PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
-    PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-    PORT_DIPNAME( 0x80, 0x80, "Full Card Gfx" ) PORT_DIPLOCATION("SW1:8")
-    PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
-    PORT_DIPSETTING(    0x00, DEF_STR( On ) )*/
+	PORT_DIPSETTING(    0x18, "Changes Allowed" )
+	PORT_DIPSETTING(    0x10, "Preset #1" )
+	PORT_DIPSETTING(    0x08, "Preset #2" )
+	PORT_DIPSETTING(    0x00, "Changes locked" )
+	PORT_DIPNAME( 0x20, 0x00, "Dwarf's Den Gfx" ) PORT_DIPLOCATION("SW1:6")
+	PORT_DIPSETTING(    0x20, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x40, 0x00, "Large Character Gfx" ) PORT_DIPLOCATION("SW1:7")
+	PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
+	PORT_DIPNAME( 0x80, 0x80, "Full Card Gfx" ) PORT_DIPLOCATION("SW1:8")
+	PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( On ) )*/
 
 	PORT_START("DSW2")
 	PORT_DIPNAME( 0x01, 0x01, "Operator Settings Mode 2/2" ) PORT_DIPLOCATION("SW1:5")
@@ -864,10 +859,10 @@ WRITE_LINE_MEMBER(dwarfd_state::dwarfd_sod_callback)
 
 static I8085_CONFIG( dwarfd_i8085_config )
 {
-	DEVCB_NULL,						/* STATUS changed callback */
-	DEVCB_NULL,						/* INTE changed callback */
-	DEVCB_NULL,						/* SID changed callback (8085A only) */
-	DEVCB_DRIVER_LINE_MEMBER(dwarfd_state,dwarfd_sod_callback)	/* SOD changed callback (8085A only) */
+	DEVCB_NULL,                     /* STATUS changed callback */
+	DEVCB_NULL,                     /* INTE changed callback */
+	DEVCB_NULL,                     /* SID changed callback (8085A only) */
+	DEVCB_DRIVER_LINE_MEMBER(dwarfd_state,dwarfd_sod_callback)  /* SOD changed callback (8085A only) */
 };
 
 
@@ -1022,7 +1017,6 @@ static const ay8910_interface ay8910_config =
 
 void dwarfd_state::machine_start()
 {
-
 	save_item(NAME(m_bank));
 	save_item(NAME(m_line));
 	save_item(NAME(m_idx));
@@ -1045,7 +1039,6 @@ void dwarfd_state::machine_start()
 
 void dwarfd_state::machine_reset()
 {
-
 	m_bank = 0;
 	m_line = 0;
 	m_idx = 0;

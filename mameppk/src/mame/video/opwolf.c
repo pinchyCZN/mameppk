@@ -12,7 +12,6 @@
 
 WRITE16_MEMBER(opwolf_state::opwolf_spritectrl_w)
 {
-
 	if (offset == 0)
 	{
 		/* bits 0 and 1 always set */
@@ -56,4 +55,3 @@ UINT32 opwolf_state::screen_update_opwolf(screen_device &screen, bitmap_ind16 &b
 
 	return 0;
 }
-

@@ -115,8 +115,8 @@ class supracan_state : public driver_device
 public:
 	supracan_state(const machine_config &mconfig, device_type type, const char *tag)
 		: driver_device(mconfig, type, tag),
-		  m_maincpu(*this, "maincpu"),
-		  m_soundram(*this, "soundram")
+			m_maincpu(*this, "maincpu"),
+			m_soundram(*this, "soundram")
 	{
 		m_m6502_reset = 0;
 	}
@@ -248,7 +248,7 @@ static int supracan_tilemap_get_region(running_machine &machine, int layer)
 
 		switch(gfx_mode)
 		{
-			case 0:	return 4;
+			case 0: return 4;
 			case 1: return 2;
 			case 2: return 1;
 			case 3: return 0;
@@ -386,7 +386,6 @@ static void supracan_tilemap_get_info_roz(running_machine &machine, int layer, t
 
 TILE_GET_INFO_MEMBER(supracan_state::get_supracan_tilemap0_tile_info)
 {
-
 	supracan_tilemap_get_info_common(machine(), 0, tileinfo, tile_index);
 }
 
@@ -397,13 +396,11 @@ TILE_GET_INFO_MEMBER(supracan_state::get_supracan_tilemap1_tile_info)
 
 TILE_GET_INFO_MEMBER(supracan_state::get_supracan_tilemap2_tile_info)
 {
-
 	supracan_tilemap_get_info_common(machine(), 2, tileinfo, tile_index);
 }
 
 TILE_GET_INFO_MEMBER(supracan_state::get_supracan_roz_tile_info)
 {
-
 	supracan_tilemap_get_info_roz(machine(), 3, tileinfo, tile_index);
 }
 
@@ -504,7 +501,7 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 //  printf("frame\n");
 	#define VRAM_MASK (0xffff)
 
-   for(int i = start_word; i < end_word; i += 4)
+	for(int i = start_word; i < end_word; i += 4)
 	{
 		int x = supracan_vram[i+2] & 0x01ff;
 		int y = supracan_vram[i+0] & 0x01ff;
@@ -527,7 +524,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 
 		if((supracan_vram[i+0] & 0x4000))
 		{
-
 		#if 0
 			printf("%d (unk %02x) (enable %02x) (unk Y2 %02x, %02x) (y pos %02x) (bank %01x) (flip %01x) (unknown %02x) (x size %02x) (xscale %01x) (unk %01x) (xpos %02x) (code %04x)\n", i,
 				(supracan_vram[i+0] & 0x8000) >> 15,
@@ -683,7 +679,6 @@ static void supracan_suprnova_draw_roz(running_machine &machine, bitmap_ind16 &b
 		/* loop over rows */
 		while (sy <= ey)
 		{
-
 			/* initialize X counters */
 			x = sx;
 			cx = startx;
@@ -718,8 +713,8 @@ static void supracan_suprnova_draw_roz(running_machine &machine, bitmap_ind16 &b
 					{
 						int scroll = 0;//scrollram[(cy>>16)&0x3ff]);
 						UINT16 data =  srcbitmap.pix16(
-											   (cy >> 16) & ymask,
-											   ((cx >> 16) - scroll) & xmask);
+												(cy >> 16) & ymask,
+												((cx >> 16) - scroll) & xmask);
 
 
 						if ((data & transmask)!=0)
@@ -772,9 +767,6 @@ static void supracan_suprnova_draw_roz(running_machine &machine, bitmap_ind16 &b
 
 UINT32 supracan_state::screen_update_supracan(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
-
-
 	// treat the sprites as frame-buffered and only update the buffer when drawing scanline 0 - this might not be true!
 
 	if (0)
@@ -791,7 +783,6 @@ UINT32 supracan_state::screen_update_supracan(screen_device &screen, bitmap_ind1
 	}
 	else
 	{
-
 		m_sprite_final_bitmap.fill(0x00, cliprect);
 		bitmap.fill(0x80, cliprect);
 
@@ -809,7 +800,6 @@ UINT32 supracan_state::screen_update_supracan(screen_device &screen, bitmap_ind1
 
 	for (int pri=7;pri>=0;pri--)
 	{
-
 		for (int layer = 3; layer >=0; layer--)
 		{
 		//  popmessage("%04x\n",m_video_flags);
@@ -853,7 +843,6 @@ UINT32 supracan_state::screen_update_supracan(screen_device &screen, bitmap_ind1
 				{
 					if (layer != 3) // standard layers, NOT roz
 					{
-
 						int wrap = (m_tilemap_flags[layer] & 0x20);
 
 						int scrollx = m_tilemap_scrollx[layer];
@@ -1429,7 +1418,7 @@ WRITE16_MEMBER( supracan_state::supracan_sound_w )
 		case 0x000a/2:  /* Sound cpu IRQ request. */
 			machine().device("soundcpu")->execute().set_input_line(0, ASSERT_LINE);
 			break;
-		case 0x001c/2:	/* Sound cpu control. Bit 0 tied to sound cpu RESET line */
+		case 0x001c/2:  /* Sound cpu control. Bit 0 tied to sound cpu RESET line */
 			if(data & 0x01)
 			{
 				if(!m_m6502_reset)
@@ -1494,7 +1483,6 @@ READ16_MEMBER( supracan_state::supracan_video_r )
 
 TIMER_CALLBACK_MEMBER(supracan_state::supracan_hbl_callback)
 {
-
 	m_maincpu->set_input_line(3, HOLD_LINE);
 
 	m_hbl_timer->adjust(attotime::never);
@@ -1502,7 +1490,6 @@ TIMER_CALLBACK_MEMBER(supracan_state::supracan_hbl_callback)
 
 TIMER_CALLBACK_MEMBER(supracan_state::supracan_line_on_callback)
 {
-
 	m_maincpu->set_input_line(5, HOLD_LINE);
 
 	m_line_on_timer->adjust(attotime::never);
@@ -1510,7 +1497,6 @@ TIMER_CALLBACK_MEMBER(supracan_state::supracan_line_on_callback)
 
 TIMER_CALLBACK_MEMBER(supracan_state::supracan_line_off_callback)
 {
-
 	m_maincpu->set_input_line(5, CLEAR_LINE);
 
 	m_line_on_timer->adjust(attotime::never);
@@ -1773,7 +1759,6 @@ static DEVICE_IMAGE_LOAD( supracan_cart )
 
 void supracan_state::machine_start()
 {
-
 	m_video_timer = machine().scheduler().timer_alloc(timer_expired_delegate(FUNC(supracan_state::supracan_video_callback),this));
 	m_hbl_timer = machine().scheduler().timer_alloc(timer_expired_delegate(FUNC(supracan_state::supracan_hbl_callback),this));
 	m_line_on_timer = machine().scheduler().timer_alloc(timer_expired_delegate(FUNC(supracan_state::supracan_line_on_callback),this));
@@ -1783,7 +1768,6 @@ void supracan_state::machine_start()
 
 void supracan_state::machine_reset()
 {
-
 	machine().device("soundcpu")->execute().set_input_line(INPUT_LINE_HALT, ASSERT_LINE);
 
 	m_video_timer->adjust( machine().primary_screen->time_until_pos( 0, 0 ) );
@@ -1828,17 +1812,17 @@ static const gfx_layout supracan_gfx2bpp =
 
 
 static const UINT32 xtexlayout_xoffset[64] = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,
-                                               24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,
-                                               45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63 };
+												24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,
+												45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63 };
 
 static const UINT32 xtexlayout_yoffset[64] = {  0*64,1*64,2*64,3*64,4*64,5*64,6*64,7*64,8*64,
-                                                9*64,10*64,11*64,12*64,13*64,14*64,15*64,
-                                                16*64,17*64,18*64,19*64,20*64,21*64,22*64,23*64,
-                                                24*64,25*64,26*64,27*64,28*64,29*64,30*64,31*64,
-                                                32*64,33*64,34*64,35*64,36*64,37*64,38*64,39*64,
-                                                40*64,41*64,42*64,43*64,44*64,45*64,46*64,47*64,
+												9*64,10*64,11*64,12*64,13*64,14*64,15*64,
+												16*64,17*64,18*64,19*64,20*64,21*64,22*64,23*64,
+												24*64,25*64,26*64,27*64,28*64,29*64,30*64,31*64,
+												32*64,33*64,34*64,35*64,36*64,37*64,38*64,39*64,
+												40*64,41*64,42*64,43*64,44*64,45*64,46*64,47*64,
 						48*64,49*64,50*64,51*64,52*64,53*64,54*64,55*64,
-                                                56*64,57*64,58*64,59*64,60*64,61*64,62*64,63*64 };
+												56*64,57*64,58*64,59*64,60*64,61*64,62*64,63*64 };
 static const gfx_layout supracan_gfx1bpp =
 {
 	64,64,
@@ -1885,7 +1869,6 @@ INTERRUPT_GEN_MEMBER(supracan_state::supracan_irq)
 
 INTERRUPT_GEN_MEMBER(supracan_state::supracan_sound_irq)
 {
-
 	m_sound_irq_source_reg |= 0x80;
 
 	if(m_sound_irq_enable_reg & m_sound_irq_source_reg)
@@ -1900,11 +1883,11 @@ INTERRUPT_GEN_MEMBER(supracan_state::supracan_sound_irq)
 
 static MACHINE_CONFIG_START( supracan, supracan_state )
 
-	MCFG_CPU_ADD( "maincpu", M68000, XTAL_10_738635MHz )		/* Correct frequency unknown */
+	MCFG_CPU_ADD( "maincpu", M68000, XTAL_10_738635MHz )        /* Correct frequency unknown */
 	MCFG_CPU_PROGRAM_MAP( supracan_mem )
 	MCFG_CPU_VBLANK_INT_DRIVER("screen", supracan_state,  supracan_irq)
 
-	MCFG_CPU_ADD( "soundcpu", M6502, XTAL_3_579545MHz )		/* TODO: Verify actual clock */
+	MCFG_CPU_ADD( "soundcpu", M6502, XTAL_3_579545MHz )     /* TODO: Verify actual clock */
 	MCFG_CPU_PROGRAM_MAP( supracan_sound_mem )
 	MCFG_CPU_VBLANK_INT_DRIVER("screen", supracan_state,  supracan_sound_irq)
 
@@ -1915,7 +1898,7 @@ static MACHINE_CONFIG_START( supracan, supracan_state )
 
 
 	MCFG_SCREEN_ADD( "screen", RASTER )
-	MCFG_SCREEN_RAW_PARAMS(XTAL_10_738635MHz/2, 348, 0, 256, 256, 0, 240 )	/* No idea if this is correct */
+	MCFG_SCREEN_RAW_PARAMS(XTAL_10_738635MHz/2, 348, 0, 256, 256, 0, 240 )  /* No idea if this is correct */
 	MCFG_SCREEN_UPDATE_DRIVER(supracan_state, screen_update_supracan)
 	MCFG_PALETTE_LENGTH( 32768 )
 	MCFG_GFXDECODE(supracan)

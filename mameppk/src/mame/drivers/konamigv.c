@@ -122,7 +122,6 @@ Notes:
 #include "cdrom.h"
 #include "cpu/psx/psx.h"
 #include "video/psx.h"
-#include "includes/psx.h"
 #include "machine/eeprom.h"
 #include "machine/intelfsh.h"
 #include "machine/scsibus.h"
@@ -131,11 +130,11 @@ Notes:
 #include "sound/spu.h"
 #include "sound/cdda.h"
 
-class konamigv_state : public psx_state
+class konamigv_state : public driver_device
 {
 public:
 	konamigv_state(const machine_config &mconfig, device_type type, const char *tag)
-		: psx_state(mconfig, type, tag),
+		: driver_device(mconfig, type, tag),
 		m_am53cf96(*this, "scsi:am53cf96"){ }
 
 	required_device<am53cf96_device> m_am53cf96;
@@ -194,7 +193,7 @@ READ32_MEMBER(konamigv_state::mb89371_r)
 }
 
 static ADDRESS_MAP_START( konamigv_map, AS_PROGRAM, 32, konamigv_state )
-	AM_RANGE(0x00000000, 0x001fffff) AM_RAM	AM_SHARE("share1") /* ram */
+	AM_RANGE(0x00000000, 0x001fffff) AM_RAM AM_SHARE("share1") /* ram */
 	AM_RANGE(0x1f000000, 0x1f00001f) AM_DEVREADWRITE8("scsi:am53cf96", am53cf96_device, read, write, 0x00ff00ff)
 	AM_RANGE(0x1f100000, 0x1f100003) AM_READ_PORT("P1")
 	AM_RANGE(0x1f100004, 0x1f100007) AM_READ_PORT("P2")
@@ -207,14 +206,12 @@ static ADDRESS_MAP_START( konamigv_map, AS_PROGRAM, 32, konamigv_state )
 	AM_RANGE(0x9fc00000, 0x9fc7ffff) AM_ROM AM_SHARE("share2") /* bios mirror */
 	AM_RANGE(0xa0000000, 0xa01fffff) AM_RAM AM_SHARE("share1") /* ram mirror */
 	AM_RANGE(0xbfc00000, 0xbfc7ffff) AM_ROM AM_SHARE("share2") /* bios mirror */
-	AM_RANGE(0xfffe0130, 0xfffe0133) AM_WRITENOP
 ADDRESS_MAP_END
 
 /* SCSI */
 
-static void scsi_dma_read( konamigv_state *state, UINT32 n_address, INT32 n_size )
+static void scsi_dma_read( konamigv_state *state, UINT32 *p_n_psxram, UINT32 n_address, INT32 n_size )
 {
-	UINT32 *p_n_psxram = state->m_p_n_psxram;
 	UINT8 *sector_buffer = state->m_sector_buffer;
 	int i;
 	int n_this;
@@ -257,9 +254,8 @@ static void scsi_dma_read( konamigv_state *state, UINT32 n_address, INT32 n_size
 	}
 }
 
-static void scsi_dma_write( konamigv_state *state, UINT32 n_address, INT32 n_size )
+static void scsi_dma_write( konamigv_state *state, UINT32 *p_n_psxram, UINT32 n_address, INT32 n_size )
 {
-	UINT32 *p_n_psxram = state->m_p_n_psxram;
 	UINT8 *sector_buffer = state->m_sector_buffer;
 	int i;
 	int n_this;
@@ -294,7 +290,6 @@ static void scsi_dma_write( konamigv_state *state, UINT32 n_address, INT32 n_siz
 
 DRIVER_INIT_MEMBER(konamigv_state,konamigv)
 {
-	psx_driver_init(machine());
 }
 
 MACHINE_START_MEMBER(konamigv_state,konamigv)
@@ -412,7 +407,7 @@ READ32_MEMBER(konamigv_state::flash_r)
 		//shift = 16;
 	}
 
-	if (reg == 4)	// set odd address
+	if (reg == 4)   // set odd address
 	{
 		m_flash_address |= 1;
 	}
@@ -467,7 +462,6 @@ WRITE32_MEMBER(konamigv_state::flash_w)
 
 READ32_MEMBER(konamigv_state::trackball_r)
 {
-
 	if( offset == 0 && mem_mask == 0x0000ffff )
 	{
 		int axis;
@@ -493,7 +487,6 @@ READ32_MEMBER(konamigv_state::unknown_r)
 
 DRIVER_INIT_MEMBER(konamigv_state,simpbowl)
 {
-
 	m_flash8[0] = machine().device<fujitsu_29f016a_device>("flash0");
 	m_flash8[1] = machine().device<fujitsu_29f016a_device>("flash1");
 	m_flash8[2] = machine().device<fujitsu_29f016a_device>("flash2");
@@ -528,7 +521,6 @@ INPUT_PORTS_END
 
 READ32_MEMBER(konamigv_state::btcflash_r)
 {
-
 	if (mem_mask == 0x0000ffff)
 	{
 		return m_flash16[0]->read(offset*2);
@@ -543,7 +535,6 @@ READ32_MEMBER(konamigv_state::btcflash_r)
 
 WRITE32_MEMBER(konamigv_state::btcflash_w)
 {
-
 	if (mem_mask == 0x0000ffff)
 	{
 		m_flash16[0]->write(offset*2, data&0xffff);
@@ -556,7 +547,6 @@ WRITE32_MEMBER(konamigv_state::btcflash_w)
 
 READ32_MEMBER(konamigv_state::btc_trackball_r)
 {
-
 //  mame_printf_debug( "r %08x %08x %08x\n", space.device().safe_pc(), offset, mem_mask );
 
 	if( offset == 1 && mem_mask == 0xffff0000 )
@@ -585,7 +575,6 @@ WRITE32_MEMBER(konamigv_state::btc_trackball_w)
 
 DRIVER_INIT_MEMBER(konamigv_state,btchamp)
 {
-
 	m_flash16[0] = machine().device<sharp_lh28f400_device>("flash");
 
 	machine().device("maincpu")->memory().space(AS_PROGRAM).install_readwrite_handler( 0x1f680080, 0x1f68008f, read32_delegate(FUNC(konamigv_state::btc_trackball_r),this), write32_delegate(FUNC(konamigv_state::btc_trackball_w),this));
@@ -628,16 +617,16 @@ READ32_MEMBER(konamigv_state::tokimeki_serial_r)
 WRITE32_MEMBER(konamigv_state::tokimeki_serial_w)
 {
 	/*
-        serial EEPROM-like device here: when mem_mask == 0x000000ff only,
+	    serial EEPROM-like device here: when mem_mask == 0x000000ff only,
 
-        0x40 = chip enable
-        0x20 = clock
-        0x10 = data
+	    0x40 = chip enable
+	    0x20 = clock
+	    0x10 = data
 
-        tokimosh sends 6 bits: 110100 then reads 8 bits.
-        readback is bit 3 (0x08) of serial_r
-        This happens starting around 8005e580.
-    */
+	    tokimosh sends 6 bits: 110100 then reads 8 bits.
+	    readback is bit 3 (0x08) of serial_r
+	    This happens starting around 8005e580.
+	*/
 
 }
 
@@ -665,7 +654,6 @@ WRITE32_MEMBER(konamigv_state::kdeadeye_0_w)
 
 DRIVER_INIT_MEMBER(konamigv_state,kdeadeye)
 {
-
 	m_flash16[0] = machine().device<sharp_lh28f400_device>("flash");
 
 	machine().device("maincpu")->memory().space(AS_PROGRAM).install_read_port  ( 0x1f680080, 0x1f680083, "GUNX1" );
@@ -727,8 +715,8 @@ static INPUT_PORTS_START( kdeadeye )
 
 INPUT_PORTS_END
 
-#define GV_BIOS	\
-	ROM_REGION32_LE( 0x080000, "user1", 0 )	\
+#define GV_BIOS \
+	ROM_REGION32_LE( 0x080000, "user1", 0 ) \
 	ROM_LOAD( "999a01.7e",   0x0000000, 0x080000, CRC(ad498d2d) SHA1(02a82a2fe1fba0404517c3602324bfa64e23e478) )
 
 ROM_START( konamigv )

@@ -100,16 +100,16 @@ static void pitnrun_spotlights(running_machine &machine)
 	int x,y,i,b,datapix;
 	UINT8 *ROM = state->memregion("user1")->base();
 	for(i=0;i<4;i++)
-	 for(y=0;y<128;y++)
-	  for(x=0;x<16;x++)
-	  {
+		for(y=0;y<128;y++)
+		for(x=0;x<16;x++)
+		{
 		datapix=ROM[128*16*i+x+y*16];
 		for(b=0;b<8;b++)
 		{
 			state->m_tmp_bitmap[i]->pix16(y, x*8+(7-b)) = (datapix&1);
 			datapix>>=1;
 		}
-	  }
+		}
 }
 
 
@@ -180,7 +180,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 
 	for (offs = 0 ; offs < 0x100; offs+=4)
 	{
-
 		pal=spriteram[offs+2]&0x3;
 
 		sy = 256-spriteram[offs+0]-16;
@@ -261,7 +260,3 @@ UINT32 pitnrun_state::screen_update_pitnrun(screen_device &screen, bitmap_ind16 
 	m_fg->draw(bitmap, cliprect, 0,0);
 	return 0;
 }
-
-
-
-

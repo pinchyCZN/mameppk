@@ -22,9 +22,9 @@ void dribling_state::palette_init()
 
 	for (i = 0; i < 256; i++)
 	{
-		int r = (~prom[i] >> 0) & 1;	// 220
-		int g = (~prom[i] >> 1) & 3;	// 820 + 560 (332 max)
-		int b = (~prom[i] >> 3) & 1;	// 220
+		int r = (~prom[i] >> 0) & 1;    // 220
+		int g = (~prom[i] >> 1) & 3;    // 820 + 560 (332 max)
+		int b = (~prom[i] >> 3) & 1;    // 220
 
 		r *= 0xff;
 		g *= 0x55;
@@ -44,7 +44,6 @@ void dribling_state::palette_init()
 
 WRITE8_MEMBER(dribling_state::dribling_colorram_w)
 {
-
 	/* it is very important that we mask off the two bits here */
 	m_colorram[offset & 0x1f9f] = data;
 }

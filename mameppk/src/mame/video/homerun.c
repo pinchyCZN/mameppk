@@ -37,7 +37,6 @@ WRITE8_MEMBER(homerun_state::homerun_scrollx_w)
 
 WRITE8_MEMBER(homerun_state::homerun_banking_w)
 {
-
 	// games do mid-screen gfx bank switching
 	int vpos = machine().primary_screen->vpos();
 	machine().primary_screen->update_partial(vpos);
@@ -61,15 +60,15 @@ WRITE8_MEMBER(homerun_state::homerun_color_w)
 	m_colorram[offset] = data;
 
 	/* from PCB photo:
-        bit 7:  470 ohm resistor \
-        bit 6:  220 ohm resistor -  --> 470 ohm resistor  --> blue
-        bit 5:  470 ohm resistor \
-        bit 4:  220 ohm resistor -  --> 470 ohm resistor  --> green
-        bit 3:  1  kohm resistor /
-        bit 2:  470 ohm resistor \
-        bit 1:  220 ohm resistor -  --> 470 ohm resistor  --> red
-        bit 0:  1  kohm resistor /
-    */
+	    bit 7:  470 ohm resistor \
+	    bit 6:  220 ohm resistor -  --> 470 ohm resistor  --> blue
+	    bit 5:  470 ohm resistor \
+	    bit 4:  220 ohm resistor -  --> 470 ohm resistor  --> green
+	    bit 3:  1  kohm resistor /
+	    bit 2:  470 ohm resistor \
+	    bit 1:  220 ohm resistor -  --> 470 ohm resistor  --> red
+	    bit 0:  1  kohm resistor /
+	*/
 
 	// let's implement it the old fashioned way until it's found out how exactly the resnet is hooked up
 	int r, g, b;
@@ -141,7 +140,6 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 UINT32 homerun_state::screen_update_homerun(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_tilemap->set_scrolly(0, m_scrolly);
 	m_tilemap->set_scrollx(0, m_scrollx);
 

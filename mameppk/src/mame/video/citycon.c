@@ -27,7 +27,7 @@ TILE_GET_INFO_MEMBER(citycon_state::get_fg_tile_info)
 	SET_TILE_INFO_MEMBER(
 			0,
 			m_videoram[tile_index],
-			(tile_index & 0x03e0) >> 5,	/* color depends on scanline only */
+			(tile_index & 0x03e0) >> 5, /* color depends on scanline only */
 			0);
 }
 
@@ -82,7 +82,6 @@ WRITE8_MEMBER(citycon_state::citycon_linecolor_w)
 
 WRITE8_MEMBER(citycon_state::citycon_background_w)
 {
-
 	/* bits 4-7 control the background image */
 	if (m_bg_image != (data >> 4))
 	{

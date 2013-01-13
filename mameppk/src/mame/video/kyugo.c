@@ -18,9 +18,9 @@ TILE_GET_INFO_MEMBER(kyugo_state::get_fg_tile_info)
 {
 	int code = m_fgvideoram[tile_index];
 	SET_TILE_INFO_MEMBER(0,
-				  code,
-				  2 * m_color_codes[code >> 3] + m_fgcolor,
-				  0);
+					code,
+					2 * m_color_codes[code >> 3] + m_fgcolor,
+					0);
 }
 
 
@@ -29,9 +29,9 @@ TILE_GET_INFO_MEMBER(kyugo_state::get_bg_tile_info)
 	int code = m_bgvideoram[tile_index];
 	int attr = m_bgattribram[tile_index];
 	SET_TILE_INFO_MEMBER(1,
-				  code | ((attr & 0x03) << 8),
-				  (attr >> 4) | (m_bgpalbank << 4),
-				  TILE_FLIPYX((attr & 0x0c) >> 2));
+					code | ((attr & 0x03) << 8),
+					(attr >> 4) | (m_bgpalbank << 4),
+					TILE_FLIPYX((attr & 0x0c) >> 2));
 }
 
 
@@ -43,7 +43,6 @@ TILE_GET_INFO_MEMBER(kyugo_state::get_bg_tile_info)
 
 void kyugo_state::video_start()
 {
-
 	m_color_codes = memregion("proms")->base() + 0x300;
 
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(kyugo_state::get_fg_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 64, 32);
@@ -64,7 +63,6 @@ void kyugo_state::video_start()
 
 WRITE8_MEMBER(kyugo_state::kyugo_fgvideoram_w)
 {
-
 	m_fgvideoram[offset] = data;
 	m_fg_tilemap->mark_tile_dirty(offset);
 }
@@ -72,7 +70,6 @@ WRITE8_MEMBER(kyugo_state::kyugo_fgvideoram_w)
 
 WRITE8_MEMBER(kyugo_state::kyugo_bgvideoram_w)
 {
-
 	m_bgvideoram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
@@ -80,7 +77,6 @@ WRITE8_MEMBER(kyugo_state::kyugo_bgvideoram_w)
 
 WRITE8_MEMBER(kyugo_state::kyugo_bgattribram_w)
 {
-
 	m_bgattribram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
@@ -88,7 +84,6 @@ WRITE8_MEMBER(kyugo_state::kyugo_bgattribram_w)
 
 READ8_MEMBER(kyugo_state::kyugo_spriteram_2_r)
 {
-
 	// only the lower nibble is connected
 	return m_spriteram_2[offset] | 0xf0;
 }
@@ -102,7 +97,6 @@ WRITE8_MEMBER(kyugo_state::kyugo_scroll_x_lo_w)
 
 WRITE8_MEMBER(kyugo_state::kyugo_gfxctrl_w)
 {
-
 	/* bit 0 is scroll MSB */
 	m_scroll_x_hi = data & 0x01;
 
@@ -134,7 +128,6 @@ WRITE8_MEMBER(kyugo_state::kyugo_scroll_y_w)
 
 WRITE8_MEMBER(kyugo_state::kyugo_flipscreen_w)
 {
-
 	if (m_flipscreen != (data & 0x01))
 	{
 		m_flipscreen = (data & 0x01);
@@ -200,10 +193,10 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 
 			drawgfx_transpen( bitmap, cliprect,machine.gfx[2],
-					 code,
-					 color,
-					 flipx,flipy,
-					 sx,state->m_flipscreen ? sy - 16*y : sy + 16*y, 0 );
+						code,
+						color,
+						flipx,flipy,
+						sx,state->m_flipscreen ? sy - 16*y : sy + 16*y, 0 );
 		}
 	}
 }
@@ -211,7 +204,6 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 UINT32 kyugo_state::screen_update_kyugo(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	if (m_flipscreen)
 		m_bg_tilemap->set_scrollx(0, -(m_scroll_x_lo + (m_scroll_x_hi * 256)));
 	else

@@ -40,22 +40,22 @@ class tapatune_state : public driver_device
 public:
 	tapatune_state(const machine_config &mconfig, device_type type, const char *tag)
 		: driver_device(mconfig, type, tag),
-		  m_videoram(*this, "videoram") {}
+			m_videoram(*this, "videoram") {}
 
-	UINT8	m_paletteram[0x300];
-	UINT16	m_palette_write_address;
-	rgb_t	m_pens[0x100];
+	UINT8   m_paletteram[0x300];
+	UINT16  m_palette_write_address;
+	rgb_t   m_pens[0x100];
 
 	required_shared_ptr<UINT16> m_videoram;
 
-	UINT8	m_controls_mux;
-	UINT8	m_z80_to_68k_index;
-	UINT8	m_z80_to_68k_data;
+	UINT8   m_controls_mux;
+	UINT8   m_z80_to_68k_index;
+	UINT8   m_z80_to_68k_data;
 
-	UINT8	m_68k_to_z80_index;
-	UINT8	m_68k_to_z80_data;
+	UINT8   m_68k_to_z80_index;
+	UINT8   m_68k_to_z80_data;
 
-	UINT16	m_bsmt_data;
+	UINT16  m_bsmt_data;
 	DECLARE_WRITE16_MEMBER(palette_w);
 	DECLARE_READ16_MEMBER(read_from_z80);
 	DECLARE_WRITE16_MEMBER(write_to_z80);
@@ -77,7 +77,6 @@ public:
 
 WRITE16_MEMBER(tapatune_state::palette_w)
 {
-
 	//logerror("Palette write: offset = %02x, data = %04x, mask = %04x\n", offset, data, mem_mask );
 	switch(offset)
 	{
@@ -94,7 +93,6 @@ WRITE16_MEMBER(tapatune_state::palette_w)
 
 READ16_MEMBER(tapatune_state::read_from_z80)
 {
-
 	//logerror("Reading data from Z80: index = %02x, data = %02x\n", m_z80_to_68k_index, m_z80_to_68k_data );
 
 	switch( offset )
@@ -108,7 +106,6 @@ READ16_MEMBER(tapatune_state::read_from_z80)
 
 WRITE16_MEMBER(tapatune_state::write_to_z80)
 {
-
 	switch( offset )
 	{
 		case 0:
@@ -364,16 +361,16 @@ WRITE_LINE_MEMBER(tapatune_state::crtc_vsync)
 
 static const mc6845_interface h46505_intf =
 {
-	"screen",	/* screen we are acting on */
-	5,			/* number of pixels per video memory address */
+	"screen",   /* screen we are acting on */
+	5,          /* number of pixels per video memory address */
 	begin_update,/* before pixel update callback */
 	update_row, /* row update callback */
-	NULL,		/* after pixel update callback */
-	DEVCB_NULL,	/* callback for display state changes */
-	DEVCB_NULL,	/* callback for cursor state changes */
-	DEVCB_NULL,	/* HSYNC callback */
-	DEVCB_DRIVER_LINE_MEMBER(tapatune_state,crtc_vsync),	/* VSYNC callback */
-	NULL		/* update address callback */
+	NULL,       /* after pixel update callback */
+	DEVCB_NULL, /* callback for display state changes */
+	DEVCB_NULL, /* callback for cursor state changes */
+	DEVCB_NULL, /* HSYNC callback */
+	DEVCB_DRIVER_LINE_MEMBER(tapatune_state,crtc_vsync),    /* VSYNC callback */
+	NULL        /* update address callback */
 };
 
 
@@ -398,7 +395,7 @@ static MACHINE_CONFIG_START( tapatune, tapatune_state )
 	MCFG_PALETTE_LENGTH(16)
 
 
-	MCFG_MC6845_ADD("crtc", H46505, 24000000/16, h46505_intf)	/* H46505 */
+	MCFG_MC6845_ADD("crtc", H46505, 24000000/16, h46505_intf)   /* H46505 */
 
 	MCFG_TICKET_DISPENSER_ADD("ticket", attotime::from_msec(100), TICKET_MOTOR_ACTIVE_LOW, TICKET_STATUS_ACTIVE_LOW)
 

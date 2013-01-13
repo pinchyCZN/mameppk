@@ -25,7 +25,6 @@ TILE_GET_INFO_MEMBER(darius_state::get_fg_tile_info)
 
 void darius_state::video_start()
 {
-
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(darius_state::get_fg_tile_info),this),TILEMAP_SCAN_ROWS,8,8,128,64);
 
 	m_fg_tilemap->set_transparent_pen(0);
@@ -35,7 +34,6 @@ void darius_state::video_start()
 
 WRITE16_MEMBER(darius_state::darius_fg_layer_w)
 {
-
 	COMBINE_DATA(&m_fg_ram[offset]);
 	if (offset < 0x4000)
 		m_fg_tilemap->mark_tile_dirty((offset & 0x1fff));
@@ -116,4 +114,3 @@ static UINT32 update_screen(screen_device &screen, bitmap_ind16 &bitmap, const r
 UINT32 darius_state::screen_update_darius_left(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect){ return update_screen(screen, bitmap, cliprect, 36 * 8 * 0); }
 UINT32 darius_state::screen_update_darius_middle(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect){ return update_screen(screen, bitmap, cliprect, 36 * 8 * 1); }
 UINT32 darius_state::screen_update_darius_right(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect){ return update_screen(screen, bitmap, cliprect, 36 * 8 * 2); }
-

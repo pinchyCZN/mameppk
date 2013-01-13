@@ -51,8 +51,8 @@ public:
 	UINT8 m_sound_byte;
 	UINT8 m_nmi_enable;
 
-	tilemap_t *	m_bg_tilemap;
-	tilemap_t *	m_fg_tilemap;
+	tilemap_t * m_bg_tilemap;
+	tilemap_t * m_fg_tilemap;
 
 	DECLARE_WRITE8_MEMBER(superwng_nmi_enable_w);
 	DECLARE_WRITE8_MEMBER(superwng_sound_interrupt_w);
@@ -117,7 +117,6 @@ void superwng_state::video_start()
 
 UINT32 superwng_state::screen_update_superwng(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	rectangle tmp = cliprect;
 
@@ -136,15 +135,15 @@ UINT32 superwng_state::screen_update_superwng(screen_device &screen, bitmap_ind1
 	for (int i = 0x3e; i >= 0; i -= 2)
 	{
 		/*      76543210
-        video0: xxxxxx    code
-                      x   /flip
-                       x  enable?
-        video1: xxxxxxxx  x
-        color0: xxxxxxxx  y
-        color1: xxx       unused?
-                   x      ?
-                    xxxx  color
-        */
+		video0: xxxxxx    code
+		              x   /flip
+		               x  enable?
+		video1: xxxxxxxx  x
+		color0: xxxxxxxx  y
+		color1: xxx       unused?
+		           x      ?
+		            xxxx  color
+		*/
 		if (~m_videoram_bg[i] & 1)
 			continue;
 
@@ -208,7 +207,6 @@ WRITE8_MEMBER(superwng_state::superwng_nmi_enable_w)
 
 INTERRUPT_GEN_MEMBER(superwng_state::superwng_nmi_interrupt)
 {
-
 	if (BIT(m_nmi_enable, 0))
 		nmi_line_pulse(device);
 }
@@ -345,29 +343,29 @@ static INPUT_PORTS_START( superwng )
 
 	PORT_START("DSW1")
 	PORT_DIPNAME( 0x01, 0x00, DEF_STR( Unknown ))
-	PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-	PORT_DIPSETTING(	0x01, DEF_STR( On ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x01, DEF_STR( On ) )
 	PORT_DIPNAME( 0x02, 0x00, DEF_STR( Unknown ))
-	PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-	PORT_DIPSETTING(	0x02, DEF_STR( On ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x02, DEF_STR( On ) )
 	PORT_DIPNAME( 0x04, 0x00, DEF_STR( Unknown ))
-	PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-	PORT_DIPSETTING(	0x04, DEF_STR( On ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x04, DEF_STR( On ) )
 	PORT_DIPNAME( 0x08, 0x00, DEF_STR( Cabinet ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( Upright ))
 	PORT_DIPSETTING(    0x08, DEF_STR( Cocktail ))
 	PORT_DIPNAME( 0x10, 0x00, DEF_STR( Unknown ))
-	PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-	PORT_DIPSETTING(	0x10, DEF_STR( On ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x10, DEF_STR( On ) )
 	PORT_DIPNAME( 0x20, 0x00, DEF_STR( Unknown ))
-	PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-	PORT_DIPSETTING(	0x20, DEF_STR( On ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x20, DEF_STR( On ) )
 	PORT_DIPNAME( 0x40, 0x00, DEF_STR( Unknown ))
-	PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-	PORT_DIPSETTING(	0x40, DEF_STR( On ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x40, DEF_STR( On ) )
 	PORT_DIPNAME( 0x80, 0x80, DEF_STR( Lives ) )
-	PORT_DIPSETTING(	0x80, "3" )
-	PORT_DIPSETTING(	0x00, "5" )
+	PORT_DIPSETTING(    0x80, "3" )
+	PORT_DIPSETTING(    0x00, "5" )
 
 	PORT_START("DSW2")
 	PORT_DIPNAME( 0x03, 0x03, DEF_STR( Coin_A ) )
@@ -381,17 +379,17 @@ static INPUT_PORTS_START( superwng )
 	PORT_DIPSETTING(    0x04, DEF_STR( 1C_1C ))
 	PORT_DIPSETTING(    0x00, DEF_STR( 1C_2C ) )
 	PORT_DIPNAME( 0x10, 0x00, DEF_STR( Unknown ))
-	PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-	PORT_DIPSETTING(	0x10, DEF_STR( On ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x10, DEF_STR( On ) )
 	PORT_DIPNAME( 0x20, 0x00, DEF_STR( Unknown )) // hopper related, writes 0 to 0xa000 every frame if it is set
-	PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-	PORT_DIPSETTING(	0x20, DEF_STR( On ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x20, DEF_STR( On ) )
 	PORT_DIPNAME( 0x40, 0x00, DEF_STR( Unknown )) // hopper related, if 0x20 is set, and this is set, it will lock up with HOPPER EMPTY
-	PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-	PORT_DIPSETTING(	0x40, DEF_STR( On ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x40, DEF_STR( On ) )
 	PORT_DIPNAME( 0x80, 0x00, DEF_STR( Unknown ))
-	PORT_DIPSETTING(	0x00, DEF_STR( Off ) )
-	PORT_DIPSETTING(	0x80, DEF_STR( On ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
+	PORT_DIPSETTING(    0x80, DEF_STR( On ) )
 INPUT_PORTS_END
 
 static const gfx_layout charlayout =
@@ -428,7 +426,6 @@ GFXDECODE_END
 
 void superwng_state::machine_start()
 {
-
 	save_item(NAME(m_tile_bank));
 	save_item(NAME(m_sound_byte));
 	save_item(NAME(m_nmi_enable));
@@ -436,7 +433,6 @@ void superwng_state::machine_start()
 
 void superwng_state::machine_reset()
 {
-
 	m_sound_byte = 0;
 	m_nmi_enable = 0;
 }

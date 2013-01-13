@@ -34,7 +34,7 @@ void mikie_state::palette_init()
 	int i;
 
 	/* compute the color output resistor weights */
-	compute_resistor_weights(0,	255, -1.0,
+	compute_resistor_weights(0, 255, -1.0,
 			4, resistances, rweights, 470, 0,
 			4, resistances, gweights, 470, 0,
 			4, resistances, bweights, 470, 0);
@@ -90,21 +90,18 @@ void mikie_state::palette_init()
 
 WRITE8_MEMBER(mikie_state::mikie_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(mikie_state::mikie_colorram_w)
 {
-
 	m_colorram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(mikie_state::mikie_palettebank_w)
 {
-
 	if (m_palettebank != (data & 0x07))
 	{
 		m_palettebank = data & 0x07;

@@ -221,7 +221,7 @@ static const int NUM_COLORS=256;
 
 struct scroll_info
 {
-	 INT32 x,y,unkbits;
+		INT32 x,y,unkbits;
 };
 
 
@@ -312,7 +312,6 @@ WRITE16_MEMBER(wheelfir_state::wheelfir_scanline_cnt_w)
 
 WRITE16_MEMBER(wheelfir_state::wheelfir_blit_w)
 {
-
 	COMBINE_DATA(&m_blitter_data[offset]);
 
 	if(!ACCESSING_BITS_8_15 && offset==0x6)  //LSB only!
@@ -381,7 +380,6 @@ WRITE16_MEMBER(wheelfir_state::wheelfir_blit_w)
 
 	if(offset==0xf && data==0xffff)
 	{
-
 		machine().device("maincpu")->execute().set_input_line(1, HOLD_LINE);
 
 		{
@@ -410,7 +408,6 @@ WRITE16_MEMBER(wheelfir_state::wheelfir_blit_w)
 
 			if(page>=0x400000) /* src set to  unav. page before direct write to the framebuffer */
 			{
-
 					m_direct_write_x0=dst_x0;
 					m_direct_write_x1=dst_x1;
 					m_direct_write_y0=dst_y0;
@@ -421,17 +418,14 @@ WRITE16_MEMBER(wheelfir_state::wheelfir_blit_w)
 
 			if(x_dst_step<0)
 			{
-
 				if(dst_x0<=dst_x1)
 				{
-
 					return;
 				}
 
 			}
 			else
 			{
-
 				if(dst_x0>=dst_x1)
 				{
 					return;
@@ -448,7 +442,6 @@ WRITE16_MEMBER(wheelfir_state::wheelfir_blit_w)
 			}
 			else
 			{
-
 				if(dst_y0>=dst_y1)
 				{
 					return;
@@ -533,8 +526,8 @@ WRITE16_MEMBER(wheelfir_state::wheelfir_blit_w)
 				endy=false;
 				for( y=dst_y0, idx_y=0 ; !endy;y+=y_dst_step, idx_y+=scale_y_step)
 				{
-					 endx=(x==dst_x1);
-					 endy=(y==dst_y1);
+						endx=(x==dst_x1);
+						endy=(y==dst_y1);
 
 
 					int xx=src_x0+x_src_step*idx_x;
@@ -579,7 +572,6 @@ void wheelfir_state::video_start()
 
 UINT32 wheelfir_state::screen_update_wheelfir(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	bitmap.fill(0, cliprect);
 
 	for(int y=0;y<NUM_SCANLINES;++y)
@@ -589,7 +581,6 @@ UINT32 wheelfir_state::screen_update_wheelfir(screen_device &screen, bitmap_ind1
 
 		for (int x=0;x<336;x++)
 		{
-
 			dest[x] = source[ (x+(m_scanlines[y].x)) &511];
 
 		}
@@ -680,7 +671,7 @@ static ADDRESS_MAP_START( wheelfir_main, AS_PROGRAM, 16, wheelfir_state )
 	AM_RANGE(0x7e0000, 0x7e0001) AM_READ_PORT("P1")
 	AM_RANGE(0x7e0002, 0x7e0003) AM_READ_PORT("P2")
 
-  ADDRESS_MAP_END
+	ADDRESS_MAP_END
 
 
 /* sub is sound cpu? the program roms contain lots of samples */
@@ -696,7 +687,7 @@ ADDRESS_MAP_END
 
 
 static INPUT_PORTS_START( wheelfir )
-	PORT_START("P1")	/* 16bit */
+	PORT_START("P1")    /* 16bit */
 	PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP ) PORT_8WAY PORT_PLAYER(1)
 	PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN ) PORT_8WAY PORT_PLAYER(1)
 	PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT ) PORT_8WAY PORT_PLAYER(1)
@@ -716,7 +707,7 @@ static INPUT_PORTS_START( wheelfir )
 	PORT_BIT( 0x4000, IP_ACTIVE_LOW, IPT_UNUSED )
 	PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNUSED )
 
-	PORT_START("P2")	/* 16bit */
+	PORT_START("P2")    /* 16bit */
 	PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_JOYSTICK_UP ) PORT_8WAY PORT_PLAYER(2)
 	PORT_BIT( 0x0002, IP_ACTIVE_LOW, IPT_JOYSTICK_DOWN ) PORT_8WAY PORT_PLAYER(2)
 	PORT_BIT( 0x0004, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT ) PORT_8WAY PORT_PLAYER(2)
@@ -772,7 +763,6 @@ void wheelfir_state::machine_reset()
 
 void wheelfir_state::machine_start()
 {
-
 	m_maincpu = machine().device<cpu_device>( "maincpu");
 	m_subcpu = machine().device<cpu_device>(  "subcpu");
 	m_screen = machine().device(  "screen");
@@ -874,4 +864,3 @@ DRIVER_INIT_MEMBER(wheelfir_state,wheelfir)
 }
 
 GAME( 199?, wheelfir,    0, wheelfir,    wheelfir, wheelfir_state,    wheelfir, ROT0,  "TCH", "Wheels & Fire", GAME_NOT_WORKING|GAME_NO_SOUND )
-

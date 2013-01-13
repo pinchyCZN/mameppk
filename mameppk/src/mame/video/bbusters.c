@@ -50,21 +50,18 @@ TILE_GET_INFO_MEMBER(bbusters_state::get_pf2_tile_info)
 
 WRITE16_MEMBER(bbusters_state::bbusters_video_w)
 {
-
 	COMBINE_DATA(&m_videoram[offset]);
 	m_fix_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE16_MEMBER(bbusters_state::bbusters_pf1_w)
 {
-
 	COMBINE_DATA(&m_pf1_data[offset]);
 	m_pf1_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE16_MEMBER(bbusters_state::bbusters_pf2_w)
 {
-
 	COMBINE_DATA(&m_pf2_data[offset]);
 	m_pf2_tilemap->mark_tile_dirty(offset);
 }
@@ -73,7 +70,6 @@ WRITE16_MEMBER(bbusters_state::bbusters_pf2_w)
 
 VIDEO_START_MEMBER(bbusters_state,bbuster)
 {
-
 	m_fix_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(bbusters_state::get_bbusters_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 	m_pf1_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(bbusters_state::get_pf1_tile_info),this), TILEMAP_SCAN_COLS, 16, 16, 128, 32);
 	m_pf2_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(bbusters_state::get_pf2_tile_info),this), TILEMAP_SCAN_COLS, 16, 16, 128, 32);
@@ -84,7 +80,6 @@ VIDEO_START_MEMBER(bbusters_state,bbuster)
 
 VIDEO_START_MEMBER(bbusters_state,mechatt)
 {
-
 	m_fix_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(bbusters_state::get_bbusters_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 	m_pf1_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(bbusters_state::get_pf1_tile_info),this), TILEMAP_SCAN_COLS, 16, 16, 256, 32);
 	m_pf2_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(bbusters_state::get_pf2_tile_info),this), TILEMAP_SCAN_COLS, 16, 16, 256, 32);
@@ -96,18 +91,18 @@ VIDEO_START_MEMBER(bbusters_state,mechatt)
 /******************************************************************************/
 
 #define ADJUST_4x4 \
-		if ((dx&0x10) && (dy&0x10)) code+=3;	\
-		else if (dy&0x10) code+=2;				\
+		if ((dx&0x10) && (dy&0x10)) code+=3;    \
+		else if (dy&0x10) code+=2;              \
 		else if (dx&0x10) code+=1
 
 #define ADJUST_8x8 \
-		if ((dx&0x20) && (dy&0x20)) code+=12;	\
-		else if (dy&0x20) code+=8;				\
+		if ((dx&0x20) && (dy&0x20)) code+=12;   \
+		else if (dy&0x20) code+=8;              \
 		else if (dx&0x20) code+=4
 
 #define ADJUST_16x16 \
-		if ((dx&0x40) && (dy&0x40)) code+=48;	\
-		else if (dy&0x40) code+=32;				\
+		if ((dx&0x40) && (dy&0x40)) code+=48;   \
+		else if (dy&0x40) code+=32;             \
 		else if (dx&0x40) code+=16
 
 INLINE const UINT8 *get_source_ptr(gfx_element *gfx, UINT32 sprite, int dx, int dy, int block)
@@ -160,7 +155,6 @@ static void bbusters_draw_block(running_machine &machine, bitmap_ind16 &dest,int
 	int sx, ex = state->m_scale_line_count;
 
 	while (state->m_scale_line_count) {
-
 		if (dy>=16 && dy<240) {
 			UINT16 *destline = &dest.pix16(dy);
 			UINT8 srcline=*state->m_scale_table_ptr;
@@ -205,37 +199,37 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const U
 		int x,y,sprite,colour,fx,fy,scale;
 		int block;
 
-	    sprite=source[offs+1];
-	    colour=source[offs+0];
+		sprite=source[offs+1];
+		colour=source[offs+0];
 
 		if (colour==0xf7 && (sprite==0x3fff || sprite==0xffff))
 			continue;
 
-	    y=source[offs+3];
-	    x=source[offs+2];
+		y=source[offs+3];
+		x=source[offs+2];
 		if (x&0x200) x=-(0x100-(x&0xff));
 
 		/*
-            Source[0]:
-                0xf000: Colour
-                0x0800: FX
-                0x0400: FY?
-                0x0300: Block control
-                0x0080: ?
-                0x007f: scale
+		    Source[0]:
+		        0xf000: Colour
+		        0x0800: FX
+		        0x0400: FY?
+		        0x0300: Block control
+		        0x0080: ?
+		        0x007f: scale
 
-            Scale varies according to block size.
-            Block type 0: 0x70 = no scale, 0x7f == half size - 16 pixel sprite
-            Block type 1: 0x60 = no scale, 0x6f == half size - 32 pixel sprite
-            Block type 2: 0x40 = no scale, 0x5f == half size - 64 pixel sprite
-            Block type 3: 0x00 = no scale, 0x3f == half size - 128 pixel sprite
+		    Scale varies according to block size.
+		    Block type 0: 0x70 = no scale, 0x7f == half size - 16 pixel sprite
+		    Block type 1: 0x60 = no scale, 0x6f == half size - 32 pixel sprite
+		    Block type 2: 0x40 = no scale, 0x5f == half size - 64 pixel sprite
+		    Block type 3: 0x00 = no scale, 0x3f == half size - 128 pixel sprite
 
-        */
+		*/
 		colour=colour>>12;
 		block=(source[offs+0]>>8)&0x3;
 		fy=source[offs+0]&0x400;
 		fx=source[offs+0]&0x800;
-	    sprite=sprite&0x3fff;
+		sprite=sprite&0x3fff;
 
 		if ((colour&colmask)!=colval)
 			continue;
@@ -273,7 +267,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const U
 
 UINT32 bbusters_state::screen_update_bbuster(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_pf1_tilemap->set_scrollx(0, m_pf1_scroll_data[0]);
 	m_pf1_tilemap->set_scrolly(0, m_pf1_scroll_data[1]);
 	m_pf2_tilemap->set_scrollx(0, m_pf2_scroll_data[0]);
@@ -290,7 +283,6 @@ UINT32 bbusters_state::screen_update_bbuster(screen_device &screen, bitmap_ind16
 
 UINT32 bbusters_state::screen_update_mechatt(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_pf1_tilemap->set_scrollx(0, m_pf1_scroll_data[0]);
 	m_pf1_tilemap->set_scrolly(0, m_pf1_scroll_data[1]);
 	m_pf2_tilemap->set_scrollx(0, m_pf2_scroll_data[0]);

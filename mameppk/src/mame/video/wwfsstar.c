@@ -17,14 +17,12 @@
 
 WRITE16_MEMBER(wwfsstar_state::wwfsstar_fg0_videoram_w)
 {
-
 	COMBINE_DATA(&m_fg0_videoram[offset]);
 	m_fg0_tilemap->mark_tile_dirty(offset/2);
 }
 
 WRITE16_MEMBER(wwfsstar_state::wwfsstar_bg0_videoram_w)
 {
-
 	COMBINE_DATA(&m_bg0_videoram[offset]);
 	m_bg0_tilemap->mark_tile_dirty(offset/2);
 }
@@ -37,18 +35,18 @@ TILE_GET_INFO_MEMBER(wwfsstar_state::get_fg0_tile_info)
 {
 	/*- FG0 RAM Format -**
 
-      0x1000 sized region (4096 bytes)
+	  0x1000 sized region (4096 bytes)
 
-      32x32 tilemap, 4 bytes per tile
+	  32x32 tilemap, 4 bytes per tile
 
-      ---- ----  CCCC TTTT  ---- ----  TTTT TTTT
+	  ---- ----  CCCC TTTT  ---- ----  TTTT TTTT
 
-      C = Colour Bank (0-15)
-      T = Tile Number (0 - 4095)
+	  C = Colour Bank (0-15)
+	  T = Tile Number (0 - 4095)
 
-      other bits unknown / unused
+	  other bits unknown / unused
 
-    **- End of Comments -*/
+	**- End of Comments -*/
 
 	UINT16 *tilebase;
 	int tileno;
@@ -73,19 +71,19 @@ TILE_GET_INFO_MEMBER(wwfsstar_state::get_bg0_tile_info)
 {
 	/*- BG0 RAM Format -**
 
-      0x1000 sized region (4096 bytes)
+	  0x1000 sized region (4096 bytes)
 
-      32x32 tilemap, 4 bytes per tile
+	  32x32 tilemap, 4 bytes per tile
 
-      ---- ----  FCCC TTTT  ---- ----  TTTT TTTT
+	  ---- ----  FCCC TTTT  ---- ----  TTTT TTTT
 
-      C = Colour Bank (0-7)
-      T = Tile Number (0 - 4095)
-      F = FlipX
+	  C = Colour Bank (0-7)
+	  T = Tile Number (0 - 4095)
+	  F = FlipX
 
-      other bits unknown / unused
+	  other bits unknown / unused
 
-    **- End of Comments -*/
+	**- End of Comments -*/
 
 	UINT16 *tilebase;
 	int tileno, colbank, flipx;
@@ -111,24 +109,24 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 {
 	/*- SPR RAM Format -**
 
-      0x3FF sized region (1024 bytes)
+	  0x3FF sized region (1024 bytes)
 
-      10 bytes per sprite
+	  10 bytes per sprite
 
-      ---- ---- yyyy yyyy ---- ---- CCCC XYLE ---- ---- fFNN NNNN ---- ---- nnnn nnnn ---- ---- xxxx xxxx
+	  ---- ---- yyyy yyyy ---- ---- CCCC XYLE ---- ---- fFNN NNNN ---- ---- nnnn nnnn ---- ---- xxxx xxxx
 
-      Yy = sprite Y Position
-      Xx = sprite X Position
-      C  = colour bank
-      f  = flip Y
-      F  = flip X
-      L  = chain sprite (32x16)
-      E  = sprite enable
-      Nn = Sprite Number
+	  Yy = sprite Y Position
+	  Xx = sprite X Position
+	  C  = colour bank
+	  f  = flip Y
+	  F  = flip X
+	  L  = chain sprite (32x16)
+	  E  = sprite enable
+	  Nn = Sprite Number
 
-      other bits unused
+	  other bits unused
 
-    **- End of Comments -*/
+	**- End of Comments -*/
 
 	wwfsstar_state *state = machine.driver_data<wwfsstar_state>();
 	gfx_element *gfx = machine.gfx[1];
@@ -207,7 +205,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 
 void wwfsstar_state::video_start()
 {
-
 	m_fg0_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(wwfsstar_state::get_fg0_tile_info),this),TILEMAP_SCAN_ROWS, 8, 8,32,32);
 	m_fg0_tilemap->set_transparent_pen(0);
 
@@ -217,7 +214,6 @@ void wwfsstar_state::video_start()
 
 UINT32 wwfsstar_state::screen_update_wwfsstar(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg0_tilemap->set_scrolly(0, m_scrolly  );
 	m_bg0_tilemap->set_scrollx(0, m_scrollx  );
 

@@ -88,7 +88,6 @@ void dynduke_state::video_start()
 
 WRITE16_MEMBER(dynduke_state::dynduke_gfxbank_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		if (data&0x01) m_back_bankbase=0x1000; else m_back_bankbase=0;
@@ -107,7 +106,6 @@ WRITE16_MEMBER(dynduke_state::dynduke_gfxbank_w)
 
 WRITE16_MEMBER(dynduke_state::dynduke_control_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		// bit 0x80 toggles, maybe sprite buffering?
@@ -197,13 +195,13 @@ static void draw_background(running_machine &machine, bitmap_ind16 &bitmap, cons
 			UINT16 srcdat = src[realx];
 
 			/* 0x01 - data bits
-               0x02
-               0x04
-               0x08
-               0x10 - extra colour bit? (first boss)
-               0x20 - priority over sprites
-               the old driver also had 'bg_palbase' but I don't see what it's for?
-            */
+			   0x02
+			   0x04
+			   0x08
+			   0x10 - extra colour bit? (first boss)
+			   0x20 - priority over sprites
+			   the old driver also had 'bg_palbase' but I don't see what it's for?
+			*/
 
 			if ((srcdat & 0x20) == pri)
 			{

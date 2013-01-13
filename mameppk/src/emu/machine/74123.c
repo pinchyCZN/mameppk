@@ -11,7 +11,7 @@
 #include "machine/rescap.h"
 
 
-#define	LOG		(0)
+#define LOG     (0)
 
 
 
@@ -29,7 +29,6 @@ const device_type TTL74123 = &device_creator<ttl74123_device>;
 ttl74123_device::ttl74123_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
 	: device_t(mconfig, TTL74123, "TTL74123", tag, owner, clock)
 {
-
 }
 
 
@@ -130,7 +129,7 @@ attotime ttl74123_device::compute_duration()
 int ttl74123_device::timer_running()
 {
 	return (m_timer->remaining() > attotime::zero) &&
-		   (m_timer->remaining() != attotime::never);
+			(m_timer->remaining() != attotime::never);
 }
 
 
@@ -279,7 +278,7 @@ void ttl74123_device::clear_w(UINT8 data)
 	{
 		start_pulse();
 	}
-	else if (!data)	 /* clear the output  */
+	else if (!data)  /* clear the output  */
 	{
 		m_timer->adjust(attotime::zero);
 

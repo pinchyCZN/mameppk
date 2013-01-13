@@ -65,13 +65,12 @@ player - when there's nothing to play - first, empty 2k of ROMs are selected.
 #include "sound/dac.h"
 #include "video/ramdac.h"
 
-#define	RLT_REFRESH_RATE   60
+#define RLT_REFRESH_RATE   60
 #define RLT_TIMER_FREQ     (RLT_REFRESH_RATE*256)
 #define RLT_XTAL           XTAL_12MHz
 
 READ16_MEMBER(rltennis_state::rlt_io_r)
 {
-
 	return (ioport("P1" )->read()&0x1fff) | (m_unk_counter<<13); /* top 3 bits controls smaple address update */
 }
 
@@ -95,8 +94,8 @@ static ADDRESS_MAP_START( rltennis_main, AS_PROGRAM, 16, rltennis_state )
 	AM_RANGE(0x720006, 0x720007) AM_DEVWRITE8("ramdac",ramdac_device,index_r_w,0x00ff)
 	AM_RANGE(0x740000, 0x740001) AM_WRITE(rlt_snd1_w)
 	AM_RANGE(0x760000, 0x760001) AM_WRITE(rlt_snd2_w)
-	AM_RANGE(0x780000, 0x780001) AM_WRITENOP	/* sound control, unknown, usually = 0x0044 */
-	AM_RANGE(0x7a0000, 0x7a0003) AM_READNOP 	/* unknown, read only at boot time*/
+	AM_RANGE(0x780000, 0x780001) AM_WRITENOP    /* sound control, unknown, usually = 0x0044 */
+	AM_RANGE(0x7a0000, 0x7a0003) AM_READNOP     /* unknown, read only at boot time*/
 	AM_RANGE(0x7e0000, 0x7e0001) AM_READ(rlt_io_r)
 	AM_RANGE(0x7e0002, 0x7e0003) AM_READ_PORT("P2")
 ADDRESS_MAP_END
@@ -132,7 +131,6 @@ INPUT_PORTS_END
 
 TIMER_CALLBACK_MEMBER(rltennis_state::sample_player)
 {
-
 	if((m_dac_counter&0x7ff) == 0x7ff) /* reload top address bits */
 	{
 		m_sample_rom_offset_1=(( m_data740000 >> m_offset_shift ) & 0xff )<<11;

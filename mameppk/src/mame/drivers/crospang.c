@@ -310,8 +310,8 @@ static const gfx_layout tlayout =
 static GFXDECODE_START( crospang )
 	//GFXDECODE_ENTRY( "gfx1", 0, tcharlayout, 256, 16 )    /* Characters 8x8 */
 	//GFXDECODE_ENTRY( "gfx1", 0, tlayout,     512, 16 )    /* Tiles 16x16 */
-	GFXDECODE_ENTRY( "gfx2", 0, tlayout,       0, 64 )	/* Tiles 16x16 */
-	GFXDECODE_ENTRY( "gfx1", 0, tlayout,       0, 64 )	/* Sprites 16x16 */
+	GFXDECODE_ENTRY( "gfx2", 0, tlayout,       0, 64 )  /* Tiles 16x16 */
+	GFXDECODE_ENTRY( "gfx1", 0, tlayout,       0, 64 )  /* Sprites 16x16 */
 GFXDECODE_END
 
 
@@ -323,13 +323,12 @@ static void irqhandler( device_t *device, int linestate )
 
 static const ym3812_interface ym3812_config =
 {
-	irqhandler	/* IRQ Line */
+	irqhandler  /* IRQ Line */
 };
 
 
 void crospang_state::machine_start()
 {
-
 	m_audiocpu = machine().device<cpu_device>("audiocpu");
 
 	save_item(NAME(m_bestri_tilebank));
@@ -338,7 +337,6 @@ void crospang_state::machine_start()
 
 void crospang_state::machine_reset()
 {
-
 	m_bestri_tilebank = 0;
 
 }

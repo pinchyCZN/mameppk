@@ -74,7 +74,6 @@ TILE_GET_INFO_MEMBER(dbz_state::get_dbz_bg1_tile_info)
 
 void dbz_state::video_start()
 {
-
 	m_bg1_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(dbz_state::get_dbz_bg1_tile_info),this), TILEMAP_SCAN_ROWS, 16, 16, 64, 32);
 	m_bg2_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(dbz_state::get_dbz_bg2_tile_info),this), TILEMAP_SCAN_ROWS, 16, 16, 64, 32);
 
@@ -157,4 +156,3 @@ UINT32 dbz_state::screen_update_dbz(screen_device &screen, bitmap_ind16 &bitmap,
 	k053247_sprites_draw(m_k053246, bitmap, cliprect);
 	return 0;
 }
-

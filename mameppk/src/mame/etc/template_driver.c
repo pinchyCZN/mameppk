@@ -16,7 +16,7 @@ class xxx_state : public driver_device
 public:
 	xxx_state(const machine_config &mconfig, device_type type, const char *tag)
 		: driver_device(mconfig, type, tag),
-		  m_maincpu(*this, "maincpu")
+			m_maincpu(*this, "maincpu")
 	{ }
 
 	// devices
@@ -36,7 +36,6 @@ protected:
 
 void xxx_state::video_start()
 {
-
 }
 
 UINT32 xxx_state::screen_update( screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect )

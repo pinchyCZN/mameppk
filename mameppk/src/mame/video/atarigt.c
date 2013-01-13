@@ -30,9 +30,9 @@
  *
  *************************************/
 
-#define RSHIFT		16
-#define GSHIFT		8
-#define BSHIFT		0
+#define RSHIFT      16
+#define GSHIFT      8
+#define BSHIFT      0
 
 
 
@@ -632,7 +632,6 @@ void atarigt_state::screen_eof_atarigt(screen_device &screen, bool state)
 	// rising edge
 	if (state)
 	{
-
 		atarirle_eof(m_rle);
 	}
 }

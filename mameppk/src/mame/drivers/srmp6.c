@@ -157,7 +157,6 @@ static void update_palette(running_machine &machine)
 
 void srmp6_state::video_start()
 {
-
 	m_tileram = auto_alloc_array_clear(machine(), UINT16, 0x100000*16/2);
 	m_dmaram.allocate(0x100/2);
 	m_sprram_old = auto_alloc_array_clear(machine(), UINT16, 0x80000/2);
@@ -206,7 +205,6 @@ UINT32 srmp6_state::screen_update_srmp6(screen_device &screen, bitmap_rgb32 &bit
 	/* Main spritelist is 0x0000 - 0x1fff in spriteram, sublists follow */
 	while (mainlist_offset<0x2000/2)
 	{
-
 		UINT16 *sprite_sublist = &m_sprram_old[sprite_list[mainlist_offset+1]<<3];
 		UINT16 sublist_length=sprite_list[mainlist_offset+0]&0x7fff; //+1 ?
 		INT16 global_x,global_y, flip_x, flip_y;
@@ -262,7 +260,6 @@ UINT32 srmp6_state::screen_update_srmp6(screen_device &screen, bitmap_rgb32 &bit
 				{
 					for(yw=0;yw<height;yw++)
 					{
-
 						if(!flip_x)
 							xb=x+xw*8+global_x;
 						else
@@ -304,17 +301,15 @@ UINT32 srmp6_state::screen_update_srmp6(screen_device &screen, bitmap_rgb32 &bit
 
 WRITE16_MEMBER(srmp6_state::srmp6_input_select_w)
 {
-
 	m_input_select = data & 0x0f;
 }
 
 READ16_MEMBER(srmp6_state::srmp6_inputs_r)
 {
-
-	if (offset == 0)			// DSW
+	if (offset == 0)            // DSW
 		return ioport("DSW")->read();
 
-	switch (m_input_select)	// inputs
+	switch (m_input_select) // inputs
 	{
 		case 1<<0: return ioport("KEY0")->read();
 		case 1<<1: return ioport("KEY1")->read();
@@ -328,10 +323,8 @@ READ16_MEMBER(srmp6_state::srmp6_inputs_r)
 
 WRITE16_MEMBER(srmp6_state::video_regs_w)
 {
-
 	switch(offset)
 	{
-
 		case 0x5e/2: // bank switch, used by ROM check
 		{
 			const UINT8 *rom = memregion("nile")->base();
@@ -369,7 +362,6 @@ WRITE16_MEMBER(srmp6_state::video_regs_w)
 
 READ16_MEMBER(srmp6_state::video_regs_r)
 {
-
 	logerror("video_regs_r (PC=%06X): %04x\n", space.device().safe_pcbase(), offset*2);
 	return m_video_regs[offset];
 }
@@ -383,7 +375,7 @@ static UINT32 process(running_machine &machine,UINT8 b,UINT32 dst_offset)
 
 	UINT8 *tram=(UINT8*)state->m_tileram;
 
-	if (state->m_lastb == state->m_lastb2)	//rle
+	if (state->m_lastb == state->m_lastb2)  //rle
 	{
 		int i;
 		int rle=(b+1)&0xff;
@@ -487,13 +479,11 @@ WRITE16_MEMBER(srmp6_state::srmp6_dma_w)
 /* if tileram is actually bigger than the mapped area, how do we access the rest? */
 READ16_MEMBER(srmp6_state::tileram_r)
 {
-
 	return m_chrram[offset];
 }
 
 WRITE16_MEMBER(srmp6_state::tileram_w)
 {
-
 	//UINT16 tmp;
 	COMBINE_DATA(&m_chrram[offset]);
 
@@ -547,11 +537,11 @@ READ16_MEMBER(srmp6_state::srmp6_irq_ack_r)
 
 static ADDRESS_MAP_START( srmp6_map, AS_PROGRAM, 16, srmp6_state )
 	AM_RANGE(0x000000, 0x0fffff) AM_ROM
-	AM_RANGE(0x200000, 0x23ffff) AM_RAM					// work RAM
-	AM_RANGE(0x600000, 0x7fffff) AM_ROMBANK("bank1")		// banked ROM (used by ROM check)
+	AM_RANGE(0x200000, 0x23ffff) AM_RAM                 // work RAM
+	AM_RANGE(0x600000, 0x7fffff) AM_ROMBANK("bank1")        // banked ROM (used by ROM check)
 	AM_RANGE(0x800000, 0x9fffff) AM_ROM AM_REGION("user1", 0)
 
-	AM_RANGE(0x300000, 0x300005) AM_READWRITE(srmp6_inputs_r, srmp6_input_select_w)		// inputs
+	AM_RANGE(0x300000, 0x300005) AM_READWRITE(srmp6_inputs_r, srmp6_input_select_w)     // inputs
 	AM_RANGE(0x480000, 0x480fff) AM_RAM_WRITE(paletteram_w) AM_SHARE("paletteram")
 	AM_RANGE(0x4d0000, 0x4d0001) AM_READ(srmp6_irq_ack_r)
 
@@ -562,9 +552,9 @@ static ADDRESS_MAP_START( srmp6_map, AS_PROGRAM, 16, srmp6_state )
 	AM_RANGE(0x500000, 0x5fffff) AM_READWRITE(tileram_r,tileram_w) AM_SHARE("chrram")
 	//AM_RANGE(0x5fff00, 0x5fffff) AM_WRITE_LEGACY(dma_w) AM_SHARE("dmaram")
 
-	AM_RANGE(0x4c0000, 0x4c006f) AM_READWRITE(video_regs_r, video_regs_w) AM_SHARE("video_regs")	// ? gfx regs ST-0026 NiLe
-	AM_RANGE(0x4e0000, 0x4e00ff) AM_DEVREADWRITE_LEGACY("nile", nile_snd_r, nile_snd_w)
-	AM_RANGE(0x4e0100, 0x4e0101) AM_DEVREADWRITE_LEGACY("nile", nile_sndctrl_r, nile_sndctrl_w)
+	AM_RANGE(0x4c0000, 0x4c006f) AM_READWRITE(video_regs_r, video_regs_w) AM_SHARE("video_regs")    // ? gfx regs ST-0026 NiLe
+	AM_RANGE(0x4e0000, 0x4e00ff) AM_DEVREADWRITE("nile", nile_device, nile_snd_r, nile_snd_w)
+	AM_RANGE(0x4e0100, 0x4e0101) AM_DEVREADWRITE("nile", nile_device, nile_sndctrl_r, nile_sndctrl_w)
 	//AM_RANGE(0x4e0110, 0x4e0111) AM_NOP // ? accessed once ($268dc, written $b.w)
 	//AM_RANGE(0x5fff00, 0x5fff1f) AM_RAM // ? see routine $5ca8, video_regs related ???
 
@@ -617,8 +607,8 @@ static INPUT_PORTS_START( srmp6 )
 	PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_MAHJONG_PON )
 	PORT_BIT( 0x0180, IP_ACTIVE_LOW, IPT_UNUSED )
 
-	PORT_START("DSW")	/* 16-bit DSW1+DSW2 */
-	PORT_DIPNAME( 0x0007, 0x0007, DEF_STR( Coinage ) )		// DSW1
+	PORT_START("DSW")   /* 16-bit DSW1+DSW2 */
+	PORT_DIPNAME( 0x0007, 0x0007, DEF_STR( Coinage ) )      // DSW1
 	PORT_DIPSETTING(      0x0000, DEF_STR( 5C_1C ) )
 	PORT_DIPSETTING(      0x0001, DEF_STR( 4C_1C ) )
 	PORT_DIPSETTING(      0x0002, DEF_STR( 3C_1C ) )
@@ -642,7 +632,7 @@ static INPUT_PORTS_START( srmp6 )
 	PORT_DIPNAME( 0x0080, 0x0080, "Nudity" )
 	PORT_DIPSETTING(      0x0000, DEF_STR( Off ) )
 	PORT_DIPSETTING(      0x0080, DEF_STR( On ) )
-	PORT_DIPNAME( 0x0700, 0x0700, DEF_STR( Difficulty ) )	// DSW2
+	PORT_DIPNAME( 0x0700, 0x0700, DEF_STR( Difficulty ) )   // DSW2
 	PORT_DIPSETTING(      0x0000, "8" )
 	PORT_DIPSETTING(      0x0100, "7" )
 	PORT_DIPSETTING(      0x0200, "6" )
@@ -689,7 +679,7 @@ static MACHINE_CONFIG_START( srmp6, srmp6_state )
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_STEREO("lspeaker", "rspeaker")
 
-	MCFG_SOUND_ADD("nile", NILE, 0)
+	MCFG_NILE_ADD("nile", 0)
 	MCFG_SOUND_ROUTE(0, "lspeaker", 1.0)
 	MCFG_SOUND_ROUTE(1, "rspeaker", 1.0)
 MACHINE_CONFIG_END
@@ -708,7 +698,7 @@ ROM_START( srmp6 )
 	ROM_LOAD( "sx011-09.10", 0x000000, 0x200000, CRC(58f74438) SHA1(a256e39ca0406e513ab4dbd812fb0b559b4f61f2) )
 
 	/* these are accessed directly by the 68k, DMA device etc.  NOT decoded */
-	ROM_REGION( 0x2000000, "nile", 0)	/* Banked ROM */
+	ROM_REGION( 0x2000000, "nile", 0)   /* Banked ROM */
 	ROM_LOAD16_WORD_SWAP( "sx011-08.15", 0x0000000, 0x0400000, CRC(01b3b1f0) SHA1(bbd60509c9ba78358edbcbb5953eafafd6e2eaf5) ) // CHR00
 	ROM_LOAD16_WORD_SWAP( "sx011-07.16", 0x0400000, 0x0400000, CRC(26e57dac) SHA1(91272268977c5fbff7e8fbe1147bf108bd2ed321) ) // CHR01
 	ROM_LOAD16_WORD_SWAP( "sx011-06.17", 0x0800000, 0x0400000, CRC(220ee32c) SHA1(77f39b54891c2381b967534b0f6d380962eadcae) ) // CHR02

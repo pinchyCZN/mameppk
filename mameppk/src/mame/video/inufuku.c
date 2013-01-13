@@ -26,10 +26,10 @@ WRITE16_MEMBER(inufuku_state::inufuku_palettereg_w)
 {
 	switch (offset)
 	{
-		case 0x02:	m_bg_palettebank = (data & 0xf000) >> 12;
+		case 0x02:  m_bg_palettebank = (data & 0xf000) >> 12;
 				m_bg_tilemap->mark_all_dirty();
 				break;
-		case 0x03:	m_tx_palettebank = (data & 0xf000) >> 12;
+		case 0x03:  m_tx_palettebank = (data & 0xf000) >> 12;
 				m_tx_tilemap->mark_all_dirty();
 				break;
 	}
@@ -39,11 +39,11 @@ WRITE16_MEMBER(inufuku_state::inufuku_scrollreg_w)
 {
 	switch (offset)
 	{
-		case 0x00:	m_bg_scrollx = data + 1; break;
-		case 0x01:	m_bg_scrolly = data + 0; break;
-		case 0x02:	m_tx_scrollx = data - 3; break;
-		case 0x03:	m_tx_scrolly = data + 1; break;
-		case 0x04:	m_bg_raster = (data & 0x0200) ? 0 : 1; break;
+		case 0x00:  m_bg_scrollx = data + 1; break;
+		case 0x01:  m_bg_scrolly = data + 0; break;
+		case 0x02:  m_tx_scrollx = data - 3; break;
+		case 0x03:  m_tx_scrolly = data + 1; break;
+		case 0x04:  m_bg_raster = (data & 0x0200) ? 0 : 1; break;
 	}
 }
 
@@ -117,7 +117,6 @@ UINT32 inufuku_state::inufuku_tile_callback( UINT32 code )
 
 void inufuku_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(inufuku_state::get_inufuku_bg_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 64, 64);
 	m_tx_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(inufuku_state::get_inufuku_tx_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 64, 64);
 
@@ -172,4 +171,3 @@ void inufuku_state::screen_eof_inufuku(screen_device &screen, bool state)
 		memcpy(m_spriteram1_old,m_spriteram1,m_spriteram1.bytes());
 	}
 }
-

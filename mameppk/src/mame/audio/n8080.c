@@ -31,13 +31,13 @@ static const sn76477_interface sheriff_sn76477_interface =
 	CAP_N(47)  ,  /* 21 */
 	CAP_N(47)  ,  /* 23 */
 	RES_K(560) ,  /* 24 */
-	0,			  /* 22 vco */
-	0,			  /* 26 mixer A */
-	0,			  /* 25 mixer B */
-	0,			  /* 27 mixer C */
-	1,			  /* 1  envelope 1 */
-	0,			  /* 28 envelope 2 */
-	1			  /* 9  enable */
+	0,            /* 22 vco */
+	0,            /* 26 mixer A */
+	0,            /* 25 mixer B */
+	0,            /* 27 mixer C */
+	1,            /* 1  envelope 1 */
+	0,            /* 28 envelope 2 */
+	1             /* 9  enable */
 };
 
 
@@ -59,13 +59,13 @@ static const sn76477_interface spacefev_sn76477_interface =
 	CAP_N(47)  ,  /* 21 */
 	CAP_N(47)  ,  /* 23 */
 	RES_K(820) ,  /* 24 */
-	0,			  /* 22 vco */
-	0,			  /* 26 mixer A */
-	0,			  /* 25 mixer B */
-	0,			  /* 27 mixer C */
-	1,			  /* 1  envelope 1 */
-	0,			  /* 28 envelope 2 */
-	1			  /* 9  enable */
+	0,            /* 22 vco */
+	0,            /* 26 mixer A */
+	0,            /* 25 mixer B */
+	0,            /* 27 mixer C */
+	1,            /* 1  envelope 1 */
+	0,            /* 28 envelope 2 */
+	1             /* 9  enable */
 };
 
 
@@ -457,7 +457,6 @@ TIMER_DEVICE_CALLBACK_MEMBER(n8080_state::helifire_dac_volume_timer)
 
 MACHINE_START_MEMBER(n8080_state,spacefev_sound)
 {
-
 	m_sound_timer[0] = machine().scheduler().timer_alloc(FUNC(stop_mono_flop_callback));
 	m_sound_timer[1] = machine().scheduler().timer_alloc(FUNC(stop_mono_flop_callback));
 	m_sound_timer[2] = machine().scheduler().timer_alloc(FUNC(stop_mono_flop_callback));
@@ -487,7 +486,6 @@ MACHINE_RESET_MEMBER(n8080_state,spacefev_sound)
 
 MACHINE_START_MEMBER(n8080_state,sheriff_sound)
 {
-
 	m_sound_timer[0] = machine().scheduler().timer_alloc(FUNC(stop_mono_flop_callback));
 	m_sound_timer[1] = machine().scheduler().timer_alloc(FUNC(stop_mono_flop_callback));
 
@@ -515,7 +513,6 @@ MACHINE_RESET_MEMBER(n8080_state,sheriff_sound)
 
 MACHINE_START_MEMBER(n8080_state,helifire_sound)
 {
-
 	save_item(NAME(m_prev_snd_data));
 	save_item(NAME(m_prev_sound_pins));
 	save_item(NAME(m_curr_sound_pins));

@@ -46,7 +46,6 @@ Stephh's notes (based on the games Z80 code and some tests) :
 
 void espial_state::machine_reset()
 {
-
 	m_flipscreen = 0;
 
 	m_main_nmi_enabled = FALSE;
@@ -55,7 +54,6 @@ void espial_state::machine_reset()
 
 void espial_state::machine_start()
 {
-
 	m_maincpu = machine().device<cpu_device>("maincpu");
 	m_audiocpu = machine().device<cpu_device>("audiocpu");
 
@@ -89,7 +87,6 @@ TIMER_DEVICE_CALLBACK_MEMBER(espial_state::espial_scanline)
 
 INTERRUPT_GEN_MEMBER(espial_state::espial_sound_nmi_gen)
 {
-
 	if (m_sound_nmi_enabled)
 		nmi_line_pulse(device);
 }
@@ -193,11 +190,11 @@ static INPUT_PORTS_START( espial )
 	PORT_DIPSETTING(    0x10, DEF_STR( 1C_6C ) )
 	PORT_DIPSETTING(    0x1c, DEF_STR( Free_Play ) )
 	PORT_DIPNAME( 0x20, 0x00, DEF_STR( Bonus_Life ) )       /* code at 0x43e1 in 'espial' and 0x44b5 in 'espialu' */
-	PORT_DIPSETTING(	0x00, "20k 70k 70k+" )              /* last bonus life at 980k : max. 15 bonus lives */
-	PORT_DIPSETTING(	0x20, "50k 100k 100k+" )            /* last bonus life at 900k : max. 10 bonus lives */
+	PORT_DIPSETTING(    0x00, "20k 70k 70k+" )              /* last bonus life at 980k : max. 15 bonus lives */
+	PORT_DIPSETTING(    0x20, "50k 100k 100k+" )            /* last bonus life at 900k : max. 10 bonus lives */
 	PORT_DIPNAME( 0x40, 0x40, DEF_STR( Cabinet ) )
-	PORT_DIPSETTING(	0x40, DEF_STR( Upright ) )
-	PORT_DIPSETTING(	0x00, DEF_STR( Cocktail ) )
+	PORT_DIPSETTING(    0x40, DEF_STR( Upright ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Cocktail ) )
 	PORT_DIPNAME( 0x80, 0x00, "Reset on Check Error" )
 	PORT_DIPSETTING(    0x80, DEF_STR( No ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( Yes ) )
@@ -254,11 +251,11 @@ static INPUT_PORTS_START( netwars )
 	PORT_DIPSETTING(    0x10, DEF_STR( 1C_6C ) )
 	PORT_DIPSETTING(    0x1c, DEF_STR( Free_Play ) )
 	PORT_DIPNAME( 0x20, 0x00, DEF_STR( Bonus_Life ) )       /* code at 0x2383 */
-	PORT_DIPSETTING(	0x00, "20k and 50k" )
-	PORT_DIPSETTING(	0x20, "40k and 70k" )
+	PORT_DIPSETTING(    0x00, "20k and 50k" )
+	PORT_DIPSETTING(    0x20, "40k and 70k" )
 	PORT_DIPNAME( 0x40, 0x40, DEF_STR( Cabinet ) )
-	PORT_DIPSETTING(	0x40, DEF_STR( Upright ) )
-	PORT_DIPSETTING(	0x00, DEF_STR( Cocktail ) )
+	PORT_DIPSETTING(    0x40, DEF_STR( Upright ) )
+	PORT_DIPSETTING(    0x00, DEF_STR( Cocktail ) )
 	PORT_DIPNAME( 0x80, 0x00, "Reset on Check Error" )
 	PORT_DIPSETTING(    0x80, DEF_STR( No ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( Yes ) )
@@ -319,11 +316,11 @@ GFXDECODE_END
 static MACHINE_CONFIG_START( espial, espial_state )
 
 	/* basic machine hardware */
-	MCFG_CPU_ADD("maincpu", Z80, 3072000)	/* 3.072 MHz */
+	MCFG_CPU_ADD("maincpu", Z80, 3072000)   /* 3.072 MHz */
 	MCFG_CPU_PROGRAM_MAP(espial_map)
 	MCFG_TIMER_DRIVER_ADD_SCANLINE("scantimer", espial_state, espial_scanline, "screen", 0, 1)
 
-	MCFG_CPU_ADD("audiocpu", Z80, 3072000)	/* 2 MHz?????? */
+	MCFG_CPU_ADD("audiocpu", Z80, 3072000)  /* 2 MHz?????? */
 	MCFG_CPU_PROGRAM_MAP(espial_sound_map)
 	MCFG_CPU_IO_MAP(espial_sound_io_map)
 	MCFG_CPU_PERIODIC_INT_DRIVER(espial_state, espial_sound_nmi_gen, 4*60)

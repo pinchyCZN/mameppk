@@ -34,7 +34,6 @@ WRITE8_MEMBER(compgolf_state::compgolf_scrolly_lo_w)
 
 WRITE8_MEMBER(compgolf_state::compgolf_ctrl_w)
 {
-
 	/* bit 4 and 6 are always set */
 
 	int new_bank = (data & 4) >> 2;
@@ -171,7 +170,7 @@ static const gfx_layout tilelayoutbg =
 	{ 0, 1, 2, 3, 16*8+0, 16*8+1, 16*8+2, 16*8+3,
 		2*16*8+0, 2*16*8+1, 2*16*8+2, 2*16*8+3, 3*16*8+0, 3*16*8+1, 3*16*8+2, 3*16*8+3 },
 	{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
-	  8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
+		8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 },
 	32*16
 };
 
@@ -225,7 +224,6 @@ static const ym2203_interface ym2203_config =
 
 void compgolf_state::machine_start()
 {
-
 	save_item(NAME(m_bank));
 	save_item(NAME(m_scrollx_lo));
 	save_item(NAME(m_scrollx_hi));
@@ -235,7 +233,6 @@ void compgolf_state::machine_start()
 
 void compgolf_state::machine_reset()
 {
-
 	m_bank = -1;
 	m_scrollx_lo = 0;
 	m_scrollx_hi = 0;

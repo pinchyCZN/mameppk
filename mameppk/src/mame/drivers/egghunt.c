@@ -115,10 +115,10 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap,const r
 			sy = 240 - sy;
 		}
 		drawgfx_transpen(bitmap,cliprect,machine.gfx[1],
-				 code,
-				 color,
-				 flipscreen,flipscreen,
-				 sx,sy,15);
+					code,
+					color,
+					flipscreen,flipscreen,
+					sx,sy,15);
 	}
 }
 
@@ -174,7 +174,6 @@ WRITE8_MEMBER(egghunt_state::egghunt_atram_w)
 
 void egghunt_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(egghunt_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 64, 32);
 
 	save_item(NAME(m_bgram));
@@ -391,7 +390,6 @@ GFXDECODE_END
 
 void egghunt_state::machine_start()
 {
-
 	m_audiocpu = machine().device<cpu_device>("audiocpu");
 
 	save_item(NAME(m_gfx_banking));
@@ -409,12 +407,12 @@ void egghunt_state::machine_reset()
 static MACHINE_CONFIG_START( egghunt, egghunt_state )
 
 	/* basic machine hardware */
-	MCFG_CPU_ADD("maincpu", Z80,12000000/2)		 /* 6 MHz ?*/
+	MCFG_CPU_ADD("maincpu", Z80,12000000/2)      /* 6 MHz ?*/
 	MCFG_CPU_PROGRAM_MAP(egghunt_map)
 	MCFG_CPU_IO_MAP(io_map)
 	MCFG_CPU_VBLANK_INT_DRIVER("screen", egghunt_state,  irq0_line_hold) // or 2 like mitchell.c?
 
-	MCFG_CPU_ADD("audiocpu", Z80,12000000/2)		 /* 6 MHz ?*/
+	MCFG_CPU_ADD("audiocpu", Z80,12000000/2)         /* 6 MHz ?*/
 	MCFG_CPU_PROGRAM_MAP(sound_map)
 
 

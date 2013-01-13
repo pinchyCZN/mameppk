@@ -19,13 +19,13 @@
 
 static const res_net_decode_info popper_decode_info =
 {
-	1,		// there may be two proms needed to construct color
-	0,		// start at 0
-	63,	// end at 255
+	1,      // there may be two proms needed to construct color
+	0,      // start at 0
+	63, // end at 255
 	//  R,   G,   B,
-	{   0,   0,   0, },		// offsets
-	{   0,   3,   6, },		// shifts
-	{0x07,0x07,0x03, }	    // masks
+	{   0,   0,   0, },     // offsets
+	{   0,   3,   6, },     // shifts
+	{0x07,0x07,0x03, }      // masks
 };
 
 static const res_net_info popper_net_info =
@@ -47,7 +47,7 @@ static const res_net_info popper_net_info =
 void popper_state::palette_init()
 {
 	const UINT8 *color_prom = machine().root_device().memregion("proms")->base();
-	rgb_t	*rgb;
+	rgb_t   *rgb;
 
 	rgb = compute_res_net_all(machine(), color_prom, &popper_decode_info, &popper_net_info);
 	palette_set_colors(machine(), 0, rgb, 64);
@@ -57,7 +57,6 @@ void popper_state::palette_init()
 
 WRITE8_MEMBER(popper_state::popper_ol_videoram_w)
 {
-
 	m_ol_videoram[offset] = data;
 	m_ol_p123_tilemap->mark_tile_dirty(offset);
 	m_ol_p0_tilemap->mark_tile_dirty(offset);
@@ -65,7 +64,6 @@ WRITE8_MEMBER(popper_state::popper_ol_videoram_w)
 
 WRITE8_MEMBER(popper_state::popper_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_p123_tilemap->mark_tile_dirty(offset);
 	m_p0_tilemap->mark_tile_dirty(offset);
@@ -73,7 +71,6 @@ WRITE8_MEMBER(popper_state::popper_videoram_w)
 
 WRITE8_MEMBER(popper_state::popper_ol_attribram_w)
 {
-
 	m_ol_attribram[offset] = data;
 	m_ol_p123_tilemap->mark_tile_dirty(offset);
 	m_ol_p0_tilemap->mark_tile_dirty(offset);
@@ -81,7 +78,6 @@ WRITE8_MEMBER(popper_state::popper_ol_attribram_w)
 
 WRITE8_MEMBER(popper_state::popper_attribram_w)
 {
-
 	m_attribram[offset] = data;
 	m_p123_tilemap->mark_tile_dirty(offset);
 	m_p0_tilemap->mark_tile_dirty(offset);
@@ -89,7 +85,6 @@ WRITE8_MEMBER(popper_state::popper_attribram_w)
 
 WRITE8_MEMBER(popper_state::popper_flipscreen_w)
 {
-
 	m_flipscreen = data;
 	machine().tilemap().set_flip_all(m_flipscreen ? (TILEMAP_FLIPX | TILEMAP_FLIPY) : 0);
 
@@ -106,7 +101,6 @@ WRITE8_MEMBER(popper_state::popper_e002_w)
 
 WRITE8_MEMBER(popper_state::popper_gfx_bank_w)
 {
-
 	if (m_gfx_bank != data)
 	{
 		m_gfx_bank = data;

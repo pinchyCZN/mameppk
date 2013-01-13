@@ -51,12 +51,12 @@
 //  DEBUGGING
 //============================================================
 
-#define VERBOSE					(0)
-#define KEEP_STATISTICS			(0)
+#define VERBOSE                 (0)
+#define KEEP_STATISTICS         (0)
 
 #if (VERBOSE)
 
-#define VERBOSE_OUT(x)		printf x
+#define VERBOSE_OUT(x)      printf x
 #else
 #define VERBOSE_OUT(x)
 #endif
@@ -66,15 +66,15 @@
 //============================================================
 
 #if KEEP_STATISTICS
-#define add_to_stat(v,x)		do { v += (x); } while (0)
-#define inc_stat(v)				add_to_stat(v, 1)
-#define begin_timing(v)			do { (v) -= get_profile_ticks(); } while (0)
-#define end_timing(v)			do { (v) += get_profile_ticks(); } while (0)
+#define add_to_stat(v,x)        do { v += (x); } while (0)
+#define inc_stat(v)             add_to_stat(v, 1)
+#define begin_timing(v)         do { (v) -= get_profile_ticks(); } while (0)
+#define end_timing(v)           do { (v) += get_profile_ticks(); } while (0)
 #else
-#define add_to_stat(v,x)		do { } while (0)
-#define inc_stat(v)				add_to_stat(v, 1)
-#define begin_timing(v)			do { } while (0)
-#define end_timing(v)			do { } while (0)
+#define add_to_stat(v,x)        do { } while (0)
+#define inc_stat(v)             add_to_stat(v, 1)
+#define begin_timing(v)         do { } while (0)
+#define end_timing(v)           do { } while (0)
 #endif
 
 
@@ -382,7 +382,6 @@ void netlist_base_t::set_clock_freq(UINT64 clockfreq)
 
 ATTR_HOT ATTR_ALIGN void netlist_base_t::process_list(INT32 &atime)
 {
-
 	while ( (atime > 0) && (m_queue.is_not_empty()))
 	{
 		queue_t::entry_t e = m_queue.pop();
@@ -795,7 +794,6 @@ static inline void update_dev(const net_input_t *inp, const UINT32 mask)
 
 ATTR_HOT inline void net_output_t::update_devs()
 {
-
 	const UINT32 masks[4] = { 1, 5, 3, 1 };
 	m_Q = m_new_Q;
 	m_Q_analog = m_new_Q_analog;
@@ -884,7 +882,7 @@ const device_type NETLIST = &device_creator<netlist_mame_device>;
 
 netlist_mame_device::netlist_mame_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
 	: device_t(mconfig, NETLIST, "netlist", tag, owner, clock),
-	  device_execute_interface(mconfig, *this)
+		device_execute_interface(mconfig, *this)
 {
 }
 
@@ -900,10 +898,9 @@ void netlist_mame_device::device_config_complete()
 
 void netlist_mame_device::device_start()
 {
-
 	//double dt = clocks_to_attotime(1).as_double();
 	m_netlist = global_alloc_clear(netlist_t(*this));
-    m_netlist->set_clock_freq(this->clock());
+	m_netlist->set_clock_freq(this->clock());
 
 	m_setup = global_alloc_clear(netlist_setup_t(*m_netlist));
 
@@ -916,7 +913,7 @@ void netlist_mame_device::device_start()
 	if (!allok)
 		fatalerror("required elements not found\n");
 
-    m_setup->resolve_inputs();
+	m_setup->resolve_inputs();
 
 	//save_item(NAME(m_clockcnt));
 	save_state();
@@ -942,12 +939,10 @@ void netlist_mame_device::device_stop()
 
 void netlist_mame_device::device_post_load()
 {
-
 }
 
 void netlist_mame_device::device_timer(emu_timer &timer, device_timer_id id, int param, void *ptr)
 {
-
 }
 
 void netlist_mame_device::save_state()
@@ -981,6 +976,3 @@ ATTR_HOT void netlist_mame_device::execute_run()
 	m_netlist->process_list(m_icount);
 
 }
-
-
-

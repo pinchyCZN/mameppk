@@ -135,7 +135,6 @@ WRITE16_MEMBER(esd16_state::esd16_tilemap0_color_jumppop_w)
 
 void esd16_state::video_start()
 {
-
 	m_tilemap_0 = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(esd16_state::get_tile_info_0),this), TILEMAP_SCAN_ROWS, 8, 8, 0x80, 0x40);
 	m_tilemap_1 = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(esd16_state::get_tile_info_1),this), TILEMAP_SCAN_ROWS, 8, 8, 0x80, 0x40);
 
@@ -173,9 +172,9 @@ UINT32 esd16_state::screen_update_hedpanic(screen_device &screen, bitmap_ind16 &
 if (machine().input().code_pressed(KEYCODE_Z))
 {
 	int msk = 0;
-	if (machine().input().code_pressed(KEYCODE_Q))	msk |= 1;
-	if (machine().input().code_pressed(KEYCODE_W))	msk |= 2;
-	if (machine().input().code_pressed(KEYCODE_A))	msk |= 4;
+	if (machine().input().code_pressed(KEYCODE_Q))  msk |= 1;
+	if (machine().input().code_pressed(KEYCODE_W))  msk |= 2;
+	if (machine().input().code_pressed(KEYCODE_A))  msk |= 4;
 	if (msk != 0) layers_ctrl &= msk;
 }
 #endif

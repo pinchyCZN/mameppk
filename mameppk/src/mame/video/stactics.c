@@ -92,7 +92,6 @@ PALETTE_INIT_MEMBER(stactics_state,stactics)
 
 WRITE8_MEMBER(stactics_state::stactics_scroll_ram_w)
 {
-
 	if (data & 0x01)
 	{
 		switch (offset >> 8)
@@ -114,7 +113,6 @@ WRITE8_MEMBER(stactics_state::stactics_scroll_ram_w)
 
 CUSTOM_INPUT_MEMBER(stactics_state::stactics_get_frame_count_d3)
 {
-
 	return (m_frame_count >> 3) & 0x01;
 }
 
@@ -128,7 +126,6 @@ CUSTOM_INPUT_MEMBER(stactics_state::stactics_get_frame_count_d3)
 
 WRITE8_MEMBER(stactics_state::stactics_speed_latch_w)
 {
-
 	/* This writes to a shift register which is clocked by   */
 	/* a 555 oscillator.  This value determines the speed of */
 	/* the LED fire beams as follows:                        */
@@ -154,28 +151,24 @@ WRITE8_MEMBER(stactics_state::stactics_speed_latch_w)
 
 WRITE8_MEMBER(stactics_state::stactics_shot_trigger_w)
 {
-
 	m_shot_standby = 0;
 }
 
 
 WRITE8_MEMBER(stactics_state::stactics_shot_flag_clear_w)
 {
-
 	m_shot_arrive = 0;
 }
 
 
 CUSTOM_INPUT_MEMBER(stactics_state::stactics_get_shot_standby)
 {
-
 	return m_shot_standby;
 }
 
 
 CUSTOM_INPUT_MEMBER(stactics_state::stactics_get_not_shot_arrive)
 {
-
 	return !m_shot_arrive;
 }
 
@@ -255,15 +248,15 @@ static void draw_background(stactics_state *state, bitmap_ind16 &bitmap, const r
 
 			/* assemble the pen index */
 			int pen = color |
-					  (pixel_b << 4) |
-					  (pixel_f << 5) |
-					  (pixel_e << 6) |
-					  (pixel_d << 7) |
-					  ((state->m_palette[0] & 0x01) << 8) |
-					  ((state->m_palette[1] & 0x01) << 9);
+						(pixel_b << 4) |
+						(pixel_f << 5) |
+						(pixel_e << 6) |
+						(pixel_d << 7) |
+						((state->m_palette[0] & 0x01) << 8) |
+						((state->m_palette[1] & 0x01) << 9);
 
 			/* compute the effective pixel coordinate after adjusting for the
-               mirror movement - this is mechanical on the real machine */
+			   mirror movement - this is mechanical on the real machine */
 			int sy = y + state->m_vert_pos;
 			int sx = x - state->m_horiz_pos;
 
@@ -361,7 +354,6 @@ static void update_artwork(running_machine &machine, stactics_state *state)
 
 VIDEO_START_MEMBER(stactics_state,stactics)
 {
-
 	m_y_scroll_d = 0;
 	m_y_scroll_e = 0;
 	m_y_scroll_f = 0;
@@ -383,7 +375,6 @@ VIDEO_START_MEMBER(stactics_state,stactics)
 
 UINT32 stactics_state::screen_update_stactics(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	update_beam(this);
 	draw_background(this, bitmap, cliprect);
 	update_artwork(machine(), this);

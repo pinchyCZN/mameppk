@@ -75,12 +75,12 @@ SRAM:
 WRITE8_MEMBER(ksayakyu_state::bank_select_w)
 {
 	/*
-        bits:
-        76543210
-               x - ROM bank
-        xxxxxxx  - unused ?
+	    bits:
+	    76543210
+	           x - ROM bank
+	    xxxxxxx  - unused ?
 
-    */
+	*/
 	membank("bank1")->set_entry(data & 0x01);
 }
 
@@ -260,7 +260,6 @@ void ksayakyu_state::machine_start()
 
 void ksayakyu_state::machine_reset()
 {
-
 	m_sound_status = 0xff;
 	m_video_ctrl = 0;
 	m_flipscreen = 0;

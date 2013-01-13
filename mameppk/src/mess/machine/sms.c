@@ -21,7 +21,7 @@
 #define CF_JANGGUN_MAPPER          0x200
 #define CF_TVDRAW                  0x400
 #define CF_MAPPER_BITS             ( CF_CODEMASTERS_MAPPER | CF_KOREAN_MAPPER | CF_KOREAN_ZEMINA_MAPPER | \
-                                     CF_KOREAN_NOBANK_MAPPER | CF_4PAK_MAPPER | CF_JANGGUN_MAPPER )
+										CF_KOREAN_NOBANK_MAPPER | CF_4PAK_MAPPER | CF_JANGGUN_MAPPER )
 
 #define LGUN_RADIUS           6
 #define LGUN_X_INTERVAL       4
@@ -234,13 +234,12 @@ void sms_state::map_bios_8k( UINT16 address, UINT16 bank )
 
 WRITE8_MEMBER(sms_state::sms_input_write)
 {
-
 	switch (offset)
 	{
 	case 0:
 		switch (ioport("CTRLSEL")->read_safe(0x00) & 0x0f)
 		{
-		case 0x04:	/* Sports Pad */
+		case 0x04:  /* Sports Pad */
 			if (data != m_sports_pad_last_data_1)
 			{
 				UINT32 cpu_cycles = downcast<cpu_device *>(&space.device())->total_cycles();
@@ -262,7 +261,7 @@ WRITE8_MEMBER(sms_state::sms_input_write)
 	case 1:
 		switch (ioport("CTRLSEL")->read_safe(0x00) & 0xf0)
 		{
-		case 0x40:	/* Sports Pad */
+		case 0x40:  /* Sports Pad */
 			if (data != m_sports_pad_last_data_2)
 			{
 				UINT32 cpu_cycles = downcast<cpu_device *>(&space.device())->total_cycles();
@@ -332,7 +331,7 @@ static int lgun_bright_aim_area( running_machine &machine, emu_timer *timer, int
 	int pos_changed = 0;
 	double dx_circ;
 
-    while (1)
+	while (1)
 	{
 		dy = abs(beam_y - lgun_y);
 
@@ -488,7 +487,6 @@ static void lphaser2_sensor_check( running_machine &machine )
 // if so, we turn on crosshair and the lightgun timer
 TIMER_CALLBACK_MEMBER(sms_state::lightgun_tick)
 {
-
 	if ((ioport("CTRLSEL")->read_safe(0x00) & 0x0f) == 0x01)
 	{
 		/* enable crosshair */
@@ -607,10 +605,10 @@ static void sms_get_inputs( address_space &space )
 			data = data >> 4;
 
 		state->m_input_port0 = (state->m_input_port0 & 0xc0) | (data & 0x0f) | (state->m_paddle_read_state & 0x20)
-		                | ((machine.root_device().ioport("CTRLIPT")->read() & 0x02) << 3);
+						| ((machine.root_device().ioport("CTRLIPT")->read() & 0x02) << 3);
 		break;
 
-	case 0x04:	/* Sega Sports Pad */
+	case 0x04:  /* Sega Sports Pad */
 		switch (state->m_sports_pad_state_1)
 		{
 		case 0:
@@ -633,7 +631,7 @@ static void sms_get_inputs( address_space &space )
 	/* Player 2 */
 	switch (machine.root_device().ioport("CTRLSEL")->read_safe(0x00)  & 0xf0)
 	{
-	case 0x00:	/* Joystick */
+	case 0x00:  /* Joystick */
 		data = machine.root_device().ioport("PORT_DC")->read();
 		state->m_input_port0 = (state->m_input_port0 & 0x3f) | (data & 0xc0);
 
@@ -649,7 +647,7 @@ static void sms_get_inputs( address_space &space )
 		state->m_input_port1 = (state->m_input_port1 & 0xf0) | (data & 0x0f);
 		break;
 
-	case 0x10:	/* Light Phaser */
+	case 0x10:  /* Light Phaser */
 		data = (machine.root_device().ioport("CTRLIPT")->read() & 0x10) >> 2;
 		if (!(data & 0x04))
 		{
@@ -661,7 +659,7 @@ static void sms_get_inputs( address_space &space )
 		state->m_input_port1 = (state->m_input_port1 & 0xf0) | (data & 0x0f);
 		break;
 
-	case 0x20:	/* Paddle Control */
+	case 0x20:  /* Paddle Control */
 		/* Get button A state */
 		data = machine.root_device().ioport("PADDLE1")->read();
 		if (state->m_paddle_read_state)
@@ -669,10 +667,10 @@ static void sms_get_inputs( address_space &space )
 
 		state->m_input_port0 = (state->m_input_port0 & 0x3f) | ((data & 0x03) << 6);
 		state->m_input_port1 = (state->m_input_port1 & 0xf0) | ((data & 0x0c) >> 2) | (state->m_paddle_read_state & 0x08)
-		                | ((machine.root_device().ioport("CTRLIPT")->read() & 0x20) >> 3);
+						| ((machine.root_device().ioport("CTRLIPT")->read() & 0x20) >> 3);
 		break;
 
-	case 0x40:	/* Sega Sports Pad */
+	case 0x40:  /* Sega Sports Pad */
 		switch (state->m_sports_pad_state_2)
 		{
 		case 0:
@@ -697,7 +695,6 @@ static void sms_get_inputs( address_space &space )
 
 WRITE8_MEMBER(sms_state::sms_fm_detect_w)
 {
-
 	if (m_has_fm)
 		m_fm_detect = (data & 0x01);
 }
@@ -705,7 +702,6 @@ WRITE8_MEMBER(sms_state::sms_fm_detect_w)
 
 READ8_MEMBER(sms_state::sms_fm_detect_r)
 {
-
 	if (m_has_fm)
 	{
 		return m_fm_detect;
@@ -758,7 +754,6 @@ WRITE8_MEMBER(sms_state::sms_io_control_w)
 
 READ8_MEMBER(sms_state::sms_count_r)
 {
-
 	if (offset & 0x01)
 		return m_vdp->hcount_latch_read(*m_space, offset);
 	else
@@ -795,7 +790,6 @@ WRITE_LINE_MEMBER(sms_state::sms_pause_callback)
 
 READ8_MEMBER(sms_state::sms_input_port_0_r)
 {
-
 	if (m_bios_port & IO_CHIP)
 	{
 		return 0xff;
@@ -810,7 +804,6 @@ READ8_MEMBER(sms_state::sms_input_port_0_r)
 
 READ8_MEMBER(sms_state::sms_input_port_1_r)
 {
-
 	if (m_bios_port & IO_CHIP)
 		return 0xff;
 
@@ -851,7 +844,6 @@ READ8_MEMBER(sms_state::sms_input_port_1_r)
 
 WRITE8_MEMBER(sms_state::sms_ym2413_register_port_0_w)
 {
-
 	if (m_has_fm)
 		ym2413_w(m_ym, space, 0, (data & 0x3f));
 }
@@ -859,7 +851,6 @@ WRITE8_MEMBER(sms_state::sms_ym2413_register_port_0_w)
 
 WRITE8_MEMBER(sms_state::sms_ym2413_data_port_0_w)
 {
-
 	if (m_has_fm)
 	{
 		logerror("data_port_0_w %x %x\n", offset, data);
@@ -870,7 +861,6 @@ WRITE8_MEMBER(sms_state::sms_ym2413_data_port_0_w)
 
 READ8_MEMBER(sms_state::gg_input_port_2_r)
 {
-
 	//logerror("joy 2 read, val: %02x, pc: %04x\n", ((m_is_region_japan ? 0x00 : 0x40) | (machine.root_device().ioport("START")->read() & 0x80)), activecpu_get_pc());
 	return ((m_is_region_japan ? 0x00 : 0x40) | (ioport("START")->read() & 0x80));
 }
@@ -936,7 +926,6 @@ READ8_MEMBER(sms_state::sms_tvdraw_data_r)
 
 WRITE8_MEMBER(sms_state::sms_93c46_w)
 {
-
 	if ( m_cartridge[m_current_cartridge].m_93c46_enabled )
 	{
 		m_cartridge[m_current_cartridge].m_93c46_lines = data;
@@ -1014,7 +1003,7 @@ WRITE8_MEMBER(sms_state::sms_mapper_w)
 			else
 			{
 				UINT8 *sram = NULL;
-				m_cartridge[m_current_cartridge].sram_save = 1;			/* SRAM should be saved on exit. */
+				m_cartridge[m_current_cartridge].sram_save = 1;         /* SRAM should be saved on exit. */
 				if (data & 0x04)
 				{
 					sram = m_cartridge[m_current_cartridge].cartSRAM + 0x4000;
@@ -1093,7 +1082,7 @@ WRITE8_MEMBER(sms_state::sms_mapper_w)
 				return;
 			}
 
-			if ( ! ( m_mapper[0] & 0x08 ) )		// Is RAM disabled
+			if ( ! ( m_mapper[0] & 0x08 ) )     // Is RAM disabled
 			{
 				if ( ! ( m_cartridge[m_current_cartridge].features & ( CF_KOREAN_NOBANK_MAPPER | CF_KOREAN_ZEMINA_MAPPER ) ) )
 				{
@@ -1104,7 +1093,7 @@ WRITE8_MEMBER(sms_state::sms_mapper_w)
 
 		if ( bios_selected )
 		{
-			if ( ! ( m_mapper[0] & 0x08 ) )		// Is RAM disabled
+			if ( ! ( m_mapper[0] & 0x08 ) )     // Is RAM disabled
 			{
 				map_bios_16k( 0x8000, data );
 			}
@@ -1115,7 +1104,6 @@ WRITE8_MEMBER(sms_state::sms_mapper_w)
 
 WRITE8_MEMBER(sms_state::sms_korean_zemina_banksw_w)
 {
-
 	if (m_cartridge[m_current_cartridge].features & CF_KOREAN_ZEMINA_MAPPER)
 	{
 		if (!m_cartridge[m_current_cartridge].ROM)
@@ -1142,7 +1130,6 @@ WRITE8_MEMBER(sms_state::sms_korean_zemina_banksw_w)
 
 WRITE8_MEMBER(sms_state::sms_codemasters_page0_w)
 {
-
 	if (m_cartridge[m_current_cartridge].ROM && m_cartridge[m_current_cartridge].features & CF_CODEMASTERS_MAPPER)
 	{
 		map_cart_16k( 0x0000, data );
@@ -1152,7 +1139,6 @@ WRITE8_MEMBER(sms_state::sms_codemasters_page0_w)
 
 WRITE8_MEMBER(sms_state::sms_codemasters_page1_w)
 {
-
 	if (m_cartridge[m_current_cartridge].ROM && m_cartridge[m_current_cartridge].features & CF_CODEMASTERS_MAPPER)
 	{
 		/* Check if we need to switch in some RAM */
@@ -1172,7 +1158,6 @@ WRITE8_MEMBER(sms_state::sms_codemasters_page1_w)
 
 WRITE8_MEMBER(sms_state::sms_4pak_page0_w)
 {
-
 	m_cartridge[m_current_cartridge].m_4pak_page0 = data;
 
 	map_cart_16k( 0x0000, data );
@@ -1182,7 +1167,6 @@ WRITE8_MEMBER(sms_state::sms_4pak_page0_w)
 
 WRITE8_MEMBER(sms_state::sms_4pak_page1_w)
 {
-
 	m_cartridge[m_current_cartridge].m_4pak_page1 = data;
 
 	map_cart_16k( 0x4000, data );
@@ -1191,7 +1175,6 @@ WRITE8_MEMBER(sms_state::sms_4pak_page1_w)
 
 WRITE8_MEMBER(sms_state::sms_4pak_page2_w)
 {
-
 	m_cartridge[m_current_cartridge].m_4pak_page2 = data;
 
 	map_cart_16k( 0x8000, ( m_cartridge[m_current_cartridge].m_4pak_page0 & 0x30 ) + m_cartridge[m_current_cartridge].m_4pak_page2 );
@@ -1200,28 +1183,24 @@ WRITE8_MEMBER(sms_state::sms_4pak_page2_w)
 
 WRITE8_MEMBER(sms_state::sms_janggun_bank0_w)
 {
-
 	map_cart_8k( 0x4000, data );
 }
 
 
 WRITE8_MEMBER(sms_state::sms_janggun_bank1_w)
 {
-
 	map_cart_8k( 0x6000, data );
 }
 
 
 WRITE8_MEMBER(sms_state::sms_janggun_bank2_w)
 {
-
 	map_cart_8k( 0x8000, data );
 }
 
 
 WRITE8_MEMBER(sms_state::sms_janggun_bank3_w)
 {
-
 	map_cart_8k( 0xA000, data );
 }
 
@@ -1238,7 +1217,6 @@ WRITE8_MEMBER(sms_state::sms_bios_w)
 
 WRITE8_MEMBER(sms_state::sms_cartram2_w)
 {
-
 	if (m_mapper[0] & 0x08)
 	{
 		logerror("write %02X to cartram at offset #%04X\n", data, offset + 0x2000);
@@ -1507,7 +1485,7 @@ static int detect_korean_mapper( UINT8 *rom )
 	static const UINT8 signatures[2][16] =
 	{
 		{ 0x3e, 0x11, 0x32, 0x00, 0xa0, 0x78, 0xcd, 0x84, 0x85, 0x3e, 0x02, 0x32, 0x00, 0xa0, 0xc9, 0xff }, /* Dodgeball King */
-		{ 0x41, 0x48, 0x37, 0x37, 0x44, 0x37, 0x4e, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x20 },	/* Sangokushi 3 */
+		{ 0x41, 0x48, 0x37, 0x37, 0x44, 0x37, 0x4e, 0xff, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x20 }, /* Sangokushi 3 */
 	};
 	int i;
 
@@ -1525,7 +1503,7 @@ static int detect_korean_mapper( UINT8 *rom )
 
 static int detect_tvdraw( UINT8 *rom )
 {
-	static const UINT8 terebi_oekaki[7] = { 0x61, 0x6e, 0x6e, 0x61, 0x6b, 0x6d, 0x6e };	// "annakmn"
+	static const UINT8 terebi_oekaki[7] = { 0x61, 0x6e, 0x6e, 0x61, 0x6b, 0x6d, 0x6e }; // "annakmn"
 
 	if (!memcmp(&rom[0x13b3], terebi_oekaki, 7))
 		return 1;
@@ -1784,7 +1762,7 @@ DEVICE_IMAGE_LOAD( sms_cart )
 				state->m_cartridge[index].features |= CF_KOREAN_ZEMINA_MAPPER;
 				// Check for special bank 0 signature
 				if ( size == 0x20000 && rom[0] == 0x00 && rom[1] == 0x00 && rom[2] == 0x00 &&
-				     rom[0x1e000] == 0xF3 && rom[0x1e001] == 0xED && rom[0x1e002] == 0x56 )
+						rom[0x1e000] == 0xF3 && rom[0x1e001] == 0xED && rom[0x1e002] == 0x56 )
 				{
 					state->m_cartridge[index].features |= CF_KOREAN_ZEMINA_NEMESIS;
 				}
@@ -1930,7 +1908,6 @@ static void setup_banks( running_machine &machine )
 
 MACHINE_START_MEMBER(sms_state,sms)
 {
-
 	machine().add_notifier(MACHINE_NOTIFY_EXIT, machine_notify_delegate(FUNC(sms_machine_stop),&machine()));
 	m_rapid_fire_timer = machine().scheduler().timer_alloc(timer_expired_delegate(FUNC(sms_state::rapid_fire_callback),this));
 	m_rapid_fire_timer->adjust(attotime::from_hz(10), 0, attotime::from_hz(10));

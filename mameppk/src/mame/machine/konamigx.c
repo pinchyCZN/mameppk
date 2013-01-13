@@ -236,7 +236,6 @@ WRITE16_MEMBER(konamigx_state::K053990_martchmp_word_w)
 
 void konamigx_esc_alert(UINT32 *srcbase, int srcoffs, int count, int mode) // (WARNING: assumed big endianess)
 {
-
 // hand-filled but should be close
 static const UINT8 ztable[7][8] =
 {
@@ -290,56 +289,55 @@ static const UINT8 ptable[7][8] =
 	}
 	else
 	{
-
 #define EXTRACT_ODD         \
 if((data1=obj[0])&0x8000)   \
 {                           \
-  i      = data1 & 7;       \
-  data1 &= 0xff00;          \
-  dst[0] = data1 | zcode[i];\
-  data1  = obj[1];          \
-  dst[1] = data1>>16;       \
-  vpos   = data1 & 0xffff;  \
-  data1  = obj[2];          \
-  vpos  += voffs;           \
-  dst[4] = data1;           \
-  vpos  &= vmask;           \
-  hpos   = data1>>16;       \
-  data1  = obj[3];          \
-  hpos  += hoffs;           \
-  dst[2] = vpos;            \
-  dst[3] = hpos;            \
-  dst[5] = data1>>16;       \
-  i      = pcode[i];        \
-  dst[6] = data1| i<<4;     \
-  dst += 8;                 \
-  if (!(--j)) return;       \
+	i      = data1 & 7;       \
+	data1 &= 0xff00;          \
+	dst[0] = data1 | zcode[i];\
+	data1  = obj[1];          \
+	dst[1] = data1>>16;       \
+	vpos   = data1 & 0xffff;  \
+	data1  = obj[2];          \
+	vpos  += voffs;           \
+	dst[4] = data1;           \
+	vpos  &= vmask;           \
+	hpos   = data1>>16;       \
+	data1  = obj[3];          \
+	hpos  += hoffs;           \
+	dst[2] = vpos;            \
+	dst[3] = hpos;            \
+	dst[5] = data1>>16;       \
+	i      = pcode[i];        \
+	dst[6] = data1| i<<4;     \
+	dst += 8;                 \
+	if (!(--j)) return;       \
 }
 
 #define EXTRACT_EVEN         \
 if((data1=obj[0])&0x80000000)\
 {                            \
-  dst[1] = data1;            \
-  data1>>= 16;               \
-  i      = data1 & 7;        \
-  data1 &= 0xff00;           \
-  dst[0] = data1 | zcode[i]; \
-  data1  = obj[1];           \
-  hpos   = data1 & 0xffff;   \
-  vpos   = data1>>16;        \
-  hpos  += hoffs;            \
-  vpos  += voffs;            \
-  data1  = obj[2];           \
-  vpos  &= vmask;            \
-  dst[3] = hpos;             \
-  dst[2] = vpos;             \
-  dst[5] = data1;            \
-  dst[4] = data1>>16;        \
-  data1  = obj[3]>>16;       \
-  i      = pcode[i];         \
-  dst[6] = data1 | i<<4;     \
-  dst += 8;                  \
-  if (!(--j)) return;        \
+	dst[1] = data1;            \
+	data1>>= 16;               \
+	i      = data1 & 7;        \
+	data1 &= 0xff00;           \
+	dst[0] = data1 | zcode[i]; \
+	data1  = obj[1];           \
+	hpos   = data1 & 0xffff;   \
+	vpos   = data1>>16;        \
+	hpos  += hoffs;            \
+	vpos  += voffs;            \
+	data1  = obj[2];           \
+	vpos  &= vmask;            \
+	dst[3] = hpos;             \
+	dst[2] = vpos;             \
+	dst[5] = data1;            \
+	dst[4] = data1>>16;        \
+	data1  = obj[3]>>16;       \
+	i      = pcode[i];         \
+	dst[6] = data1 | i<<4;     \
+	dst += 8;                  \
+	if (!(--j)) return;        \
 }
 
 		// These suspecious looking flags might tell the ESC chip what zcode/priority combos to use.

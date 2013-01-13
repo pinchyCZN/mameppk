@@ -29,7 +29,7 @@ void xmen_tile_callback( running_machine &machine, int layer, int bank, int *cod
 void xmen_sprite_callback( running_machine &machine, int *code, int *color, int *priority_mask )
 {
 	xmen_state *state = machine.driver_data<xmen_state>();
-	int pri = (*color & 0x00e0) >> 4;	/* ??????? */
+	int pri = (*color & 0x00e0) >> 4;   /* ??????? */
 
 	if (pri <= state->m_layerpri[2])
 		*priority_mask = 0;
@@ -53,7 +53,6 @@ void xmen_sprite_callback( running_machine &machine, int *code, int *color, int 
 
 VIDEO_START_MEMBER(xmen_state,xmen6p)
 {
-
 	k053247_get_ram(m_k053246, &m_k053247_ram);
 
 	m_screen_left  = auto_bitmap_ind16_alloc(machine(), 64 * 8, 32 * 8);
@@ -157,14 +156,13 @@ void xmen_state::screen_eof_xmen6p(screen_device &screen, bool state)
 		address_space &space = machine().driver_data()->generic_space();
 		if (machine().primary_screen->frame_number() & 0x01)
 		{
-
 			/* copy the desired spritelist to the chip */
 			memcpy(m_k053247_ram, m_xmen6p_spriteramright, 0x1000);
 
 			/* we write the entire content of the tileram to the chip to ensure
-               everything gets marked as dirty and the desired tilemap is rendered
-               this is not very efficient!
-               */
+			   everything gets marked as dirty and the desired tilemap is rendered
+			   this is not very efficient!
+			   */
 			for (offset = 0; offset < (0xc000 / 2); offset++)
 			{
 	//          K052109_lsb_w
@@ -180,10 +178,10 @@ void xmen_state::screen_eof_xmen6p(screen_device &screen, bool state)
 			memcpy(m_k053247_ram, m_xmen6p_spriteramleft, 0x1000);
 
 			/* we write the entire content of the tileram to the chip to ensure
-               everything gets marked as dirty and the desired tilemap is rendered
+			   everything gets marked as dirty and the desired tilemap is rendered
 
-               this is not very efficient!
-               */
+			   this is not very efficient!
+			   */
 			for (offset = 0; offset < (0xc000 / 2); offset++)
 			{
 	//          K052109_lsb_w
@@ -220,7 +218,7 @@ void xmen_state::screen_eof_xmen6p(screen_device &screen, bool state)
 		k052109_tilemap_draw(m_k052109, *renderbitmap, cliprect, layer[2], 0, 4);
 
 	/* this isn't supported anymore and it is unsure if still needed; keeping here for reference
-        pdrawgfx_shadow_lowpri = 1; fix shadows of boulders in front of feet */
+	    pdrawgfx_shadow_lowpri = 1; fix shadows of boulders in front of feet */
 		k053247_sprites_draw(m_k053246, *renderbitmap, cliprect);
 	}
 }

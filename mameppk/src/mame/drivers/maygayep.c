@@ -40,7 +40,7 @@ class maygayep_state : public driver_device
 public:
 	maygayep_state(const machine_config &mconfig, device_type type, const char *tag)
 		: driver_device(mconfig, type, tag),
-		  m_maincpu(*this, "maincpu")
+			m_maincpu(*this, "maincpu")
 	{ }
 
 
@@ -102,7 +102,6 @@ DRIVER_INIT_MEMBER(maygayep_state,maygayep)
 
 static void irqhandler(device_t *device, int state)
 {
-
 }
 
 static const ymz280b_interface ymz280b_config =
@@ -124,16 +123,14 @@ MACHINE_CONFIG_END
 
 #define MISSING_SOUND \
 	ROM_REGION( 0x100000, "ymz", ROMREGION_ERASE00 ) \
-		ROM_LOAD16_BYTE( "sound_roms", 0x000000, 0x080000, NO_DUMP ) \
-
+		ROM_LOAD16_BYTE( "sound_roms", 0x000000, 0x080000, NO_DUMP )
 
 /* Only a handful of games have dumped sound roms! */
 
 #define EP_SIMP_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "simpsnd0", 0x000000, 0x080000, CRC(d58d16cc) SHA1(75eb2ab106855156831399a08eed66295c0c288f) ) \
-	ROM_LOAD( "simpsnd1", 0x080000, 0x080000, CRC(26d12470) SHA1(4ea92b9d80c73d784534185313a6d5534cb6f3b2) ) \
-
+	ROM_LOAD( "simpsnd1", 0x080000, 0x080000, CRC(26d12470) SHA1(4ea92b9d80c73d784534185313a6d5534cb6f3b2) )
 
 ROM_START( ep_simp )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -232,8 +229,7 @@ ROM_END
 #define EP_DBLIM_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "doubleimpact_snd0.bin", 0x000000, 0x080000, CRC(d83b2a30) SHA1(1bf94b246941dfd3b8c84249085e6f93072da432) ) \
-	ROM_LOAD( "doubleimpact_snd1.bin", 0x080000, 0x080000, CRC(3f4bb32a) SHA1(af2f8e7f341dec0ffaae4c3b2efca847cddd8a11) ) \
-
+	ROM_LOAD( "doubleimpact_snd1.bin", 0x080000, 0x080000, CRC(3f4bb32a) SHA1(af2f8e7f341dec0ffaae4c3b2efca847cddd8a11) )
 ROM_START( ep_dblim )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "i99ndi10.g0", 0x000000, 0x020000, CRC(caee435c) SHA1(3dc8e1c0cf2f8b7f177fd785260d0d14fa835743) )
@@ -273,8 +269,7 @@ ROM_END
 #define EP_ITJB3_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "italianjobsound0.bin", 0x000000, 0x080000, CRC(680f5932) SHA1(08d212625c16ff63f57a8c0165f1b9a158513879) ) \
-	ROM_LOAD( "italianjobsound1.bin", 0x080000, 0x080000, CRC(595514ab) SHA1(9586fb22dd748bafa10553090f48b42b750c7e97) ) \
-
+	ROM_LOAD( "italianjobsound1.bin", 0x080000, 0x080000, CRC(595514ab) SHA1(9586fb22dd748bafa10553090f48b42b750c7e97) )
 ROM_START( ep_itjb3 )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "italianjobgame0.bin", 0x000000, 0x020000, CRC(ceaefd73) SHA1(b4f756212773c88b0c09364c1981773e6a4c5527) )
@@ -296,8 +291,7 @@ ROM_END
 #define EP_MERLN_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "merlsnd0.bin", 0x000000, 0x080000, CRC(f0841966) SHA1(d67446723735a780675590ca05a19de58da1f6f2) ) \
-	ROM_LOAD( "merlsnd1.bin", 0x080000, 0x080000, CRC(e7de17a6) SHA1(586d9843b4c235027f6f9a40f1155248ffc54ea9) ) \
-
+	ROM_LOAD( "merlsnd1.bin", 0x080000, 0x080000, CRC(e7de17a6) SHA1(586d9843b4c235027f6f9a40f1155248ffc54ea9) )
 ROM_START( ep_merln )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "merlg0.bin", 0x000000, 0x020000, CRC(1d64717f) SHA1(a259228d31968381da09786b3b2a9fabfb384b08) )
@@ -311,8 +305,7 @@ ROM_END
 #define EP_WIPEO_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "wipeoutsnd0.bin", 0x000000, 0x080000, CRC(c8d75e9d) SHA1(fff911ad015f09cac5b92033a01de3775f47d87d) ) \
-	ROM_LOAD( "wipeoutsnd1.bin", 0x080000, 0x080000, CRC(8e2332db) SHA1(c363bc254eb59f5fdee623bad49439a4cb19c746) ) \
-
+	ROM_LOAD( "wipeoutsnd1.bin", 0x080000, 0x080000, CRC(8e2332db) SHA1(c363bc254eb59f5fdee623bad49439a4cb19c746) )
 ROM_START( ep_wipeo )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "i00nwo18.g0", 0x000000, 0x020000, CRC(12c623e5) SHA1(3473adea1b4e93f1d848a8af996a7e18b3c0ee21) )
@@ -358,8 +351,7 @@ ROM_END
 #define EP_FUNNY_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "funnymoneysound0.bin", 0x000000, 0x080000, CRC(81354590) SHA1(f11e46ed0dadf98ffc2476ee993708cc15ffc7bd) ) \
-	ROM_LOAD( "funnymoneysound1.bin", 0x080000, 0x080000, CRC(65b728e1) SHA1(aa5b8b20d33ffd834e58fa872e27594846a7567b) ) \
-
+	ROM_LOAD( "funnymoneysound1.bin", 0x080000, 0x080000, CRC(65b728e1) SHA1(aa5b8b20d33ffd834e58fa872e27594846a7567b) )
 
 ROM_START( ep_funny )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -428,8 +420,7 @@ ROM_END
 #define EP_BATHL_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "hellsnd.p0", 0x000000, 0x080000, CRC(c143174d) SHA1(7b86281a653d85e0020245e05db2489489c7fe55) ) \
-	ROM_LOAD( "hellsnd.p1", 0x080000, 0x080000, CRC(44af956b) SHA1(49ed8fde3aec64304090be795eaae09a78b3619d) ) \
-
+	ROM_LOAD( "hellsnd.p1", 0x080000, 0x080000, CRC(44af956b) SHA1(49ed8fde3aec64304090be795eaae09a78b3619d) )
 
 ROM_START( ep_bathl )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -516,14 +507,12 @@ ROM_END
 
 #define EP_BEAVR_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
-	ROM_LOAD( "bblvsnd.p0", 0x000000, 0x100000, CRC(eeb9d956) SHA1(37961d32fe48d2815049ed12e10b61c533f5c610) ) \
-
+	ROM_LOAD( "bblvsnd.p0", 0x000000, 0x100000, CRC(eeb9d956) SHA1(37961d32fe48d2815049ed12e10b61c533f5c610) )
 // are these the same? check..
 #define EP_BEAV3_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "blvesnd.p0", 0x000000, 0x080000, CRC(d7f5ad5a) SHA1(a73257a18ae3361b87fb62bf5dd9ceeb8c9ef8c3) ) \
-	ROM_LOAD( "blvesnd.p1", 0x080000, 0x080000, CRC(bb892e3e) SHA1(536cc315e6b2d2f716becb938ef3533ffceaae4d) ) \
-
+	ROM_LOAD( "blvesnd.p1", 0x080000, 0x080000, CRC(bb892e3e) SHA1(536cc315e6b2d2f716becb938ef3533ffceaae4d) )
 
 ROM_START( ep_beavr )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -682,8 +671,7 @@ ROM_END
 #define EP_BVRUC_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "bvunsnd.p0", 0x000000, 0x080000, CRC(422ddcd3) SHA1(fc0f5b19e32a47ab04bc76f23c2839a823dc6836) ) \
-	ROM_LOAD( "bvunsnd.p1", 0x080000, 0x080000, CRC(beb1de17) SHA1(084ff32a0b7a061f61d4dcc6d7cffe3d0af588ef) ) \
-
+	ROM_LOAD( "bvunsnd.p1", 0x080000, 0x080000, CRC(beb1de17) SHA1(084ff32a0b7a061f61d4dcc6d7cffe3d0af588ef) )
 
 ROM_START( ep_bvruc )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -718,7 +706,7 @@ ROM_START( ep_bvrucc )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	/* this might be a mismatched set.. */
 	ROM_LOAD16_BYTE( "b_uncovr.go", 0x000000, 0x020000, CRC(72ff0f24) SHA1(85d232c6aa47fb55b823ad69114512e23c2a8174) )
-	ROM_LOAD16_BYTE( "g1",			0x000001, 0x020000, NO_DUMP )
+	ROM_LOAD16_BYTE( "g1",          0x000001, 0x020000, NO_DUMP )
 	ROM_LOAD16_BYTE( "uncoverd.g2", 0x040000, 0x020000, CRC(31cfd4b2) SHA1(f215899f9de58a1d7200acfdc92e6c65a5f88c71) )
 	ROM_LOAD16_BYTE( "uncoverd.g3", 0x040001, 0x020000, CRC(e7ef6191) SHA1(3e0f4149b36286a6f2efd546d1c44385f2233421) )
 	EP_BVRUC_SOUND
@@ -727,8 +715,7 @@ ROM_END
 
 #define EP_BJCLB_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
-	ROM_LOAD( "bkjksnd.p0", 0x000000, 0x0ab42c, BAD_DUMP CRC(8f574d3f) SHA1(3ce26f0bd7e88baddcf80abeebf190eb2a5f8333) ) \
-
+	ROM_LOAD( "bkjksnd.p0", 0x000000, 0x0ab42c, BAD_DUMP CRC(8f574d3f) SHA1(3ce26f0bd7e88baddcf80abeebf190eb2a5f8333) )
 
 ROM_START( ep_bjclb )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -741,8 +728,7 @@ ROM_END
 #define EP_CBRUN_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "cannsnd.p0", 0x000000, 0x080000, CRC(435cc88e) SHA1(d1d4818ecc82580ee5d2c478afa595c38ebe3a18) ) \
-	ROM_LOAD( "cannsnd.p1", 0x080000, 0x080000, CRC(86623111) SHA1(8515d5bb51266c472c4e87408bf112bec55015f7) ) \
-
+	ROM_LOAD( "cannsnd.p1", 0x080000, 0x080000, CRC(86623111) SHA1(8515d5bb51266c472c4e87408bf112bec55015f7) )
 ROM_START( ep_cbrun )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "cann2-2n.p0", 0x000000, 0x020000, CRC(7a896390) SHA1(18e70e8687bc0fc40d913619887a9f8baf233c61) )
@@ -801,8 +787,7 @@ ROM_END
 #define EP_CBRCL_SOUND \
 	ROM_REGION( 0x200000, "ymz", 0 ) \
 	ROM_LOAD( "ccansnd.p0", 0x000000, 0x100000, CRC(d0dc482a) SHA1(8ca7fdcf0fcd5d451c6d68269b1fef681095be20) ) \
-	ROM_LOAD( "ccansnd.p1", 0x100000, 0x100000, CRC(9cf088a5) SHA1(94bef848066050b0f04556f59cc859cb646dafc5) ) \
-
+	ROM_LOAD( "ccansnd.p1", 0x100000, 0x100000, CRC(9cf088a5) SHA1(94bef848066050b0f04556f59cc859cb646dafc5) )
 
 ROM_START( ep_cbrcl )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -892,8 +877,7 @@ ROM_END
 
 #define EP_CCLAS_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
-	ROM_LOAD( "casisnd.p0", 0x000000, 0x100000, CRC(7050e393) SHA1(363e939675d47fa234a6ec29be9032dba3cc25dc) ) \
-
+	ROM_LOAD( "casisnd.p0", 0x000000, 0x100000, CRC(7050e393) SHA1(363e939675d47fa234a6ec29be9032dba3cc25dc) )
 ROM_START( ep_cclas )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "casi1-5n.p0", 0x000000, 0x020000, CRC(b834ddca) SHA1(4547414d0de2fd4445a08b9787b8ebe96b6b6d10) )
@@ -910,8 +894,7 @@ ROM_END
 
 #define EP_CGRED_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
-	ROM_LOAD( "cgresnd.p0", 0x000000, 0x100000, CRC(25e60f16) SHA1(06cbdd97faedcc6c9a14e02d49787ee94d7a1bb9) ) \
-
+	ROM_LOAD( "cgresnd.p0", 0x000000, 0x100000, CRC(25e60f16) SHA1(06cbdd97faedcc6c9a14e02d49787ee94d7a1bb9) )
 
 ROM_START( ep_cgred )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -932,8 +915,7 @@ ROM_END
 #define EP_CSTRK_SOUND \
 	ROM_REGION( 0x200000, "ymz", 0 ) \
 	ROM_LOAD( "clcssnd.p0", 0x000000, 0x100000, CRC(93baa48d) SHA1(95098b5be5f354811fd2f6c460fd8b3f8849f868) ) \
-	ROM_LOAD( "clcssnd.p1", 0x100000, 0x100000, CRC(33208356) SHA1(189333ad3d9180dd3785fb6ce72d808d0b0ed083) ) \
-
+	ROM_LOAD( "clcssnd.p1", 0x100000, 0x100000, CRC(33208356) SHA1(189333ad3d9180dd3785fb6ce72d808d0b0ed083) )
 ROM_START( ep_cstrk )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "clcs1-0n.p0", 0x000000, 0x020000, CRC(1a7dd627) SHA1(bd1ba7f3448f799bb05fb15e2dca98f843001e3f) )
@@ -993,8 +975,7 @@ ROM_END
 
 #define EP_DDQCL_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
-	ROM_LOAD( "cddqsnd.p0", 0x000000, 0x100000, CRC(bc5eec74) SHA1(29b7676a263c043428f3028759c6609468162bee) ) \
-
+	ROM_LOAD( "cddqsnd.p0", 0x000000, 0x100000, CRC(bc5eec74) SHA1(29b7676a263c043428f3028759c6609468162bee) )
 ROM_START( ep_ddqcl )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "cddq1-0n.p0", 0x000000, 0x020000, CRC(2371b69e) SHA1(9594b92dd13881b92ec91778531812eb6b450119) )
@@ -1059,8 +1040,7 @@ ROM_END
 	ROM_LOAD( "gridrunnersound0.bin", 0x000000, 0x080000, CRC(dc8f0bbb) SHA1(a375eff2fa5d109491479e050c5267ae73f63ebc) ) \
 	ROM_LOAD( "gridrunnersound1.bin", 0x080000, 0x080000, CRC(d965860b) SHA1(ceaabf092777c50035baf13545a0280047d530ae) ) \
 	/* this is verified EPOCH, but has no partner */ \
-	ROM_LOAD( "grid run.s0", 0x0000, 0x080000, CRC(9c8938ef) SHA1(f6bc299097c64984cb8356d62bf935582b86d6bc) ) \
-
+	ROM_LOAD( "grid run.s0", 0x0000, 0x080000, CRC(9c8938ef) SHA1(f6bc299097c64984cb8356d62bf935582b86d6bc) )
 ROM_START( ep_grun )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "grid031n.p0", 0x000000, 0x020000, CRC(02eae1b1) SHA1(68311fc3237da30cf96b42ae0cf16342ecf9cb45) )
@@ -1082,8 +1062,7 @@ ROM_END
 
 #define EP_HEYBG_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
-	ROM_LOAD( "heybsnd.p0", 0x000000, 0x100000, CRC(b81e94b2) SHA1(2fc0d84096ce00bd7ff5fd5518ab53f8cd94f8b0) ) \
-
+	ROM_LOAD( "heybsnd.p0", 0x000000, 0x100000, CRC(b81e94b2) SHA1(2fc0d84096ce00bd7ff5fd5518ab53f8cd94f8b0) )
 
 ROM_START( ep_heybg )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -1116,8 +1095,7 @@ ROM_END
 #define EP_SPIRT_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "hispsnd.p1", 0x000000, 0x080000, CRC(3d4b265b) SHA1(6a5ca56395c4c57b302aa6f0a066ceb54deedacc) ) \
-	ROM_LOAD( "hispsnd.p2", 0x080000, 0x080000, CRC(57a60f8d) SHA1(4de7fbf14da9ca214af96307dccfae719571eab8) ) \
-
+	ROM_LOAD( "hispsnd.p2", 0x080000, 0x080000, CRC(57a60f8d) SHA1(4de7fbf14da9ca214af96307dccfae719571eab8) )
 
 ROM_START( ep_spirt )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -1150,8 +1128,7 @@ ROM_END
 #define EP_MONRT_SOUND \
 	ROM_REGION( 0x200000, "ymz", 0 ) \
 	ROM_LOAD( "monrsnd.p0", 0x000000, 0x100000, CRC(01532b1e) SHA1(233973c57e314ef04a3910a7c8c9eafeb288363c) ) \
-	ROM_LOAD( "monrsnd.p1", 0x100000, 0x100000, CRC(3cb3021d) SHA1(aa5858fc2c7030bcf37240a074739014d0e8caca) ) \
-
+	ROM_LOAD( "monrsnd.p1", 0x100000, 0x100000, CRC(3cb3021d) SHA1(aa5858fc2c7030bcf37240a074739014d0e8caca) )
 
 ROM_START( ep_monrt )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -1206,8 +1183,7 @@ ROM_END
 #define EP_PKNI_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "phoesnd.p0", 0x000000, 0x080000, CRC(4128577f) SHA1(016098257aec8e7b4e9c535479303aef4896b03c) ) \
-	ROM_LOAD( "phoesnd.p1", 0x080000, 0x080000, CRC(62b78d0d) SHA1(92284b04257ff498ff10c4b026e33b06214c9bb8) ) \
-
+	ROM_LOAD( "phoesnd.p1", 0x080000, 0x080000, CRC(62b78d0d) SHA1(92284b04257ff498ff10c4b026e33b06214c9bb8) )
 
 ROM_START( ep_pkni )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -1275,8 +1251,7 @@ ROM_END
 #define EP_SNBEV_SOUND \
 	ROM_REGION( 0x200000, "ymz", 0 ) \
 	ROM_LOAD( "snbvsnd.p0", 0x000000, 0x100000, CRC(18e21765) SHA1(dd50499c779dde72964117178e004093777a6edf) ) \
-	ROM_LOAD( "snbvsnd.p1", 0x100000, 0x100000, CRC(73d65f34) SHA1(13d11a60eb579d1a99d28ba42915fdc45b0c1681) ) \
-
+	ROM_LOAD( "snbvsnd.p1", 0x100000, 0x100000, CRC(73d65f34) SHA1(13d11a60eb579d1a99d28ba42915fdc45b0c1681) )
 ROM_START( ep_snbev )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "snbv1-8n.p0", 0x000000, 0x020000, CRC(f018f20a) SHA1(d9e28fa94ed08c06de65018bbe7169233a5fad91) )
@@ -1338,8 +1313,7 @@ ROM_END
 #define EP_SPOOK_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "spkysnd.p0", 0x000000, 0x080000, CRC(005a1383) SHA1(92d3400a89906c990ba2ab46a70ed1e3453e50fc) ) \
-	ROM_LOAD( "spkysnd.p1", 0x080000, 0x080000, CRC(6258dceb) SHA1(e7b00318ff57affe8ac54cca54d1e095ab8cd40e) ) \
-
+	ROM_LOAD( "spkysnd.p1", 0x080000, 0x080000, CRC(6258dceb) SHA1(e7b00318ff57affe8ac54cca54d1e095ab8cd40e) )
 
 ROM_START( ep_spook )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -1374,8 +1348,7 @@ ROM_END
 	/* these sound roms might not belong to this as there was another HW game in here */ \
 	ROM_LOAD( "spotteddisksnd.bin", 0x000000, 0x100000, CRC(f2c66aab) SHA1(6fe94a193779c91711588365591cf42d197cb7b9) ) \
 	ROM_LOAD( "sdclsnd.p1", 0x000001, 0x100000, CRC(487ed1e5) SHA1(3f9b0a4d0655906a8863765c26099c8871f1f8cf) ) \
-	ROM_LOAD( "sdclsnd.p2", 0x100000, 0x100000, CRC(91f0a42a) SHA1(d0953f89f44267be216495586c5e5d2cbbf1e349) ) \
-
+	ROM_LOAD( "sdclsnd.p2", 0x100000, 0x100000, CRC(91f0a42a) SHA1(d0953f89f44267be216495586c5e5d2cbbf1e349) )
 
 
 ROM_START( ep_sdclb )
@@ -1397,8 +1370,7 @@ ROM_END
 #define EP_STMCL_SOUND \
 	ROM_REGION( 0x200000, "ymz", 0 ) \
 	ROM_LOAD( "clsfsnd.p0", 0x000000, 0x100000, CRC(09860f64) SHA1(0c32828b912bc1a94bd8ab2dc77604803835fc40) ) \
-	ROM_LOAD( "clsfsnd.p1", 0x100000, 0x100000, CRC(eb751795) SHA1(db28fd0c00b08cad6db0c7d6d1768705610de119) ) \
-
+	ROM_LOAD( "clsfsnd.p1", 0x100000, 0x100000, CRC(eb751795) SHA1(db28fd0c00b08cad6db0c7d6d1768705610de119) )
 
 ROM_START( ep_stmcl )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -1416,8 +1388,7 @@ ROM_END
 
 #define EP_UTNUT_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
-	ROM_LOAD( "anutsnd0.p0", 0x000000, 0x100000, CRC(bb9b9a9e) SHA1(f6aee7e059fab9698e763a4c42b6b30cda2d6e77) ) \
-
+	ROM_LOAD( "anutsnd0.p0", 0x000000, 0x100000, CRC(bb9b9a9e) SHA1(f6aee7e059fab9698e763a4c42b6b30cda2d6e77) )
 ROM_START( ep_utnut )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "anut1-2n.p0", 0x000000, 0x020000, CRC(26d767a9) SHA1(a919d8b7f4733d21e1456f9ba21d3a55fef5bad1) )
@@ -1453,8 +1424,7 @@ ROM_END
 	ROM_LOAD( "haresnd.p1", 0x080000, 0x080000, CRC(38ddf39f) SHA1(eec475b3329dc0f82a19a8f4134249d0803e7bc1) ) \
 	ROM_REGION( 0x100000, "altymz", 0 ) \
 	ROM_LOAD( "sound.0", 0x000000, 0x080000, CRC(093220bb) SHA1(064bf28aa031222f85c3c74a2693ad06df231a1c) ) \
-	ROM_LOAD( "sound.1", 0x080000, 0x080000, CRC(2eb13cda) SHA1(9343fe11a43e5d0213533cb81ad4a3c3d5476b85) ) \
-
+	ROM_LOAD( "sound.1", 0x080000, 0x080000, CRC(2eb13cda) SHA1(9343fe11a43e5d0213533cb81ad4a3c3d5476b85) )
 
 ROM_START( ep_milhr )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -1533,8 +1503,7 @@ ROM_END
 
 #define EP_MLHRC_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
-	ROM_LOAD( "cmlhsnd.p0", 0x000000, 0x100000, CRC(e6e60e63) SHA1(dba38ff4e1d0ed803083cce42c858a2110945a4e) ) \
-
+	ROM_LOAD( "cmlhsnd.p0", 0x000000, 0x100000, CRC(e6e60e63) SHA1(dba38ff4e1d0ed803083cce42c858a2110945a4e) )
 ROM_START( ep_mlhrc )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "cmlh1-0n.p0", 0x000000, 0x020000, CRC(857b0ca9) SHA1(904190c2de27f69d29d6e472e78a422980f838d0) )
@@ -1636,8 +1605,7 @@ ROM_END
 #define EP_CFALL_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "cash falls sound 0 sy980007.bin", 0x000000, 0x080000, CRC(7dbe0b80) SHA1(d2454d923b8a479e14513f2201b9725f3b92ef4d) ) \
-	ROM_LOAD( "cash falls sound 1 sy980007.bin", 0x080000, 0x080000, CRC(ff7f4c42) SHA1(491d38bdd73bcb9725bfb90942560379f6c8ee40) ) \
-
+	ROM_LOAD( "cash falls sound 1 sy980007.bin", 0x080000, 0x080000, CRC(ff7f4c42) SHA1(491d38bdd73bcb9725bfb90942560379f6c8ee40) )
 
 ROM_START( ep_cfall )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -1783,8 +1751,7 @@ ROM_END
 #define EP_NYNY_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "nyny.s0", 0x000000, 0x080000, CRC(ded53db1) SHA1(d1085d7ead67b2d125c74deccb1b9f154351c3ac) ) \
-	ROM_LOAD( "nyny.s1", 0x080000, 0x080000, CRC(8a03bcb2) SHA1(0cb633fa9044be11ad2f60ab53225114d144df3d) ) \
-
+	ROM_LOAD( "nyny.s1", 0x080000, 0x080000, CRC(8a03bcb2) SHA1(0cb633fa9044be11ad2f60ab53225114d144df3d) )
 
 ROM_START( ep_nyny )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -1915,8 +1882,7 @@ ROM_END
 #define EP_MARIO_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) /* contains 'Super Mario' string */ \
 	ROM_LOAD( "sm64snd0", 0x000000, 0x080000, CRC(1e5c350d) SHA1(1f7e0ba84b122882b82ae4edd78628cfcae92977) ) \
-	ROM_LOAD( "sm64snd1", 0x080000, 0x080000, CRC(5ed95303) SHA1(b58e557b56c7b943e19b9bf1229de85c3ca99fe8) ) \
-
+	ROM_LOAD( "sm64snd1", 0x080000, 0x080000, CRC(5ed95303) SHA1(b58e557b56c7b943e19b9bf1229de85c3ca99fe8) )
 
 ROM_START( ep_mario )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -2146,8 +2112,7 @@ ROM_END
 #define EP_25CRT_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) /* not 100% these are right, '25.s0' isn't exactly a telling name */ \
 	ROM_LOAD( "25.s0", 0x000000, 0x080000, CRC(fb4dd880) SHA1(4ccb92b4f14f49fef45d804671c429355cf75dcf) ) \
-	ROM_LOAD( "25.s1", 0x080000, 0x080000, CRC(ba09b8c7) SHA1(91141f06425e4ac7fed371768062d171e300e8f1) ) \
-
+	ROM_LOAD( "25.s1", 0x080000, 0x080000, CRC(ba09b8c7) SHA1(91141f06425e4ac7fed371768062d171e300e8f1) )
 
 ROM_START( ep_25crt )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -2404,8 +2369,7 @@ ROM_END
 #define EP_CCOCK_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "c_cockt.s0", 0x000000, 0x080000, CRC(ad3d60e4) SHA1(ac45ae46517e92fc41ebd249bd6a5a5a29c7bb38) ) \
-	ROM_LOAD( "c_cockt.s1", 0x080000, 0x080000, CRC(25758aa4) SHA1(7a8ee383da39b2443affb807ff60a8a960042cef) ) \
-
+	ROM_LOAD( "c_cockt.s1", 0x080000, 0x080000, CRC(25758aa4) SHA1(7a8ee383da39b2443affb807ff60a8a960042cef) )
 ROM_START( ep_ccock )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "msa01056.g0", 0x000000, 0x020000, CRC(8a7ccb9d) SHA1(a9dc43dd6427e3dda0f8c19c7b1eb5a09d80dc89) )
@@ -2754,8 +2718,7 @@ ROM_END
 #define EP_DUFF_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "duff.s0", 0x000000, 0x080000, CRC(639b6528) SHA1(2ff6b84531f3a2a18e5c846b7a2b14102faf8864) ) \
-	ROM_LOAD( "duff.s1", 0x080000, 0x080000, CRC(5c18f8cb) SHA1(c850c386b0b00ba982bd473a2ba4d464bbfd57d0) ) \
-
+	ROM_LOAD( "duff.s1", 0x080000, 0x080000, CRC(5c18f8cb) SHA1(c850c386b0b00ba982bd473a2ba4d464bbfd57d0) )
 
 ROM_START( ep_duff )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -2793,8 +2756,7 @@ ROM_END
 #define EP_FLASH_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "fl_back.s0", 0x0000, 0x080000, CRC(acaa4b38) SHA1(6960e29181f67ca77fee9f6bce84dfa6bea4bdf7) ) \
-	ROM_LOAD( "fl_back.s1", 0x0000, 0x080000, CRC(4ff8b006) SHA1(bfe7b83b1bcc81f5980263db26e0c3dd8074518b) ) \
-
+	ROM_LOAD( "fl_back.s1", 0x0000, 0x080000, CRC(4ff8b006) SHA1(bfe7b83b1bcc81f5980263db26e0c3dd8074518b) )
 
 ROM_START( ep_flash )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -2854,8 +2816,7 @@ ROM_END
 #define EP_FORTG_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "f_n_g.s0", 0x000000, 0x080000, CRC(e257502d) SHA1(5be9ea39299582c0c68feeb9537d887c7562b293) ) \
-	ROM_LOAD( "f_n_g.s1", 0x080000, 0x080000, CRC(87e2f4bd) SHA1(b515b294384dbfa24bf3d7a561a572aa9c041831) ) \
-
+	ROM_LOAD( "f_n_g.s1", 0x080000, 0x080000, CRC(87e2f4bd) SHA1(b515b294384dbfa24bf3d7a561a572aa9c041831) )
 ROM_START( ep_fortg )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "f_n_gl.g0", 0x000000, 0x020000, CRC(ea112032) SHA1(2e06447058f5d697fc4263348106342faf9c41ab) )
@@ -3163,8 +3124,7 @@ ROM_END
 #define EP_HHCLB_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) /* guess based on name */ \
 	ROM_LOAD( "h_house.s0", 0x000000, 0x080000, CRC(387fb6bb) SHA1(e532a74792792c17347560cdc5aa890223b99abc) ) \
-	ROM_LOAD( "h_house.s1", 0x080000, 0x080000, CRC(a8df24cb) SHA1(b57590c128ce7cc40050ed1149741ca2c16e656b) ) \
-
+	ROM_LOAD( "h_house.s1", 0x080000, 0x080000, CRC(a8df24cb) SHA1(b57590c128ce7cc40050ed1149741ca2c16e656b) )
 
 ROM_START( ep_hhclb )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -3306,8 +3266,7 @@ ROM_END
 #define EP_HOMER_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "homer.sn0", 0x000000, 0x080000, CRC(f276596d) SHA1(675679271da7dc71f0e93a8ce519c1a6214a467b) ) \
-	ROM_LOAD( "homer.sn1", 0x080000, 0x080000, CRC(1820f976) SHA1(32c1af52906dd40494a002a66eb314bec74b3361) ) \
-
+	ROM_LOAD( "homer.sn1", 0x080000, 0x080000, CRC(1820f976) SHA1(32c1af52906dd40494a002a66eb314bec74b3361) )
 ROM_START( ep_homer )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "sa000070.g0", 0x000000, 0x020000, CRC(cd838170) SHA1(2dcb8729dafa69c4afe335cc48822341bd58fc4f) )
@@ -3425,8 +3384,7 @@ ROM_END
 	ROM_LOAD( "huricane.sn0", 0x000000, 0x080000, CRC(b34b4667) SHA1(8b0b7b3668506de8433aa662556118a8b0e203d6) ) \
 	ROM_LOAD( "huricane.sn1", 0x080000, 0x080000, CRC(324e255d) SHA1(6a30a512f19774b99bdbc14026a3b1cbfb65fe6d) ) \
 	ROM_LOAD( "hurrican.s0", 0x000000, 0x080000, CRC(a50f8fa5) SHA1(bde27c5b536cdc97384adb3c2eb842d1c31eddde) ) \
-	ROM_LOAD( "hurrican.s1", 0x080000, 0x080000, CRC(22412ebf) SHA1(36fa6da835f2a1f005d08b8e1c6bde9b0fb3ef6b) ) \
-
+	ROM_LOAD( "hurrican.s1", 0x080000, 0x080000, CRC(22412ebf) SHA1(36fa6da835f2a1f005d08b8e1c6bde9b0fb3ef6b) )
 
 ROM_START( ep_huric )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -3695,8 +3653,7 @@ ROM_END
 #define EP_IJOB_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "it_job.s1", 0x000000, 0x080000, CRC(77ea2225) SHA1(fb02bccf4555797b60871070821afe2162be26c2) ) \
-	ROM_LOAD( "it_job.s2", 0x080000, 0x080000, CRC(b6f86703) SHA1(f09f9d88132919ca24fc1ed7094b5b22c1136eb8) ) \
-
+	ROM_LOAD( "it_job.s2", 0x080000, 0x080000, CRC(b6f86703) SHA1(f09f9d88132919ca24fc1ed7094b5b22c1136eb8) )
 
 ROM_START( ep_ijob )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -3913,8 +3870,7 @@ ROM_END
 #define EP_MKART_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "m_kart.sn0", 0x000000, 0x080000, CRC(cb9f8fe6) SHA1(8e0d10c55ebf225c395094a720b797185df94365) ) \
-	ROM_LOAD( "m_kart.sn1", 0x080000, 0x080000, CRC(f725261c) SHA1(1ad0cf2af55e7bf6c5711ffd03b12191f8489942) ) \
-
+	ROM_LOAD( "m_kart.sn1", 0x080000, 0x080000, CRC(f725261c) SHA1(1ad0cf2af55e7bf6c5711ffd03b12191f8489942) )
 
 ROM_START( ep_mkart )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -4006,8 +3962,7 @@ ROM_END
 
 #define EP_MWOM_SOUND \
 	ROM_REGION( 0x080000, "ymz", 0 ) \
-	ROM_LOAD( "mortal.snd", 0x0000, 0x080000, CRC(34a24e83) SHA1(df464ffdaf3225beecd9facdb86a87ed501c261e) ) \
-
+	ROM_LOAD( "mortal.snd", 0x0000, 0x080000, CRC(34a24e83) SHA1(df464ffdaf3225beecd9facdb86a87ed501c261e) )
 
 ROM_START( ep_mwom )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -4123,8 +4078,7 @@ ROM_END
 
 #define EP_NUNS_SOUND \
 	ROM_REGION( 0x080000, "ymz", 0 ) \
-	ROM_LOAD( "nuns s0", 0x0000, 0x080000, CRC(158dadca) SHA1(e65dd64517f5e9ccf93a993ee22ab1b96d0a2a22) ) \
-
+	ROM_LOAD( "nuns s0", 0x0000, 0x080000, CRC(158dadca) SHA1(e65dd64517f5e9ccf93a993ee22ab1b96d0a2a22) )
 
 ROM_START( ep_nuns )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -4295,19 +4249,18 @@ ROM_END
 
 
 	/*
-    Disk marked:
+	Disk marked:
 
-    PHARAOH'S TREASURE
-    SS010003 DATA
-    VIDEO EPOCH
+	PHARAOH'S TREASURE
+	SS010003 DATA
+	VIDEO EPOCH
 
-    Fujistu MPF3102AT (10.2GB HDD)
-    */
+	Fujistu MPF3102AT (10.2GB HDD)
+	*/
 
 #define EP_PHARO_HDD \
 	DISK_REGION( "ide" ) \
-	DISK_IMAGE( "ep_pharo", 0, SHA1(daf56705178bb2b6f3547418a98c361478702aed) ) \
-
+	DISK_IMAGE( "ep_pharo", 0, SHA1(daf56705178bb2b6f3547418a98c361478702aed) )
 
 
 ROM_START( ep_pharo )
@@ -4335,8 +4288,7 @@ ROM_END
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	/* guess based on filenames */ \
 	ROM_LOAD( "p pesos.s0", 0x0000, 0x080000, CRC(970b2947) SHA1(14b0cc21a2fdb019143332869a656c4a4e3fb4a8) ) \
-	ROM_LOAD( "p pesos.s1", 0x0000, 0x080000, CRC(d98d0a73) SHA1(db6fcf7d4f1e12d9484c308613660d6da9e423f6) ) \
-
+	ROM_LOAD( "p pesos.s1", 0x0000, 0x080000, CRC(d98d0a73) SHA1(db6fcf7d4f1e12d9484c308613660d6da9e423f6) )
 
 
 ROM_START( ep_pesos )
@@ -4556,8 +4508,7 @@ ROM_END
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	/* guess based on filename */ \
 	ROM_LOAD( "royal r.s0", 0x000000, 0x080000, CRC(a1060eac) SHA1(47b0383e4c0eb714eaba55014fbc5597233a5d53) ) \
-	ROM_LOAD( "royal r.s1", 0x080000, 0x080000, CRC(c0caaeb8) SHA1(79efa22844137a0326b5887df186a3220cd2577b) ) \
-
+	ROM_LOAD( "royal r.s1", 0x080000, 0x080000, CRC(c0caaeb8) SHA1(79efa22844137a0326b5887df186a3220cd2577b) )
 
 ROM_START( ep_royrl )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -4657,8 +4608,7 @@ ROM_END
 #define EP_SECAG_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "s_agent.s0", 0x000000, 0x080000, CRC(58a509db) SHA1(339a69eab79c4e7886a18b92392a25ba2ccb7c9a) ) \
-	ROM_LOAD( "s_agent.s1", 0x080000, 0x080000, CRC(8e0117f8) SHA1(e7d1c64d995a7f7e2d4e2ed0bccb303fe5bb267e) ) \
-
+	ROM_LOAD( "s_agent.s1", 0x080000, 0x080000, CRC(8e0117f8) SHA1(e7d1c64d995a7f7e2d4e2ed0bccb303fe5bb267e) )
 
 ROM_START( ep_secag )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -4705,8 +4655,7 @@ ROM_END
 #define EP_SRWIN_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "s_winlot.s0", 0x000000, 0x080000, CRC(33ec2d5a) SHA1(57309e9053a685f54ebd8051c01862e9bd5cd72d) ) \
-	ROM_LOAD( "s_winlot.s1", 0x080000, 0x080000, CRC(f0d3078e) SHA1(e89ccb9fa1d4e85a35497f677572a3723300fd79) ) \
-
+	ROM_LOAD( "s_winlot.s1", 0x080000, 0x080000, CRC(f0d3078e) SHA1(e89ccb9fa1d4e85a35497f677572a3723300fd79) )
 
 ROM_START( ep_srwin )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -4967,8 +4916,7 @@ ROM_END
 #define EP_SPIN_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "spinonit.sn0", 0x000000, 0x080000, CRC(ad92e501) SHA1(adea1d2751c0fbf4637d5eb2b1003995c829413d) ) \
-	ROM_LOAD( "spinonit.sn1", 0x080000, 0x080000, CRC(e052ff0c) SHA1(afa2b2f4d51c95352d6fd1d69af87fef07c2f039) ) \
-
+	ROM_LOAD( "spinonit.sn1", 0x080000, 0x080000, CRC(e052ff0c) SHA1(afa2b2f4d51c95352d6fd1d69af87fef07c2f039) )
 
 ROM_START( ep_spin )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -5058,8 +5006,7 @@ ROM_END
 #define EP_SUBB_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "subbuteo.s0", 0x000000, 0x080000, CRC(3140ed84) SHA1(418fd6a1fd06c59f524f03116f0d284ebf481f58) ) \
-	ROM_LOAD( "subbuteo.s1", 0x080000, 0x080000, CRC(e87da3e7) SHA1(9443b8304ad75612186a97f0dafcdd698bf43c04) ) \
-
+	ROM_LOAD( "subbuteo.s1", 0x080000, 0x080000, CRC(e87da3e7) SHA1(9443b8304ad75612186a97f0dafcdd698bf43c04) )
 
 ROM_START( ep_subb )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -5469,8 +5416,7 @@ ROM_END
 #define EP_XSPOT_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) \
 	ROM_LOAD( "x_marks.s0", 0x000000, 0x080000, CRC(2e6f4524) SHA1(8f3e0cf3bbdbb32c13b6bcaadee86ddb081e7e81) ) \
-	ROM_LOAD( "x_marks.s1", 0x080000, 0x080000, CRC(5f0315d4) SHA1(d6ef3060f382fbc8012635196497b764ce635181) ) \
-
+	ROM_LOAD( "x_marks.s1", 0x080000, 0x080000, CRC(5f0315d4) SHA1(d6ef3060f382fbc8012635196497b764ce635181) )
 ROM_START( ep_xspot )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "msa02195.g0", 0x000000, 0x020000, CRC(18cb2ae4) SHA1(610e7c6820c4b6ed45a50080e9c8624e653cd950) )
@@ -5723,8 +5669,7 @@ ROM_END
 #define EP_DMBUS_SOUND \
 	ROM_REGION( 0x200000, "ymz", 0 ) \
 	ROM_LOAD( "d bus.s0", 0x000000, 0x080000, CRC(dcf93e70) SHA1(c005daa041bcc2bb8c4aa422593599a530390b28) ) \
-	ROM_LOAD( "d bus.s1", 0x080000, 0x080000, CRC(d6ebc176) SHA1(c554358839463d706f93e4eee4462d91a3961a59) ) \
-
+	ROM_LOAD( "d bus.s1", 0x080000, 0x080000, CRC(d6ebc176) SHA1(c554358839463d706f93e4eee4462d91a3961a59) )
 
 ROM_START( ep_dmbus )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -5906,8 +5851,7 @@ ROM_END
 #define EP_FULLM_SOUND \
 	ROM_REGION( 0x100000, "ymz", 0 ) /* guess based on name */ \
 	ROM_LOAD( "fmoon.s0", 0x000000, 0x080000, CRC(e8b06465) SHA1(269c2f271f5338dea6aed0be7ef49ba2ae2025c3) ) \
-	ROM_LOAD( "fmoon.s1", 0x080000, 0x080000, CRC(4781c1bd) SHA1(a9f66ad2b111c75edf29d4ea65c546a969504bb6) ) \
-
+	ROM_LOAD( "fmoon.s1", 0x080000, 0x080000, CRC(4781c1bd) SHA1(a9f66ad2b111c75edf29d4ea65c546a969504bb6) )
 
 ROM_START( ep_fullm )
 	ROM_REGION( 0x080000, "maincpu", 0 )
@@ -6961,8 +6905,7 @@ ROM_END
 #define EP_LUG_SOUND \
 	ROM_REGION( 0x200000, "ymz", 0 ) \
 	ROM_LOAD( "udrgnd.sn0", 0x000000, 0x080000, CRC(743e3936) SHA1(89d34a36c0506ee690011951713c8bc1844955cf) ) \
-	ROM_LOAD( "udrgnd.s1" , 0x080000, 0x080000, CRC(db9aa3db) SHA1(5688e21db228d0d7d195fd70fb1b32d75d350a54) ) \
-
+	ROM_LOAD( "udrgnd.s1" , 0x080000, 0x080000, CRC(db9aa3db) SHA1(5688e21db228d0d7d195fd70fb1b32d75d350a54) )
 ROM_START( ep_lug )
 	ROM_REGION( 0x080000, "maincpu", 0 )
 	ROM_LOAD16_BYTE( "undergr.g0", 0x00000, 0x020000, CRC(ad34ecc5) SHA1(b0122ed340e76b52529ec12b237e93773674d314) )
@@ -7081,1023 +7024,1023 @@ ROM_END
 
 /* header info */
 
-GAME( 1998, ep_simp,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (3.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_simpa,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (3.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_simpb,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (3.5, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_simpc,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (4.5, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_simpd,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (4.5, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_simpe,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (1.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_simpf,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (1.5, set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_simpg,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (2.5, set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_simph,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (2.5, set 9)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_simpj,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (1.8, set 10)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_simpk,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (1.8, set 11)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_simpl,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (3.7, set 12)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_simpm,	ep_simp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (3.7, set 13)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_simp,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (3.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_simpa,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (3.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_simpb,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (3.5, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_simpc,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (4.5, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_simpd,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (4.5, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_simpe,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (1.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_simpf,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (1.5, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_simpg,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (2.5, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_simph,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (2.5, set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_simpj,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (1.8, set 10)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_simpk,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (1.8, set 11)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_simpl,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (3.7, set 12)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_simpm,   ep_simp,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons (Maygay) (EPOCH) (3.7, set 13)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 1999, ep_merln,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Merlin's Magic (Maygay) (EPOCH) (1.91)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_merln,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Merlin's Magic (Maygay) (EPOCH) (1.91)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 1998, ep_bingb,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bingo Belle (Maygay) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_bingba,	ep_bingb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bingo Belle (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_bingb,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bingo Belle (Maygay) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_bingba,  ep_bingb,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bingo Belle (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 1998, ep_calyp,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Calypso (Maygay) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_calypa,	ep_calyp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Calypso (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_calyp,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Calypso (Maygay) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_calypa,  ep_calyp,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Calypso (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 1998, ep_cow,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Carry On Winning (Maygay) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_cowa,	ep_cow,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Carry On Winning (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cow,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Carry On Winning (Maygay) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cowa,    ep_cow,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Carry On Winning (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 1998, ep_cfall,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_cfalla,	ep_cfall,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_cfallb,	ep_cfall,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_cfallc,	ep_cfall,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (2.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_cfalld,	ep_cfall,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (2.3, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_cfalle,	ep_cfall,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (3.2, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_cfallf,	ep_cfall,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (3.2, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cfall,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cfalla,  ep_cfall,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cfallb,  ep_cfall,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cfallc,  ep_cfall,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (2.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cfalld,  ep_cfall,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (2.3, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cfalle,  ep_cfall,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (3.2, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cfallf,  ep_cfall,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Falls (Maygay) (EPOCH) (3.2, set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 1998, ep_cflow,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Flow (Maygay) (EPOCH) (3.7, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_cflowa,	ep_cflow,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Flow (Maygay) (EPOCH) (3.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_cflowc,	ep_cflow,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Flow (Maygay) (EPOCH) (3.A, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_cflowd,	ep_cflow,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Flow (Maygay) (EPOCH) (3.A, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cflow,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Flow (Maygay) (EPOCH) (3.7, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_cflowa,  ep_cflow,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Flow (Maygay) (EPOCH) (3.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_cflowc,  ep_cflow,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Flow (Maygay) (EPOCH) (3.A, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_cflowd,  ep_cflow,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Flow (Maygay) (EPOCH) (3.A, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_doubl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Top (Maygay) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_doubla,	ep_doubl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Top (Maygay) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_doublb,	ep_doubl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Top (Maygay) (EPOCH) (1.6, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_doublc,	ep_doubl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Top (Maygay) (EPOCH) (1.6, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_doubld,	ep_doubl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Top (Maygay) (EPOCH) (1.4, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_doubl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Top (Maygay) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_doubla,  ep_doubl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Top (Maygay) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_doublb,  ep_doubl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Top (Maygay) (EPOCH) (1.6, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_doublc,  ep_doubl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Top (Maygay) (EPOCH) (1.6, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_doubld,  ep_doubl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Top (Maygay) (EPOCH) (1.4, set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_evil,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Evil Streak (Maygay) (EPOCH) (1.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_evila,	ep_evil,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Evil Streak (Maygay) (EPOCH) (1.6, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_evilb,	ep_evil,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Evil Streak (Maygay) (EPOCH) (1.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_evil,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Evil Streak (Maygay) (EPOCH) (1.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_evila,   ep_evil,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Evil Streak (Maygay) (EPOCH) (1.6, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_evilb,   ep_evil,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Evil Streak (Maygay) (EPOCH) (1.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 1998, ep_nyny,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (3.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_nynya,	ep_nyny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (3.6, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_nynyb,	ep_nyny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (4.6, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_nynyc,	ep_nyny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (4.6, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_nynyd,	ep_nyny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (3.A, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_nynye,	ep_nyny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (3.A, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_nynyf,	ep_nyny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (3.9, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_nyny,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (3.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_nynya,   ep_nyny,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (3.6, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_nynyb,   ep_nyny,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (4.6, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_nynyc,   ep_nyny,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (4.6, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_nynyd,   ep_nyny,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (3.A, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_nynye,   ep_nyny,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (3.A, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_nynyf,   ep_nyny,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "New York New York (Maygay) (EPOCH) (3.9, set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_pizza,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pizza The Action (Maygay) (EPOCH) (2.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pizzaa,	ep_pizza,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pizza The Action (Maygay) (EPOCH) (2.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pizzab,	ep_pizza,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pizza The Action (Maygay) (EPOCH) (2.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pizzac,	ep_pizza,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pizza The Action (Maygay) (EPOCH) (2.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pizza,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pizza The Action (Maygay) (EPOCH) (2.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pizzaa,  ep_pizza,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pizza The Action (Maygay) (EPOCH) (2.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pizzab,  ep_pizza,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pizza The Action (Maygay) (EPOCH) (2.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pizzac,  ep_pizza,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pizza The Action (Maygay) (EPOCH) (2.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_crazy,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (1.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_crazya,	ep_crazy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (1.6, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_crazyb,	ep_crazy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (2.6, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_crazyc,	ep_crazy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (2.6, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_crazyd,	ep_crazy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (1.9, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_crazye,	ep_crazy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (1.9, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_crazy,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (1.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_crazya,  ep_crazy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (1.6, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_crazyb,  ep_crazy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (2.6, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_crazyc,  ep_crazy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (2.6, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_crazyd,  ep_crazy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (1.9, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_crazye,  ep_crazy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reel Crazy (Maygay) (EPOCH) (1.9, set 6)",GAME_IS_SKELETON_MECHANICAL )
 
 // CA000527 SUPER MARIO  - version number seems to jump backwards from 2.A after 1.A, with 2.A having the exact same build date as 1.A..  is the KJ / SM / CW bit significant? or is the 2.A revision a mistake, it comes after the 1.A in label tho, so 1.A isn't a correction.
-GAME( 1997, ep_mario,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL ) // SA970024 SA970018 11:40:00 DEC 02 1997 MAB, V1.5 EPOCH APOLLO AllCash
-GAME( 1997, ep_marioa,	ep_mario,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL ) // SA970025 SA970019 11:40:00 DEC 02 1997 MAB, V1.5 EPOCH APOLLO AllCash
-GAME( 1997, ep_mariob,	ep_mario,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.A, set 3)",GAME_IS_SKELETON_MECHANICAL ) // SA970036 SA970024 11:15:00 DEC 23 1997 KJGio.x, 1.A  EPOCH APOLLO
-GAME( 1997, ep_marioc,	ep_mario,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.A, set 4)",GAME_IS_SKELETON_MECHANICAL ) // SA970037 SA970025 11:15:00 DEC 23 1997 KJGio.x, 1.A  EPOCH APOLLO
-GAME( 1997, ep_mariod,	ep_mario,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (2.A, set 5)",GAME_IS_SKELETON_MECHANICAL ) // SA970038 SA970026 11:15:00 DEC 23 1997 KJGio.x, 2.A  EPOCH APOLLO
-GAME( 1997, ep_marioe,	ep_mario,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (2.A, set 6)",GAME_IS_SKELETON_MECHANICAL ) // SA970039 SA970027 11:15:00 DEC 23 1997 KJGio.x, 2.A  EPOCH APOLLO
-GAME( 1998, ep_marioh,	ep_mario,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.B, set 9)",GAME_IS_SKELETON_MECHANICAL ) // SA980286 SA970037 10:05:00 AUG 26 1998 SJMio.x, 1.B  EPOCH APOLLO
-GAME( 1999, ep_mariof,	ep_mario,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.C, set 7)",GAME_IS_SKELETON_MECHANICAL ) // SA990033 SA980286 14:05:00 FEB 26 1999 CWGio.x, 1.C  EPOCH APOLLO
-GAME( 1999, ep_mariog,	ep_mario,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.C, set 8)",GAME_IS_SKELETON_MECHANICAL ) // SA990034 SA980287 14:05:00 FEB 26 1999 CWGio.x, 1.C  EPOCH APOLLO
+GAME( 1997, ep_mario,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL ) // SA970024 SA970018 11:40:00 DEC 02 1997 MAB, V1.5 EPOCH APOLLO AllCash
+GAME( 1997, ep_marioa,  ep_mario,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL ) // SA970025 SA970019 11:40:00 DEC 02 1997 MAB, V1.5 EPOCH APOLLO AllCash
+GAME( 1997, ep_mariob,  ep_mario,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.A, set 3)",GAME_IS_SKELETON_MECHANICAL ) // SA970036 SA970024 11:15:00 DEC 23 1997 KJGio.x, 1.A  EPOCH APOLLO
+GAME( 1997, ep_marioc,  ep_mario,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.A, set 4)",GAME_IS_SKELETON_MECHANICAL ) // SA970037 SA970025 11:15:00 DEC 23 1997 KJGio.x, 1.A  EPOCH APOLLO
+GAME( 1997, ep_mariod,  ep_mario,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (2.A, set 5)",GAME_IS_SKELETON_MECHANICAL ) // SA970038 SA970026 11:15:00 DEC 23 1997 KJGio.x, 2.A  EPOCH APOLLO
+GAME( 1997, ep_marioe,  ep_mario,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (2.A, set 6)",GAME_IS_SKELETON_MECHANICAL ) // SA970039 SA970027 11:15:00 DEC 23 1997 KJGio.x, 2.A  EPOCH APOLLO
+GAME( 1998, ep_marioh,  ep_mario,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.B, set 9)",GAME_IS_SKELETON_MECHANICAL ) // SA980286 SA970037 10:05:00 AUG 26 1998 SJMio.x, 1.B  EPOCH APOLLO
+GAME( 1999, ep_mariof,  ep_mario,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.C, set 7)",GAME_IS_SKELETON_MECHANICAL ) // SA990033 SA980286 14:05:00 FEB 26 1999 CWGio.x, 1.C  EPOCH APOLLO
+GAME( 1999, ep_mariog,  ep_mario,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Mario (Maygay) (EPOCH) (1.C, set 8)",GAME_IS_SKELETON_MECHANICAL ) // SA990034 SA980287 14:05:00 FEB 26 1999 CWGio.x, 1.C  EPOCH APOLLO
 
-GAME( 199?, ep_tincn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tin Can Alley (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tincna,	ep_tincn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tin Can Alley (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tincn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tin Can Alley (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tincna,  ep_tincn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tin Can Alley (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_tonfn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tons Of Fun (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tonfna,	ep_tonfn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tons Of Fun (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tonfn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tons Of Fun (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tonfna,  ep_tonfn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tons Of Fun (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_tcrwn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tcrwna,	ep_tcrwn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tcrwnb,	ep_tcrwn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (2.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tcrwnc,	ep_tcrwn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (2.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tcrwnd,	ep_tcrwn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (3.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tcrwne,	ep_tcrwn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (3.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tcrwn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tcrwna,  ep_tcrwn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tcrwnb,  ep_tcrwn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (2.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tcrwnc,  ep_tcrwn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (2.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tcrwnd,  ep_tcrwn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (3.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tcrwne,  ep_tcrwn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Crown (Maygay) (EPOCH) (3.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_word,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_worda,	ep_word,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wordb,	ep_word,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (2.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wordc,	ep_word,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (2.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wordd,	ep_word,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (3.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_worde,	ep_word,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (3.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wordf,	ep_word,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (4.1, set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wordg,	ep_word,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (4.1, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_word,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_worda,   ep_word,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wordb,   ep_word,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (2.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wordc,   ep_word,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (2.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wordd,   ep_word,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (3.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_worde,   ep_word,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (3.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wordf,   ep_word,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (4.1, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wordg,   ep_word,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Word Up (Maygay) (EPOCH) (4.1, set 8)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_xtra,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "X-tra X-tra (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_xtraa,	ep_xtra,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "X-tra X-tra (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_xtra,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "X-tra X-tra (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_xtraa,   ep_xtra,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "X-tra X-tra (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 2002, ep_25crt,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "25 Carrot Gold (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_25crta,	ep_25crt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "25 Carrot Gold (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_25crtb,	ep_25crt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "25 Carrot Gold (Maygay) (EPOCH) (3.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_25crtc,	ep_25crt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "25 Carrot Gold (Maygay) (EPOCH) (4.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_25crtd,	ep_25crt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "25 Carrot Gold (Maygay) (EPOCH) (5.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_25crt,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "25 Carrot Gold (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_25crta,  ep_25crt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "25 Carrot Gold (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_25crtb,  ep_25crt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "25 Carrot Gold (Maygay) (EPOCH) (3.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_25crtc,  ep_25crt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "25 Carrot Gold (Maygay) (EPOCH) (4.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_25crtd,  ep_25crt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "25 Carrot Gold (Maygay) (EPOCH) (5.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_bartk,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (4.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bartka,	ep_bartk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (3.9, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bartkb,	ep_bartk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (3.9, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bartkc,	ep_bartk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (4.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bartkd,	ep_bartk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (4.4, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bartke,	ep_bartk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (4.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bartkf,	ep_bartk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (4.2, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bartk,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (4.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bartka,  ep_bartk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (3.9, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bartkb,  ep_bartk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (3.9, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bartkc,  ep_bartk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (4.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bartkd,  ep_bartk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (4.4, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bartke,  ep_bartk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (4.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bartkf,  ep_bartk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bar Trekkin (Maygay) (EPOCH) (4.2, set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_batls,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Battleships (Maygay) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_batlsa,	ep_batls,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Battleships (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_batlsb,	ep_batls,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Battleships (Maygay) (EPOCH) (1.9, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_batlsc,	ep_batls,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Battleships (Maygay) (EPOCH) (1.9, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_batls,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Battleships (Maygay) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_batlsa,  ep_batls,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Battleships (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_batlsb,  ep_batls,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Battleships (Maygay) (EPOCH) (1.9, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_batlsc,  ep_batls,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Battleships (Maygay) (EPOCH) (1.9, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cdspn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cardinal Spin (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cdspna,	ep_cdspn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cardinal Spin (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cdspn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cardinal Spin (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cdspna,  ep_cdspn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cardinal Spin (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cosc,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Carry On Screaming (Maygay) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cosca,	ep_cosc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Carry On Screaming (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cosc,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Carry On Screaming (Maygay) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cosca,   ep_cosc,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Carry On Screaming (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 // these 3 are 'fruit cocktail' (CA000627) in the header
-GAME( 199?, ep_ccock,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Cocktail (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ccocka,	ep_ccock,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Cocktail (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ccockb,	ep_ccock,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Cocktail (Maygay) (EPOCH) (1.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ccock,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Cocktail (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ccocka,  ep_ccock,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Cocktail (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ccockb,  ep_ccock,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Cocktail (Maygay) (EPOCH) (1.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
 // this one is 'cash cocktail' (CA000710)
-GAME( 199?, ep_ccockc,	ep_ccock,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Cocktail (Maygay) (EPOCH) (1.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ccockc,  ep_ccock,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Cocktail (Maygay) (EPOCH) (1.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cgord,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Gordon (Maygay) (EPOCH) (2.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cgorda,	ep_cgord,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Gordon (Maygay) (EPOCH) (2.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cgordb,	ep_cgord,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Gordon (Maygay) (EPOCH) (2.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cgordc,	ep_cgord,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Gordon (Maygay) (EPOCH) (1.9, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cgord,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Gordon (Maygay) (EPOCH) (2.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cgorda,  ep_cgord,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Gordon (Maygay) (EPOCH) (2.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cgordb,  ep_cgord,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Gordon (Maygay) (EPOCH) (2.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cgordc,  ep_cgord,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Gordon (Maygay) (EPOCH) (1.9, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cshpn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash In The Pan (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cshpna,	ep_cshpn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash In The Pan (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cshpn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash In The Pan (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cshpna,  ep_cshpn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash In The Pan (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_ctit,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Of The Titans (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ctita,	ep_ctit,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Of The Titans (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ctit,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Of The Titans (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ctita,   ep_ctit,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Of The Titans (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 // CASINO GRAND
-GAME( 199?, ep_casgc,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Grand Club (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_casgca,	ep_casgc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Grand Club (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_casgc,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Grand Club (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_casgca,  ep_casgc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Grand Club (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
 // CLASSIC CASINO GRAND
-GAME( 199?, ep_casgcb,	ep_casgc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Grand Club (Maygay) (EPOCH) (1.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_casgcc,	ep_casgc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Grand Club (Maygay) (EPOCH) (1.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_casgcb,  ep_casgc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Grand Club (Maygay) (EPOCH) (1.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_casgcc,  ep_casgc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Grand Club (Maygay) (EPOCH) (1.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_casrd,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Royale Deluxe Club (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_casrda,	ep_casrd,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Royale Deluxe Club (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_casrd,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Royale Deluxe Club (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_casrda,  ep_casrd,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Casino Royale Deluxe Club (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_chock,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Chocks Away (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_chocka,	ep_chock,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Chocks Away (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_chockb,	ep_chock,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Chocks Away (Maygay) (EPOCH) (1.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_chock,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Chocks Away (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_chocka,  ep_chock,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Chocks Away (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_chockb,  ep_chock,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Chocks Away (Maygay) (EPOCH) (1.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_commd,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Complete Madness (Maygay) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_commda,	ep_commd,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Complete Madness (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_commdb,	ep_commd,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Complete Madness (Maygay) (EPOCH) (1.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_commdc,	ep_commd,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Complete Madness (Maygay) (EPOCH) (1.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_commdd,	ep_commd,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Complete Madness (Maygay) (EPOCH) (2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_commd,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Complete Madness (Maygay) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_commda,  ep_commd,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Complete Madness (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_commdb,  ep_commd,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Complete Madness (Maygay) (EPOCH) (1.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_commdc,  ep_commd,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Complete Madness (Maygay) (EPOCH) (1.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_commdd,  ep_commd,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Complete Madness (Maygay) (EPOCH) (2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cor2,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street 2 (Maygay) (EPOCH) (3.7, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cor2a,	ep_cor2,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street 2 (Maygay) (EPOCH) (3.7, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cor2b,	ep_cor2,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street 2 (Maygay) (EPOCH) (3.8, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cor2c,	ep_cor2,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street 2 (Maygay) (EPOCH) (3.8, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cor2,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street 2 (Maygay) (EPOCH) (3.7, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cor2a,   ep_cor2,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street 2 (Maygay) (EPOCH) (3.7, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cor2b,   ep_cor2,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street 2 (Maygay) (EPOCH) (3.8, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cor2c,   ep_cor2,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street 2 (Maygay) (EPOCH) (3.8, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cormn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street Monopoly Club (Maygay) (EPOCH) (1.7, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cormna,	ep_cormn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street Monopoly Club (Maygay) (EPOCH) (1.7, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cormn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street Monopoly Club (Maygay) (EPOCH) (1.7, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cormna,  ep_cormn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Coronation Street Monopoly Club (Maygay) (EPOCH) (1.7, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cycl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cyclone Club (Maygay) (EPOCH) (3.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cycla,	ep_cycl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cyclone Club (Maygay) (EPOCH) (3.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cyclb,	ep_cycl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cyclone Club (Maygay) (EPOCH) (2.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cycl,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cyclone Club (Maygay) (EPOCH) (3.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cycla,   ep_cycl,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cyclone Club (Maygay) (EPOCH) (3.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cyclb,   ep_cycl,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cyclone Club (Maygay) (EPOCH) (2.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
 // these are dated 2001 with a MMLNFOTG string (game CA000727)
-GAME( 2001, ep_fgods,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2001, ep_fgodsa,	ep_fgods,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2001, ep_fgodsb,	ep_fgods,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (2.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2001, ep_fgodsc,	ep_fgods,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (2.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2001, ep_fgods,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2001, ep_fgodsa,  ep_fgods,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2001, ep_fgodsb,  ep_fgods,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (2.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2001, ep_fgodsc,  ep_fgods,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (2.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
 // below are dated 2002 with a UGLNFOTG string (still CA000727) versioning seems independent of above
-GAME( 2002, ep_fgodsd,	ep_fgods,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_fgodse,	ep_fgods,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (3.2, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_fgodsf,	ep_fgods,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (1.1, set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_fgodsg,	ep_fgods,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (1.1, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_fgodsd,  ep_fgods,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_fgodse,  ep_fgods,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (3.2, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_fgodsf,  ep_fgods,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (1.1, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_fgodsg,  ep_fgods,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit Of The Gods (Maygay) (EPOCH) (1.1, set 8)",GAME_IS_SKELETON_MECHANICAL )
 
 
-GAME( 2002, ep_gldtp,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gold Top (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_gldtpa,	ep_gldtp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gold Top (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_gldtp,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gold Top (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_gldtpa,  ep_gldtp,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gold Top (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 // CA000782 GREATESCAPE
-GAME( 2002, ep_gesc2,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape 2 (Maygay) (EPOCH) (2.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_gesc2a,	ep_gesc2,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape 2 (Maygay) (EPOCH) (2.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_gresc,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_gresca,	ep_gresc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_gesc2,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape 2 (Maygay) (EPOCH) (2.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_gesc2a,  ep_gesc2,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape 2 (Maygay) (EPOCH) (2.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_gresc,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_gresca,  ep_gresc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 // CC000043 CLUB ESCAPE
-GAME( 1999, ep_geclb,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape Club (Maygay) (EPOCH) (1.C, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_geclba,	ep_geclb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape Club (Maygay) (EPOCH) (1.C, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_geclbb,	ep_geclb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape Club (Maygay) (EPOCH) (1.9, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_geclb,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape Club (Maygay) (EPOCH) (1.C, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_geclba,  ep_geclb,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape Club (Maygay) (EPOCH) (1.C, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_geclbb,  ep_geclb,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Great Escape Club (Maygay) (EPOCH) (1.9, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
 
 
-GAME( 2002, ep_hhclb,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Haunted House Club (Maygay) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_hhclba,	ep_hhclb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Haunted House Club (Maygay) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2000, ep_hhclbb,	ep_hhclb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Haunted House Club (Maygay) (EPOCH) (1.1, set 3)",GAME_IS_SKELETON_MECHANICAL ) // only one of the last roms differs from below
-GAME( 2000, ep_hhclbc,	ep_hhclb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Haunted House Club (Maygay) (EPOCH) (1.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_hhclb,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Haunted House Club (Maygay) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_hhclba,  ep_hhclb,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Haunted House Club (Maygay) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2000, ep_hhclbb,  ep_hhclb,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Haunted House Club (Maygay) (EPOCH) (1.1, set 3)",GAME_IS_SKELETON_MECHANICAL ) // only one of the last roms differs from below
+GAME( 2000, ep_hhclbc,  ep_hhclb,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Haunted House Club (Maygay) (EPOCH) (1.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
 // CA000623 HOMERS MELT
-GAME( 2000, ep_homer,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.A, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2000, ep_homeri,	ep_homer,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.9, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2000, ep_homer,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.A, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2000, ep_homeri,  ep_homer,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.9, set 2)",GAME_IS_SKELETON_MECHANICAL )
 // CA000623 MELTDOWN lt
-GAME( 2002, ep_homera,	ep_homer,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (3.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_homerb,	ep_homer,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (3.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_homerc,	ep_homer,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.B, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_homerd,	ep_homer,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.B, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_homera,  ep_homer,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (3.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_homerb,  ep_homer,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (3.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_homerc,  ep_homer,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.B, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_homerd,  ep_homer,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.B, set 6)",GAME_IS_SKELETON_MECHANICAL )
 // CA000555 HOMERS MELT
-GAME( 2003, ep_homere,	ep_homer,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (3.1, set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_homerf,	ep_homer,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (3.1, set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_homerg,	ep_homer,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.1, set 9)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_homerh,	ep_homer,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.1, set 10)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_homere,  ep_homer,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (3.1, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_homerf,  ep_homer,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (3.1, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_homerg,  ep_homer,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.1, set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_homerh,  ep_homer,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Homer's Meltdown (Maygay) (EPOCH) (2.1, set 10)",GAME_IS_SKELETON_MECHANICAL )
 
 // versioning doesn't make much sense here
-GAME( 2002, ep_icebg,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_icebga,	ep_icebg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_icebgb,	ep_icebg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_icebgc,	ep_icebg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_icebgd,	ep_icebg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_icebge,	ep_icebg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_icebg,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_icebga,  ep_icebg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_icebgb,  ep_icebg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_icebgc,  ep_icebg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_icebgd,  ep_icebg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_icebge,  ep_icebg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
 // these have 2003 dates, despite being versioned lower?
-GAME( 2003, ep_icebgf,	ep_icebg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.3, set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_icebgg,	ep_icebg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.3, set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_icebgh,	ep_icebg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.4, set 9)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_icebgi,	ep_icebg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.4, set 10)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_icebgf,  ep_icebg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.3, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_icebgg,  ep_icebg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.3, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_icebgh,  ep_icebg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.4, set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_icebgi,  ep_icebg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ice Burger (Maygay) (EPOCH) (1.4, set 10)",GAME_IS_SKELETON_MECHANICAL )
 
 // CA000719 ITALIAN JOB
-GAME( 2002, ep_itjb2,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 2 (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_itjb2a,	ep_itjb2,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 2 (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_itjb2b,	ep_itjb2,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 2 (Maygay) (EPOCH) (2.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_itjb2c,	ep_itjb2,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 2 (Maygay) (EPOCH) (2.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_itjb2,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 2 (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_itjb2a,  ep_itjb2,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 2 (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_itjb2b,  ep_itjb2,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 2 (Maygay) (EPOCH) (2.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_itjb2c,  ep_itjb2,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 2 (Maygay) (EPOCH) (2.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
 // same game code, but 2.1 is (c)2001 wheras 1.5 above is 2002...
-GAME( 2001, ep_ijob,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job (Maygay) (EPOCH, v2.1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2001, ep_ijoba,	ep_ijob,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job (Maygay) (EPOCH, v1.1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2001, ep_ijob,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job (Maygay) (EPOCH, v2.1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2001, ep_ijoba,   ep_ijob,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job (Maygay) (EPOCH, v1.1)",GAME_IS_SKELETON_MECHANICAL )
 
 // CC000059 CLUBITALIAN
-GAME( 2002, ep_ijcl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job Club (Maygay) (EPOCH) (2.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_ijcla,	ep_ijcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job Club (Maygay) (EPOCH) (2.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_ijcl,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job Club (Maygay) (EPOCH) (2.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_ijcla,   ep_ijcl,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job Club (Maygay) (EPOCH) (2.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 // again build date vs build number doesn't make sense
-GAME( 2002, ep_jsttt,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (4.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_jsttta,	ep_jsttt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (4.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_jstttb,	ep_jsttt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.5, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_jstttc,	ep_jsttt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_jstttd,	ep_jsttt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.5, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_jsttte,	ep_jsttt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_jstttf,	ep_jsttt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.6, set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2003, ep_jstttg,	ep_jsttt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.6, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_jsttt,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (4.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_jsttta,  ep_jsttt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (4.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_jstttb,  ep_jsttt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.5, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_jstttc,  ep_jsttt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_jstttd,  ep_jsttt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.5, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_jsttte,  ep_jsttt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_jstttf,  ep_jsttt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.6, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2003, ep_jstttg,  ep_jsttt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Just The Ticket (Maygay) (EPOCH) (3.6, set 8)",GAME_IS_SKELETON_MECHANICAL )
 
 // CA000593 MARIO KART    'ELEGANCE'
-GAME( 1999, ep_mkart,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_mkarta,	ep_mkart,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_mkartd,	ep_mkart,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.1, set 5)",GAME_IS_SKELETON_MECHANICAL ) // First Master For Elegance cab
+GAME( 1999, ep_mkart,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_mkarta,  ep_mkart,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_mkartd,  ep_mkart,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.1, set 5)",GAME_IS_SKELETON_MECHANICAL ) // First Master For Elegance cab
 // CA000580 MARIOKART     'EPOCH APOLLO'
-GAME( 1999, ep_mkartb,	ep_mkart,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.6, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_mkartc,	ep_mkart,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.6, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_mkarte,	ep_mkart,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_mkartb,  ep_mkart,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.6, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_mkartc,  ep_mkart,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.6, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_mkarte,  ep_mkart,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mario Kart (Maygay) (EPOCH) (1.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 1998, ep_midas,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Midas Touch Club (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1998, ep_midasa,	ep_midas,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Midas Touch Club (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_midas,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Midas Touch Club (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_midasa,  ep_midas,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Midas Touch Club (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 // CA000612 MONTE CARLO     'ELEGANCE'
-GAME( 199?, ep_monbs,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Monte Carlo Or Bust (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monbsa,	ep_monbs,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Monte Carlo Or Bust (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monbs,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Monte Carlo Or Bust (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monbsa,  ep_monbs,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Monte Carlo Or Bust (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_mrmus,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mr Muscle (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mrmusa,	ep_mrmus,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mr Muscle (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mrmus,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mr Muscle (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mrmusa,  ep_mrmus,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mr Muscle (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_nuns,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Nuns Of Navarone (Maygay) (EPOCH) (2.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_nunsa,	ep_nuns,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Nuns Of Navarone (Maygay) (EPOCH) (2.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_nuns,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Nuns Of Navarone (Maygay) (EPOCH) (2.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_nunsa,   ep_nuns,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Nuns Of Navarone (Maygay) (EPOCH) (2.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_otm,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Over The Moon (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_otma,	ep_otm,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Over The Moon (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_otm,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Over The Moon (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_otma,    ep_otm,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Over The Moon (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 // messy headers..
-GAME( 199?, ep_ozzie,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (2.Z, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ozziea,	ep_ozzie,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) ( .2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ozzieb,	ep_ozzie,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (5.J, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ozziec,	ep_ozzie,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (6.J, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ozzied,	ep_ozzie,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (1.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ozziee,	ep_ozzie,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (1.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ozzief,	ep_ozzie,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (2.Z, set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ozzieg,	ep_ozzie,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (0.2, set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ozzieh,	ep_ozzie,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (0.2, set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ozzie,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (2.Z, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ozziea,  ep_ozzie,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) ( .2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ozzieb,  ep_ozzie,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (5.J, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ozziec,  ep_ozzie,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (6.J, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ozzied,  ep_ozzie,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (1.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ozziee,  ep_ozzie,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (1.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ozzief,  ep_ozzie,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (2.Z, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ozzieg,  ep_ozzie,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (0.2, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ozzieh,  ep_ozzie,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Ozzie Ozzie Ozzie (Maygay) (EPOCH) (0.2, set 9)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_pascl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Classic Club (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pascla,	ep_pascl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Classic Club (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_passpb,	ep_pascl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Classic Club (Maygay) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_passpc,	ep_pascl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Classic Club (Maygay) (EPOCH) (1.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pascl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Classic Club (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pascla,  ep_pascl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Classic Club (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_passpb,  ep_pascl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Classic Club (Maygay) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_passpc,  ep_pascl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Classic Club (Maygay) (EPOCH) (1.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_passp,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Club (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_passpa,	ep_passp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Club (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_passp,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Club (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_passpa,  ep_passp,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Passport To Riches Club (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_baskr,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (1.7, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_baskra,	ep_baskr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_baskrb,	ep_baskr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (2.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_baskrc,	ep_baskr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (1.7, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_baskrd,	ep_baskr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_baskre,	ep_baskr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (1.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_baskr,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (1.7, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_baskra,  ep_baskr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_baskrb,  ep_baskr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (2.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_baskrc,  ep_baskr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (1.7, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_baskrd,  ep_baskr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_baskre,  ep_baskr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pounds Of The Baskervilles (Maygay) (EPOCH) (1.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_rags,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Rags To Riches Club (Maygay) (EPOCH) (1.10, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ragsa,	ep_rags,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Rags To Riches Club (Maygay) (EPOCH) (1.10, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_rags,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Rags To Riches Club (Maygay) (EPOCH) (1.10, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ragsa,   ep_rags,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Rags To Riches Club (Maygay) (EPOCH) (1.10, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_roost,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Roosters Millions (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_roosta,	ep_roost,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Roosters Millions (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_roost,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Roosters Millions (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_roosta,  ep_roost,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Roosters Millions (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 
-GAME( 2002, ep_secag,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Secret Agent (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_secaga,	ep_secag,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Secret Agent (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2000, ep_secagb,	ep_secag,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Secret Agent (Maygay) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_secag,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Secret Agent (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_secaga,  ep_secag,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Secret Agent (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2000, ep_secagb,  ep_secag,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Secret Agent (Maygay) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_simfr,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Simply Fruits (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_simfra,	ep_simfr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Simply Fruits (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_simfr,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Simply Fruits (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_simfra,  ep_simfr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Simply Fruits (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 2002, ep_srwin,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Sir Winalot (Maygay) (EPOCH) (2.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_srwina,	ep_srwin,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Sir Winalot (Maygay) (EPOCH) (3.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_srwinb,	ep_srwin,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Sir Winalot (Maygay) (EPOCH) (3.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_srwinc,	ep_srwin,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Sir Winalot (Maygay) (EPOCH) (2.6, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2000, ep_srwind,	ep_srwin,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Sir Winalot (Maygay) (EPOCH) (2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_srwin,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Sir Winalot (Maygay) (EPOCH) (2.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_srwina,  ep_srwin,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Sir Winalot (Maygay) (EPOCH) (3.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_srwinb,  ep_srwin,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Sir Winalot (Maygay) (EPOCH) (3.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_srwinc,  ep_srwin,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Sir Winalot (Maygay) (EPOCH) (2.6, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2000, ep_srwind,  ep_srwin,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Sir Winalot (Maygay) (EPOCH) (2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_spcbw,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwa,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwb,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwc,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwd,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.5, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwe,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwf,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.6, set 7)",GAME_IS_SKELETON_MECHANICAL ) // version seems typoed as " .6" in ROM
-GAME( 199?, ep_spcbwg,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.6, set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwh,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.4, set 9)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwi,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.4, set 10)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwj,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.8, set 11)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwk,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.8, set 12)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwl,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.9, set 13)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spcbwm,	ep_spcbw,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.9, set 14)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbw,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwa,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwb,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwc,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwd,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.5, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwe,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwf,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.6, set 7)",GAME_IS_SKELETON_MECHANICAL ) // version seems typoed as " .6" in ROM
+GAME( 199?, ep_spcbwg,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.6, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwh,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.4, set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwi,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.4, set 10)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwj,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.8, set 11)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwk,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.8, set 12)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwl,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.9, set 13)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spcbwm,  ep_spcbw,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Special Brew (Maygay) (EPOCH) (1.9, set 14)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 2002, ep_spec,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spectre (Maygay) (EPOCH) (1.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_speca,	ep_spec,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spectre (Maygay) (EPOCH) (1.6, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_specb,	ep_spec,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spectre (Maygay) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_spec,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spectre (Maygay) (EPOCH) (1.6, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_speca,   ep_spec,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spectre (Maygay) (EPOCH) (1.6, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_specb,   ep_spec,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spectre (Maygay) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_step,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Stepping Stones (Maygay) (EPOCH) (1.0, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_stepa,	ep_step,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Stepping Stones (Maygay) (EPOCH) (1.0, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_step,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Stepping Stones (Maygay) (EPOCH) (1.0, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_stepa,   ep_step,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Stepping Stones (Maygay) (EPOCH) (1.0, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_survi,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Survival (Maygay) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_survia,	ep_survi,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Survival (Maygay) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_survi,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Survival (Maygay) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_survia,  ep_survi,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Survival (Maygay) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_tits,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Title Shot Club (Maygay) (EPOCH) (1.7, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_titsa,	ep_tits,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Title Shot Club (Maygay) (EPOCH) (1.7, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_titsb,	ep_tits,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Title Shot Club (Maygay) (EPOCH) (1.5, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tits,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Title Shot Club (Maygay) (EPOCH) (1.7, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_titsa,   ep_tits,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Title Shot Club (Maygay) (EPOCH) (1.7, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_titsb,   ep_tits,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Title Shot Club (Maygay) (EPOCH) (1.5, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 2000, ep_tortr,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Torture TV (Maygay) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2000, ep_tortra,	ep_tortr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Torture TV (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2000, ep_tortr,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Torture TV (Maygay) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2000, ep_tortra,  ep_tortr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Torture TV (Maygay) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 // CA000715 TRIVIAL PUR
-GAME( 199?, ep_tp,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trivial Pursuit (Maygay) (EPOCH) (3.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tpa,		ep_tp,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trivial Pursuit (Maygay) (EPOCH) (3.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tpb,		ep_tp,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trivial Pursuit (Maygay) (EPOCH) (2.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tp,      0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trivial Pursuit (Maygay) (EPOCH) (3.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tpa,     ep_tp,      maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trivial Pursuit (Maygay) (EPOCH) (3.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tpb,     ep_tp,      maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trivial Pursuit (Maygay) (EPOCH) (2.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
 // same code as above?
-GAME( 199?, ep_tp2,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trivial Pursuit 2 (Maygay) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tp2a,	ep_tp2,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trivial Pursuit 2 (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tp2,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trivial Pursuit 2 (Maygay) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tp2a,    ep_tp2,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trivial Pursuit 2 (Maygay) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_tutcl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tutankhamun Club (Maygay) (EPOCH) (2.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tutcla,	ep_tutcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tutankhamun Club (Maygay) (EPOCH) (2.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tutclb,	ep_tutcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tutankhamun Club (Maygay) (EPOCH) (1.8, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tutcl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tutankhamun Club (Maygay) (EPOCH) (2.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tutcla,  ep_tutcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tutankhamun Club (Maygay) (EPOCH) (2.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tutclb,  ep_tutcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tutankhamun Club (Maygay) (EPOCH) (1.8, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_21clb,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Twenty One Club (Maygay) (EPOCH) (3.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_21clba,	ep_21clb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Twenty One Club (Maygay) (EPOCH) (3.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_21clb,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Twenty One Club (Maygay) (EPOCH) (3.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_21clba,  ep_21clb,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Twenty One Club (Maygay) (EPOCH) (3.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 2002, ep_xspot,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "X Marks The Spot (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_xspota,	ep_xspot,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "X Marks The Spot (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_xspotb,	ep_xspot,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "X Marks The Spot (Maygay) (EPOCH) (1.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_xspot,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "X Marks The Spot (Maygay) (EPOCH) (1.5, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_xspota,  ep_xspot,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "X Marks The Spot (Maygay) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_xspotb,  ep_xspot,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "X Marks The Spot (Maygay) (EPOCH) (1.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
 
-GAME( 199?, ep_bathl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (2.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bathla,	ep_bathl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (2.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bathlb,	ep_bathl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (2.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bathlc,	ep_bathl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (2.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bathld,	ep_bathl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (3.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bathle,	ep_bathl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (3.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bathlf,	ep_bathl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (4.1, set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bathlg,	ep_bathl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (4.1, set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bathlh,	ep_bathl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (3.3, set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bathl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (2.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bathla,  ep_bathl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (2.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bathlb,  ep_bathl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (2.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bathlc,  ep_bathl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (2.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bathld,  ep_bathl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (3.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bathle,  ep_bathl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (3.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bathlf,  ep_bathl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (4.1, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bathlg,  ep_bathl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (4.1, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bathlh,  ep_bathl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Bat Outa Hell (Global) (EPOCH) (3.3, set 9)",GAME_IS_SKELETON_MECHANICAL )
 
 
 // CA000720 BEAVER LAS  (2.3 has a newer date than 3.3...)
-GAME( 2001, ep_beav3,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 3.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2001, ep_beav3a,	ep_beav3,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 3.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_beav3b,	ep_beav3,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 4.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_beav3c,	ep_beav3,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 4.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_beavrn,	ep_beav3,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 2.3, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_beavro,	ep_beav3,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 2.3, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2001, ep_beav3,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 3.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2001, ep_beav3a,  ep_beav3,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 3.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_beav3b,  ep_beav3,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 4.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_beav3c,  ep_beav3,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 4.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_beavrn,  ep_beav3,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 2.3, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_beavro,  ep_beav3,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (CA000720, 2.3, set 6)",GAME_IS_SKELETON_MECHANICAL )
 
 
-GAME( 199?, ep_bvruc,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Uncovered (Global) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvruca,	ep_bvruc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Uncovered (Global) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrucb,	ep_bvruc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Uncovered (Global) (EPOCH) (1.6, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrucc,	ep_bvruc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Uncovered (Global) (EPOCH) (2.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvruc,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Uncovered (Global) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvruca,  ep_bvruc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Uncovered (Global) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrucb,  ep_bvruc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Uncovered (Global) (EPOCH) (1.6, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrucc,  ep_bvruc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Uncovered (Global) (EPOCH) (2.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
 
-GAME( 199?, ep_cbrun,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbruna,	ep_cbrun,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrunb,	ep_cbrun,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (2.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrunc,	ep_cbrun,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (2.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrund,	ep_cbrun,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (3.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrune,	ep_cbrun,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (3.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrun,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (2.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbruna,  ep_cbrun,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (2.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrunb,  ep_cbrun,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (2.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrunc,  ep_cbrun,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (2.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrund,  ep_cbrun,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (3.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrune,  ep_cbrun,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run (Global) (EPOCH) (3.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_ctc,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cut Throat Cash (Global) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ctca,	ep_ctc,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cut Throat Cash (Global) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ctc,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cut Throat Cash (Global) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ctca,    ep_ctc,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cut Throat Cash (Global) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 
 
-GAME( 199?, ep_ddq,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqa,	ep_ddq,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqb,	ep_ddq,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqc,	ep_ddq,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqd,	ep_ddq,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.2, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqe,	ep_ddq,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.2, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqf,	ep_ddq,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.4, set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqg,	ep_ddq,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.4, set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqh,	ep_ddq,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.5, set 9)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqi,	ep_ddq,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.5, set 10)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddq,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqa,    ep_ddq,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (1.4, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqb,    ep_ddq,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqc,    ep_ddq,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqd,    ep_ddq,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.2, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqe,    ep_ddq,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.2, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqf,    ep_ddq,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.4, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqg,    ep_ddq,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.4, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqh,    ep_ddq,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.5, set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqi,    ep_ddq,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens (Global) (EPOCH) (2.5, set 10)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_greed,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Greed (Global) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_greeda,	ep_greed,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Greed (Global) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_greed,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Greed (Global) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_greeda,  ep_greed,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Greed (Global) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 // CA000702 HI SPIRITS
-GAME( 199?, ep_hispr,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (1.A, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hispra,	ep_hispr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (1.A, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hisprb,	ep_hispr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (4.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hisprc,	ep_hispr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (4.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hisprd,	ep_hispr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (3.2, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hispre,	ep_hispr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (3.2, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spirt,	ep_hispr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (2.3, set 1)",GAME_IS_SKELETON_MECHANICAL ) // same game code
-GAME( 199?, ep_spirta,	ep_hispr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (2.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spirtb,	ep_hispr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (4.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hispr,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (1.A, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hispra,  ep_hispr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (1.A, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hisprb,  ep_hispr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (4.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hisprc,  ep_hispr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (4.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hisprd,  ep_hispr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (3.2, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hispre,  ep_hispr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (3.2, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spirt,   ep_hispr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (2.3, set 1)",GAME_IS_SKELETON_MECHANICAL ) // same game code
+GAME( 199?, ep_spirta,  ep_hispr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (2.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spirtb,  ep_hispr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits (Global) (EPOCH) (4.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_pkni,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pknia,	ep_pkni,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pknib,	ep_pkni,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pknic,	ep_pkni,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pknid,	ep_pkni,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.4, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pknie,	ep_pkni,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.7, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pknif,	ep_pkni,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.7, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pkni,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pknia,   ep_pkni,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pknib,   ep_pkni,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pknic,   ep_pkni,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pknid,   ep_pkni,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.4, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pknie,   ep_pkni,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.7, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pknif,   ep_pkni,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Phoenix Knights (Global) (EPOCH) (1.7, set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_snbev,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (1.8, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_snbeva,	ep_snbev,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (1.8, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_snbevb,	ep_snbev,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (1.9, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_snbevc,	ep_snbev,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (1.9, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_snbevd,	ep_snbev,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_snbeve,	ep_snbev,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (2.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snbev,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (1.8, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snbeva,  ep_snbev,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (1.8, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snbevb,  ep_snbev,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (1.9, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snbevc,  ep_snbev,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (1.9, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snbevd,  ep_snbev,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snbeve,  ep_snbev,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Saturday Night Beaver (Global) (EPOCH) (2.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_spook,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spooky Hollow (Global) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spooka,	ep_spook,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spooky Hollow (Global) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spookb,	ep_spook,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spooky Hollow (Global) (EPOCH) (2.7, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spook,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spooky Hollow (Global) (EPOCH) (1.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spooka,  ep_spook,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spooky Hollow (Global) (EPOCH) (1.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spookb,  ep_spook,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spooky Hollow (Global) (EPOCH) (2.7, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
 
-GAME( 199?, ep_milhr,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_milhra,	ep_milhr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_milhrb,	ep_milhr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_milhrc,	ep_milhr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_milhrd,	ep_milhr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.6, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_milhre,	ep_milhr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.6, set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_milhrf,	ep_milhr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.9, set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_milhrg,	ep_milhr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.9, set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_milhr,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_milhra,  ep_milhr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_milhrb,  ep_milhr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_milhrc,  ep_milhr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_milhrd,  ep_milhr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.6, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_milhre,  ep_milhr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.6, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_milhrf,  ep_milhr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.9, set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_milhrg,  ep_milhr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Wants To Be A Millionhare? (Global) (EPOCH) (1.9, set 8)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_bbars,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Balloon Bars (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bbarsa,	ep_bbars,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Balloon Bars (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bbarsb,	ep_bbars,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Balloon Bars (Maygay) (EPOCH) (2.0, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bbarsc,	ep_bbars,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Balloon Bars (Maygay) (EPOCH) (2.0, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bbars,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Balloon Bars (Maygay) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bbarsa,  ep_bbars,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Balloon Bars (Maygay) (EPOCH) (1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bbarsb,  ep_bbars,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Balloon Bars (Maygay) (EPOCH) (2.0, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bbarsc,  ep_bbars,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Balloon Bars (Maygay) (EPOCH) (2.0, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cslay,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cash Slayer (Global) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cslaya,	ep_cslay,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cash Slayer (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL ) // incomplete pair
+GAME( 199?, ep_cslay,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cash Slayer (Global) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cslaya,  ep_cslay,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cash Slayer (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL ) // incomplete pair
 
-GAME( 199?, ep_monky,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Monkey Business (Global) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monkya,	ep_monky,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Monkey Business (Global) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monky,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Monkey Business (Global) (EPOCH) (1.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monkya,  ep_monky,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Monkey Business (Global) (EPOCH) (1.5, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 1999, ep_lug,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "London Underground (Maygay) (EPOCH) (2.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 1999, ep_luga,	ep_lug,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "London Underground (Maygay) (EPOCH) (2.9, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_lugb,	ep_lug,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "London Underground (Maygay) (EPOCH) (3.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 2002, ep_lugc,	ep_lug,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "London Underground (Maygay) (EPOCH) (3.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_lug,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "London Underground (Maygay) (EPOCH) (2.4, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1999, ep_luga,    ep_lug,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "London Underground (Maygay) (EPOCH) (2.9, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_lugb,    ep_lug,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "London Underground (Maygay) (EPOCH) (3.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 2002, ep_lugc,    ep_lug,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "London Underground (Maygay) (EPOCH) (3.1, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_crzbn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Crazy Bingo (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_crzbna,	ep_crzbn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Crazy Bingo (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_crzbnb,	ep_crzbn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Crazy Bingo (Maygay) (EPOCH) (1.1 Gala, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_crzbnc,	ep_crzbn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Crazy Bingo (Maygay) (EPOCH) (1.1 Gala, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_crzbn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Crazy Bingo (Maygay) (EPOCH) (1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_crzbna,  ep_crzbn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Crazy Bingo (Maygay) (EPOCH) (1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_crzbnb,  ep_crzbn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Crazy Bingo (Maygay) (EPOCH) (1.1 Gala, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_crzbnc,  ep_crzbn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Crazy Bingo (Maygay) (EPOCH) (1.1 Gala, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
 // Z0000024 CASINOCR AZ
-GAME( 199?, ep_cascza,	ep_cascz,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Crazy (Global) (EPOCH) (2.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cascza,  ep_cascz,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Crazy (Global) (EPOCH) (2.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_wside,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildside (Global) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wsidea,	ep_wside,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildside (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL ) // incomplete pair
+GAME( 199?, ep_wside,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildside (Global) (EPOCH) (1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wsidea,  ep_wside,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildside (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL ) // incomplete pair
 
-GAME( 199?, ep_imj,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "I'm A Jackpot (Global) (EPOCH) (1.5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_imj,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "I'm A Jackpot (Global) (EPOCH) (1.5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 1998, ep_party,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Party Party (Global) (EPOCH) (1.1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 1998, ep_party,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Party Party (Global) (EPOCH) (1.1)",GAME_IS_SKELETON_MECHANICAL )
 
 
 /* no header info */
 
-GAME( 199?, ep_dblim,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Impact (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_dblima,	ep_dblim,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Impact (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_dblimb,	ep_dblim,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Impact (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_dblimc,	ep_dblim,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Impact (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_dblimd,	ep_dblim,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Impact (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dblim,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Impact (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dblima,  ep_dblim,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Impact (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dblimb,  ep_dblim,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Impact (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dblimc,  ep_dblim,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Impact (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dblimd,  ep_dblim,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Double Impact (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_itjb3,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 3 (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_itjb3a,	ep_itjb3,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 3 (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_itjb3,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 3 (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_itjb3a,  ep_itjb3,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Italian Job 3 (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_wipeo,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wipeout (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wipeoa,	ep_wipeo,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wipeout (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wipeob,	ep_wipeo,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wipeout (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wipeoc,	ep_wipeo,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wipeout (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wipeoe,	ep_wipeo,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wipeout (Maygay) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wipeo,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wipeout (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wipeoa,  ep_wipeo,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wipeout (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wipeob,  ep_wipeo,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wipeout (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wipeoc,  ep_wipeo,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wipeout (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wipeoe,  ep_wipeo,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wipeout (Maygay) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_bbonz,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bingo Bonanza (Maygay - Union) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bbonza,	ep_bbonz,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bingo Bonanza (Maygay - Union) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bbonz,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bingo Bonanza (Maygay - Union) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bbonza,  ep_bbonz,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bingo Bonanza (Maygay - Union) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cahoy,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Ahoy (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cahoya,	ep_cahoy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Ahoy (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cahoyb,	ep_cahoy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Ahoy (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cahoy,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Ahoy (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cahoya,  ep_cahoy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Ahoy (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cahoyb,  ep_cahoy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cash Ahoy (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cock,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cocka,	ep_cock,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cockb,	ep_cock,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cockc,	ep_cock,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cockd,	ep_cock,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cocke,	ep_cock,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cock,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cocka,   ep_cock,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cockb,   ep_cock,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cockc,   ep_cock,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cockd,   ep_cock,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cocke,   ep_cock,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cock A Doodle Dosh (Maygay - Union) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_duff,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Duff Beer Guide (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_duffa,	ep_duff,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Duff Beer Guide (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_duffb,	ep_duff,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Duff Beer Guide (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_duffc,	ep_duff,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Duff Beer Guide (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_duff,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Duff Beer Guide (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_duffa,   ep_duff,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Duff Beer Guide (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_duffb,   ep_duff,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Duff Beer Guide (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_duffc,   ep_duff,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "The Simpsons - Duff Beer Guide (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_flash,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_flasha,	ep_flash,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_flashb,	ep_flash,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_flashc,	ep_flash,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_flashd,	ep_flash,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_flashe,	ep_flash,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_flashf,	ep_flash,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_flash,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_flasha,  ep_flash,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_flashb,  ep_flash,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_flashc,  ep_flash,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_flashd,  ep_flash,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_flashe,  ep_flash,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_flashf,  ep_flash,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Flashback (Maygay - Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_fortg,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fortune & Glory (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_fortga,	ep_fortg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fortune & Glory (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_fortgb,	ep_fortg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fortune & Glory (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fortg,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fortune & Glory (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fortga,  ep_fortg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fortune & Glory (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fortgb,  ep_fortg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fortune & Glory (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_fran,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Frantic (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_frana,	ep_fran,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Frantic (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fran,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Frantic (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_frana,   ep_fran,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Frantic (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_fnclb,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit & Nudge Club (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_fnclba,	ep_fnclb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit & Nudge Club (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fnclb,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit & Nudge Club (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fnclba,  ep_fnclb,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Fruit & Nudge Club (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_fullm,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_fullma,	ep_fullm,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_fullmb,	ep_fullm,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_fullmc,	ep_fullm,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_fullmd,	ep_fullm,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_fullme,	ep_fullm,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_fullmf,	ep_fullm,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fullm,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fullma,  ep_fullm,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fullmb,  ep_fullm,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fullmc,  ep_fullm,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fullmd,  ep_fullm,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fullme,  ep_fullm,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fullmf,  ep_fullm,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Full Moon Fever (Maygay - Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_funny,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_funnya,	ep_funny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_funnyb,	ep_funny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_funnyc,	ep_funny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_funnyd,	ep_funny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_funnye,	ep_funny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_funnyf,	ep_funny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_funnyg,	ep_funny,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_funny,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_funnya,  ep_funny,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_funnyb,  ep_funny,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_funnyc,  ep_funny,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_funnyd,  ep_funny,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_funnye,  ep_funny,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_funnyf,  ep_funny,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_funnyg,  ep_funny,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Funny Money (Maygay) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_geron,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_gerona,	ep_geron,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_geronb,	ep_geron,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_geronc,	ep_geron,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_gerond,	ep_geron,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_gerone,	ep_geron,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_geron,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_gerona,  ep_geron,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_geronb,  ep_geron,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_geronc,  ep_geron,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_gerond,  ep_geron,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_gerone,  ep_geron,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Geronimo (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_gridr,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gridrunner (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_gridra,	ep_gridr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gridrunner (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_gridrb,	ep_gridr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gridrunner (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_gridrc,	ep_gridr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gridrunner (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_gridrd,	ep_gridr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gridrunner (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_gridr,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gridrunner (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_gridra,  ep_gridr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gridrunner (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_gridrb,  ep_gridr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gridrunner (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_gridrc,  ep_gridr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gridrunner (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_gridrd,  ep_gridr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Gridrunner (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_hvns,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Heavens Above (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hvnsa,	ep_hvns,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Heavens Above (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hvns,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Heavens Above (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hvnsa,   ep_hvns,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Heavens Above (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_highv,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_highva,	ep_highv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_highvb,	ep_highv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_highvc,	ep_highv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_highvd,	ep_highv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_highve,	ep_highv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_highvf,	ep_highv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_highv,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_highva,  ep_highv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_highvb,  ep_highv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_highvc,  ep_highv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_highvd,  ep_highv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_highve,  ep_highv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_highvf,  ep_highv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "High Voltage (Maygay - Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_hogmn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hog Money (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hogmna,	ep_hogmn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hog Money (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hogmnb,	ep_hogmn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hog Money (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hogmn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hog Money (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hogmna,  ep_hogmn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hog Money (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hogmnb,  ep_hogmn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hog Money (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_htdgs,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hot Dogs (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_htdgsa,	ep_htdgs,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hot Dogs (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_htdgs,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hot Dogs (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_htdgsa,  ep_htdgs,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hot Dogs (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_hubbl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hubble Bubble (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hubbla,	ep_hubbl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hubble Bubble (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hubbl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hubble Bubble (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hubbla,  ep_hubbl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hubble Bubble (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_huric,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hurica,	ep_huric,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_huricb,	ep_huric,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_huricc,	ep_huric,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_huricd,	ep_huric,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hurice,	ep_huric,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_huric,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hurica,  ep_huric,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_huricb,  ep_huric,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_huricc,  ep_huric,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_huricd,  ep_huric,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hurice,  ep_huric,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hurricane (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_hur,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hurricane (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hura,	ep_hur,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hurricane (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hurb,	ep_hur,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hurricane (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hur,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hurricane (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hura,    ep_hur,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hurricane (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hurb,    ep_hur,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hurricane (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_hyst,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hysteria (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hysta,	ep_hyst,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hysteria (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hyst,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hysteria (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hysta,   ep_hyst,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Hysteria (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_manic,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_manica,	ep_manic,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_manicb,	ep_manic,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_manicc,	ep_manic,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_manicd,	ep_manic,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_manice,	ep_manic,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_manicf,	ep_manic,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_manic,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_manica,  ep_manic,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_manicb,  ep_manic,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_manicc,  ep_manic,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_manicd,  ep_manic,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_manice,  ep_manic,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_manicf,  ep_manic,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Manic Miner (Maygay - Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_matrx,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Matrix (Maygay - Impulse) (EPOCH)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_matrx,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Matrix (Maygay - Impulse) (EPOCH)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_mwom,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mortal Wombat (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mwoma,	ep_mwom,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mortal Wombat (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mwomb,	ep_mwom,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mortal Wombat (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mwomc,	ep_mwom,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mortal Wombat (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mwomd,	ep_mwom,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mortal Wombat (Maygay) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mwom,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mortal Wombat (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mwoma,   ep_mwom,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mortal Wombat (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mwomb,   ep_mwom,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mortal Wombat (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mwomc,   ep_mwom,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mortal Wombat (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mwomd,   ep_mwom,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Mortal Wombat (Maygay) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_otmcl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Over The Moon Club (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_otmcla,	ep_otmcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Over The Moon Club (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_otmcl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Over The Moon Club (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_otmcla,  ep_otmcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Over The Moon Club (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
 // 'awards'
-GAME( 199?, ep_pharo,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pharaoh's Treasure (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL ) // has hdd dump
-GAME( 199?, ep_pharoa,	ep_pharo,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pharaoh's Treasure (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pharo,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pharaoh's Treasure (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL ) // has hdd dump
+GAME( 199?, ep_pharoa,  ep_pharo,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pharaoh's Treasure (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_pesos,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pick Yer Pesos (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pesosa,	ep_pesos,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pick Yer Pesos (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pesosb,	ep_pesos,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pick Yer Pesos (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pesosc,	ep_pesos,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pick Yer Pesos (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pesos,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pick Yer Pesos (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pesosa,  ep_pesos,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pick Yer Pesos (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pesosb,  ep_pesos,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pick Yer Pesos (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pesosc,  ep_pesos,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Pick Yer Pesos (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_react,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_reacta,	ep_react,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_reactb,	ep_react,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_reactc,	ep_react,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_reactd,	ep_react,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_reacte,	ep_react,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_react,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_reacta,  ep_react,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_reactb,  ep_react,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_reactc,  ep_react,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_reactd,  ep_react,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_reacte,  ep_react,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Reactor (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_rtt,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Round The Twist (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_rtta,	ep_rtt,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Round The Twist (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_rtt,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Round The Twist (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_rtta,    ep_rtt,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Round The Twist (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_royrl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_royrla,	ep_royrl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_royrlb,	ep_royrl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_royrlc,	ep_royrl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_royrld,	ep_royrl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_royrle,	ep_royrl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_royrl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_royrla,  ep_royrl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_royrlb,  ep_royrl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_royrlc,  ep_royrl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_royrld,  ep_royrl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_royrle,  ep_royrl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Royal Roulette (Maygay) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_spart,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spartacash (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_sparta,	ep_spart,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spartacash (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spartb,	ep_spart,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spartacash (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spart,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spartacash (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_sparta,  ep_spart,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spartacash (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spartb,  ep_spart,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spartacash (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_spntn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin & Tonic (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spntna,	ep_spntn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin & Tonic (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spntnb,	ep_spntn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin & Tonic (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spntnc,	ep_spntn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin & Tonic (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spntn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin & Tonic (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spntna,  ep_spntn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin & Tonic (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spntnb,  ep_spntn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin & Tonic (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spntnc,  ep_spntn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin & Tonic (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_spin,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spina,	ep_spin,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spinb,	ep_spin,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spinc,	ep_spin,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spind,	ep_spin,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_spine,	ep_spin,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spin,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spina,   ep_spin,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spinb,   ep_spin,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spinc,   ep_spin,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spind,   ep_spin,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_spine,   ep_spin,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Spin On It (Maygay - Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_strat,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Stratagem (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_strata,	ep_strat,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Stratagem (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_strat,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Stratagem (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_strata,  ep_strat,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Stratagem (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_subb,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_subba,	ep_subb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_subbb,	ep_subb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_subbc,	ep_subb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_subbd,	ep_subb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_subbe,	ep_subb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_subbf,	ep_subb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_subbg,	ep_subb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_subb,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_subba,   ep_subb,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_subbb,   ep_subb,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_subbc,   ep_subb,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_subbd,   ep_subb,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_subbe,   ep_subb,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_subbf,   ep_subb,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_subbg,   ep_subb,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Subbuteo (Maygay) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_snw,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Nudge Wink (Maygay - Union) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_snwa,	ep_snw,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Nudge Wink (Maygay - Union) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_snwb,	ep_snw,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Nudge Wink (Maygay - Union) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_snwc,	ep_snw,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Nudge Wink (Maygay - Union) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_snwd,	ep_snw,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Nudge Wink (Maygay - Union) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snw,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Nudge Wink (Maygay - Union) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snwa,    ep_snw,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Nudge Wink (Maygay - Union) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snwb,    ep_snw,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Nudge Wink (Maygay - Union) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snwc,    ep_snw,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Nudge Wink (Maygay - Union) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snwd,    ep_snw,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Super Nudge Wink (Maygay - Union) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_tak5,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Take Five (Maygay - Union) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tak5a,	ep_tak5,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Take Five (Maygay - Union) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tak5,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Take Five (Maygay - Union) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tak5a,   ep_tak5,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Take Five (Maygay - Union) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_trail,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trailblazer (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_traila,	ep_trail,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trailblazer (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_trailb,	ep_trail,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trailblazer (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_trail,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trailblazer (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_traila,  ep_trail,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trailblazer (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_trailb,  ep_trail,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Trailblazer (Maygay - Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_trics,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Cash (Maygay - Union) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_tricsa,	ep_trics,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Cash (Maygay - Union) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_trics,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Cash (Maygay - Union) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tricsa,  ep_trics,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Triple Cash (Maygay - Union) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_wildf,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wildfire (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wildfa,	ep_wildf,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wildfire (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wildf,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wildfire (Maygay - Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wildfa,  ep_wildf,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Wildfire (Maygay - Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_beavr,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavra,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavrb,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavrc,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavrd,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavre,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavrf,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavrg,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavrh,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 9)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavri,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 10)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavrj,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 11)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavrk,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 12)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavrl,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 13)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_beavrm,	ep_beavr,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 14)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavr,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavra,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavrb,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavrc,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavrd,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavre,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavrf,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavrg,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavrh,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavri,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 10)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavrj,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 11)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavrk,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 12)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavrl,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 13)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_beavrm,  ep_beavr,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Beaver Las Vegas (Global) (EPOCH) (set 14)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_bvrcl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrcla,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrclb,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrclc,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrcld,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrcle,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrclf,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrclg,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrclh,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 9)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrcli,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 10)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrclj,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 11)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bvrclk,	ep_bvrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 12)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrcl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrcla,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrclb,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrclc,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrcld,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrcle,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrclf,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrclg,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrclh,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrcli,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 10)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrclj,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 11)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bvrclk,  ep_bvrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Beaver Las Vegas Club (Global) (EPOCH) (set 12)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_bjclb,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Blackjack Club, The (Global) (EPOCH)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bjclb,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Blackjack Club, The (Global) (EPOCH)",GAME_IS_SKELETON_MECHANICAL )
 
 
-GAME( 199?, ep_cbrcl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrcla,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrclb,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrclc,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrcld,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrcle,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrclf,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrclg,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrclh,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 9)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrcli,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 10)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrclj,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 11)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cbrclk,	ep_cbrcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 12)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrcl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrcla,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrclb,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrclc,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrcld,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrcle,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrclf,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrclg,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrclh,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrcli,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 10)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrclj,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 11)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cbrclk,  ep_cbrcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Cannonball Run Club (Global) (EPOCH) (set 12)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cclas,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Classic (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cclasa,	ep_cclas,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Classic (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cclas,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Classic (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cclasa,  ep_cclas,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Classic (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cgrc,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Grand Classic (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cgrca,	ep_cgrc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Grand Classic (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cgrc,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Grand Classic (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cgrca,   ep_cgrc,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Grand Classic (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cgred,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Club Greed (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cgreda,	ep_cgred,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Club Greed (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cgred,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Club Greed (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cgreda,  ep_cgred,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Club Greed (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cstrk,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cstrka,	ep_cstrk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cstrkb,	ep_cstrk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cstrkc,	ep_cstrk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cstrkd,	ep_cstrk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cstrke,	ep_cstrk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL ) // bad? (or at least has garbage fill, not 0xff like the other sets)
-GAME( 199?, ep_cstrkf,	ep_cstrk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cstrkg,	ep_cstrk,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cstrk,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cstrka,  ep_cstrk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cstrkb,  ep_cstrk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cstrkc,  ep_cstrk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cstrkd,  ep_cstrk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cstrke,  ep_cstrk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL ) // bad? (or at least has garbage fill, not 0xff like the other sets)
+GAME( 199?, ep_cstrkf,  ep_cstrk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cstrkg,  ep_cstrk,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Crazy Streak Club (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_dmbus,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_dmbusa,	ep_dmbus,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_dmbusb,	ep_dmbus,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_dmbusc,	ep_dmbus,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_dmbusd,	ep_dmbus,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_dmbuse,	ep_dmbus,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_dmbusf,	ep_dmbus,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dmbus,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dmbusa,  ep_dmbus,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dmbusb,  ep_dmbus,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dmbusc,  ep_dmbus,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dmbusd,  ep_dmbus,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dmbuse,  ep_dmbus,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_dmbusf,  ep_dmbus,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Dambusters (Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_ddqcl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqcla,	ep_ddqcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqclb,	ep_ddqcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqclc,	ep_ddqcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqcld,	ep_ddqcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqcle,	ep_ddqcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqclf,	ep_ddqcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ddqclg,	ep_ddqcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqcl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqcla,  ep_ddqcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqclb,  ep_ddqcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqclc,  ep_ddqcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqcld,  ep_ddqcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqcle,  ep_ddqcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqclf,  ep_ddqcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ddqclg,  ep_ddqcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Dungeons & Drag Queens Club (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_fog,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Fields of Gold (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_foga,	ep_fog,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Fields of Gold (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fog,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Fields of Gold (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_foga,    ep_fog,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Fields of Gold (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_fmf,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Full Moon Fever (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_fmfa,	ep_fmf,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Full Moon Fever (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fmf,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Full Moon Fever (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_fmfa,    ep_fmf,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Full Moon Fever (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_gtrot,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Globe Trotter (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL ) // contains maygay, global and impulse strings
-GAME( 199?, ep_gtrota,	ep_gtrot,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Globe Trotter (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL ) // contains maygay, global and impulse strings
+GAME( 199?, ep_gtrot,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Globe Trotter (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL ) // contains maygay, global and impulse strings
+GAME( 199?, ep_gtrota,  ep_gtrot,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Globe Trotter (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL ) // contains maygay, global and impulse strings
 
-GAME( 199?, ep_grun,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_gruna,	ep_grun,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_grun,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_gruna,   ep_grun,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_grncl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_grncla,	ep_grncl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_grnclb,	ep_grncl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_grnclc,	ep_grncl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_grncl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_grncla,  ep_grncl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_grnclb,  ep_grncl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_grnclc,  ep_grncl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Grid Runner Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_heybg,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_heybga,	ep_heybg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_heybgb,	ep_heybg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_heybgc,	ep_heybg,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_heybg,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_heybga,  ep_heybg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_heybgb,  ep_heybg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_heybgc,  ep_heybg,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_heybc,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_heybca,	ep_heybc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_heybc,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_heybca,  ep_heybc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hey Big Spender Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_hiscl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_hiscla,	ep_hiscl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hiscl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_hiscla,  ep_hiscl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Hi Spirits Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_smoke,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_smokea,	ep_smoke,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_smokeb,	ep_smoke,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_smokec,	ep_smoke,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_smoked,	ep_smoke,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_smokee,	ep_smoke,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_smokef,	ep_smoke,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_smokeg,	ep_smoke,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_smokeh,	ep_smoke,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 9)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_smokei,	ep_smoke,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 10)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_smokej,	ep_smoke,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 11)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smoke,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smokea,  ep_smoke,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smokeb,  ep_smoke,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smokec,  ep_smoke,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smoked,  ep_smoke,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smokee,  ep_smoke,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smokef,  ep_smoke,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smokeg,  ep_smoke,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smokeh,  ep_smoke,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 9)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smokei,  ep_smoke,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 10)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_smokej,  ep_smoke,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Holy Smoke! (Impulse) (EPOCH) (set 11)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_ifern,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Inferno (Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_iferna,	ep_ifern,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Inferno (Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ifern,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Inferno (Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_iferna,  ep_ifern,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Inferno (Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_kopcl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Knockout Punch Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_kopcla,	ep_kopcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Knockout Punch Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_kopclb,	ep_kopcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Knockout Punch Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_kopcl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Knockout Punch Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_kopcla,  ep_kopcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Knockout Punch Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_kopclb,  ep_kopcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Knockout Punch Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_ltt,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Licence To Thrill (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_ltta,	ep_ltt,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Licence To Thrill (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ltt,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Licence To Thrill (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ltta,    ep_ltt,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Licence To Thrill (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_monrt,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monrta,	ep_monrt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monrtb,	ep_monrt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monrtc,	ep_monrt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monrtd,	ep_monrt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monrte,	ep_monrt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monrtf,	ep_monrt,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monrt,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monrta,  ep_monrt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monrtb,  ep_monrt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monrtc,  ep_monrt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monrtd,  ep_monrt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monrte,  ep_monrt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monrtf,  ep_monrt,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Money Returns Club, The (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_monsh,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monsha,	ep_monsh,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monshb,	ep_monsh,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monshc,	ep_monsh,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monshd,	ep_monsh,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monshe,	ep_monsh,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_monshf,	ep_monsh,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monsh,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monsha,  ep_monsh,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monshb,  ep_monsh,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monshc,  ep_monsh,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monshd,  ep_monsh,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monshe,  ep_monsh,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_monshf,  ep_monsh,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "The Moonshine Club (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_mummy,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mummya,	ep_mummy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mummyb,	ep_mummy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mummyc,	ep_mummy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mummyd,	ep_mummy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mummye,	ep_mummy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mummyf,	ep_mummy,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mummy,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mummya,  ep_mummy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mummyb,  ep_mummy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mummyc,  ep_mummy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mummyd,  ep_mummy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mummye,  ep_mummy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mummyf,  ep_mummy,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Mummy Talks (Impulse) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_rchik,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Rich Chics Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_rchika,	ep_rchik,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Rich Chics Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_rchik,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Rich Chics Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_rchika,  ep_rchik,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Rich Chics Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_royrc,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Royal Roulette Club (Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_royrca,	ep_royrc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Royal Roulette Club (Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_royrc,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Royal Roulette Club (Impulse) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_royrca,  ep_royrc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Royal Roulette Club (Impulse) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_sdcla,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_sdclaa,	ep_sdcla,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_sdclab,	ep_sdcla,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_sdclac,	ep_sdcla,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_sdclaf,	ep_sdcla,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_sdclag,	ep_sdcla,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_sdclad,	ep_sdcla,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL ) // larger roms, header not cleared
-GAME( 199?, ep_sdclae,	ep_sdcla,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL ) // larger roms, header not cleared
+GAME( 199?, ep_sdcla,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_sdclaa,  ep_sdcla,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_sdclab,  ep_sdcla,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_sdclac,  ep_sdcla,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_sdclaf,  ep_sdcla,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_sdclag,  ep_sdcla,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_sdclad,  ep_sdcla,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL ) // larger roms, header not cleared
+GAME( 199?, ep_sdclae,  ep_sdcla,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Classic (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL ) // larger roms, header not cleared
 
-GAME( 199?, ep_sdclb,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_sdclba,	ep_sdclb,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_sdclb,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_sdclba,  ep_sdclb,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Spotted Dick Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_stm,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_stma,	ep_stm,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_stmb,	ep_stm,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_stmc,	ep_stm,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_stm,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_stma,    ep_stm,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_stmb,    ep_stm,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_stmc,    ep_stm,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_stmcl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_stmcla,	ep_stmcl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_stmcl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_stmcla,  ep_stmcl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Storm Force Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_tod,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Truth Or Dare (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_toda,	ep_tod,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Truth Or Dare (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tod,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Truth Or Dare (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_toda,    ep_tod,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Truth Or Dare (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_utnut,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_utnuta,	ep_utnut,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_utnutb,	ep_utnut,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_utnutc,	ep_utnut,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_utnut,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_utnuta,  ep_utnut,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_utnutb,  ep_utnut,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_utnutc,  ep_utnut,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_utncl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_utncla,	ep_utncl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_utncl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_utncla,  ep_utncl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Utter Nutter Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_wleek,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Weakest Leek Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wleeka,	ep_wleek,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Weakest Leek Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wleek,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Weakest Leek Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wleeka,  ep_wleek,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Weakest Leek Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_wud,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wuda,	ep_wud,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wudb,	ep_wud,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wudc,	ep_wud,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wudd,	ep_wud,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wude,	ep_wud,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wud,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wuda,    ep_wud,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wudb,    ep_wud,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wudc,    ep_wud,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wudd,    ep_wud,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wude,    ep_wud,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "What's Up Doc (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_mlhrc,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mlhrca,	ep_mlhrc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mlhrcb,	ep_mlhrc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mlhrcc,	ep_mlhrc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mlhrcd,	ep_mlhrc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_mlhrce,	ep_mlhrc,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mlhrc,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mlhrca,  ep_mlhrc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mlhrcb,  ep_mlhrc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mlhrcc,  ep_mlhrc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mlhrcd,  ep_mlhrc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_mlhrce,  ep_mlhrc,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Who Whats To Be A Millionhare Club (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_wf,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wfa,		ep_wf,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wfb,		ep_wf,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wfc,		ep_wf,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wfd,		ep_wf,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wfe,		ep_wf,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wff,		ep_wf,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_wfg,		ep_wf,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wf,      0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wfa,     ep_wf,      maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wfb,     ep_wf,      maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wfc,     ep_wf,      maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wfd,     ep_wf,      maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wfe,     ep_wf,      maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wff,     ep_wf,      maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 7)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_wfg,     ep_wf,      maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Wildfire (Global) (EPOCH) (set 8)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_makmv,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",		   "Make Your Move (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_makmva,	ep_makmv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",		   "Make Your Move (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_makmv,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Make Your Move (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_makmva,  ep_makmv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Make Your Move (Global) (EPOCH) (set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cascz,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Crazy (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL ) // check identity, other set has header
+GAME( 199?, ep_cascz,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Global",        "Casino Crazy (Global) (EPOCH) (set 1)",GAME_IS_SKELETON_MECHANICAL ) // check identity, other set has header
 
-GAME( 199?, ep_goldf,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Gold Fever (Impulse) (EPOCH)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_goldf,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Impulse",       "Gold Fever (Impulse) (EPOCH)",GAME_IS_SKELETON_MECHANICAL )
 
 /* minimal header info */
 
-GAME( 199?, ep_bubsq,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bubble & Squeak (Extreme) (EPOCH) (BASQ 0.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bubsqa,	ep_bubsq,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bubble & Squeak (Extreme) (EPOCH) (BASQ 0.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bubsqb,	ep_bubsq,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bubble & Squeak (Extreme) (EPOCH) (BASQ 0.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bubsqc,	ep_bubsq,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bubble & Squeak (Extreme) (EPOCH) (BASQ 0.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_bubsqd,	ep_bubsq,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bubble & Squeak (Extreme) (EPOCH) (BASQ 0.4, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bubsq,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bubble & Squeak (Extreme) (EPOCH) (BASQ 0.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bubsqa,  ep_bubsq,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bubble & Squeak (Extreme) (EPOCH) (BASQ 0.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bubsqb,  ep_bubsq,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bubble & Squeak (Extreme) (EPOCH) (BASQ 0.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bubsqc,  ep_bubsq,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bubble & Squeak (Extreme) (EPOCH) (BASQ 0.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_bubsqd,  ep_bubsq,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Bubble & Squeak (Extreme) (EPOCH) (BASQ 0.4, set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cashn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cashino (Maygay - Extreme) (EPOCH) (CSHI 1.0, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cashna,	ep_cashn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cashino (Maygay - Extreme) (EPOCH) (CSHI 1.0, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cashn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cashino (Maygay - Extreme) (EPOCH) (CSHI 1.0, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cashna,  ep_cashn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Cashino (Maygay - Extreme) (EPOCH) (CSHI 1.0, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_inca,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Inca Dinka Do (Maygay - Extreme) (EPOCH) (INCA 1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_incaa,	ep_inca,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Inca Dinka Do (Maygay - Extreme) (EPOCH) (INCA 1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_incab,	ep_inca,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Inca Dinka Do (Maygay - Extreme) (EPOCH) (INCA 1.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_inca,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Inca Dinka Do (Maygay - Extreme) (EPOCH) (INCA 1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_incaa,   ep_inca,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Inca Dinka Do (Maygay - Extreme) (EPOCH) (INCA 1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_incab,   ep_inca,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Inca Dinka Do (Maygay - Extreme) (EPOCH) (INCA 1.1, set 3)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_jakbn,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Jackpot & The Beanstreak (Extreme) (EPOCH) (JABS 0.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_jakbna,	ep_jakbn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Jackpot & The Beanstreak (Extreme) (EPOCH) (JABS 0.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_jakbnb,	ep_jakbn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Jackpot & The Beanstreak (Extreme) (EPOCH) (JABS 0.5, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_jakbnc,	ep_jakbn,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Jackpot & The Beanstreak (Extreme) (EPOCH) (JABS 0.5, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_jakbn,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Jackpot & The Beanstreak (Extreme) (EPOCH) (JABS 0.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_jakbna,  ep_jakbn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Jackpot & The Beanstreak (Extreme) (EPOCH) (JABS 0.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_jakbnb,  ep_jakbn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Jackpot & The Beanstreak (Extreme) (EPOCH) (JABS 0.5, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_jakbnc,  ep_jakbn,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Jackpot & The Beanstreak (Extreme) (EPOCH) (JABS 0.5, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_loadd,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Loaded (Maygay) (EPOCH) (LOAD 1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_loadda,	ep_loadd,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Loaded (Maygay) (EPOCH) (LOAD 1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_loadd,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Loaded (Maygay) (EPOCH) (LOAD 1.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_loadda,  ep_loadd,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Loaded (Maygay) (EPOCH) (LOAD 1.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_lukld,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Lucky Ladders (Maygay) (EPOCH) (LULA 0.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_luklda,	ep_lukld,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Lucky Ladders (Maygay) (EPOCH) (LULA 0.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_lukld,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Lucky Ladders (Maygay) (EPOCH) (LULA 0.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_luklda,  ep_lukld,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Lucky Ladders (Maygay) (EPOCH) (LULA 0.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_noter,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 0.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_notera,	ep_noter,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 0.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_noterb,	ep_noter,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 0.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_noterc,	ep_noter,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 0.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_noterd,	ep_noter,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 1.0, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_notere,	ep_noter,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 1.0, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_noter,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 0.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_notera,  ep_noter,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 0.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_noterb,  ep_noter,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 0.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_noterc,  ep_noter,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 0.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_noterd,  ep_noter,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 1.0, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_notere,  ep_noter,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Note Runner (Maygay) (EPOCH) (NORU 1.0, set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_pwrpl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Power Play (Maygay) (EPOCH) (PPLY 0.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_pwrpla,	ep_pwrpl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Power Play (Maygay) (EPOCH) (PPLY 0.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pwrpl,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Power Play (Maygay) (EPOCH) (PPLY 0.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_pwrpla,  ep_pwrpl,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Power Play (Maygay) (EPOCH) (PPLY 0.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_scrm,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Screamin Demon (Maygay) (EPOCH) (SCDE 2.0, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_scrma,	ep_scrm,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Screamin Demon (Maygay) (EPOCH) (SCDE 2.0, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_scrmb,	ep_scrm,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Screamin Demon (Maygay) (EPOCH) (SCDE 1.0, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_scrmc,	ep_scrm,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Screamin Demon (Maygay) (EPOCH) (SCDE 1.0, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_scrm,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Screamin Demon (Maygay) (EPOCH) (SCDE 2.0, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_scrma,   ep_scrm,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Screamin Demon (Maygay) (EPOCH) (SCDE 2.0, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_scrmb,   ep_scrm,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Screamin Demon (Maygay) (EPOCH) (SCDE 1.0, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_scrmc,   ep_scrm,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Screamin Demon (Maygay) (EPOCH) (SCDE 1.0, set 4)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_tree,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tree Amigos (Maygay) (EPOCH) (TRAM 0.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_treea,	ep_tree,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tree Amigos (Maygay) (EPOCH) (TRAM 0.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_tree,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tree Amigos (Maygay) (EPOCH) (TRAM 0.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_treea,   ep_tree,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Tree Amigos (Maygay) (EPOCH) (TRAM 0.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_vipjv,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Viper Jive (Maygay - Extreme) (EPOCH) (JIVE 1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_vipjva,	ep_vipjv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Viper Jive (Maygay - Extreme) (EPOCH) (JIVE 1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_vipjvb,	ep_vipjv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Viper Jive (Maygay - Extreme) (EPOCH) (JIVE 2.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_vipjvc,	ep_vipjv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Viper Jive (Maygay - Extreme) (EPOCH) (JIVE 2.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_vipjvd,	ep_vipjv,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Viper Jive (Maygay - Extreme) (EPOCH) (JIVE 2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_vipjv,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Viper Jive (Maygay - Extreme) (EPOCH) (JIVE 1.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_vipjva,  ep_vipjv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Viper Jive (Maygay - Extreme) (EPOCH) (JIVE 1.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_vipjvb,  ep_vipjv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Viper Jive (Maygay - Extreme) (EPOCH) (JIVE 2.2, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_vipjvc,  ep_vipjv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Viper Jive (Maygay - Extreme) (EPOCH) (JIVE 2.2, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_vipjvd,  ep_vipjv,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Maygay",        "Viper Jive (Maygay - Extreme) (EPOCH) (JIVE 2.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_braid,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_braida,	ep_braid,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_braidb,	ep_braid,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.5, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_braidc,	ep_braid,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.5, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_braidd,	ep_braid,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.5, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_braide,	ep_braid,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_braid,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_braida,  ep_braid,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_braidb,  ep_braid,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.5, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_braidc,  ep_braid,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.5, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_braidd,  ep_braid,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.5, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_braide,  ep_braid,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Bank Raid (Extreme) (EPOCH) (BARA 0.5, set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_cyc,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cyca,	ep_cyc,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cycb,	ep_cyc,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cycc,	ep_cyc,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cycd,	ep_cyc,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_cyce,	ep_cyc,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cyc,     0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.2, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cyca,    ep_cyc,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.2, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cycb,    ep_cyc,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.3, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cycc,    ep_cyc,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.3, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cycd,    ep_cyc,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.1, set 5)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_cyce,    ep_cyc,     maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Cyclone (Extreme) (EPOCH) (CYCL 0.1, set 6)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_ll,		0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Lucky Ladders (Extreme) (EPOCH) (LULA 0.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_lla,		ep_ll,		maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Lucky Ladders (Extreme) (EPOCH) (LULA 0.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_ll,      0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Lucky Ladders (Extreme) (EPOCH) (LULA 0.3, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_lla,     ep_ll,      maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Lucky Ladders (Extreme) (EPOCH) (LULA 0.3, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_redl,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Red Line (Extreme) (EPOCH) (RELI 0.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_redla,	ep_redl,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Red Line (Extreme) (EPOCH) (RELI 0.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_redl,    0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Red Line (Extreme) (EPOCH) (RELI 0.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_redla,   ep_redl,    maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Red Line (Extreme) (EPOCH) (RELI 0.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_snset,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Sunset Strip (Extreme) (EPOCH) (SUST 0.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_snseta,	ep_snset,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Sunset Strip (Extreme) (EPOCH) (SUST 0.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snset,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Sunset Strip (Extreme) (EPOCH) (SUST 0.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_snseta,  ep_snset,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Sunset Strip (Extreme) (EPOCH) (SUST 0.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
 
-GAME( 199?, ep_twarp,	0,			maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Time Warp (Extreme) (EPOCH) (TWRP 0.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_twarpa,	ep_twarp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Time Warp (Extreme) (EPOCH) (TWRP 0.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_twarpb,	ep_twarp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Time Warp (Extreme) (EPOCH) (TWRP 0.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
-GAME( 199?, ep_twarpc,	ep_twarp,	maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Time Warp (Extreme) (EPOCH) (TWRP 0.4, set 4)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_twarp,   0,          maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Time Warp (Extreme) (EPOCH) (TWRP 0.1, set 1)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_twarpa,  ep_twarp,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Time Warp (Extreme) (EPOCH) (TWRP 0.1, set 2)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_twarpb,  ep_twarp,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Time Warp (Extreme) (EPOCH) (TWRP 0.4, set 3)",GAME_IS_SKELETON_MECHANICAL )
+GAME( 199?, ep_twarpc,  ep_twarp,   maygayep,  maygayep, maygayep_state,  maygayep, ROT0, "Extreme",       "Time Warp (Extreme) (EPOCH) (TWRP 0.4, set 4)",GAME_IS_SKELETON_MECHANICAL )

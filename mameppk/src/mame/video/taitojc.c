@@ -15,7 +15,6 @@ static const gfx_layout taitojc_char_layout =
 
 TILE_GET_INFO_MEMBER(taitojc_state::taitojc_tile_info)
 {
-
 	UINT32 val = m_tile_ram[tile_index];
 	int color = (val >> 22) & 0xff;
 	int tile = (val >> 2) & 0x7f;
@@ -126,21 +125,21 @@ static void draw_object(running_machine &machine, bitmap_ind16 &bitmap, const re
 	color_depth = (w2 & 0x10000) >> 16;
 	mask_screen = (w2 & 0x20000) >> 17;
 
-	address		= (w2 & 0x7fff) * 0x20;
+	address     = (w2 & 0x7fff) * 0x20;
 	if (w2 & 0x4000)
 		address |= 0x40000;
 
-	x			= ((w1 >>  0) & 0x3ff);
+	x           = ((w1 >>  0) & 0x3ff);
 	if (x & 0x200)
-		x |= ~0x1ff;		// sign-extend
+		x |= ~0x1ff;        // sign-extend
 
-	y			= ((w1 >> 16) & 0x3ff);
+	y           = ((w1 >> 16) & 0x3ff);
 	if (y & 0x200)
-		y |= ~0x1ff;		// sign-extend
+		y |= ~0x1ff;        // sign-extend
 
-	width		= ((w1 >> 10) & 0x3f) * 16;
-	height		= ((w1 >> 26) & 0x3f) * 16;
-	palette		= ((w2 >> 22) & 0x7f) << 8;
+	width       = ((w1 >> 10) & 0x3f) * 16;
+	height      = ((w1 >> 26) & 0x3f) * 16;
+	palette     = ((w2 >> 22) & 0x7f) << 8;
 
 	/* TODO: untangle this! */
 	if(address >= 0xff000)
@@ -300,7 +299,6 @@ static void taitojc_exit(running_machine &machine)
 
 void taitojc_state::video_start()
 {
-
 	machine().add_notifier(MACHINE_NOTIFY_EXIT, machine_notify_delegate(FUNC(taitojc_exit), &machine()));
 
 	/* find first empty slot to decode gfx */
@@ -331,7 +329,6 @@ void taitojc_state::video_start()
 
 UINT32 taitojc_state::screen_update_taitojc(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	bitmap.fill(0, cliprect);
 
 	// low priority objects
@@ -356,7 +353,6 @@ UINT32 taitojc_state::screen_update_taitojc(screen_device &screen, bitmap_ind16 
 
 UINT32 taitojc_state::screen_update_dendego(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	// update controller state in artwork
 	UINT8 btn = (ioport("BUTTONS")->read() & 0x77);
 	int level;
@@ -542,12 +538,12 @@ void taitojc_renderer::render_polygons(running_machine &machine, UINT16 *polygon
 				// 0x0c: Vertex 3 Z
 
 #if 0
-                printf("CMD1: ");
-                for (i=0; i < 0x0c; i++)
-                {
-                    printf("%04X ", polygon_fifo[ptr+i]);
-                }
-                printf("\n");
+				printf("CMD1: ");
+				for (i=0; i < 0x0c; i++)
+				{
+					printf("%04X ", polygon_fifo[ptr+i]);
+				}
+				printf("\n");
 #endif
 
 				for (i=0; i < 3; i++)
@@ -599,12 +595,12 @@ void taitojc_renderer::render_polygons(running_machine &machine, UINT16 *polygon
 				// 0x13: Vertex 3 Z
 
 #if 0
-                printf("CMD3: ");
-                for (i=0; i < 0x13; i++)
-                {
-                    printf("%04X ", polygon_fifo[ptr+i]);
-                }
-                printf("\n");
+				printf("CMD3: ");
+				for (i=0; i < 0x13; i++)
+				{
+					printf("%04X ", polygon_fifo[ptr+i]);
+				}
+				printf("\n");
 #endif
 
 				taitojc_polydata &extra = object_data_alloc();
@@ -618,7 +614,7 @@ void taitojc_renderer::render_polygons(running_machine &machine, UINT16 *polygon
 
 				for (i=0; i < 3; i++)
 				{
-					vert[i].p[3] = polygon_fifo[ptr++] + 0.5;	// palette
+					vert[i].p[3] = polygon_fifo[ptr++] + 0.5;   // palette
 					vert[i].p[2] = (UINT16)(polygon_fifo[ptr++]);
 					vert[i].p[1] = (UINT16)(polygon_fifo[ptr++]);
 					vert[i].y =  (INT16)(polygon_fifo[ptr++]);
@@ -655,12 +651,12 @@ void taitojc_renderer::render_polygons(running_machine &machine, UINT16 *polygon
 				// 0x10: Vertex 4 Z
 
 #if 0
-                printf("CMD4: ");
-                for (i=0; i < 0x10; i++)
-                {
-                    printf("%04X ", polygon_fifo[ptr+i]);
-                }
-                printf("\n");
+				printf("CMD4: ");
+				for (i=0; i < 0x10; i++)
+				{
+					printf("%04X ", polygon_fifo[ptr+i]);
+				}
+				printf("\n");
 #endif
 
 				for (i=0; i < 4; i++)
@@ -719,12 +715,12 @@ void taitojc_renderer::render_polygons(running_machine &machine, UINT16 *polygon
 				// 0x19: Vertex 4 Z
 
 #if 0
-                printf("CMD6: ");
-                for (i=0; i < 0x19; i++)
-                {
-                    printf("%04X ", polygon_fifo[ptr+i]);
-                }
-                printf("\n");
+				printf("CMD6: ");
+				for (i=0; i < 0x19; i++)
+				{
+					printf("%04X ", polygon_fifo[ptr+i]);
+				}
+				printf("\n");
 #endif
 
 				taitojc_polydata &extra = object_data_alloc();
@@ -738,7 +734,7 @@ void taitojc_renderer::render_polygons(running_machine &machine, UINT16 *polygon
 
 				for (i=0; i < 4; i++)
 				{
-					vert[i].p[3] = polygon_fifo[ptr++] + 0.5;	// palette
+					vert[i].p[3] = polygon_fifo[ptr++] + 0.5;   // palette
 					vert[i].p[2] = (UINT16)(polygon_fifo[ptr++]);
 					vert[i].p[1] = (UINT16)(polygon_fifo[ptr++]);
 					vert[i].y =  (INT16)(polygon_fifo[ptr++]);

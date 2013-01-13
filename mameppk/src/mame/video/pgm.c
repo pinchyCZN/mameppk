@@ -18,7 +18,6 @@
 
 INLINE void pgm_draw_pix( int xdrawpos, int pri, UINT16* dest, UINT8* destpri, UINT16 srcdat)
 {
-
 	if ((xdrawpos >= 0) && (xdrawpos < 448))
 	{
 		if (!(destpri[xdrawpos]&1))
@@ -184,8 +183,8 @@ static void draw_sprite_new_zoomed( pgm_state *state, running_machine &machine, 
 
 	/* precalculate where drawing will end, for flipped zoomed cases. */
 	/* if we're to avoid pre-decoding the data for each sprite each time we draw then we have to draw the sprite data
-       in the order it is in ROM due to the nature of the compresson scheme.  This means drawing upwards from the end point
-       in the case of flipped sprites */
+	   in the order it is in ROM due to the nature of the compresson scheme.  This means drawing upwards from the end point
+	   in the case of flipped sprites */
 	ycnt = 0;
 	ycntdraw = 0;
 	int realysize = 0;
@@ -452,7 +451,6 @@ static void draw_sprite_new_basic( pgm_state *state, running_machine &machine, i
 
 	while (ycnt < high)
 	{
-
 		if (!(flip & 0x02))
 			ydrawpos = ypos + ycntdraw;
 		else
@@ -489,11 +487,11 @@ static void draw_sprite_new_basic( pgm_state *state, running_machine &machine, i
 static void draw_sprites( pgm_state *state, running_machine &machine, bitmap_ind16& spritebitmap, UINT16 *sprite_source, bitmap_ind8& priority_bitmap )
 {
 	/* ZZZZ Zxxx xxxx xxxx
-       zzzz z-yy yyyy yyyy
-       -ffp pppp Pvvv vvvv
-       vvvv vvvv vvvv vvvv
-       wwww wwwh hhhh hhhh
-    */
+	   zzzz z-yy yyyy yyyy
+	   -ffp pppp Pvvv vvvv
+	   vvvv vvvv vvvv vvvv
+	   wwww wwwh hhhh hhhh
+	*/
 
 	const UINT16 *finish = state->m_spritebufferram + (0xa00 / 2);
 
@@ -563,7 +561,6 @@ WRITE16_MEMBER(pgm_state::pgm_tx_videoram_w)
 
 TILE_GET_INFO_MEMBER(pgm_state::get_pgm_tx_tilemap_tile_info)
 {
-
 /* 0x904000 - 0x90ffff is the Text Overlay Ram (pgm_tx_videoram)
     each tile uses 4 bytes, the tilemap is 64x128?
 
@@ -671,7 +668,6 @@ void pgm_state::screen_eof_pgm(screen_device &screen, bool state)
 	// rising edge
 	if (state)
 	{
-
 		/* first 0xa00 of main ram = sprites, seems to be buffered, DMA? */
 		memcpy(m_spritebufferram, m_mainram, 0xa00);
 	}

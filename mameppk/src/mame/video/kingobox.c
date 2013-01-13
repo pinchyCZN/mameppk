@@ -37,7 +37,7 @@ static void palette_init_common( running_machine &machine, const UINT8 *color_pr
 						1, resistances_fg, gweights_fg, 0, 0,
 						1, resistances_fg, bweights_fg, 0, 0);
 
-				   compute_resistor_weights(0, 255, scale,
+					compute_resistor_weights(0, 255, scale,
 						4, resistances, rweights, 470, 0,
 						4, resistances, gweights, 470, 0,
 						4, resistances, bweights, 470, 0);
@@ -242,7 +242,6 @@ static void kingofb_draw_sprites(running_machine &machine, bitmap_ind16 &bitmap,
 
 UINT32 kingofb_state::screen_update_kingofb(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->set_scrolly(0, -(*m_scroll_y));
 	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	kingofb_draw_sprites(machine(), bitmap, cliprect);
@@ -301,7 +300,6 @@ static void ringking_draw_sprites( running_machine &machine, bitmap_ind16 &bitma
 
 UINT32 kingofb_state::screen_update_ringking(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->set_scrolly(0, -(*m_scroll_y));
 	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	ringking_draw_sprites(machine(), bitmap, cliprect);

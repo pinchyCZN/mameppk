@@ -9,7 +9,7 @@
 #include "includes/m58.h"
 
 #define SCROLL_PANEL_WIDTH  (14*4)
-#define RADAR_PALETTE_BASE	(256)
+#define RADAR_PALETTE_BASE  (256)
 
 
 
@@ -36,7 +36,7 @@ void m58_state::palette_init()
 	machine().colortable = colortable_alloc(machine(), 256+256+16);
 
 	/* compute palette information for characters/radar */
-	scale = compute_resistor_weights(0,	255, -1.0,
+	scale = compute_resistor_weights(0, 255, -1.0,
 			2, resistances_2, weights_r, 0, 0,
 			3, resistances_3, weights_g, 0, 0,
 			3, resistances_3, weights_b, 0, 0);
@@ -64,7 +64,7 @@ void m58_state::palette_init()
 	}
 
 	/* compute palette information for sprites */
-	scale = compute_resistor_weights(0,	255, scale,
+	scale = compute_resistor_weights(0, 255, scale,
 			2, resistances_2, weights_r, 470, 0,
 			3, resistances_3, weights_g, 470, 0,
 			3, resistances_3, weights_b, 470, 0);
@@ -106,7 +106,6 @@ void m58_state::palette_init()
 
 WRITE8_MEMBER(m58_state::yard_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset / 2);
 }
@@ -114,7 +113,6 @@ WRITE8_MEMBER(m58_state::yard_videoram_w)
 
 WRITE8_MEMBER(m58_state::yard_scroll_panel_w)
 {
-
 	int sx,sy,i;
 
 	sx = ( offset % 16 );
@@ -146,7 +144,6 @@ WRITE8_MEMBER(m58_state::yard_scroll_panel_w)
 
 TILE_GET_INFO_MEMBER(m58_state::yard_get_bg_tile_info)
 {
-
 	int offs = tile_index * 2;
 	int attr = m_videoram[offs + 1];
 	int code = m_videoram[offs] + ((attr & 0xc0) << 2);
@@ -176,7 +173,6 @@ TILEMAP_MAPPER_MEMBER(m58_state::yard_tilemap_scan_rows)
 
 void m58_state::video_start()
 {
-
 	int width = machine().primary_screen->width();
 	int height = machine().primary_screen->height();
 	const rectangle &visarea = machine().primary_screen->visible_area();
@@ -276,7 +272,7 @@ static void draw_panel( running_machine &machine, bitmap_ind16 &bitmap, const re
 
 	if (!*state->m_yard_score_panel_disabled)
 	{
-		const rectangle clippanel(26*8, 32*8-1,	1*8, 31*8-1);
+		const rectangle clippanel(26*8, 32*8-1, 1*8, 31*8-1);
 		const rectangle clippanelflip(0*8, 6*8-1, 1*8, 31*8-1);
 		rectangle clip = state->flip_screen() ? clippanelflip : clippanel;
 		const rectangle &visarea = machine.primary_screen->visible_area();
@@ -288,7 +284,7 @@ static void draw_panel( running_machine &machine, bitmap_ind16 &bitmap, const re
 		clip &= cliprect;
 
 		copybitmap(bitmap, *state->m_scroll_panel_bitmap, state->flip_screen(), state->flip_screen(),
-				   sx, visarea.min_y + yoffs, clip);
+					sx, visarea.min_y + yoffs, clip);
 	}
 }
 
@@ -302,7 +298,6 @@ static void draw_panel( running_machine &machine, bitmap_ind16 &bitmap, const re
 
 UINT32 m58_state::screen_update_yard(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->set_scrollx(0, (*m_yard_scroll_x_high * 0x100) + *m_yard_scroll_x_low);
 	m_bg_tilemap->set_scrolly(0, *m_yard_scroll_y_low);
 

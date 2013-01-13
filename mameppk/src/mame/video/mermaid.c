@@ -118,19 +118,19 @@ WRITE8_MEMBER(mermaid_state::rougien_gfxbankswitch2_w)
 READ8_MEMBER(mermaid_state::mermaid_collision_r)
 {
 	/*
-        collision register active LOW:
+	    collision register active LOW:
 
-    with coll = spriteram[offs + 2] & 0xc0
+	with coll = spriteram[offs + 2] & 0xc0
 
-        Bit 0 - Sprite (coll = 0x40) - Sprite (coll = 0x00)
-        Bit 1 - Sprite (coll = 0x40) - Foreground
-        Bit 2 - Sprite (coll = 0x40) - Background
-        Bit 3 - Sprite (coll = 0x80) - Sprite (coll = 0x00)
-        Bit 4
-        Bit 5
-        Bit 6 - Sprite (coll = 0x40) - Sprite (coll = 0x80)
-        Bit 7
-    */
+	    Bit 0 - Sprite (coll = 0x40) - Sprite (coll = 0x00)
+	    Bit 1 - Sprite (coll = 0x40) - Foreground
+	    Bit 2 - Sprite (coll = 0x40) - Background
+	    Bit 3 - Sprite (coll = 0x80) - Sprite (coll = 0x00)
+	    Bit 4
+	    Bit 5
+	    Bit 6 - Sprite (coll = 0x40) - Sprite (coll = 0x80)
+	    Bit 7
+	*/
 
 	int collision = 0xff;
 
@@ -167,7 +167,6 @@ TILE_GET_INFO_MEMBER(mermaid_state::get_fg_tile_info)
 
 void mermaid_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(mermaid_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 	m_bg_tilemap->set_scroll_cols(32);
 
@@ -223,7 +222,6 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 UINT32 mermaid_state::screen_update_mermaid(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	m_fg_tilemap->draw(bitmap, cliprect, 0, 0);
 	draw_sprites(machine(), bitmap, cliprect);

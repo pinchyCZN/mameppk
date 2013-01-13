@@ -21,25 +21,25 @@ static const UINT32 extyoffs[] =
 
 static const gfx_layout backlayout =
 {
-	8,8*32,	/* 8*(8*32) characters */
-	4,		/* 4 characters */
-	1,		/* 1 bit per pixel */
+	8,8*32, /* 8*(8*32) characters */
+	4,      /* 4 characters */
+	1,      /* 1 bit per pixel */
 	{ 0 },
 	{ 0, 1, 2, 3, 4, 5, 6, 7 },
 	EXTENDED_YOFFS,
-	32*8*8,	/* every char takes 8 consecutive bytes */
+	32*8*8, /* every char takes 8 consecutive bytes */
 	NULL, extyoffs
 };
 
 static const gfx_layout charlayout =
 {
-	8,8,	/* 8*8 characters */
-	256,	/* 256 characters */
-	1,		/* 1 bit per pixel */
+	8,8,    /* 8*8 characters */
+	256,    /* 256 characters */
+	1,      /* 1 bit per pixel */
 	{ 0 },
 	{ 0, 1, 2, 3, 4, 5, 6, 7 },
 	{ 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 },
-	8*8	/* every char takes 8 consecutive bytes */
+	8*8 /* every char takes 8 consecutive bytes */
 };
 
 TILEMAP_MAPPER_MEMBER(m10_state::tilemap_scan)
@@ -56,7 +56,6 @@ TILE_GET_INFO_MEMBER(m10_state::get_tile_info)
 
 WRITE8_MEMBER(m10_state::m10_colorram_w)
 {
-
 	if (m_colorram[offset] != data)
 	{
 		m_tx_tilemap->mark_tile_dirty(offset);
@@ -67,7 +66,6 @@ WRITE8_MEMBER(m10_state::m10_colorram_w)
 
 WRITE8_MEMBER(m10_state::m10_chargen_w)
 {
-
 	if (m_chargen[offset] != data)
 	{
 		m_chargen[offset] = data;
@@ -78,7 +76,6 @@ WRITE8_MEMBER(m10_state::m10_chargen_w)
 
 WRITE8_MEMBER(m10_state::m15_chargen_w)
 {
-
 	if (m_chargen[offset] != data)
 	{
 		m_chargen[offset] = data;
@@ -100,7 +97,6 @@ INLINE void plot_pixel_m10( running_machine &machine, bitmap_ind16 &bm, int x, i
 
 VIDEO_START_MEMBER(m10_state,m10)
 {
-
 	m_tx_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(m10_state::get_tile_info),this), tilemap_mapper_delegate(FUNC(m10_state::tilemap_scan),this), 8, 8, 32, 32);
 	m_tx_tilemap->set_transparent_pen(0);
 	m_tx_tilemap->set_scrolldx(0, 62);
@@ -114,7 +110,6 @@ VIDEO_START_MEMBER(m10_state,m10)
 
 VIDEO_START_MEMBER(m10_state,m15)
 {
-
 	machine().gfx[0] = auto_alloc(machine(), gfx_element(machine(), charlayout, m_chargen, 8, 0));
 
 	m_tx_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(m10_state::get_tile_info),this),tilemap_mapper_delegate(FUNC(m10_state::tilemap_scan),this), 8, 8, 32, 32);

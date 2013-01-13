@@ -44,7 +44,7 @@ class mpu2_state : public driver_device
 public:
 	mpu2_state(const machine_config &mconfig, device_type type, const char *tag)
 		: driver_device(mconfig, type, tag),
-		  m_maincpu(*this, "maincpu")
+			m_maincpu(*this, "maincpu")
 	{ }
 
 protected:
@@ -73,8 +73,7 @@ MACHINE_CONFIG_END
 // technically not a 'bios' because they're all on the same board.
 #define MPU2_MASKROM \
 	ROM_REGION( 0x800, "maskrom", 0 ) \
-	ROM_LOAD( "rom1.bin", 0x0000, 0x0800, CRC(198d77ee) SHA1(ef466e539efd6e31c82ef01b09d63b7580f068fe) ) \
-
+	ROM_LOAD( "rom1.bin", 0x0000, 0x0800, CRC(198d77ee) SHA1(ef466e539efd6e31c82ef01b09d63b7580f068fe) )
 
 ROM_START( m2hilite )
 	MPU2_MASKROM

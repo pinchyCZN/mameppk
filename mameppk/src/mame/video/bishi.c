@@ -26,7 +26,6 @@ void bishi_tile_callback( running_machine &machine, int layer, int *code, int *c
 
 void bishi_state::video_start()
 {
-
 	assert(machine().primary_screen->format() == BITMAP_FORMAT_RGB32);
 
 	k056832_set_layer_association(m_k056832, 0);
@@ -38,7 +37,7 @@ void bishi_state::video_start()
 
 	// the 55555 is set to "0x10, 0x11, 0x12, 0x13", but these values are almost correct...
 	m_layer_colorbase[0] = 0x00;
-	m_layer_colorbase[1] = 0x40;	// this one is wrong
+	m_layer_colorbase[1] = 0x40;    // this one is wrong
 	m_layer_colorbase[2] = 0x80;
 	m_layer_colorbase[3] = 0xc0;
 }

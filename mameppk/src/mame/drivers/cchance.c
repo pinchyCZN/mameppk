@@ -56,7 +56,6 @@ public:
 
 WRITE8_MEMBER(cchance_state::output_0_w)
 {
-
 	//---- --x- divider?
 	coin_lockout_w(machine(), 0, ~data & 1);
 
@@ -66,14 +65,11 @@ WRITE8_MEMBER(cchance_state::output_0_w)
 
 READ8_MEMBER(cchance_state::input_1_r)
 {
-
 	return (m_hop_io) | (m_bell_io) | (ioport("SP")->read() & 0xff);
 }
 
 WRITE8_MEMBER(cchance_state::output_1_w)
 {
-
-
 	m_hop_io = (data & 0x40)>>4;
 	m_bell_io = (data & 0x80)>>4;
 }
@@ -88,7 +84,7 @@ static ADDRESS_MAP_START( main_map, AS_PROGRAM, 8, cchance_state )
 
 	AM_RANGE(0xe000, 0xe2ff) AM_RAM AM_DEVREADWRITE_LEGACY("spritegen", spriteylow_r8, spriteylow_w8)
 	AM_RANGE(0xe300, 0xe303) AM_RAM AM_MIRROR(0xfc) AM_DEVWRITE_LEGACY("spritegen", spritectrl_w8)  /* control registers (0x80 mirror used by Arkanoid 2) */
-	AM_RANGE(0xe800, 0xe800) AM_DEVWRITE_LEGACY("spritegen", spritebgflag_w8)	/* enable / disable background transparency */
+	AM_RANGE(0xe800, 0xe800) AM_DEVWRITE_LEGACY("spritegen", spritebgflag_w8)   /* enable / disable background transparency */
 
 	AM_RANGE(0xf000, 0xf000) AM_READNOP AM_WRITENOP //???
 	AM_RANGE(0xf001, 0xf001) AM_READ(input_1_r) AM_WRITE(output_0_w)
@@ -209,7 +205,6 @@ MACHINE_START_MEMBER(cchance_state,cchance)
 
 MACHINE_RESET_MEMBER(cchance_state,cchance)
 {
-
 	m_screenflip = 0;
 	m_mcu_type = -1;
 	m_hop_io = 0;
@@ -219,7 +214,7 @@ MACHINE_RESET_MEMBER(cchance_state,cchance)
 
 static MACHINE_CONFIG_START( cchance, cchance_state )
 
-	MCFG_CPU_ADD("maincpu", Z80,4000000)		 /* ? MHz */
+	MCFG_CPU_ADD("maincpu", Z80,4000000)         /* ? MHz */
 	MCFG_CPU_PROGRAM_MAP(main_map)
 	MCFG_CPU_VBLANK_INT_DRIVER("screen", cchance_state,  irq0_line_hold)
 
@@ -259,7 +254,7 @@ ROM_START( cchance )
 	ROM_LOAD("chance-cccha2.bin", 0x10000, 0x10000, CRC(fa5ccf5b) SHA1(21957a6a7b88c315d1fbb82e98a924a637a28397) )
 	ROM_LOAD("chance-cccha3.bin", 0x00000, 0x10000, CRC(2a2979c9) SHA1(5036313e219ec561fa6753f0db6bb28c6fc97963) )
 
-	ROM_REGION( 0x0400, "proms", 0 )		/* color proms */
+	ROM_REGION( 0x0400, "proms", 0 )        /* color proms */
 	ROM_LOAD( "prom1", 0x0000, 0x0200, NO_DUMP )
 	ROM_LOAD( "prom2", 0x0200, 0x0200, NO_DUMP )
 ROM_END

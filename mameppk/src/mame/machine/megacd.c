@@ -36,25 +36,21 @@ const device_type SEGA_SEGACD_EUROPE = &device_creator<sega_segacd_europe_device
 sega_segacd_device::sega_segacd_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock, device_type type)
 	: device_t(mconfig, type, "sega_segacd_device", tag, owner, clock)
 {
-
 }
 
 sega_segacd_us_device::sega_segacd_us_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
 	: sega_segacd_device(mconfig, tag, owner, clock, SEGA_SEGACD_US)
 {
-
 }
 
 sega_segacd_japan_device::sega_segacd_japan_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
 	: sega_segacd_device(mconfig, tag, owner, clock, SEGA_SEGACD_JAPAN)
 {
-
 }
 
 sega_segacd_europe_device::sega_segacd_europe_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
 	: sega_segacd_device(mconfig, tag, owner, clock, SEGA_SEGACD_EUROPE)
 {
-
 }
 
 
@@ -180,7 +176,6 @@ machine_config_constructor sega_segacd_device::device_mconfig_additions() const
 
 inline void sega_segacd_device::write_pixel(running_machine& machine, UINT8 pix, int pixeloffset )
 {
-
 	int shift = 12-(4*(pixeloffset&0x3));
 	UINT16 datamask = (0x000f) << shift;
 
@@ -302,8 +297,6 @@ void sega_segacd_device::segacd_1meg_mode_word_write(running_machine& machine, i
 
 WRITE16_MEMBER( sega_segacd_device::scd_a12000_halt_reset_w )
 {
-
-
 	UINT16 old_halt = a12000_halt_reset_reg;
 
 	COMBINE_DATA(&a12000_halt_reset_reg);
@@ -372,15 +365,13 @@ READ16_MEMBER( sega_segacd_device::scd_a12000_halt_reset_r )
 
 READ16_MEMBER( sega_segacd_device::scd_a12002_memory_mode_r )
 {
-
-
 	int temp = scd_rammode;
 	int temp2 = 0;
 
 	temp2 |= (scd_mode_dmna_ret_flags>>(temp*4))&0x7;
 
 	return (segacd_ram_writeprotect_bits << 8) |
-		   (segacd_4meg_prgbank << 6) |
+			(segacd_4meg_prgbank << 6) |
 			temp2;
 
 }
@@ -410,9 +401,6 @@ WRITE8_MEMBER( sega_segacd_device::scd_a12002_memory_mode_w_8_15 )
 
 WRITE8_MEMBER( sega_segacd_device::scd_a12002_memory_mode_w_0_7 )
 {
-
-
-
 	//printf("scd_a12002_memory_mode_w_0_7 %04x\n",data);
 
 	segacd_4meg_prgbank = (data&0x00c0)>>6;
@@ -436,8 +424,6 @@ WRITE8_MEMBER( sega_segacd_device::scd_a12002_memory_mode_w_0_7 )
 
 WRITE16_MEMBER( sega_segacd_device::scd_a12002_memory_mode_w )
 {
-
-
 	if (ACCESSING_BITS_8_15)
 		scd_a12002_memory_mode_w_8_15(space, 0, data>>8, mem_mask>>8);
 
@@ -450,15 +436,13 @@ WRITE16_MEMBER( sega_segacd_device::scd_a12002_memory_mode_w )
 
 READ16_MEMBER( sega_segacd_device::segacd_sub_memory_mode_r )
 {
-
-
 	int temp = scd_rammode;
 	int temp2 = 0;
 
 	temp2 |= (scd_mode_dmna_ret_flags>>(temp*4))&0x7;
 
 	return (segacd_ram_writeprotect_bits << 8) |
-		   (segacd_memory_priority_mode << 3) |
+			(segacd_memory_priority_mode << 3) |
 			temp2;
 }
 
@@ -472,9 +456,6 @@ WRITE8_MEMBER( sega_segacd_device::segacd_sub_memory_mode_w_8_15 )
 
 WRITE8_MEMBER( sega_segacd_device::segacd_sub_memory_mode_w_0_7 )
 {
-
-
-
 	segacd_memory_priority_mode = (data&0x0018)>>3;
 
 	// If the mode bit is 0 then we're requesting a change to
@@ -483,7 +464,7 @@ WRITE8_MEMBER( sega_segacd_device::segacd_sub_memory_mode_w_0_7 )
 	//printf("segacd_sub_memory_mode_w_0_7 %04x\n",data);
 
 	if (!(data&4)) // check ram mode bit
-	{	// == 0x0 - 2 meg mode
+	{   // == 0x0 - 2 meg mode
 		scd_mode_dmna_ret_flags &= 0xddff;
 
 		if (data&1) // check RET
@@ -506,7 +487,7 @@ WRITE8_MEMBER( sega_segacd_device::segacd_sub_memory_mode_w_0_7 )
 		}
 	}
 	else
-	{	// == 0x4 - 1 meg mode
+	{   // == 0x4 - 1 meg mode
 		data &=1;
 		int temp = data;
 		int scd_rammode_old = scd_rammode;
@@ -554,14 +535,11 @@ WRITE16_MEMBER( sega_segacd_device::segacd_sub_memory_mode_w )
 
 READ16_MEMBER( sega_segacd_device::segacd_comms_flags_r )
 {
-
 	return segacd_comms_flags;
 }
 
 WRITE16_MEMBER( sega_segacd_device::segacd_comms_flags_subcpu_w )
 {
-
-
 	if (ACCESSING_BITS_8_15) // Dragon's Lair
 	{
 		segacd_comms_flags = (segacd_comms_flags & 0xff00) | ((data >> 8) & 0x00ff);
@@ -576,8 +554,6 @@ WRITE16_MEMBER( sega_segacd_device::segacd_comms_flags_subcpu_w )
 
 WRITE16_MEMBER( sega_segacd_device::segacd_comms_flags_maincpu_w )
 {
-
-
 	if (ACCESSING_BITS_8_15)
 	{
 		segacd_comms_flags = (segacd_comms_flags & 0x00ff) | (data & 0xff00);
@@ -612,19 +588,16 @@ WRITE16_MEMBER( sega_segacd_device::scd_4m_prgbank_ram_w )
 
 READ16_MEMBER( sega_segacd_device::segacd_comms_main_part1_r )
 {
-
 	return segacd_comms_part1[offset];
 }
 
 WRITE16_MEMBER( sega_segacd_device::segacd_comms_main_part1_w )
 {
-
 	COMBINE_DATA(&segacd_comms_part1[offset]);
 }
 
 READ16_MEMBER( sega_segacd_device::segacd_comms_main_part2_r )
 {
-
 	return segacd_comms_part2[offset];
 }
 
@@ -636,7 +609,6 @@ WRITE16_MEMBER( sega_segacd_device::segacd_comms_main_part2_w )
 
 READ16_MEMBER( sega_segacd_device::segacd_comms_sub_part1_r )
 {
-
 	return segacd_comms_part1[offset];
 }
 
@@ -647,13 +619,11 @@ WRITE16_MEMBER( sega_segacd_device::segacd_comms_sub_part1_w )
 
 READ16_MEMBER( sega_segacd_device::segacd_comms_sub_part2_r )
 {
-
 	return segacd_comms_part2[offset];
 }
 
 WRITE16_MEMBER( sega_segacd_device::segacd_comms_sub_part2_w )
 {
-
 	COMBINE_DATA(&segacd_comms_part2[offset]);
 }
 
@@ -679,7 +649,6 @@ READ16_MEMBER( sega_segacd_device::segacd_main_dataram_part1_r )
 	}
 	else if ((scd_rammode&2)==RAM_MODE_1MEG)
 	{
-
 		if (offset<0x20000/2)
 		{
 			// wordram accees
@@ -701,11 +670,11 @@ READ16_MEMBER( sega_segacd_device::segacd_main_dataram_part1_r )
 			// converts data stored in bitmap format (in dataram) to be read out as tiles (for dma->vram purposes)
 			// used by Heart of the Alien
 
-			if(offset<0x30000/2)		/* 0x20000 - 0x2ffff */ // 512x256 bitmap. tiles
+			if(offset<0x30000/2)        /* 0x20000 - 0x2ffff */ // 512x256 bitmap. tiles
 				offset = BITSWAP24(offset,23,22,21,20,19,18,17,16,15,8,7,6,5,4,3,2,1,14,13,12,11,10,9,0);
-			else if(offset<0x38000/2)	/* 0x30000 - 0x37fff */  // 512x128 bitmap. tiles
+			else if(offset<0x38000/2)   /* 0x30000 - 0x37fff */  // 512x128 bitmap. tiles
 				offset = BITSWAP24(offset,23,22,21,20,19,18,17,16,15,14,7,6,5,4,3,2,1,13,12,11,10,9,8,0);
-			else if(offset<0x3c000/2)	/* 0x38000 - 0x3bfff */  // 512x64 bitmap. tiles
+			else if(offset<0x3c000/2)   /* 0x38000 - 0x3bfff */  // 512x64 bitmap. tiles
 				offset = BITSWAP24(offset,23,22,21,20,19,18,17,16,15,14,13,6,5,4,3,2,1,12,11,10,9,8,7,0);
 			else  /* 0x3c000 - 0x3dfff and 0x3e000 - 0x3ffff */  // 512x32 bitmap (x2) -> tiles
 				offset = BITSWAP24(offset,23,22,21,20,19,18,17,16,15,14,13,12,5,4,3,2,1,11,10,9,8,7,6,0);
@@ -785,13 +754,11 @@ READ16_MEMBER( sega_segacd_device::scd_hint_vector_r )
 
 READ16_MEMBER( sega_segacd_device::scd_a12006_hint_register_r )
 {
-
 	return segacd_hint_register;
 }
 
 WRITE16_MEMBER( sega_segacd_device::scd_a12006_hint_register_w )
 {
-
 	COMBINE_DATA(&segacd_hint_register);
 }
 
@@ -1600,7 +1567,6 @@ READ16_MEMBER( sega_segacd_device::segacd_font_converted_r )
 
 void sega_segacd_device::device_start()
 {
-
 	_segacd_68k_cpu = machine().device<cpu_device>(":segacd:segacd_68k");
 	sega_cd_connected = 1;
 
@@ -1690,7 +1656,6 @@ WRITE16_MEMBER( sega_segacd_device::segacd_dmaaddr_w )
 
 void sega_segacd_device::device_reset()
 {
-
 	_segacd_68k_cpu->set_input_line(INPUT_LINE_RESET, ASSERT_LINE);
 	_segacd_68k_cpu->set_input_line(INPUT_LINE_HALT, ASSERT_LINE);
 
@@ -1818,7 +1783,6 @@ void sega_segacd_device::SegaCD_CDC_Do_DMA(int &dmacount, UINT8 *CDC_BUFFER, UIN
 			{
 				if (destination==DMA_WRAM)
 				{
-
 					if ((scd_rammode&2)==RAM_MODE_2MEG)
 					{
 						dstoffset &= 0x3ffff;
@@ -1867,4 +1831,3 @@ void sega_segacd_device::SegaCD_CDC_Do_DMA(int &dmacount, UINT8 *CDC_BUFFER, UIN
 		m_dmaaddr += length >> 2;
 	}
 }
-

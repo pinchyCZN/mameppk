@@ -178,7 +178,6 @@ TILE_GET_INFO_MEMBER(ladybug_state::get_fg_tile_info)
 
 VIDEO_START_MEMBER(ladybug_state,redclash)
 {
-
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ladybug_state::get_fg_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 	m_fg_tilemap->set_transparent_pen(0);
 }
@@ -208,7 +207,7 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 				switch ((spriteram[offs + i] & 0x18) >> 3)
 				{
-					case 3:	/* 24x24 */
+					case 3: /* 24x24 */
 					{
 						int code = ((spriteram[offs + i + 1] & 0xf0) >> 4) + ((state->m_gfxbank & 1) << 4);
 
@@ -226,8 +225,8 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 						break;
 					}
 
-					case 2:	/* 16x16 */
-						if (spriteram[offs + i] & 0x20)	/* zero hour spaceships */
+					case 2: /* 16x16 */
+						if (spriteram[offs + i] & 0x20) /* zero hour spaceships */
 						{
 							int code = ((spriteram[offs + i + 1] & 0xf8) >> 3) + ((state->m_gfxbank & 1) << 5);
 							int bank = (spriteram[offs + i + 1] & 0x02) >> 1;
@@ -250,7 +249,7 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 						}
 						break;
 
-					case 1:	/* 8x8 */
+					case 1: /* 8x8 */
 						drawgfx_transpen(bitmap,cliprect,machine.gfx[1],
 								spriteram[offs + i + 1],// + 4 * (spriteram[offs + i + 2] & 0x10),
 								color,
@@ -275,7 +274,7 @@ static void draw_bullets( running_machine &machine, bitmap_ind16 &bitmap, const 
 	for (offs = 0; offs < 0x20; offs++)
 	{
 //      sx = state->m_videoramoffs];
-		int sx = 8 * offs + (state->m_videoram[offs] & 0x07);	/* ?? */
+		int sx = 8 * offs + (state->m_videoram[offs] & 0x07);   /* ?? */
 		int sy = 0xff - state->m_videoram[offs + 0x20];
 
 		if (state->flip_screen())
@@ -303,7 +302,7 @@ static void draw_bullets( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 /* This line can reset the LFSR to zero and disables the star generator */
 void redclash_set_stars_enable( running_machine &machine, UINT8 on )
-{	ladybug_state *state = machine.driver_data<ladybug_state>();
+{   ladybug_state *state = machine.driver_data<ladybug_state>();
 
 	if ((state->m_stars_enable == 0) && (on == 1))
 	{
@@ -426,7 +425,6 @@ void ladybug_state::screen_eof_redclash(screen_device &screen, bool state)
 
 UINT32 ladybug_state::screen_update_redclash(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	bitmap.fill(get_black_pen(machine()), cliprect);
 	redclash_draw_stars(machine(), bitmap, cliprect, 0x60, 0, 0x00, 0xff);
 	draw_sprites(machine(), bitmap, cliprect);

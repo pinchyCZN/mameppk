@@ -118,10 +118,9 @@ static int counter_from_ram( UINT8 *data, int offset )
 //-------------------------------------------------
 
 timekeeper_device::timekeeper_device(const machine_config &mconfig, device_type type, const char *name, const char *tag, device_t *owner, UINT32 clock)
-    : device_t(mconfig, type, name, tag, owner, clock),
-	  device_nvram_interface(mconfig, *this)
+	: device_t(mconfig, type, name, tag, owner, clock),
+		device_nvram_interface(mconfig, *this)
 {
-
 }
 
 m48t02_device::m48t02_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
@@ -443,4 +442,3 @@ void timekeeper_device::nvram_write(emu_file &file)
 
 WRITE8_DEVICE_HANDLER( timekeeper_w ) { downcast<timekeeper_device *>(device)->write(offset, data); }
 READ8_DEVICE_HANDLER( timekeeper_r ) { return downcast<timekeeper_device*>(device)->read(offset); }
-

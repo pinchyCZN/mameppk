@@ -39,7 +39,7 @@
 #include "includes/opwolf.h"
 
 /* Select how coinage data is initialised in opwolf_cchip_data_w : 0 = user-defined in function - 1 = automatic */
-#define OPWOLF_READ_COINAGE_FROM_ROM	1
+#define OPWOLF_READ_COINAGE_FROM_ROM    1
 
 /* List of possible regions */
 enum {
@@ -275,7 +275,6 @@ static const UINT16 *const level_data_lookup[] =
 
 TIMER_CALLBACK_MEMBER(opwolf_state::opwolf_timer_callback)
 {
-
 	// Level data command
 	if (m_current_cmd == 0xf5)
 	{
@@ -406,7 +405,6 @@ WRITE16_MEMBER(opwolf_state::opwolf_cchip_bank_w)
 
 WRITE16_MEMBER(opwolf_state::opwolf_cchip_data_w)
 {
-
 	m_cchip_ram[(m_current_bank * 0x400) + offset] = data & 0xff;
 
 //  if (offset != 0x64 && offset != 0x65 && offset != 0x66 && offset != 0x67 && offset != 0x68 && offset != 0x69)
@@ -448,14 +446,14 @@ WRITE16_MEMBER(opwolf_state::opwolf_cchip_data_w)
 #else
 			if ((m_opwolf_region == OPWOLF_REGION_JAPAN) || (m_opwolf_region == OPWOLF_REGION_US))
 			{
-				switch (data&0x30)	/* table at 0x03ffce.w - 4 * 2 words (coins for credits first) - inverted order */
+				switch (data&0x30)  /* table at 0x03ffce.w - 4 * 2 words (coins for credits first) - inverted order */
 				{
 					case 0x00: m_cchip_coins_for_credit[0] = 2; cchip_credits_for_coin[0] = 3; break;
 					case 0x10: m_cchip_coins_for_credit[0] = 2; cchip_credits_for_coin[0] = 1; break;
 					case 0x20: m_cchip_coins_for_credit[0] = 1; cchip_credits_for_coin[0] = 2; break;
 					case 0x30: m_cchip_coins_for_credit[0] = 1; cchip_credits_for_coin[0] = 1; break;
 				}
-				switch (data&0xc0)	/* table at 0x03ffce.w - 4 * 2 words (coins for credits first) - inverted order */
+				switch (data&0xc0)  /* table at 0x03ffce.w - 4 * 2 words (coins for credits first) - inverted order */
 				{
 					case 0x00: m_cchip_coins_for_credit[1] = 2; cchip_credits_for_coin[1] = 3; break;
 					case 0x40: m_cchip_coins_for_credit[1] = 2; cchip_credits_for_coin[1] = 1; break;
@@ -466,14 +464,14 @@ WRITE16_MEMBER(opwolf_state::opwolf_cchip_data_w)
 
 			if ((opwolf_region == OPWOLF_REGION_WORLD) || (opwolf_region == OPWOLF_REGION_OTHER))
 			{
-				switch (data&0x30)	/* table at 0x03ffde.w - 4 * 2 words (coins for credits first) - inverted order */
+				switch (data&0x30)  /* table at 0x03ffde.w - 4 * 2 words (coins for credits first) - inverted order */
 				{
 					case 0x00: m_cchip_coins_for_credit[0] = 4; cchip_credits_for_coin[0] = 1; break;
 					case 0x10: m_cchip_coins_for_credit[0] = 3; cchip_credits_for_coin[0] = 1; break;
 					case 0x20: m_cchip_coins_for_credit[0] = 2; cchip_credits_for_coin[0] = 1; break;
 					case 0x30: m_cchip_coins_for_credit[0] = 1; cchip_credits_for_coin[0] = 1; break;
 				}
-				switch (data & 0xc0)	/* table at 0x03ffee.w - 4 * 2 words (coins for credits first) - inverted order */
+				switch (data & 0xc0)    /* table at 0x03ffee.w - 4 * 2 words (coins for credits first) - inverted order */
 				{
 					case 0x00: m_cchip_coins_for_credit[1] = 1; cchip_credits_for_coin[1] = 6; break;
 					case 0x40: m_cchip_coins_for_credit[1] = 1; cchip_credits_for_coin[1] = 4; break;
@@ -502,15 +500,14 @@ WRITE16_MEMBER(opwolf_state::opwolf_cchip_data_w)
 READ16_MEMBER(opwolf_state::opwolf_cchip_status_r)
 {
 	/*
-        Bit 0x4 = Error signal
-        Bit 0x1 = Ready signal
-    */
+	    Bit 0x4 = Error signal
+	    Bit 0x1 = Ready signal
+	*/
 	return 0x1; /* Return 0x5 for C-Chip error */
 }
 
 READ16_MEMBER(opwolf_state::opwolf_cchip_data_r)
 {
-
 //  if (offset!=0x7f && offset!=0x1c && offset!=0x1d && offset!=0x1e && offset!=0x1f && offset!=0x20 && space.device().safe_pc()!=0xc18 && space.device().safe_pc()!=0xc2e && space.device().safe_pc()!=0xc9e && offset!=0x50 && offset!=0x51 && offset!=0x52 && offset!=0x53 && offset!=0x5 && offset!=0x13 && offset!=0x79 && offset!=0x12 && offset!=0x34)
 //      logerror("%08x:  opwolf c read %04x (bank %04x)\n", space.device().safe_pc(), offset, m_current_bank);
 
@@ -525,7 +522,6 @@ READ16_MEMBER(opwolf_state::opwolf_cchip_data_r)
 
 TIMER_CALLBACK_MEMBER(opwolf_state::cchip_timer)
 {
-
 	// Update input ports, these are used by both the 68k directly and by the c-chip
 	m_cchip_ram[0x4] = ioport("IN0")->read();
 	m_cchip_ram[0x5] = ioport("IN1")->read();

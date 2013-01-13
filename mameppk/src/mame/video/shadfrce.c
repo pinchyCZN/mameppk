@@ -3,7 +3,6 @@
 
 TILE_GET_INFO_MEMBER(shadfrce_state::get_shadfrce_fgtile_info)
 {
-
 	/* ---- ----  tttt tttt  ---- ----  pppp TTTT */
 	int tileno, colour;
 
@@ -15,20 +14,18 @@ TILE_GET_INFO_MEMBER(shadfrce_state::get_shadfrce_fgtile_info)
 
 WRITE16_MEMBER(shadfrce_state::shadfrce_fgvideoram_w)
 {
-
 	m_fgvideoram[offset] = data;
 	m_fgtilemap->mark_tile_dirty(offset/2);
 }
 
 TILE_GET_INFO_MEMBER(shadfrce_state::get_shadfrce_bg0tile_info)
 {
-
 	/* ---- ----  ---- cccc  --TT TTTT TTTT TTTT */
 	int tileno, colour,fyx;
 
 	tileno = (m_bg0videoram[tile_index *2+1] & 0x3fff);
 	colour = m_bg0videoram[tile_index *2] & 0x001f;
-	if (colour & 0x10) colour ^= 0x30;	/* skip hole */
+	if (colour & 0x10) colour ^= 0x30;  /* skip hole */
 	fyx = (m_bg0videoram[tile_index *2] & 0x00c0) >>6;
 
 	SET_TILE_INFO_MEMBER(2,tileno,colour,TILE_FLIPYX(fyx));
@@ -36,7 +33,6 @@ TILE_GET_INFO_MEMBER(shadfrce_state::get_shadfrce_bg0tile_info)
 
 WRITE16_MEMBER(shadfrce_state::shadfrce_bg0videoram_w)
 {
-
 	m_bg0videoram[offset] = data;
 	m_bg0tilemap->mark_tile_dirty(offset/2);
 }
@@ -53,7 +49,6 @@ TILE_GET_INFO_MEMBER(shadfrce_state::get_shadfrce_bg1tile_info)
 
 WRITE16_MEMBER(shadfrce_state::shadfrce_bg1videoram_w)
 {
-
 	m_bg1videoram[offset] = data;
 	m_bg1tilemap->mark_tile_dirty(offset);
 }
@@ -63,7 +58,6 @@ WRITE16_MEMBER(shadfrce_state::shadfrce_bg1videoram_w)
 
 void shadfrce_state::video_start()
 {
-
 	m_fgtilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(shadfrce_state::get_shadfrce_fgtile_info),this),TILEMAP_SCAN_ROWS,    8,  8,64,32);
 	m_fgtilemap->set_transparent_pen(0);
 
@@ -77,25 +71,21 @@ void shadfrce_state::video_start()
 
 WRITE16_MEMBER(shadfrce_state::shadfrce_bg0scrollx_w)
 {
-
 	m_bg0tilemap->set_scrollx(0, data & 0x1ff );
 }
 
 WRITE16_MEMBER(shadfrce_state::shadfrce_bg0scrolly_w)
 {
-
 	m_bg0tilemap->set_scrolly(0, data  & 0x1ff );
 }
 
 WRITE16_MEMBER(shadfrce_state::shadfrce_bg1scrollx_w)
 {
-
 	m_bg1tilemap->set_scrollx(0, data  & 0x1ff );
 }
 
 WRITE16_MEMBER(shadfrce_state::shadfrce_bg1scrolly_w)
 {
-
 	m_bg1tilemap->set_scrolly(0, data & 0x1ff );
 }
 
@@ -104,20 +94,19 @@ WRITE16_MEMBER(shadfrce_state::shadfrce_bg1scrolly_w)
 
 static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const rectangle &cliprect )
 {
-
 	/* | ---- ---- hhhf Fe-Y | ---- ---- yyyy yyyy | ---- ---- TTTT TTTT | ---- ---- tttt tttt |
-       | ---- ---- -pCc cccX | ---- ---- xxxx xxxx | ---- ---- ---- ---- | ---- ---- ---- ---- | */
+	   | ---- ---- -pCc cccX | ---- ---- xxxx xxxx | ---- ---- ---- ---- | ---- ---- ---- ---- | */
 
 	/* h  = height
-       f  = flipx
-       F  = flipy
-       e  = enable
-       Yy = Y Position
-       Tt = Tile No.
-       Xx = X Position
-       Cc = color
-       P = priority
-    */
+	   f  = flipx
+	   F  = flipy
+	   e  = enable
+	   Yy = Y Position
+	   Tt = Tile No.
+	   Xx = X Position
+	   Cc = color
+	   P = priority
+	*/
 
 	shadfrce_state *state = machine.driver_data<shadfrce_state>();
 	gfx_element *gfx = machine.gfx[1];
@@ -136,10 +125,10 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 		int pal = ((source[4] & 0x003e));
 		int pri_mask = (source[4] & 0x0040) ? 0x02 : 0x00;
 
-		if (pal & 0x20) pal ^= 0x60;	/* skip hole */
+		if (pal & 0x20) pal ^= 0x60;    /* skip hole */
 
 		height++;
-		if (enable)	{
+		if (enable) {
 			for (hcount=0;hcount<height;hcount++) {
 				pdrawgfx_transpen(bitmap,cliprect,gfx,tile+hcount,pal,flipx,flipy,xpos,ypos-hcount*16-16,machine.priority_bitmap,pri_mask,0);
 				pdrawgfx_transpen(bitmap,cliprect,gfx,tile+hcount,pal,flipx,flipy,xpos-0x200,ypos-hcount*16-16,machine.priority_bitmap,pri_mask,0);
@@ -175,7 +164,6 @@ void shadfrce_state::screen_eof_shadfrce(screen_device &screen, bool state)
 	// rising edge
 	if (state)
 	{
-
 		/* looks like sprites are *two* frames ahead */
 		memcpy(m_spvideoram_old, m_spvideoram, m_spvideoram.bytes());
 	}

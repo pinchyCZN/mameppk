@@ -105,7 +105,6 @@ TEST.TXT - suggests the content of a prototype version, which was expanded to ma
 
 static void irqhandler(device_t *device, int state)
 {
-
 }
 
 static const ymz280b_interface ymz280b_config =
@@ -119,7 +118,7 @@ class bfm_swp_state : public driver_device
 public:
 	bfm_swp_state(const machine_config &mconfig, device_type type, const char *tag)
 		: driver_device(mconfig, type, tag),
-		  m_maincpu(*this, "maincpu")
+			m_maincpu(*this, "maincpu")
 	{ }
 
 	UINT32* m_cpuregion;
@@ -312,7 +311,7 @@ ROM_END
 
 
 
-GAME( 199?, c3_rtime		, 0			, bfm_swp, bfm_swp, driver_device, 0, ROT0, "BFM", "Radio Times (Bellfruit) (Cobra 3)", GAME_IS_SKELETON )
-GAME( 199?, c3_telly		, 0			, bfm_swp, bfm_swp, driver_device, 0, ROT0, "BFM", "Telly Addicts (Bellfruit) (Cobra 3)", GAME_IS_SKELETON )
-GAME( 199?, c3_totp			, 0			, bfm_swp, bfm_swp, driver_device, 0, ROT0, "BFM", "Top of the Pops (Bellfruit) (Cobra 3?)", GAME_IS_SKELETON )
-GAME( 199?, c3_ppays		, 0			, bfm_swp, bfm_swp, driver_device, 0, ROT0, "BFM", "The Phrase That Pays (Bellfruit) (Cobra 3?)", GAME_IS_SKELETON )
+GAME( 199?, c3_rtime        , 0         , bfm_swp, bfm_swp, driver_device, 0, ROT0, "BFM", "Radio Times (Bellfruit) (Cobra 3)", GAME_IS_SKELETON )
+GAME( 199?, c3_telly        , 0         , bfm_swp, bfm_swp, driver_device, 0, ROT0, "BFM", "Telly Addicts (Bellfruit) (Cobra 3)", GAME_IS_SKELETON )
+GAME( 199?, c3_totp         , 0         , bfm_swp, bfm_swp, driver_device, 0, ROT0, "BFM", "Top of the Pops (Bellfruit) (Cobra 3?)", GAME_IS_SKELETON )
+GAME( 199?, c3_ppays        , 0         , bfm_swp, bfm_swp, driver_device, 0, ROT0, "BFM", "The Phrase That Pays (Bellfruit) (Cobra 3?)", GAME_IS_SKELETON )

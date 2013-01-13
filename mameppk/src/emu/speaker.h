@@ -63,8 +63,7 @@ extern const device_type SPEAKER;
 // add/remove speakers
 #define MCFG_SPEAKER_ADD(_tag, _x, _y, _z) \
 	MCFG_DEVICE_ADD(_tag, SPEAKER, 0) \
-	speaker_device::static_set_position(*device, _x, _y, _z); \
-
+	speaker_device::static_set_position(*device, _x, _y, _z);
 #define MCFG_SPEAKER_STANDARD_MONO(_tag) \
 	MCFG_SPEAKER_ADD(_tag, 0.0, 0.0, 1.0)
 
@@ -81,7 +80,7 @@ extern const device_type SPEAKER;
 // ======================> speaker_device
 
 class speaker_device : public device_t,
-					   public device_mixer_interface
+						public device_mixer_interface
 {
 	friend resource_pool_object<speaker_device>::~resource_pool_object();
 
@@ -101,15 +100,15 @@ protected:
 	virtual void device_start() ATTR_COLD;
 
 	// inline configuration state
-	double				m_x;
-	double				m_y;
-	double				m_z;
+	double              m_x;
+	double              m_y;
+	double              m_z;
 
 	// internal state
 #ifdef MAME_DEBUG
-	INT32				m_max_sample;			// largest sample value we've seen
-	INT32				m_clipped_samples;		// total number of clipped samples
-	INT32				m_total_samples;		// total number of samples
+	INT32               m_max_sample;           // largest sample value we've seen
+	INT32               m_clipped_samples;      // total number of clipped samples
+	INT32               m_total_samples;        // total number of samples
 #endif
 };
 
@@ -118,4 +117,4 @@ protected:
 typedef device_type_iterator<&device_creator<speaker_device>, speaker_device> speaker_device_iterator;
 
 
-#endif	/* __SOUND_H__ */
+#endif  /* __SOUND_H__ */

@@ -50,14 +50,11 @@
 //**************************************************************************
 
 #define MCFG_BSMT2000_ADD(_tag, _clock) \
-	MCFG_DEVICE_ADD(_tag, BSMT2000, _clock) \
-
+	MCFG_DEVICE_ADD(_tag, BSMT2000, _clock)
 #define MCFG_BSMT2000_REPLACE(_tag, _clock) \
-	MCFG_DEVICE_REPLACE(_tag, BSMT2000, _clock) \
-
+	MCFG_DEVICE_REPLACE(_tag, BSMT2000, _clock)
 #define MCFG_BSMT2000_READY_CALLBACK(_callback) \
-	bsmt2000_device::static_set_ready_callback(*device, _callback); \
-
+	bsmt2000_device::static_set_ready_callback(*device, _callback);
 
 
 //**************************************************************************
@@ -121,19 +118,19 @@ private:
 
 	// configuration state
 	const address_space_config  m_space_config;
-	ready_callback				m_ready_callback;
+	ready_callback              m_ready_callback;
 
 	// internal state
-	sound_stream *				m_stream;
-	direct_read_data *			m_direct;
-	tms32015_device *			m_cpu;
-	UINT16						m_register_select;
-	UINT16						m_write_data;
-	UINT16						m_rom_address;
-	UINT16						m_rom_bank;
-	INT16						m_left_data;
-	INT16						m_right_data;
-	bool						m_write_pending;
+	sound_stream *              m_stream;
+	direct_read_data *          m_direct;
+	tms32015_device *           m_cpu;
+	UINT16                      m_register_select;
+	UINT16                      m_write_data;
+	UINT16                      m_rom_address;
+	UINT16                      m_rom_bank;
+	INT16                       m_left_data;
+	INT16                       m_right_data;
+	bool                        m_write_pending;
 };
 
 

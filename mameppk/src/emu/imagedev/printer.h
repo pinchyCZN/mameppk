@@ -20,12 +20,12 @@
 
 struct printer_interface
 {
-    devcb_write_line m_online;
+	devcb_write_line m_online;
 };
 
 // ======================> printer_image_device
 
-class printer_image_device :	public device_t,
+class printer_image_device :    public device_t,
 								public printer_interface,
 								public device_image_interface
 {
@@ -70,6 +70,5 @@ extern const device_type PRINTER;
 
 
 #define MCFG_PRINTER_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, PRINTER, 0) \
-
+	MCFG_DEVICE_ADD(_tag, PRINTER, 0)
 #endif /* __PRINTER_H__ */

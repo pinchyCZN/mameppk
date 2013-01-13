@@ -16,8 +16,7 @@ Template for skeleton device
 //**************************************************************************
 
 #define MCFG_MB90082_ADD(_tag,_freq) \
-	MCFG_DEVICE_ADD(_tag, MB90082, _freq) \
-
+	MCFG_DEVICE_ADD(_tag, MB90082, _freq)
 
 //**************************************************************************
 //  TYPE DEFINITIONS
@@ -32,7 +31,7 @@ enum
 
 // ======================> mb90082_device
 
-class mb90082_device :	public device_t,
+class mb90082_device :  public device_t,
 						public device_memory_interface
 {
 public:
@@ -66,7 +65,7 @@ private:
 	inline UINT16 read_word(offs_t address);
 	inline void write_word(offs_t address, UINT16 data);
 
-	const address_space_config		m_space_config;
+	const address_space_config      m_space_config;
 };
 
 

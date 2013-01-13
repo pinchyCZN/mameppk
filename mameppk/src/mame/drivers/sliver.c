@@ -71,7 +71,7 @@ Notes:
 
 
 #define FIFO_SIZE 1024
-#define IO_SIZE 	0x100
+#define IO_SIZE     0x100
 #define COMMAND_SIZE 8
 #define x_offset 0x45
 #define y_offset 0xe
@@ -143,7 +143,6 @@ static void plot_pixel_pal(running_machine &machine, int x, int y, int addr)
 
 WRITE16_MEMBER(sliver_state::fifo_data_w)
 {
-
 	if (m_tmp_counter < 8)
 	{
 		COMBINE_DATA(&m_tempbuf[m_tmp_counter]);
@@ -199,7 +198,6 @@ static void blit_gfx(running_machine &machine)
 
 WRITE16_MEMBER(sliver_state::fifo_clear_w)
 {
-
 	m_bitmap_fg.fill(0);
 	m_fptr=0;
 	m_tmp_counter=0;
@@ -213,7 +211,6 @@ WRITE16_MEMBER(sliver_state::fifo_flush_w)
 
 WRITE16_MEMBER(sliver_state::jpeg1_w)
 {
-
 	COMBINE_DATA(&m_jpeg1);
 }
 
@@ -233,7 +230,6 @@ static void render_jpeg(running_machine &machine)
 
 	/* Access libJPEG */
 	{
-
 		struct jpeg_decompress_struct cinfo;
 		struct jpeg_error_mgr jerr;
 		JSAMPARRAY buffer;
@@ -276,7 +272,6 @@ static void render_jpeg(running_machine &machine)
 
 WRITE16_MEMBER(sliver_state::jpeg2_w)
 {
-
 	COMBINE_DATA(&m_jpeg2);
 
 	render_jpeg(machine());
@@ -285,13 +280,11 @@ WRITE16_MEMBER(sliver_state::jpeg2_w)
 
 WRITE16_MEMBER(sliver_state::io_offset_w)
 {
-
 	COMBINE_DATA(&m_io_offset);
 }
 
 WRITE16_MEMBER(sliver_state::io_data_w)
 {
-
 	if (m_io_offset < IO_SIZE)
 	{
 		int tmpx, tmpy;
@@ -369,14 +362,12 @@ ADDRESS_MAP_END
 
 void sliver_state::video_start()
 {
-
 	machine().primary_screen->register_screen_bitmap(m_bitmap_bg);
 	machine().primary_screen->register_screen_bitmap(m_bitmap_fg);
 }
 
 UINT32 sliver_state::screen_update_sliver(screen_device &screen, bitmap_rgb32 &bitmap, const rectangle &cliprect)
 {
-
 	copybitmap      (bitmap, m_bitmap_bg, 0, 0, 0, 0, cliprect);
 	copybitmap_trans(bitmap, m_bitmap_fg, 0, 0, 0, 0, cliprect, 0);
 	return 0;
@@ -410,7 +401,7 @@ static INPUT_PORTS_START( sliver )
 	PORT_BIT( 0xffa4, IP_ACTIVE_LOW, IPT_UNKNOWN )
 
 	PORT_START("DSW")
-	PORT_DIPNAME( 0x000f, 0x000f, DEF_STR( Coinage ) )	PORT_DIPLOCATION("SW1:1,2,3,4")
+	PORT_DIPNAME( 0x000f, 0x000f, DEF_STR( Coinage ) )  PORT_DIPLOCATION("SW1:1,2,3,4")
 	PORT_DIPSETTING(      0x0004, DEF_STR( 5C_1C ) )
 	PORT_DIPSETTING(      0x0003, DEF_STR( 4C_1C ) )
 	PORT_DIPSETTING(      0x0002, DEF_STR( 3C_1C ) )
@@ -421,37 +412,37 @@ static INPUT_PORTS_START( sliver )
 	PORT_DIPSETTING(      0x000c, DEF_STR( 1C_4C ) )
 	PORT_DIPSETTING(      0x000b, DEF_STR( 1C_5C ) )
 	PORT_DIPSETTING(      0x0000, DEF_STR( Free_Play ) )
-	PORT_DIPNAME( 0x0030, 0x0020, DEF_STR( Lives ) )	PORT_DIPLOCATION("SW1:5,6")
+	PORT_DIPNAME( 0x0030, 0x0020, DEF_STR( Lives ) )    PORT_DIPLOCATION("SW1:5,6")
 	PORT_DIPSETTING(      0x0030, "2" )
 	PORT_DIPSETTING(      0x0020, "3" )
 	PORT_DIPSETTING(      0x0010, "4" )
 	PORT_DIPSETTING(      0x0000, "5" )
-	PORT_DIPNAME( 0x00c0, 0x00c0, DEF_STR( Game_Time ) )	PORT_DIPLOCATION("SW1:7,8")
+	PORT_DIPNAME( 0x00c0, 0x00c0, DEF_STR( Game_Time ) )    PORT_DIPLOCATION("SW1:7,8")
 	PORT_DIPSETTING(      0x0000, "Longer" )
 	PORT_DIPSETTING(      0x0040, "Long" )
 	PORT_DIPSETTING(      0x00c0, DEF_STR( Normal ) )
 	PORT_DIPSETTING(      0x0080, "Short" )
-	PORT_DIPNAME( 0x0300, 0x0300, DEF_STR( Difficulty ) )	PORT_DIPLOCATION("SW2:1,2")
+	PORT_DIPNAME( 0x0300, 0x0300, DEF_STR( Difficulty ) )   PORT_DIPLOCATION("SW2:1,2")
 	PORT_DIPSETTING(      0x0200, DEF_STR( Easy ) )
 	PORT_DIPSETTING(      0x0300, DEF_STR( Normal ) )
 	PORT_DIPSETTING(      0x0100, DEF_STR( Hard ) )
 	PORT_DIPSETTING(      0x0000, DEF_STR( Hardest ) )
-	PORT_DIPNAME( 0x0400, 0x0400, "2 Player Mode" )		PORT_DIPLOCATION("SW2:3")
+	PORT_DIPNAME( 0x0400, 0x0400, "2 Player Mode" )     PORT_DIPLOCATION("SW2:3")
 	PORT_DIPSETTING(      0x0400, DEF_STR( Yes ) )
 	PORT_DIPSETTING(      0x0000, DEF_STR( No ) )
-	PORT_DIPNAME( 0x0800, 0x0800, DEF_STR( Demo_Sounds ) )	PORT_DIPLOCATION("SW2:4")
+	PORT_DIPNAME( 0x0800, 0x0800, DEF_STR( Demo_Sounds ) )  PORT_DIPLOCATION("SW2:4")
 	PORT_DIPSETTING(      0x0000, DEF_STR( Off ) )
 	PORT_DIPSETTING(      0x0800, DEF_STR( On ) )
-	PORT_DIPNAME( 0x1000, 0x1000, "Draw Insert" )		PORT_DIPLOCATION("SW2:5")
+	PORT_DIPNAME( 0x1000, 0x1000, "Draw Insert" )       PORT_DIPLOCATION("SW2:5")
 	PORT_DIPSETTING(      0x1000, DEF_STR( Yes ) )
 	PORT_DIPSETTING(      0x0000, DEF_STR( No ) )
-	PORT_DIPNAME( 0x2000, 0x2000, "Joystick Input Mode" )	PORT_DIPLOCATION("SW2:6")
+	PORT_DIPNAME( 0x2000, 0x2000, "Joystick Input Mode" )   PORT_DIPLOCATION("SW2:6")
 	PORT_DIPSETTING(      0x2000, "Step" )
 	PORT_DIPSETTING(      0x0000, "Continuous" )
-	PORT_DIPNAME( 0x4000, 0x4000, "Game Paused (Test)" )	PORT_DIPLOCATION("SW2:7")
+	PORT_DIPNAME( 0x4000, 0x4000, "Game Paused (Test)" )    PORT_DIPLOCATION("SW2:7")
 	PORT_DIPSETTING(      0x4000, DEF_STR( Off ) )
 	PORT_DIPSETTING(      0x0000, DEF_STR( On ) )
-	PORT_DIPUNUSED_DIPLOC( 0x8000, 0x0000, "SW2:8" )	/* Listed as "UNUSED (MUST ON)" */
+	PORT_DIPUNUSED_DIPLOC( 0x8000, 0x0000, "SW2:8" )    /* Listed as "UNUSED (MUST ON)" */
 INPUT_PORTS_END
 
 static ADDRESS_MAP_START( ramdac_map, AS_0, 8, sliver_state )

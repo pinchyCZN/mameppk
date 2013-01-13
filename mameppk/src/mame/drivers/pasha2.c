@@ -115,7 +115,6 @@ public:
 
 WRITE16_MEMBER(pasha2_state::pasha2_misc_w)
 {
-
 	if (offset)
 	{
 		if (data & 0x0800)
@@ -173,7 +172,6 @@ WRITE16_MEMBER(pasha2_state::bitmap_0_w)
 
 WRITE16_MEMBER(pasha2_state::bitmap_1_w)
 {
-
 	// handle overlapping pixels without writing them
 	switch (mem_mask)
 	{
@@ -345,7 +343,6 @@ INPUT_PORTS_END
 
 void pasha2_state::video_start()
 {
-
 	save_item(NAME(m_bitmap0));
 	save_item(NAME(m_bitmap1));
 }
@@ -400,14 +397,12 @@ UINT32 pasha2_state::screen_update_pasha2(screen_device &screen, bitmap_ind16 &b
 
 void pasha2_state::machine_start()
 {
-
 	save_item(NAME(m_old_bank));
 	save_item(NAME(m_vbuffer));
 }
 
 void pasha2_state::machine_reset()
 {
-
 	m_old_bank = -1;
 	m_vbuffer = 0;
 }
@@ -415,7 +410,7 @@ void pasha2_state::machine_reset()
 static MACHINE_CONFIG_START( pasha2, pasha2_state )
 
 	/* basic machine hardware */
-	MCFG_CPU_ADD("maincpu", E116XT, 20000000*4)		/* 4x internal multiplier */
+	MCFG_CPU_ADD("maincpu", E116XT, 20000000*4)     /* 4x internal multiplier */
 	MCFG_CPU_PROGRAM_MAP(pasha2_map)
 	MCFG_CPU_IO_MAP(pasha2_io)
 	MCFG_CPU_VBLANK_INT_DRIVER("screen", pasha2_state,  irq0_line_hold)
@@ -472,7 +467,6 @@ ROM_END
 
 READ16_MEMBER(pasha2_state::pasha2_speedup_r)
 {
-
 	if(space.device().safe_pc() == 0x8302)
 		space.device().execute().spin_until_interrupt();
 

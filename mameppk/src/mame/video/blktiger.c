@@ -27,7 +27,7 @@ TILEMAP_MAPPER_MEMBER(blktiger_state::bg4x8_scan)
 TILE_GET_INFO_MEMBER(blktiger_state::get_bg_tile_info)
 {
 	/* the tile priority table is a guess compiled by looking at the game. It
-       was not derived from a PROM so it could be wrong. */
+	   was not derived from a PROM so it could be wrong. */
 	static const UINT8 split_table[16] =
 	{
 		3,3,0,0,
@@ -64,7 +64,6 @@ TILE_GET_INFO_MEMBER(blktiger_state::get_tx_tile_info)
 
 void blktiger_state::video_start()
 {
-
 	m_chon = 1;
 	m_bgon = 1;
 	m_objon = 1;
@@ -78,10 +77,10 @@ void blktiger_state::video_start()
 
 	m_tx_tilemap->set_transparent_pen(3);
 
-	m_bg_tilemap8x4->set_transmask(0, 0xffff, 0x8000);	/* split type 0 is totally transparent in front half */
-	m_bg_tilemap8x4->set_transmask(1, 0xfff0, 0x800f);	/* split type 1 has pens 4-15 transparent in front half */
-	m_bg_tilemap8x4->set_transmask(2, 0xff00, 0x80ff);	/* split type 1 has pens 8-15 transparent in front half */
-	m_bg_tilemap8x4->set_transmask(3, 0xf000, 0x8fff);	/* split type 1 has pens 12-15 transparent in front half */
+	m_bg_tilemap8x4->set_transmask(0, 0xffff, 0x8000);  /* split type 0 is totally transparent in front half */
+	m_bg_tilemap8x4->set_transmask(1, 0xfff0, 0x800f);  /* split type 1 has pens 4-15 transparent in front half */
+	m_bg_tilemap8x4->set_transmask(2, 0xff00, 0x80ff);  /* split type 1 has pens 8-15 transparent in front half */
+	m_bg_tilemap8x4->set_transmask(3, 0xf000, 0x8fff);  /* split type 1 has pens 12-15 transparent in front half */
 	m_bg_tilemap4x8->set_transmask(0, 0xffff, 0x8000);
 	m_bg_tilemap4x8->set_transmask(1, 0xfff0, 0x800f);
 	m_bg_tilemap4x8->set_transmask(2, 0xff00, 0x80ff);
@@ -163,7 +162,6 @@ WRITE8_MEMBER(blktiger_state::blktiger_video_control_w)
 
 WRITE8_MEMBER(blktiger_state::blktiger_video_enable_w)
 {
-
 	/* not sure which is which, but I think that bit 1 and 2 enable background and sprites */
 	/* bit 1 enables bg ? */
 	m_bgon = ~data & 0x02;
@@ -220,7 +218,6 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 UINT32 blktiger_state::screen_update_blktiger(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	bitmap.fill(1023, cliprect);
 
 	if (m_bgon)

@@ -34,7 +34,7 @@ void shaolins_state::palette_init()
 	int i;
 
 	/* compute the color output resistor weights */
-	compute_resistor_weights(0,	255, -1.0,
+	compute_resistor_weights(0, 255, -1.0,
 			4, resistances, rweights, 470, 0,
 			4, resistances, gweights, 470, 0,
 			4, resistances, bweights, 470, 0);
@@ -76,7 +76,7 @@ void shaolins_state::palette_init()
 	color_prom += 0x300;
 
 	/* characters use colors 0x10-0x1f of each 0x20 color bank,
-       while sprites use colors 0-0x0f */
+	   while sprites use colors 0-0x0f */
 	for (i = 0; i < 0x200; i++)
 	{
 		int j;
@@ -91,21 +91,18 @@ void shaolins_state::palette_init()
 
 WRITE8_MEMBER(shaolins_state::shaolins_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(shaolins_state::shaolins_colorram_w)
 {
-
 	m_colorram[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(shaolins_state::shaolins_palettebank_w)
 {
-
 	if (m_palettebank != (data & 0x07))
 	{
 		m_palettebank = data & 0x07;
@@ -123,7 +120,6 @@ WRITE8_MEMBER(shaolins_state::shaolins_scroll_w)
 
 WRITE8_MEMBER(shaolins_state::shaolins_nmi_w)
 {
-
 	m_nmi_enable = data;
 
 	if (flip_screen() != (data & 0x01))
@@ -145,9 +141,8 @@ TILE_GET_INFO_MEMBER(shaolins_state::get_bg_tile_info)
 
 void shaolins_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(shaolins_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS,
-		 8, 8, 32, 32);
+			8, 8, 32, 32);
 
 	m_bg_tilemap->set_scroll_cols(32);
 }
@@ -188,7 +183,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 
 UINT32 shaolins_state::screen_update_shaolins(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	draw_sprites(machine(), bitmap, cliprect);
 	return 0;

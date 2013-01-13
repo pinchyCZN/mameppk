@@ -46,7 +46,6 @@ WRITE16_MEMBER(dec0_state::dec0_paletteram_b_w)
 
 UINT32 dec0_state::screen_update_hbarrel(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	flip_screen_set(m_tilegen1->get_flip_state());
 
 	m_tilegen3->deco_bac06_pf_draw(machine(),bitmap,cliprect,TILEMAP_DRAW_OPAQUE, 0x00, 0x00, 0x00, 0x00);
@@ -215,7 +214,6 @@ UINT32 dec0_automat_state::screen_update_automat(screen_device &screen, bitmap_i
 
 UINT32 dec0_automat_state::screen_update_secretab(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	// layer enables seem different... where are they?
 
 	// the bootleg doesn't write these registers, I think they're hardcoded?, so fake them for compatibility with our implementation..
@@ -265,11 +263,10 @@ UINT32 dec0_automat_state::screen_update_secretab(screen_device &screen, bitmap_
 
 UINT32 dec0_state::screen_update_birdtry(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	flip_screen_set(m_tilegen1->get_flip_state());
 
 	/* This game doesn't have the extra playfield chip on the game board, but
-    the palette does show through. */
+	the palette does show through. */
 	bitmap.fill(machine().pens[768], cliprect);
 	m_tilegen2->deco_bac06_pf_draw(machine(),bitmap,cliprect,0, 0x00, 0x00, 0x00, 0x00);
 	m_spritegen->draw_sprites(machine(), bitmap, cliprect, m_buffered_spriteram, 0x00, 0x00, 0x0f);

@@ -111,28 +111,24 @@ public:
 
 WRITE16_MEMBER(mwarr_state::bg_videoram_w)
 {
-
 	COMBINE_DATA(&m_bg_videoram[offset]);
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE16_MEMBER(mwarr_state::mlow_videoram_w)
 {
-
 	COMBINE_DATA(&m_mlow_videoram[offset]);
 	m_mlow_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE16_MEMBER(mwarr_state::mhigh_videoram_w)
 {
-
 	COMBINE_DATA(&m_mhigh_videoram[offset]);
 	m_mhigh_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE16_MEMBER(mwarr_state::tx_videoram_w)
 {
-
 	COMBINE_DATA(&m_tx_videoram[offset]);
 	m_tx_tilemap->mark_tile_dirty(offset);
 }
@@ -145,7 +141,6 @@ WRITE16_MEMBER(mwarr_state::oki1_bank_w)
 
 WRITE16_MEMBER(mwarr_state::sprites_commands_w)
 {
-
 	if (m_which)
 	{
 		int i;
@@ -259,7 +254,7 @@ static INPUT_PORTS_START( mwarr )
 
 	PORT_START("DSW")
 	PORT_DIPNAME( 0x0003, 0x0003, DEF_STR( Difficulty ) )
-	PORT_DIPSETTING(	  0x0003, DEF_STR( Very_Easy ) )
+	PORT_DIPSETTING(      0x0003, DEF_STR( Very_Easy ) )
 	PORT_DIPSETTING(      0x0002, DEF_STR( Easy ) )
 	PORT_DIPSETTING(      0x0001, DEF_STR( Hard ) )
 	PORT_DIPSETTING(      0x0000, DEF_STR( Very_Hard ) )
@@ -328,8 +323,8 @@ static const gfx_layout mwarr_tile16_layout =
 	RGN_FRAC(1,2),
 	4,
 	{ 0,1,2,3 },
-	{ 4, 0,	RGN_FRAC(1,2)+4, RGN_FRAC(1,2)+0, 12, 8, RGN_FRAC(1,2)+12, RGN_FRAC(1,2)+8,
-	  256+4, 256+0, 256+RGN_FRAC(1,2)+4, 256+RGN_FRAC(1,2)+0, 256+12, 256+8, 256+RGN_FRAC(1,2)+12, 256+RGN_FRAC(1,2)+8 },
+	{ 4, 0, RGN_FRAC(1,2)+4, RGN_FRAC(1,2)+0, 12, 8, RGN_FRAC(1,2)+12, RGN_FRAC(1,2)+8,
+		256+4, 256+0, 256+RGN_FRAC(1,2)+4, 256+RGN_FRAC(1,2)+0, 256+12, 256+8, 256+RGN_FRAC(1,2)+12, 256+RGN_FRAC(1,2)+8 },
 	{ 0*16,1*16,2*16,3*16,4*16,5*16,6*16,7*16,8*16,9*16,10*16,11*16,12*16,13*16,14*16,15*16 },
 	32*16
 };
@@ -347,7 +342,7 @@ static const gfx_layout mwarr_6bpp_sprites =
 
 static GFXDECODE_START( mwarr )
 	GFXDECODE_ENTRY( "gfx1", 0, mwarr_6bpp_sprites,  1024, 16 )
-	GFXDECODE_ENTRY( "gfx2", 0, mwarr_tile8_layout,	 384,  8 )
+	GFXDECODE_ENTRY( "gfx2", 0, mwarr_tile8_layout,  384,  8 )
 	GFXDECODE_ENTRY( "gfx3", 0, mwarr_tile16_layout,  256,  8 )
 	GFXDECODE_ENTRY( "gfx4", 0, mwarr_tile16_layout,  128,  8 )
 	GFXDECODE_ENTRY( "gfx5", 0, mwarr_tile16_layout,    0,  8 )
@@ -393,7 +388,6 @@ TILE_GET_INFO_MEMBER(mwarr_state::get_tx_tile_info)
 
 void mwarr_state::video_start()
 {
-
 	m_bg_tilemap    = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(mwarr_state::get_bg_tile_info),this),    TILEMAP_SCAN_COLS, 16, 16, 64, 16);
 	m_mlow_tilemap  = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(mwarr_state::get_mlow_tile_info),this),  TILEMAP_SCAN_COLS, 16, 16, 64, 16);
 	m_mhigh_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(mwarr_state::get_mhigh_tile_info),this), TILEMAP_SCAN_COLS, 16, 16, 64, 16);
@@ -431,49 +425,49 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 			dy = (source[0] & 0xf000) >> 12;
 
-			pri = ((source[1] & 0x3c00) >> 10);	// Priority (1 = Low)
-			pri_mask = ~((1 << (pri + 1)) - 1);		// Above the first "pri" levels
+			pri = ((source[1] & 0x3c00) >> 10); // Priority (1 = Low)
+			pri_mask = ~((1 << (pri + 1)) - 1);     // Above the first "pri" levels
 
 			for (i = 0; i <= dy; i++)
 			{
 				pdrawgfx_transpen( bitmap,
-						  cliprect,
-						  gfx,
-						  source[2]+i,
-						  color,
-						  flipx,0,
-						  x,y+i*16,
-						  machine.priority_bitmap,pri_mask,0 );
+							cliprect,
+							gfx,
+							source[2]+i,
+							color,
+							flipx,0,
+							x,y+i*16,
+							machine.priority_bitmap,pri_mask,0 );
 
 				/* wrap around x */
 				pdrawgfx_transpen( bitmap,
-						  cliprect,
-						  gfx,
-						  source[2]+i,
-						  color,
-						  flipx,0,
-						  x-1024,y+i*16,
-						  machine.priority_bitmap,pri_mask,0 );
+							cliprect,
+							gfx,
+							source[2]+i,
+							color,
+							flipx,0,
+							x-1024,y+i*16,
+							machine.priority_bitmap,pri_mask,0 );
 
 				/* wrap around y */
 				pdrawgfx_transpen( bitmap,
-						  cliprect,
-						 gfx,
-						  source[2]+i,
-						  color,
-						  flipx,0,
-						  x,y-512+i*16,
-						 machine.priority_bitmap,pri_mask,0 );
+							cliprect,
+							gfx,
+							source[2]+i,
+							color,
+							flipx,0,
+							x,y-512+i*16,
+							machine.priority_bitmap,pri_mask,0 );
 
 				/* wrap around x & y */
 				pdrawgfx_transpen( bitmap,
-						  cliprect,
-						  gfx,
-						  source[2]+i,
-						  color,
-						  flipx,0,
-						  x-1024,y-512+i*16,
-						  machine.priority_bitmap,pri_mask,0 );
+							cliprect,
+							gfx,
+							source[2]+i,
+							color,
+							flipx,0,
+							x-1024,y-512+i*16,
+							machine.priority_bitmap,pri_mask,0 );
 			}
 		}
 
@@ -543,13 +537,11 @@ UINT32 mwarr_state::screen_update_mwarr(screen_device &screen, bitmap_ind16 &bit
 
 void mwarr_state::machine_start()
 {
-
 	save_item(NAME(m_which));
 }
 
 void mwarr_state::machine_reset()
 {
-
 	m_which = 0;
 }
 

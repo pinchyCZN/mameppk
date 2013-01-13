@@ -24,8 +24,7 @@
 	static const floppy_format_type _name [];
 
 #define FLOPPY_FORMATS_MEMBER(_member) \
-	const floppy_format_type _member [] = { \
-
+	const floppy_format_type _member [] = {
 #define FLOPPY_FORMATS_END \
 		, \
 		FLOPPY_D88_FORMAT, \
@@ -60,7 +59,7 @@ public:
 	void set_formats(const floppy_format_type *formats);
 	floppy_image_format_t *get_formats() const;
 	floppy_image_format_t *get_load_format() const;
-	floppy_image_format_t *identify(astring filename) const;
+	floppy_image_format_t *identify(astring filename);
 	void set_rpm(float rpm);
 
 	// image-level overrides
@@ -190,6 +189,7 @@ protected:
 
 	void do_load_create();
 	virtual void hook_load(astring filename, bool softlist);
+	astring try_file(astring location, astring name, bool has_crc, UINT32 crc);
 };
 
 class floppy_3_ssdd : public floppy_image_device {

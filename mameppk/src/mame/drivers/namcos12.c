@@ -85,9 +85,6 @@ http://www.arcadeflyers.com/?page=thumbs&db=videodb&id=5531
 This was cancelled, only the flyer exists.
 It was shown only at an amusement show. Possibly a prototype still exists. Possibly not.
 
-Techno Drive                            (C) Namco,        1998
-http://www.bandainamcogames.co.jp/am/em/techno-drive/main/index.php
-
 Tekno Werk                              (C) Namco,        1999
 Some kind of music game similar to Konami's Keyboard Mania series
 
@@ -1036,22 +1033,21 @@ Notes:
 #include "cpu/psx/psx.h"
 #include "cpu/h83002/h8.h"
 #include "video/psx.h"
-#include "includes/psx.h"
 #include "machine/at28c16.h"
 #include "sound/c352.h"
 #include "machine/rtc4543.h"
 
 #define VERBOSE_LEVEL ( 0 )
 
-class namcos12_state : public psx_state
+class namcos12_state : public driver_device
 {
 public:
 	namcos12_state(const machine_config &mconfig, device_type type, const char *tag)
-		: psx_state(mconfig, type, tag),
-          m_rtc(*this, "rtc"),
-		  m_sharedram(*this, "sharedram") { }
+		: driver_device(mconfig, type, tag),
+			m_rtc(*this, "rtc"),
+			m_sharedram(*this, "sharedram") { }
 
-    required_device<rtc4543_device> m_rtc;
+	required_device<rtc4543_device> m_rtc;
 	required_shared_ptr<UINT32> m_sharedram;
 	UINT32 m_n_bankoffset;
 
@@ -1117,21 +1113,18 @@ INLINE void ATTR_PRINTF(3,4) verboselog( running_machine &machine, int n_level, 
 
 WRITE32_MEMBER(namcos12_state::sharedram_w)
 {
-
 	verboselog( machine(), 1, "sharedram_w( %08x, %08x, %08x )\n", ( offset * 4 ), data, mem_mask );
 	COMBINE_DATA( &m_sharedram[ offset ] );
 }
 
 READ32_MEMBER(namcos12_state::sharedram_r)
 {
-
 	verboselog( machine(), 1, "sharedram_r( %08x, %08x ) %08x\n", ( offset * 4 ), mem_mask, m_sharedram[ offset ] );
 	return m_sharedram[ offset ];
 }
 
 WRITE16_MEMBER(namcos12_state::sharedram_sub_w)
 {
-
 	UINT16 *shared16 = reinterpret_cast<UINT16 *>(m_sharedram.target());
 
 	COMBINE_DATA(&shared16[BYTE_XOR_LE(offset)]);
@@ -1139,7 +1132,6 @@ WRITE16_MEMBER(namcos12_state::sharedram_sub_w)
 
 READ16_MEMBER(namcos12_state::sharedram_sub_r)
 {
-
 	UINT16 *shared16 = reinterpret_cast<UINT16 *>(m_sharedram.target());
 
 	return shared16[BYTE_XOR_LE(offset)];
@@ -1147,7 +1139,6 @@ READ16_MEMBER(namcos12_state::sharedram_sub_r)
 
 WRITE32_MEMBER(namcos12_state::bankoffset_w)
 {
-
 	// Golgo 13 has different banking (maybe the keycus controls it?)
 	if( strcmp( machine().system().name, "golgo13" ) == 0 ||
 		strcmp( machine().system().name, "g13knd" ) == 0 )
@@ -1173,7 +1164,6 @@ WRITE32_MEMBER(namcos12_state::bankoffset_w)
 
 WRITE32_MEMBER(namcos12_state::dmaoffset_w)
 {
-
 	if( ACCESSING_BITS_0_15 )
 	{
 		m_n_dmaoffset = ( offset * 4 ) | ( data << 16 );
@@ -1185,16 +1175,19 @@ WRITE32_MEMBER(namcos12_state::dmaoffset_w)
 	verboselog( machine(), 1, "dmaoffset_w( %08x, %08x, %08x ) %08x\n", offset, data, mem_mask, m_n_dmaoffset );
 }
 
-static void namcos12_rom_read( namcos12_state *state, UINT32 n_address, INT32 n_size )
+static void namcos12_rom_read( namcos12_state *state, UINT32 *p_n_psxram, UINT32 n_address, INT32 n_size )
 {
 	const char *n_region;
 	int n_offset;
 
-	INT32 n_ramleft;
 	INT32 n_romleft;
 
 	UINT16 *source;
 	UINT16 *destination;
+	INT32 n_ramleft;
+
+	// TODO: the check for going past the end of ram should be in dma.c
+	UINT32 m_n_psxramsize = state->machine().root_device().memshare("share1")->bytes();
 
 	if(state->m_has_tektagt_dma && !state->m_n_dmaoffset)
 	{
@@ -1223,8 +1216,9 @@ static void namcos12_rom_read( namcos12_state *state, UINT32 n_address, INT32 n_
 		n_size = n_romleft;
 	}
 
-	destination = (UINT16 *)state->m_p_n_psxram;
-	n_ramleft = ( state->m_n_psxramsize - n_address ) / 4;
+	destination = (UINT16 *)p_n_psxram;
+
+	n_ramleft = ( m_n_psxramsize - n_address ) / 4;
 	if( n_size > n_ramleft )
 	{
 		verboselog( state->machine(), 1, "namcos12_rom_read dma truncated %d to %d passed end of ram\n", n_size, n_ramleft );
@@ -1251,13 +1245,12 @@ static void namcos12_sub_irq( namcos12_state *state, screen_device &screen, bool
 
 WRITE32_MEMBER(namcos12_state::s12_dma_bias_w)
 {
-
 	m_n_dmabias = data;
 }
 
 static ADDRESS_MAP_START( namcos12_map, AS_PROGRAM, 32, namcos12_state )
 	AM_RANGE(0x00000000, 0x003fffff) AM_RAM AM_SHARE("share1") /* ram */
-	AM_RANGE(0x1f000000, 0x1f000003) AM_READNOP AM_WRITE(bankoffset_w)			/* banking */
+	AM_RANGE(0x1f000000, 0x1f000003) AM_READNOP AM_WRITE(bankoffset_w)          /* banking */
 	AM_RANGE(0x1f080000, 0x1f083fff) AM_READWRITE(sharedram_r, sharedram_w) AM_SHARE("sharedram") /* shared ram?? */
 	AM_RANGE(0x1f140000, 0x1f140fff) AM_DEVREADWRITE8_LEGACY("at28c16", at28c16_r, at28c16_w, 0x00ff00ff) /* eeprom */
 	AM_RANGE(0x1f1bff08, 0x1f1bff0f) AM_WRITENOP    /* ?? */
@@ -1268,14 +1261,12 @@ static ADDRESS_MAP_START( namcos12_map, AS_PROGRAM, 32, namcos12_state )
 	AM_RANGE(0x9fc00000, 0x9fffffff) AM_ROM AM_SHARE("share2") /* bios mirror */
 	AM_RANGE(0xa0000000, 0xa03fffff) AM_RAM AM_SHARE("share1") /* ram mirror */
 	AM_RANGE(0xbfc00000, 0xbfffffff) AM_ROM AM_SHARE("share2") /* bios mirror */
-	AM_RANGE(0xfffe0130, 0xfffe0133) AM_WRITENOP
 ADDRESS_MAP_END
 
 WRITE32_MEMBER(namcos12_state::system11gun_w)
 {
 	if( ACCESSING_BITS_0_15 )
 	{
-
 		/* blowback 1 */
 		/* blowback 2 */
 		/* Note: output label has been changed for the Engrish Impaired ;-) */
@@ -1332,13 +1323,11 @@ WRITE32_MEMBER(namcos12_state::kcoff_w)
 
 WRITE32_MEMBER(namcos12_state::kcon_w)
 {
-
 	membank( "bank2" )->set_base( m_kcram );
 }
 
 WRITE32_MEMBER(namcos12_state::tektagt_protection_1_w)
 {
-
 	// Second dma offset or protection ref values write
 	m_n_tektagdmaoffset = data;
 	if(m_ttt_cnt != 2)
@@ -1353,7 +1342,6 @@ READ32_MEMBER(namcos12_state::tektagt_protection_1_r)
 
 WRITE32_MEMBER(namcos12_state::tektagt_protection_2_w)
 {
-
 	// Writes are 0 or rand(), only used as a "start prot value write" trigger
 	m_ttt_cnt = 0;
 }
@@ -1449,8 +1437,8 @@ static ADDRESS_MAP_START( s12h8rwmap, AS_PROGRAM, 16, namcos12_state )
 	AM_RANGE(0x280000, 0x287fff) AM_DEVREADWRITE("c352", c352_device, read, write)
 	AM_RANGE(0x300000, 0x300001) AM_READ_PORT("IN0")
 	AM_RANGE(0x300002, 0x300003) AM_READ_PORT("IN1")
-	AM_RANGE(0x300010, 0x300011) AM_NOP	// golgo13 writes here a lot, possibly also a wait state generator?
-	AM_RANGE(0x300030, 0x300031) AM_NOP	// most S12 bioses write here simply to generate a wait state.  there is no deeper meaning.
+	AM_RANGE(0x300010, 0x300011) AM_NOP // golgo13 writes here a lot, possibly also a wait state generator?
+	AM_RANGE(0x300030, 0x300031) AM_NOP // most S12 bioses write here simply to generate a wait state.  there is no deeper meaning.
 ADDRESS_MAP_END
 
 READ8_MEMBER(namcos12_state::s12_mcu_p8_r)
@@ -1464,34 +1452,32 @@ READ8_MEMBER(namcos12_state::s12_mcu_p8_r)
 
 READ8_MEMBER(namcos12_state::s12_mcu_pa_r)
 {
-
 	return m_s12_porta;
 }
 
 WRITE8_MEMBER(namcos12_state::s12_mcu_pa_w)
 {
-    m_rtc->ce_w(data & 1);
+	m_rtc->ce_w(data & 1);
 	m_s12_porta = data;
 }
 
 READ8_MEMBER(namcos12_state::s12_mcu_rtc_r)
 {
-    UINT8 ret = 0;
+	UINT8 ret = 0;
 
-    for (int i = 0; i < 8; i++)
-    {
-        m_rtc->clk_w(0);
-        m_rtc->clk_w(1);
-        ret <<= 1;
-        ret |= m_rtc->data_r();
-    }
+	for (int i = 0; i < 8; i++)
+	{
+		m_rtc->clk_w(0);
+		m_rtc->clk_w(1);
+		ret <<= 1;
+		ret |= m_rtc->data_r();
+	}
 
 	return ret;
 }
 
 READ8_MEMBER(namcos12_state::s12_mcu_portB_r)
 {
-
 	// golgo13 won't boot if this doesn't toggle every read
 	m_s12_lastpB ^= 0x80;
 	return m_s12_lastpB;
@@ -1499,7 +1485,6 @@ READ8_MEMBER(namcos12_state::s12_mcu_portB_r)
 
 WRITE8_MEMBER(namcos12_state::s12_mcu_portB_w)
 {
-
 	// bit 7 = chip enable for the video settings controller
 	if (data & 0x80)
 	{
@@ -1528,7 +1513,7 @@ WRITE8_MEMBER(namcos12_state::s12_mcu_settings_w)
 		}
 	}
 	else
-	{	// setting number
+	{   // setting number
 		m_s12_setnum = (data >> 4)-1;
 	}
 
@@ -1587,16 +1572,13 @@ static ADDRESS_MAP_START( s12h8iomap, AS_IO, 8, namcos12_state )
 	AM_RANGE(H8_PORT_B, H8_PORT_B) AM_READWRITE(s12_mcu_portB_r, s12_mcu_portB_w )
 	AM_RANGE(H8_SERIAL_1, H8_SERIAL_1) AM_READ(s12_mcu_rtc_r ) AM_WRITE(s12_mcu_settings_w )
 	AM_RANGE(H8_ADC_0_H, H8_ADC_0_L) AM_NOP
-	AM_RANGE(H8_ADC_1_H, H8_ADC_1_L) AM_READ(s12_mcu_gun_h_r )	// golgo 13 gun X-axis
-	AM_RANGE(H8_ADC_2_H, H8_ADC_2_L) AM_READ(s12_mcu_gun_v_r )	// golgo 13 gun Y-axis
+	AM_RANGE(H8_ADC_1_H, H8_ADC_1_L) AM_READ(s12_mcu_gun_h_r )  // golgo 13 gun X-axis
+	AM_RANGE(H8_ADC_2_H, H8_ADC_2_L) AM_READ(s12_mcu_gun_v_r )  // golgo 13 gun Y-axis
 	AM_RANGE(H8_ADC_3_H, H8_ADC_3_L) AM_NOP
 ADDRESS_MAP_END
 
 DRIVER_INIT_MEMBER(namcos12_state,namcos12)
 {
-
-	psx_driver_init(machine());
-
 	membank("bank1")->configure_entries(0, memregion( "user2" )->bytes() / 0x200000, memregion( "user2" )->base(), 0x200000 );
 
 	m_s12_porta = 0;
@@ -1647,7 +1629,7 @@ static MACHINE_CONFIG_START( coh700, namcos12_state )
 
 	MCFG_MACHINE_RESET_OVERRIDE(namcos12_state, namcos12 )
 
-    MCFG_RTC4543_ADD("rtc", XTAL_32_768kHz)
+	MCFG_RTC4543_ADD("rtc", XTAL_32_768kHz)
 
 	/* video hardware */
 	MCFG_PSXGPU_ADD( "maincpu", "gpu", CXD8654Q, 0x200000, XTAL_53_693175MHz )
@@ -2768,7 +2750,7 @@ ROM_START( truckk )
 	ROM_REGION( 0x1000000, "c352", 0 ) /* samples */
 	ROM_LOAD( "tkk1wave0.ic1", 0x000000, 0x800000, CRC(037d3095) SHA1(cc343bdd45d023c133964321e2df5cb1c91525ef) )
 
-	ROM_REGION( 0x20000, "ioboard", 0)	/* Truck K. I/O board */
+	ROM_REGION( 0x20000, "ioboard", 0)  /* Truck K. I/O board */
 	ROM_LOAD( "tkk1prg0.ic7", 0x000000, 0x020000, CRC(11fd9c31) SHA1(068b8364ec0eb1e88f9f85f40b8b322876f6f3e2) )
 
 	DISK_REGION( "cdrom" )

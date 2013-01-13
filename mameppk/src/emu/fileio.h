@@ -78,9 +78,9 @@ public:
 
 private:
 	// internal state
-	const char *	m_base;
-	const char *	m_current;
-	int				m_index;
+	const char *    m_base;
+	const char *    m_current;
+	int             m_index;
 };
 
 
@@ -100,10 +100,10 @@ public:
 
 private:
 	// internal state
-	path_iterator	m_iterator;
-	osd_directory *	m_curdir;
-	astring			m_pathbuffer;
-	int				m_buflen;
+	path_iterator   m_iterator;
+	osd_directory * m_curdir;
+	astring         m_pathbuffer;
+	int             m_buflen;
 };
 
 
@@ -176,23 +176,23 @@ private:
 	file_error load__7zped_file();
 
 	// internal state
-	astring			m_filename;					// original filename provided
-	astring			m_fullpath;					// full filename
-	core_file *		m_file;						// core file pointer
-	path_iterator	m_iterator;						// iterator for paths
-	UINT32			m_crc;						// iterator for paths
-	UINT32			m_openflags;					// flags we used for the open
-	hash_collection m_hashes;						// collection of hashes
+	astring         m_filename;                     // original filename provided
+	astring         m_fullpath;                     // full filename
+	core_file *     m_file;                         // core file pointer
+	path_iterator   m_iterator;                     // iterator for paths
+	UINT32          m_crc;                          // iterator for paths
+	UINT32          m_openflags;                    // flags we used for the open
+	hash_collection m_hashes;                       // collection of hashes
 
-	zip_file *		m_zipfile;					// ZIP file pointer
-	UINT8 *			m_zipdata;					// ZIP file data
-	UINT64			m_ziplength;					// ZIP file length
+	zip_file *      m_zipfile;                      // ZIP file pointer
+	UINT8 *         m_zipdata;                      // ZIP file data
+	UINT64          m_ziplength;                    // ZIP file length
 
-	_7z_file *		m__7zfile;						// 7Z file pointer
-	UINT8 *			m__7zdata;						// 7Z file data
-	UINT64			m__7zlength;					// 7Z file length
+	_7z_file *      m__7zfile;                      // 7Z file pointer
+	UINT8 *         m__7zdata;                      // 7Z file data
+	UINT64          m__7zlength;                    // 7Z file length
 
-	bool			m_remove_on_close;				// flag: remove the file when closing
+	bool            m_remove_on_close;              // flag: remove the file when closing
 };
 
 
@@ -205,4 +205,4 @@ int checksum_file_crc32(const char *searchpath, const char *file, UINT8 **p, UIN
 void GetDirectory(void* filename, char* dst, int dstlen);
 #endif /* MAME_AVI */
 
-#endif	/* __FILEIO_H__ */
+#endif  /* __FILEIO_H__ */

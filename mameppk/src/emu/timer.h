@@ -53,8 +53,8 @@
 //**************************************************************************
 
 // macros for a timer callback functions
-#define TIMER_DEVICE_CALLBACK(name)		void name(device_t *, timer_device &timer, void *ptr, INT32 param)
-#define TIMER_DEVICE_CALLBACK_MEMBER(name)	void name(timer_device &timer, void *ptr, INT32 param)
+#define TIMER_DEVICE_CALLBACK(name)     void name(device_t *, timer_device &timer, void *ptr, INT32 param)
+#define TIMER_DEVICE_CALLBACK_MEMBER(name)  void name(timer_device &timer, void *ptr, INT32 param)
 
 //**************************************************************************
 //  TIMER DEVICE CONFIGURATION MACROS
@@ -62,50 +62,38 @@
 
 #define MCFG_TIMER_ADD(_tag, _callback) \
 	MCFG_DEVICE_ADD(_tag, TIMER, 0) \
-	timer_device::static_configure_generic(*device, timer_device_expired_delegate(&_callback, #_callback)); \
-
+	timer_device::static_configure_generic(*device, timer_device_expired_delegate(&_callback, #_callback));
 #define MCFG_TIMER_ADD_NONE(_tag) \
 	MCFG_DEVICE_ADD(_tag, TIMER, 0) \
-	timer_device::static_configure_generic(*device, timer_device_expired_delegate()); \
-
+	timer_device::static_configure_generic(*device, timer_device_expired_delegate());
 #define MCFG_TIMER_ADD_PERIODIC(_tag, _callback, _period) \
 	MCFG_DEVICE_ADD(_tag, TIMER, 0) \
-	timer_device::static_configure_periodic(*device, timer_device_expired_delegate(&_callback, #_callback), _period); \
-
+	timer_device::static_configure_periodic(*device, timer_device_expired_delegate(&_callback, #_callback), _period);
 #define MCFG_TIMER_ADD_SCANLINE(_tag, _callback, _screen, _first_vpos, _increment) \
 	MCFG_DEVICE_ADD(_tag, TIMER, 0) \
-	timer_device::static_configure_scanline(*device, timer_device_expired_delegate(&_callback, #_callback), _screen, _first_vpos, _increment); \
-
+	timer_device::static_configure_scanline(*device, timer_device_expired_delegate(&_callback, #_callback), _screen, _first_vpos, _increment);
 #define MCFG_TIMER_DRIVER_ADD(_tag, _class, _callback) \
 	MCFG_DEVICE_ADD(_tag, TIMER, 0) \
-	timer_device::static_configure_generic(*device, timer_device_expired_delegate(&_class::_callback, #_class "::" #_callback, NULL, (_class *)0)); \
-
+	timer_device::static_configure_generic(*device, timer_device_expired_delegate(&_class::_callback, #_class "::" #_callback, NULL, (_class *)0));
 #define MCFG_TIMER_DRIVER_ADD_PERIODIC(_tag, _class, _callback, _period) \
 	MCFG_DEVICE_ADD(_tag, TIMER, 0) \
-	timer_device::static_configure_periodic(*device, timer_device_expired_delegate(&_class::_callback, #_class "::" #_callback, NULL, (_class *)0), _period); \
-
+	timer_device::static_configure_periodic(*device, timer_device_expired_delegate(&_class::_callback, #_class "::" #_callback, NULL, (_class *)0), _period);
 #define MCFG_TIMER_DRIVER_ADD_SCANLINE(_tag, _class, _callback, _screen, _first_vpos, _increment) \
 	MCFG_DEVICE_ADD(_tag, TIMER, 0) \
-	timer_device::static_configure_scanline(*device, timer_device_expired_delegate(&_class::_callback, #_class "::" #_callback, NULL, (_class *)0), _screen, _first_vpos, _increment); \
-
+	timer_device::static_configure_scanline(*device, timer_device_expired_delegate(&_class::_callback, #_class "::" #_callback, NULL, (_class *)0), _screen, _first_vpos, _increment);
 #define MCFG_TIMER_MODIFY(_tag) \
 	MCFG_DEVICE_MODIFY(_tag)
 
 #define MCFG_TIMER_CALLBACK(_callback) \
-	timer_device::static_set_callback(*device, timer_device_expired_delegate(&_callback, #_callback)); \
-
+	timer_device::static_set_callback(*device, timer_device_expired_delegate(&_callback, #_callback));
 #define MCFG_TIMER_DRIVER_CALLBACK(_class, _callback) \
-	timer_device::static_set_callback(*device, timer_device_expired_delegate(&_class::_callback, #_class "::" #_callback, NULL, (_class *)0)); \
-
+	timer_device::static_set_callback(*device, timer_device_expired_delegate(&_class::_callback, #_class "::" #_callback, NULL, (_class *)0));
 #define MCFG_TIMER_START_DELAY(_start_delay) \
-	timer_device::static_set_start_delay(*device, _start_delay); \
-
+	timer_device::static_set_start_delay(*device, _start_delay);
 #define MCFG_TIMER_PARAM(_param) \
-	timer_device::static_set_param(*device, _param); \
-
+	timer_device::static_set_param(*device, _param);
 #define MCFG_TIMER_PTR(_ptr) \
-	timer_device::static_set_ptr(*device, (void *)(_ptr)); \
-
+	timer_device::static_set_ptr(*device, (void *)(_ptr));
 
 
 //**************************************************************************
@@ -172,24 +160,24 @@ private:
 	};
 
 	// configuration data
-	timer_type				m_type;				// type of timer
-	timer_device_expired_delegate	m_callback;			// the timer's callback function
-	void *					m_ptr;				// the pointer parameter passed to the timer callback
+	timer_type              m_type;             // type of timer
+	timer_device_expired_delegate   m_callback;         // the timer's callback function
+	void *                  m_ptr;              // the pointer parameter passed to the timer callback
 
 	// periodic timers only
-	attotime				m_start_delay;		// delay before the timer fires for the first time
-	attotime				m_period;			// period of repeated timer firings
-	INT32					m_param;			// the integer parameter passed to the timer callback
+	attotime                m_start_delay;      // delay before the timer fires for the first time
+	attotime                m_period;           // period of repeated timer firings
+	INT32                   m_param;            // the integer parameter passed to the timer callback
 
 	// scanline timers only
-	const char *			m_screen_tag;		// the tag of the screen this timer tracks
-	screen_device *			m_screen;			// pointer to the screen device
-	UINT32					m_first_vpos;		// the first vertical scanline position the timer fires on
-	UINT32					m_increment;		// the number of scanlines between firings
+	const char *            m_screen_tag;       // the tag of the screen this timer tracks
+	screen_device *         m_screen;           // pointer to the screen device
+	UINT32                  m_first_vpos;       // the first vertical scanline position the timer fires on
+	UINT32                  m_increment;        // the number of scanlines between firings
 
 	// internal state
-	emu_timer *				m_timer;			// the backing timer
-	bool					m_first_time;		// indicates that the system is starting (scanline timers only)
+	emu_timer *             m_timer;            // the backing timer
+	bool                    m_first_time;       // indicates that the system is starting (scanline timers only)
 };
 
 
@@ -201,4 +189,4 @@ private:
 extern const device_type TIMER;
 
 
-#endif	/* __TIMER_H__ */
+#endif  /* __TIMER_H__ */

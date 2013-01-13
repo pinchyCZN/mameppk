@@ -68,13 +68,13 @@ static int draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const re
 			code = state->m_spvideoram[offs + 1];
 
 			color = state->m_spvideoram[offs + 2];
-			size = 1 << (color & 0x0003);				/* 1,2,4,8 */
+			size = 1 << (color & 0x0003);               /* 1,2,4,8 */
 			color = (color & 0x00f0) >> 4;
 
 			sx = state->m_spvideoram[offs + 4];
 			sy = state->m_spvideoram[offs + 3];
 
-			attr &= ~0x0040;							/* !!! */
+			attr &= ~0x0040;                            /* !!! */
 
 			if (attr & 0x0040)
 				color |= 0x0180;
@@ -108,7 +108,6 @@ static int draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const re
 
 void spbactn_state::video_start()
 {
-
 	/* allocate bitmaps */
 	machine().primary_screen->register_screen_bitmap(m_tile_bitmap_bg);
 	machine().primary_screen->register_screen_bitmap(m_tile_bitmap_fg);

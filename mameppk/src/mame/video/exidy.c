@@ -20,7 +20,7 @@ void exidy_video_config(running_machine &machine, UINT8 _collision_mask, UINT8 _
 	exidy_state *state = machine.driver_data<exidy_state>();
 	state->m_collision_mask   = _collision_mask;
 	state->m_collision_invert = _collision_invert;
-	state->m_is_2bpp			 = _is_2bpp;
+	state->m_is_2bpp             = _is_2bpp;
 }
 
 
@@ -33,7 +33,6 @@ void exidy_video_config(running_machine &machine, UINT8 _collision_mask, UINT8 _
 
 void exidy_state::video_start()
 {
-
 	machine().primary_screen->register_screen_bitmap(m_background_bitmap);
 	m_motion_object_1_vid.allocate(16, 16);
 	m_motion_object_2_vid.allocate(16, 16);
@@ -98,9 +97,9 @@ INLINE void set_1_color(running_machine &machine, int index, int which)
 {
 	exidy_state *state = machine.driver_data<exidy_state>();
 	palette_set_color_rgb(machine, index,
-						  pal1bit(state->m_color_latch[2] >> which),
-						  pal1bit(state->m_color_latch[1] >> which),
-						  pal1bit(state->m_color_latch[0] >> which));
+							pal1bit(state->m_color_latch[2] >> which),
+							pal1bit(state->m_color_latch[1] >> which),
+							pal1bit(state->m_color_latch[0] >> which));
 }
 
 static void set_colors(running_machine &machine)

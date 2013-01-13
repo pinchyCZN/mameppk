@@ -11,14 +11,14 @@ WRITE8_MEMBER(ksayakyu_state::ksayakyu_videoram_w)
 WRITE8_MEMBER(ksayakyu_state::ksayakyu_videoctrl_w)
 {
 	/*
-        bits:
-        76543210
-              xx - ?? layers enable ?
-             x   - screen flip
-           xx    - ??
-        xxx      - scroll offset
+	    bits:
+	    76543210
+	          xx - ?? layers enable ?
+	         x   - screen flip
+	       xx    - ??
+	    xxx      - scroll offset
 
-     */
+	 */
 	m_video_ctrl = data;
 
 	m_flipscreen = data & 4;
@@ -122,7 +122,6 @@ void ksayakyu_state::video_start()
 
 UINT32 ksayakyu_state::screen_update_ksayakyu(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	bitmap.fill(0, cliprect);
 
 	if (m_video_ctrl & 1)

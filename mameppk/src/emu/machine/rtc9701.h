@@ -18,8 +18,7 @@
 //**************************************************************************
 
 #define MCFG_RTC9701_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, rtc9701, XTAL_32_768kHz) \
-
+	MCFG_DEVICE_ADD(_tag, rtc9701, XTAL_32_768kHz)
 
 //**************************************************************************
 //  TYPE DEFINITIONS
@@ -45,7 +44,7 @@ struct rtc_regs_t
 
 // ======================> rtc9701_device
 
-class rtc9701_device :	public device_t,
+class rtc9701_device :  public device_t,
 						public device_nvram_interface
 {
 public:
@@ -75,9 +74,9 @@ protected:
 
 	static TIMER_CALLBACK( rtc_inc_callback );
 
-	int 					m_latch;
-	int						m_reset_line;
-	int						m_clock_line;
+	int                     m_latch;
+	int                     m_reset_line;
+	int                     m_clock_line;
 
 
 	rtc9701_state_t rtc_state;

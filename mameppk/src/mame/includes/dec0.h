@@ -90,7 +90,6 @@ class dec0_automat_state : public dec0_state
 public:
 	dec0_automat_state(const machine_config &mconfig, device_type type, const char *tag)
 		: dec0_state(mconfig, type, tag) {
-
 	}
 
 	UINT8 m_automat_adpcm_byte;
@@ -116,4 +115,3 @@ DECLARE_READ16_HANDLER( slyspy_controls_r );
 
 extern void dec0_i8751_write(running_machine &machine, int data);
 extern void dec0_i8751_reset(running_machine &machine);
-

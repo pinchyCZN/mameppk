@@ -144,7 +144,6 @@ TILE_GET_INFO_MEMBER(calorie_state::get_fg_tile_info)
 
 void calorie_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(calorie_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS, 16, 16, 16, 16);
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(calorie_state::get_fg_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 
@@ -191,7 +190,7 @@ UINT32 calorie_state::screen_update_calorie(screen_device &screen, bitmap_ind16 
 
 		if (m_sprites[x + 1] & 0x10)
 		{
-			 /* 32x32 sprites */
+				/* 32x32 sprites */
 			drawgfx_transpen(bitmap, cliprect, machine().gfx[3], tileno | 0x40, color, flipx, flipy, xpos, ypos - 31, 0);
 		}
 		else
@@ -426,13 +425,11 @@ GFXDECODE_END
 
 void calorie_state::machine_start()
 {
-
 	save_item(NAME(m_bg_bank));
 }
 
 void calorie_state::machine_reset()
 {
-
 	m_bg_bank = 0;
 }
 
@@ -440,11 +437,11 @@ void calorie_state::machine_reset()
 static MACHINE_CONFIG_START( calorie, calorie_state )
 
 	/* basic machine hardware */
-	MCFG_CPU_ADD("maincpu", Z80,4000000)		 /* 4 MHz */
+	MCFG_CPU_ADD("maincpu", Z80,4000000)         /* 4 MHz */
 	MCFG_CPU_PROGRAM_MAP(calorie_map)
 	MCFG_CPU_VBLANK_INT_DRIVER("screen", calorie_state,  irq0_line_hold)
 
-	MCFG_CPU_ADD("audiocpu", Z80,3000000)		 /* 3 MHz */
+	MCFG_CPU_ADD("audiocpu", Z80,3000000)        /* 3 MHz */
 	MCFG_CPU_PROGRAM_MAP(calorie_sound_map)
 	MCFG_CPU_IO_MAP(calorie_sound_io_map)
 	MCFG_CPU_PERIODIC_INT_DRIVER(calorie_state, irq0_line_hold,  64)

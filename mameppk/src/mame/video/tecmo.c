@@ -81,12 +81,12 @@ TILE_GET_INFO_MEMBER(tecmo_state::get_tx_tile_info)
 
 VIDEO_START_MEMBER(tecmo_state,tecmo)
 {
-	if (m_video_type == 2)	/* gemini */
+	if (m_video_type == 2)  /* gemini */
 	{
 		m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(tecmo_state::gemini_get_bg_tile_info),this),TILEMAP_SCAN_ROWS,16,16,32,16);
 		m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(tecmo_state::gemini_get_fg_tile_info),this),TILEMAP_SCAN_ROWS,16,16,32,16);
 	}
-	else	/* rygar, silkworm */
+	else    /* rygar, silkworm */
 	{
 		m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(tecmo_state::get_bg_tile_info),this),TILEMAP_SCAN_ROWS,16,16,32,16);
 		m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(tecmo_state::get_fg_tile_info),this),TILEMAP_SCAN_ROWS,16,16,32,16);
@@ -129,7 +129,6 @@ WRITE8_MEMBER(tecmo_state::tecmo_bgvideoram_w)
 
 WRITE8_MEMBER(tecmo_state::tecmo_fgscroll_w)
 {
-
 	m_fgscroll[offset] = data;
 
 	m_fg_tilemap->set_scrollx(0, m_fgscroll[0] + 256 * m_fgscroll[1]);
@@ -138,7 +137,6 @@ WRITE8_MEMBER(tecmo_state::tecmo_fgscroll_w)
 
 WRITE8_MEMBER(tecmo_state::tecmo_bgscroll_w)
 {
-
 	m_bgscroll[offset] = data;
 
 	m_bg_tilemap->set_scrollx(0, m_bgscroll[0] + 256 * m_bgscroll[1]);
@@ -186,10 +184,10 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap,const re
 			int code,xpos,ypos,flipx,flipy,priority_mask,x,y;
 			int size = spriteram[offs + 2] & 3;
 
-			if (state->m_video_type != 0)	/* gemini, silkworm */
-			  code = which + ((bank & 0xf8) << 5);
-			else						/* rygar */
-			  code = which + ((bank & 0xf0) << 4);
+			if (state->m_video_type != 0)   /* gemini, silkworm */
+				code = which + ((bank & 0xf8) << 5);
+			else                        /* rygar */
+				code = which + ((bank & 0xf0) << 4);
 
 			code &= ~((1 << (size*2)) - 1);
 			size = 1 << size;
@@ -213,7 +211,7 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap,const re
 				default:
 				case 0x0: priority_mask = 0; break;
 				case 0x1: priority_mask = 0xf0; break; /* obscured by text layer */
-				case 0x2: priority_mask = 0xf0|0xcc; break;	/* obscured by foreground */
+				case 0x2: priority_mask = 0xf0|0xcc; break; /* obscured by foreground */
 				case 0x3: priority_mask = 0xf0|0xcc|0xaa; break; /* obscured by bg and fg */
 			}
 

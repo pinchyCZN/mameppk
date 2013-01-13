@@ -69,20 +69,15 @@ extern const device_type MIDWAY_SQUAWK_N_TALK;
 //**************************************************************************
 
 #define MCFG_MIDWAY_SSIO_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, MIDWAY_SSIO, 0) \
-
+	MCFG_DEVICE_ADD(_tag, MIDWAY_SSIO, 0)
 #define MCFG_MIDWAY_CHIP_SQUEAK_DELUXE_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, MIDWAY_CHIP_SQUEAK_DELUXE, 0) \
-
+	MCFG_DEVICE_ADD(_tag, MIDWAY_CHIP_SQUEAK_DELUXE, 0)
 #define MCFG_MIDWAY_SOUNDS_GOOD_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, MIDWAY_SOUNDS_GOOD, 0) \
-
+	MCFG_DEVICE_ADD(_tag, MIDWAY_SOUNDS_GOOD, 0)
 #define MCFG_MIDWAY_TURBO_CHIP_SQUEAK_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, MIDWAY_TURBO_CHIP_SQUEAK, 0) \
-
+	MCFG_DEVICE_ADD(_tag, MIDWAY_TURBO_CHIP_SQUEAK, 0)
 #define MCFG_MIDWAY_SQUAWK_N_TALK_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, MIDWAY_SQUAWK_N_TALK, 0) \
-
+	MCFG_DEVICE_ADD(_tag, MIDWAY_SQUAWK_N_TALK, 0)
 
 
 //**************************************************************************
@@ -91,7 +86,7 @@ extern const device_type MIDWAY_SQUAWK_N_TALK;
 
 // ======================> midway_ssio_device
 
-class midway_ssio_device :	public device_t,
+class midway_ssio_device :  public device_t,
 							public device_mixer_interface
 {
 public:
@@ -157,7 +152,7 @@ private:
 
 // ======================> midway_chip_squeak_deluxe_device
 
-class midway_chip_squeak_deluxe_device :	public device_t,
+class midway_chip_squeak_deluxe_device :    public device_t,
 											public device_mixer_interface
 {
 public:
@@ -197,7 +192,7 @@ private:
 
 // ======================> midway_sounds_good_device
 
-class midway_sounds_good_device :	public device_t,
+class midway_sounds_good_device :   public device_t,
 									public device_mixer_interface
 {
 public:
@@ -235,7 +230,7 @@ private:
 
 // ======================> midway_turbo_chip_squeak_device
 
-class midway_turbo_chip_squeak_device :	public device_t,
+class midway_turbo_chip_squeak_device : public device_t,
 										public device_mixer_interface
 {
 public:
@@ -273,7 +268,7 @@ private:
 
 // ======================> midway_squawk_n_talk_device
 
-class midway_squawk_n_talk_device :	public device_t,
+class midway_squawk_n_talk_device : public device_t,
 									public device_mixer_interface
 {
 public:

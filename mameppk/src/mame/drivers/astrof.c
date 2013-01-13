@@ -61,15 +61,15 @@
 #include "includes/astrof.h"
 
 
-#define MASTER_CLOCK		(XTAL_10_595MHz)
-#define MAIN_CPU_CLOCK  	(MASTER_CLOCK / 16)
-#define PIXEL_CLOCK 		(MASTER_CLOCK / 2)
-#define HTOTAL				(0x150)
-#define HBEND				(0x000)
-#define HBSTART				(0x100)
-#define VTOTAL				(0x118)
-#define VBEND				(0x000)
-#define VBSTART				(0x100)
+#define MASTER_CLOCK        (XTAL_10_595MHz)
+#define MAIN_CPU_CLOCK      (MASTER_CLOCK / 16)
+#define PIXEL_CLOCK         (MASTER_CLOCK / 2)
+#define HTOTAL              (0x150)
+#define HBEND               (0x000)
+#define HBSTART             (0x100)
+#define VTOTAL              (0x118)
+#define VBEND               (0x000)
+#define VBSTART             (0x100)
 
 
 
@@ -102,7 +102,6 @@ TIMER_DEVICE_CALLBACK_MEMBER(astrof_state::irq_callback)
 
 INPUT_CHANGED_MEMBER(astrof_state::coin_inserted)
 {
-
 	/* coin insertion causes an NMI */
 	m_maincpu->set_input_line(INPUT_LINE_NMI, newval ? ASSERT_LINE : CLEAR_LINE);
 	coin_counter_w(machine(), 0, newval);
@@ -111,7 +110,6 @@ INPUT_CHANGED_MEMBER(astrof_state::coin_inserted)
 
 INPUT_CHANGED_MEMBER(astrof_state::service_coin_inserted)
 {
-
 	/* service coin insertion causes an NMI */
 	m_maincpu->set_input_line(INPUT_LINE_NMI, newval ? ASSERT_LINE : CLEAR_LINE);
 }
@@ -128,8 +126,8 @@ CUSTOM_INPUT_MEMBER(astrof_state::astrof_p2_controls_r)
 	UINT32 ret;
 
 	/* on an upright cabinet, a single set of controls
-       is connected to both sets of pins on the edge
-       connector */
+	   is connected to both sets of pins on the edge
+	   connector */
 	if (ioport("CAB")->read())
 		ret = ioport("P2")->read();
 	else
@@ -144,8 +142,8 @@ CUSTOM_INPUT_MEMBER(astrof_state::tomahawk_controls_r)
 	UINT32 ret;
 
 	/* on a cocktail cabinet, two sets of controls are
-       multiplexed on a single set of inputs
-         (not verified on pcb) */
+	   multiplexed on a single set of inputs
+	     (not verified on pcb) */
 
 	if (m_flipscreen)
 		ret = ioport("P2")->read();
@@ -163,13 +161,12 @@ CUSTOM_INPUT_MEMBER(astrof_state::tomahawk_controls_r)
  *
  *************************************/
 
-#define ASTROF_NUM_PENS		(0x10)
-#define TOMAHAWK_NUM_PENS	(0x20)
+#define ASTROF_NUM_PENS     (0x10)
+#define TOMAHAWK_NUM_PENS   (0x20)
 
 
 void astrof_state::video_start()
 {
-
 	/* allocate the color RAM -- half the size of the video RAM as A0 is not connected */
 	m_colorram = auto_alloc_array(machine(), UINT8, m_videoram.bytes() / 2);
 	save_pointer(NAME(m_colorram), m_videoram.bytes() / 2);
@@ -188,7 +185,7 @@ static rgb_t make_pen( running_machine &machine, UINT8 data )
 	UINT8 b2_bit = (data >> 5) & 0x01;
 
 	/* this is probably not quite right, but I don't have the
-       knowledge to figure out the actual weights - ZV */
+	   knowledge to figure out the actual weights - ZV */
 	UINT8 r = (0xc0 * r1_bit) + (0x3f * r2_bit);
 	UINT8 g = (0xc0 * g1_bit) + (0x3f * g2_bit);
 	UINT8 b = (0xc0 * b1_bit) + (0x3f * b2_bit);
@@ -276,7 +273,6 @@ static void tomahawk_get_pens( running_machine &machine, pen_t *pens )
 
 WRITE8_MEMBER(astrof_state::astrof_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_colorram[offset >> 1] = *m_astrof_color & 0x0e;
 }
@@ -284,7 +280,6 @@ WRITE8_MEMBER(astrof_state::astrof_videoram_w)
 
 WRITE8_MEMBER(astrof_state::tomahawk_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_colorram[offset >> 1] = (*m_astrof_color & 0x0e) | ((*m_astrof_color & 0x01) << 4);
 }
@@ -292,7 +287,6 @@ WRITE8_MEMBER(astrof_state::tomahawk_videoram_w)
 
 WRITE8_MEMBER(astrof_state::video_control_1_w)
 {
-
 	m_flipscreen = ((data >> 0) & 0x01) & ioport("CAB")->read();
 
 	/* this ties to the CLR pin of the shift registers */
@@ -452,7 +446,6 @@ READ8_MEMBER(astrof_state::shoot_r)
 
 READ8_MEMBER(astrof_state::abattle_coin_prot_r)
 {
-
 	m_abattle_count = (m_abattle_count + 1) % 0x0101;
 	return m_abattle_count ? 0x07 : 0x00;
 }
@@ -460,7 +453,6 @@ READ8_MEMBER(astrof_state::abattle_coin_prot_r)
 
 READ8_MEMBER(astrof_state::afire_coin_prot_r)
 {
-
 	m_abattle_count = m_abattle_count ^ 0x01;
 	return m_abattle_count ? 0x07 : 0x00;
 }
@@ -468,7 +460,6 @@ READ8_MEMBER(astrof_state::afire_coin_prot_r)
 
 READ8_MEMBER(astrof_state::tomahawk_protection_r)
 {
-
 	/* flip the byte */
 	return BITSWAP8(*m_tomahawk_protection, 0, 1, 2, 3, 4, 5, 6, 7);
 }
@@ -483,7 +474,6 @@ READ8_MEMBER(astrof_state::tomahawk_protection_r)
 
 MACHINE_START_MEMBER(astrof_state,astrof)
 {
-
 	/* the 74175 outputs all HI's if not otherwise set */
 	astrof_set_video_control_2(machine(), 0xff);
 
@@ -505,7 +495,6 @@ MACHINE_START_MEMBER(astrof_state,astrof)
 
 MACHINE_START_MEMBER(astrof_state,abattle)
 {
-
 	/* register for state saving */
 	save_item(NAME(m_abattle_count));
 
@@ -515,7 +504,6 @@ MACHINE_START_MEMBER(astrof_state,abattle)
 
 MACHINE_START_MEMBER(astrof_state,spfghmk2)
 {
-
 	/* the 74175 outputs all HI's if not otherwise set */
 	spfghmk2_set_video_control_2(machine(), 0xff);
 
@@ -533,7 +521,6 @@ MACHINE_START_MEMBER(astrof_state,spfghmk2)
 
 MACHINE_START_MEMBER(astrof_state,tomahawk)
 {
-
 	/* the 74175 outputs all HI's if not otherwise set */
 	tomahawk_set_video_control_2(machine(), 0xff);
 
@@ -1090,7 +1077,7 @@ ROM_START( abattle )
 	ROM_REGION( 0x0100, "proms", 0 )
 	ROM_LOAD( "8f-clr.bin",   0x0000, 0x0100, CRC(3bf3ccb0) SHA1(d61d19d38045f42a9adecf295e479fee239bed48) )
 
-	ROM_REGION( 0x0100, "user1", 0 )	/* decryption table */
+	ROM_REGION( 0x0100, "user1", 0 )    /* decryption table */
 	ROM_LOAD( "2h-prot.bin",  0x0000, 0x0100, CRC(a6bdd18c) SHA1(438bfc543730afdb531204585f17a68ddc03ded0) )
 ROM_END
 
@@ -1113,7 +1100,7 @@ ROM_START( abattle2 )
 	ROM_REGION( 0x0100, "proms", 0 )
 	ROM_LOAD( "8f-clr.bin",   0x0000, 0x0100, CRC(3bf3ccb0) SHA1(d61d19d38045f42a9adecf295e479fee239bed48) )
 
-	ROM_REGION( 0x0100, "user1", 0 )	/* decryption table */
+	ROM_REGION( 0x0100, "user1", 0 )    /* decryption table */
 	ROM_LOAD( "2h-prot.bin",  0x0000, 0x0100, CRC(a6bdd18c) SHA1(438bfc543730afdb531204585f17a68ddc03ded0) )
 ROM_END
 

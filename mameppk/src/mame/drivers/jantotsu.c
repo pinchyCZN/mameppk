@@ -142,7 +142,6 @@ public:
 
 void jantotsu_state::video_start()
 {
-
 	save_item(NAME(m_bitmap));
 }
 
@@ -192,7 +191,6 @@ WRITE8_MEMBER(jantotsu_state::jantotsu_bitmap_w)
 
 WRITE8_MEMBER(jantotsu_state::bankaddr_w)
 {
-
 	m_vram_bank = ((data & 0xc0) >> 6);
 
 	m_display_on = (data & 2);
@@ -205,8 +203,8 @@ WRITE8_MEMBER(jantotsu_state::bankaddr_w)
 void jantotsu_state::palette_init()
 {
 	const UINT8 *color_prom = machine().root_device().memregion("proms")->base();
-	int	bit0, bit1, bit2, r, g, b;
-	int	i;
+	int bit0, bit1, bit2, r, g, b;
+	int i;
 
 	for (i = 0; i < 0x20; ++i)
 	{
@@ -238,7 +236,7 @@ void jantotsu_state::palette_init()
 READ8_MEMBER(jantotsu_state::jantotsu_mux_r)
 {
 	const char *const portnames[] = { "PL1_1", "PL1_2", "PL1_3", "PL1_4",
-									  "PL2_1", "PL2_2", "PL2_3", "PL2_4" };
+										"PL2_1", "PL2_2", "PL2_3", "PL2_4" };
 	UINT8 i,res;
 
 	//  printf("%02x\n", m_mux_data);
@@ -278,7 +276,7 @@ WRITE8_MEMBER(jantotsu_state::jan_adpcm_w)
 			m_adpcm_idle = 0;
 			msm5205_reset_w(device, 0);
 			/* I don't think that this will ever happen, it's there just to be sure
-               (i.e. I'll probably never do a "nagare" in my entire life ;-) ) */
+			   (i.e. I'll probably never do a "nagare" in my entire life ;-) ) */
 			if(data & 0x20)
 				popmessage("ADPCM called with data = %02x, contact MAMEdev", data);
 //          printf("%02x 0\n", data);
@@ -467,8 +465,8 @@ INPUT_PORTS_END
 
 static const msm5205_interface msm5205_config =
 {
-	jan_adpcm_int,	/* interrupt function */
-	MSM5205_S64_4B	/* 6 KHz */
+	jan_adpcm_int,  /* interrupt function */
+	MSM5205_S64_4B  /* 6 KHz */
 };
 
 
@@ -478,7 +476,7 @@ static const msm5205_interface msm5205_config =
 
 static const sn76496_config psg_intf =
 {
-    DEVCB_NULL
+	DEVCB_NULL
 };
 
 
@@ -490,7 +488,6 @@ static const sn76496_config psg_intf =
 
 void jantotsu_state::machine_start()
 {
-
 	save_item(NAME(m_vram_bank));
 	save_item(NAME(m_mux_data));
 	save_item(NAME(m_adpcm_pos));
@@ -501,7 +498,6 @@ void jantotsu_state::machine_start()
 
 void jantotsu_state::machine_reset()
 {
-
 	/*Load hard-wired background color.*/
 	m_col_bank = (ioport("DSW2")->read() & 0xc0) >> 3;
 

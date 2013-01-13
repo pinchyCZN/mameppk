@@ -319,7 +319,6 @@ WRITE32_MEMBER(macrossp_state::paletteram32_macrossp_w)
 
 READ32_MEMBER(macrossp_state::macrossp_soundstatus_r)
 {
-
 	//  logerror("%08x read soundstatus\n", space.device().safe_pc());
 
 	/* bit 1 is sound status */
@@ -332,7 +331,6 @@ READ32_MEMBER(macrossp_state::macrossp_soundstatus_r)
 
 WRITE32_MEMBER(macrossp_state::macrossp_soundcmd_w)
 {
-
 	if (ACCESSING_BITS_16_31)
 	{
 		//logerror("%08x write soundcmd %08x (%08x)\n",space.device().safe_pc(),data,mem_mask);
@@ -346,7 +344,6 @@ WRITE32_MEMBER(macrossp_state::macrossp_soundcmd_w)
 
 READ16_MEMBER(macrossp_state::macrossp_soundcmd_r)
 {
-
 	//  logerror("%06x read soundcmd\n",space.device().safe_pc());
 	m_sndpending = 0;
 	return soundlatch_word_r(space, offset, mem_mask);
@@ -384,7 +381,6 @@ static void update_colors( running_machine &machine )
 
 WRITE32_MEMBER(macrossp_state::macrossp_palette_fade_w)
 {
-
 	m_fade_effect = ((data & 0xff00) >> 8) - 0x28; //it writes two times, first with a -0x28 then with the proper data
 	//  popmessage("%02x",fade_effect);
 
@@ -421,9 +417,9 @@ static ADDRESS_MAP_START( macrossp_map, AS_PROGRAM, 32, macrossp_state )
 
 	AM_RANGE(0xb00000, 0xb00003) AM_READ_PORT("INPUTS")
 	AM_RANGE(0xb00004, 0xb00007) AM_READ(macrossp_soundstatus_r) AM_WRITENOP // irq related?
-	AM_RANGE(0xb00008, 0xb0000b) AM_WRITENOP	// irq related?
+	AM_RANGE(0xb00008, 0xb0000b) AM_WRITENOP    // irq related?
 	AM_RANGE(0xb0000c, 0xb0000f) AM_READ_PORT("DSW") AM_WRITENOP
-	AM_RANGE(0xb00010, 0xb00013) AM_WRITE(macrossp_palette_fade_w)	// macrossp palette fade
+	AM_RANGE(0xb00010, 0xb00013) AM_WRITE(macrossp_palette_fade_w)  // macrossp palette fade
 	AM_RANGE(0xb00020, 0xb00023) AM_WRITENOP
 
 	AM_RANGE(0xc00000, 0xc00003) AM_WRITE(macrossp_soundcmd_w)
@@ -551,7 +547,7 @@ static const gfx_layout macrossp_char16x16x4layout =
 	{ 0,1,2,3 },
 	{ 0, 4, 8, 12, 16, 20, 24, 28, 32+0,32+4,32+8,32+12,32+16,32+20,32+24,32+28 },
 	{ 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
-	  8*64, 9*64, 10*64,11*64,12*64,13*64,14*64,15*64},
+		8*64, 9*64, 10*64,11*64,12*64,13*64,14*64,15*64},
 	16*64
 };
 
@@ -563,15 +559,15 @@ static const gfx_layout macrossp_char16x16x8layout =
 	{ 0,1,2,3,4,5,6,7 },
 	{ 0, 8, 16, 24, 32, 40, 48, 56, 64+0,64+8,64+16,64+24,64+32,64+40,64+48,64+56 },
 	{ 0*128, 1*128, 2*128, 3*128, 4*128, 5*128, 6*128, 7*128,
-	  8*128, 9*128, 10*128,11*128,12*128,13*128,14*128,15*128},
+		8*128, 9*128, 10*128,11*128,12*128,13*128,14*128,15*128},
 	16*128
 };
 
 static GFXDECODE_START( macrossp )
-	GFXDECODE_ENTRY( "gfx1", 0, macrossp_char16x16x8layout,   0x000, 0x20 )	/* 8bpp but 6bpp granularity */
-	GFXDECODE_ENTRY( "gfx2", 0, macrossp_char16x16x8layout,   0x800, 0x20 )	/* 8bpp but 6bpp granularity */
-	GFXDECODE_ENTRY( "gfx3", 0, macrossp_char16x16x8layout,   0x800, 0x20 )	/* 8bpp but 6bpp granularity */
-	GFXDECODE_ENTRY( "gfx4", 0, macrossp_char16x16x8layout,   0x800, 0x20 )	/* 8bpp but 6bpp granularity */
+	GFXDECODE_ENTRY( "gfx1", 0, macrossp_char16x16x8layout,   0x000, 0x20 ) /* 8bpp but 6bpp granularity */
+	GFXDECODE_ENTRY( "gfx2", 0, macrossp_char16x16x8layout,   0x800, 0x20 ) /* 8bpp but 6bpp granularity */
+	GFXDECODE_ENTRY( "gfx3", 0, macrossp_char16x16x8layout,   0x800, 0x20 ) /* 8bpp but 6bpp granularity */
+	GFXDECODE_ENTRY( "gfx4", 0, macrossp_char16x16x8layout,   0x800, 0x20 ) /* 8bpp but 6bpp granularity */
 	GFXDECODE_ENTRY( "gfx5", 0, macrossp_char16x16x4layout,   0x800, 0x80 )
 GFXDECODE_END
 
@@ -583,7 +579,7 @@ static void irqhandler(device_t *device, int irq)
 	logerror("ES5506 irq %d\n", irq);
 
 	/* IRQ lines 1 & 4 on the sound 68000 are definitely triggered by the ES5506,
-    but I haven't noticed the ES5506 ever assert the line - maybe only used when developing the game? */
+	but I haven't noticed the ES5506 ever assert the line - maybe only used when developing the game? */
 	//  state->m_audiocpu->set_input_line(1, irq ? ASSERT_LINE : CLEAR_LINE);
 }
 
@@ -599,7 +595,6 @@ static const es5506_interface es5506_config =
 
 void macrossp_state::machine_start()
 {
-
 	m_maincpu = machine().device<cpu_device>("maincpu");
 	m_audiocpu = machine().device<cpu_device>("audiocpu");
 
@@ -611,7 +606,6 @@ void macrossp_state::machine_start()
 
 void macrossp_state::machine_reset()
 {
-
 	m_sndpending = 0;
 	m_snd_toggle = 0;
 	m_fade_effect = 0;
@@ -621,11 +615,11 @@ void macrossp_state::machine_reset()
 static MACHINE_CONFIG_START( macrossp, macrossp_state )
 
 	/* basic machine hardware */
-	MCFG_CPU_ADD("maincpu", M68EC020, 50000000/2)	/* 25 MHz */
+	MCFG_CPU_ADD("maincpu", M68EC020, 50000000/2)   /* 25 MHz */
 	MCFG_CPU_PROGRAM_MAP(macrossp_map)
 	MCFG_CPU_VBLANK_INT_DRIVER("screen", macrossp_state,  irq3_line_hold) // there are others ...
 
-	MCFG_CPU_ADD("audiocpu", M68000, 32000000/2)	/* 16 MHz */
+	MCFG_CPU_ADD("audiocpu", M68000, 32000000/2)    /* 16 MHz */
 	MCFG_CPU_PROGRAM_MAP(macrossp_sound_map)
 
 
@@ -771,7 +765,6 @@ PC :00018110 018110: beq     18104
 #ifdef UNUSED_FUNCTION
 WRITE32_MEMBER(macrossp_state::quizmoon_speedup_w)
 {
-
 	COMBINE_DATA(&m_mainram[0x00020 / 4]);
 	if (space.device().safe_pc() == 0x1cc) space.device().execute().spin_until_interrupt();
 }

@@ -49,33 +49,25 @@
 //**************************************************************************
 
 #define MCFG_SEGA_HANGON_SPRITES_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_HANGON_SPRITES, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_HANGON_SPRITES, 0)
 #define MCFG_SEGA_SHARRIER_SPRITES_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_SHARRIER_SPRITES, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_SHARRIER_SPRITES, 0)
 #define MCFG_SEGA_OUTRUN_SPRITES_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_OUTRUN_SPRITES, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_OUTRUN_SPRITES, 0)
 #define MCFG_SEGA_SYS16A_SPRITES_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_SYS16A_SPRITES, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_SYS16A_SPRITES, 0)
 #define MCFG_SEGA_SYS16B_SPRITES_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_SYS16B_SPRITES, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_SYS16B_SPRITES, 0)
 #define MCFG_SEGA_SYS16C_SPRITES_ADD(_tag) \
 	MCFG_DEVICE_ADD(_tag, SEGA_SYS16C_SPRITES, 0) \
 
 #define MCFG_SEGA_XBOARD_SPRITES_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_XBOARD_SPRITES, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_XBOARD_SPRITES, 0)
 #define MCFG_SEGA_YBOARD_SPRITES_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_YBOARD_SPRITES, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_YBOARD_SPRITES, 0)
 
 #define MCFG_BOOTLEG_SYS16A_SPRITES_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, BOOTLEG_SYS16A_SPRITES, 0) \
-
+	MCFG_DEVICE_ADD(_tag, BOOTLEG_SYS16A_SPRITES, 0)
 #define MCFG_BOOTLEG_SYS16A_SPRITES_REMAP(_0,_1,_2,_3,_4,_5,_6,_7) \
 	bootleg_sys16a_sprite_device::static_set_remap(*device, _0,_1,_2,_3,_4,_5,_6,_7);
 
@@ -87,8 +79,7 @@
 
 
 #define MCFG_BOOTLEG_SYS16B_SPRITES_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, SEGA_SYS16B_SPRITES, 0) \
-
+	MCFG_DEVICE_ADD(_tag, SEGA_SYS16B_SPRITES, 0)
 #define MCFG_BOOTLEG_SYS16B_SPRITES_XORIGIN(_xorigin) \
 	bootleg_sys16a_sprite_device::static_set_xorigin(*device, _xorigin);
 
@@ -120,8 +111,8 @@ protected:
 	virtual void device_start();
 
 	// internal state
-	bool						m_flip;					// screen flip?
-	UINT8						m_bank[16];				// banking redirection
+	bool                        m_flip;                 // screen flip?
+	UINT8                       m_bank[16];             // banking redirection
 };
 
 
@@ -167,7 +158,7 @@ protected:
 	virtual void draw(bitmap_ind16 &bitmap, const rectangle &cliprect);
 
 	// configuration
-	bool			m_is_xboard;
+	bool            m_is_xboard;
 };
 
 class sega_xboard_sprite_device : public sega_outrun_sprite_device
@@ -208,7 +199,7 @@ protected:
 	virtual void draw(bitmap_ind16 &bitmap, const rectangle &cliprect);
 
 	// internal state
-	UINT8		m_addrmap[8];
+	UINT8       m_addrmap[8];
 };
 
 
@@ -264,4 +255,3 @@ extern const device_type SEGA_YBOARD_SPRITES;
 
 
 #endif
-

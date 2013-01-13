@@ -181,10 +181,10 @@ TILE_GET_INFO_MEMBER(xevious_state::get_fg_tile_info)
 	UINT8 attr = m_xevious_fg_colorram[tile_index];
 
 	/* the hardware has two character sets, one normal and one x-flipped. When
-       screen is flipped, character y flip is done by the hardware inverting the
-       timing signals, while x flip is done by selecting the 2nd character set.
-       We reproduce this here, but since the tilemap system automatically flips
-       characters when screen is flipped, we have to flip them back. */
+	   screen is flipped, character y flip is done by the hardware inverting the
+	   timing signals, while x flip is done by selecting the 2nd character set.
+	   We reproduce this here, but since the tilemap system automatically flips
+	   characters when screen is flipped, we have to flip them back. */
 	UINT8 color = ((attr & 0x03) << 4) | ((attr & 0x3c) >> 2);
 	SET_TILE_INFO_MEMBER(
 			0,
@@ -215,7 +215,6 @@ TILE_GET_INFO_MEMBER(xevious_state::get_bg_tile_info)
 
 VIDEO_START_MEMBER(xevious_state,xevious)
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(xevious_state::get_bg_tile_info),this),TILEMAP_SCAN_ROWS,8,8,64,32);
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(xevious_state::get_fg_tile_info),this),TILEMAP_SCAN_ROWS,8,8,64,32);
 
@@ -296,9 +295,9 @@ WRITE8_HANDLER( xevious_vh_latch_w )
 	case 7:
 		state->flip_screen_set(scroll & 1);
 		break;
-   default:
-		   logerror("CRTC WRITE REG: %x  Data: %03x\n",reg, scroll);
-		   break;
+	default:
+			logerror("CRTC WRITE REG: %x  Data: %03x\n",reg, scroll);
+			break;
 	}
 }
 
@@ -331,8 +330,8 @@ READ8_HANDLER( xevious_bb_r )
 	}
 	else
 	{
-	    /* low bits select */
-	    dat1 = ((rom2a[adr_2b >> 1] & 0x0f) << 8) | rom2b[adr_2b];
+		/* low bits select */
+		dat1 = ((rom2a[adr_2b >> 1] & 0x0f) << 8) | rom2b[adr_2b];
 	}
 
 	adr_2c = ((dat1 & 0x1ff) << 2) | ((state->m_xevious_bs[1] & 1) << 1) | (state->m_xevious_bs[0] & 1);
@@ -485,7 +484,7 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap,const re
 						code+1,color,flipx,flipy,
 						flipx ? sx : sx+16,flipy ? sy-16 : sy,transmask);
 			}
-			else	/* normal */
+			else    /* normal */
 			{
 				drawgfx_transmask(bitmap,cliprect,machine.gfx[bank],
 						code,color,flipx,flipy,sx,sy,transmask);
@@ -497,7 +496,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap,const re
 
 UINT32 xevious_state::screen_update_xevious(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->draw(bitmap, cliprect, 0,0);
 	draw_sprites(machine(), bitmap,cliprect);
 	m_fg_tilemap->draw(bitmap, cliprect, 0,0);

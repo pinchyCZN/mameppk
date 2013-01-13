@@ -127,7 +127,7 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 		if (offs < 0x26)
 		{
-			sy++;	/* fix title screen & garbage at the bottom of the screen */
+			sy++;   /* fix title screen & garbage at the bottom of the screen */
 		}
 
 		drawgfx_transpen(bitmap, cliprect,
@@ -140,7 +140,6 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 UINT32 yiear_state::screen_update_yiear(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	draw_sprites(machine(), bitmap, cliprect);
 	return 0;

@@ -94,7 +94,7 @@
 #include "sound/2203intf.h"
 #include "sound/dac.h"
 
-#define MASTER_CLOCK		8000000		/* 8MHz crystal */
+#define MASTER_CLOCK        8000000     /* 8MHz crystal */
 
 
 /*************************************
@@ -107,8 +107,8 @@
 
 INTERRUPT_GEN_MEMBER(capbowl_state::capbowl_interrupt)
 {
-	if (machine().root_device().ioport("SERVICE")->read() & 1)						/* get status of the F2 key */
-		device.execute().set_input_line(INPUT_LINE_NMI, PULSE_LINE);	/* trigger self test */
+	if (machine().root_device().ioport("SERVICE")->read() & 1)                      /* get status of the F2 key */
+		device.execute().set_input_line(INPUT_LINE_NMI, PULSE_LINE);    /* trigger self test */
 }
 
 
@@ -164,7 +164,6 @@ READ8_MEMBER(capbowl_state::track_1_r)
 
 WRITE8_MEMBER(capbowl_state::track_reset_w)
 {
-
 	/* reset the trackball counters */
 	m_last_trackball_val[0] = ioport("TRACKY")->read();
 	m_last_trackball_val[1] = ioport("TRACKX")->read();
@@ -198,7 +197,7 @@ WRITE8_MEMBER(capbowl_state::capbowl_sndcmd_w)
 static void firqhandler( device_t *device, int irq )
 {
 	capbowl_state *state = device->machine().driver_data<capbowl_state>();
-	state->m_audiocpu->set_input_line(1, irq ? ASSERT_LINE : CLEAR_LINE);
+	state->m_audiocpu->set_input_line(M6809_FIRQ_LINE, irq ? ASSERT_LINE : CLEAR_LINE);
 }
 
 
@@ -212,8 +211,8 @@ static void firqhandler( device_t *device, int irq )
 void capbowl_state::init_nvram(nvram_device &nvram, void *base, size_t size)
 {
 	/* invalidate nvram to make the game initialize it.
-      A 0xff fill will cause the game to malfunction, so we use a
-      0x01 fill which seems OK */
+	  A 0xff fill will cause the game to malfunction, so we use a
+	  0x01 fill which seems OK */
 	memset(base, 0x01, size);
 }
 
@@ -232,9 +231,9 @@ static ADDRESS_MAP_START( capbowl_map, AS_PROGRAM, 8, capbowl_state )
 	AM_RANGE(0x5000, 0x57ff) AM_RAM AM_SHARE("nvram")
 	AM_RANGE(0x5800, 0x5fff) AM_READWRITE(capbowl_tms34061_r, capbowl_tms34061_w)
 	AM_RANGE(0x6000, 0x6000) AM_WRITE(capbowl_sndcmd_w)
-	AM_RANGE(0x6800, 0x6800) AM_WRITE(track_reset_w)	/* + watchdog */
-	AM_RANGE(0x7000, 0x7000) AM_READ(track_0_r)			/* + other inputs */
-	AM_RANGE(0x7800, 0x7800) AM_READ(track_1_r)			/* + other inputs */
+	AM_RANGE(0x6800, 0x6800) AM_WRITE(track_reset_w)    /* + watchdog */
+	AM_RANGE(0x7000, 0x7000) AM_READ(track_0_r)         /* + other inputs */
+	AM_RANGE(0x7800, 0x7800) AM_READ(track_1_r)         /* + other inputs */
 	AM_RANGE(0x8000, 0xffff) AM_ROM
 ADDRESS_MAP_END
 
@@ -245,9 +244,9 @@ static ADDRESS_MAP_START( bowlrama_map, AS_PROGRAM, 8, capbowl_state )
 	AM_RANGE(0x5000, 0x57ff) AM_RAM AM_SHARE("nvram")
 	AM_RANGE(0x5800, 0x5fff) AM_READWRITE(capbowl_tms34061_r, capbowl_tms34061_w)
 	AM_RANGE(0x6000, 0x6000) AM_WRITE(capbowl_sndcmd_w)
-	AM_RANGE(0x6800, 0x6800) AM_WRITE(track_reset_w)	/* + watchdog */
-	AM_RANGE(0x7000, 0x7000) AM_READ(track_0_r)			/* + other inputs */
-	AM_RANGE(0x7800, 0x7800) AM_READ(track_1_r)			/* + other inputs */
+	AM_RANGE(0x6800, 0x6800) AM_WRITE(track_reset_w)    /* + watchdog */
+	AM_RANGE(0x7000, 0x7000) AM_READ(track_0_r)         /* + other inputs */
+	AM_RANGE(0x7800, 0x7800) AM_READ(track_1_r)         /* + other inputs */
 	AM_RANGE(0x8000, 0xffff) AM_ROM
 ADDRESS_MAP_END
 
@@ -262,7 +261,7 @@ ADDRESS_MAP_END
 static ADDRESS_MAP_START( sound_map, AS_PROGRAM, 8, capbowl_state )
 	AM_RANGE(0x0000, 0x07ff) AM_RAM
 	AM_RANGE(0x1000, 0x1001) AM_DEVREADWRITE_LEGACY("ymsnd", ym2203_r, ym2203_w)
-	AM_RANGE(0x2000, 0x2000) AM_WRITENOP				/* Not hooked up according to the schematics */
+	AM_RANGE(0x2000, 0x2000) AM_WRITENOP                /* Not hooked up according to the schematics */
 	AM_RANGE(0x6000, 0x6000) AM_DEVWRITE("dac", dac_device, write_unsigned8)
 	AM_RANGE(0x7000, 0x7000) AM_READ(soundlatch_byte_r)
 	AM_RANGE(0x8000, 0xffff) AM_ROM
@@ -282,7 +281,7 @@ static INPUT_PORTS_START( capbowl )
 	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_BUTTON1 ) PORT_COCKTAIL
 	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_BUTTON2 ) PORT_COCKTAIL
 	PORT_DIPNAME( 0x40, 0x40, DEF_STR( Cabinet ) ) /* This version of Bowl-O-Rama */
-	PORT_DIPSETTING(    0x40, DEF_STR( Upright ) )			   /* is Upright only */
+	PORT_DIPSETTING(    0x40, DEF_STR( Upright ) )             /* is Upright only */
 	PORT_DIPSETTING(    0x00, DEF_STR( Cocktail ) )
 	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_COIN2 )
 
@@ -336,7 +335,6 @@ static const ym2203_interface ym2203_config =
 
 void capbowl_state::machine_start()
 {
-
 	m_maincpu = machine().device<cpu_device>("maincpu");
 	m_audiocpu = machine().device<cpu_device>("audiocpu");
 
@@ -347,7 +345,6 @@ void capbowl_state::machine_start()
 
 void capbowl_state::machine_reset()
 {
-
 	machine().scheduler().timer_set(machine().primary_screen->time_until_pos(32), timer_expired_delegate(FUNC(capbowl_state::capbowl_update),this), 32);
 
 	m_blitter_addr = 0;

@@ -17,8 +17,7 @@ Mitsubishi M50458 OSD chip
 
 #define MCFG_M50458_ADD(_tag,_config,_freq) \
 	MCFG_DEVICE_ADD(_tag, M50458,_freq) \
-	MCFG_DEVICE_CONFIG(_config) \
-
+	MCFG_DEVICE_CONFIG(_config)
 
 #define M50458_INTERFACE(name) \
 	const m50458_interface (name) =
@@ -43,7 +42,7 @@ struct m50458_interface
 
 // ======================> m50458_device
 
-class m50458_device :	public device_t,
+class m50458_device :   public device_t,
 						public device_memory_interface,
 						public m50458_interface
 {
@@ -78,8 +77,8 @@ protected:
 	screen_device *m_screen;
 
 	int m_latch;
-	int	m_reset_line;
-	int	m_clock_line;
+	int m_reset_line;
+	int m_clock_line;
 	UINT16 m_current_cmd;
 	int m_cmd_stream_pos;
 	UINT16 m_osd_addr;
@@ -99,7 +98,7 @@ private:
 	inline UINT16 read_word(offs_t address);
 	inline void write_word(offs_t address, UINT16 data);
 
-	const address_space_config		m_space_config;
+	const address_space_config      m_space_config;
 };
 
 

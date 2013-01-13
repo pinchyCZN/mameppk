@@ -18,7 +18,6 @@ static void blitter_execute(running_machine &machine);
 
 void kangaroo_state::video_start()
 {
-
 	/* video RAM is accessed 32 bits at a time (two planes, 4bpp each, 4 pixels) */
 	m_videoram = auto_alloc_array(machine(), UINT32, 256 * 64);
 	save_pointer(NAME(m_videoram), 256 * 64);
@@ -79,11 +78,11 @@ WRITE8_MEMBER(kangaroo_state::kangaroo_video_control_w)
 
 	switch (offset)
 	{
-		case 5:	/* blitter start */
+		case 5: /* blitter start */
 			blitter_execute(machine());
 			break;
 
-		case 8:	/* bank select */
+		case 8: /* bank select */
 			membank("bank1")->set_entry((data & 0x05) ? 0 : 1);
 			break;
 	}

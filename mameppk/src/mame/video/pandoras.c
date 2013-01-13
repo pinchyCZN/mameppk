@@ -30,7 +30,7 @@ void pandoras_state::palette_init()
 	int i;
 
 	/* compute the color output resistor weights */
-	compute_resistor_weights(0,	255, -1.0,
+	compute_resistor_weights(0, 255, -1.0,
 			3, &resistances_rg[0], rweights, 1000, 0,
 			3, &resistances_rg[0], gweights, 1000, 0,
 			2, &resistances_b[0],  bweights, 1000, 0);
@@ -120,27 +120,23 @@ void pandoras_state::video_start()
 
 WRITE8_MEMBER(pandoras_state::pandoras_vram_w)
 {
-
 	m_layer0->mark_tile_dirty(offset);
 	m_videoram[offset] = data;
 }
 
 WRITE8_MEMBER(pandoras_state::pandoras_cram_w)
 {
-
 	m_layer0->mark_tile_dirty(offset);
 	m_colorram[offset] = data;
 }
 
 WRITE8_MEMBER(pandoras_state::pandoras_scrolly_w)
 {
-
 	m_layer0->set_scrolly(0, data);
 }
 
 WRITE8_MEMBER(pandoras_state::pandoras_flipscreen_w)
 {
-
 	m_flipscreen = data;
 	machine().tilemap().set_flip_all(m_flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
 }

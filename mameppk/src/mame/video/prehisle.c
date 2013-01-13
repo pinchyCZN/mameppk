@@ -12,28 +12,25 @@
 
 WRITE16_MEMBER(prehisle_state::prehisle_bg_videoram16_w)
 {
-
 	COMBINE_DATA(&m_bg_videoram16[offset]);
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE16_MEMBER(prehisle_state::prehisle_fg_videoram16_w)
 {
-
 	COMBINE_DATA(&m_videoram[offset]);
 	m_fg_tilemap->mark_tile_dirty(offset);
 }
 
 READ16_MEMBER(prehisle_state::prehisle_control16_r)
 {
-
 	switch (offset)
 	{
-	case 0x08: return ioport("P2")->read();						// Player 2
-	case 0x10: return ioport("COIN")->read();						// Coins, Tilt, Service
-	case 0x20: return ioport("P1")->read() ^ m_invert_controls;		// Player 1
-	case 0x21: return ioport("DSW0")->read();						// DIPs
-	case 0x22: return ioport("DSW1")->read();						// DIPs + VBLANK
+	case 0x08: return ioport("P2")->read();                     // Player 2
+	case 0x10: return ioport("COIN")->read();                       // Coins, Tilt, Service
+	case 0x20: return ioport("P1")->read() ^ m_invert_controls;     // Player 1
+	case 0x21: return ioport("DSW0")->read();                       // DIPs
+	case 0x22: return ioport("DSW1")->read();                       // DIPs + VBLANK
 	default: return 0;
 	}
 }
@@ -91,15 +88,14 @@ TILE_GET_INFO_MEMBER(prehisle_state::get_fg_tile_info)
 
 void prehisle_state::video_start()
 {
-
 	m_bg2_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(prehisle_state::get_bg2_tile_info),this), TILEMAP_SCAN_COLS,
-		 16, 16, 1024, 32);
+			16, 16, 1024, 32);
 
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(prehisle_state::get_bg_tile_info),this), TILEMAP_SCAN_COLS,
-		 16, 16, 256, 32);
+			16, 16, 256, 32);
 
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(prehisle_state::get_fg_tile_info),this), TILEMAP_SCAN_ROWS,
-		 8, 8, 32, 32);
+			8, 8, 32, 32);
 
 	m_bg_tilemap->set_transparent_pen(15);
 	m_fg_tilemap->set_transparent_pen(15);
@@ -159,7 +155,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 
 UINT32 prehisle_state::screen_update_prehisle(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg2_tilemap->draw(bitmap, cliprect, 0, 0);
 	draw_sprites(machine(), bitmap, cliprect, 0);
 	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);

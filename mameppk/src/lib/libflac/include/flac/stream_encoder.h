@@ -238,41 +238,40 @@ extern "C" {
  * must be deleted with FLAC__stream_encoder_delete().
  */
 typedef enum {
-
 	FLAC__STREAM_ENCODER_OK = 0,
 	/**< The encoder is in the normal OK state and samples can be processed. */
 
 	FLAC__STREAM_ENCODER_UNINITIALIZED,
 	/**< The encoder is in the uninitialized state; one of the
-     * FLAC__stream_encoder_init_*() functions must be called before samples
-     * can be processed.
-     */
+	 * FLAC__stream_encoder_init_*() functions must be called before samples
+	 * can be processed.
+	 */
 
 	FLAC__STREAM_ENCODER_OGG_ERROR,
 	/**< An error occurred in the underlying Ogg layer.  */
 
 	FLAC__STREAM_ENCODER_VERIFY_DECODER_ERROR,
 	/**< An error occurred in the underlying verify stream decoder;
-     * check FLAC__stream_encoder_get_verify_decoder_state().
-     */
+	 * check FLAC__stream_encoder_get_verify_decoder_state().
+	 */
 
 	FLAC__STREAM_ENCODER_VERIFY_MISMATCH_IN_AUDIO_DATA,
 	/**< The verify decoder detected a mismatch between the original
-     * audio signal and the decoded audio signal.
-     */
+	 * audio signal and the decoded audio signal.
+	 */
 
 	FLAC__STREAM_ENCODER_CLIENT_ERROR,
 	/**< One of the callbacks returned a fatal error. */
 
 	FLAC__STREAM_ENCODER_IO_ERROR,
 	/**< An I/O error occurred while opening/reading/writing a file.
-     * Check \c errno.
-     */
+	 * Check \c errno.
+	 */
 
 	FLAC__STREAM_ENCODER_FRAMING_ERROR,
 	/**< An error occurred while writing the stream; usually, the
-     * write_callback returned an error.
-     */
+	 * write_callback returned an error.
+	 */
 
 	FLAC__STREAM_ENCODER_MEMORY_ALLOCATION_ERROR
 	/**< Memory allocation failed. */
@@ -290,7 +289,6 @@ extern FLAC_API const char * const FLAC__StreamEncoderStateString[];
 /** Possible return values for the FLAC__stream_encoder_init_*() functions.
  */
 typedef enum {
-
 	FLAC__STREAM_ENCODER_INIT_STATUS_OK = 0,
 	/**< Initialization was successful. */
 
@@ -299,8 +297,8 @@ typedef enum {
 
 	FLAC__STREAM_ENCODER_INIT_STATUS_UNSUPPORTED_CONTAINER,
 	/**< The library was not compiled with support for the given container
-     * format.
-     */
+	 * format.
+	 */
 
 	FLAC__STREAM_ENCODER_INIT_STATUS_INVALID_CALLBACKS,
 	/**< A required callback was not supplied. */
@@ -310,9 +308,9 @@ typedef enum {
 
 	FLAC__STREAM_ENCODER_INIT_STATUS_INVALID_BITS_PER_SAMPLE,
 	/**< The encoder has an invalid setting for bits-per-sample.
-     * FLAC supports 4-32 bps but the reference encoder currently supports
-     * only up to 24 bps.
-     */
+	 * FLAC supports 4-32 bps but the reference encoder currently supports
+	 * only up to 24 bps.
+	 */
 
 	FLAC__STREAM_ENCODER_INIT_STATUS_INVALID_SAMPLE_RATE,
 	/**< The encoder has an invalid setting for the input sample rate. */
@@ -334,18 +332,18 @@ typedef enum {
 
 	FLAC__STREAM_ENCODER_INIT_STATUS_INVALID_METADATA,
 	/**< The metadata input to the encoder is invalid, in one of the following ways:
-     * - FLAC__stream_encoder_set_metadata() was called with a null pointer but a block count > 0
-     * - One of the metadata blocks contains an undefined type
-     * - It contains an illegal CUESHEET as checked by FLAC__format_cuesheet_is_legal()
-     * - It contains an illegal SEEKTABLE as checked by FLAC__format_seektable_is_legal()
-     * - It contains more than one SEEKTABLE block or more than one VORBIS_COMMENT block
-     */
+	 * - FLAC__stream_encoder_set_metadata() was called with a null pointer but a block count > 0
+	 * - One of the metadata blocks contains an undefined type
+	 * - It contains an illegal CUESHEET as checked by FLAC__format_cuesheet_is_legal()
+	 * - It contains an illegal SEEKTABLE as checked by FLAC__format_seektable_is_legal()
+	 * - It contains more than one SEEKTABLE block or more than one VORBIS_COMMENT block
+	 */
 
 	FLAC__STREAM_ENCODER_INIT_STATUS_ALREADY_INITIALIZED
 	/**< FLAC__stream_encoder_init_*() was called when the encoder was
-     * already initialized, usually because
-     * FLAC__stream_encoder_finish() was not called.
-     */
+	 * already initialized, usually because
+	 * FLAC__stream_encoder_finish() was not called.
+	 */
 
 } FLAC__StreamEncoderInitStatus;
 
@@ -360,7 +358,6 @@ extern FLAC_API const char * const FLAC__StreamEncoderInitStatusString[];
 /** Return values for the FLAC__StreamEncoder read callback.
  */
 typedef enum {
-
 	FLAC__STREAM_ENCODER_READ_STATUS_CONTINUE,
 	/**< The read was OK and decoding can continue. */
 
@@ -386,7 +383,6 @@ extern FLAC_API const char * const FLAC__StreamEncoderReadStatusString[];
 /** Return values for the FLAC__StreamEncoder write callback.
  */
 typedef enum {
-
 	FLAC__STREAM_ENCODER_WRITE_STATUS_OK = 0,
 	/**< The write was OK and encoding can continue. */
 
@@ -406,7 +402,6 @@ extern FLAC_API const char * const FLAC__StreamEncoderWriteStatusString[];
 /** Return values for the FLAC__StreamEncoder seek callback.
  */
 typedef enum {
-
 	FLAC__STREAM_ENCODER_SEEK_STATUS_OK,
 	/**< The seek was OK and encoding can continue. */
 
@@ -429,7 +424,6 @@ extern FLAC_API const char * const FLAC__StreamEncoderSeekStatusString[];
 /** Return values for the FLAC__StreamEncoder tell callback.
  */
 typedef enum {
-
 	FLAC__STREAM_ENCODER_TELL_STATUS_OK,
 	/**< The tell was OK and encoding can continue. */
 

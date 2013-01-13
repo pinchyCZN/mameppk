@@ -54,7 +54,7 @@ void mrdo_state::palette_init()
 	const int pull = 220;
 	float pot[16];
 	int weight[16];
-	const float potadjust = 0.7f;	/* diode voltage drop */
+	const float potadjust = 0.7f;   /* diode voltage drop */
 
 	for (i = 0x0f; i >= 0; i--)
 	{
@@ -118,9 +118,9 @@ void mrdo_state::palette_init()
 		UINT8 ctabentry = color_prom[(i - 0x100) & 0x1f];
 
 		if ((i - 0x100) & 0x20)
-			ctabentry >>= 4;		/* high 4 bits are for sprite color n + 8 */
+			ctabentry >>= 4;        /* high 4 bits are for sprite color n + 8 */
 		else
-			ctabentry &= 0x0f;	/* low 4 bits are for sprite color n */
+			ctabentry &= 0x0f;  /* low 4 bits are for sprite color n */
 
 		colortable_entry_set_value(machine().colortable, i, ctabentry + ((ctabentry & 0x0c) << 3));
 	}
@@ -164,7 +164,6 @@ TILE_GET_INFO_MEMBER(mrdo_state::get_fg_tile_info)
 
 void mrdo_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(mrdo_state::get_bg_tile_info),this),TILEMAP_SCAN_ROWS,8,8,32,32);
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(mrdo_state::get_fg_tile_info),this),TILEMAP_SCAN_ROWS,8,8,32,32);
 
@@ -209,7 +208,6 @@ WRITE8_MEMBER(mrdo_state::mrdo_scrollx_w)
 
 WRITE8_MEMBER(mrdo_state::mrdo_scrolly_w)
 {
-
 	/* This is NOT affected by flipscreen (so stop it happening) */
 	if (m_flipscreen)
 		m_bg_tilemap->set_scrolly(0,((256 - data) & 0xff));
@@ -220,7 +218,6 @@ WRITE8_MEMBER(mrdo_state::mrdo_scrolly_w)
 
 WRITE8_MEMBER(mrdo_state::mrdo_flipscreen_w)
 {
-
 	/* bits 1-3 control the playfield priority, but they are not used by */
 	/* Mr. Do! so we don't emulate them */
 
@@ -256,7 +253,6 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap,const r
 
 UINT32 mrdo_state::screen_update_mrdo(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	bitmap.fill(0, cliprect);
 	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	m_fg_tilemap->draw(bitmap, cliprect, 0, 0);

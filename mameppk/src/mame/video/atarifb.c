@@ -21,7 +21,7 @@ static void get_tile_info_common( running_machine &machine, tile_data &tileinfo,
 	int disable = alpha_videoram[tile_index] & 0x80;
 
 	if (disable)
-		code = 0;	/* I *know* this is a space */
+		code = 0;   /* I *know* this is a space */
 
 	SET_TILE_INFO(0, code, 0, (flip ? TILE_FLIPX | TILE_FLIPY : 0));
 }
@@ -58,7 +58,6 @@ TILE_GET_INFO_MEMBER(atarifb_state::field_get_tile_info)
 
 WRITE8_MEMBER(atarifb_state::atarifb_alpha1_videoram_w)
 {
-
 	m_alphap1_videoram[offset] = data;
 	m_alpha1_tilemap->mark_tile_dirty(offset);
 }
@@ -66,7 +65,6 @@ WRITE8_MEMBER(atarifb_state::atarifb_alpha1_videoram_w)
 
 WRITE8_MEMBER(atarifb_state::atarifb_alpha2_videoram_w)
 {
-
 	m_alphap2_videoram[offset] = data;
 	m_alpha2_tilemap->mark_tile_dirty(offset);
 }
@@ -74,7 +72,6 @@ WRITE8_MEMBER(atarifb_state::atarifb_alpha2_videoram_w)
 
 WRITE8_MEMBER(atarifb_state::atarifb_field_videoram_w)
 {
-
 	m_field_videoram[offset] = data;
 	m_field_tilemap->mark_tile_dirty(offset);
 }
@@ -89,7 +86,6 @@ WRITE8_MEMBER(atarifb_state::atarifb_field_videoram_w)
 
 void atarifb_state::video_start()
 {
-
 	m_alpha1_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(atarifb_state::alpha1_get_tile_info),this), TILEMAP_SCAN_COLS, 8, 8, 3, 32);
 	m_alpha2_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(atarifb_state::alpha2_get_tile_info),this), TILEMAP_SCAN_COLS, 8, 8, 3, 32);
 	m_field_tilemap  = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(atarifb_state::field_get_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);

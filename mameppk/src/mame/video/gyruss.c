@@ -38,7 +38,7 @@ void gyruss_state::palette_init()
 	int i;
 
 	/* compute the color output resistor weights */
-	compute_resistor_weights(0,	255, -1.0,
+	compute_resistor_weights(0, 255, -1.0,
 			3, resistances_rg, weights_rg, 470, 0,
 			2, resistances_b,  weights_b,  470, 0,
 			0, 0, 0, 0, 0);
@@ -114,7 +114,7 @@ TILE_GET_INFO_MEMBER(gyruss_state::gyruss_get_tile_info)
 void gyruss_state::video_start()
 {
 	m_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(gyruss_state::gyruss_get_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
-	m_tilemap->set_transmask(0, 0x00, 0);	/* opaque */
+	m_tilemap->set_transmask(0, 0x00, 0);   /* opaque */
 	m_tilemap->set_transmask(1, 0x0f, 0);  /* transparent */
 }
 
@@ -150,7 +150,6 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 UINT32 gyruss_state::screen_update_gyruss(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	if (cliprect.min_y == screen.visible_area().min_y)
 	{
 		machine().tilemap().mark_all_dirty();

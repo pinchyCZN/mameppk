@@ -10,7 +10,6 @@ Atari Sky Raider video emulation
 
 void skyraid_state::video_start()
 {
-
 	m_helper.allocate(128, 240);
 }
 
@@ -30,7 +29,7 @@ static void draw_text(running_machine &machine, bitmap_ind16 &bitmap, const rect
 		y = 136 + 16 * (i ^ 1);
 
 		for (x = 0; x < bitmap.width(); x += 16)
-			drawgfx_transpen(bitmap, cliprect, machine.gfx[0], *p++, 0, 0, 0,	x, y, 0);
+			drawgfx_transpen(bitmap, cliprect, machine.gfx[0], *p++, 0, 0, 0,   x, y, 0);
 	}
 }
 
@@ -134,7 +133,6 @@ static void draw_trapezoid(running_machine &machine, bitmap_ind16& dst, bitmap_i
 
 UINT32 skyraid_state::screen_update_skyraid(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	bitmap.fill(0, cliprect);
 
 	rectangle helper_clip = cliprect;

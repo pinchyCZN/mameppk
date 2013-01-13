@@ -76,7 +76,7 @@ READ16_MEMBER(othldrby_state::calendar_r)
 			return (((systime.local_time.year%100)/10)<<4) + (systime.local_time.year%10);
 		case 7:
 		default:
-			return 0;	/* status? the other registers are read only when bit 0 is clear */
+			return 0;   /* status? the other registers are read only when bit 0 is clear */
 	}
 }
 
@@ -177,7 +177,7 @@ static INPUT_PORTS_START( othldrby )
 	PORT_START("SYSTEM")
 	PORT_BIT( 0x01, IP_ACTIVE_HIGH, IPT_SERVICE1 )
 	PORT_BIT( 0x02, IP_ACTIVE_HIGH, IPT_UNKNOWN )
-	PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SERVICE2 )	/* TEST */
+	PORT_BIT( 0x04, IP_ACTIVE_HIGH, IPT_SERVICE2 )  /* TEST */
 	PORT_BIT( 0x08, IP_ACTIVE_HIGH, IPT_COIN1 ) PORT_IMPULSE(1)
 	PORT_BIT( 0x10, IP_ACTIVE_HIGH, IPT_COIN2 ) PORT_IMPULSE(1)
 	PORT_BIT( 0x20, IP_ACTIVE_HIGH, IPT_START1 )
@@ -220,7 +220,6 @@ GFXDECODE_END
 
 void othldrby_state::machine_start()
 {
-
 	save_item(NAME(m_toggle));
 	save_item(NAME(m_vram_addr));
 	save_item(NAME(m_vreg_addr));
@@ -229,7 +228,6 @@ void othldrby_state::machine_start()
 
 void othldrby_state::machine_reset()
 {
-
 	m_toggle = 0xff;
 	m_vram_addr = 0;
 	m_vreg_addr = 0;
@@ -281,7 +279,7 @@ ROM_START( othldrby )
 	ROM_LOAD( "db0-r2",       0x000000, 0x200000, CRC(4efff265) SHA1(4cd239ff42f532495946cb52bd1fee412f84e192) )
 	ROM_LOAD( "db0-r3",       0x200000, 0x200000, CRC(5c142b38) SHA1(5466a8b061a0f2545493de0f96fd4387beea276a) )
 
-	ROM_REGION( 0x080000, "oki", 0 )	/* OKIM6295 samples */
+	ROM_REGION( 0x080000, "oki", 0 )    /* OKIM6295 samples */
 	ROM_LOAD( "db0.4",        0x00000, 0x80000, CRC(a9701868) SHA1(9ee89556666d358e8d3915622573b3ba660048b8) )
 ROM_END
 

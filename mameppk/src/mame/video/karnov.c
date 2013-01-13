@@ -71,6 +71,7 @@ void karnov_flipscreen_w( running_machine &machine, int data )
 	karnov_state *state = machine.driver_data<karnov_state>();
 	state->m_flipscreen = data;
 	machine.tilemap().set_flip_all(state->m_flipscreen ? (TILEMAP_FLIPY | TILEMAP_FLIPX) : 0);
+	state->flip_screen_set(state->m_flipscreen);
 }
 
 static void draw_background( running_machine &machine, bitmap_ind16 &bitmap, const rectangle &cliprect )
@@ -160,7 +161,6 @@ WRITE16_MEMBER(karnov_state::karnov_playfield_swap_w)
 
 VIDEO_START_MEMBER(karnov_state,karnov)
 {
-
 	/* Allocate bitmap & tilemap */
 	m_bitmap_f = auto_bitmap_ind16_alloc(machine(), 512, 512);
 	m_fix_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(karnov_state::get_fix_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
@@ -172,7 +172,6 @@ VIDEO_START_MEMBER(karnov_state,karnov)
 
 VIDEO_START_MEMBER(karnov_state,wndrplnt)
 {
-
 	/* Allocate bitmap & tilemap */
 	m_bitmap_f = auto_bitmap_ind16_alloc(machine(), 512, 512);
 	m_fix_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(karnov_state::get_fix_tile_info),this), TILEMAP_SCAN_COLS, 8, 8, 32, 32);

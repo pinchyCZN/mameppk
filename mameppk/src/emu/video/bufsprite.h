@@ -61,17 +61,13 @@ extern const device_type BUFFERED_SPRITERAM64;
 //**************************************************************************
 
 #define MCFG_BUFFERED_SPRITERAM8_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, BUFFERED_SPRITERAM8, 0) \
-
+	MCFG_DEVICE_ADD(_tag, BUFFERED_SPRITERAM8, 0)
 #define MCFG_BUFFERED_SPRITERAM16_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, BUFFERED_SPRITERAM16, 0) \
-
+	MCFG_DEVICE_ADD(_tag, BUFFERED_SPRITERAM16, 0)
 #define MCFG_BUFFERED_SPRITERAM32_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, BUFFERED_SPRITERAM32, 0) \
-
+	MCFG_DEVICE_ADD(_tag, BUFFERED_SPRITERAM32, 0)
 #define MCFG_BUFFERED_SPRITERAM64_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, BUFFERED_SPRITERAM64, 0) \
-
+	MCFG_DEVICE_ADD(_tag, BUFFERED_SPRITERAM64, 0)
 
 
 //**************************************************************************
@@ -88,7 +84,7 @@ public:
 	// construction
 	buffered_spriteram_device(const machine_config &mconfig, device_type type, const char *tag, device_t *owner, UINT32 clock)
 		: device_t(mconfig, type, "Buffered Sprite RAM", tag, owner, clock),
-		  m_spriteram(*owner, tag) { }
+			m_spriteram(*owner, tag) { }
 
 	// getters
 	_Type *live() const { return m_spriteram; }
@@ -124,8 +120,8 @@ protected:
 
 private:
 	// internal state
-	required_shared_ptr<_Type>	m_spriteram;
-	dynamic_array<_Type>		m_buffered;
+	required_shared_ptr<_Type>  m_spriteram;
+	dynamic_array<_Type>        m_buffered;
 };
 
 
@@ -173,4 +169,4 @@ public:
 };
 
 
-#endif	/* __BUFSPRITE_H__ */
+#endif  /* __BUFSPRITE_H__ */

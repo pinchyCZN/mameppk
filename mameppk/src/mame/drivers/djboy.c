@@ -149,7 +149,6 @@ Notes:
 
 WRITE8_MEMBER(djboy_state::beast_data_w)
 {
-
 	m_data_to_beast = data;
 	m_z80_to_beast_full = 1;
 	m_beast_int0_l = 0;
@@ -158,7 +157,6 @@ WRITE8_MEMBER(djboy_state::beast_data_w)
 
 READ8_MEMBER(djboy_state::beast_data_r)
 {
-
 	m_beast_to_z80_full = 0;
 	return m_data_to_z80;
 }
@@ -177,7 +175,6 @@ WRITE8_MEMBER(djboy_state::trigger_nmi_on_cpu0)
 
 WRITE8_MEMBER(djboy_state::cpu0_bankswitch_w)
 {
-
 	data ^= m_bankxor;
 	membank("bank1")->set_entry(data);
 	membank("bank4")->set_entry(0); /* unsure if/how this area is banked */
@@ -238,7 +235,7 @@ WRITE8_MEMBER(djboy_state::trigger_nmi_on_sound_cpu2)
 
 WRITE8_MEMBER(djboy_state::cpu2_bankswitch_w)
 {
-	membank("bank3")->set_entry(data);	// shall we check data<0x07?
+	membank("bank3")->set_entry(data);  // shall we check data<0x07?
 }
 
 /******************************************************************************/
@@ -308,7 +305,6 @@ READ8_MEMBER(djboy_state::beast_p0_r)
 
 WRITE8_MEMBER(djboy_state::beast_p0_w)
 {
-
 	if (!BIT(m_beast_p0, 1) && BIT(data, 1))
 	{
 		m_beast_to_z80_full = 1;
@@ -323,7 +319,6 @@ WRITE8_MEMBER(djboy_state::beast_p0_w)
 
 READ8_MEMBER(djboy_state::beast_p1_r)
 {
-
 	if (BIT(m_beast_p0, 0) == 0)
 		return m_data_to_beast;
 	else
@@ -332,7 +327,6 @@ READ8_MEMBER(djboy_state::beast_p1_r)
 
 WRITE8_MEMBER(djboy_state::beast_p1_w)
 {
-
 	if (data == 0xff)
 	{
 		m_beast_int0_l = 1;
@@ -344,7 +338,6 @@ WRITE8_MEMBER(djboy_state::beast_p1_w)
 
 READ8_MEMBER(djboy_state::beast_p2_r)
 {
-
 	switch ((m_beast_p0 >> 2) & 3)
 	{
 		case 0: return ioport("IN1")->read();
@@ -361,7 +354,6 @@ WRITE8_MEMBER(djboy_state::beast_p2_w)
 
 READ8_MEMBER(djboy_state::beast_p3_r)
 {
-
 	UINT8 dsw = 0;
 	UINT8 dsw1 = ~ioport("DSW1")->read();
 	UINT8 dsw2 = ~ioport("DSW2")->read();
@@ -378,7 +370,6 @@ READ8_MEMBER(djboy_state::beast_p3_r)
 
 WRITE8_MEMBER(djboy_state::beast_p3_w)
 {
-
 	m_beast_p3 = data;
 	m_cpu1->execute().set_input_line(INPUT_LINE_RESET, data & 2 ? CLEAR_LINE : ASSERT_LINE);
 }
@@ -425,32 +416,32 @@ static INPUT_PORTS_START( djboy )
 	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_UNKNOWN )
 
 	PORT_START("DSW1")
-	PORT_DIPNAME( 0x01, 0x00, DEF_STR( Unknown ) )		PORT_DIPLOCATION("SW1:1") /* Manual states "CAUTION  !! .... Don't use ." */
+	PORT_DIPNAME( 0x01, 0x00, DEF_STR( Unknown ) )      PORT_DIPLOCATION("SW1:1") /* Manual states "CAUTION  !! .... Don't use ." */
 	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
 	PORT_DIPSETTING(    0x01, DEF_STR( On ) )
-	PORT_DIPNAME( 0x02, 0x00, DEF_STR( Flip_Screen ) )	PORT_DIPLOCATION("SW1:2")
+	PORT_DIPNAME( 0x02, 0x00, DEF_STR( Flip_Screen ) )  PORT_DIPLOCATION("SW1:2")
 	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
 	PORT_DIPSETTING(    0x02, DEF_STR( On ) )
 	PORT_SERVICE_DIPLOC(  0x04, IP_ACTIVE_HIGH, "SW1:3" )
 //  PORT_DIPNAME( 0x04, 0x00, DEF_STR( Service_Mode ) ) PORT_DIPLOCATION("SW1:3")
 //  PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
 //  PORT_DIPSETTING(    0x04, DEF_STR( On ) )
-	PORT_DIPNAME( 0x08, 0x00, DEF_STR( Unknown ) )		PORT_DIPLOCATION("SW1:4")
+	PORT_DIPNAME( 0x08, 0x00, DEF_STR( Unknown ) )      PORT_DIPLOCATION("SW1:4")
 	PORT_DIPSETTING(    0x00, DEF_STR( Off ) )
 	PORT_DIPSETTING(    0x08, DEF_STR( On ) )
-	PORT_DIPNAME( 0x30, 0x00, DEF_STR( Coin_A ) )		PORT_DIPLOCATION("SW1:5,6")
+	PORT_DIPNAME( 0x30, 0x00, DEF_STR( Coin_A ) )       PORT_DIPLOCATION("SW1:5,6")
 	PORT_DIPSETTING(    0x20, DEF_STR( 2C_1C ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
 	PORT_DIPSETTING(    0x30, DEF_STR( 2C_3C ) )
 	PORT_DIPSETTING(    0x10, DEF_STR( 1C_2C ) )
-	PORT_DIPNAME( 0xc0, 0x00, DEF_STR( Coin_B ) )		PORT_DIPLOCATION("SW1:7,8")
+	PORT_DIPNAME( 0xc0, 0x00, DEF_STR( Coin_B ) )       PORT_DIPLOCATION("SW1:7,8")
 	PORT_DIPSETTING(    0x80, DEF_STR( 2C_1C ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( 1C_1C ) )
 	PORT_DIPSETTING(    0xc0, DEF_STR( 2C_3C ) )
 	PORT_DIPSETTING(    0x40, DEF_STR( 1C_2C ) )
 
 	PORT_START("DSW2")
-	PORT_DIPNAME( 0x03, 0x00, DEF_STR( Difficulty ) )	PORT_DIPLOCATION("SW2:1,2")
+	PORT_DIPNAME( 0x03, 0x00, DEF_STR( Difficulty ) )   PORT_DIPLOCATION("SW2:1,2")
 	PORT_DIPSETTING(    0x01, DEF_STR( Easy ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( Normal ) )
 	PORT_DIPSETTING(    0x02, DEF_STR( Hard ) )
@@ -460,15 +451,15 @@ static INPUT_PORTS_START( djboy )
 	PORT_DIPSETTING(    0x04, "10,20,30,40,50,60,70,80,90" )
 	PORT_DIPSETTING(    0x08, "20,50" )
 	PORT_DIPSETTING(    0x0c, DEF_STR( None ) )
-	PORT_DIPNAME( 0x30, 0x00, DEF_STR( Lives ) )		PORT_DIPLOCATION("SW2:5,6")
+	PORT_DIPNAME( 0x30, 0x00, DEF_STR( Lives ) )        PORT_DIPLOCATION("SW2:5,6")
 	PORT_DIPSETTING(    0x10, "3" )
 	PORT_DIPSETTING(    0x00, "5" )
 	PORT_DIPSETTING(    0x20, "7" )
 	PORT_DIPSETTING(    0x30, "9" )
-	PORT_DIPNAME( 0x40, 0x00, DEF_STR( Demo_Sounds ) )	PORT_DIPLOCATION("SW2:7")
+	PORT_DIPNAME( 0x40, 0x00, DEF_STR( Demo_Sounds ) )  PORT_DIPLOCATION("SW2:7")
 	PORT_DIPSETTING(    0x40, DEF_STR( Off ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
-	PORT_DIPNAME( 0x80, 0x80, "Stereo Sound" )		PORT_DIPLOCATION("SW2:8")
+	PORT_DIPNAME( 0x80, 0x80, "Stereo Sound" )      PORT_DIPLOCATION("SW2:8")
 	PORT_DIPSETTING(    0x80, DEF_STR( Off ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
 INPUT_PORTS_END
@@ -513,9 +504,9 @@ TIMER_DEVICE_CALLBACK_MEMBER(djboy_state::djboy_scanline)
 
 static const kaneko_pandora_interface djboy_pandora_config =
 {
-	"screen",	/* screen tag */
-	0,	/* gfx_region */
-	0, 0	/* x_offs, y_offs */
+	"screen",   /* screen tag */
+	0,  /* gfx_region */
+	0, 0    /* x_offs, y_offs */
 };
 
 
@@ -557,7 +548,6 @@ void djboy_state::machine_start()
 
 void djboy_state::machine_reset()
 {
-
 	m_videoreg = 0;
 	m_scrollx = 0;
 	m_scrolly = 0;

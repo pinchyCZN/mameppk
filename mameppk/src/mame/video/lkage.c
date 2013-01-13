@@ -43,7 +43,6 @@
 
 WRITE8_MEMBER(lkage_state::lkage_videoram_w)
 {
-
 	m_videoram[offset] = data;
 
 	switch (offset / 0x400)
@@ -85,7 +84,6 @@ TILE_GET_INFO_MEMBER(lkage_state::get_tx_tile_info)
 
 void lkage_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(lkage_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(lkage_state::get_fg_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 	m_tx_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(lkage_state::get_tx_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
@@ -109,12 +107,12 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 	{
 		int attributes = source[2];
 		/* 0x01: horizontal flip
-         * 0x02: vertical flip
-         * 0x04: bank select
-         * 0x08: sprite size
-         * 0x70: color
-         * 0x80: priority
-         */
+		 * 0x02: vertical flip
+		 * 0x04: bank select
+		 * 0x08: sprite size
+		 * 0x70: color
+		 * 0x80: priority
+		 */
 		int priority_mask = 0;
 		int color = (attributes >> 4) & 7;
 		int flipx = attributes & 0x01;

@@ -3,28 +3,24 @@
 
 WRITE8_MEMBER(solomon_state::solomon_videoram_w)
 {
-
 	m_videoram[offset] = data;
 	m_fg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(solomon_state::solomon_colorram_w)
 {
-
 	m_colorram[offset] = data;
 	m_fg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(solomon_state::solomon_videoram2_w)
 {
-
 	m_videoram2[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
 
 WRITE8_MEMBER(solomon_state::solomon_colorram2_w)
 {
-
 	m_colorram2[offset] = data;
 	m_bg_tilemap->mark_tile_dirty(offset);
 }
@@ -59,12 +55,11 @@ TILE_GET_INFO_MEMBER(solomon_state::get_fg_tile_info)
 
 void solomon_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(solomon_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS,
-		 8, 8, 32, 32);
+			8, 8, 32, 32);
 
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(solomon_state::get_fg_tile_info),this), TILEMAP_SCAN_ROWS,
-		 8, 8, 32, 32);
+			8, 8, 32, 32);
 
 	m_fg_tilemap->set_transparent_pen(0);
 }
@@ -80,7 +75,7 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap, const r
 		int code = spriteram[offs] + 16 * (spriteram[offs + 1] & 0x10);
 		int color = (spriteram[offs + 1] & 0x0e) >> 1;
 		int flipx = spriteram[offs + 1] & 0x40;
-		int flipy =	spriteram[offs + 1] & 0x80;
+		int flipy = spriteram[offs + 1] & 0x80;
 		int sx = spriteram[offs + 3];
 		int sy = 241 - spriteram[offs + 2];
 

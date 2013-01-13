@@ -14,7 +14,6 @@ bit 0 = ? (unused?)
 */
 WRITE8_MEMBER(mexico86_state::mexico86_f008_w)
 {
-
 	m_audiocpu->set_input_line(INPUT_LINE_RESET, (data & 4) ? CLEAR_LINE : ASSERT_LINE);
 
 	if (m_mcu != NULL)
@@ -51,12 +50,12 @@ static void mcu_simulate( running_machine &machine )
 		if (state->m_protection_ram[0x01] == 0x00)
 		{
 			logerror("initialising MCU\n");
-			state->m_protection_ram[0x04] = 0xfc;	// coin inputs
-			state->m_protection_ram[0x02] = 0xff;	// player 1
-			state->m_protection_ram[0x03] = 0xff;	// player 2
-			state->m_protection_ram[0x1b] = 0xff;	// active player
-			state->m_protection_ram[0x06] = 0xff;	// must be FF otherwise PS4 ERROR
-			state->m_protection_ram[0x07] = 0x03;	// must be 03 otherwise PS4 ERROR
+			state->m_protection_ram[0x04] = 0xfc;   // coin inputs
+			state->m_protection_ram[0x02] = 0xff;   // player 1
+			state->m_protection_ram[0x03] = 0xff;   // player 2
+			state->m_protection_ram[0x1b] = 0xff;   // active player
+			state->m_protection_ram[0x06] = 0xff;   // must be FF otherwise PS4 ERROR
+			state->m_protection_ram[0x07] = 0x03;   // must be 03 otherwise PS4 ERROR
 			state->m_protection_ram[0x00] = 0x00;
 			state->m_mcu_initialised = 1;
 		}
@@ -70,17 +69,17 @@ static void mcu_simulate( running_machine &machine )
 		coin_curr = ~machine.root_device().ioport("IN0")->read() & 1;
 		if (coin_curr && !state->m_coin_last && state->m_protection_ram[0x01] < 9)
 		{
-			state->m_protection_ram[0x01]++;	// increase credits counter
-			state->m_protection_ram[0x0a] = 0x01;	// set flag (coin inserted sound is not played otherwise)
+			state->m_protection_ram[0x01]++;    // increase credits counter
+			state->m_protection_ram[0x0a] = 0x01;   // set flag (coin inserted sound is not played otherwise)
 		}
 		state->m_coin_last = coin_curr;
 
-		state->m_protection_ram[0x04] = 0x3c;	// coin inputs
+		state->m_protection_ram[0x04] = 0x3c;   // coin inputs
 
-		state->m_protection_ram[0x02] = BITSWAP8(machine.root_device().ioport("IN1")->read(), 7,6,5,4,2,3,1,0);	// player 1
-		state->m_protection_ram[0x03] = BITSWAP8(machine.root_device().ioport("IN2")->read(), 7,6,5,4,2,3,1,0);	// player 2
+		state->m_protection_ram[0x02] = BITSWAP8(machine.root_device().ioport("IN1")->read(), 7,6,5,4,2,3,1,0); // player 1
+		state->m_protection_ram[0x03] = BITSWAP8(machine.root_device().ioport("IN2")->read(), 7,6,5,4,2,3,1,0); // player 2
 
-		if (state->m_protection_ram[0x19] == 0xaa)	// player 2 active
+		if (state->m_protection_ram[0x19] == 0xaa)  // player 2 active
 			state->m_protection_ram[0x1b] = state->m_protection_ram[0x03];
 		else
 			state->m_protection_ram[0x1b] = state->m_protection_ram[0x02];
@@ -152,7 +151,6 @@ static void mcu_simulate( running_machine &machine )
 
 INTERRUPT_GEN_MEMBER(mexico86_state::kikikai_interrupt)
 {
-
 	if (m_mcu_running)
 		mcu_simulate(machine());
 
@@ -225,14 +223,12 @@ INTERRUPT_GEN_MEMBER(mexico86_state::mexico86_m68705_interrupt)
 
 READ8_MEMBER(mexico86_state::mexico86_68705_port_a_r)
 {
-
 	//logerror("%04x: 68705 port A read %02x\n", space.device().safe_pc(), m_port_a_in);
 	return (m_port_a_out & m_ddr_a) | (m_port_a_in & ~m_ddr_a);
 }
 
 WRITE8_MEMBER(mexico86_state::mexico86_68705_port_a_w)
 {
-
 	//logerror("%04x: 68705 port A write %02x\n", space.device().safe_pc(), data);
 	m_port_a_out = data;
 }

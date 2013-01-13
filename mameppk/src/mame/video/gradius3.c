@@ -81,7 +81,7 @@ void gradius3_state::video_start()
 	k051960_set_sprite_offsets(m_k051960, 2, 0);
 
 	/* re-decode the sprites because the ROMs are connected to the custom IC differently
-       from how they are connected to the CPU. */
+	   from how they are connected to the CPU. */
 	for (i = 0; i < TOTAL_SPRITES; i++)
 		machine().gfx[1]->mark_dirty(i);
 
@@ -123,7 +123,6 @@ WRITE16_MEMBER(gradius3_state::gradius3_gfxram_w)
 
 UINT32 gradius3_state::screen_update_gradius3(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	/* TODO: this kludge enforces the char banks. For some reason, they don't work otherwise. */
 	address_space &space = machine().driver_data()->generic_space();
 	k052109_w(m_k052109, space, 0x1d80, 0x10);

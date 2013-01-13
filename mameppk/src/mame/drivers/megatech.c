@@ -77,7 +77,7 @@ Sonic Hedgehog 2           171-6215A   837-6963-62       610-0239-62         MPR
 #include "includes/megadriv.h"
 #include "imagedev/cartslot.h"
 
-#define MASTER_CLOCK		53693100
+#define MASTER_CLOCK        53693100
 
 /* not currently used */
 static INPUT_PORTS_START( megatech ) /* Genesis Input Ports */
@@ -289,9 +289,9 @@ static void megatech_select_game(running_machine &machine, int gameno)
 static WRITE8_HANDLER( megatech_cart_select_w )
 {
 	/* seems to write the slot number..
-      but it stores something in (banked?) ram
-      because it always seems to show the
-      same instructions ... */
+	  but it stores something in (banked?) ram
+	  because it always seems to show the
+	  same instructions ... */
 	mtech_state *state = space.machine().driver_data<mtech_state>();
 	state->m_mt_cart_select_reg = data;
 
@@ -448,7 +448,6 @@ VIDEO_START_MEMBER(mtech_state,mtnew)
 //attotime::never
 UINT32 mtech_state::screen_update_mtnew(screen_device &screen, bitmap_rgb32 &bitmap, const rectangle &cliprect)
 {
-
 	/* if we're running an sms game then use the SMS update.. maybe this should be moved to the megadrive emulation core as compatibility mode is a feature of the chip */
 	if (!m_current_game_is_sms)
 		SCREEN_UPDATE32_CALL(megadriv);
@@ -500,7 +499,7 @@ static const sega315_5124_interface _vdp_intf =
 
 static const sn76496_config psg_intf =
 {
-    DEVCB_NULL
+	DEVCB_NULL
 };
 
 
@@ -571,7 +570,7 @@ static DEVICE_IMAGE_LOAD( megatech_cart )
 {
 	mtech_state *state = image.device().machine().driver_data<mtech_state>();
 	const struct megatech_cart_region *mt_cart = &megatech_cart_table[0], *this_cart;
-	const char	*pcb_name;
+	const char  *pcb_name;
 
 	/* First, determine where this cart has to be loaded */
 	while (mt_cart->tag)
@@ -652,8 +651,7 @@ MACHINE_CONFIG_END
 	ROM_SYSTEM_BIOS( 1, "ver0a", "Ver 0 Rev A" ) \
 	ROMX_LOAD( "epr-12263a.20", 0x000000, 0x8000, CRC(07c3f423) SHA1(50c28bbc2d4349c820d988ae3f20aae3f808545f), ROM_BIOS(2)) \
 	ROM_SYSTEM_BIOS( 2, "ver0b", "Ver 0 Rev B" ) \
-	ROMX_LOAD( "epr-12263b.20", 0x000000, 0x8000, CRC(ca26c87a) SHA1(987a18bede6e54cd73c4434426eb6c302a37cdc5), ROM_BIOS(3)) \
-
+	ROMX_LOAD( "epr-12263b.20", 0x000000, 0x8000, CRC(ca26c87a) SHA1(987a18bede6e54cd73c4434426eb6c302a37cdc5), ROM_BIOS(3))
 /* no games */
 ROM_START( megatech )
 	MEGATECH_BIOS

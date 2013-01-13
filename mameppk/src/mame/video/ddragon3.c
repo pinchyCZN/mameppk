@@ -9,17 +9,16 @@
 
 WRITE16_MEMBER(ddragon3_state::ddragon3_scroll_w)
 {
-
 	switch (offset)
 	{
-		case 0: COMBINE_DATA(&m_fg_scrollx);	break;	// Scroll X, BG1
-		case 1: COMBINE_DATA(&m_fg_scrolly);	break;	// Scroll Y, BG1
-		case 2: COMBINE_DATA(&m_bg_scrollx);	break;	// Scroll X, BG0
-		case 3: COMBINE_DATA(&m_bg_scrolly);	break;	// Scroll Y, BG0
-		case 4:										break;	// Unknown write
-		case 5: flip_screen_set(data & 0x01);		break;	// Flip Screen
+		case 0: COMBINE_DATA(&m_fg_scrollx);    break;  // Scroll X, BG1
+		case 1: COMBINE_DATA(&m_fg_scrolly);    break;  // Scroll Y, BG1
+		case 2: COMBINE_DATA(&m_bg_scrollx);    break;  // Scroll X, BG0
+		case 3: COMBINE_DATA(&m_bg_scrolly);    break;  // Scroll Y, BG0
+		case 4:                                     break;  // Unknown write
+		case 5: flip_screen_set(data & 0x01);       break;  // Flip Screen
 		case 6:
-			COMBINE_DATA(&m_bg_tilebase);			// BG Tile Base
+			COMBINE_DATA(&m_bg_tilebase);           // BG Tile Base
 			m_bg_tilebase &= 0x1ff;
 			m_bg_tilemap->mark_all_dirty();
 			break;
@@ -28,7 +27,6 @@ WRITE16_MEMBER(ddragon3_state::ddragon3_scroll_w)
 
 READ16_MEMBER(ddragon3_state::ddragon3_scroll_r)
 {
-
 	switch (offset)
 	{
 		case 0: return m_fg_scrollx;
@@ -76,7 +74,6 @@ TILE_GET_INFO_MEMBER(ddragon3_state::get_fg_tile_info)
 
 void ddragon3_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ddragon3_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS, 16, 16, 32, 32);
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ddragon3_state::get_fg_tile_info),this), TILEMAP_SCAN_ROWS, 16, 16, 32, 32);
 
@@ -119,7 +116,7 @@ static void draw_sprites( running_machine& machine, bitmap_ind16 &bitmap, const 
 	{
 		UINT16 attr = source[1];
 
-		if (attr & 0x01)	/* enable */
+		if (attr & 0x01)    /* enable */
 		{
 			int i;
 			int bank = source[3] & 0xff;
@@ -157,7 +154,6 @@ static void draw_sprites( running_machine& machine, bitmap_ind16 &bitmap, const 
 
 UINT32 ddragon3_state::screen_update_ddragon3(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->set_scrollx(0, m_bg_scrollx);
 	m_bg_tilemap->set_scrolly(0, m_bg_scrolly);
 	m_fg_tilemap->set_scrollx(0, m_fg_scrollx);
@@ -186,7 +182,6 @@ UINT32 ddragon3_state::screen_update_ddragon3(screen_device &screen, bitmap_ind1
 
 UINT32 ddragon3_state::screen_update_ctribe(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->set_scrollx(0, m_bg_scrollx);
 	m_bg_tilemap->set_scrolly(0, m_bg_scrolly);
 	m_fg_tilemap->set_scrollx(0, m_fg_scrollx);

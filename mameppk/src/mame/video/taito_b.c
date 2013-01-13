@@ -40,7 +40,6 @@ WRITE16_MEMBER(taitob_state::realpunc_video_ctrl_w)
 
 VIDEO_START_MEMBER(taitob_state,taitob_core)
 {
-
 	m_framebuffer[0] = auto_bitmap_ind16_alloc(machine(), 512, 256);
 	m_framebuffer[1] = auto_bitmap_ind16_alloc(machine(), 512, 256);
 	m_pixel_bitmap = NULL;  /* only hitice needs this */
@@ -58,7 +57,7 @@ VIDEO_START_MEMBER(taitob_state,taitob_color_order0)
 
 	/*Note that in both this and color order 1 pixel_color_base/color_granularity is equal to sprites color base. Pure coincidence? */
 
-	m_b_sp_color_base = 0x40 * 16;	/*sprites   */
+	m_b_sp_color_base = 0x40 * 16;  /*sprites   */
 
 	/* bg, fg, tx color_base are set in the tc0180vcu interface */
 
@@ -84,10 +83,9 @@ VIDEO_START_MEMBER(taitob_state,taitob_color_order2)
 
 VIDEO_START_MEMBER(taitob_state,hitice)
 {
-
 	VIDEO_START_CALL_MEMBER(taitob_color_order0);
 
-	m_b_fg_color_base = 0x80;		/* hitice also uses this for the pixel_bitmap */
+	m_b_fg_color_base = 0x80;       /* hitice also uses this for the pixel_bitmap */
 
 	m_pixel_bitmap = auto_bitmap_ind16_alloc(machine(), 1024, 512);
 
@@ -103,7 +101,6 @@ VIDEO_RESET_MEMBER(taitob_state,hitice)
 
 VIDEO_START_MEMBER(taitob_state,realpunc)
 {
-
 	m_realpunc_bitmap = auto_bitmap_ind16_alloc(machine(), machine().primary_screen->width(), machine().primary_screen->height());
 
 	VIDEO_START_CALL_MEMBER(taitob_color_order0);
@@ -218,8 +215,8 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 			zoomy = zoomylatch;
 
 			/* Note: like taito_f2.c, this zoom implementation is wrong,
-            chopped up into 16x16 sections instead of one sprite. This
-            is especially visible in rambo3. */
+			chopped up into 16x16 sections instead of one sprite. This
+			is especially visible in rambo3. */
 
 			x = xlatch + (x_no * (0xff - zoomx) + 15) / 16;
 			y = ylatch + (y_no * (0xff - zoomy) + 15) / 16;
@@ -280,7 +277,7 @@ g_profiler.start(PROFILER_USER1);
 			return;
 		}
 
-		if (video_control & 0x10)	/*flip screen*/
+		if (video_control & 0x10)   /*flip screen*/
 		{
 			/*popmessage("1. X[%3i;%3i] Y[%3i;%3i]", myclip.min_x, myclip.max_x, myclip.min_y, myclip.max_y);*/
 			for (y = myclip.min_y; y <= myclip.max_y; y++)
@@ -343,9 +340,9 @@ g_profiler.start(PROFILER_USER1);
 				}
 			}
 		}
-    	else
-	    {
-	        for (y = myclip.min_y; y <= myclip.max_y; y++)
+		else
+		{
+			for (y = myclip.min_y; y <= myclip.max_y; y++)
 			{
 				UINT16 *src = &state->m_framebuffer[framebuffer_page]->pix16(y, myclip.min_x);
 				UINT16 *dst = &bitmap.pix16(y, myclip.min_x);

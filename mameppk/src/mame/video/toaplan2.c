@@ -24,7 +24,7 @@
 #include "emu.h"
 #include "includes/toaplan2.h"
 
-#define RAIZING_TX_GFXRAM_SIZE  0x8000	/* GFX data decode RAM size */
+#define RAIZING_TX_GFXRAM_SIZE  0x8000  /* GFX data decode RAM size */
 
 
 
@@ -60,7 +60,7 @@ static void truxton2_create_tx_tilemap(running_machine &machine)
 	toaplan2_state *state = machine.driver_data<toaplan2_state>();
 
 	state->m_tx_tilemap = &machine.tilemap().create(tilemap_get_info_delegate(FUNC(toaplan2_state::get_text_tile_info),state), TILEMAP_SCAN_ROWS, 8, 8, 64, 32);
-	state->m_tx_tilemap->set_scroll_rows(8*32);	/* line scrolling */
+	state->m_tx_tilemap->set_scroll_rows(8*32); /* line scrolling */
 	state->m_tx_tilemap->set_scroll_cols(1);
 	state->m_tx_tilemap->set_transparent_pen(0);
 }
@@ -80,7 +80,6 @@ static void truxton2_postload(running_machine &machine)
 
 VIDEO_START_MEMBER(toaplan2_state,toaplan2)
 {
-
 	/* cache the VDP device */
 	m_vdp0 = machine().device<gp9001vdp_device>("gp9001vdp0");
 	m_vdp1 = machine().device<gp9001vdp_device>("gp9001vdp1");
@@ -105,7 +104,6 @@ VIDEO_START_MEMBER(toaplan2_state,toaplan2)
 
 VIDEO_START_MEMBER(toaplan2_state,truxton2)
 {
-
 	VIDEO_START_CALL_MEMBER( toaplan2 );
 
 	/* Create the Text tilemap for this game */
@@ -118,7 +116,6 @@ VIDEO_START_MEMBER(toaplan2_state,truxton2)
 
 VIDEO_START_MEMBER(toaplan2_state,fixeightbl)
 {
-
 	VIDEO_START_CALL_MEMBER( toaplan2 );
 
 	/* Create the Text tilemap for this game */
@@ -144,7 +141,6 @@ VIDEO_START_MEMBER(toaplan2_state,fixeightbl)
 
 VIDEO_START_MEMBER(toaplan2_state,bgaregga)
 {
-
 	VIDEO_START_CALL_MEMBER( toaplan2 );
 
 	/* Create the Text tilemap for this game */
@@ -154,7 +150,6 @@ VIDEO_START_MEMBER(toaplan2_state,bgaregga)
 
 VIDEO_START_MEMBER(toaplan2_state,bgareggabl)
 {
-
 	VIDEO_START_CALL_MEMBER( toaplan2 );
 
 	/* Create the Text tilemap for this game */
@@ -182,7 +177,6 @@ VIDEO_START_MEMBER(toaplan2_state,batrider)
 
 WRITE16_MEMBER(toaplan2_state::toaplan2_txvideoram16_w)
 {
-
 	COMBINE_DATA(&m_txvideoram16[offset]);
 	if (offset < m_txvideoram16.bytes()/4)
 		m_tx_tilemap->mark_tile_dirty(offset);
@@ -197,15 +191,15 @@ WRITE16_MEMBER(toaplan2_state::toaplan2_txvideoram16_offs_w)
 
 	if (oldword != data)
 	{
-		if (offset == 0)			/* Wrong ! */
+		if (offset == 0)            /* Wrong ! */
 		{
-			if (data & 0x8000)		/* Flip off */
+			if (data & 0x8000)      /* Flip off */
 			{
 				m_tx_flip = 0;
 				m_tx_tilemap->set_flip(m_tx_flip);
 				m_tx_tilemap->set_scrolly(0, 0);
 			}
-			else					/* Flip on */
+			else                    /* Flip on */
 			{
 				m_tx_flip = (TILEMAP_FLIPY | TILEMAP_FLIPX);
 				m_tx_tilemap->set_flip(m_tx_flip);
@@ -273,7 +267,6 @@ WRITE16_MEMBER(toaplan2_state::batrider_unknown_dma_w)
 
 WRITE16_MEMBER(toaplan2_state::batrider_objectbank_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		data &= 0xf;
@@ -288,7 +281,6 @@ WRITE16_MEMBER(toaplan2_state::batrider_objectbank_w)
 // Dogyuun doesn't appear to require fancy mixing?
 UINT32 toaplan2_state::screen_update_toaplan2_dual(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	if (m_vdp1)
 	{
 		bitmap.fill(0, cliprect);
@@ -310,7 +302,6 @@ UINT32 toaplan2_state::screen_update_toaplan2_dual(screen_device &screen, bitmap
 // renders to 2 bitmaps, and mixes output
 UINT32 toaplan2_state::screen_update_toaplan2_mixed(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 //  bitmap.fill(0, cliprect);
 //  gp9001_custom_priority_bitmap->fill(0, cliprect);
 
@@ -364,14 +355,14 @@ UINT32 toaplan2_state::screen_update_toaplan2_mixed(screen_device &screen, bitma
 				// note: GPU1_LUTaddr & 0x000f - transparency check for vdp1? (gfx are 4bpp, the low 4 bits of the lookup would be the pixel data value)
 #if 0
 				int result =
-					     ((GPU0_LUTaddr & 0x0008) & !COMPARISON)
-					   | ((GPU0_LUTaddr & 0x0008) & !(GPU1_LUTaddr & 0x000f))
-					   | ((GPU0_LUTaddr & 0x0004) & !COMPARISON)
-					   | ((GPU0_LUTaddr & 0x0004) & !(GPU1_LUTaddr & 0x000f))
-					   | ((GPU0_LUTaddr & 0x0002) & !COMPARISON)
-					   | ((GPU0_LUTaddr & 0x0002) & !(GPU1_LUTaddr & 0x000f))
-					   | ((GPU0_LUTaddr & 0x0001) & !COMPARISON)
-					   | ((GPU0_LUTaddr & 0x0001) & !(GPU1_LUTaddr & 0x000f));
+							((GPU0_LUTaddr & 0x0008) & !COMPARISON)
+						| ((GPU0_LUTaddr & 0x0008) & !(GPU1_LUTaddr & 0x000f))
+						| ((GPU0_LUTaddr & 0x0004) & !COMPARISON)
+						| ((GPU0_LUTaddr & 0x0004) & !(GPU1_LUTaddr & 0x000f))
+						| ((GPU0_LUTaddr & 0x0002) & !COMPARISON)
+						| ((GPU0_LUTaddr & 0x0002) & !(GPU1_LUTaddr & 0x000f))
+						| ((GPU0_LUTaddr & 0x0001) & !COMPARISON)
+						| ((GPU0_LUTaddr & 0x0001) & !(GPU1_LUTaddr & 0x000f));
 
 				if (result) src_vdp0[x] = GPU0_LUTaddr;
 				else src_vdp0[x] = GPU1_LUTaddr;
@@ -409,7 +400,6 @@ UINT32 toaplan2_state::screen_update_toaplan2_mixed(screen_device &screen, bitma
 
 UINT32 toaplan2_state::screen_update_toaplan2(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	if (m_vdp0)
 	{
 		bitmap.fill(0, cliprect);

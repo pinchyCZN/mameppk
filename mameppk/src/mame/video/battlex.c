@@ -70,7 +70,7 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 		int sx = (source[0] & 0x7f) * 2 - (source[0] & 0x80) * 2;
 		int sy = source[3];
 		int tile = source[2] & 0x7f;
-		int color = source[1] & 0x07;	/* bits 3,4,5 also used during explosions */
+		int color = source[1] & 0x07;   /* bits 3,4,5 also used during explosions */
 		int flipy = source[1] & 0x80;
 		int flipx = source[1] & 0x40;
 
@@ -91,7 +91,6 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 
 UINT32 battlex_state::screen_update_battlex(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_bg_tilemap->set_scrollx(0, m_scroll_lsb | (m_scroll_msb << 8));
 	m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	draw_sprites(machine(), bitmap, cliprect);

@@ -5,8 +5,7 @@
 
 
 #define MCFG_NAMCO_50XX_ADD(_tag, _clock) \
-	MCFG_DEVICE_ADD(_tag, NAMCO_50XX, _clock) \
-
+	MCFG_DEVICE_ADD(_tag, NAMCO_50XX, _clock)
 
 DECLARE_READ8_DEVICE_HANDLER( namco_50xx_read );
 void namco_50xx_read_request(device_t *device);
@@ -37,4 +36,4 @@ extern const device_type NAMCO_50XX;
 
 
 
-#endif	/* NAMCO50_H */
+#endif  /* NAMCO50_H */

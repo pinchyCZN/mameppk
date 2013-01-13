@@ -92,7 +92,6 @@ public:
 
 WRITE8_MEMBER(trvmadns_state::trvmadns_banking_w)
 {
-
 	UINT8 *rom;
 	int address = 0;
 
@@ -133,11 +132,11 @@ WRITE8_MEMBER(trvmadns_state::trvmadns_banking_w)
 		rom = memregion("user1")->base();
 
 		/*
-        7
-        6
-        4
-        0
-        */
+		7
+		6
+		4
+		0
+		*/
 
 		//switch(data & 0xf)
 		switch(data & 7)

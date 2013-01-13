@@ -17,8 +17,7 @@ Template for skeleton device
 
 /* TODO: frequency */
 #define MCFG_M6M80011AP_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, M6M80011AP, XTAL_32_768kHz) \
-
+	MCFG_DEVICE_ADD(_tag, M6M80011AP, XTAL_32_768kHz)
 
 //**************************************************************************
 //  TYPE DEFINITIONS
@@ -37,8 +36,8 @@ enum eeprom_cmd_t
 
 // ======================> m6m80011ap_device
 
-class m6m80011ap_device :	public device_t,
-    						public device_nvram_interface
+class m6m80011ap_device :   public device_t,
+							public device_nvram_interface
 {
 public:
 	// construction/destruction

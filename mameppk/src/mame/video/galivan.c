@@ -128,7 +128,7 @@ TILE_GET_INFO_MEMBER(galivan_state::get_bg_tile_info)
 	SET_TILE_INFO_MEMBER(
 			1,
 			code,
-			(attr & 0x78) >> 3,		/* seems correct */
+			(attr & 0x78) >> 3,     /* seems correct */
 			0);
 }
 
@@ -139,9 +139,9 @@ TILE_GET_INFO_MEMBER(galivan_state::get_tx_tile_info)
 	SET_TILE_INFO_MEMBER(
 			0,
 			code,
-			(attr & 0xe0) >> 5,		/* not sure */
+			(attr & 0xe0) >> 5,     /* not sure */
 			0);
-	tileinfo.category = attr & 8 ? 0 : 1;	/* seems correct */
+	tileinfo.category = attr & 8 ? 0 : 1;   /* seems correct */
 }
 
 TILE_GET_INFO_MEMBER(galivan_state::ninjemak_get_bg_tile_info)
@@ -152,7 +152,7 @@ TILE_GET_INFO_MEMBER(galivan_state::ninjemak_get_bg_tile_info)
 	SET_TILE_INFO_MEMBER(
 			1,
 			code,
-			((attr & 0x60) >> 3) | ((attr & 0x0c) >> 2),	/* seems correct */
+			((attr & 0x60) >> 3) | ((attr & 0x0c) >> 2),    /* seems correct */
 			0);
 }
 
@@ -167,7 +167,7 @@ TILE_GET_INFO_MEMBER(galivan_state::ninjemak_get_tx_tile_info)
 	SET_TILE_INFO_MEMBER(
 			0,
 			code,
-			(attr & 0x1c) >> 2,		/* seems correct ? */
+			(attr & 0x1c) >> 2,     /* seems correct ? */
 			0);
 }
 
@@ -181,7 +181,6 @@ TILE_GET_INFO_MEMBER(galivan_state::ninjemak_get_tx_tile_info)
 
 VIDEO_START_MEMBER(galivan_state,galivan)
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(galivan_state::get_bg_tile_info),this), TILEMAP_SCAN_ROWS, 16, 16, 128, 128);
 	m_tx_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(galivan_state::get_tx_tile_info),this), TILEMAP_SCAN_COLS, 8, 8, 32, 32);
 
@@ -190,7 +189,6 @@ VIDEO_START_MEMBER(galivan_state,galivan)
 
 VIDEO_START_MEMBER(galivan_state,ninjemak)
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(galivan_state::ninjemak_get_bg_tile_info),this), TILEMAP_SCAN_COLS, 16, 16, 512, 32);
 	m_tx_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(galivan_state::ninjemak_get_tx_tile_info),this), TILEMAP_SCAN_COLS, 8, 8, 32, 32);
 
@@ -214,7 +212,6 @@ WRITE8_MEMBER(galivan_state::galivan_videoram_w)
 /* Written through port 40 */
 WRITE8_MEMBER(galivan_state::galivan_gfxbank_w)
 {
-
 	/* bits 0 and 1 coin counters */
 	coin_counter_w(machine(), 0,data & 1);
 	coin_counter_w(machine(), 1,data & 2);
@@ -232,7 +229,6 @@ WRITE8_MEMBER(galivan_state::galivan_gfxbank_w)
 
 WRITE8_MEMBER(galivan_state::ninjemak_gfxbank_w)
 {
-
 	/* bits 0 and 1 coin counters */
 	coin_counter_w(machine(), 0,data & 1);
 	coin_counter_w(machine(), 1,data & 2);
@@ -326,7 +322,7 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap, const 
 		}
 
 //      code = spriteram[offs + 1] + ((attr & 0x02) << 7);
-		code = spriteram[offs + 1] + ((attr & 0x06) << 7);	// for ninjemak, not sure ?
+		code = spriteram[offs + 1] + ((attr & 0x06) << 7);  // for ninjemak, not sure ?
 
 		drawgfx_transpen(bitmap,cliprect,machine.gfx[2],
 				code,
@@ -365,7 +361,6 @@ UINT32 galivan_state::screen_update_galivan(screen_device &screen, bitmap_ind16 
 
 UINT32 galivan_state::screen_update_ninjemak(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	/* (scrollx[1] & 0x40) does something */
 	m_bg_tilemap->set_scrollx(0, m_scrollx);
 	m_bg_tilemap->set_scrolly(0, m_scrolly);

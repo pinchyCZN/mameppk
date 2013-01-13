@@ -53,7 +53,6 @@ TILE_GET_INFO_MEMBER(sf_state::get_tx_tile_info)
 
 void sf_state::video_start()
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(sf_state::get_bg_tile_info),this), TILEMAP_SCAN_COLS, 16, 16, 2048, 16);
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(sf_state::get_fg_tile_info),this), TILEMAP_SCAN_COLS, 16, 16, 2048, 16);
 	m_tx_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(sf_state::get_tx_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 64, 32);
@@ -138,7 +137,7 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap,const r
 		int flipx = attr & 0x0100;
 		int flipy = attr & 0x0200;
 
-		if (attr & 0x400)	/* large sprite */
+		if (attr & 0x400)   /* large sprite */
 		{
 			int c1, c2, c3, c4, t;
 
@@ -214,7 +213,6 @@ static void draw_sprites( running_machine &machine, bitmap_ind16 &bitmap,const r
 
 UINT32 sf_state::screen_update_sf(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	if (m_sf_active & 0x20)
 		m_bg_tilemap->draw(bitmap, cliprect, 0, 0);
 	else

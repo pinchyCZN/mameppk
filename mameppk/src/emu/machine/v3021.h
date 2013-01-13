@@ -20,8 +20,7 @@
 //**************************************************************************
 
 #define MCFG_V3021_ADD(_tag) \
-	MCFG_DEVICE_ADD(_tag, v3021, XTAL_32_768kHz) \
-
+	MCFG_DEVICE_ADD(_tag, v3021, XTAL_32_768kHz)
 
 //**************************************************************************
 //  TYPE DEFINITIONS
@@ -35,7 +34,7 @@ struct rtc_regs_t
 
 // ======================> v3021_device
 
-class v3021_device :	public device_t
+class v3021_device :    public device_t
 {
 public:
 	// construction/destruction

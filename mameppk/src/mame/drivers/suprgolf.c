@@ -85,7 +85,6 @@ TILE_GET_INFO_MEMBER(suprgolf_state::get_tile_info)
 
 void suprgolf_state::video_start()
 {
-
 	m_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(suprgolf_state::get_tile_info),this),TILEMAP_SCAN_ROWS,8,8,32,32 );
 	m_paletteram = auto_alloc_array(machine(), UINT8, 0x1000);
 	m_bg_vram = auto_alloc_array(machine(), UINT8, 0x2000*0x20);
@@ -141,7 +140,6 @@ UINT32 suprgolf_state::screen_update_suprgolf(screen_device &screen, bitmap_ind1
 
 READ8_MEMBER(suprgolf_state::suprgolf_videoram_r)
 {
-
 	if (m_palette_switch)
 		return m_paletteram[offset];
 	else
@@ -150,7 +148,6 @@ READ8_MEMBER(suprgolf_state::suprgolf_videoram_r)
 
 WRITE8_MEMBER(suprgolf_state::suprgolf_videoram_w)
 {
-
 	if(m_palette_switch)
 	{
 		int r,g,b,datax;
@@ -173,13 +170,11 @@ WRITE8_MEMBER(suprgolf_state::suprgolf_videoram_w)
 
 READ8_MEMBER(suprgolf_state::suprgolf_vregs_r)
 {
-
 	return m_vreg_bank;
 }
 
 WRITE8_MEMBER(suprgolf_state::suprgolf_vregs_w)
 {
-
 	//printf("%02x\n",data);
 
 	//bits 0,1,2 and probably 3 controls the background vram banking
@@ -195,7 +190,6 @@ WRITE8_MEMBER(suprgolf_state::suprgolf_vregs_w)
 
 READ8_MEMBER(suprgolf_state::suprgolf_bg_vram_r)
 {
-
 	return m_bg_vram[offset+m_bg_bank*0x2000];
 }
 
@@ -246,19 +240,16 @@ WRITE8_MEMBER(suprgolf_state::suprgolf_bg_vram_w)
 
 WRITE8_MEMBER(suprgolf_state::suprgolf_pen_w)
 {
-
 	m_vreg_pen = data;
 }
 
 WRITE8_MEMBER(suprgolf_state::adpcm_data_w)
 {
-
 	m_msm5205next = data;
 }
 
 READ8_MEMBER(suprgolf_state::rom_bank_select_r)
 {
-
 	return m_rom_bank;
 }
 
@@ -325,42 +316,42 @@ static ADDRESS_MAP_START( io_map, AS_IO, 8, suprgolf_state )
 	AM_RANGE(0x04, 0x07) AM_DEVREADWRITE("ppi8255_1", i8255_device, read, write)
 	AM_RANGE(0x08, 0x09) AM_DEVREADWRITE_LEGACY("ymsnd", ym2203_r, ym2203_w)
 	AM_RANGE(0x0c, 0x0c) AM_WRITE(adpcm_data_w)
- ADDRESS_MAP_END
+	ADDRESS_MAP_END
 
 static INPUT_PORTS_START( suprgolf )
 	PORT_START("P1")
 	PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_SPECIAL ) /* low port of P1 Pedal */
-	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT ) PORT_PLAYER(1)	    /* D.L */
-	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT ) PORT_PLAYER(1)	    /* D.R */
-	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON1 ) PORT_PLAYER(1)			/* CNT - shot switch */
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON2 ) PORT_PLAYER(1)			/* SEL */
+	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT ) PORT_PLAYER(1)      /* D.L */
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT ) PORT_PLAYER(1)       /* D.R */
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON1 ) PORT_PLAYER(1)         /* CNT - shot switch */
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON2 ) PORT_PLAYER(1)         /* SEL */
 
 	PORT_START("P1_ANALOG")
 	PORT_BIT( 0x0f, 0x00, IPT_DIAL ) PORT_SENSITIVITY(5) PORT_KEYDELTA(5) PORT_PLAYER(1)
 
 	/* simulate spring throttle with the following button */
 	PORT_START("P1_RELEASE")
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON4 ) PORT_PLAYER(1)	/* release power? */
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON4 ) PORT_PLAYER(1) /* release power? */
 
 	PORT_START("P2")
 	PORT_BIT( 0x0f, IP_ACTIVE_LOW, IPT_SPECIAL ) /* low port of P2 Pedal */
-	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT ) PORT_PLAYER(2)	    /* D.L */
-	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT ) PORT_PLAYER(2)	    /* D.R */
-	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON1 ) PORT_PLAYER(2)			/* CNT - shot switch */
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON2 ) PORT_PLAYER(2)			/* SEL */
+	PORT_BIT( 0x10, IP_ACTIVE_LOW, IPT_JOYSTICK_RIGHT ) PORT_PLAYER(2)      /* D.L */
+	PORT_BIT( 0x20, IP_ACTIVE_LOW, IPT_JOYSTICK_LEFT ) PORT_PLAYER(2)       /* D.R */
+	PORT_BIT( 0x40, IP_ACTIVE_LOW, IPT_BUTTON1 ) PORT_PLAYER(2)         /* CNT - shot switch */
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON2 ) PORT_PLAYER(2)         /* SEL */
 
 	PORT_START("P2_ANALOG")
 	PORT_BIT( 0x0f, 0x00, IPT_DIAL ) PORT_SENSITIVITY(5) PORT_KEYDELTA(5) PORT_PLAYER(2)
 
 	/* simulate spring throttle with the following button */
 	PORT_START("P2_RELEASE")
-	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON4 ) PORT_PLAYER(2)	/* release power? */
+	PORT_BIT( 0x80, IP_ACTIVE_LOW, IPT_BUTTON4 ) PORT_PLAYER(2) /* release power? */
 
 	PORT_START("SYSTEM")
-	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 )             			/* 1P */
-	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON3 ) PORT_PLAYER(1)			/* POW */
-	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START2 ) 	                	/* 1P */
-	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON3 ) PORT_PLAYER(2)			/* POW */
+	PORT_BIT( 0x01, IP_ACTIVE_LOW, IPT_START1 )                         /* 1P */
+	PORT_BIT( 0x02, IP_ACTIVE_LOW, IPT_BUTTON3 ) PORT_PLAYER(1)         /* POW */
+	PORT_BIT( 0x04, IP_ACTIVE_LOW, IPT_START2 )                         /* 1P */
+	PORT_BIT( 0x08, IP_ACTIVE_LOW, IPT_BUTTON3 ) PORT_PLAYER(2)         /* POW */
 	PORT_DIPNAME( 0x10, 0x10, DEF_STR( Unknown ) )
 	PORT_DIPSETTING(    0x10, DEF_STR( Off ) )
 	PORT_DIPSETTING(    0x00, DEF_STR( On ) )
@@ -461,8 +452,8 @@ static void adpcm_int(device_t *device)
 
 static const msm5205_interface msm5205_config =
 {
-	adpcm_int,		/* interrupt function */
-	MSM5205_S48_4B	/* 4KHz 4-bit */
+	adpcm_int,      /* interrupt function */
+	MSM5205_S48_4B  /* 4KHz 4-bit */
 };
 
 static const gfx_layout gfxlayout =
@@ -482,28 +473,27 @@ GFXDECODE_END
 
 void suprgolf_state::machine_reset()
 {
-
 	m_msm_nmi_mask = 0;
 }
 
 static I8255A_INTERFACE( ppi8255_intf_0 )
 {
-	DEVCB_DRIVER_MEMBER(suprgolf_state,p1_r),						/* Port A read */
-	DEVCB_NULL,									/* Port A write */
-	DEVCB_DRIVER_MEMBER(suprgolf_state,p2_r),						/* Port B read */
-	DEVCB_NULL,									/* Port B write */
-	DEVCB_DRIVER_MEMBER(suprgolf_state,pedal_extra_bits_r),			/* Port C read */
-	DEVCB_NULL									/* Port C write */
+	DEVCB_DRIVER_MEMBER(suprgolf_state,p1_r),                       /* Port A read */
+	DEVCB_NULL,                                 /* Port A write */
+	DEVCB_DRIVER_MEMBER(suprgolf_state,p2_r),                       /* Port B read */
+	DEVCB_NULL,                                 /* Port B write */
+	DEVCB_DRIVER_MEMBER(suprgolf_state,pedal_extra_bits_r),         /* Port C read */
+	DEVCB_NULL                                  /* Port C write */
 };
 
 static I8255A_INTERFACE( ppi8255_intf_1 )
 {
-	DEVCB_INPUT_PORT("SYSTEM"),					/* Port A read */
-	DEVCB_NULL,									/* Port A write */
-	DEVCB_DRIVER_MEMBER(suprgolf_state,rom_bank_select_r),			/* Port B read */
-	DEVCB_DRIVER_MEMBER(suprgolf_state,rom_bank_select_w),			/* Port B write */
-	DEVCB_DRIVER_MEMBER(suprgolf_state,suprgolf_vregs_r),			/* Port C read */
-	DEVCB_DRIVER_MEMBER(suprgolf_state,suprgolf_vregs_w)				/* Port C write */
+	DEVCB_INPUT_PORT("SYSTEM"),                 /* Port A read */
+	DEVCB_NULL,                                 /* Port A write */
+	DEVCB_DRIVER_MEMBER(suprgolf_state,rom_bank_select_r),          /* Port B read */
+	DEVCB_DRIVER_MEMBER(suprgolf_state,rom_bank_select_w),          /* Port B write */
+	DEVCB_DRIVER_MEMBER(suprgolf_state,suprgolf_vregs_r),           /* Port C read */
+	DEVCB_DRIVER_MEMBER(suprgolf_state,suprgolf_vregs_w)                /* Port C write */
 };
 
 

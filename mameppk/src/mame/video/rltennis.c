@@ -74,7 +74,7 @@ Blitter registers description (reg/bit names selected arbitrary ) :
 
 enum
 {
-	BLT_X_START	= 0,
+	BLT_X_START = 0,
 	BLT_X_END,
 	BLT_Y_START,
 	BLT_Y_END,
@@ -92,27 +92,26 @@ enum
 	BITMAP_FG_DISPLAY,
 };
 
-#define BLTFLAG_DST_X_DIR	(1<<0)
-#define BLTFLAG_DST_Y_DIR	(1<<1)
-#define BLTFLAG_DST_LR		(1<<2)
-#define BLTFLAG_DST_UD		(1<<3)
-#define BLTFLAG_DISPLAY_UD	(1<<5)
+#define BLTFLAG_DST_X_DIR   (1<<0)
+#define BLTFLAG_DST_Y_DIR   (1<<1)
+#define BLTFLAG_DST_LR      (1<<2)
+#define BLTFLAG_DST_UD      (1<<3)
+#define BLTFLAG_DISPLAY_UD  (1<<5)
 
-#define BLTFLAG_SRC_X_DIR	(1<<8)
-#define BLTFLAG_SRC_Y_DIR	(1<<9)
-#define BLTFLAG_SRC_LR		(1<<10)
-#define BLTFLAG_SRC_UD		(1<<11)
+#define BLTFLAG_SRC_X_DIR   (1<<8)
+#define BLTFLAG_SRC_Y_DIR   (1<<9)
+#define BLTFLAG_SRC_LR      (1<<10)
+#define BLTFLAG_SRC_UD      (1<<11)
 
 
-#define BLTSTRT_ROM_MSB		(1<<8)
-#define BLTSTRT_TRIGGER		(1<<14)
-#define BLTSTRT_LAYER		(1<<15)
+#define BLTSTRT_ROM_MSB     (1<<8)
+#define BLTSTRT_TRIGGER     (1<<14)
+#define BLTSTRT_LAYER       (1<<15)
 
-#define SRC_SHIFT			8
+#define SRC_SHIFT           8
 
 WRITE16_MEMBER(rltennis_state::rlt_blitter_w)
 {
-
 	int old_data=m_blitter[offset];
 	COMBINE_DATA(&m_blitter[offset]);
 	int new_data=m_blitter[offset];
@@ -196,7 +195,6 @@ WRITE16_MEMBER(rltennis_state::rlt_blitter_w)
 		{
 			for( y=dst_y0, idx_y=0 ; idx_y<=blit_h1;y+=y_dst_step, idx_y++)
 			{
-
 				int xx=src_x0+(x_src_step*idx_x);
 				int yy=src_y0+(y_src_step*idx_y);
 

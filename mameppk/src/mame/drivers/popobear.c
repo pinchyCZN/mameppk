@@ -101,7 +101,6 @@ public:
 
 void popobear_state::video_start()
 {
-
 }
 
 static void draw_layer(running_machine &machine, bitmap_ind16 &bitmap,const rectangle &cliprect, UINT8 layer_n)
@@ -197,14 +196,14 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap,const re
 	#endif
 
 	/*
-    ???? ---- ---- ---- unused?
-    ---- xxxx ---- ---- priority?
-    ---- ---- x--- ---- Y direction
-    ---- ---- -x-- ---- X direction
-    ---- ---- --xx ---- width
-    ---- ---- ---- xx-- color bank
-    ---- ---- ---- --xx height?
-    */
+	???? ---- ---- ---- unused?
+	---- xxxx ---- ---- priority?
+	---- ---- x--- ---- Y direction
+	---- ---- -x-- ---- X direction
+	---- ---- --xx ---- width
+	---- ---- ---- xx-- color bank
+	---- ---- ---- --xx height?
+	*/
 
 	/* 0x106 = 8 x 8 */
 	/* 0x*29 = 32 x 32 */
@@ -260,7 +259,6 @@ static void draw_sprites(running_machine &machine, bitmap_ind16 &bitmap,const re
 
 UINT32 popobear_state::screen_update_popobear(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	bitmap.fill(0, cliprect);
 
 	//popmessage("%04x",m_vregs[0/2]);

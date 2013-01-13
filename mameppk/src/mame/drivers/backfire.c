@@ -89,7 +89,6 @@ public:
 /* I'm using the functions in deco16ic.c ... same chips, why duplicate code? */
 void backfire_state::video_start()
 {
-
 	m_spriteram_1 = auto_alloc_array(machine(), UINT16, 0x2000/2);
 	m_spriteram_2 = auto_alloc_array(machine(), UINT16, 0x2000/2);
 
@@ -113,7 +112,6 @@ void backfire_state::video_start()
 
 UINT32 backfire_state::screen_update_backfire_left(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	//FIXME: flip_screen_x should not be written!
 	flip_screen_set_no_update(1);
 
@@ -145,7 +143,6 @@ UINT32 backfire_state::screen_update_backfire_left(screen_device &screen, bitmap
 
 UINT32 backfire_state::screen_update_backfire_right(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	//FIXME: flip_screen_x should not be written!
 	flip_screen_set_no_update(1);
 
@@ -190,7 +187,6 @@ READ32_MEMBER(backfire_state::backfire_eeprom_r)
 
 READ32_MEMBER(backfire_state::backfire_control2_r)
 {
-
 //  logerror("%08x:Read eprom %08x (%08x)\n", space.device().safe_pc(), offset << 1, mem_mask);
 	return (m_eeprom->read_bit() << 24) | ioport("IN1")->read() | (ioport("IN1")->read() << 16);
 }
@@ -198,7 +194,6 @@ READ32_MEMBER(backfire_state::backfire_control2_r)
 #ifdef UNUSED_FUNCTION
 READ32_MEMBER(backfire_state::backfire_control3_r)
 {
-
 //  logerror("%08x:Read eprom %08x (%08x)\n", space.device().safe_pc(), offset << 1, mem_mask);
 	return (m_eeprom->read_bit() << 24) | ioport("IN2")->read() | (ioport("IN2")->read() << 16);
 }
@@ -383,7 +378,7 @@ static const gfx_layout charlayout =
 	{ RGN_FRAC(1,2)+8, RGN_FRAC(1,2), 8, 0 },
 	{ 0, 1, 2, 3, 4, 5, 6, 7 },
 	{ 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16 },
-	16*8	/* every char takes 8 consecutive bytes */
+	16*8    /* every char takes 8 consecutive bytes */
 };
 
 static const gfx_layout spritelayout =
@@ -414,12 +409,12 @@ static const gfx_layout tilelayout =
 
 
 static GFXDECODE_START( backfire )
-	GFXDECODE_ENTRY( "gfx1", 0, charlayout,      0, 128 )	/* Characters 8x8 */
-	GFXDECODE_ENTRY( "gfx1", 0, tilelayout,      0, 128 )	/* Tiles 16x16 */
-	GFXDECODE_ENTRY( "gfx2", 0, charlayout,      0, 128 )	/* Characters 8x8 */
-	GFXDECODE_ENTRY( "gfx2", 0, tilelayout,      0, 128 )	/* Tiles 16x16 */
-	GFXDECODE_ENTRY( "gfx3", 0, spritelayout,    0x200, 32 )	/* Sprites 16x16 (screen 1) */
-	GFXDECODE_ENTRY( "gfx4", 0, spritelayout,    0x600, 32 )	/* Sprites 16x16 (screen 2) */
+	GFXDECODE_ENTRY( "gfx1", 0, charlayout,      0, 128 )   /* Characters 8x8 */
+	GFXDECODE_ENTRY( "gfx1", 0, tilelayout,      0, 128 )   /* Tiles 16x16 */
+	GFXDECODE_ENTRY( "gfx2", 0, charlayout,      0, 128 )   /* Characters 8x8 */
+	GFXDECODE_ENTRY( "gfx2", 0, tilelayout,      0, 128 )   /* Tiles 16x16 */
+	GFXDECODE_ENTRY( "gfx3", 0, spritelayout,    0x200, 32 )    /* Sprites 16x16 (screen 1) */
+	GFXDECODE_ENTRY( "gfx4", 0, spritelayout,    0x600, 32 )    /* Sprites 16x16 (screen 2) */
 GFXDECODE_END
 
 
@@ -453,9 +448,9 @@ static const deco16ic_interface backfire_deco16ic_tilegen1_intf =
 {
 	"lscreen",
 	0, 1,
-	0x0f, 0x0f,	/* trans masks (default values) */
+	0x0f, 0x0f, /* trans masks (default values) */
 	0x00, 0x40, /* color base */
-	0x0f, 0x0f,	/* color masks (default values) */
+	0x0f, 0x0f, /* color masks (default values) */
 	backfire_bank_callback,
 	backfire_bank_callback,
 	0,1
@@ -465,9 +460,9 @@ static const deco16ic_interface backfire_deco16ic_tilegen2_intf =
 {
 	"lscreen",
 	0, 1,
-	0x0f, 0x0f,	/* trans masks (default values) */
+	0x0f, 0x0f, /* trans masks (default values) */
 	0x10, 0x50, /* color base */
-	0x0f, 0x0f,	/* color masks (default values) */
+	0x0f, 0x0f, /* color masks (default values) */
 	backfire_bank_callback,
 	backfire_bank_callback,
 	2,3
@@ -475,7 +470,6 @@ static const deco16ic_interface backfire_deco16ic_tilegen2_intf =
 
 void backfire_state::machine_start()
 {
-
 	m_maincpu = machine().device<cpu_device>("maincpu");
 	m_deco_tilegen1 = machine().device("tilegen1");
 	m_deco_tilegen2 = machine().device("tilegen2");
@@ -488,10 +482,10 @@ UINT16 backfire_pri_callback(UINT16 x)
 {
 	switch (x & 0xc000)
 	{
-		case 0x0000: return 0;   break; // numbers, people, cars when in the air, status display..
-		case 0x4000: return 0xf0;break; // cars most of the time
-		case 0x8000: return 0;   break; // car wheels during jump?
-		case 0xc000: return 0xf0;break; /* car wheels in race? */
+		case 0x0000: return 0;    // numbers, people, cars when in the air, status display..
+		case 0x4000: return 0xf0; // cars most of the time
+		case 0x8000: return 0;    // car wheels during jump?
+		case 0xc000: return 0xf0; // car wheels in race?
 	}
 	return 0;
 }
@@ -501,7 +495,7 @@ static MACHINE_CONFIG_START( backfire, backfire_state )
 	/* basic machine hardware */
 	MCFG_CPU_ADD("maincpu", ARM, 28000000/4) /* Unconfirmed */
 	MCFG_CPU_PROGRAM_MAP(backfire_map)
-	MCFG_CPU_VBLANK_INT_DRIVER("lscreen", backfire_state,  deco32_vbl_interrupt)	/* or is it "rscreen?" */
+	MCFG_CPU_VBLANK_INT_DRIVER("lscreen", backfire_state,  deco32_vbl_interrupt)    /* or is it "rscreen?" */
 
 	MCFG_EEPROM_93C46_ADD("eeprom")
 
@@ -681,11 +675,11 @@ static void descramble_sound( running_machine &machine )
 		UINT32 addr;
 
 		addr = BITSWAP24 (x,23,22,21,0, 20,
-		                    19,18,17,16,
-		                    15,14,13,12,
-		                    11,10,9, 8,
-		                    7, 6, 5, 4,
-		                    3, 2, 1 );
+							19,18,17,16,
+							15,14,13,12,
+							11,10,9, 8,
+							7, 6, 5, 4,
+							3, 2, 1 );
 
 		buf1[addr] = rom[x];
 	}
@@ -697,7 +691,6 @@ static void descramble_sound( running_machine &machine )
 
 READ32_MEMBER(backfire_state::backfire_speedup_r)
 {
-
 	//mame_printf_debug( "%08x\n",space.device().safe_pc());
 
 	if (space.device() .safe_pc()== 0xce44)  space.device().execute().spin_until_time(attotime::from_usec(400)); // backfire

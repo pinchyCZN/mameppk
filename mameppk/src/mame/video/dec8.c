@@ -136,7 +136,6 @@ WRITE8_MEMBER(dec8_state::dec8_scroll2_w)
 
 WRITE8_MEMBER(dec8_state::srdarwin_control_w)
 {
-
 	switch (offset)
 	{
 	case 0: /* Top 3 bits - bank switch, bottom 4 - scroll MSB */
@@ -147,19 +146,18 @@ WRITE8_MEMBER(dec8_state::srdarwin_control_w)
 	case 1:
 		m_scroll2[1] = data;
 		return;
-    }
+	}
 }
 
 WRITE8_MEMBER(dec8_state::lastmisn_control_w)
 {
-
 	/*
-        Bit 0x0f - ROM bank switch.
-        Bit 0x10 - Unused
-        Bit 0x20 - X scroll MSB
-        Bit 0x40 - Y scroll MSB
-        Bit 0x80 - Hold subcpu reset line high if clear, else low
-    */
+	    Bit 0x0f - ROM bank switch.
+	    Bit 0x10 - Unused
+	    Bit 0x20 - X scroll MSB
+	    Bit 0x40 - Y scroll MSB
+	    Bit 0x80 - Hold subcpu reset line high if clear, else low
+	*/
 	membank("bank1")->set_entry(data & 0x0f);
 
 	m_scroll2[0] = (data >> 5) & 1;
@@ -173,7 +171,6 @@ WRITE8_MEMBER(dec8_state::lastmisn_control_w)
 
 WRITE8_MEMBER(dec8_state::shackled_control_w)
 {
-
 	/* Bottom 4 bits - bank switch, Bits 4 & 5 - Scroll MSBs */
 	membank("bank1")->set_entry(data & 0x0f);
 
@@ -248,12 +245,12 @@ static void srdarwin_draw_sprites( running_machine& machine, bitmap_ind16 &bitma
 		else sy2 = sy + 16;
 
 		drawgfx_transpen(bitmap,cliprect,machine.gfx[1],
-        			code,
+					code,
 				color,
 				fx,state->flip_screen(),
 				sx,sy,0);
-        if (multi)
-    		drawgfx_transpen(bitmap,cliprect,machine.gfx[1],
+		if (multi)
+			drawgfx_transpen(bitmap,cliprect,machine.gfx[1],
 				code+1,
 				color,
 				fx,state->flip_screen(),

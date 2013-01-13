@@ -19,7 +19,7 @@
  *
  *************************************/
 
-#define VTX_SEX(x)				((x) | ((x) & (1 << 29) ? 0xc0000000 : 0))
+#define VTX_SEX(x)              ((x) | ((x) & (1 << 29) ? 0xc0000000 : 0))
 
 enum
 {
@@ -37,7 +37,6 @@ enum
 
 void micro3d_state::video_start()
 {
-
 	/* Allocate 512x12 x 2 3D frame buffers */
 	m_frame_buffers[0] = auto_alloc_array(machine(), UINT16, 1024 * 512);
 	m_frame_buffers[1] = auto_alloc_array(machine(), UINT16, 1024 * 512);
@@ -47,7 +46,6 @@ void micro3d_state::video_start()
 
 void micro3d_state::video_reset()
 {
-
 	m_pipeline_state  = 0;
 	m_creg = 0;
 
@@ -85,9 +83,9 @@ void micro3d_scanline_update(screen_device &screen, bitmap_ind16 &bitmap, int sc
 		UINT16 pix = src[coladdr++ & 0x1ff];
 
 		/*
-            TODO: The upper four bits of the 3D buffer affect priority
-            0xfxx forces 3D priority?
-        */
+		    TODO: The upper four bits of the 3D buffer affect priority
+		    0xfxx forces 3D priority?
+		*/
 		if (pix & 0x80)
 			dest[x + 0] = sd_11_7 | (pix & 0x7f);
 		else
@@ -415,9 +413,9 @@ static void rasterise_spans(micro3d_state *state, UINT32 min_y, UINT32 max_y, UI
 	else
 	{
 		/*
-            I don't know the LFSR arrangement inside the DRAW2 ASIC
-            but here are some possible tap arrangements
-        */
+		    I don't know the LFSR arrangement inside the DRAW2 ASIC
+		    but here are some possible tap arrangements
+		*/
 		static const UINT8 taps[8][4] =
 		{
 			{9, 8, 7, 2},
@@ -677,9 +675,9 @@ WRITE32_MEMBER(micro3d_state::micro3d_fifo_w)
 					m_draw_state = STATE_DRAW_VTX_DATA;
 
 					/* Invalidate the draw RAM
-                     * TODO: Not sure this is the right place for it -
-                     * causes monitor mode draw tests to fail
-                     */
+					 * TODO: Not sure this is the right place for it -
+					 * causes monitor mode draw tests to fail
+					 */
 					for (addr = 0; addr < 512; ++addr)
 						m_draw_dpram[addr << 1] = 0x3ff000;
 

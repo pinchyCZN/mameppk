@@ -19,8 +19,7 @@ MACHINE_CONFIG_EXTERN( bfm_ad5 );
 INPUT_PORTS_EXTERN( bfm_ad5 );
 
 #define ad5crcpt_others \
-	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
-
+	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 )
 ROM_START( ad5crcpt )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211599.bin", 0x0000, 0x1000000, CRC(0fa50547) SHA1(95b1890851e82ad827b739a8d359309529c0b5b7) )
@@ -39,8 +38,7 @@ ROM_END
 	ROM_LOAD( "95890494.bin", 0x0000, 0x5000, CRC(84513cb2) SHA1(8d45cff91953263c4aa8e7cb4a437c27371bd8a1) ) \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "95008987.bin", 0x0000, 0x0fe101, CRC(798c9559) SHA1(4afb21a78be73353741b5903099d3c48e44fcebb) ) /* ITSBULLSEYE SOUNDS */ \
-	ROM_LOAD( "95008994.bin", 0x0000, 0x0fb8bc, CRC(2c7a4446) SHA1(b1e327747043c795e179643e8bd485f51f838021) ) /* BULLSEYEPFP SOUNDS */  \
-
+	ROM_LOAD( "95008994.bin", 0x0000, 0x0fb8bc, CRC(2c7a4446) SHA1(b1e327747043c795e179643e8bd485f51f838021) ) /* BULLSEYEPFP SOUNDS */
 ROM_START( ad5bpfpm )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211339.bin", 0x0000, 0xa91458, CRC(e653ce23) SHA1(8cf3ad73974d97f3ed1d715c607e7888cf0992b1) )
@@ -74,8 +72,7 @@ ROM_END
 
 #define ad5cmons_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "95008434.bin", 0x0000, 0x100000, CRC(2d35e8ab) SHA1(a2e39beb891416bc5fae3d17125d146fe3ec3a12) ) /* PR1601 CRAZY MONEY SOUNDS11 */ \
-
+	ROM_LOAD( "95008434.bin", 0x0000, 0x100000, CRC(2d35e8ab) SHA1(a2e39beb891416bc5fae3d17125d146fe3ec3a12) ) /* PR1601 CRAZY MONEY SOUNDS11 */
 ROM_START( ad5cmons )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211009.bin", 0x0000, 0x8ba10c, CRC(3883c4ea) SHA1(ac5876d252ef9900bbd86a43c73b2e3ba08f4e04) )
@@ -92,8 +89,7 @@ ROM_END
 #define ad5dndpl_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "95009108.bin", 0x000000, 0x100000, CRC(113b7f60) SHA1(62a8ca9dd9fc663971037936ddbd634273c3055f) ) /* PR3314 DOND PLATINUM SOUNDS11 */ \
-	ROM_LOAD( "95009109.bin", 0x100000, 0x100000, CRC(edf5a701) SHA1(3514b4a46dd921446c74c5b87a3a4b272e7b0fdb) ) \
-
+	ROM_LOAD( "95009109.bin", 0x100000, 0x100000, CRC(edf5a701) SHA1(3514b4a46dd921446c74c5b87a3a4b272e7b0fdb) )
 
 ROM_START( ad5dndpl )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -123,8 +119,7 @@ ROM_END
 #define ad5hir_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "95009143.bin", 0x000000, 0x100000, CRC(e8bab23e) SHA1(dc8e5173fcb301ee4abedc76d42ebf4d58d07af1) ) /* PR3401 HI ROLLER SOUNDS11 */ \
-	ROM_LOAD( "95009144.bin", 0x100000, 0x100000, CRC(73b81f14) SHA1(0a8d7949a290dce2b9cd6c4ec42a64ac8f18836d) ) \
-
+	ROM_LOAD( "95009144.bin", 0x100000, 0x100000, CRC(73b81f14) SHA1(0a8d7949a290dce2b9cd6c4ec42a64ac8f18836d) )
 
 ROM_START( ad5hir )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -152,8 +147,7 @@ ROM_END
 
 #define ad5hircl_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* game header wants SOUNDS12, check */\
-	ROM_LOAD( "95008555.bin", 0x0000, 0x100000, CRC(51d07478) SHA1(1e678b61d594d4884601e92485ab22206dc425d4) ) /* PR1755 HI ROLLER SOUNDS11 */ \
-
+	ROM_LOAD( "95008555.bin", 0x0000, 0x100000, CRC(51d07478) SHA1(1e678b61d594d4884601e92485ab22206dc425d4) ) /* PR1755 HI ROLLER SOUNDS11 */
 
 
 ROM_START( ad5hircl )
@@ -178,8 +172,7 @@ ROM_END
 #define ad5dnd_others \
 	ROM_REGION( 0x1000000, "ymz", ROMREGION_ERASE00 ) \
 	PR1945_CASINO_D_O_N_D_SOUNDS11 \
-	PR1945_CASINO_DOND_R_SOUNDS12 \
-
+	PR1945_CASINO_DOND_R_SOUNDS12
 
 ROM_START( ad5dnd )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -309,8 +302,7 @@ ROM_END
 
 #define ad5dndcl_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "95008727.bin", 0x0000, 0x100000, CRC(b4c343a0) SHA1(d67faa1bcac1547cdc68874a411624f5c025cdbd) ) /* R3078 TWIN */ \
-
+	ROM_LOAD( "95008727.bin", 0x0000, 0x100000, CRC(b4c343a0) SHA1(d67faa1bcac1547cdc68874a411624f5c025cdbd) ) /* R3078 TWIN */
 
 ROM_START( ad5dndcl )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -364,8 +356,7 @@ ROM_END
 #define ad5dnddd_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR3402 DOUBLE DELUXE SOUNDS11 */ \
 	ROM_LOAD( "95009137.bin", 0x000000, 0x100000, CRC(1d1fe8df) SHA1(d3aebec1a956d563de96069b587ebd2d40123497) ) \
-	ROM_LOAD( "95009138.bin", 0x100000, 0x100000, CRC(c16971e0) SHA1(45df220ffe61db6a5319f495ff36efa793d428a4) ) \
-
+	ROM_LOAD( "95009138.bin", 0x100000, 0x100000, CRC(c16971e0) SHA1(45df220ffe61db6a5319f495ff36efa793d428a4) )
 
 ROM_START( ad5dnddd )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -383,8 +374,7 @@ ROM_END
 #define ad5dndpg_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR3526 DOND PERFG CLUB SOUNDS12 */ \
 	ROM_LOAD( "95009043.bin", 0x000000, 0x100000, CRC(8f24fedd) SHA1(4168f057c91968ccdc1d87966cd191a53d4969f5) ) \
-	ROM_LOAD( "95009044.bin", 0x100000, 0x100000, CRC(21c8e0b5) SHA1(700c9dad452f86e013329db0182c8494af166378) ) \
-
+	ROM_LOAD( "95009044.bin", 0x100000, 0x100000, CRC(21c8e0b5) SHA1(700c9dad452f86e013329db0182c8494af166378) )
 ROM_START( ad5dndpg )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211613.bin", 0x0000, 0x1000000, CRC(98495946) SHA1(4c3d5d0731dfdaad37cee317a5d862ff46665ebd) )
@@ -687,8 +677,7 @@ ROM_END
 #define ad5gldmn_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "95008808.bin", 0x0000, 0x100000, CRC(0982179a) SHA1(ea962cc30d191c8e581bb1672a201d6f56a29b22) ) /* PR3217 GOLD MINE SOUNDS11 */ \
-	ROM_LOAD( "95008809.bin", 0x0000, 0x100000, CRC(fcd6f506) SHA1(3d2b8768d9b168f06c01568ed248ee9f687a56b5) ) \
-
+	ROM_LOAD( "95008809.bin", 0x0000, 0x100000, CRC(fcd6f506) SHA1(3d2b8768d9b168f06c01568ed248ee9f687a56b5) )
 ROM_START( ad5gldmn )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211462.bin", 0x0000, 0x1000000, CRC(811a32ab) SHA1(d37238fd6b4a5d13594cc80da48a6b45f44e7c4b) )
@@ -849,8 +838,7 @@ ROM_END
 
 
 #define ad5pp_others \
-	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
-
+	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 )
 ROM_START( ad5pp )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211267.bin", 0x0000, 0xb071f3, CRC(51d49618) SHA1(0053ecf1b2d2ad20444f05daf80138d4c8c0c885) )
@@ -923,8 +911,7 @@ ROM_END
 
 #define ad5rsclb_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR1826 RANDOM SPINNER SOUNDS11 */ \
-	ROM_LOAD( "95008546.bin", 0x0000, 0x100000, CRC(3d97132f) SHA1(b611617b21b6b7afafa300604ec09e0a84bde8ba) ) \
-
+	ROM_LOAD( "95008546.bin", 0x0000, 0x100000, CRC(3d97132f) SHA1(b611617b21b6b7afafa300604ec09e0a84bde8ba) )
 
 ROM_START( ad5rsclb )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -993,8 +980,7 @@ ROM_END
 
 
 #define ad5monop_others \
-	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
-
+	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 )
 ROM_START( ad5monop )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211239.bin", 0x0000, 0x6a78e0, CRC(024795a6) SHA1(aba82d4a61efaa4c48750fc62e6a369aa2a8df9d) )
@@ -1070,8 +1056,7 @@ ROM_END
 
 #define ad5rspin_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR1826 RANDOM SPINNER SOUNDS12 */\
-	ROM_LOAD( "95008549.bin", 0x0000, 0x100000, CRC(dd7399cf) SHA1(1d4f475dde67048c6a425623a696a06e49231308) ) \
-
+	ROM_LOAD( "95008549.bin", 0x0000, 0x100000, CRC(dd7399cf) SHA1(1d4f475dde67048c6a425623a696a06e49231308) )
 ROM_START( ad5rspin )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211388.bin", 0x0000, 0x1000000, CRC(56fca244) SHA1(56890695c230a62b50c9dc2ecb4e8d6c123ed8dc) )
@@ -1115,8 +1100,7 @@ ROM_END
 
 
 #define ad5rsnw_others \
-	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
-
+	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 )
 ROM_START( ad5rsnw )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211205.bin", 0x0000, 0x6a39e0, CRC(bb426781) SHA1(b1e21abd85589a7ca0e77b123f18b61c16e47971) )
@@ -1186,8 +1170,7 @@ ROM_END
 
 
 #define ad5mr2r_others \
-	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
-
+	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 )
 
 ROM_START( ad5mr2r )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -1247,8 +1230,7 @@ ROM_END
 // might be wrong, our sets have SOUNDS12 in the header
 #define ad5rwclb_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR1756 RANDOM WINNER SOUNDS11 */ \
-	ROM_LOAD( "95008569.bin", 0x0000, 0x080000, CRC(1a966dd9) SHA1(1314b7ee5b6e22d504e12e9eba3b2b88f6f5d64c) ) \
-
+	ROM_LOAD( "95008569.bin", 0x0000, 0x080000, CRC(1a966dd9) SHA1(1314b7ee5b6e22d504e12e9eba3b2b88f6f5d64c) )
 
 ROM_START( ad5rwclb )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -1290,8 +1272,7 @@ ROM_END
 
 #define ad5gldwn_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
-	ROM_LOAD( "95008945.bin", 0x0000, 0x0ff168, CRC(a467d802) SHA1(4120b3a21598f1c3642f0ce05a3c35c15bf6d811) ) /* GOLDEN WINNER SOUNDS */ \
-
+	ROM_LOAD( "95008945.bin", 0x0000, 0x0ff168, CRC(a467d802) SHA1(4120b3a21598f1c3642f0ce05a3c35c15bf6d811) ) /* GOLDEN WINNER SOUNDS */
 ROM_START( ad5gldwn )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211347.bin", 0x0000, 0x1000000, CRC(9db14fec) SHA1(ade5ae1764eb1889624b11ccc5a1faea093fc3ef) )
@@ -1308,8 +1289,7 @@ ROM_END
 
 #define ad5rapid_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR1712 RAPID PAY SOUNDS11 */ \
-	ROM_LOAD( "95008570.bin", 0x0000, 0x080000, CRC(edd2bff6) SHA1(213b16eb091f96633dec5ec8df5084062dd68ba0) ) \
-
+	ROM_LOAD( "95008570.bin", 0x0000, 0x080000, CRC(edd2bff6) SHA1(213b16eb091f96633dec5ec8df5084062dd68ba0) )
 
 
 ROM_START( ad5rapid )
@@ -1325,8 +1305,7 @@ ROM_START( ad5rapida )
 ROM_END
 
 #define ad5jckmo_others \
-	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
-
+	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 )
 
 ROM_START( ad5jckmo )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -1370,8 +1349,7 @@ ROM_END
 	ROM_LOAD( "95890416.bin", 0x0000, 0x5000, CRC(2becd79f) SHA1(e87c668c651adf55c234aaa2f9d8a0ed66792356) ) \
 	ROM_LOAD( "95890417.bin", 0x0000, 0x5000, CRC(373a2723) SHA1(61795c8e22e97903f0a4388b3aff6db3ca3af981) ) \
 	ROM_LOAD( "95890418.bin", 0x0000, 0x5000, CRC(f46005b3) SHA1(58b6369c0a9414f8ccf16ccbe05adfa47c188e1b) ) \
-	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
-
+	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 )
 
 ROM_START( ad5ppbtb )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -1404,8 +1382,7 @@ ROM_END
 #define ad5vlv_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR3507 VIVA LAS VEGAS SOUNDS11 */ \
 	ROM_LOAD( "95009055.bin", 0x000000, 0x100000, CRC(6fa39bdb) SHA1(a78b02d4b7d38da529db590b32d5d22ed7b46870) ) \
-	ROM_LOAD( "95009056.bin", 0x100000, 0x100000, CRC(d530f185) SHA1(a3a8ac81ce7d9a8e8e005cfaab3f9ae82804cbd9) ) \
-
+	ROM_LOAD( "95009056.bin", 0x100000, 0x100000, CRC(d530f185) SHA1(a3a8ac81ce7d9a8e8e005cfaab3f9ae82804cbd9) )
 ROM_START( ad5vlv )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211605.bin", 0x0000, 0x1000000, CRC(b8fab0a2) SHA1(68ad9810549d9d01934182cb578e17af05ffa3c2) )
@@ -1453,8 +1430,7 @@ ROM_END
 	ROM_LOAD( "95890491.bin", 0x0000, 0x5000, CRC(50cd0335) SHA1(db2bcf0e2be67eb8c657ab3536a5056bb66649b8) ) \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "95008986.bin", 0x0000, 0x0c18ab, CRC(f69f04b5) SHA1(b1095592120c3f4f3bac8963362611def14f7233) ) /* REEL ROULETTE SOUNDS */ \
-	ROM_LOAD( "95008996.bin", 0x0000, 0x0ce354, CRC(a462a168) SHA1(6598605123407bb2206928e82a903f9a41ba524c) ) /* REEL ROULETTE SOUNDS (different) */ \
-
+	ROM_LOAD( "95008996.bin", 0x0000, 0x0ce354, CRC(a462a168) SHA1(6598605123407bb2206928e82a903f9a41ba524c) ) /* REEL ROULETTE SOUNDS (different) */
 
 
 ROM_START( ad5rroul )
@@ -1484,8 +1460,7 @@ ROM_END
 
 #define ad5mcob_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* MMONTE SOUNDS */ \
-	ROM_LOAD( "95009011.bin", 0x0000, 0x0ff73b, CRC(9f6e0643) SHA1(d0f76b8a45aef2dd42939f1fca7b010637aaabe1) ) \
-
+	ROM_LOAD( "95009011.bin", 0x0000, 0x0ff73b, CRC(9f6e0643) SHA1(d0f76b8a45aef2dd42939f1fca7b010637aaabe1) )
 
 ROM_START( ad5mcob )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -1516,8 +1491,7 @@ ROM_END
 
 #define ad5pking_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR1625 POKER KING SOUNDS11 */ \
-	ROM_LOAD( "95008495.bin", 0x0000, 0x080000, CRC(dac8c4a8) SHA1(0192e1d2b9558a789753a5e58d97503cc09dfa27) ) \
-
+	ROM_LOAD( "95008495.bin", 0x0000, 0x080000, CRC(dac8c4a8) SHA1(0192e1d2b9558a789753a5e58d97503cc09dfa27) )
 
 ROM_START( ad5pking )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -1535,8 +1509,7 @@ ROM_END
 
 #define ad5vpa_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR3073 POKER ACE SOUNDS11 */ \
-	ROM_LOAD( "95008722.bin", 0x0000, 0x080000, CRC(0643d71d) SHA1(027e096a82d5c13a98ef773548c8f5e16257e863) ) \
-
+	ROM_LOAD( "95008722.bin", 0x0000, 0x080000, CRC(0643d71d) SHA1(027e096a82d5c13a98ef773548c8f5e16257e863) )
 
 ROM_START( ad5vpa )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -1568,8 +1541,7 @@ ROM_END
 
 #define ad5tornc_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR1627 TORNADO CLUB SOUNDS11 */ \
-	ROM_LOAD( "95008564.bin", 0x0000, 0x100000, CRC(55d0d855) SHA1(343cfe935c34c8f95a638eccb1397238fa7698e4) ) \
-
+	ROM_LOAD( "95008564.bin", 0x0000, 0x100000, CRC(55d0d855) SHA1(343cfe935c34c8f95a638eccb1397238fa7698e4) )
 
 ROM_START( ad5tornc )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -1624,8 +1596,7 @@ ROM_END
 	ROM_LOAD( "95890391.bin", 0x0000, 0x5000, CRC(e5a52b29) SHA1(ac408585a14060b81651e14f0cae6a77edee1985) ) \
 	ROM_LOAD( "95890392.bin", 0x0000, 0x5000, CRC(26ff09b9) SHA1(236d0808126d517e4a1c86bebad3c877252de4d8) ) \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* REEL CASH SOUNDS */ \
-	ROM_LOAD( "95008946.bin", 0x0000, 0x0f7b10, CRC(9a70fd7b) SHA1(692908750bea92af5f06d7151b15aec294aaf686) ) \
-
+	ROM_LOAD( "95008946.bin", 0x0000, 0x0f7b10, CRC(9a70fd7b) SHA1(692908750bea92af5f06d7151b15aec294aaf686) )
 
 ROM_START( ad5rcash )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -1642,15 +1613,14 @@ ROM_END
 
 
 #define ad5mww_others \
-	ROM_REGION( 0x400000, "pics", ROMREGION_ERASEFF ) \
-
- ROM_START( ad5mww )
+	ROM_REGION( 0x400000, "pics", ROMREGION_ERASEFF )
+	ROM_START( ad5mww )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211269.bin", 0x0000, 0x7a0866, CRC(0fae0667) SHA1(5356149061413c71b662371aa08f616a28ddbafb) )
 	ad5mww_others
 ROM_END
 
- ROM_START( ad5mwwa )
+	ROM_START( ad5mwwa )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211270.bin", 0x0000, 0x7a097a, CRC(13cb2a2a) SHA1(f00bf3647abf0593eb0708aee103dfd42e623bef) )
 	ad5mww_others
@@ -1664,8 +1634,7 @@ ROM_END
 	ROM_LOAD( "95890305.bin", 0x0000, 0x5000, CRC(0281445e) SHA1(b93460a79c906fb0f33bd898054f4c7aaea8fe12) ) \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) \
 	ROM_LOAD( "95008933.bin", 0x0000, 0x03fc55, CRC(5f01c246) SHA1(b5e2b79f780d48935b8eb158b3292ab26340ba7f) ) /* EDWNS16 SOUNDS */ \
-	ROM_LOAD( "95008959.bin", 0x0000, 0x07daf0, CRC(61e7fb11) SHA1(039efe731866314770800224e2b8536822252193) ) /* EDMULTI SOUNDS */ \
-
+	ROM_LOAD( "95008959.bin", 0x0000, 0x07daf0, CRC(61e7fb11) SHA1(039efe731866314770800224e2b8536822252193) ) /* EDMULTI SOUNDS */
 ROM_START( ad5eyes )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
 	ROM_LOAD( "39211248.bin", 0x0000, 0x4d88b4, CRC(a2b799c9) SHA1(9088de779c31d33d9f1eb83e46ec28c30181a0fc) )
@@ -1720,8 +1689,7 @@ ROM_END
 #define ad5rsrm_others \
 	ROM_REGION( 0x400000, "ymz", ROMREGION_ERASE00 ) /* PR3302 RONNIE ROCKET SOUNDS11 */ \
 	ROM_LOAD( "95008828.bin", 0x0000, 0x100000, CRC(35a1b9aa) SHA1(a6d03645994b36a9e506b950f752a6c1c899e110) ) \
-	ROM_LOAD( "95008829.bin", 0x0000, 0x100000, CRC(3745f572) SHA1(ffc9e67ed92552e7b2790433ea4838df10712f4d) ) \
-
+	ROM_LOAD( "95008829.bin", 0x0000, 0x100000, CRC(3745f572) SHA1(ffc9e67ed92552e7b2790433ea4838df10712f4d) )
 
 ROM_START( ad5rsrm )
 	ROM_REGION( 0x1000000, "maincpu", ROMREGION_ERASEFF )
@@ -1785,352 +1753,351 @@ ROM_END
 
 
 // PR3255 CASINO COPS TRIPLE         CASINO COPS ARCADE  PR3255 COPS & ROBBERS SOUNDS11
-GAME( 200?, ad5crcpt	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers Community Party (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5crcpta	,ad5crcpt,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers Community Party (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5crcpt    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers Community Party (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5crcpta   ,ad5crcpt,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers Community Party (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 
 // PROJECT NUMBER PR2334 BULLSEYE_PFP         ITSBULLSEYE SOUNDS         BULLSEYE_PFP  S.SITE
-GAME( 200?, ad5bpfpm	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Bullseye Pounds For Points (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5bpfpma	,ad5bpfpm,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Bullseye Pounds For Points (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5bpfpmb	,ad5bpfpm,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Bullseye Pounds For Points (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5bpfpm    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Bullseye Pounds For Points (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5bpfpma   ,ad5bpfpm,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Bullseye Pounds For Points (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5bpfpmb   ,ad5bpfpm,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Bullseye Pounds For Points (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
 // PROJECT NUMBER PR2334 BULLSEYE_PFP         BULLSEYEPFP SOUNDS         BULLSEYE_PFP  S.SITE
-GAME( 200?, ad5bpfpmc	,ad5bpfpm,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Bullseye Pounds For Points (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5bpfpmd	,ad5bpfpm,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Bullseye Pounds For Points (Mazooma) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5bpfpmc   ,ad5bpfpm,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Bullseye Pounds For Points (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5bpfpmd   ,ad5bpfpm,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Bullseye Pounds For Points (Mazooma) (Adder 5) (set 5)", GAME_IS_SKELETON )
 
 
 // PR1601 AWP CRAZY MONEY         CRAZY MONEY S.SITE  PR1601 CRAZY MONEY SOUNDS11
-GAME( 200?, ad5cmons	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Crazy Money (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5cmonsa	,ad5cmons,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Crazy Money (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5cmons    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Crazy Money (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5cmonsa   ,ad5cmons,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Crazy Money (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR3314 AWP DEAL OR NO DEAL PLATINUM SCORP5         PR3314 DOND PLATINUM SOUNDS11
-GAME( 200?, ad5dndpl	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Platinum (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndpla	,ad5dndpl,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Platinum (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndplb	,ad5dndpl,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Platinum (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndplc	,ad5dndpl,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Platinum (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndpl    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Platinum (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndpla   ,ad5dndpl,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Platinum (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndplb   ,ad5dndpl,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Platinum (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndplc   ,ad5dndpl,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Platinum (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
 
 // PROJECT NUMBER PR3401 AWP HI ROLLER SCORP5         PR3401 HI ROLLER SOUNDS11         HI ROLLER S.SITE
-GAME( 200?, ad5hir		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5hira		,ad5hir,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5hirb		,ad5hir,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5hirc		,ad5hir,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5hir      ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5hira     ,ad5hir,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5hirb     ,ad5hir,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5hirc     ,ad5hir,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
 
 // PROJECT NUMBER PR1755 HI ROLLER         PR1755 HI ROLLER SOUNDS12
-GAME( 200?, ad5hircl	,ad5hir,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller Club (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5hircla	,ad5hir,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller Club (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5hirclb	,ad5hir,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller Club (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5hircl    ,ad5hir,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller Club (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5hircla   ,ad5hir,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller Club (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5hirclb   ,ad5hir,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Hi Roller Club (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
 
 // PROJECT NUMBER PR1965 CASINO DOND TRIPLE         CASINO DOND ARCADE  PR1965 CASINO DOND R SOUNDS11
-GAME( 200?, ad5dnd		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5dnda		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndb		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndc		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndd		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5dnde		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndf		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 7)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndg		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 8)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndh		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 9)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndi		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 10)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndj		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 11)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndk		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 12)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndl		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 13)", GAME_IS_SKELETON )
+GAME( 200?, ad5dnd      ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5dnda     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndb     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndc     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndd     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5dnde     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndf     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 7)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndg     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 8)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndh     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 9)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndi     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 10)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndj     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 11)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndk     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 12)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndl     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 13)", GAME_IS_SKELETON )
 // PROJECT NUMBER PR1945 VIDEO CASINO DOND         VID CASINO DOND ARCADE  PR1945 CASINO D O N D SOUNDS12
-GAME( 200?, ad5dndm		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 14)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndn		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 15)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndo		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 16)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndp		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 17)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndq		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 18)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndr		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 19)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndm     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 14)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndn     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 15)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndo     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 16)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndp     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 17)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndq     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 18)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndr     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 19)", GAME_IS_SKELETON )
 // PROJECT NUMBER PR1945 DEAL OR NO DEAL  - BFG*DEAL ( PR1945 CASINO D O N D SOUNDS11 )
-GAME( 200?, ad5dndu		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 22)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndv		,ad5dnd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 23)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndu     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 22)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndv     ,ad5dnd,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal (Bellfruit) (Adder 5) (set 23)", GAME_IS_SKELETON )
 
 // PROJECT NUMBER PR3078 DEAL OR NO DEAL - BFG*BDTS ( PR3078 DOND TWIN SOUNDS11 ) (twin screen)
-GAME( 200?, ad5dndcl	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndcla	,ad5dndcl,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndclb	,ad5dndcl,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndclc	,ad5dndcl,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndcld	,ad5dndcl,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndcle	,ad5dndcl,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndclf	,ad5dndcl,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 20)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndclg	,ad5dndcl,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 21)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndcl    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndcla   ,ad5dndcl,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndclb   ,ad5dndcl,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndclc   ,ad5dndcl,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndcld   ,ad5dndcl,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndcle   ,ad5dndcl,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndclf   ,ad5dndcl,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 20)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndclg   ,ad5dndcl,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Club (Bellfruit) (Adder 5) (set 21)", GAME_IS_SKELETON )
 
 // PR3402 AWP DOND DOUBLE DELUXE S5         PR3402 DOUBLE DELUXE SOUNDS11
-GAME( 200?, ad5dnddd	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Double Deal Or No Deal (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5dnddda	,ad5dnddd,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Double Deal Or No Deal (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5dnddd    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Double Deal Or No Deal (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5dnddda   ,ad5dnddd,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal Double Deal Or No Deal (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR3526 DEAL OR NO DEAL THE PERFECT GAME - BFGNVVPG ( R3526 DOND PERFG CLUB SOUNDS12 ) (twin screen)
-GAME( 200?, ad5dndpg	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal The Perfect Game (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndpga	,ad5dndpg,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal The Perfect Game (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndpgb	,ad5dndpg,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal The Perfect Game (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5dndpgc	,ad5dndpg,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal The Perfect Game (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndpg    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal The Perfect Game (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndpga   ,ad5dndpg,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal The Perfect Game (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndpgb   ,ad5dndpg,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal The Perfect Game (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5dndpgc   ,ad5dndpg,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Deal Or No Deal The Perfect Game (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
 
 // PR3206 AWP COPS N ROBBERS         PR3206 COPS N ROBBERS SOUNDS11
-GAME( 200?, ad5copsr	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsra	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrb	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrd	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsre	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrf	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrk	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 7)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrl	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 8)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrm	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 9)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsro	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 10)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrp	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 11)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrq	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 12)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrv	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 13)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrw	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 14)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsr    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsra   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrb   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrd   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsre   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrf   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrk   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 7)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrl   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 8)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrm   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 9)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsro   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 10)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrp   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 11)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrq   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 12)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrv   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 13)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrw   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR3206) (Bellfruit) (Adder 5) (set 14)", GAME_IS_SKELETON )
 // PR1965 CASINO COPS TRIPLE         CASINO COPS ARCADE  PR3255 COPS & ROBBERS SOUNDS11
-GAME( 200?, ad5copsrc	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrg	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrn	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrr	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrx	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsry	,ad5copsr,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrc   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrg   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrn   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrr   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrx   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsry   ,ad5copsr,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Cops 'n' Robbers (PR1965) (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
 
 
 // PR2476 COPSNROBB3         COPNROB SOUNDS         COPSNROBB3  S.SITE    ` MAZNSCBT
-GAME( 200?, ad5crsc		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5crsca	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5crscb	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5crscc	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrj	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsru	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 6)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsr0	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 7)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsr2	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 8)", GAME_IS_SKELETON )
+GAME( 200?, ad5crsc     ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5crsca    ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5crscb    ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5crscc    ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrj   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsru   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 6)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsr0   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 7)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsr2   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2476) (Mazooma) (Adder 5) (set 8)", GAME_IS_SKELETON )
 //  PR2495 COPSNROB         COPNROB SOUNDS         COPSNROB  S.SITE  ` MAZNSCBF
-GAME( 200?, ad5copsrh	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsri	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrs	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsrt	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsr4	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsr6	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 6)", GAME_IS_SKELETON )
-GAME( 200?, ad5crscd	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 7)", GAME_IS_SKELETON )
-GAME( 200?, ad5crsce	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 8)", GAME_IS_SKELETON )
-GAME( 200?, ad5crscf	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 9)", GAME_IS_SKELETON )
-GAME( 200?, ad5crscg	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 10)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrh   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsri   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrs   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrt   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsr4   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsr6   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 6)", GAME_IS_SKELETON )
+GAME( 200?, ad5crscd    ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 7)", GAME_IS_SKELETON )
+GAME( 200?, ad5crsce    ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 8)", GAME_IS_SKELETON )
+GAME( 200?, ad5crscf    ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 9)", GAME_IS_SKELETON )
+GAME( 200?, ad5crscg    ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2495) (Mazooma) (Adder 5) (set 10)", GAME_IS_SKELETON )
 // PR2628 COPSNROB         COPNROB SOUNDS         COPSNROB  S.SITE  ` MAZ*CRBF
-GAME( 200?, ad5copsr3	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2628) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsr5	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2628) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5crsch	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2628) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsr7	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2628) (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsr3   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2628) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsr5   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2628) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5crsch    ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2628) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsr7   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2628) (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
 // PR2497 COPSNROB         COPNROB CD SOUNDS         COPSNROB  S.SITE  ` MAZ*COPV
-GAME( 200?, ad5copsrz	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2497) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5copsr1	,ad5crsc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2497) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsrz   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2497) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5copsr1   ,ad5crsc,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Cops 'n' Robbers (PR2497) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 
 
 // PR3217 AWP GOLD MINE         PR3217 GOLD MINE SOUNDS11         GOLD MINE S.SITE
-GAME( 200?, ad5gldmn	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmna	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmnb	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmnc	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmnd	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmne	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmnf	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 7)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmng	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 8)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmnh	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 9)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmni	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 10)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmnj	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 11)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldmnk	,ad5gldmn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 12)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmn    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmna   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmnb   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmnc   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmnd   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmne   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmnf   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 7)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmng   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 8)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmnh   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 9)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmni   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 10)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmnj   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 11)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldmnk   ,ad5gldmn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Gold Mine (Bellfruit) (Adder 5) (set 12)", GAME_IS_SKELETON )
 
 // PR2365 MONOPOLYWOW         WOW SOUNDS         MONOPOLYWOW S.SITE    ` MAZ*BPFP
-GAME( 200?, ad5mowow	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZNBPFP) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5mowowl	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZNBPFP) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5mowowe	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZPBPFP) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5mowowm	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZPBPFP) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowow    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZNBPFP) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowl   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZNBPFP) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowe   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZPBPFP) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowm   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZPBPFP) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 // PR2365 MONOPOLYWOW         WOW SOUNDS         MONOPOLYWOW S.SITE    ` MAZ*MWOW
-GAME( 200?, ad5mowowd	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZNMWOW) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5mowowi	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZPMWOW) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowd   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZNMWOW) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowi   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZPMWOW) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
 // PR2365 MONOPOLYWOW         WOWT SOUNDS         MONOPOLYWOW S.SITE    ` MAZ*WOWT
-GAME( 200?, ad5mowowa	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZNWOWT) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5mowowb	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZNWOWT) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5mowowf	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZPWOWT) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5mowowg	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZPWOWT) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowa   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZNWOWT) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowb   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZNWOWT) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowf   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZPWOWT) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowg   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2365, MAZPWOWT) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 // PR2389 MONOPOLYWOW         WOWT SOUNDS         MONOPOLYWOW S.SITE    ` MAZ*WWBU
-GAME( 200?, ad5mowowc	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2389, MAZNWWBU) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5mowowh	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2389, MAZPWWBU) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowc   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2389, MAZNWWBU) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowh   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR2389, MAZPWWBU) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
 // PR3075 VIDEO CASINO WOW         CASINO DOND WOW ARCADE  PR3075 CASINO DOND WOW SOUNDS11  (wrong game?)
-GAME( 200?, ad5mowowj	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR3075) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5mowowk	,ad5mowow,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR3075) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowj   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR3075) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5mowowk   ,ad5mowow,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Wheel Of Wealth (PR3075) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR2283 PINK PANTHER         ` QPS*PINK   (PINK PANTHER SOUNDS)
-GAME( 200?, ad5pp		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2283, QPSNPINK) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5ppa		,ad5pp,		bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2283, QPSNPINK) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5ppf		,ad5pp,		bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2283, QPSPPINK) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5ppg		,ad5pp,		bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2283, QPSPPINK) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5pp       ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2283, QPSNPINK) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppa      ,ad5pp,     bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2283, QPSNPINK) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppf      ,ad5pp,     bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2283, QPSPPINK) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppg      ,ad5pp,     bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2283, QPSPPINK) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 // PR2267 PINK PANTHER         ` MAZ*PINK (SD_PANTHER SNDS)
-GAME( 200?, ad5ppb		,ad5pp,		bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2267, MAZNPINK) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5ppc		,ad5pp,		bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2267, MAZNPINK) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5pph		,ad5pp,		bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2267, MAZPPINK) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppb      ,ad5pp,     bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2267, MAZNPINK) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppc      ,ad5pp,     bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2267, MAZNPINK) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5pph      ,ad5pp,     bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (PR2267, MAZPPINK) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
 /* (no main ident string) MAZ.PINKP SOUNDS */
-GAME( 200?, ad5ppd		,ad5pp,		bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (MAZNPINK) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5ppe		,ad5pp,		bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (MAZNPINK) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5ppi		,ad5pp,		bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (MAZPPINK) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5ppj		,ad5pp,		bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (MAZPPINK) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppd      ,ad5pp,     bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (MAZNPINK) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppe      ,ad5pp,     bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (MAZNPINK) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppi      ,ad5pp,     bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (MAZPPINK) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppj      ,ad5pp,     bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Pink Panther (MAZPPINK) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR1669 RANDOM SPINNER         ` BFGNRNDN ( PR1669 RANDOM SPINNER SNDS11 )
-GAME( 200?, ad5rsclb	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGNRNDN) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsclbc	,ad5rsclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGNRNDN) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsclbd	,ad5rsclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGNRNDN) (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsclbe	,ad5rsclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGNRNDN) (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsclbf	,ad5rsclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGPRNDN) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsclbi	,ad5rsclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGPRNDN) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsclbj	,ad5rsclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGPRNDN) (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclb    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGNRNDN) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclbc   ,ad5rsclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGNRNDN) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclbd   ,ad5rsclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGNRNDN) (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclbe   ,ad5rsclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGNRNDN) (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclbf   ,ad5rsclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGPRNDN) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclbi   ,ad5rsclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGPRNDN) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclbj   ,ad5rsclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1669, BFGPRNDN) (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
 // PR1826 RANDOM SPINNER         ` BFGNRNDN  ( PR1826 RANDOM SPINNER SOUNDS12 )
-GAME( 200?, ad5rsclba	,ad5rsclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1826, BFGNRNDN) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsclbb	,ad5rsclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1826, BFGNRNDN) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsclbg	,ad5rsclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1826, BFGPRNDN) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsclbh	,ad5rsclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1826, BFGPRNDN) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclba   ,ad5rsclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1826, BFGNRNDN) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclbb   ,ad5rsclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1826, BFGNRNDN) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclbg   ,ad5rsclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1826, BFGPRNDN) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsclbh   ,ad5rsclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner Club (PR1826, BFGPRNDN) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR2217 RANDOM MONOPOLY         ` MAZ*RNDN   - S16MONOP SOUNDS
-GAME( 200?, ad5monop	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZNRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5monopa	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZNRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5monopb	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZNRNDN) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5monopc	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZNRNDN) (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5monopf	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZPRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5monopg	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZPRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5monoph	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZPRNDN) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5monopi	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZPRNDN) (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5monop    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZNRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5monopa   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZNRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5monopb   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZNRNDN) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5monopc   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZNRNDN) (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5monopf   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZPRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5monopg   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZPRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5monoph   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZPRNDN) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5monopi   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2217, MAZPRNDN) (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
 // PR2221 RANDOM MONOPOLY         ` MAZ*RNDN   - S16MONOP SOUNDS
-GAME( 200?, ad5monopd	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2221, MAZNRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5monope	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2221, MAZNRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5monopj	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2221, MAZPRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5monopk	,ad5monop,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2221, MAZPRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5monopd   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2221, MAZNRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5monope   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2221, MAZNRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5monopj   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2221, MAZPRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5monopk   ,ad5monop,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly (PR2221, MAZPRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR1669 RANDOM SPINNER         ` BFGNRNDN  (  PR1669 RANDOM SPINNER SNDS11  )
-GAME( 200?, ad5rspin	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner (PR1669, BFGNRNDN) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rspinb	,ad5rspin,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner (PR1669, BFGPRNDN) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rspin    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner (PR1669, BFGNRNDN) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rspinb   ,ad5rspin,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner (PR1669, BFGPRNDN) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR1872 HOT SPINNER ASTURIAS 2.00  (wrong game?)   ( PR1506 RANDOM SPINNER ) (non-english, can't find a sound string)
-GAME( 200?, ad5rspinc	,ad5rspin,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rspinc   ,ad5rspin,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Spinner (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
 
 // PR1758 BULLSEYE TRIPLE         ` BFG*BULS  ( PR1758 BULLSEYE TRIPLE SOUNDS11 )
-GAME( 200?, ad5btc		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Bullseye Triple Club (PR1758, BFGPBULS) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5btca		,ad5btc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Bullseye Triple Club (PR1758, BFGPBULS) (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5btcb		,ad5btc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Bullseye Triple Club (PR1758, BFGNBULS) (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5btc      ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Bullseye Triple Club (PR1758, BFGPBULS) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5btca     ,ad5btc,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Bullseye Triple Club (PR1758, BFGPBULS) (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5btcb     ,ad5btc,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Bullseye Triple Club (PR1758, BFGNBULS) (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
 
 // PR2226 RANDOM SPINNWIN         ` MAZ*RNDN  ( S16RSPINNWIN SOUNDS )
-GAME( 200?, ad5rsnw		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Spin 'n' Win (PR2226, MAZNRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsnwa	,ad5rsnw,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Spin 'n' Win (PR2226, MAZNRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsnwb	,ad5rsnw,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Spin 'n' Win (PR2226, MAZPRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsnwc	,ad5rsnw,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Spin 'n' Win (PR2226, MAZPRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsnw     ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Spin 'n' Win (PR2226, MAZNRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsnwa    ,ad5rsnw,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Spin 'n' Win (PR2226, MAZNRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsnwb    ,ad5rsnw,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Spin 'n' Win (PR2226, MAZPRNDN) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsnwc    ,ad5rsnw,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Spin 'n' Win (PR2226, MAZPRNDN) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR3084 VIDEO SUPER SLAM         VIDEO SUPER SLAM  CLUB  PR3084 SUPER SLAM VID SOUNDS11
-GAME( 200?, ad5sslam	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5sslama	,ad5sslam,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5sslamb	,ad5sslam,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5sslamc	,ad5sslam,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5sslamd	,ad5sslam,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5sslame	,ad5sslam,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
-GAME( 200?, ad5sslamf	,ad5sslam,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 7)", GAME_IS_SKELETON )
+GAME( 200?, ad5sslam    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5sslama   ,ad5sslam,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5sslamb   ,ad5sslam,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5sslamc   ,ad5sslam,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5sslamd   ,ad5sslam,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5sslame   ,ad5sslam,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
+GAME( 200?, ad5sslamf   ,ad5sslam,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Super Slam (Bellfruit) (Adder 5) (set 7)", GAME_IS_SKELETON )
 
 // PR2419 ROAD TO RICHES         MR2R SOUNDS
-GAME( 200?, ad5mr2r		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5mr2ra	,ad5mr2r,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5mr2rb	,ad5mr2r,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5mr2rc	,ad5mr2r,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5mr2rd	,ad5mr2r,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5mr2re	,ad5mr2r,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 6)", GAME_IS_SKELETON )
-GAME( 200?, ad5mr2rf	,ad5mr2r,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 7)", GAME_IS_SKELETON )
-GAME( 200?, ad5mr2rg	,ad5mr2r,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 8)", GAME_IS_SKELETON )
-GAME( 200?, ad5mr2rh	,ad5mr2r,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 9)", GAME_IS_SKELETON )
+GAME( 200?, ad5mr2r     ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5mr2ra    ,ad5mr2r,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5mr2rb    ,ad5mr2r,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5mr2rc    ,ad5mr2r,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5mr2rd    ,ad5mr2r,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5mr2re    ,ad5mr2r,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 6)", GAME_IS_SKELETON )
+GAME( 200?, ad5mr2rf    ,ad5mr2r,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 7)", GAME_IS_SKELETON )
+GAME( 200?, ad5mr2rg    ,ad5mr2r,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 8)", GAME_IS_SKELETON )
+GAME( 200?, ad5mr2rh    ,ad5mr2r,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Monopoly Road To Riches (Mazooma) (Adder 5) (set 9)", GAME_IS_SKELETON )
 
 // PR1756 RANDOM WINNER         ` BFG*RWSX  ( PR1756 RANDOM WINNER SOUNDS12 )
-GAME( 200?, ad5rwclb	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1756, BFGNRWSX) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rwclba	,ad5rwclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1756, BFGNRWSX) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5rwclbb	,ad5rwclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1756, BFGPRWSX) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rwclbc	,ad5rwclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1756, BFGPRWSX) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rwclb    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1756, BFGNRWSX) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rwclba   ,ad5rwclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1756, BFGNRWSX) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rwclbb   ,ad5rwclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1756, BFGPRWSX) (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rwclbc   ,ad5rwclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1756, BFGPRWSX) (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
 // PR1757 RANDOM WINNER         ` BFG*RWCL  ( PR1756 RANDOM WINNER SOUNDS12 )
-GAME( 200?, ad5rwclbd	,ad5rwclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1757, BFGPRWCL) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5rwclbe	,ad5rwclb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1757, BFGNRWCL) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5rwclbd   ,ad5rwclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1757, BFGPRWCL) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5rwclbe   ,ad5rwclb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Random Winner Club (PR1757, BFGNRWCL) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
 
 // PR2258 GOLDEN WINNER
-GAME( 200?, ad5gldwn	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Golden Winner (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5gldwna	,ad5gldwn,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Golden Winner (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldwn    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Golden Winner (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5gldwna   ,ad5gldwn,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Golden Winner (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR1712 RAPID PAY         PR1712 RAPID PAY SOUNDS11
-GAME( 200?, ad5rapid	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Rapid Pay (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rapida	,ad5rapid,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Rapid Pay (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rapid    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Rapid Pay (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rapida   ,ad5rapid,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Rapid Pay (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR2226 JACKPOT MONOPOLY         ` MAZ*JACM  (JPMONP SOUNDS)
-GAME( 200?, ad5jckmo	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2226, MAZNJACM) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5jckmoa	,ad5jckmo,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2226, MAZNJACM) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5jckmoc	,ad5jckmo,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2226, MAZNJACM) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5jckmod	,ad5jckmo,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2226, MAZPJACM) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5jckmoe	,ad5jckmo,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2226, MAZPJACM) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5jckmo    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2226, MAZNJACM) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5jckmoa   ,ad5jckmo,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2226, MAZNJACM) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5jckmoc   ,ad5jckmo,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2226, MAZNJACM) (Mazooma) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5jckmod   ,ad5jckmo,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2226, MAZPJACM) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5jckmoe   ,ad5jckmo,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2226, MAZPJACM) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 // PR2253 JACKPOT MONOPOLY         ` MAZNJACM  (JPMONP SOUNDS)
-GAME( 200?, ad5jckmob	,ad5jckmo,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2253, MAZNJACM) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5jckmob   ,ad5jckmo,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Jackpot Monopoly (PR2253, MAZNJACM) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
 
 // PR2304 PINKP_BTB         PPBTB SOUNDS         PINKP_BTB S.SITE  ` QPSNPPBB
-GAME( 200?, ad5ppbtb	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Pink Panther Break The Bank (PR2304, QPSNPPBB) (Qps) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5ppbtba	,ad5ppbtb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Pink Panther Break The Bank (PR2304, QPSNPPBB) (Qps) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5ppbtbb	,ad5ppbtb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Pink Panther Break The Bank (PR2304, QPSPPPBB) (Qps) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5ppbtbc	,ad5ppbtb,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Pink Panther Break The Bank (PR2304, QPSPPPBB) (Qps) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppbtb    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Pink Panther Break The Bank (PR2304, QPSNPPBB) (Qps) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppbtba   ,ad5ppbtb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Pink Panther Break The Bank (PR2304, QPSNPPBB) (Qps) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppbtbb   ,ad5ppbtb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Pink Panther Break The Bank (PR2304, QPSPPPBB) (Qps) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5ppbtbc   ,ad5ppbtb,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Pink Panther Break The Bank (PR2304, QPSPPPBB) (Qps) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR3507 AWP VIVA LAS VEGAS SCORP5         PR3507 VIVA LAS VEGAS SOUNDS11
-GAME( 200?, ad5vlv		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5vlvb		,ad5vlv,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5vlvc		,ad5vlv,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5vlvd		,ad5vlv,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
-GAME( 200?, ad5vlve		,ad5vlv,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5vlvf		,ad5vlv,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
+GAME( 200?, ad5vlv      ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5vlvb     ,ad5vlv,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5vlvc     ,ad5vlv,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5vlvd     ,ad5vlv,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5vlve     ,ad5vlv,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5vlvf     ,ad5vlv,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Viva Las Vegas (Bellfruit) (Adder 5) (set 6)", GAME_IS_SKELETON )
 
 // PR2331 RROULETTE         REEL ROULETTE SOUNDS         RROULETTE S.SITE  ` QPS*RLRO
-GAME( 200?, ad5rroul	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Roulette (QPSNRLRO) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5rroula	,ad5rroul,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Roulette (QPSPRLRO) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5rroul    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Roulette (QPSNRLRO) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5rroula   ,ad5rroul,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Roulette (QPSPRLRO) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
 // PR2331 RROULETTE         REEL ROULETTE SOUNDS         RROULETTE S.SITE  ` MAZ*RERO
-GAME( 200?, ad5rroulb	,ad5rroul,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Roulette (MAZNRERO) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5rroulc	,ad5rroul,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Roulette (MAZPRERO) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5rroulb   ,ad5rroul,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Roulette (MAZNRERO) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5rroulc   ,ad5rroul,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Roulette (MAZPRERO) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
 
 // PR2444 MONTE CARLO OR BUST         MONTE SOUNDS
-GAME( 200?, ad5mcob		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Monte Carlo Or Bust (Qps) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5mcoba	,ad5mcob,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Monte Carlo Or Bust (Qps) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5mcobb	,ad5mcob,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Monte Carlo Or Bust (Qps) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5mcobc	,ad5mcob,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Monte Carlo Or Bust (Qps) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5mcob     ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Monte Carlo Or Bust (Qps) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5mcoba    ,ad5mcob,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Monte Carlo Or Bust (Qps) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5mcobb    ,ad5mcob,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Monte Carlo Or Bust (Qps) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5mcobc    ,ad5mcob,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Qps","Monte Carlo Or Bust (Qps) (Adder 5) (set 4)", GAME_IS_SKELETON )
 
 // PR1625  POKER KING         PR1625 POKER KING SOUNDS11        POKER KING  S.SITE
-GAME( 200?, ad5pking	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Poker King (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5pkinga	,ad5pking,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Poker King (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5pking    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Poker King (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5pkinga   ,ad5pking,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Poker King (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR3073 VIDEO POKER ACE         VID POKER ACE ARCADE  PR3073 POKER ACE SOUNDS11
-GAME( 200?, ad5vpa		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Video Poker Ace (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5vpaa		,ad5vpa,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Video Poker Ace (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5vpab		,ad5vpa,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Video Poker Ace (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5vpac		,ad5vpa,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Video Poker Ace (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
+GAME( 200?, ad5vpa      ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Video Poker Ace (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5vpaa     ,ad5vpa,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Video Poker Ace (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5vpab     ,ad5vpa,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Video Poker Ace (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5vpac     ,ad5vpa,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Video Poker Ace (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
 
 // PR1629 TORNADO 5.5 (Revision 8)         ` BFG*TORD  ( PR1627 TORNADO CLUB SOUNDS11 )
-GAME( 200?, ad5tornc	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1629, 5.5, rv 8, BFGNTORD) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5torncb	,ad5tornc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1629, 5.5, rv 8, BFGPTORD) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5tornc    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1629, 5.5, rv 8, BFGNTORD) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5torncb   ,ad5tornc,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1629, 5.5, rv 8, BFGPTORD) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
 // PR1629 TORNADO 5.8 (Revision 7)         ` BFGPTORD  ( PR1627 TORNADO CLUB SOUNDS11 )
-GAME( 200?, ad5tornca	,ad5tornc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1629, 5.8, rv 7, BFGNTORD) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5torncc	,ad5tornc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1629, 5.8, rv 7, BFGPTORD) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5tornca   ,ad5tornc,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1629, 5.8, rv 7, BFGNTORD) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5torncc   ,ad5tornc,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1629, 5.8, rv 7, BFGPTORD) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
 // PR1627 TORNADO 0.1 (Revision 1)         ` BFG*TORN  ( PR1627 TORNADO CLUB SOUNDS11 )
-GAME( 200?, ad5tornce	,ad5tornc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1627, 0.1, rv 1, BFGNTORN) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
-GAME( 200?, ad5torncd	,ad5tornc,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1627, 0.1, rv 1, BFGPTORN) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5tornce   ,ad5tornc,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1627, 0.1, rv 1, BFGNTORN) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5torncd   ,ad5tornc,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Tornado Club (PR1627, 0.1, rv 1, BFGPTORN) (Bellfruit) (Adder 5)", GAME_IS_SKELETON )
 
 // PR2268 REEL CASH
-GAME( 200?, ad5rcash	,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Cash (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rcasha	,ad5rcash,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Cash (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rcash    ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Cash (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rcasha   ,ad5rcash,  bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Reel Cash (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR2284 RANDOM MONOPOLY WOTW   ( S16MONOPWOW SOUNDS )
-GAME( 200?, ad5mww		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly Wonders Of The World (PR2284) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5mww      ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly Wonders Of The World (PR2284) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
 // PR2291 RANDOM MONOPOLY WOTW   ( S16MONOPWOW SOUNDS )
-GAME( 200?, ad5mwwa		,ad5mww,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly Wonders Of The World (PR2291) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
+GAME( 200?, ad5mwwa     ,ad5mww,    bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Random Monopoly Wonders Of The World (PR2291) (Mazooma) (Adder 5)", GAME_IS_SKELETON )
 
 // PR2242 EYES DOWN         ` MAZ*EYDW
-GAME( 200?, ad5eyes		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2242, MAZNEYDW) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5eyesa	,ad5eyes,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2242, MAZNEYDW) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5eyesd	,ad5eyes,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2242, MAZPEYDW) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5eyese	,ad5eyes,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2242, MAZPEYDW) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5eyes     ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2242, MAZNEYDW) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5eyesa    ,ad5eyes,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2242, MAZNEYDW) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5eyesd    ,ad5eyes,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2242, MAZPEYDW) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5eyese    ,ad5eyes,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2242, MAZPEYDW) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 // PR2246 EYES DOWN         ` MAZ*EYDW
-GAME( 200?, ad5eyesb	,ad5eyes,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2246, MAZNEYDW) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5eyesg	,ad5eyes,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2246, MAZNEYDW) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5eyesc	,ad5eyes,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2246, MAZPEYDW) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5eyesf	,ad5eyes,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2246, MAZPEYDW) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5eyesb    ,ad5eyes,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2246, MAZNEYDW) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5eyesg    ,ad5eyes,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2246, MAZNEYDW) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5eyesc    ,ad5eyes,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2246, MAZPEYDW) (Mazooma) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5eyesf    ,ad5eyes,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "Mazooma","Eyes Down (PR2246, MAZPEYDW) (Mazooma) (Adder 5) (set 2)", GAME_IS_SKELETON )
 
 // PR3302 AWP RONNIE O SULLIVANS ROCKET MONEY SCORP5         PR3302 RONNIE ROCKET SOUNDS11
-GAME( 200?, ad5rsrm		,0,			bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Ronnie O'Sullivan's Rocket Money (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsrma	,ad5rsrm,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Ronnie O'Sullivan's Rocket Money (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsrr		,ad5rsrm,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Ronnie O'Sullivan's Rocket Money (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
-GAME( 200?, ad5rsrra	,ad5rsrm,	bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Ronnie O'Sullivan's Rocket Money (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )
-
+GAME( 200?, ad5rsrm     ,0,         bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Ronnie O'Sullivan's Rocket Money (Bellfruit) (Adder 5) (set 1)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsrma    ,ad5rsrm,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Ronnie O'Sullivan's Rocket Money (Bellfruit) (Adder 5) (set 2)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsrr     ,ad5rsrm,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Ronnie O'Sullivan's Rocket Money (Bellfruit) (Adder 5) (set 3)", GAME_IS_SKELETON )
+GAME( 200?, ad5rsrra    ,ad5rsrm,   bfm_ad5, bfm_ad5, adder5_state, ad5, ROT0,  "BFM","Ronnie O'Sullivan's Rocket Money (Bellfruit) (Adder 5) (set 4)", GAME_IS_SKELETON )

@@ -54,7 +54,6 @@ public:
 
 void bingoc_state::video_start()
 {
-
 }
 
 UINT32 bingoc_state::screen_update_bingoc(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
@@ -76,7 +75,6 @@ READ16_MEMBER(bingoc_state::bingoc_rand_r)
 */
 READ8_MEMBER(bingoc_state::sound_test_r)
 {
-
 	if(machine().input().code_pressed_once(KEYCODE_Z))
 		m_x++;
 
@@ -101,9 +99,9 @@ WRITE8_MEMBER(bingoc_state::bingoc_play_w)
 {
 	device_t *device = machine().device("upd");
 	/*
-    ---- --x- sound rom banking
-    ---- ---x start-stop sample
-    */
+	---- --x- sound rom banking
+	---- ---x start-stop sample
+	*/
 	UINT8 *upd = machine().root_device().memregion("upd")->base();
 	memcpy(&upd[0x00000], &upd[0x20000 + (((data & 2)>>1) * 0x20000)], 0x20000);
 	upd7759_start_w(device, data & 1);
@@ -144,11 +142,11 @@ INPUT_PORTS_END
 
 static MACHINE_CONFIG_START( bingoc, bingoc_state )
 
-	MCFG_CPU_ADD("maincpu", M68000,8000000)		 /* ? MHz */
+	MCFG_CPU_ADD("maincpu", M68000,8000000)      /* ? MHz */
 	MCFG_CPU_PROGRAM_MAP(main_map)
 	MCFG_CPU_VBLANK_INT_DRIVER("screen", bingoc_state,  irq2_line_hold)
 
-	MCFG_CPU_ADD("soundcpu", Z80,4000000)		 /* ? MHz */
+	MCFG_CPU_ADD("soundcpu", Z80,4000000)        /* ? MHz */
 	MCFG_CPU_PROGRAM_MAP(sound_map)
 	MCFG_CPU_IO_MAP(sound_io)
 #if SOUND_TEST

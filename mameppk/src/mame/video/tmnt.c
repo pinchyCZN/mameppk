@@ -254,7 +254,6 @@ VIDEO_START_MEMBER(tmnt_state,tmnt)
 
 VIDEO_START_MEMBER(tmnt_state,lgtnfght)/* also tmnt2, ssriders */
 {
-
 	k05324x_set_z_rejection(m_k053245, 0);
 
 	m_dim_c = m_dim_v = m_lastdim = m_lasten = 0;
@@ -267,7 +266,6 @@ VIDEO_START_MEMBER(tmnt_state,lgtnfght)/* also tmnt2, ssriders */
 
 VIDEO_START_MEMBER(tmnt_state,glfgreat)
 {
-
 	m_roz_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(tmnt_state::glfgreat_get_roz_tile_info),this), TILEMAP_SCAN_ROWS, 16, 16, 512, 512);
 	m_roz_tilemap->set_transparent_pen(0);
 
@@ -281,7 +279,6 @@ VIDEO_START_MEMBER(tmnt_state,glfgreat)
 
 VIDEO_START_MEMBER(tmnt_state,prmrsocr)
 {
-
 	m_roz_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(tmnt_state::prmrsocr_get_roz_tile_info),this), TILEMAP_SCAN_ROWS, 16, 16, 512, 256);
 	m_roz_tilemap->set_transparent_pen(0);
 
@@ -293,7 +290,6 @@ VIDEO_START_MEMBER(tmnt_state,prmrsocr)
 
 VIDEO_START_MEMBER(tmnt_state,blswhstl)
 {
-
 	m_blswhstl_rombank = -1;
 	save_item(NAME(m_blswhstl_rombank));
 }
@@ -318,12 +314,11 @@ WRITE16_MEMBER(tmnt_state::tmnt_paletteram_word_w)
 
 WRITE16_MEMBER(tmnt_state::tmnt_0a0000_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		/* bit 0/1 = coin counters */
 		coin_counter_w(machine(), 0, data & 0x01);
-		coin_counter_w(machine(), 1, data & 0x02);	/* 2 players version */
+		coin_counter_w(machine(), 1, data & 0x02);  /* 2 players version */
 
 		/* bit 3 high then low triggers irq on sound CPU */
 		if (m_last == 0x08 && (data & 0x08) == 0)
@@ -343,7 +338,6 @@ WRITE16_MEMBER(tmnt_state::tmnt_0a0000_w)
 
 WRITE16_MEMBER(tmnt_state::punkshot_0a0020_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		/* bit 0 = coin counter */
@@ -362,7 +356,6 @@ WRITE16_MEMBER(tmnt_state::punkshot_0a0020_w)
 
 WRITE16_MEMBER(tmnt_state::lgtnfght_0a0018_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		/* bit 0,1 = coin counter */
@@ -382,7 +375,6 @@ WRITE16_MEMBER(tmnt_state::lgtnfght_0a0018_w)
 
 WRITE16_MEMBER(tmnt_state::blswhstl_700300_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		/* bit 0,1 = coin counter */
@@ -406,7 +398,6 @@ WRITE16_MEMBER(tmnt_state::blswhstl_700300_w)
 
 READ16_MEMBER(tmnt_state::glfgreat_rom_r)
 {
-
 	if (m_glfgreat_roz_rom_mode)
 		return memregion("gfx3")->base()[m_glfgreat_roz_char_bank * 0x80000 + offset];
 	else if (offset < 0x40000)
@@ -420,7 +411,6 @@ READ16_MEMBER(tmnt_state::glfgreat_rom_r)
 
 WRITE16_MEMBER(tmnt_state::glfgreat_122000_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		/* bit 0,1 = coin counter */
@@ -452,7 +442,6 @@ WRITE16_MEMBER(tmnt_state::glfgreat_122000_w)
 
 WRITE16_MEMBER(tmnt_state::ssriders_eeprom_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		/* bit 0 is data */
@@ -472,7 +461,6 @@ WRITE16_MEMBER(tmnt_state::ssriders_eeprom_w)
 
 WRITE16_MEMBER(tmnt_state::ssriders_1c0300_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		/* bit 0,1 = coin counter */
@@ -489,7 +477,6 @@ WRITE16_MEMBER(tmnt_state::ssriders_1c0300_w)
 
 WRITE16_MEMBER(tmnt_state::prmrsocr_122000_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		/* bit 0,1 = coin counter */
@@ -512,7 +499,6 @@ WRITE16_MEMBER(tmnt_state::prmrsocr_122000_w)
 
 READ16_MEMBER(tmnt_state::prmrsocr_rom_r)
 {
-
 	if(m_glfgreat_roz_char_bank)
 		return memregion("gfx3")->base()[offset];
 	else
@@ -524,27 +510,26 @@ READ16_MEMBER(tmnt_state::prmrsocr_rom_r)
 
 WRITE16_MEMBER(tmnt_state::tmnt_priority_w)
 {
-
 	if (ACCESSING_BITS_0_7)
 	{
 		/* bit 2/3 = priority; other bits unused */
 		/* bit2 = PRI bit3 = PRI2
-              sprite/playfield priority is controlled by these two bits, by bit 3
-              of the background tile color code, and by the SHADOW sprite
-              attribute bit.
-              Priorities are encoded in a PROM (G19 for TMNT). However, in TMNT,
-              the PROM only takes into account the PRI and SHADOW bits.
-              PRI  Priority
-               0   bg fg spr text
-               1   bg spr fg text
-              The SHADOW bit, when set, torns a sprite into a shadow which makes
-              color below it darker (this is done by turning off three resistors
-              in parallel with the RGB output).
+		      sprite/playfield priority is controlled by these two bits, by bit 3
+		      of the background tile color code, and by the SHADOW sprite
+		      attribute bit.
+		      Priorities are encoded in a PROM (G19 for TMNT). However, in TMNT,
+		      the PROM only takes into account the PRI and SHADOW bits.
+		      PRI  Priority
+		       0   bg fg spr text
+		       1   bg spr fg text
+		      The SHADOW bit, when set, torns a sprite into a shadow which makes
+		      color below it darker (this is done by turning off three resistors
+		      in parallel with the RGB output).
 
-              Note: the background color (color used when all of the four layers
-              are 0) is taken from the *foreground* palette, not the background
-              one as would be more intuitive.
-        */
+		      Note: the background color (color used when all of the four layers
+		      are 0) is taken from the *foreground* palette, not the background
+		      one as would be more intuitive.
+		*/
 		m_tmnt_priorityflag = (data & 0x0c) >> 2;
 	}
 }
@@ -559,7 +544,6 @@ WRITE16_MEMBER(tmnt_state::tmnt_priority_w)
 
 UINT32 tmnt_state::screen_update_mia(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	k052109_tilemap_update(m_k052109);
 
 	k052109_tilemap_draw(m_k052109, bitmap, cliprect, 2, TILEMAP_DRAW_OPAQUE,0);
@@ -573,7 +557,6 @@ UINT32 tmnt_state::screen_update_mia(screen_device &screen, bitmap_ind16 &bitmap
 
 UINT32 tmnt_state::screen_update_tmnt(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	k052109_tilemap_update(m_k052109);
 
 	k052109_tilemap_draw(m_k052109, bitmap, cliprect, 2, TILEMAP_DRAW_OPAQUE,0);
@@ -588,7 +571,6 @@ UINT32 tmnt_state::screen_update_tmnt(screen_device &screen, bitmap_ind16 &bitma
 
 UINT32 tmnt_state::screen_update_punkshot(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	m_sprite_colorbase = k053251_get_palette_index(m_k053251, K053251_CI1);
 	m_layer_colorbase[0] = k053251_get_palette_index(m_k053251, K053251_CI2);
 	m_layer_colorbase[1] = k053251_get_palette_index(m_k053251, K053251_CI4);
@@ -649,7 +631,6 @@ UINT32 tmnt_state::screen_update_lgtnfght(screen_device &screen, bitmap_ind16 &b
 
 READ16_MEMBER(tmnt_state::glfgreat_ball_r)
 {
-
 #ifdef MAME_DEBUG
 popmessage("%04x", m_glfgreat_pixel);
 #endif
@@ -667,7 +648,7 @@ UINT32 tmnt_state::screen_update_glfgreat(screen_device &screen, bitmap_ind16 &b
 	bg_colorbase = k053251_get_palette_index(m_k053251, K053251_CI0);
 	m_sprite_colorbase  = k053251_get_palette_index(m_k053251, K053251_CI1);
 	m_layer_colorbase[0] = k053251_get_palette_index(m_k053251, K053251_CI2);
-	m_layer_colorbase[1] = k053251_get_palette_index(m_k053251, K053251_CI3) + 8;	/* weird... */
+	m_layer_colorbase[1] = k053251_get_palette_index(m_k053251, K053251_CI3) + 8;   /* weird... */
 	m_layer_colorbase[2] = k053251_get_palette_index(m_k053251, K053251_CI4);
 
 	k052109_tilemap_update(m_k052109);
@@ -730,12 +711,12 @@ UINT32 tmnt_state::screen_update_tmnt2(screen_device &screen, bitmap_ind16 &bitm
 		m_lasten = newen;
 
 		/*
-            Only affect the background and sprites, not text layer.
-            Instead of dimming each layer we dim the entire palette
-            except text colors because palette bases may change
-            anytime and there's no guarantee a dimmed color will be
-            reset properly.
-        */
+		    Only affect the background and sprites, not text layer.
+		    Instead of dimming each layer we dim the entire palette
+		    except text colors because palette bases may change
+		    anytime and there's no guarantee a dimmed color will be
+		    reset properly.
+		*/
 
 		// find the text layer's palette range
 		cb = m_layer_colorbase[m_sorted_layer[2]] << 4;

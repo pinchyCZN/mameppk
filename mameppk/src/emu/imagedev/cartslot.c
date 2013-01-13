@@ -19,18 +19,17 @@ const device_type CARTSLOT = &device_creator<cartslot_image_device>;
 //-------------------------------------------------
 
 cartslot_image_device::cartslot_image_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
-    : device_t(mconfig, CARTSLOT, "Cartslot", tag, owner, clock),
-	  device_image_interface(mconfig, *this),
-	  m_extensions("bin"),
-	  m_interface(NULL),
-	  m_must_be_loaded(0),
-	  m_device_start(NULL),
-	  m_device_load(NULL),
-	  m_device_unload(NULL),
-	  m_device_partialhash(NULL),
-	  m_device_displayinfo(NULL)
+	: device_t(mconfig, CARTSLOT, "Cartslot", tag, owner, clock),
+		device_image_interface(mconfig, *this),
+		m_extensions("bin"),
+		m_interface(NULL),
+		m_must_be_loaded(0),
+		m_device_start(NULL),
+		m_device_load(NULL),
+		m_device_unload(NULL),
+		m_device_partialhash(NULL),
+		m_device_displayinfo(NULL)
 {
-
 }
 
 //-------------------------------------------------
@@ -208,7 +207,6 @@ int cartslot_image_device::process_cartridge(bool load)
 
 void cartslot_image_device::device_start()
 {
-
 	/* if this cartridge has a custom DEVICE_START, use it */
 	if (m_device_start != NULL)
 	{
@@ -245,5 +243,3 @@ void cartslot_image_device::call_unload()
 	}
 	process_cartridge(false);
 }
-
-

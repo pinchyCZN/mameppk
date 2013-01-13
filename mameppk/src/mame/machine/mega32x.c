@@ -221,22 +221,19 @@ const device_type SEGA_32X_PAL = &device_creator<sega_32x_pal_device>;
 
 sega_32x_device::sega_32x_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock, device_type type)
 	: device_t(mconfig, type, "sega_32x_device", tag, owner, clock),
-	  m_lch_pwm(*this, "lch_pwm"),
-	  m_rch_pwm(*this, "rch_pwm")
+		m_lch_pwm(*this, "lch_pwm"),
+		m_rch_pwm(*this, "rch_pwm")
 {
-
 }
 
 sega_32x_ntsc_device::sega_32x_ntsc_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
 	: sega_32x_device(mconfig, tag, owner, clock, SEGA_32X_NTSC)
 {
-
 }
 
 sega_32x_pal_device::sega_32x_pal_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
 	: sega_32x_device(mconfig, tag, owner, clock, SEGA_32X_PAL)
 {
-
 }
 
 TIMER_CALLBACK( _32x_pwm_callback );
@@ -368,9 +365,8 @@ WRITE16_MEMBER( sega_32x_device::_32x_68k_a15106_w )
 	{
 		m_a15106_reg = data & 0x7;
 
-        if (m_a15106_reg & 0x1) /* NBA Jam TE relies on this */
+		if (m_a15106_reg & 0x1) /* NBA Jam TE relies on this */
 		{
-
 			// install the game rom in the normal 0x000000-0x03fffff space used by the genesis - this allows VDP DMA operations to work as they have to be from this area or RAM
 			// it should also UNMAP the banked rom area...
 			space.install_rom(0x0000100, 0x03fffff, space.machine().root_device().memregion("gamecart")->base() + 0x100);
@@ -396,17 +392,17 @@ WRITE16_MEMBER( sega_32x_device::_32x_68k_a15106_w )
 
 		//printf("_32x_68k_a15106_w %04x\n", data);
 		/*
-        if (m_a15106_reg & 0x4)
-            printf(" --- 68k Write Mode enabled\n");
-        else
-            printf(" --- 68k Write Mode disabled\n");
+		if (m_a15106_reg & 0x4)
+		    printf(" --- 68k Write Mode enabled\n");
+		else
+		    printf(" --- 68k Write Mode disabled\n");
 
-        if (m_a15106_reg & 0x1)
-            printf(" --- DMA Start Allowed \n");
-        else
-            printf(" --- DMA Start No Operation\n");
+		if (m_a15106_reg & 0x1)
+		    printf(" --- DMA Start Allowed \n");
+		else
+		    printf(" --- DMA Start No Operation\n");
 
-        */
+		*/
 	}
 }
 
@@ -633,16 +629,16 @@ WRITE16_MEMBER( sega_32x_device::_32x_68k_m_hint_vector_w )
 // returns MARS, the system ID of the 32x
 READ16_MEMBER( sega_32x_device::_32x_68k_MARS_r )
 {
-    switch (offset)
-    {
-        case 0:
-            return 0x4d41;
+	switch (offset)
+	{
+		case 0:
+			return 0x4d41;
 
-        case 1:
-            return 0x5253;
-    }
+		case 1:
+			return 0x5253;
+	}
 
-    return 0x0000;
+	return 0x0000;
 }
 
 
@@ -681,10 +677,10 @@ WRITE16_MEMBER( sega_32x_device::_32x_68k_a15100_w )
 			space.install_rom(0x0000000, 0x03fffff, space.machine().root_device().memregion("32x_68k_bios")->base());
 
 			/* VDP area */
-			space.install_readwrite_handler(0x0a15180, 0x0a1518b, read16_delegate(FUNC(sega_32x_device::_32x_common_vdp_regs_r), this),		write16_delegate(FUNC(sega_32x_device::_32x_common_vdp_regs_w),this)); // common / shared VDP regs
-			space.install_readwrite_handler(0x0a15200, 0x0a153ff, read16_delegate(FUNC(sega_32x_device::_32x_68k_palette_r), this),			write16_delegate(FUNC(sega_32x_device::_32x_68k_palette_w),this)); // access to 'palette' xRRRRRGGGGGBBBBB
-			space.install_readwrite_handler(0x0840000, 0x085ffff, read16_delegate(FUNC(sega_32x_device::_32x_68k_dram_r), this),			write16_delegate(FUNC(sega_32x_device::_32x_68k_dram_w),this)); // access to 'display ram' (framebuffer)
-			space.install_readwrite_handler(0x0860000, 0x087ffff, read16_delegate(FUNC(sega_32x_device::_32x_68k_dram_overwrite_r),this),	write16_delegate(FUNC(sega_32x_device::_32x_68k_dram_overwrite_w),this)); // access to 'display ram' (framebuffer)
+			space.install_readwrite_handler(0x0a15180, 0x0a1518b, read16_delegate(FUNC(sega_32x_device::_32x_common_vdp_regs_r), this),     write16_delegate(FUNC(sega_32x_device::_32x_common_vdp_regs_w),this)); // common / shared VDP regs
+			space.install_readwrite_handler(0x0a15200, 0x0a153ff, read16_delegate(FUNC(sega_32x_device::_32x_68k_palette_r), this),         write16_delegate(FUNC(sega_32x_device::_32x_68k_palette_w),this)); // access to 'palette' xRRRRRGGGGGBBBBB
+			space.install_readwrite_handler(0x0840000, 0x085ffff, read16_delegate(FUNC(sega_32x_device::_32x_68k_dram_r), this),            write16_delegate(FUNC(sega_32x_device::_32x_68k_dram_w),this)); // access to 'display ram' (framebuffer)
+			space.install_readwrite_handler(0x0860000, 0x087ffff, read16_delegate(FUNC(sega_32x_device::_32x_68k_dram_overwrite_r),this),   write16_delegate(FUNC(sega_32x_device::_32x_68k_dram_overwrite_w),this)); // access to 'display ram' (framebuffer)
 
 
 
@@ -889,7 +885,6 @@ READ16_MEMBER( sega_32x_device::_32x_pwm_r )
 
 WRITE16_MEMBER( sega_32x_device::_32x_pwm_w )
 {
-
 	switch(offset)
 	{
 		case 0x00/2:
@@ -995,9 +990,9 @@ READ16_MEMBER( sega_32x_device::_32x_common_vdp_regs_r )
 		else ntsc = 1;
 
 		return (ntsc << 15) |
-			   (m_32x_videopriority << 7 ) |
-			   ( m_32x_240mode << 6 ) |
-			   ( m_32x_displaymode << 0 );
+				(m_32x_videopriority << 7 ) |
+				( m_32x_240mode << 6 ) |
+				( m_32x_displaymode << 0 );
 
 
 
@@ -1080,7 +1075,6 @@ WRITE16_MEMBER( sega_32x_device::_32x_common_vdp_regs_w )
 
 	switch (offset)
 	{
-
 		case 0x00:
 			//printf("_32x_68k_a15180_w (a15180) %04x %04x   source m_32x_access_auth %04x\n",data,mem_mask, m_32x_access_auth);
 
@@ -1099,7 +1093,6 @@ WRITE16_MEMBER( sega_32x_device::_32x_common_vdp_regs_w )
 			}
 			if (ACCESSING_BITS_8_15)
 			{
-
 			}
 			break;
 
@@ -1111,7 +1104,6 @@ WRITE16_MEMBER( sega_32x_device::_32x_common_vdp_regs_w )
 
 			if (ACCESSING_BITS_8_15)
 			{
-
 			}
 			break;
 
@@ -1196,7 +1188,7 @@ READ16_MEMBER( sega_32x_device::_32x_sh2_master_4000_r )
 	UINT16 retvalue = 0x0200;
 	retvalue |= m_32x_access_auth << 15;
 
-	retvalue |=	m_sh2_hint_in_vbl;
+	retvalue |= m_sh2_hint_in_vbl;
 	retvalue |= m_sh2_master_vint_enable;
 	retvalue |= m_sh2_master_hint_enable;
 	retvalue |= m_sh2_master_cmdint_enable;
@@ -1233,7 +1225,7 @@ READ16_MEMBER( sega_32x_device::_32x_sh2_slave_4000_r )
 {
 	UINT16 retvalue = 0x0200;
 	retvalue |= m_32x_access_auth << 15;
-	retvalue |=	m_sh2_hint_in_vbl;
+	retvalue |= m_sh2_hint_in_vbl;
 	retvalue |= m_sh2_slave_vint_enable;
 	retvalue |= m_sh2_slave_hint_enable;
 	retvalue |= m_sh2_slave_cmdint_enable;
@@ -1456,10 +1448,9 @@ READ32_MEMBER( sega_32x_device::_32x_sh2_##NAMEA##_##NAMEB##_r )                
 		UINT16 ret = _32x_sh2_##NAMEB##_r(space,0,(mem_mask>>0)&0xffff);          \
 		retvalue |= ret << 0;                                                       \
 	}                                                                               \
-                                                                                    \
+																					\
 	return retvalue;                                                                \
-}                                                                                   \
-
+}
 #define _32X_MAP_WRITEHANDLERS(NAMEA,NAMEB)                                             \
 WRITE32_MEMBER( sega_32x_device::_32x_sh2_##NAMEA##_##NAMEB##_w)                                 \
 {                                                                                       \
@@ -1471,8 +1462,7 @@ WRITE32_MEMBER( sega_32x_device::_32x_sh2_##NAMEA##_##NAMEB##_w)                
 	{                                                                                   \
 		_32x_sh2_##NAMEB##_w(space,0,(data>>0)&0xffff,(mem_mask>>0)&0xffff);          \
 	}                                                                                   \
-}                                                                                       \
-
+}
 
 
 
@@ -1568,7 +1558,6 @@ ADDRESS_MAP_END
 
 void sega_32x_device::_32x_check_irqs(running_machine& machine)
 {
-
 	if (m_sh2_master_vint_enable && m_sh2_master_vint_pending) _32x_master_cpu->set_input_line(SH2_VINT_IRQ_LEVEL,ASSERT_LINE);
 	else _32x_master_cpu->set_input_line(SH2_VINT_IRQ_LEVEL,CLEAR_LINE);
 
@@ -1629,7 +1618,6 @@ UINT32* sega_32x_device::_32x_render_videobuffer_to_screenbuffer_helper(running_
 	{
 		if (m_32x_displaymode==1)
 		{
-
 			UINT32 lineoffs;
 			int start;
 
@@ -1671,7 +1659,7 @@ UINT32* sega_32x_device::_32x_render_videobuffer_to_screenbuffer_helper(running_
 			if (m_32x_screenshift == 0) start=0;
 			else start = -1;
 
-            x = start;
+			x = start;
 			while (x<320)
 			{
 				UINT16 coldata, length, l;
@@ -1701,7 +1689,7 @@ UINT32* sega_32x_device::_32x_render_videobuffer_to_screenbuffer_helper(running_
 			if (m_32x_screenshift == 0) start=0;
 			else start = -1;
 
-            x = start;
+			x = start;
 			while (x<320)
 			{
 				UINT16 coldata;
@@ -1758,8 +1746,7 @@ void sega_32x_device::device_config_complete()
 // some games appear to dislike 'perfect' levels of interleave, probably due to
 // non-emulated cache, ram waitstates and other issues?
 #define _32X_INTERLEAVE_LEVEL \
-	MCFG_QUANTUM_TIME(attotime::from_hz(1800000)) \
-
+	MCFG_QUANTUM_TIME(attotime::from_hz(1800000))
 
 static MACHINE_CONFIG_FRAGMENT( _32x_ntsc )
 
@@ -1925,5 +1912,3 @@ void sega_32x_device::device_reset()
 	membank("masterbios")->set_entry(0);
 	membank("slavebios")->set_entry(0);
 }
-
-

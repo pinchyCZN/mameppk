@@ -95,7 +95,6 @@ TILE_GET_INFO_MEMBER(ddragon_state::get_fg_16color_tile_info)
 
 VIDEO_START_MEMBER(ddragon_state,ddragon)
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ddragon_state::get_bg_tile_info),this), tilemap_mapper_delegate(FUNC(ddragon_state::background_scan),this), 16, 16, 32, 32);
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ddragon_state::get_fg_tile_info),this), TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 
@@ -108,7 +107,6 @@ VIDEO_START_MEMBER(ddragon_state,ddragon)
 
 VIDEO_START_MEMBER(ddragon_state,chinagat)
 {
-
 	m_bg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ddragon_state::get_bg_tile_info),this),tilemap_mapper_delegate(FUNC(ddragon_state::background_scan),this), 16, 16, 32, 32);
 	m_fg_tilemap = &machine().tilemap().create(tilemap_get_info_delegate(FUNC(ddragon_state::get_fg_16color_tile_info),this),TILEMAP_SCAN_ROWS, 8, 8, 32, 32);
 
@@ -155,7 +153,7 @@ static void draw_sprites( running_machine& machine, bitmap_ind16 &bitmap,const r
 	UINT8 *src;
 	int i;
 
-	if (state->m_technos_video_hw == 1)		/* China Gate Sprite RAM */
+	if (state->m_technos_video_hw == 1)     /* China Gate Sprite RAM */
 		src = (UINT8 *) (state->m_spriteram);
 	else
 		src = (UINT8 *) (&(state->m_spriteram[0x800]));
@@ -175,14 +173,14 @@ static void draw_sprites( running_machine& machine, bitmap_ind16 &bitmap,const r
 			int which;
 			int color;
 
-			if (state->m_technos_video_hw == 2)		/* Double Dragon 2 */
+			if (state->m_technos_video_hw == 2)     /* Double Dragon 2 */
 			{
 				color = (src[i + 2] >> 5);
 				which = src[i + 3] + ((src[i + 2] & 0x1f) << 8);
 			}
 			else
 			{
-				if (state->m_technos_video_hw == 1)		/* China Gate */
+				if (state->m_technos_video_hw == 1)     /* China Gate */
 				{
 					if ((sx < -7) && (sx > -16)) sx += 256; /* fix sprite clip */
 					if ((sy < -7) && (sy > -16)) sy += 256; /* fix sprite clip */
@@ -235,7 +233,6 @@ static void draw_sprites( running_machine& machine, bitmap_ind16 &bitmap,const r
 
 UINT32 ddragon_state::screen_update_ddragon(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-
 	int scrollx = (m_scrollx_hi << 8) | *m_scrollx_lo;
 	int scrolly = (m_scrolly_hi << 8) | *m_scrolly_lo;
 
