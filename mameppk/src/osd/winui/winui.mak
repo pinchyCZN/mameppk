@@ -63,6 +63,7 @@ endif
 
 # add UI objs
 OSDOBJS += \
+	$(UIOBJ)/win_options.o \
 	$(UIOBJ)/mui_util.o \
 	$(UIOBJ)/directinput.o \
 	$(UIOBJ)/dijoystick.o \
@@ -101,6 +102,9 @@ OSDOBJS +=  $(UIOBJ)/ui_temp.o
 OSDOBJS +=  $(UIOBJ)/extmem.o
 OSDOBJS +=  $(UIOBJ)/kailleraclient.o
 endif
+
+# misc dependencies
+$(UIOBJ)/mui_opts.o:	$(UISRC)/game_opts.h
 
 # add our UI resources
 GUIRESFILE += $(UIOBJ)/mameui.res
@@ -167,7 +171,7 @@ $(GUIRESFILE): $(UISRC)/mameui.rc $(UIOBJ)/mamevers.rc
 
 $(UIOBJ)/mamevers.rc: $(OBJ)/build/verinfo$(EXE) $(SRC)/version.c
 	@echo Emitting $@...
-	@"$(OBJ)/build/verinfo$(EXE)" -b winui $(SRC)/version.c > $@
+	@"$(OBJ)/build/verinfo$(EXE)" -b mame $(SRC)/version.c > $@
 
 
 
