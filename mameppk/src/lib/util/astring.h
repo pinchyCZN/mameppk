@@ -189,10 +189,10 @@ private:
 	void normalize_substr(int &start, int &count, int length) const;
 
 	// internal state
-	char *			m_text;
-	int				m_alloclen;
-	int 			m_len;
-	char			m_smallbuf[32];
+	char *          m_text;
+	int             m_alloclen;
+	int             m_len;
+	char		m_smallbuf[32];
 };
 
 
@@ -219,14 +219,14 @@ public:
 		const char *semi;
 
 		/* if none left, return FALSE to indicate we are done */
-		if (m_index != 0 and *m_cur == 0)
+		if ((m_index != 0) && (*m_cur == 0))
 			return false;
 
 		/* ignore duplicates of the separator */
-		while (duplicate and m_index == 0 and *m_cur == separator)
+		while (duplicate && (m_index == 0) && (*m_cur == separator))
 			m_cur++;
 
-		if (duplicate and *m_cur == 0)
+		if (duplicate && (*m_cur == 0))
 			return false;
 
 		/* copy up to the next separator */
@@ -239,7 +239,7 @@ public:
 		m_cur = (*semi == 0) ? semi : semi + 1;
 
 		/* ignore duplicates of the separator */
-		while (duplicate and *m_cur and *m_cur == separator)
+		while (duplicate && *m_cur && (*m_cur == separator))
 			m_cur++;
 
 		/* bump the index and return true */
