@@ -92,21 +92,22 @@ public:
 	DECLARE_WRITE8_MEMBER(psg_4015_w);
 	DECLARE_WRITE8_MEMBER(psg_4017_w);
 	DECLARE_DRIVER_INIT(playch10);
-	DECLARE_DRIVER_INIT(pcfboard_2);
 	DECLARE_DRIVER_INIT(pc_gun);
-	DECLARE_DRIVER_INIT(pchboard);
-	DECLARE_DRIVER_INIT(pcdboard);
-	DECLARE_DRIVER_INIT(pccboard);
+	DECLARE_DRIVER_INIT(pcaboard);
 	DECLARE_DRIVER_INIT(pcbboard);
-	DECLARE_DRIVER_INIT(pcgboard);
-	DECLARE_DRIVER_INIT(pcfboard);
-	DECLARE_DRIVER_INIT(pcgboard_type2);
-	DECLARE_DRIVER_INIT(pc_hrz);
-	DECLARE_DRIVER_INIT(pckboard);
+	DECLARE_DRIVER_INIT(pccboard);
+	DECLARE_DRIVER_INIT(pcdboard);
 	DECLARE_DRIVER_INIT(pcdboard_2);
 	DECLARE_DRIVER_INIT(pceboard);
+	DECLARE_DRIVER_INIT(pcfboard);
+	DECLARE_DRIVER_INIT(pcfboard_2);
+	DECLARE_DRIVER_INIT(virus);
+	DECLARE_DRIVER_INIT(pcgboard);
+	DECLARE_DRIVER_INIT(pcgboard_type2);
+	DECLARE_DRIVER_INIT(pchboard);
 	DECLARE_DRIVER_INIT(pciboard);
-	DECLARE_DRIVER_INIT(pcaboard);
+	DECLARE_DRIVER_INIT(pckboard);
+	DECLARE_DRIVER_INIT(pc_hrz);
 	TILE_GET_INFO_MEMBER(get_bg_tile_info);
 	virtual void machine_start();
 	virtual void machine_reset();
@@ -118,6 +119,8 @@ public:
 	UINT32 screen_update_playch10_bottom(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
 	UINT32 screen_update_playch10_single(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
 	INTERRUPT_GEN_MEMBER(playch10_interrupt);
+	void pc10_set_videorom_bank( int first, int count, int bank, int size );
+	void set_videoram_bank( int first, int count, int bank, int size );
 };
 
 /*----------- defined in video/playch10.c -----------*/
