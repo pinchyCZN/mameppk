@@ -2421,6 +2421,9 @@ $(VIDEO)/model3.o:	$(MAMESRC)/video/m3raster.c
 $(VIDEO)/n64.o:		$(MAMESRC)/video/rdpfiltr.c
 $(DRIVERS)/bfm_sc4.o:   $(MAMESRC)/includes/bfm_sc45.h
 $(DRIVERS)/bfm_sc5.o:   $(MAMESRC)/includes/bfm_sc45.h
+$(DRIVERS)/namcos2.o:   $(MAMESRC)/includes/namcos2.h
+$(MACHINE)/namcos2.o:   $(MAMESRC)/includes/namcos2.h 
+$(VIDEO)/namcos2.o:     $(MAMESRC)/includes/namcos2.h 
 $(DRIVERS)/cavesh3.o:	$(MAMESRC)/drivers/csh3blit.c
 
 #-------------------------------------------------
