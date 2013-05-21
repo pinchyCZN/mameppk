@@ -148,6 +148,8 @@ b) Exit the dialog.
 
 #include <ddraw.h>
 
+#define WINOPTION_D3DVERSION "9"
+
 #ifdef _MSC_VER
 #define snprintf _snprintf
 #endif
@@ -321,7 +323,6 @@ static windows_options pOptsSource;
 #define PARENT_COLOR RGB( 190, 128, 192 ) // PURPLE
 #define GAME_COLOR RGB( 0, 128, 192 ) // DARK BLUE
 
-
 BOOL PropSheetFilter_Vector(const machine_config *drv, const game_driver *gamedrv)
 {
 	return isDriverVector(drv);
@@ -350,7 +351,6 @@ static struct ComboBoxD3DVersion
 } g_ComboBoxD3DVersion[] =
 {
 	{ TEXT("Version 9"),  9   },
-	{ TEXT("Version 8"),  8   },
 };
 
 #define NUMD3DVERSIONS ARRAY_LENGTH(g_ComboBoxD3DVersion)
@@ -3323,7 +3323,7 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_HWSTRETCH,				DM_BOOL,	WINOPTION_HWSTRETCH);
 
 	// Direct3D specific options
-	datamap_add(properties_datamap, IDC_D3D_VERSION,			DM_INT,		WINOPTION_D3DVERSION);
+//	datamap_add(properties_datamap, IDC_D3D_VERSION,			DM_INT,		WINOPTION_D3DVERSION);
 	datamap_add(properties_datamap, IDC_D3D_FILTER,				DM_BOOL,	WINOPTION_FILTER);
 
 	// per window video options
