@@ -1075,6 +1075,19 @@ void shaders::init_fsfx_quad(void *vertbuf)
 	fsfx_vertices[5].u0 = 1.0f;
 	fsfx_vertices[5].v0 = 1.0f;
 
+	fsfx_vertices[0].u1 = 0.0f;
+	fsfx_vertices[0].v1 = 0.0f;
+	fsfx_vertices[1].u1 = 0.0f;
+	fsfx_vertices[1].v1 = 0.0f;
+	fsfx_vertices[2].u1 = 0.0f;
+	fsfx_vertices[2].v1 = 0.0f;
+	fsfx_vertices[3].u1 = 0.0f;
+	fsfx_vertices[3].v1 = 0.0f;
+	fsfx_vertices[4].u1 = 0.0f;
+	fsfx_vertices[4].v1 = 0.0f;
+	fsfx_vertices[5].u1 = 0.0f;
+	fsfx_vertices[5].v1 = 0.0f;
+
 	// set the color, Z parameters to standard values
 	for (int i = 0; i < 6; i++)
 	{
@@ -1672,7 +1685,8 @@ void shaders::render_quad(poly_info *poly, int vertnum)
 			if(options->params_dirty)
 			{
 				(*d3dintf->effect.set_vector)(curr_effect, "RawDims", 2, &rawdims.c.x);
-				(*d3dintf->effect.set_vector)(curr_effect, "SizeRatio", 2, &delta.c.x);
+				(*d3dintf->effect.set_float)(curr_effect, "WidthRatio", 1.0f / delta.c.x);
+				(*d3dintf->effect.set_float)(curr_effect, "HeightRatio", 1.0f / delta.c.y);
 				(*d3dintf->effect.set_float)(curr_effect, "TargetWidth", (float)d3d->get_width());
 				(*d3dintf->effect.set_float)(curr_effect, "TargetHeight", (float)d3d->get_height());
 				(*d3dintf->effect.set_float)(curr_effect, "CCValue", options->yiq_cc);
@@ -1710,10 +1724,12 @@ void shaders::render_quad(poly_info *poly, int vertnum)
 
 			(*d3dintf->effect.set_texture)(curr_effect, "Composite", rt->render_texture[4]);
 			(*d3dintf->effect.set_texture)(curr_effect, "Diffuse", texture->get_finaltex());
-			if(options->params_dirty)
+			if(true)//options->params_dirty)
 			{
-				(*d3dintf->effect.set_vector)(curr_effect, "RawDims", 2, &rawdims.c.x);
-				(*d3dintf->effect.set_vector)(curr_effect, "SizeRatio", 2, &delta.c.x);
+				(*d3dintf->effect.set_float)(curr_effect, "RawWidth", rawdims.c.x);
+				(*d3dintf->effect.set_float)(curr_effect, "RawHeight", rawdims.c.y);
+				(*d3dintf->effect.set_float)(curr_effect, "WidthRatio", 1.0f / delta.c.x);
+				(*d3dintf->effect.set_float)(curr_effect, "HeightRatio", 1.0f / delta.c.y);
 				(*d3dintf->effect.set_float)(curr_effect, "TargetWidth", (float)d3d->get_width());
 				(*d3dintf->effect.set_float)(curr_effect, "TargetHeight", (float)d3d->get_height());
 				(*d3dintf->effect.set_float)(curr_effect, "CCValue", options->yiq_cc);
