@@ -157,7 +157,7 @@ void winvideo_init(running_machine &machine)
 
 	// possibly create the debug window, but don't show it yet
 	if (machine.debug_flags & DEBUG_FLAG_OSD_ENABLED)
-		debugwin_init_windows(machine);
+		machine.osd().init_debugger();
 }
 
 
@@ -271,7 +271,7 @@ void windows_osd_interface::update(bool skip_redraw)
 	}
 
 	// poll the joystick values here
-	winwindow_process_events(machine(), TRUE);
+	winwindow_process_events(machine(), TRUE, FALSE);
 	wininput_poll(machine());
 	check_osd_inputs(machine());
 }
