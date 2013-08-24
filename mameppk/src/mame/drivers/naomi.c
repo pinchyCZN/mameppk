@@ -19,6 +19,12 @@
 
 Sega Naomi is Dreamcast based Arcade hardware.
 
+Compatibility list (as per 26-jun-2013)
+- sfz3ugd: currently dies at disclaimer screen (regression);
+- sprtjam: garbage on initial attract mode screen (regression).
+- puyofev: hangs after pressing start.
+- vtennisg: crashes after stage screen.
+
 TODO (general):
     - all games that uses YUV just updates one frame then dies, why?
     - Some SH to ARM sound streaming doesn't work (used by ADX compression system)
@@ -1534,8 +1540,8 @@ static ADDRESS_MAP_START( naomi_map, AS_PROGRAM, 64, naomi_state )
 	AM_RANGE(0x005f7000, 0x005f70ff) AM_MIRROR(0x02000000) AM_DEVICE16( "rom_board", naomi_board, submap, U64(0x0000ffff0000ffff) )
 	AM_RANGE(0x005f7400, 0x005f74ff) AM_MIRROR(0x02000000) AM_DEVICE32( "rom_board", naomi_g1_device, amap, U64(0xffffffffffffffff) )
 	AM_RANGE(0x005f7800, 0x005f78ff) AM_MIRROR(0x02000000) AM_READWRITE(dc_g2_ctrl_r, dc_g2_ctrl_w )
-	AM_RANGE(0x005f7c00, 0x005f7cff) AM_MIRROR(0x02000000) AM_DEVREADWRITE32("powervr2", powervr2_device, pvr_ctrl_r, pvr_ctrl_w, U64(0xffffffffffffffff))
-	AM_RANGE(0x005f8000, 0x005f9fff) AM_MIRROR(0x02000000) AM_DEVREADWRITE32("powervr2", powervr2_device, pvr_ta_r, pvr_ta_w, U64(0xffffffffffffffff))
+	AM_RANGE(0x005f7c00, 0x005f7cff) AM_MIRROR(0x02000000) AM_DEVICE32("powervr2", powervr2_device, pd_dma_map, U64(0xffffffffffffffff))
+	AM_RANGE(0x005f8000, 0x005f9fff) AM_MIRROR(0x02000000) AM_DEVICE32("powervr2", powervr2_device, ta_map, U64(0xffffffffffffffff))
 	AM_RANGE(0x00600000, 0x006007ff) AM_MIRROR(0x02000000) AM_READWRITE(dc_modem_r, dc_modem_w )
 	AM_RANGE(0x00700000, 0x00707fff) AM_MIRROR(0x02000000) AM_READWRITE(dc_aica_reg_r, dc_aica_reg_w )
 	AM_RANGE(0x00710000, 0x0071000f) AM_MIRROR(0x02000000) AM_READWRITE(dc_rtc_r, dc_rtc_w )
@@ -1586,8 +1592,8 @@ static ADDRESS_MAP_START( naomi2_map, AS_PROGRAM, 64, naomi_state )
 	AM_RANGE(0x005f7000, 0x005f70ff) AM_MIRROR(0x02000000) AM_DEVICE16( "rom_board", naomi_board, submap, U64(0x0000ffff0000ffff) )
 	AM_RANGE(0x005f7400, 0x005f74ff) AM_MIRROR(0x02000000) AM_DEVICE32( "rom_board", naomi_g1_device, amap, U64(0xffffffffffffffff) )
 	AM_RANGE(0x005f7800, 0x005f78ff) AM_MIRROR(0x02000000) AM_READWRITE(dc_g2_ctrl_r, dc_g2_ctrl_w )
-	AM_RANGE(0x005f7c00, 0x005f7cff) AM_DEVREADWRITE32("powervr2", powervr2_device, pvr_ctrl_r, pvr_ctrl_w, U64(0xffffffffffffffff))
-	AM_RANGE(0x005f8000, 0x005f9fff) AM_DEVREADWRITE32("powervr2", powervr2_device, pvr_ta_r, pvr_ta_w, U64(0xffffffffffffffff))
+	AM_RANGE(0x005f7c00, 0x005f7cff) AM_MIRROR(0x02000000) AM_DEVICE32("powervr2", powervr2_device, pd_dma_map, U64(0xffffffffffffffff))
+	AM_RANGE(0x005f8000, 0x005f9fff) AM_MIRROR(0x02000000) AM_DEVICE32("powervr2", powervr2_device, ta_map, U64(0xffffffffffffffff))
 	AM_RANGE(0x00600000, 0x006007ff) AM_MIRROR(0x02000000) AM_READWRITE(dc_modem_r, dc_modem_w )
 	AM_RANGE(0x00700000, 0x00707fff) AM_MIRROR(0x02000000) AM_READWRITE(dc_aica_reg_r, dc_aica_reg_w )
 	AM_RANGE(0x00710000, 0x0071000f) AM_MIRROR(0x02000000) AM_READWRITE(dc_rtc_r, dc_rtc_w )
@@ -1599,7 +1605,7 @@ static ADDRESS_MAP_START( naomi2_map, AS_PROGRAM, 64, naomi_state )
 
 //  AM_RANGE(0x025f6800, 0x025f69ff) AM_READWRITE_LEGACY(dc_sysctrl_r, dc_sysctrl_w ) // second PVR DMA!
 //  AM_RANGE(0x025f7c00, 0x025f7cff) AM_DEVREADWRITE32("powervr2", powervr2_device, pvr_ctrl_r, pvr_ctrl_w, U64(0xffffffffffffffff))
-	AM_RANGE(0x025f8000, 0x025f9fff) AM_DEVREADWRITE32("powervr2", powervr2_device, pvr2_ta_r, pvr2_ta_w, U64(0xffffffffffffffff))
+	AM_RANGE(0x005f8000, 0x005f9fff) AM_MIRROR(0x02000000) AM_DEVICE32("powervr2", powervr2_device, ta_map, U64(0xffffffffffffffff))
 
 	/* Area 1 */
 	AM_RANGE(0x04000000, 0x04ffffff) AM_RAM AM_SHARE("dc_texture_ram")      // texture memory 64 bit access
@@ -1609,7 +1615,7 @@ static ADDRESS_MAP_START( naomi2_map, AS_PROGRAM, 64, naomi_state )
 
 	/* Area 2*/
 	AM_RANGE(0x085f6800, 0x085f69ff) AM_WRITE(dc_sysctrl_w ) // writes to BOTH PVRs
-	AM_RANGE(0x085f8000, 0x085f9fff) AM_DEVWRITE32("powervr2", powervr2_device, pvrs_ta_w, U64(0xffffffffffffffff) ) // writes to BOTH PVRs
+	AM_RANGE(0x085f8000, 0x805f9fff) AM_DEVICE32("powervr2", powervr2_device, ta_map, U64(0xffffffffffffffff))
 	AM_RANGE(0x08800000, 0x088000ff) AM_DEVREADWRITE32("powervr2", powervr2_device, elan_regs_r, elan_regs_w, U64(0xffffffffffffffff)) // T&L chip registers
 //  AM_RANGE(0x09000000, 0x09??????) T&L command processing
 	AM_RANGE(0x0a000000, 0x0bffffff) AM_RAM AM_SHARE("elan_ram") // T&L chip RAM
@@ -1739,8 +1745,8 @@ static ADDRESS_MAP_START( aw_map, AS_PROGRAM, 64, naomi_state )
 	AM_RANGE(0x005f7000, 0x005f70ff) AM_MIRROR(0x02000000) AM_DEVICE16( "rom_board", aw_rom_board, submap, U64(0x0000ffff0000ffff) )
 	AM_RANGE(0x005f7400, 0x005f74ff) AM_MIRROR(0x02000000) AM_DEVICE32( "rom_board", naomi_g1_device, amap, U64(0xffffffffffffffff) )
 	AM_RANGE(0x005f7800, 0x005f78ff) AM_READWRITE(dc_g2_ctrl_r, dc_g2_ctrl_w )
-	AM_RANGE(0x005f7c00, 0x005f7cff) AM_DEVREADWRITE32("powervr2", powervr2_device, pvr_ctrl_r, pvr_ctrl_w, U64(0xffffffffffffffff))
-	AM_RANGE(0x005f8000, 0x005f9fff) AM_DEVREADWRITE32("powervr2", powervr2_device, pvr_ta_r, pvr_ta_w, U64(0xffffffffffffffff))
+	AM_RANGE(0x005f7c00, 0x005f7cff) AM_MIRROR(0x02000000) AM_DEVICE32("powervr2", powervr2_device, pd_dma_map, U64(0xffffffffffffffff))
+	AM_RANGE(0x005f8000, 0x005f9fff) AM_MIRROR(0x02000000) AM_DEVICE32("powervr2", powervr2_device, ta_map, U64(0xffffffffffffffff))
 	AM_RANGE(0x00600000, 0x006007ff) AM_READWRITE(aw_modem_r, aw_modem_w )
 	AM_RANGE(0x00700000, 0x00707fff) AM_READWRITE(dc_aica_reg_r, dc_aica_reg_w )
 	AM_RANGE(0x00710000, 0x0071000f) AM_READWRITE(dc_rtc_r, dc_rtc_w )
@@ -2492,10 +2498,7 @@ static MACHINE_CONFIG_START( naomi_aw_base, naomi_state )
 
 	/* video hardware */
 	MCFG_SCREEN_ADD("screen", RASTER)
-	MCFG_SCREEN_REFRESH_RATE(60)
-	MCFG_SCREEN_VBLANK_TIME(ATTOSECONDS_IN_USEC(2500) /* not accurate */)
-	MCFG_SCREEN_SIZE(640, 480)
-	MCFG_SCREEN_VISIBLE_AREA(0, 640-1, 0, 480-1)
+	MCFG_SCREEN_RAW_PARAMS(CPU_CLOCK/2/4, 820, 0, 640, 532, 0, 480) /* TODO: PVR is clocked at 100 MHz, pixel clock is guessed to be /4 so ~57 fps. */
 	MCFG_SCREEN_UPDATE_DEVICE("powervr2", powervr2_device, screen_update)
 	MCFG_PALETTE_LENGTH(0x1000)
 	MCFG_POWERVR2_ADD("powervr2", WRITE8(dc_state, pvr_irq))
@@ -7146,6 +7149,24 @@ ROM_START( ngdup23e )
 	// PIC and sticker unknown
 	ROM_LOAD("317-unk-jpn.pic", 0x00, 0x4000, NO_DUMP )
 ROM_END
+
+/*
+0C03F492: MOV     R5,R0
+0C03F494: MOV     R0,R5
+0C03F496: CMP/EQ  R5,R4
+0C03F498: BF      $0C03F4A6
+0C03F4A6: MOV.L   @($28,R14),R0
+0C03F4A8: TST     R0,R0
+0C03F4AA: BT      $0C03F4C4
+0C03F4AC: BRA     $0C03F4BC
+0C03F4BA: BT      $0C03F4C4
+0C03F4BC: MOV.L   @($28,R14),R3
+0C03F4BE: MOV     #$FD,R5
+0C03F4C0: JSR     R3
+0C03F134: NOP
+0C03F136: BRA     $0C03F136
+0C03F134: NOP
+*/
 
 ROM_START( puyofev )
 	NAOMIGD_BIOS

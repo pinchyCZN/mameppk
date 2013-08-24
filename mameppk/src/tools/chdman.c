@@ -1086,6 +1086,11 @@ static void parse_compression(const parameters_t &params, chd_codec_type compres
 		if (end == -1)
 			break;
 	}
+	
+	for(;index < 4; ++index)
+	{
+		compression[index] = CHD_CODEC_NONE;
+	}
 }
 
 
@@ -1630,11 +1635,11 @@ static void do_create_raw(parameters_t &params)
 	}
 	catch (...)
 	{
+		delete chd;
 		// delete the output file
 		astring *output_chd_str = params.find(OPTION_OUTPUT);
 		if (output_chd_str != NULL)
 			osd_rmfile(*output_chd_str);
-		delete chd;
 		throw;
 	}
 }
@@ -1803,11 +1808,11 @@ static void do_create_hd(parameters_t &params)
 	}
 	catch (...)
 	{
+		delete chd;
 		// delete the output file
 		astring *output_chd_str = params.find(OPTION_OUTPUT);
 		if (output_chd_str != NULL)
 			osd_rmfile(*output_chd_str);
-		delete chd;
 		throw;
 	}
 }
@@ -1895,11 +1900,11 @@ static void do_create_cd(parameters_t &params)
 	}
 	catch (...)
 	{
+		delete chd;
 		// delete the output file
 		astring *output_chd_str = params.find(OPTION_OUTPUT);
 		if (output_chd_str != NULL)
 			osd_rmfile(*output_chd_str);
-		delete chd;
 		throw;
 	}
 }
@@ -2020,11 +2025,11 @@ static void do_create_ld(parameters_t &params)
 	}
 	catch (...)
 	{
+		delete chd;
 		// delete the output file
 		astring *output_chd_str = params.find(OPTION_OUTPUT);
 		if (output_chd_str != NULL)
 			osd_rmfile(*output_chd_str);
-		delete chd;
 		throw;
 	}
 }
@@ -2145,11 +2150,11 @@ static void do_copy(parameters_t &params)
 	}
 	catch (...)
 	{
+		delete chd;
 		// delete the output file
 		astring *output_chd_str = params.find(OPTION_OUTPUT);
 		if (output_chd_str != NULL)
 			osd_rmfile(*output_chd_str);
-		delete chd;
 		throw;
 	}
 }
@@ -2883,14 +2888,9 @@ int CLIB_DECL main(int argc, char *argv[])
 			{
 				return err.error();
 			}
-			catch (std::bad_alloc &)
+			catch (std::exception& ex)
 			{
-				fprintf(stderr, "Out of memory\n");
-				return 1;
-			}
-			catch (...)
-			{
-				fprintf(stderr, "Unhandled exception\n");
+				fprintf(stderr, "Unhandled exception: %s\n", ex.what());
 				return 1;
 			}
 		}

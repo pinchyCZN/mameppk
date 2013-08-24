@@ -378,7 +378,7 @@ NAME = $(TARGET)$(SUBTARGET)$(EXTRA_SUFFIX)
 endif
 
 # fullname is prefix+name+suffix+suffix64+suffixdebug
-FULLNAME = $(PREFIX)$(PREFIXSDL)$(NAME)$(SUFFIX)$(SUFFIX64)$(SUFFIXDEBUG)$(SUFFIXPROFILE)
+FULLNAME ?= $(PREFIX)$(PREFIXSDL)$(NAME)$(SUFFIX)$(SUFFIX64)$(SUFFIXDEBUG)$(SUFFIXPROFILE)
 ifneq ($(WINUI),)
 MAMEUINAME = $(NAME)
 MAMEUIEXE = $(PREFIX)$(PREFIXSDL)$(MAMEUINAME)$(SUFFIX)$(SUFFIX64)$(SUFFIXDEBUG)$(SUFFIXPROFILE)$(EXE)
@@ -655,6 +655,11 @@ CCOMFLAGS += -fsanitize=$(SANITIZE)
 ifneq (,$(findstring thread,$(SANITIZE)))
 CCOMFLAGS += -fPIE
 endif
+ifneq (,$(findstring memory,$(SANITIZE)))
+ifneq (,$(findstring clang,$(CC)))
+CCOMFLAGS += -fsanitize-memory-track-origins -fPIE
+endif
+endif
 endif
 
 #-------------------------------------------------
@@ -728,6 +733,9 @@ LDFLAGS += -fsanitize=$(SANITIZE)
 ifneq (,$(findstring thread,$(SANITIZE)))
 LDFLAGS += -pie
 endif
+ifneq (,$(findstring memory,$(SANITIZE)))
+LDFLAGS += -pie
+endif
 endif
 
 
@@ -745,11 +753,8 @@ OBJDIRS = $(OBJ)
 #-------------------------------------------------
 
 LIBEMU = $(OBJ)/libemu.a
-LIBCPU = $(OBJ)/libcpu.a
+LIBOPTIONAL = $(OBJ)/liboptional.a
 LIBDASM = $(OBJ)/libdasm.a
-LIBSOUND = $(OBJ)/libsound.a
-LIBVIDEO = $(OBJ)/libvideo.a
-LIBMACHINE = $(OBJ)/libmachine.a
 LIBUTIL = $(OBJ)/libutil.a
 LIBOCORE = $(OBJ)/libocore.a
 LIBOSD = $(OBJ)/libosd.a
@@ -855,8 +860,6 @@ default: maketree buildtools emulator
 
 all: default tools
 
-tests: maketree jedutil$(EXE) chdman$(EXE)
-
 7Z_LIB = $(OBJ)/lib7z.a 
 
 #-------------------------------------------------
@@ -917,6 +920,7 @@ clean: $(OSDCLEAN)
 	@echo Deleting $(TOOLS)...
 	$(RM) $(TOOLS)
 	@echo Deleting dependencies...
+	$(RM) depend_emu.mak
 	$(RM) depend_mame.mak
 	$(RM) depend_mess.mak
 	$(RM) depend_ume.mak
@@ -937,6 +941,10 @@ checkautodetect:
 
 tests: $(REGTESTS)
 
+mak: maketree $(MAKEMAK_TARGET)
+	@echo Rebuilding $(SUBTARGET).mak...
+	$(MAKEMAK) $(SRC)/targets/$(SUBTARGET).lst -I$(SRC)/emu -I$(SRC)/mame -I$(SRC)/mame/layout -I$(SRC)/mess -I$(SRC)/mess/layout $(SRC) > $(SUBTARGET).mak
+	$(MAKEMAK) $(SRC)/targets/$(SUBTARGET).lst > $(SUBTARGET).lst
 
 #-------------------------------------------------
 # directory targets
@@ -954,15 +962,15 @@ $(sort $(OBJDIRS)):
 ifndef EXECUTABLE_DEFINED
 
 # always recompile the version string
-$(VERSIONOBJ): $(EMUINFOOBJ) $(DRVLIBS) $(LIBOSD) $(LIBCPU) $(LIBMACHINE) $(LIBEMU) $(LIBSOUND) $(LIBVIDEO) $(LIBUTIL) $(EXPAT) $(ZLIB) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(LUA_LIB) $(FORMATS_LIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE)
+$(VERSIONOBJ): $(EMUINFOOBJ) $(DRVLIBS) $(LIBOSD) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(EXPAT) $(ZLIB) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(LUA_LIB) $(FORMATS_LIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE)
 
-$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBCPU) $(LIBMACHINE) $(LIBEMU) $(LIBDASM) $(LIBSOUND) $(LIBVIDEO) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(ZLIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE) $(CLIRESFILE)
+$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(ZLIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE) $(CLIRESFILE)
 	$(CC) $(CDEFS) $(CFLAGS) -c $(SRC)/version.c -o $(VERSIONOBJ)
 	@echo Linking $@...
 	$(LD) $(LDFLAGS) $(LDFLAGSEMULATOR) -mconsole $(VERSIONOBJ) $^ $(LIBS) -o $@
 
 ifneq ($(WINUI),)
-$(MAMEUIEXE): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBCPU) $(LIBMACHINE) $(LIBEMU) $(LIBDASM) $(LIBSOUND) $(LIBVIDEO) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(ZLIB) $(LIBOCORE_NOMAIN) $(MIDI_LIB) $(RESFILE) $(GUIRESFILE)
+$(MAMEUIEXE): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(ZLIB) $(LIBOCORE_NOMAIN) $(MIDI_LIB) $(RESFILE) $(GUIRESFILE)
 	$(CC) $(CDEFS) $(CFLAGS) -c $(SRC)/version.c -o $(VERSIONOBJ)
 	@echo Linking $@...
 	$(LD) $(LDFLAGS) $(LDFLAGSEMULATOR) -mwindows $(VERSIONOBJ) $^ $(LIBS) -o $@
@@ -1108,4 +1116,5 @@ $(EMUOBJ)/uicmd14.bdc: $(PNG2BDC_TARGET) $(SRC)/emu/font/cmd14.png
 # optional dependencies file
 #-------------------------------------------------
 
+-include depend_emu.mak
 -include depend_$(TARGET).mak

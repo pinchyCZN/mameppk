@@ -2198,6 +2198,7 @@ recordbr        // B56 (c) 1988 Taito Corporation Japan (World)
 gogold          // B56 (c) 1988 Taito Corporation (Japan)
 dleague         // C02 (c) 1990 Taito America Corporation (US)
 dleaguej        // C02 (c) 1990 Taito Corporation (Japan)
+tetristh        // C26 (c) 1988 Sega Enterprises,Ltd. (Japan)
 
 // Taito B-System games
 masterw         // B72 (c) 1989 Taito Corporation Japan (World)
@@ -2212,8 +2213,8 @@ rambo3p         // B93 (c) 1989 Taito Europe Corporation (Europe) Proto or bootl
 crimec          // B99 (c) 1989 Taito Corporation Japan (World)
 crimecu         // B99 (c) 1989 Taito America Corporation (US)
 crimecj         // B99 (c) 1989 Taito Corporation (Japan)
-tetrist         // C12 (c) 1989 Sega Enterprises,Ltd. (Japan)
-tetrista        // C35 (c) 1989 Sega Enterprises,Ltd. (Japan)
+tetrist         // C12 (c) 1988 Sega Enterprises,Ltd. (Japan)
+tetrista        // C35 (c) 1988 Sega Enterprises,Ltd. (Japan)
 viofight        // C16 (c) 1989 Taito Corporation Japan (World)
 viofightu       // C16 (c) 1989 Taito America Corporation (US)
 viofightj       // C16 (c) 1989 Taito Corporation (Japan)
@@ -2472,6 +2473,9 @@ batlgr2         // E87 (c) 2000 Taito (2.04J)
 batlgr2a        // E87 (c) 2000 Taito (2.01J)
 raizpin         // F14 (c) 2002 Taito
 
+// Taito Type-X / X+/ X2 / X Zero
+hotgmkmp		// (c) 2005 XNauts
+
 invqix          // F34 (c) 2003 Taito Corporation
 
 // Toaplan games
@@ -2537,6 +2541,7 @@ snowbrosc       // MIN16-02 (c) 1990 Toaplan + Romstar license
 snowbrosj       // MIN16-02 (c) 1990 Toaplan
 snowbrosd       // MIN16-02 (c) 1990 Toaplan + Dooyong license
 wintbob         // bootleg
+snowbroswb      //
 // modified snowbros 'clone' hardware
 honeydol        // (c) 1995 Barko Corp
 twinadv         // (c) 1995 Barko Corp
@@ -4323,7 +4328,6 @@ tetris3         // (c) 1988 (FD1094, decrypted) S16A
 timescan1       // (c) 1987 (FD1089B, decrypted)
 wb31            // (c) 1988 Sega / Westone (FD1094, decrypted)
 wb35            // (c) 1988 Sega / Westone (FD1089A, decrypted)
-wb35a           // (c) 1988 Sega / Westone (FD1089A, decrypted)
 passsht16a      // (c) 1988 (FD1094, decrypted)
 
 // System 16B
@@ -5730,6 +5734,7 @@ suprtrio        // (c) 1994 GameAce
 lemmings        // prototype (c) 1991 Data East USA (US)
 				// MAQ ??
 dragngun        // MAR (c) 1992 Data East Corporation (US)
+dragngunj       // MAR (c) 1992 Data East Corporation (Japan)
 wizdfire        // MAS (c) 1992 Data East Corporation (Over Sea)
 wizdfireu       // MAS (c) 1992 Data East Corporation (US)
 darkseal2       // MAS (c) 1992 Data East Corporation (Japan)
@@ -7639,6 +7644,7 @@ sabotenba       // (c) 1992 NMK / Tecmo
 cactus          // bootleg
 nouryoku        // (c) 1995 Tecmo
 nouryokup       // (c) 1995 Tecmo
+arcadian        // (c) 1994 NMK
 raphero         // (c) 1994 Media Trading Corp
 
 // nmk16.c bootlegs using the Seibu Sound System
@@ -8207,6 +8213,7 @@ lomakai         // (c) 1988 (World)
 makaiden        // (c) 1988 (Japan)
 p47             // (c) 1988
 p47j            // (c) 1988 (Japan)
+p47je           // (c) 1988 (Japan, Export)
 kickoff         // (c) 1988 (Japan)
 tshingen        // (c) 1988 (Japan)
 tshingena       // (c) 1988 (Japan)
@@ -8637,6 +8644,8 @@ extdwnhl        // (c) 1995 Sammy Japan
 gundhara        // (c) 1995 Banpresto
 sokonuke        // (c) 1995 Sammy Industries
 zombraid        // (c) 1995 American Sammy
+zombraidp       //
+zombraidpj      //
 crazyfgt        // (c) 1998 Subsino
 inttoote        // (c) 1998 Coinmaster
 inttootea       // (c) 1998 Coinmaster
@@ -9039,6 +9048,7 @@ redhawkb        // (c) 1997
 grdnstrm        // (c) 1998 Apples Industries license
 grdnstrmv       //
 grdnstrmk       // (c) 1998 (Korea)
+grdnstrmg       //
 redfoxwp2       // (c) 1998 (China)
 redfoxwp2a      // (c) 1998 (China)
 bubl2000        // (c) 1998 Tuning
@@ -9284,6 +9294,7 @@ nkishusp        // (c) 1998
 iqblocka        // (c) 1996
 iqblockf        // (c) 1996
 tjsb            // (c) 1997
+spkrform        // (c) ????
 sdmg2           // (c) 1997
 mgdh            // (c) 1997
 mgdha           // (c) 1997

@@ -10,8 +10,10 @@ ifeq ($(TARGET),mess)
 # In order to keep dependencies reasonable, we exclude objects in the base of
 # $(SRC)/emu, as well as all the OSD objects and anything in the $(OBJ) tree
 depend: maketree $(MAKEDEP_TARGET)
+	@echo Rebuilding depend_emu.mak...
+	$(MAKEDEP) -I. $(INCPATH) -X$(SRC)/emu -X$(SRC)/osd/... -X$(OBJ)/... $(SRC)/emu > depend_emu.mak
 	@echo Rebuilding depend_$(TARGET).mak...
-	$(MAKEDEP) -I. $(INCPATH) -X$(SRC)/emu -X$(SRC)/osd/... -X$(OBJ)/... src/$(TARGET) > depend_$(TARGET).mak
+	$(MAKEDEP) -I. $(INCPATH) -X$(SRC)/emu -X$(SRC)/osd/... -X$(OBJ)/... $(SRC)/$(TARGET) > depend_$(TARGET).mak
 
 INCPATH += \
 	-I$(SRC)/$(TARGET) \
@@ -182,7 +184,7 @@ $(MESSOBJ)/nintendo.a:          \
 	$(MESS_MACHINE)/sns_event.o  \
 	$(MESS_DRIVERS)/snes.o      \
 	$(MESS_AUDIO)/gb.o          \
-	$(MESS_VIDEO)/gb.o          \
+	$(MESS_VIDEO)/gb_lcd.o      \
 	$(MESS_MACHINE)/gb.o        \
 	$(MESS_MACHINE)/gb_slot.o   \
 	$(MESS_MACHINE)/gb_rom.o    \
@@ -208,6 +210,12 @@ $(MESSOBJ)/sega.a:              \
 	$(MESS_MACHINE)/sat_bram.o  \
 	$(MESS_DRIVERS)/saturn.o    \
 	$(MESS_MACHINE)/sms.o       \
+	$(MESS_MACHINE)/smsctrl.o   \
+	$(MESS_MACHINE)/sms_joypad.o  \
+	$(MESS_MACHINE)/sms_lphaser.o \
+	$(MESS_MACHINE)/sms_paddle.o  \
+	$(MESS_MACHINE)/sms_sports.o  \
+	$(MESS_MACHINE)/sms_rfu.o     \
 	$(MESS_MACHINE)/sega8_slot.o \
 	$(MESS_MACHINE)/sega8_rom.o \
 	$(MESS_DRIVERS)/sms.o       \
@@ -237,14 +245,14 @@ $(MESSOBJ)/sony.a:              \
 # miscellaneous dependencies
 #-------------------------------------------------
 
-$(MESS_MACHINE)/snescx4.o: $(MESSSRC)/machine/cx4ops.c \
-				$(MESSSRC)/machine/cx4oam.c \
-				$(MESSSRC)/machine/cx4fn.c \
-				$(MESSSRC)/machine/cx4data.c \
+$(MESS_MACHINE)/snescx4.o: $(MESSSRC)/machine/cx4ops.inc \
+				$(MESSSRC)/machine/cx4oam.inc \
+				$(MESSSRC)/machine/cx4fn.inc \
+				$(MESSSRC)/machine/cx4data.inc \
 
-$(MESS_MACHINE)/nes_slot.o:  $(MESSSRC)/machine/nes_ines.c \
-				$(MESSSRC)/machine/nes_pcb.c \
-				$(MESSSRC)/machine/nes_unif.c \
+$(MESS_MACHINE)/nes_slot.o:  $(MESSSRC)/machine/nes_ines.inc \
+				$(MESSSRC)/machine/nes_pcb.inc \
+				$(MESSSRC)/machine/nes_unif.inc \
 
 #-------------------------------------------------
 # layout dependencies

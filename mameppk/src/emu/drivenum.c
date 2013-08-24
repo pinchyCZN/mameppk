@@ -65,8 +65,8 @@ void driver_switch::assign_drivers(emu_options &opts)
 	} drivers_table[] =
 	{
 #ifndef TINY_BUILD
-		{ "mame",		mamedrivers },
-		{ "plus",		mameplusdrivers },
+		{ "mame",	mamedrivers },
+		{ "plus",	mameplusdrivers },
 		{ "homebrew",	mamehbdrivers },
 		{ "decrypted",	mamedecrypteddrivers },
 #ifdef MAMEMESS
