@@ -149,6 +149,7 @@ Speedups
 */
 
 #include "emu.h"
+#include "mcfglgcy.h"
 #include "cpu/sh4/sh4.h"
 #include "cpu/sh4/sh3comn.h"
 #include "profiler.h"
@@ -193,12 +194,16 @@ public:
 	DECLARE_WRITE64_MEMBER(ibara_fpga_w);
 	DECLARE_READ32_MEMBER(cavesh_gfx_ready_r);
 	DECLARE_WRITE32_MEMBER(cavesh_gfx_exec_w);
+	UINT32 screen_update_cavesh3(screen_device &screen, bitmap_rgb32 &bitmap, const rectangle &cliprect);
 	DECLARE_WRITE8_MEMBER(flash_enab_w);
 	DECLARE_WRITE8_MEMBER(flash_cmd_w);
 	DECLARE_WRITE8_MEMBER(flash_data_w);
 	DECLARE_WRITE8_MEMBER(flash_addr_w);
 	DECLARE_READ8_MEMBER(flash_io_r);
 	DECLARE_READ8_MEMBER(flash_ready_r);
+	DECLARE_MACHINE_START(cavesh3);
+	DECLARE_MACHINE_RESET(cavesh3);
+	DECLARE_VIDEO_START(cavesh3);
 
 	DECLARE_DRIVER_INIT(mushisam);
 	DECLARE_DRIVER_INIT(mushisama);
@@ -428,10 +433,10 @@ static int cavesh_gfx_size;
 static bitmap_rgb32 *cavesh_bitmaps;
 static rectangle cavesh_clip;
 
-static VIDEO_START( cavesh3 )
+VIDEO_START_MEMBER( cavesh3_state,cavesh3 )
 {
 	cavesh_gfx_size = 0x2000 * 0x1000;
-	cavesh_bitmaps = auto_bitmap_rgb32_alloc(machine, 0x2000, 0x1000);
+	cavesh_bitmaps = auto_bitmap_rgb32_alloc(machine(), 0x2000, 0x1000);
 	cavesh_clip = cavesh_bitmaps->cliprect();
 }
 
@@ -5478,7 +5483,7 @@ WRITE32_MEMBER( cavesh3_state::cavesh_gfx_exec_w )
 
 
 
-static SCREEN_UPDATE_RGB32( cavesh3 )
+UINT32 cavesh3_state::screen_update_cavesh3(screen_device &screen, bitmap_rgb32 &bitmap, const rectangle &cliprect)
 {
 
 	cavesh3_state *state = screen.machine().driver_data<cavesh3_state>();
@@ -6082,32 +6087,32 @@ static TIMER_CALLBACK( cavesh3_blitter_delay_callback )
 	state->blitter_busy = 0;
 }
 
-static MACHINE_START( cavesh3 )
+MACHINE_START_MEMBER( cavesh3_state,cavesh3 )
 {
-	size_t size = machine.root_device().memregion( "game" )->bytes();
-	cavesh3_state *state = machine.driver_data<cavesh3_state>();
+	size_t size = machine().root_device().memregion( "game" )->bytes();
+	cavesh3_state *state = machine().driver_data<cavesh3_state>();
 
-	state->flashwritemap = auto_alloc_array(machine, UINT8, size / FLASH_PAGE_SIZE);
+	state->flashwritemap = auto_alloc_array(machine(), UINT8, size / FLASH_PAGE_SIZE);
 	memset(state->flashwritemap, 0, size / FLASH_PAGE_SIZE);
 
-	cavesh3_ram16_copy = auto_alloc_array(machine, UINT16, 0x400000);
+	cavesh3_ram16_copy = auto_alloc_array(machine(), UINT16, 0x400000);
 
-	state->cavesh3_blitter_delay_timer = machine.scheduler().timer_alloc(FUNC(cavesh3_blitter_delay_callback));
+	state->cavesh3_blitter_delay_timer = machine().scheduler().timer_alloc(FUNC(cavesh3_blitter_delay_callback));
 	state->cavesh3_blitter_delay_timer->adjust(attotime::never);
 
 
 	state->queue = osd_work_queue_alloc(WORK_QUEUE_FLAG_HIGH_FREQ);
 }
 
-static MACHINE_RESET( cavesh3 )
+MACHINE_RESET_MEMBER( cavesh3_state,cavesh3 )
 {
-	cavesh3_state *state = machine.driver_data<cavesh3_state>();
+	cavesh3_state *state = machine().driver_data<cavesh3_state>();
 
 	flash_enab = 0;
-	flash_hard_reset(machine);
+	flash_hard_reset(machine());
 	cavesh3_ram16 = reinterpret_cast<UINT16 *>(state->cavesh3_ram.target());
 
-	state->flashregion = machine.root_device().memregion( "game" )->base();
+	state->flashregion = machine().root_device().memregion( "game" )->base();
 
 
 	// cache table to avoid divides in blit code, also pre-clamped
@@ -6200,11 +6205,11 @@ static MACHINE_CONFIG_START( cavesh3, cavesh3_state )
 	MCFG_PALETTE_LENGTH(0x10000)
 
 
-	MCFG_SCREEN_UPDATE_STATIC(cavesh3)
-	MCFG_MACHINE_START(cavesh3)
-	MCFG_MACHINE_RESET(cavesh3)
+	MCFG_SCREEN_UPDATE_DRIVER(cavesh3_state,screen_update_cavesh3)
+	MCFG_MACHINE_START_OVERRIDE(cavesh3_state,cavesh3)
+	MCFG_MACHINE_RESET_OVERRIDE(cavesh3_state,cavesh3)
 
-	MCFG_VIDEO_START(cavesh3)
+	MCFG_VIDEO_START_OVERRIDE(cavesh3_state,cavesh3)
 
 	MCFG_SPEAKER_STANDARD_STEREO("lspeaker", "rspeaker")
     MCFG_YMZ770_ADD("ymz770", 16384000)

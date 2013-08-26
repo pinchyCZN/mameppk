@@ -73,8 +73,8 @@ void segas16c_state::memory_mapper(sega_315_5195_mapper_device &mapper, UINT8 in
 			break;
 
 		case 5:	// 64k of tileram + 4k of textram
-			mapper.map_as_ram(0x00000, 0x10000, 0xfe0000, "tileram", write16_delegate(FUNC(segas16c_state::legacy_wrapper<segaic16_tileram_0_w>), this));
-			mapper.map_as_ram(0x10000, 0x01000, 0xfef000, "textram", write16_delegate(FUNC(segas16c_state::legacy_wrapper<segaic16_textram_0_w>), this));
+			mapper.map_as_ram(0x00000, 0x10000, 0xfe0000, "tileram", write16_delegate(FUNC(segas16c_state::sega_tileram_0_w), this));
+			mapper.map_as_ram(0x10000, 0x01000, 0xfef000, "textram", write16_delegate(FUNC(segas16c_state::sega_textram_0_w), this));
 			break;
 
 		case 4:	// 2k of spriteram
@@ -149,7 +149,7 @@ void segas16c_state::mapper_sound_w(UINT8 data)
 WRITE16_MEMBER( segas16c_state::rom_5704_bank_w )
 {
 	if (ACCESSING_BITS_0_7)
-		segaic16_tilemap_set_bank(machine(), 0, offset & 1, data & 7);
+		m_segaic16vid->segaic16_tilemap_set_bank(machine(), 0, offset & 1, data & 7);
 }
 
 
@@ -196,10 +196,10 @@ WRITE16_MEMBER( segas16c_state::standard_io_w )
             //  D1 : (Output to coin counter 2?)
             //  D0 : Output to coin counter 1
             //
-			segaic16_tilemap_set_flip(machine(), 0, data & 0x40);
+			m_segaic16vid->segaic16_tilemap_set_flip(machine(), 0, data & 0x40);
 			m_sprites->set_flip(data & 0x40);
 			if (!m_disable_screen_blanking)
-				segaic16_set_display_enable(machine(), data & 0x20);
+				m_segaic16vid->segaic16_set_display_enable(machine(), data & 0x20);
 			set_led_status(machine(), 1, data & 0x08);
 			set_led_status(machine(), 0, data & 0x04);
 			coin_counter_w(machine(), 1, data & 0x02);
@@ -231,8 +231,8 @@ void segas16c_state::init_generic(segas16c_rom_board rom_board)
 	m_custom_io_w = write16_delegate(FUNC(segas16c_state::standard_io_w), this);
 
 	// point globals to allocated memory regions
-	segaic16_tileram_0 = reinterpret_cast<UINT16 *>(memshare("tileram")->ptr());
-	segaic16_textram_0 = reinterpret_cast<UINT16 *>(memshare("textram")->ptr());
+	m_segaic16vid->segaic16_tileram_0 = reinterpret_cast<UINT16 *>(memshare("tileram")->ptr());
+	m_segaic16vid->segaic16_textram_0 = reinterpret_cast<UINT16 *>(memshare("textram")->ptr());
 
 	// save state
 	save_item(NAME(m_atomicp_sound_count));
@@ -267,8 +267,8 @@ WRITE8_MEMBER( segas16c_state::upd7759_control_w )
 	{
 		// it is important to write in this order: if the /START line goes low
         // at the same time /RESET goes low, no sample should be started
-		upd7759_start_w(m_upd7759, data & 0x80);
-		upd7759_reset_w(m_upd7759, data & 0x40);
+		m_upd7759->start_w(data & 0x80);
+		m_upd7759->reset_w(data & 0x40);
 
 		// banking depends on the ROM board
 		int bankoffs = 0;
@@ -304,7 +304,7 @@ WRITE8_MEMBER( segas16c_state::upd7759_control_w )
 
 READ8_MEMBER( segas16c_state::upd7759_status_r )
 {
-	return upd7759_busy_r(m_upd7759) << 7;
+	return m_upd7759->busy_r() << 7;
 }
 
 
@@ -357,7 +357,7 @@ void segas16c_state::machine_reset()
 	synchronize(TID_INIT_I8751);
 
 	// reset tilemap state
-	segaic16_tilemap_reset(machine(), 0);
+	m_segaic16vid->segaic16_tilemap_reset(machine(), 0);
 
 	// configure sprite banks
 	static const UINT8 default_banklist[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
@@ -439,7 +439,7 @@ static ADDRESS_MAP_START( sound_portmap, AS_IO, 8, segas16c_state )
 	ADDRESS_MAP_GLOBAL_MASK(0xff)
 	AM_RANGE(0x00, 0x01) AM_MIRROR(0x3e) AM_DEVREADWRITE("ym2151", ym2151_device, read, write)
 	AM_RANGE(0x40, 0x40) AM_MIRROR(0x3f) AM_WRITE(upd7759_control_w)
-	AM_RANGE(0x80, 0x80) AM_MIRROR(0x3f) AM_READ(upd7759_status_r) AM_DEVWRITE_LEGACY("upd", upd7759_port_w)
+	AM_RANGE(0x80, 0x80) AM_MIRROR(0x3f) AM_READ(upd7759_status_r) AM_DEVWRITE("upd", upd7759_device, port_w)
 	AM_RANGE(0xc0, 0xc0) AM_MIRROR(0x3f) AM_READ(soundlatch_byte_r)
 ADDRESS_MAP_END
 
@@ -592,7 +592,7 @@ INPUT_PORTS_END
 //  SOUND CONFIGURATIONS
 //**************************************************************************
 
-static const upd7759_interface upd7759_config =
+static const upd775x_interface upd7759_config =
 {
 	&segas16c_state::upd7759_generate_nmi
 };

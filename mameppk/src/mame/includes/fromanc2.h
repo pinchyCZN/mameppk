@@ -109,6 +109,9 @@ public:
 	DECLARE_VIDEO_START(fromanc4);
 	UINT32 screen_update_fromanc2_left(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
 	UINT32 screen_update_fromanc2_right(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
+#ifdef KAILLERA
+	UINT32 screen_update_fromanc2_k(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
+#endif /* KAILLERA */
 	INTERRUPT_GEN_MEMBER(fromanc2_interrupt);
 	inline void fromanc2_get_tile_info( tile_data &tileinfo, int tile_index, int vram, int layer );
 	inline void fromancr_get_tile_info( tile_data &tileinfo, int tile_index, int vram, int layer );

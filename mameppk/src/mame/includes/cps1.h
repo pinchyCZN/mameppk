@@ -279,6 +279,9 @@ public:
 	DECLARE_MACHINE_START(qsound);
 	DECLARE_MACHINE_START(ganbare);
 	DECLARE_MACHINE_RESET(cps);
+#ifdef MAMEUIPLUSPLUS
+	DECLARE_MACHINE_RESET(cps2);
+#endif /* MAMEUIPLUSPLUS */
 	DECLARE_VIDEO_START(cps);
 	DECLARE_MACHINE_START(sf2m1);
 	UINT32 screen_update_cps1(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
@@ -411,8 +414,6 @@ extern int cps2_nvram_type;
 
 #ifdef MAMEUIPLUSPLUS
 extern UINT16 *cps2_ram;
-
-MACHINE_RESET(cps2);
 #endif /* MAMEUIPLUSPLUS */
 
 #endif
