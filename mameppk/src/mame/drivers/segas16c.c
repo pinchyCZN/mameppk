@@ -149,7 +149,7 @@ void segas16c_state::mapper_sound_w(UINT8 data)
 WRITE16_MEMBER( segas16c_state::rom_5704_bank_w )
 {
 	if (ACCESSING_BITS_0_7)
-		m_segaic16vid->segaic16_tilemap_set_bank(machine(), 0, offset & 1, data & 7);
+		m_segaic16vid->segaic16_tilemap_set_bank(0, offset & 1, data & 7);
 }
 
 
@@ -196,10 +196,10 @@ WRITE16_MEMBER( segas16c_state::standard_io_w )
             //  D1 : (Output to coin counter 2?)
             //  D0 : Output to coin counter 1
             //
-			m_segaic16vid->segaic16_tilemap_set_flip(machine(), 0, data & 0x40);
+			m_segaic16vid->segaic16_tilemap_set_flip(0, data & 0x40);
 			m_sprites->set_flip(data & 0x40);
 			if (!m_disable_screen_blanking)
-				m_segaic16vid->segaic16_set_display_enable(machine(), data & 0x20);
+				m_segaic16vid->segaic16_set_display_enable(data & 0x20);
 			set_led_status(machine(), 1, data & 0x08);
 			set_led_status(machine(), 0, data & 0x04);
 			coin_counter_w(machine(), 1, data & 0x02);
@@ -357,7 +357,7 @@ void segas16c_state::machine_reset()
 	synchronize(TID_INIT_I8751);
 
 	// reset tilemap state
-	m_segaic16vid->segaic16_tilemap_reset(machine(), 0);
+	m_segaic16vid->segaic16_tilemap_reset(*m_screen);
 
 	// configure sprite banks
 	static const UINT8 default_banklist[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
@@ -622,7 +622,7 @@ static MACHINE_CONFIG_START( system16c, segas16c_state )
 	/* basic machine hardware */
 	MCFG_CPU_ADD("maincpu", M68000, MASTER_CLOCK_10MHz)
 	MCFG_CPU_PROGRAM_MAP(system16c_map)
-	MCFG_CPU_VBLANK_INT("screen", irq4_line_hold)
+	MCFG_CPU_VBLANK_INT_DRIVER("screen", segas16c_state, irq4_line_hold)
 
 	MCFG_CPU_ADD("soundcpu", Z80, MASTER_CLOCK_10MHz/2)
 	MCFG_CPU_PROGRAM_MAP(sound_map)

@@ -19,7 +19,7 @@
 #include "emu.h"
 #include "cpu/m68000/m68000.h"
 #include "cpu/z80/z80.h"
-#include "machine/eeprom.h"
+#include "machine/eepromser.h"
 #include "sound/2610intf.h"
 #include "rendlay.h"
 #include "includes/fromanc2.h"
@@ -45,7 +45,7 @@ INTERRUPT_GEN_MEMBER(fromanc2_state::fromanc2_interrupt)
 }
 
 #ifdef KAILLERA
-static INTERRUPT_GEN( fromanc2_k_interrupt )
+INTERRUPT_GEN_MEMBER(fromanc2_state::fromanc2_k_interrupt)
 {
 	static int Kaillera_Pos_old = -1;
 	static int fromanc2_playerside_old = -1;
@@ -55,7 +55,7 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 
 	if(!kPlay)
 	{
-		if (device->machine().input().code_pressed(KEYCODE_F1)) {
+		if (device.machine().input().code_pressed(KEYCODE_F1)) {
 			if (key_F1_old != 1) {
 				key_F1_old = 1;
 				fromanc2_playerside ^= 1;
@@ -76,14 +76,14 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 	
 			if (!Kaillera_Pos)
 			{
-				if (device->machine().sound().indexed_mixer_input(1, info))
+				if (device.machine().sound().indexed_mixer_input(1, info))
 					info.stream->set_input_gain(info.inputnum, 0.75); // 1P (LEFT)
-				if (device->machine().sound().indexed_mixer_input(2, info))
+				if (device.machine().sound().indexed_mixer_input(2, info))
 					info.stream->set_input_gain(info.inputnum, 0.00); // 2P (RIGHT)
 			} else {
-				if (device->machine().sound().indexed_mixer_input(1, info))
+				if (device.machine().sound().indexed_mixer_input(1, info))
 					info.stream->set_input_gain(info.inputnum, 0.00); // 1P (LEFT)
-				if (device->machine().sound().indexed_mixer_input(2, info))
+				if (device.machine().sound().indexed_mixer_input(2, info))
 					info.stream->set_input_gain(info.inputnum, 0.75); // 2P (RIGHT)
 			}
 	
@@ -97,14 +97,14 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 	
 			if (!fromanc2_playerside)
 			{
-				if (device->machine().sound().indexed_mixer_input(1, info))
+				if (device.machine().sound().indexed_mixer_input(1, info))
 					info.stream->set_input_gain(info.inputnum, 0.75); // 1P (LEFT)
-				if (device->machine().sound().indexed_mixer_input(2, info))
+				if (device.machine().sound().indexed_mixer_input(2, info))
 					info.stream->set_input_gain(info.inputnum, 0.00); // 2P (RIGHT)
 			} else {
-				if (device->machine().sound().indexed_mixer_input(1, info))
+				if (device.machine().sound().indexed_mixer_input(1, info))
 					info.stream->set_input_gain(info.inputnum, 0.00); // 1P (LEFT)
-				if (device->machine().sound().indexed_mixer_input(2, info))
+				if (device.machine().sound().indexed_mixer_input(2, info))
 					info.stream->set_input_gain(info.inputnum, 0.75); // 2P (RIGHT)
 			}
 	
@@ -112,7 +112,7 @@ static INTERRUPT_GEN( fromanc2_k_interrupt )
 		}
 	}
 
-	device->execute().set_input_line(1, HOLD_LINE);
+	device.execute().set_input_line(1, HOLD_LINE);
 }
 #endif /* KAILLERA */
 
@@ -393,7 +393,7 @@ static INPUT_PORTS_START( fromanc2 )
 	PORT_BIT( 0x0010, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, fromanc2_state,subcpu_int_r, NULL) // SUBCPU INT FLAG
 	PORT_BIT( 0x0020, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, fromanc2_state,sndcpu_nmi_r, NULL) // SNDCPU NMI FLAG
 	PORT_BIT( 0x0040, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, fromanc2_state,subcpu_nmi_r, NULL) // SUBCPU NMI FLAG
-	PORT_BIT( 0x0080, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_READ_LINE_DEVICE_MEMBER("eeprom", eeprom_device, read_bit)
+	PORT_BIT( 0x0080, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_READ_LINE_DEVICE_MEMBER("eeprom", eeprom_serial_93cxx_device, do_read)
 	PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_SERVICE ) PORT_NAME( "Service Mode (1P)" ) PORT_CODE(KEYCODE_F2) // TEST (1P)
 	PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_SERVICE ) PORT_NAME( "Service Mode (2P)" ) PORT_CODE(KEYCODE_F2) // TEST (2P)
 	PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_UNUSED )
@@ -476,9 +476,9 @@ static INPUT_PORTS_START( fromanc2 )
 	PORT_BIT( 0x8000, IP_ACTIVE_LOW, IPT_UNKNOWN )
 
 	PORT_START( "EEPROMOUT" )
-	PORT_BIT( 0x0100, IP_ACTIVE_HIGH, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_device, write_bit)
-	PORT_BIT( 0x0200, IP_ACTIVE_HIGH, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_device, set_clock_line)
-	PORT_BIT( 0x0400, IP_ACTIVE_LOW, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_device, set_cs_line)
+	PORT_BIT( 0x0100, IP_ACTIVE_HIGH, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_serial_93cxx_device, di_write)
+	PORT_BIT( 0x0200, IP_ACTIVE_HIGH, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_serial_93cxx_device, clk_write)
+	PORT_BIT( 0x0400, IP_ACTIVE_HIGH, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_serial_93cxx_device, cs_write)
 INPUT_PORTS_END
 
 static INPUT_PORTS_START( fromanc4 )
@@ -492,14 +492,14 @@ static INPUT_PORTS_START( fromanc4 )
 	PORT_BIT( 0x0010, IP_ACTIVE_LOW, IPT_COIN4 )
 	PORT_BIT( 0x0020, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_CUSTOM_MEMBER(DEVICE_SELF, fromanc2_state,sndcpu_nmi_r, NULL) // SNDCPU NMI FLAG
 	PORT_BIT( 0x0040, IP_ACTIVE_LOW, IPT_UNUSED )
-	PORT_BIT( 0x0080, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_READ_LINE_DEVICE_MEMBER("eeprom", eeprom_device, read_bit)
+	PORT_BIT( 0x0080, IP_ACTIVE_HIGH, IPT_SPECIAL ) PORT_READ_LINE_DEVICE_MEMBER("eeprom", eeprom_serial_93cxx_device, do_read)
 	PORT_BIT( 0x0100, IP_ACTIVE_LOW, IPT_UNUSED )
 	PORT_BIT( 0x0200, IP_ACTIVE_LOW, IPT_UNUSED )
 
 	PORT_MODIFY("EEPROMOUT")
-	PORT_BIT( 0x0001, IP_ACTIVE_LOW, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_device, set_cs_line)
-	PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_device, set_clock_line)
-	PORT_BIT( 0x0004, IP_ACTIVE_HIGH, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_device, write_bit)
+	PORT_BIT( 0x0001, IP_ACTIVE_HIGH, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_serial_93cxx_device, cs_write)
+	PORT_BIT( 0x0002, IP_ACTIVE_HIGH, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_serial_93cxx_device, clk_write)
+	PORT_BIT( 0x0004, IP_ACTIVE_HIGH, IPT_OUTPUT ) PORT_WRITE_LINE_DEVICE_MEMBER("eeprom", eeprom_serial_93cxx_device, di_write)
 INPUT_PORTS_END
 
 
@@ -571,7 +571,7 @@ MACHINE_START_MEMBER(fromanc2_state,fromanc4)
 	save_item(NAME(m_datalatch_2h));
 	save_item(NAME(m_datalatch_2l));
 
-	/* video-related elements are saved in VIDEO_START */
+	/* video-related elements are saved in video_start */
 }
 
 MACHINE_START_MEMBER(fromanc2_state,fromanc2)
@@ -614,7 +614,7 @@ static MACHINE_CONFIG_START( fromanc2, fromanc2_state )
 
 	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc2)
 
-	MCFG_EEPROM_93C46_ADD("eeprom")
+	MCFG_EEPROM_SERIAL_93C46_ADD("eeprom")
 
 	/* video hardware */
 	MCFG_GFXDECODE(fromanc2)
@@ -664,7 +664,7 @@ static MACHINE_CONFIG_START( fromancr, fromanc2_state )
 
 	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc2)
 
-	MCFG_EEPROM_93C46_ADD("eeprom")
+	MCFG_EEPROM_SERIAL_93C46_ADD("eeprom")
 
 	/* video hardware */
 	MCFG_GFXDECODE(fromancr)
@@ -710,7 +710,7 @@ static MACHINE_CONFIG_START( fromanc4, fromanc2_state )
 
 	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc4)
 
-	MCFG_EEPROM_93C46_ADD("eeprom")
+	MCFG_EEPROM_SERIAL_93C46_ADD("eeprom")
 
 	/* video hardware */
 	MCFG_GFXDECODE(fromancr)
@@ -750,7 +750,7 @@ static MACHINE_CONFIG_START( fromanc2_k, fromanc2_state )
 	/* basic machine hardware */
 	MCFG_CPU_ADD("maincpu", M68000,32000000/2)		/* 16.00 MHz */
 	MCFG_CPU_PROGRAM_MAP(fromanc2_main_map)
-	MCFG_CPU_VBLANK_INT("lscreen", fromanc2_k_interrupt)
+	MCFG_CPU_VBLANK_INT_DRIVER("lscreen", fromanc2_state,  fromanc2_k_interrupt)
 
 	MCFG_CPU_ADD("audiocpu", Z80,32000000/4)		/* 8.00 MHz */
 	MCFG_CPU_PROGRAM_MAP(fromanc2_sound_map)
@@ -762,7 +762,7 @@ static MACHINE_CONFIG_START( fromanc2_k, fromanc2_state )
 
 	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc2)
 
-	MCFG_EEPROM_93C46_ADD("eeprom")
+	MCFG_EEPROM_SERIAL_93C46_ADD("eeprom")
 
 	/* video hardware */
 	MCFG_GFXDECODE(fromanc2)
@@ -792,7 +792,7 @@ static MACHINE_CONFIG_START( fromancr_k, fromanc2_state )
 	/* basic machine hardware */
 	MCFG_CPU_ADD("maincpu", M68000,32000000/2)		/* 16.00 MHz */
 	MCFG_CPU_PROGRAM_MAP(fromancr_main_map)
-	MCFG_CPU_VBLANK_INT("lscreen", fromanc2_k_interrupt)
+	MCFG_CPU_VBLANK_INT_DRIVER("lscreen", fromanc2_state,  fromanc2_k_interrupt)
 
 	MCFG_CPU_ADD("audiocpu", Z80,32000000/4)		/* 8.00 MHz */
 	MCFG_CPU_PROGRAM_MAP(fromanc2_sound_map)
@@ -804,7 +804,7 @@ static MACHINE_CONFIG_START( fromancr_k, fromanc2_state )
 
 	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc2)
 
-	MCFG_EEPROM_93C46_ADD("eeprom")
+	MCFG_EEPROM_SERIAL_93C46_ADD("eeprom")
 
 	/* video hardware */
 	MCFG_GFXDECODE(fromancr)
@@ -834,7 +834,7 @@ static MACHINE_CONFIG_START( fromanc4_k, fromanc2_state )
 	/* basic machine hardware */
 	MCFG_CPU_ADD("maincpu", M68000,32000000/2)		/* 16.00 MHz */
 	MCFG_CPU_PROGRAM_MAP(fromanc4_main_map)
-	MCFG_CPU_VBLANK_INT("lscreen", fromanc2_k_interrupt)
+	MCFG_CPU_VBLANK_INT_DRIVER("lscreen", fromanc2_state,  fromanc2_k_interrupt)
 
 	MCFG_CPU_ADD("audiocpu", Z80,32000000/4)		/* 8.00 MHz */
 	MCFG_CPU_PROGRAM_MAP(fromanc2_sound_map)
@@ -842,7 +842,7 @@ static MACHINE_CONFIG_START( fromanc4_k, fromanc2_state )
 
 	MCFG_MACHINE_START_OVERRIDE(fromanc2_state,fromanc4)
 
-	MCFG_EEPROM_93C46_ADD("eeprom")
+	MCFG_EEPROM_SERIAL_93C46_ADD("eeprom")
 
 	/* video hardware */
 	MCFG_GFXDECODE(fromancr)

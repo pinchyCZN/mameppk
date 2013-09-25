@@ -201,6 +201,7 @@ public:
 	DECLARE_WRITE8_MEMBER(flash_addr_w);
 	DECLARE_READ8_MEMBER(flash_io_r);
 	DECLARE_READ8_MEMBER(flash_ready_r);
+	INTERRUPT_GEN_MEMBER(cavesh3_interrupt);
 	DECLARE_MACHINE_START(cavesh3);
 	DECLARE_MACHINE_RESET(cavesh3);
 	DECLARE_VIDEO_START(cavesh3);
@@ -6074,9 +6075,9 @@ static const struct sh4_config sh4cpu_config = {
 
 
 
-static INTERRUPT_GEN(cavesh3_interrupt)
+INTERRUPT_GEN_MEMBER(cavesh3_state::cavesh3_interrupt)
 {
-	device->execute().set_input_line(2, HOLD_LINE);
+	device.execute().set_input_line(2, HOLD_LINE);
 }
 
 
@@ -6190,7 +6191,7 @@ static MACHINE_CONFIG_START( cavesh3, cavesh3_state )
 	MCFG_CPU_CONFIG(sh4cpu_config)
 	MCFG_CPU_PROGRAM_MAP(cavesh3_map)
 	MCFG_CPU_IO_MAP(cavesh3_port)
-	MCFG_CPU_VBLANK_INT("screen", cavesh3_interrupt)
+	MCFG_CPU_VBLANK_INT_DRIVER("screen", cavesh3_state, cavesh3_interrupt)
 
 	MCFG_RTC9701_ADD("eeprom")
 	MCFG_NVRAM_HANDLER(cavesh3)

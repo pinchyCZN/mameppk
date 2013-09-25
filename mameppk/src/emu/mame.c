@@ -84,7 +84,7 @@
 #include "crsshair.h"
 #include "validity.h"
 #include "debug/debugcon.h"
-
+#include "webengine.h"
 #include <time.h>
 
 
@@ -141,7 +141,6 @@ int mame_is_valid_machine(running_machine &machine)
 	return (&machine == global_machine);
 }
 
-
 /*-------------------------------------------------
     mame_execute - run the core emulation
 -------------------------------------------------*/
@@ -158,6 +157,9 @@ int mame_execute(emu_options &options, osd_interface &osd)
 	// loop across multiple hard resets
 	bool exit_pending = false;
 	int error = MAMERR_NONE;
+
+	web_engine web(options);
+
 	while (error == MAMERR_NONE && !exit_pending)
 	{
 		// if no driver, use the internal empty driver
@@ -198,6 +200,8 @@ int mame_execute(emu_options &options, osd_interface &osd)
 		// looooong term: remove this
 		global_machine = &machine;
 
+		web.set_machine(machine);
+		web.push_message("update_machine");
 		// run the machine
 		error = machine.run(firstrun);
 		firstrun = false;
@@ -214,7 +218,6 @@ int mame_execute(emu_options &options, osd_interface &osd)
 		// machine will go away when we exit scope
 		global_machine = NULL;
 	}
-
 	// return an error
 	return error;
 }

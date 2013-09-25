@@ -1,4 +1,4 @@
-#include "machine/eeprom.h"
+#include "machine/eepromser.h"
 
 class fromanc2_state : public driver_device
 {
@@ -33,7 +33,7 @@ public:
 	/* devices */
 	required_device<cpu_device> m_audiocpu;
 	optional_device<cpu_device> m_subcpu;
-	optional_device<eeprom_device> m_eeprom;
+	optional_device<eeprom_serial_93cxx_device> m_eeprom;
 	DECLARE_WRITE16_MEMBER(fromanc2_sndcmd_w);
 	DECLARE_WRITE16_MEMBER(fromanc2_portselect_w);
 	DECLARE_READ16_MEMBER(fromanc2_keymatrix_r);
@@ -111,6 +111,7 @@ public:
 	UINT32 screen_update_fromanc2_right(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
 #ifdef KAILLERA
 	UINT32 screen_update_fromanc2_k(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
+	INTERRUPT_GEN_MEMBER(fromanc2_k_interrupt);
 #endif /* KAILLERA */
 	INTERRUPT_GEN_MEMBER(fromanc2_interrupt);
 	inline void fromanc2_get_tile_info( tile_data &tileinfo, int tile_index, int vram, int layer );
