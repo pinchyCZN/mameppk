@@ -5278,7 +5278,7 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 {
 
 	int Order[COLUMN_MAX];
-	int Size[COLUMN_MAX] = {70, 4, 8, 9, 6, 9, 9, 30, 4, 70, 12, 9};
+	int Size[COLUMN_MAX] = {70, 10, 4, 7, 12, 6, 9, 6, 40, 4, 70, 12,9};
 	int nColumnMax = Picker_GetNumColumns(hwndList);
 	int nListCount = ListView_GetItemCount(hwndList);
 	int nIndex = 0, nGameIndex = 0;
@@ -5286,7 +5286,7 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 	const char *Filters[8] = { "Clones", "Non-Working", "Unvailable", "Vector Graphics", "Raster Graphics", "Originals", "Working", "Available"};
 
 	char *CrLf;
-	char Buf[300];
+	char Buf[350];
 
 	LPTREEFOLDER lpFolder = GetCurrentFolder();
 	LV_ITEM lvi;
@@ -5463,14 +5463,21 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 							sprintf( &Buf[strlen(Buf)], "%s\t", UseLangList() ? _String(_LSTW(driversw[nGameIndex]->description)) : ModifyThe(driver_list::driver(nGameIndex).description));
 						break;
 
-					case  1: // ROMs
+					case  1: // Screen
+						if ( Formatted )
+							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], (DriverIsVertical(nGameIndex)?"Vertical":"Horizontal") );
+						else
+							sprintf( &Buf[strlen(Buf)], "%s", (DriverIsVertical(nGameIndex)?"Vertical":"Horizontal") );
+						break;
+
+					case  2: // ROMs
 						if ( Formatted )
 							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], (GetRomAuditResults(nGameIndex)==TRUE?"yes":"no") );
 						else
 							sprintf( &Buf[strlen(Buf)], "%s", (GetRomAuditResults(nGameIndex)==TRUE?"yes":"no") );
 						break;
 
-					case  2: // Samples
+					case  3: // Samples
 						if (DriverUsesSamples(nGameIndex))
 						{
 							if ( Formatted )
@@ -5485,63 +5492,63 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 						}
 						break;
 
-					case  3: // Directory
+					case  4: // Directory
 						if ( Formatted )
 							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], driver_list::driver(nGameIndex).name );
 						else
 							sprintf( &Buf[strlen(Buf)], "%s", driver_list::driver(nGameIndex).name );
 						break;
 
-					case  4: // Type
+					case  5: // Type
 						if ( Formatted )
 							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], (DriverIsVector(nGameIndex)?"Vector":"Raster") );
 						else
 							sprintf( &Buf[strlen(Buf)], "%s", (DriverIsVector(nGameIndex)?"Vector":"Raster") );
 						break;
 
-					case  5: // Trackball
+					case  6: // Trackball
 						if ( Formatted )
 							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], (DriverUsesTrackball(nGameIndex)?"yes":"no") );
 						else
 							sprintf( &Buf[strlen(Buf)], "%s", (DriverUsesTrackball(nGameIndex)?"yes":"no") );
 						break;
 
-					case  6: // Played
+					case  7: // Played
 						if ( Formatted )
 							sprintf( &Buf[strlen(Buf)], " %-*d |", Size[Order[i]], GetPlayCount(nGameIndex) );
 						else
 							sprintf( &Buf[strlen(Buf)], "%d", GetPlayCount(nGameIndex) );
 						break;
 
-					case  7: // Manufacturer
+					case  8: // Manufacturer
 						if ( Formatted )
 							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], driver_list::driver(nGameIndex).manufacturer );
 						else
 							sprintf( &Buf[strlen(Buf)], "%s", driver_list::driver(nGameIndex).manufacturer );
 						break;
 
-					case  8: // Year
+					case  9: // Year
 						if ( Formatted )
 							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], driver_list::driver(nGameIndex).year );
 						else
 							sprintf( &Buf[strlen(Buf)], "%s", driver_list::driver(nGameIndex).year );
 						break;
 
-					case  9: // Clone of
+					case  10: // Clone of
 						if ( Formatted )
 							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], _String(GetCloneParentName(nGameIndex)) );
 						else
 							sprintf( &Buf[strlen(Buf)], "%s", _String(GetCloneParentName(nGameIndex)) );
 						break;
 
-					case 10: // Source
+					case 11: // Source
 						if ( Formatted )
 							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], _String(GetDriverFilename(nGameIndex)) );
 						else
 							sprintf( &Buf[strlen(Buf)], "%s", _String(GetDriverFilename(nGameIndex)) );
 						break;
 
-					case 11: // Play time
+					case 12: // Play time
 					{
 						WCHAR Tmp[20];
 

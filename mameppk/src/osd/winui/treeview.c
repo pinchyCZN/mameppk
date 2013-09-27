@@ -510,7 +510,7 @@ void CreateNEOGEOFolders(int parent_index)
 		if (s == NULL || s[0] == '\0')
 			continue;
 
-		if (!wcscmp(TEXT("neogeo.c"), s) ||
+		if (!wcscmp(TEXT("neogeo.inc"), s) ||
 			!wcscmp(TEXT("neodrvr.c"), s))
 			AddGame(lpFolder, jj);
 	}
