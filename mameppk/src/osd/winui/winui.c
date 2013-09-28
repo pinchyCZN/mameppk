@@ -5284,7 +5284,7 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 	int nIndex = 0, nGameIndex = 0;
 	int i, j = 0;
 	const char *Filters[8] = { "Clones", "Non-Working", "Unvailable", "Vector Graphics", "Raster Graphics", "Originals", "Working", "Available"};
-	int audit_result;
+//	int audit_result;
 
 	char *CrLf;
 	char Buf[350];
