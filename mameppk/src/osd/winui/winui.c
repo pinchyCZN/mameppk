@@ -5284,6 +5284,7 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 	int nIndex = 0, nGameIndex = 0;
 	int i, j = 0;
 	const char *Filters[8] = { "Clones", "Non-Working", "Unvailable", "Vector Graphics", "Raster Graphics", "Originals", "Working", "Available"};
+	int audit_result;
 
 	char *CrLf;
 	char Buf[350];
@@ -5472,9 +5473,21 @@ static void SaveGameListToFile(char *szFile, int Formatted)
 
 					case  2: // ROMs
 						if ( Formatted )
-							sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], (GetRomAuditResults(nGameIndex)==TRUE?"yes":"no") );
+						{
+							if( GetRomAuditResults(nGameIndex)==UNKNOWN)
+								sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], "?" );
+							else if (IsAuditResultYes( GetRomAuditResults(nGameIndex)))
+								sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], "yes" );
+							else 	sprintf( &Buf[strlen(Buf)], " %-*.*s |", Size[Order[i]], Size[Order[i]], "no" );
+						}
 						else
-							sprintf( &Buf[strlen(Buf)], "%s", (GetRomAuditResults(nGameIndex)==TRUE?"yes":"no") );
+						{
+							if( GetRomAuditResults(nGameIndex)==UNKNOWN)
+								sprintf( &Buf[strlen(Buf)], "%s", "unknown" );
+							else if (IsAuditResultYes(GetRomAuditResults(nGameIndex)))
+								sprintf( &Buf[strlen(Buf)], "%s", "yes" );
+							else 	sprintf( &Buf[strlen(Buf)], "%s", "no" );
+						}
 						break;
 
 					case  3: // Samples
