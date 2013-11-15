@@ -1,59 +1,18 @@
+// license:BSD-3-Clause
+// copyright-holders:Aaron Giles
 /***************************************************************************
 
     fileio.c
 
     File access functions.
 
-****************************************************************************
-
-    Copyright Aaron Giles
-    All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are
-    met:
-
-        * Redistributions of source code must retain the above copyright
-          notice, this list of conditions and the following disclaimer.
-        * Redistributions in binary form must reproduce the above copyright
-          notice, this list of conditions and the following disclaimer in
-          the documentation and/or other materials provided with the
-          distribution.
-        * Neither the name 'MAME' nor the names of its contributors may be
-          used to endorse or promote products derived from this software
-          without specific prior written permission.
-
-    THIS SOFTWARE IS PROVIDED BY AARON GILES ''AS IS'' AND ANY EXPRESS OR
-    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL AARON GILES BE LIABLE FOR ANY DIRECT,
-    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-    HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-    IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-    POSSIBILITY OF SUCH DAMAGE.
-
 ***************************************************************************/
 
-// standard windows headers
-#define WIN32_LEAN_AND_MEAN
-#define _WIN32_IE 0x0501
-#include <windows.h>
-
-// standard C headers
-#include <stdio.h>
-#include <direct.h>
-#include <sys/stat.h>
-
-// MAME/MAMEUI headers
 #include "emu.h"
 #include "unzip.h"
 #include "un7z.h"
 #include "fileio.h"
 #include "zlib.h"
-#include "translate.h"
 
 
 const UINT32 OPEN_FLAG_HAS_CRC  = 0x10000;
@@ -960,11 +919,16 @@ file_error emu_file::load__7zped_file()
 }
 
 #if defined(KAILLERA) || defined(MAME_AVI)
+#include <sys/stat.h>
+#include <windows.h>
+#include "strconv.h"
 void delete_file(const char *filename)
 {
 	struct stat s;
+	TCHAR *t_name = tstring_from_utf8(filename);
 	if (stat(filename, &s) == 0)
-		DeleteFile(_Unicode(filename));
+		DeleteFile(t_name);
+	osd_free(t_name);
 }
 
 int checksum_file_crc32(const char *searchpath, const char *file, UINT8 **p, UINT64 *size, unsigned int *crc)

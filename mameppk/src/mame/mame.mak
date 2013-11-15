@@ -291,6 +291,7 @@ VIDEOS += BUFSPRITE
 #VIDEOS += DL1416
 VIDEOS += DM9368
 #VIDEOS += EF9340_1
+VIDEOS += FIXFREQ
 VIDEOS += H63484
 #VIDEOS += HD44102
 #VIDEOS += HD44352
@@ -308,6 +309,7 @@ VIDEOS += I8275
 VIDEOS += K053250
 VIDEOS += M50458
 VIDEOS += MB90082
+VIDEOS += MB_VCU
 VIDEOS += MC6845
 #VIDEOS += MC6847
 #VIDEOS += MSM6255
@@ -370,9 +372,9 @@ MACHINES += AY31015
 MACHINES += BANKDEV
 MACHINES += CDP1852
 MACHINES += CDP1871
+MACHINES += CDU76S
 MACHINES += COM8116
 MACHINES += CR589
-MACHINES += CTRONICS
 MACHINES += DS1302
 MACHINES += DS2401
 MACHINES += DS2404
@@ -1064,6 +1066,9 @@ $(MAMEOBJ)/igs.a: \
 	$(MACHINE)/pgmprot_igs025_igs012.o \
 	$(MACHINE)/pgmprot_igs025_igs022.o \
 	$(MACHINE)/pgmprot_igs025_igs028.o \
+	$(MACHINE)/igs025.o \
+	$(MACHINE)/igs022.o \
+	$(MACHINE)/igs028.o \
 
 $(MAMEOBJ)/irem.a: \
 	$(DRIVERS)/m10.o $(VIDEO)/m10.o \
@@ -1364,7 +1369,7 @@ $(MAMEOBJ)/namco.a: \
 	$(DRIVERS)/tankbatt.o $(VIDEO)/tankbatt.o \
 	$(DRIVERS)/tceptor.o $(VIDEO)/tceptor.o \
 	$(DRIVERS)/toypop.o $(VIDEO)/toypop.o \
-	$(DRIVERS)/turrett.o \
+	$(DRIVERS)/turrett.o $(AUDIO)/turrett.o $(VIDEO)/turrett.o \
 	$(DRIVERS)/warpwarp.o $(AUDIO)/geebee.o $(AUDIO)/warpwarp.o $(VIDEO)/warpwarp.o \
 	$(MACHINE)/namcoio.o \
 	$(MACHINE)/namco06.o \
@@ -1988,6 +1993,7 @@ $(MAMEOBJ)/pinball.a: \
 	$(DRIVERS)/s11a.o  \
 	$(DRIVERS)/s11b.o  \
 	$(DRIVERS)/s11c.o  \
+	$(AUDIO)/s11c_bg.o \
 	$(DRIVERS)/s3.o  \
 	$(DRIVERS)/s4.o  \
 	$(DRIVERS)/s6.o  \
@@ -2013,6 +2019,8 @@ $(MAMEOBJ)/pinball.a: \
 	$(DRIVERS)/wpc_flip1.o  \
 	$(DRIVERS)/wpc_flip2.o  \
 	$(DRIVERS)/wpc_s.o  \
+	$(MACHINE)/wpc.o \
+	$(AUDIO)/wpcsnd.o \
 	$(DRIVERS)/zac_1.o  \
 	$(DRIVERS)/zac_2.o  \
 	$(DRIVERS)/zac_proto.o  \
@@ -2117,6 +2125,7 @@ $(MAMEOBJ)/misc.a: \
 	$(DRIVERS)/gstream.o \
 	$(DRIVERS)/gumbo.o $(VIDEO)/gumbo.o \
 	$(DRIVERS)/gunpey.o \
+	$(DRIVERS)/hideseek.o \
 	$(DRIVERS)/hazelgr.o \
 	$(DRIVERS)/headonb.o \
 	$(DRIVERS)/highvdeo.o \
@@ -2451,6 +2460,8 @@ $(DRIVERS)/jankenmn.o:  $(LAYOUT)/jankenmn.lh
 
 $(DRIVERS)/jpmimpct.o:  $(LAYOUT)/jpmimpct.lh
 
+$(DRIVERS)/jpmmps.o:   $(LAYOUT)/jpmmps.lh
+
 $(DRIVERS)/jpmsys5.o:   $(LAYOUT)/jpmsys5.lh
 
 $(DRIVERS)/kas89.o:     $(LAYOUT)/kas89.lh
@@ -2679,6 +2690,8 @@ $(DRIVERS)/videopkr.o:  $(LAYOUT)/videopkr.lh \
 $(DRIVERS)/warpwarp.o:  $(LAYOUT)/geebee.lh \
 			$(LAYOUT)/navarone.lh \
 			$(LAYOUT)/sos.lh
+
+$(DRIVERS)/wpc_an.o:    $(LAYOUT)/wpc_an.lh
 
 $(DRIVERS)/wecleman.o:  $(LAYOUT)/wecleman.lh
 

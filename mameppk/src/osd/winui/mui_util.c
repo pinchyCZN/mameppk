@@ -306,7 +306,7 @@ LPWSTR MyStrStrI(LPCWSTR pFirst, LPCWSTR pSrch)
 
 char * ConvertToWindowsNewlines(const char *source)
 {
-	static char buf[1024 * 1024];
+	static char buf[2048 * 2048];
 	char *dest;
 
 	dest = buf;
