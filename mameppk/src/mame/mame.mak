@@ -291,6 +291,7 @@ VIDEOS += BUFSPRITE
 #VIDEOS += DL1416
 VIDEOS += DM9368
 #VIDEOS += EF9340_1
+VIDEOS += EPIC12
 VIDEOS += FIXFREQ
 VIDEOS += H63484
 #VIDEOS += HD44102
@@ -331,6 +332,7 @@ VIDEOS += TMS9928A
 #VIDEOS += UPD7227
 VIDEOS += V9938
 VIDEOS += VOODOO
+
 
 #-------------------------------------------------
 # specify available machine cores
@@ -2069,7 +2071,7 @@ $(MAMEOBJ)/misc.a: \
 	$(DRIVERS)/castle.o \
 	$(DRIVERS)/cave.o $(VIDEO)/cave.o \
 	$(DRIVERS)/cavepc.o \
-	$(DRIVERS)/cavesh3.o \
+	$(DRIVERS)/cv1k.o \
 	$(DRIVERS)/cb2001.o \
 	$(DRIVERS)/cdi.o $(VIDEO)/mcd212.o $(MACHINE)/cdi070.o $(MACHINE)/cdislave.o $(MACHINE)/cdicdic.o \
 	$(DRIVERS)/cesclass.o \
@@ -2741,7 +2743,6 @@ $(DRIVERS)/bfm_sc5.o:   $(MAMESRC)/includes/bfm_sc45.h
 $(DRIVERS)/namcos2.o:   $(MAMESRC)/includes/namcos2.h
 $(MACHINE)/namcos2.o:   $(MAMESRC)/includes/namcos2.h
 $(VIDEO)/namcos2.o:     $(MAMESRC)/includes/namcos2.h
-$(DRIVERS)/cavesh3.o:	$(MAMESRC)/drivers/csh3blit.c
 
 #-------------------------------------------------
 # mamep: driver list dependencies
