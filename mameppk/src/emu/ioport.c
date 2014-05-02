@@ -101,7 +101,7 @@
 #include "config.h"
 #include "xmlfile.h"
 #include "profiler.h"
-#include "ui.h"
+#include "ui/ui.h"
 #include "uiinput.h"
 #include "debug/debugcon.h"
 #ifdef USE_SHOW_INPUT_LOG
@@ -178,148 +178,6 @@ const unicode_char INVALID_CHAR = '?';
 //**************************************************************************
 //  TYPE DEFINITIONS
 //**************************************************************************
-
-// live analog field information
-class analog_field
-{
-	friend class simple_list<analog_field>;
-	friend class ioport_manager;
-	friend void ioport_field::set_user_settings(const ioport_field::user_settings &settings);
-
-public:
-	// construction/destruction
-	analog_field(ioport_field &field);
-
-	// getters
-	analog_field *next() const { return m_next; }
-	ioport_manager &manager() const { return m_field.manager(); }
-	ioport_field &field() const { return m_field; }
-	INT32 sensitivity() const { return m_sensitivity; }
-	bool reverse() const { return m_reverse; }
-	INT32 delta() const { return m_delta; }
-	INT32 centerdelta() const { return m_centerdelta; }
-
-	// readers
-	void read(ioport_value &value);
-	float crosshair_read();
-	void frame_update(running_machine &machine);
-
-private:
-	// helpers
-	INT32 apply_min_max(INT32 value) const;
-	INT32 apply_settings(INT32 value) const;
-	INT32 apply_sensitivity(INT32 value) const;
-	INT32 apply_inverse_sensitivity(INT32 value) const;
-
-	// internal state
-	analog_field *      m_next;                 // link to the next analog state for this port
-	ioport_field &      m_field;                // pointer to the input field referenced
-
-	// adjusted values (right-justified and tweaked)
-	UINT8               m_shift;                // shift to align final value in the port
-	INT32               m_adjdefvalue;          // adjusted default value from the config
-	INT32               m_adjmin;               // adjusted minimum value from the config
-	INT32               m_adjmax;               // adjusted maximum value from the config
-
-	// live values of configurable parameters
-	INT32               m_sensitivity;          // current live sensitivity (100=normal)
-	bool                m_reverse;              // current live reverse flag
-	INT32               m_delta;                // current live delta to apply each frame a digital inc/dec key is pressed
-	INT32               m_centerdelta;          // current live delta to apply each frame no digital inputs are pressed
-
-	// live analog value tracking
-	INT32               m_accum;                // accumulated value (including relative adjustments)
-	INT32               m_previous;             // previous adjusted value
-	INT32               m_previousanalog;       // previous analog value
-
-	// parameters for modifying live values
-	INT32               m_minimum;              // minimum adjusted value
-	INT32               m_maximum;              // maximum adjusted value
-	INT32               m_center;               // center adjusted value for autocentering
-	INT32               m_reverse_val;          // value where we subtract from to reverse directions
-
-	// scaling factors
-	INT64               m_scalepos;             // scale factor to apply to positive adjusted values
-	INT64               m_scaleneg;             // scale factor to apply to negative adjusted values
-	INT64               m_keyscalepos;          // scale factor to apply to the key delta field when pos
-	INT64               m_keyscaleneg;          // scale factor to apply to the key delta field when neg
-	INT64               m_positionalscale;      // scale factor to divide a joystick into positions
-
-	// misc flags
-	bool                m_absolute;             // is this an absolute or relative input?
-	bool                m_wraps;                // does the control wrap around?
-	bool                m_autocenter;           // autocenter this input?
-	bool                m_single_scale;         // scale joystick differently if default is between min/max
-	bool                m_interpolate;          // should we do linear interpolation for mid-frame reads?
-	bool                m_lastdigital;          // was the last modification caused by a digital form?
-};
-
-
-// live device field information
-class dynamic_field
-{
-	friend class simple_list<dynamic_field>;
-
-public:
-	// construction/destruction
-	dynamic_field(ioport_field &field);
-
-	// getters
-	dynamic_field *next() const { return m_next; }
-	ioport_field &field() const { return m_field; }
-
-	// read/write
-	void read(ioport_value &result);
-	void write(ioport_value newval);
-
-private:
-	// internal state
-	dynamic_field *         m_next;             // linked list of info for this port
-	ioport_field &          m_field;            // reference to the input field
-	UINT8                   m_shift;            // shift to apply to the final result
-	ioport_value            m_oldval;           // last value
-};
-
-
-// internal live state of an input field
-struct ioport_field_live
-{
-	// construction/destruction
-	ioport_field_live(ioport_field &field, analog_field *analog);
-
-	// public state
-	analog_field *          analog;             // pointer to live analog data if this is an analog field
-	digital_joystick *      joystick;           // pointer to digital joystick information
-	input_seq               seq[SEQ_TYPE_TOTAL];// currently configured input sequences
-	ioport_value            value;              // current value of this port
-	UINT8                   impulse;            // counter for impulse controls
-	bool                    last;               // were we pressed last time?
-	bool                    toggle;             // current toggle setting
-	digital_joystick::direction_t joydir;       // digital joystick direction index
-#ifdef USE_AUTOFIRE
-	UINT8                   autofire_toggle;    // autofire current toggle state
-	int                     autofire;           // autofire
-	int                     autopressed;        // autofire status
-#endif /* USE_AUTOFIRE */
-	astring                 name;               // overridden name
-};
-
-
-// internal live state of an input port
-struct ioport_port_live
-{
-	// construction/destruction
-	ioport_port_live(ioport_port &port);
-
-	// public state
-	simple_list<analog_field> analoglist;       // list of analog port info
-	simple_list<dynamic_field> readlist;        // list of dynamic read fields
-	simple_list<dynamic_field> writelist;       // list of dynamic write fields
-	ioport_value            defvalue;           // combined default value across the port
-	ioport_value            digital;            // current value from all digital inputs
-	ioport_value            outputvalue;        // current value for outputs
-};
-
 
 // character information
 struct char_info
@@ -1038,6 +896,18 @@ void input_type_entry::configure_osd(const char *token, const char *name)
 }
 
 
+//-------------------------------------------------
+//  restore_default_seq - restores the sequence
+//  from the default
+//-------------------------------------------------
+
+void input_type_entry::restore_default_seq()
+{
+	for (input_seq_type seqtype = SEQ_TYPE_STANDARD; seqtype < SEQ_TYPE_TOTAL; seqtype++)
+		m_seq[seqtype] = defseq(seqtype);
+}
+
+
 //**************************************************************************
 //  DIGITAL JOYSTICKS
 //**************************************************************************
@@ -1511,7 +1381,7 @@ void natural_keyboard::internal_post(unicode_char ch)
 	// add to the buffer, resizing if necessary
 	m_buffer[m_bufend++] = ch;
 	if ((m_bufend + 1) % m_buffer.count() == m_bufbegin)
-		m_buffer.resize(m_buffer.count() + KEY_BUFFER_SIZE, true);
+		m_buffer.resize_keep(m_buffer.count() + KEY_BUFFER_SIZE);
 	m_bufend %= m_buffer.count();
 }
 
@@ -1772,7 +1642,6 @@ ioport_diplocation::ioport_diplocation(const char *name, UINT8 swnum, bool inver
 ioport_field::ioport_field(ioport_port &port, ioport_type type, ioport_value defvalue, ioport_value maskbits, const char *name)
 	: m_next(NULL),
 		m_port(port),
-		m_live(NULL),
 		m_modcount(port.modcount()),
 		m_mask(maskbits),
 		m_defvalue(defvalue & maskbits),
@@ -1823,7 +1692,6 @@ ioport_field::ioport_field(ioport_port &port, ioport_type type, ioport_value def
 
 ioport_field::~ioport_field()
 {
-	global_free(m_live);
 }
 
 
@@ -2222,7 +2090,7 @@ void ioport_field::frame_update(ioport_value &result, bool mouse_down)
 	}
 
 	// if UI is active, ignore digital inputs
-	if (ui_is_menu_active())
+	if (machine().ui().is_menu_active())
 		return;
 
 	// if the state changed, look for switch down/switch up
@@ -2239,7 +2107,7 @@ void ioport_field::frame_update(ioport_value &result, bool mouse_down)
 	}
 
 	// if we're a keyboard type and using natural keyboard, bail
-	if (m_type == IPT_KEYBOARD && ui_get_use_natural_keyboard(machine()))
+	if (m_type == IPT_KEYBOARD && machine().ui().use_natural_keyboard())
 		return;
 
 	// coin impulse option
@@ -2306,12 +2174,12 @@ void ioport_field::frame_update(ioport_value &result, bool mouse_down)
 		if (machine().options().coin_lockout())
 		{
 			if (verbose)
-				ui_popup_time(3, "Coinlock disabled %s.", name());
+				machine().ui().popup_time(3, "Coinlock disabled %s.", name());
 			curstate = false;
 		}
 		else
 			if (verbose)
-				ui_popup_time(3, "Coinlock disabled, but broken through %s.", name());
+				machine().ui().popup_time(3, "Coinlock disabled, but broken through %s.", name());
 	}
 
 	// if we're active, set the appropriate bits in the digital state
@@ -2463,7 +2331,7 @@ void ioport_field::init_live_state(analog_field *analog)
 	m_crosshair_mapper.bind_relative_to(device());
 
 	// allocate live state
-	m_live = global_alloc(ioport_field_live(*this, analog));
+	m_live.reset(global_alloc(ioport_field_live(*this, analog)));
 
 	m_condition.initialize(device());
 
@@ -2543,8 +2411,7 @@ ioport_port::ioport_port(device_t &owner, const char *tag)
 		m_device(owner),
 		m_tag(tag),
 		m_modcount(0),
-		m_active(0),
-		m_live(NULL)
+		m_active(0)
 {
 }
 
@@ -2555,7 +2422,6 @@ ioport_port::ioport_port(device_t &owner, const char *tag)
 
 ioport_port::~ioport_port()
 {
-	global_free(m_live);
 }
 
 
@@ -2735,7 +2601,7 @@ void ioport_port::insert_field(ioport_field &newfield, ioport_value &disallowedb
 
 void ioport_port::init_live_state()
 {
-	m_live = global_alloc(ioport_port_live(*this));
+	m_live.reset(global_alloc(ioport_port_live(*this)));
 }
 
 
@@ -2917,99 +2783,99 @@ time_t ioport_manager::initialize()
 
 		KailleraStartOption.gameinputmin = 0;
 		// Sega
-		if (!mame_stricmp(machine().system().name, "gground"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "ga2j4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ga2u"))				KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "gground"))			KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "ga2j4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ga2u"))				KailleraStartOption.gameinputmin = 4;
 
 		// Namco
-		if (!mame_stricmp(machine().system().name, "numanath"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "numanatj"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "numanath"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "numanatj"))			KailleraStartOption.gameinputmin = 4;
 
 		// Copcom
-		if (!mame_stricmp(machine().system().name, "captcomm3p"))		KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "captcomu3p"))		KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "captcomj3p"))		KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "captcomm4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "captcomu4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "captcomj4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "avsp3p"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "avspu3p"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "avspj3p"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "avspa3p"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "batcir4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "batcirj4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddsom4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddsomr2_4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddsomu4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddsomur1_4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddsomj4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddsomjr1_4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddsoma4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddtod"))				KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddtodr1"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddtodh"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddtodj"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddtodjr1"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddtodu"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ddtodur1"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "armwarr1"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "armwaru"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "pgear"))				KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "pgearr1"))			KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "wof"))				KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "wofa"))				KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "wofu"))				KailleraStartOption.gameinputmin = 3;
-		if (!mame_stricmp(machine().system().name, "wofj"))				KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "captcomm3p"))		KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "captcomu3p"))		KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "captcomj3p"))		KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "captcomm4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "captcomu4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "captcomj4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "avsp3p"))			KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "avspu3p"))			KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "avspj3p"))			KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "avspa3p"))			KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "batcir4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "batcirj4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddsom4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddsomr2_4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddsomu4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddsomur1_4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddsomj4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddsomjr1_4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddsoma4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddtod"))				KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddtodr1"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddtodh"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddtodj"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddtodjr1"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddtodu"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ddtodur1"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "armwarr1"))			KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "armwaru"))			KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "pgear"))				KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "pgearr1"))			KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "wof"))				KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "wofa"))				KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "wofu"))				KailleraStartOption.gameinputmin = 3;
+		if (!core_stricmp(machine().system().name, "wofj"))				KailleraStartOption.gameinputmin = 3;
 #ifdef MAMEUIPLUSPLUS
-		if (!mame_stricmp(machine().system().name, "xmvsfregion4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "xmvsfregion4p"))		KailleraStartOption.gameinputmin = 4;
 #endif /* MAMEUIPLUSPLUS */
-		if (!mame_stricmp(machine().system().name, "mshvsfj4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "mvscj4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "mshvsfj4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "mvscj4p"))			KailleraStartOption.gameinputmin = 4;
 
 		// Neo-Geo
-		if (!mame_stricmp(machine().system().name, "lbowling4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "kof98_6p"))			KailleraStartOption.gameinputmin = 6;
-		if (!mame_stricmp(machine().system().name, "kof95_6p"))			KailleraStartOption.gameinputmin = 6;
+		if (!core_stricmp(machine().system().name, "lbowling4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "kof98_6p"))			KailleraStartOption.gameinputmin = 6;
+		if (!core_stricmp(machine().system().name, "kof95_6p"))			KailleraStartOption.gameinputmin = 6;
 
 		// Konami
-		if (!mame_stricmp(machine().system().name, "hyprolym4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "hyperspt4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "hpolym84_4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ssriders"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ssrdradd"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ssrdreaa"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ssrdruac"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "ssrdruda"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "hyprolym4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "hyperspt4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "hpolym84_4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ssriders"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ssrdradd"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ssrdreaa"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ssrdruac"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "ssrdruda"))			KailleraStartOption.gameinputmin = 4;
 
 		// Deco
-		if (!mame_stricmp(machine().system().name, "thndzone"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "thndzone"))			KailleraStartOption.gameinputmin = 4;
 
 #if 1
 		// Psikyo
-		if (!mame_stricmp(machine().system().name, "hotgmck_k"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "hgkairak_k"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "hotgmck3_k"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "hotgm4ev_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "hotgmck_k"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "hgkairak_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "hotgmck3_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "hotgm4ev_k"))		KailleraStartOption.gameinputmin = 4;
 
 		// Video System Co.
-		if (!mame_stricmp(machine().system().name, "fromanc2_k"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "fromancr_k"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "fromanc4_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "fromanc2_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "fromancr_k"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "fromanc4_k"))		KailleraStartOption.gameinputmin = 4;
 #endif
 
 		// Taito
-		if (!mame_stricmp(machine().system().source_file+17, "taito_f3.c")) KAnalogCtrl = 0;
+		if (!core_stricmp(machine().system().source_file+17, "taito_f3.c")) KAnalogCtrl = 0;
 
-		if (!mame_stricmp(machine().system().name, "arabianm4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "arabiamj4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "arabiamu4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "dungeonm4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "lightbr4p"))			KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "dungenmu4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "arabianm4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "arabiamj4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "arabiamu4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "dungeonm4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "lightbr4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "dungenmu4p"))		KailleraStartOption.gameinputmin = 4;
 
 		// IGS/PGM
-		if (!mame_stricmp(machine().system().name, "kov2106_4p"))		KailleraStartOption.gameinputmin = 4;
-		if (!mame_stricmp(machine().system().name, "kov2p4p"))			KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "kov2106_4p"))		KailleraStartOption.gameinputmin = 4;
+		if (!core_stricmp(machine().system().name, "kov2p4p"))			KailleraStartOption.gameinputmin = 4;
 
 		memset(&kBitsPlayValues,-1,sizeof(kBitsPlayValues));
 		memset(&kMahjongPlayValues,-1,sizeof(kMahjongPlayValues));	//kt
@@ -3123,21 +2989,21 @@ time_t ioport_manager::initialize()
 
 				//case IPT_SERVICE1:								break;
 				case IPT_SERVICE2:
-					if (!mame_stricmp(machine().system().source_file+17, "playch10.c") &&
+					if (!core_stricmp(machine().system().source_file+17, "playch10.c") &&
 						!strcmp(field->name(), "Channel Select"))	{ player=0;	pos =  3;	break;}
 					break;
 				case IPT_SERVICE3:
-					if (!mame_stricmp(machine().system().source_file+17, "playch10.c") &&
+					if (!core_stricmp(machine().system().source_file+17, "playch10.c") &&
 						!strcmp(field->name(), "Enter"))				{ player=0;	pos =  4;	break;}
 					break;
 				case IPT_SERVICE4:
-					if (!mame_stricmp(machine().system().source_file+17, "playch10.c") &&
+					if (!core_stricmp(machine().system().source_file+17, "playch10.c") &&
 						!strcmp(field->name(), "Reset"))				{ player=0;	pos =  5;	break;}
 					break;
 
 				case IPT_OTHER:
-					if (!mame_stricmp(machine().system().source_file+17, "neogeo.c") ||
-						!mame_stricmp(machine().system().source_file+17, "neodrvr.c"))
+					if (!core_stricmp(machine().system().source_file+17, "neogeo.c") ||
+						!core_stricmp(machine().system().source_file+17, "neodrvr.c"))
 					{
 						if (!strcmp(field->name(), "Next Game"))		{ player=0;	pos =  4;	break;}
 						if (!strcmp(field->name(), "Previous Game"))	{ player=1;	pos =  4;	break;}
@@ -3146,7 +3012,7 @@ time_t ioport_manager::initialize()
 
 				case IPT_DIPSWITCH:
 
-					if (!mame_stricmp(machine().system().source_file+17, "namcona1.c"))
+					if (!core_stricmp(machine().system().source_file+17, "namcona1.c"))
 						if (!strcmp(field->name(), "Test"))	{ player=0;	pos =  4;	break;}
 
 					if (!strcmp(field->name(), "Service Mode") &&
@@ -3168,7 +3034,7 @@ time_t ioport_manager::initialize()
 					break;
 				}
 
-				if (!mame_stricmp(machine().system().source_file+17, "fromanc2.c"))
+				if (!core_stricmp(machine().system().source_file+17, "fromanc2.c"))
 				{
 					switch(field->type())
 					{
@@ -3180,7 +3046,7 @@ time_t ioport_manager::initialize()
 					}
 				}
 
-				if (!mame_stricmp(machine().system().source_file+17, "namcos2.c"))
+				if (!core_stricmp(machine().system().source_file+17, "namcos2.c"))
 				{
 					//Service Button
 					if (player==0 && pos==14 && portnum<2)	{ player=0; pos=3; }
@@ -3311,6 +3177,31 @@ time_t ioport_manager::initialize()
 	// register callbacks for when we load configurations
 	config_register(machine(), "input", config_saveload_delegate(FUNC(ioport_manager::load_config), this), config_saveload_delegate(FUNC(ioport_manager::save_config), this));
 
+	// calculate "has..." values
+	{
+		m_has_configs = false;
+		m_has_analog = false;
+		m_has_dips = false;
+		m_has_bioses = false;
+
+		// scan the input port array to see what options we need to enable
+		for (ioport_port *port = first_port(); port != NULL; port = port->next())
+			for (ioport_field *field = port->first_field(); field != NULL; field = field->next())
+			{
+				if (field->type() == IPT_DIPSWITCH)
+					m_has_dips = true;
+				if (field->type() == IPT_CONFIG)
+					m_has_configs = true;
+				if (field->is_analog())
+					m_has_analog = true;
+			}
+		device_iterator deviter(machine().root_device());
+		for (device_t *device = deviter.first(); device != NULL; device = deviter.next())
+			if (device->rom_region())
+				for (const rom_entry *rom = device->rom_region(); !ROMENTRY_ISEND(rom); rom++)
+					if (ROMENTRY_ISSYSTEM_BIOS(rom)) { m_has_bioses= true; break; }
+	}
+
 	// open playback and record files if specified
 	time_t basetime = playback_init();
 	record_init();
@@ -3397,8 +3288,7 @@ void ioport_manager::init_port_types()
 	for (input_type_entry *curtype = first_type(); curtype != NULL; curtype = curtype->next())
 	{
 		// first copy all the OSD-updated sequences into our current state
-		for (input_seq_type seqtype = SEQ_TYPE_STANDARD; seqtype < SEQ_TYPE_TOTAL; seqtype++)
-			curtype->m_seq[seqtype] = curtype->defseq(seqtype);
+		curtype->restore_default_seq();
 
 		// also make a lookup table mapping type/player to the appropriate type list entry
 		m_type_to_entry[curtype->type()][curtype->player()] = curtype;
@@ -3715,7 +3605,7 @@ g_profiler.start(PROFILER_INPUT);
 
 	// perform mouse hit testing
 	INT32 mouse_target_x, mouse_target_y;
-	int mouse_button;
+	bool mouse_button;
 	render_target *mouse_target = ui_input_find_mouse(machine(), &mouse_target_x, &mouse_target_y, &mouse_button);
 
 	// if the button is pressed, map the point and determine what was hit
@@ -3907,7 +3797,7 @@ g_profiler.start(PROFILER_INPUT);
 							name[1] = 0;
 							//int flag;
 							sprintf(fname, "%s/%s-%c.sta", machine().basename(), machine().system().name, name[0]);
-							emu_file file = emu_file(machine().options().state_directory(), OPEN_FLAG_READ);
+							emu_file file(machine().options().state_directory(), OPEN_FLAG_READ);
 							filerr = file.open(fname);
 							if(filerr != FILERR_NONE) popmessage(_("%s-%c.sta is Nothing"), machine().system().name, name[0]);
 							else {
@@ -5363,7 +5253,7 @@ time_t ioport_manager::playback_init()
 #ifdef INP_CAPTION
 	if (strlen(filename) > 4)
 	{
-		char *fname = mame_strdup(filename);
+		char *fname = core_strdup(filename);
 
 		if (fname)
 		{
@@ -5379,7 +5269,7 @@ time_t ioport_manager::playback_init()
 	mame_printf_info("INP version %d.%d\n", header[0x10], header[0x11]);
 	time_t basetime = header[0x08] | (header[0x09] << 8) | (header[0x0a] << 16) | (header[0x0b] << 24) |
 						((UINT64)header[0x0c] << 32) | ((UINT64)header[0x0d] << 40) | ((UINT64)header[0x0e] << 48) | ((UINT64)header[0x0f] << 56);
-	mame_printf_info("Created %s", ctime(&basetime));
+	mame_printf_info("Created %s\n", ctime(&basetime));
 	mame_printf_info("Recorded using %s\n", header + 0x20);
 
 	// verify the header against the current game
@@ -6415,7 +6305,7 @@ input_seq_type ioport_manager::token_to_seq_type(const char *string)
 {
 	// look up the string in the table of possible sequence types and return the index
 	for (int seqindex = 0; seqindex < ARRAY_LENGTH(seqtypestrings); seqindex++)
-		if (!mame_stricmp(string, seqtypestrings[seqindex]))
+		if (!core_stricmp(string, seqtypestrings[seqindex]))
 			return input_seq_type(seqindex);
 	return SEQ_TYPE_INVALID;
 }
@@ -6653,8 +6543,7 @@ void ioport_manager::make_input_log()
 	/* loop over all the buttons */
 	if (normal_buttons > 0)
 	{
-		int is_neogeo = !mame_stricmp(machine().system().source_file+17, "neogeo.c")
-		                || !mame_stricmp(machine().system().source_file+17, "neodrvr.c");
+		int is_neogeo = !core_stricmp(machine().system().source_file+17, "neogeo.c");
 		static UINT16 old_btn = 0;
 		static UINT16 now_btn;
 		int is_pressed = 0;
@@ -6778,7 +6667,7 @@ skip_comment:
 			next_caption_timer = 0;
 			if (m_next_caption_frame == 0)
 			{
-				m_next_caption_frame = (int)machine().primary_screen->frame_number();
+				m_next_caption_frame = (int)machine().first_screen()->frame_number();
 				strcpy(next_caption, _("Error: illegal caption file"));
 				m_caption_file.close();
 			}
@@ -6814,7 +6703,7 @@ skip_comment:
 			}
 			if (next_caption_timer == 0)
 			{
-				next_caption_timer = 5 * ATTOSECONDS_TO_HZ(machine().primary_screen->frame_period().attoseconds);	// 5sec.
+				next_caption_timer = 5 * ATTOSECONDS_TO_HZ(machine().first_screen()->frame_period().attoseconds);	// 5sec.
 			}
 
 			strcpy(next_caption, &read_buf[i]);
@@ -6829,7 +6718,7 @@ skip_comment:
 			}
 		}
 	}
-	if (next_caption_timer && m_next_caption_frame <= (int)machine().primary_screen->frame_number())
+	if (next_caption_timer && m_next_caption_frame <= (int)machine().first_screen()->frame_number())
 	{
 		m_caption_timer = next_caption_timer;
 		strcpy(caption_text, next_caption);
@@ -6839,7 +6728,7 @@ skip_comment:
 
 	if (m_caption_timer)
 	{
-		ui_draw_text_box(container, caption_text, JUSTIFY_LEFT, 0.5f, 1.0f, UI_BACKGROUND_COLOR);
+		machine().ui().draw_text_box(container, caption_text, JUSTIFY_LEFT, 0.5f, 1.0f, UI_BACKGROUND_COLOR);
 		m_caption_timer--;
 	}
 }

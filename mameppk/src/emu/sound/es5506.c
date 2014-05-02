@@ -233,6 +233,11 @@ void es5506_device::device_start()
 	m_irqv = 0x80;
 	m_channels = channels;
 
+	/* KT-76 assumes all voices are active on an ES5506 without setting them! */
+	m_active_voices = 31;
+	m_sample_rate = m_master_clock / (16 * (m_active_voices + 1));
+	m_stream->set_sample_rate(m_sample_rate);
+
 	/* compute the tables */
 	compute_tables();
 
@@ -525,7 +530,7 @@ void es550x_device::compute_tables()
 		UINT32 mantissa = (i & 0xff) | 0x100;
 
 #ifdef MAMEUIPLUSPLUS
-		if (!mame_stricmp(machine().system().name, "quizmoon"))
+		if (!core_stricmp(machine().system().name, "quizmoon"))
 		{
 			if (i < 256) exponent = 0;
 			if (exponent > 8) exponent=8;

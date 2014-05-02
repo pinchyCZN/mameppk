@@ -119,7 +119,7 @@ static void datafile_exit(running_machine &machine)
 
 	flush_index();
 
-	if (sorted_drivers == NULL)
+	if (sorted_drivers)
 	{
 		auto_free(*m_machine, sorted_drivers);
 		sorted_drivers = NULL;
@@ -626,7 +626,7 @@ static void ParseClose(void)
 	if (fp)
 	{
 		fp->close();
-		auto_free(*m_machine, fp);
+		global_free(fp);
 	}
 
 	fp = NULL;
@@ -643,7 +643,7 @@ static UINT8 ParseOpen(const char *pszFilename)
 	ParseClose();
 
 	/* Open file up in binary mode */
-	fp = auto_alloc(*m_machine, emu_file(OPEN_FLAG_READ));
+	fp = global_alloc(emu_file(OPEN_FLAG_READ));
 	filerr = fp->open(pszFilename);
 	if (filerr != FILERR_NONE)
 		return(FALSE);
@@ -704,7 +704,7 @@ static int index_datafile (struct tDatafileIndex **_index)
 		if (TOKEN_SYMBOL != token) continue;
 
 		/* DATAFILE_TAG_KEY identifies the driver */
-		if (!mame_strnicmp (DATAFILE_TAG_KEY, (char *)s, strlen (DATAFILE_TAG_KEY)))
+		if (!core_strnicmp (DATAFILE_TAG_KEY, (char *)s, strlen (DATAFILE_TAG_KEY)))
 		{
 			token = GetNextToken (&s, &tell);
 			if (TOKEN_EQUALS == token)
@@ -822,11 +822,11 @@ static int index_menuidx (const game_driver *drv, struct tDatafileIndex *d_idx, 
 	token = GetNextToken (&s, &tell);
 	while ((m_count < (MAX_MENUIDX_ENTRIES - 1)) && TOKEN_INVALID != token)
 	{
-		if (!mame_strnicmp (DATAFILE_TAG_KEY, (char *)s, strlen (DATAFILE_TAG_KEY)))
+		if (!core_strnicmp (DATAFILE_TAG_KEY, (char *)s, strlen (DATAFILE_TAG_KEY)))
 			break;
 
 		/* DATAFILE_TAG_COMMAND identifies the driver */
-		if (!mame_strnicmp (DATAFILE_TAG_COMMAND, (char *)s, strlen (DATAFILE_TAG_COMMAND)))
+		if (!core_strnicmp (DATAFILE_TAG_COMMAND, (char *)s, strlen (DATAFILE_TAG_COMMAND)))
 		{
 			cmdtag_offset = tell;
 			token = GetNextToken_ex (&s, &tell);
@@ -866,6 +866,7 @@ static void free_menuidx(struct tMenuIndex **_index)
 		while(m_idx->menuitem != NULL)
 		{
 			auto_free(*m_machine, m_idx->menuitem);
+			m_idx->menuitem = NULL;
 			m_idx++;
 		}
 
@@ -912,7 +913,7 @@ static int load_datafile_text_ex (char *buffer, int bufsize,
 		if (TOKEN_SYMBOL == token)
 		{
 			/* looking for requested tag */
-			if (!mame_strnicmp (tag, (char *)s, strlen (tag)))
+			if (!core_strnicmp (tag, (char *)s, strlen (tag)))
 			{
 				token = GetNextToken_ex (&s, &tell);
 
@@ -926,7 +927,7 @@ static int load_datafile_text_ex (char *buffer, int bufsize,
 
 				break;
 			}
-			else if (!mame_strnicmp (DATAFILE_TAG_KEY, (char *)s, strlen (DATAFILE_TAG_KEY)))
+			else if (!core_strnicmp (DATAFILE_TAG_KEY, (char *)s, strlen (DATAFILE_TAG_KEY)))
 			{
 				token = TOKEN_INVALID;
 				break;	/* error: tag missing */
@@ -938,7 +939,7 @@ static int load_datafile_text_ex (char *buffer, int bufsize,
 	while (TOKEN_INVALID != token)
 	{
 		/* end entry when a tag is encountered */
-		if (TOKEN_SYMBOL == token && !mame_strnicmp (DATAFILE_TAG_END, (char *)s, strlen (DATAFILE_TAG_END)))
+		if (TOKEN_SYMBOL == token && !core_strnicmp (DATAFILE_TAG_END, (char *)s, strlen (DATAFILE_TAG_END)))
 			break;
 
 		prev_token = token;
@@ -972,7 +973,10 @@ static int find_command (const game_driver *drv)
 	int i;
 
 	if (menu_filename)
+	{
 		osd_free(menu_filename);
+		menu_filename = NULL;
+	}
 
 	for (where = 0; where <= FILE_ROOT; where += FILE_ROOT)
 	{
@@ -1058,7 +1062,7 @@ static int find_command (const game_driver *drv)
 
 			if (status)
 			{
-				menu_filename = mame_strdup(filename);
+				menu_filename = core_strdup(filename);
 
 				return 0;
 			}
