@@ -63,7 +63,7 @@
 #include "drawgfx.h"	// tRect structure defined
 #include "video.h"		//"Display.h"
 #include "Avi.h"
-#include "ui.h"
+#include "ui/ui.h"
 #include "translate.h"
 
 #ifndef BMP_PALSIZE
@@ -2036,10 +2036,10 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t &tBitmap, unsigned
 				ptr = &tBitmap.pixt<UINT16>(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					*dst = (r << 10) | (g << 5) | (b);
 					dst -= nLineSize;
 				}
@@ -2054,10 +2054,10 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t &tBitmap, unsigned
 				ptr = &tBitmap.pixt<UINT16>(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					*dst = (r << 10) | (g << 5) | (b);
 					dst += nLineSize;
 				}
@@ -2073,10 +2073,10 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t &tBitmap, unsigned
 				ptr = &tBitmap.pixt<UINT16>(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.b() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					*dst = (r << 10) | (g << 5) | (b);
 					dst -= nLineSize;
 				}
@@ -2092,10 +2092,10 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t &tBitmap, unsigned
 				ptr = &tBitmap.pixt<UINT16>(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					dst[x] = (r << 10) | (g << 5) | (b);
 				}
 				dst += nLineSize;
@@ -2109,10 +2109,10 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t &tBitmap, unsigned
 				ptr = &tBitmap.pixt<UINT16>(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					dst[x] = (r << 10) | (g << 5) | (b);
 				}
 				dst -= nLineSize;
@@ -2125,10 +2125,10 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t &tBitmap, unsigned
 				ptr = &tBitmap.pixt<UINT16>(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					dst[x] = (r << 10) | (g << 5) | (b);
 				}
 				dst += nLineSize;
@@ -2142,10 +2142,10 @@ void TransformBitmap16to16(running_machine &machine, bitmap_t &tBitmap, unsigned
 				ptr = &tBitmap.pixt<UINT16>(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					dst[x] = (r << 10) | (g << 5) | (b);
 				}
 				dst -= nLineSize;
@@ -2193,10 +2193,10 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t &tBitmap, unsigned 
 				ptr = &tBitmap.pixt<UINT8>(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					*dst = (r << 10) | (g << 5) | (b);
 					dst -= nLineSize;
 				}
@@ -2211,10 +2211,10 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t &tBitmap, unsigned 
 				ptr = &tBitmap.pixt<UINT8>(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					*dst = (r << 10) | (g << 5) | (b);
 					dst += nLineSize;
 				}
@@ -2230,10 +2230,10 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t &tBitmap, unsigned 
 				ptr = &tBitmap.pixt<UINT8>(i + nLeft, nTop);
 				for (x = 0; x<nHeight; x++)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					*dst = (r << 10) | (g << 5) | (b);
 					dst -= nLineSize;
 				}
@@ -2249,10 +2249,10 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t &tBitmap, unsigned 
 				ptr = &tBitmap.pixt<UINT8>(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					dst[x] = (r << 10) | (g << 5) | (b);
 				}
 				dst += nLineSize;
@@ -2266,10 +2266,10 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t &tBitmap, unsigned 
 				ptr = &tBitmap.pixt<UINT8>(i + nTop, nLeft);
 				for (x = nWidth-1; x >=0; x--)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					dst[x] = (r << 10) | (g << 5) | (b);
 				}
 				dst -= nLineSize;
@@ -2282,10 +2282,10 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t &tBitmap, unsigned 
 				ptr = &tBitmap.pixt<UINT8>(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					dst[x] = (r << 10) | (g << 5) | (b);
 				}
 				dst += nLineSize;
@@ -2299,10 +2299,10 @@ void TransformBitmap8to16(running_machine &machine, bitmap_t &tBitmap, unsigned 
 				ptr = &tBitmap.pixt<UINT8>(i + nTop, nLeft);
 				for (x = 0; x < nWidth; x++)
 				{
-					color = palette_get_color(machine, *ptr++);
-					r = ((RGB_RED(color) >> 3) & 0x1f);
-					g = ((RGB_GREEN(color) >> 3) & 0x1f);
-					b = ((RGB_BLUE(color) >> 3) & 0x1f);
+					color = tBitmap.palette()->entry_color(*ptr++);
+					r = ((color.r() >> 3) & 0x1f);
+					g = ((color.g() >> 3) & 0x1f);
+					b = ((color.b() >> 3) & 0x1f);
 					dst[x] = (r << 10) | (g << 5) | (b);
 				}
 				dst -= nLineSize;

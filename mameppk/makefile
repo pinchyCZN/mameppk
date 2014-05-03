@@ -278,6 +278,11 @@ BUILD_MIDILIB = 1
 # sanity check the configuration
 #-------------------------------------------------
 
+# enable symbols as it is useless without them
+ifdef SANITIZE
+SYMBOLS = 1
+endif
+
 # specify a default optimization level if none explicitly stated
 ifndef OPTIMIZE
 ifndef SYMBOLS
@@ -294,6 +299,7 @@ PROFILER = 1
 endif
 endif
 
+# TODO: also move it up, so it isn't optimized by default?
 # allow gprof profiling as well, which overrides the internal PROFILER
 # also enable symbols as it is useless without them
 ifdef PROFILE
@@ -669,15 +675,7 @@ COBJFLAGS += \
 CPPONLYFLAGS += \
 	-Woverloaded-virtual
 
-ifneq (,$(findstring clang,$(CC)))
-CCOMFLAGS += \
-	-Wno-cast-align \
-	-Wno-tautological-compare \
-	-Wno-constant-logical-operand \
-	-Wno-format-security \
-	-Wno-shift-count-overflow \
-	-Wno-self-assign-field
-endif
+include $(SRC)/build/cc_detection.mak
 
 ifdef SANITIZE
 CCOMFLAGS += -fsanitize=$(SANITIZE)
@@ -687,6 +685,12 @@ endif
 ifneq (,$(findstring memory,$(SANITIZE)))
 ifneq (,$(findstring clang,$(CC)))
 CCOMFLAGS += -fsanitize-memory-track-origins -fPIE
+endif
+endif
+ifneq (,$(findstring undefined,$(SANITIZE)))
+ifneq (,$(findstring clang,$(CC)))
+# TODO: check if linker is clang++
+CCOMFLAGS += -fno-sanitize=alignment -fno-sanitize=function -fno-sanitize=shift -fno-sanitize=null -fno-sanitize=signed-integer-overflow -fno-sanitize=vptr -fno-sanitize=float-cast-overflow -fno-sanitize=integer-divide-by-zero -fno-sanitize=float-divide-by-zero -fno-sanitize=object-size
 endif
 endif
 endif
@@ -792,6 +796,7 @@ OBJDIRS = $(OBJ)
 
 LIBEMU = $(OBJ)/libemu.a
 LIBOPTIONAL = $(OBJ)/liboptional.a
+LIBBUS = $(OBJ)/libbus.a
 LIBDASM = $(OBJ)/libdasm.a
 LIBUTIL = $(OBJ)/libutil.a
 LIBOCORE = $(OBJ)/libocore.a
@@ -927,14 +932,14 @@ include $(SRC)/osd/$(OSD)/$(OSD).mak
 include $(SRC)/build/build.mak
 include $(SRC)/$(TARGET)/$(SUBTARGET).mak
 -include $(SRC)/$(TARGET)/osd/$(OSD)/$(OSD).mak
+ifneq ($(MAMEMESS),)
+include $(SRC)/mess/mess.mak
+endif
 include $(SRC)/emu/emu.mak
 include $(SRC)/lib/lib.mak
 -include $(SRC)/osd/$(CROSS_BUILD_OSD)/build.mak
 include $(SRC)/tools/tools.mak
 include $(SRC)/regtests/regtests.mak
-ifneq ($(MAMEMESS),)
-include $(SRC)/mess/mess.mak
-endif
 
 # combine the various definitions to one
 CCOMFLAGS += $(INCPATH)
@@ -1006,15 +1011,15 @@ $(sort $(OBJDIRS)):
 ifndef EXECUTABLE_DEFINED
 
 # always recompile the version string
-$(VERSIONOBJ): $(EMUINFOOBJ) $(DRVLIBS) $(LIBOSD) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(EXPAT) $(ZLIB) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(LUA_LIB) $(FORMATS_LIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE)
+$(VERSIONOBJ): $(EMUINFOOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(EXPAT) $(ZLIB) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(LUA_LIB) $(FORMATS_LIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE)
 
-$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(WEB_LIB) $(ZLIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE) $(CLIRESFILE)
+$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(WEB_LIB) $(ZLIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE) $(CLIRESFILE)
 	$(CC) $(CDEFS) $(CFLAGS) -c $(SRC)/version.c -o $(VERSIONOBJ)
 	@echo Linking $@...
 	$(LD) $(LDFLAGS) $(LDFLAGSEMULATOR) -mconsole $(VERSIONOBJ) $^ $(LIBS) -o $@
 
 ifneq ($(WINUI),)
-$(MAMEUIEXE): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(WEB_LIB) $(ZLIB) $(LIBOCORE_NOMAIN) $(MIDI_LIB) $(RESFILE) $(GUIRESFILE)
+$(MAMEUIEXE): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(WEB_LIB) $(ZLIB) $(LIBOCORE_NOMAIN) $(MIDI_LIB) $(RESFILE) $(GUIRESFILE)
 	$(CC) $(CDEFS) $(CFLAGS) -c $(SRC)/version.c -o $(VERSIONOBJ)
 	@echo Linking $@...
 	$(LD) $(LDFLAGS) $(LDFLAGSEMULATOR) -mwindows $(VERSIONOBJ) $^ $(LIBS) -o $@

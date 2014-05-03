@@ -103,7 +103,7 @@ static struct MAME_AVI_STATUS AviStatus;
 #include "ui_temp.h"
 #include "fileio.h"
 #include "zlib.h"
-#include "ui.h"
+#include "ui/ui.h"
 #include "emuopts.h"
 
 #ifdef __INTEL_COMPILER
@@ -1505,7 +1505,7 @@ static HICON ExtractIconFromZip(const WCHAR *zipname, const WCHAR *iconname)
 	stemp = utf8_from_wstring(iconname);
 
 	for (entry = zip_file_first_file(zip); entry; entry = zip_file_next_file(zip))
-		if (mame_stricmp(entry->filename, stemp) == 0)
+		if (core_stricmp(entry->filename, stemp) == 0)
 			break;
 	osd_free(stemp);
 
@@ -2395,7 +2395,7 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	{
 		file_error filerr;
 
-		emu_file file = emu_file(OPEN_FLAG_READ);
+		emu_file file(OPEN_FLAG_READ);
 		filerr = file.open(emulator_info::get_configname(), ".ini");
 		if (filerr == FILERR_NONE)
 		{
@@ -3294,7 +3294,7 @@ static LRESULT CALLBACK MameWindowProc(HWND hWnd, UINT message, WPARAM wParam, L
 				{
 					for (nParentIndex = nGameIndex; nGameIndex == -1; nParentIndex = GetParentIndex(&driver_list::driver(nParentIndex)))
 					{
-						if (!mame_stricmp(driver_list::driver(nParentIndex).name, szFileName))
+						if (!core_stricmp(driver_list::driver(nParentIndex).name, szFileName))
 						{
 							if (pfnGetAuditResults(nGameIndex) != UNKNOWN)
 							{
@@ -7403,7 +7403,7 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 		break;
 
 	case COLUMN_DIRECTORY:
-		value = mame_stricmp(driver_list::driver(index1).name, driver_list::driver(index2).name);
+		value = core_stricmp(driver_list::driver(index1).name, driver_list::driver(index2).name);
 		break;
 
    	case COLUMN_SRCDRIVERS:
@@ -7429,11 +7429,11 @@ static int GamePicker_Compare(HWND hwndPicker, int index1, int index2, int sort_
 		break;
 
 	case COLUMN_MANUFACTURER:
-		value = mame_stricmp(driver_list::driver(index1).manufacturer, driver_list::driver(index2).manufacturer);
+		value = core_stricmp(driver_list::driver(index1).manufacturer, driver_list::driver(index2).manufacturer);
 		break;
 
 	case COLUMN_YEAR:
-		value = mame_stricmp(driver_list::driver(index1).year, driver_list::driver(index2).year);
+		value = core_stricmp(driver_list::driver(index1).year, driver_list::driver(index2).year);
 		break;
 
 	case COLUMN_CLONE:
@@ -7759,14 +7759,14 @@ static void CopyTrctempStateSaveFile(const WCHAR *fname, inpsub_header *inpsub_h
 		//sprintf(path, "%s\\trctemp", GetInpDir());
 		wcscpy(path, TEXT("inp\\trctemp"));
 		stemp = utf8_from_wstring(name);
-		emu_file file_inp = emu_file(MameUIGlobal().state_directory(), OPEN_FLAG_READ);
+		emu_file file_inp(MameUIGlobal().state_directory(), OPEN_FLAG_READ);
 		filerr = file_inp.open(stemp);
 
 		if (!file_inp)
 			delete_file(_String(name));
 		else
 		{
-			emu_file file_trctemp = emu_file(MameUIGlobal().state_directory(), OPEN_FLAG_READ);
+			emu_file file_trctemp(MameUIGlobal().state_directory(), OPEN_FLAG_READ);
 			filerr = file_trctemp.open(stemp);
 
 			fsize = file_inp.size();
@@ -7910,7 +7910,7 @@ static void MamePlayBackGame()
 			path[wcslen(path)-1] = 0; // take off trailing back slash
 
 		stemp = utf8_from_wstring(fname);
-		emu_file pPlayBack = emu_file(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
+		emu_file pPlayBack(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
 		fileerr = pPlayBack.open(stemp);
 		osd_free(stemp);
 		if (fileerr != FILERR_NONE)
@@ -7920,7 +7920,7 @@ static void MamePlayBackGame()
 		}
 
 		// check for game name embedded in .inp header
-		if (pPlayBack)
+		if (pPlayBack.is_open())
 		{
 			int i;
 			inp_header ihdr;
@@ -7959,7 +7959,7 @@ static void MamePlayBackGame()
 		if ((!wcscmp(ext, TEXT(".zip"))) || (!wcscmp(ext, TEXT(".trc"))))
 		{
 			stemp = utf8_from_wstring(fname2);
-			emu_file pPlayBackSub = emu_file(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
+			emu_file pPlayBackSub(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
 			fileerr = pPlayBackSub.open(stemp);
 			osd_free(stemp);
 			if (fileerr == FILERR_NONE)
@@ -8056,7 +8056,7 @@ static void MameLoadState()
 #endif // MESS
 
 		stemp = utf8_from_wstring(state_fname);
-		emu_file pSaveState = emu_file(MameUIGlobal().state_directory(), OPEN_FLAG_READ);
+		emu_file pSaveState(MameUIGlobal().state_directory(), OPEN_FLAG_READ);
 		filerr = pSaveState.open(stemp);
 		osd_free(stemp);
 		if (filerr != FILERR_NONE)
@@ -10053,11 +10053,11 @@ void WINAPI kChatCallback(char *nick, char *text)
 					char name[2];
 					name[0] = Kaillera_StateSave_file; name[1] = 0;
 					sprintf(filename, "%s%s%s-%s.sta", get_global_machine().basename(), PATH_SEPARATOR, get_global_machine().system().name, name);
-					emu_file file = emu_file(get_global_machine().options().state_directory(), OPEN_FLAG_READ);
+					emu_file file(get_global_machine().options().state_directory(), OPEN_FLAG_READ);
 					filerr = file.open(filename);
 					if (filerr != FILERR_NONE)
 					{
-						emu_file file2 = emu_file(get_global_machine().options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+						emu_file file2(get_global_machine().options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
 						filerr = file2.open(filename);
 						file2.close();
 					}
@@ -10236,7 +10236,7 @@ void WINAPI kChatCallback(char *nick, char *text)
 				name[1] = 0;
 				//int flag;
 				sprintf(fname, "%s/%s-%c.sta", get_global_machine().basename(), get_global_machine().system().name, name[0]);
-				emu_file file = emu_file(get_global_machine().options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+				emu_file file(get_global_machine().options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
 				filerr = file.open(fname);
 				file.write(temp, tst);
 				file.close();
@@ -11906,7 +11906,7 @@ static void MamePlayBackGameAVI()
 			path[wcslen(path)-1] = 0; // take off trailing back slash
 
 		stemp = utf8_from_wstring(fname);
-		emu_file pPlayBack = emu_file(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
+		emu_file pPlayBack(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
 		fileerr = pPlayBack.open(stemp);
 		osd_free(stemp);
 		if (fileerr != FILERR_NONE)
@@ -11956,7 +11956,7 @@ static void MamePlayBackGameAVI()
 		{
 			//pPlayBackSub = mame_fopen(fname,NULL,FILETYPE_INPUTSUBLOG,0);
 			stemp = utf8_from_wstring(fname2);
-			emu_file pPlayBackSub = emu_file(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
+			emu_file pPlayBackSub(MameUIGlobal().input_directory(), OPEN_FLAG_READ);
 			fileerr = pPlayBackSub.open(stemp);
 			osd_free(stemp);
 			if (pPlayBackSub)

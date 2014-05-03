@@ -33,11 +33,11 @@
 #include "emu.h"
 #include "winui.h"
 #include "resource.h"
-#include "ui.h"
+#include "ui/ui.h"
 #include "kailleraclient.h"
 #include "imm.h"
 #include "uiinput.h"
-#include "uilang.h"
+#include "ui/lang.h"
 #include "bitmask.h"
 #include "mui_opts.h"
 #include "strconv.h"
@@ -108,8 +108,6 @@ static void             KailleraChatImeGetConversionStatus(void);
 static BOOL             MSIME2K_GetReg(void);
 //static void             GetWinVersion(BOOL *bIsNT, int *nMajor, int *nMinor, int *nBuildNumber);
 
-extern void             ui_draw_box(render_container *container, float x0, float y0, float x1, float y1, rgb_t backcolor);
-extern void             displaychatlog(running_machine &machine, render_container *container, char *text);
 extern HWND             GetGameWindow(void);
 extern void             win_pause_input(running_machine &machine, int paused);
 
@@ -237,7 +235,7 @@ void KailleraChatInit(running_machine &machine)
     HIMC hImc;
     HKL  hKeyboardLayout;
     UINT error_mode;
-	float space_width = ui_get_char_width(machine, 'W');
+	float space_width = machine.ui().get_char_width('W');
 
     bChatActive   = FALSE;
     bInputEnable  = FALSE;
@@ -413,7 +411,7 @@ void KailleraChatReInit(running_machine &machine)
     HIMC hImc;
     HKL  hKeyboardLayout;
     UINT error_mode;
-	float space_width = ui_get_char_width(machine, 'W');
+	float space_width = machine.ui().get_char_width('W');
 
 
     bChatActive   = FALSE;
@@ -543,7 +541,7 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
     char szCursor[4];
     int i;
     float j;
-	float line_height = ui_get_line_height(machine);
+	float line_height = machine.ui().get_line_height();
 	float totalheight;
 	char *utf8_string;
 
@@ -628,7 +626,7 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
     j = 0;
     for (i = 0; i < KC_CHATLINE_MAX; i++)
     {
-        ui_draw_chattext(container, szChatText[(nIndex + i) % KC_CHATLINE_MAX], 0, j, nChatDrawMode, &totalheight);
+        machine.ui().draw_chattext(container, szChatText[(nIndex + i) % KC_CHATLINE_MAX], 0, j, nChatDrawMode, &totalheight);
         if (szChatText[(nIndex + i) % KC_CHATLINE_MAX][0])
         {
 			if (totalheight > line_height)
@@ -651,7 +649,7 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
         y  = 0 + (1.0f - line_height) - nAdjustHeight;
         x2 = 1.0f;
         y2 = 1.0f - nAdjustHeight;
-		ui_draw_box(container, x, y, x2, y2,UI_BACKGROUND_COLOR);
+		machine.ui().draw_box(container, x, y, x2, y2,UI_BACKGROUND_COLOR);
 
         if (strlen(szInputBuf) > nEditMaxLen)
         {
@@ -672,7 +670,7 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
 		if (szInputBuf_utf8)
 			strcat(szChatLine, szInputBuf_utf8);
 
-		ui_draw_colortext(container, szChatLine, 0, (1.0f - line_height) - nAdjustHeight, ARGB_WHITE);
+		machine.ui().draw_colortext(container, szChatLine, 0, (1.0f - line_height) - nAdjustHeight, ARGB_WHITE);
 
         /* cursor blink */
         nBlinkCounter++;
@@ -688,7 +686,7 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
         ZeroMemory(szCursor, 4);
         nCursorDispPos = 5 + nCursorPos;
         nCursorColor   = bShowCursor ? ARGB_WHITE : UI_BACKGROUND_COLOR;
-		cx = ui_get_string_width(machine, "Chat:");
+		cx = machine.ui().get_string_width("Chat:");
         if (szInputBuf[nCursorPos])
         {
             char *p = &szInputBuf[nCursorPos];
@@ -698,7 +696,7 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
             utf8_string = utf8_from_astring(szInputBuf_tmp);
             if (utf8_string)
             {
-                cx += ui_get_string_width(machine, utf8_string);
+                cx += machine.ui().get_string_width(utf8_string);
                 osd_free(utf8_string);
             }
 
@@ -715,14 +713,14 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
         else
         {
             szCursor[0] = ' ';
-			if (szInputBuf_utf8) cx += ui_get_string_width(machine, szInputBuf_utf8);
+			if (szInputBuf_utf8) cx += machine.ui().get_string_width(szInputBuf_utf8);
         }
 
         if (bUseIME)
         {
             if (szIMEStateStr[0])
             {
-                ui_draw_colortext(container, szIMEStateStr, 1.0f - ui_get_string_width(machine, szIMEStateStr_utf8[0]), 1.0f - line_height - nAdjustHeight, ARGB_WHITE);
+                machine.ui().draw_colortext(container, szIMEStateStr, 1.0f - machine.ui().get_string_width(szIMEStateStr_utf8[0]), 1.0f - line_height - nAdjustHeight, ARGB_WHITE);
             }
 
             if (nIMEState & IME_CONVERSION)
@@ -746,19 +744,19 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
 
 					if (szConvStrBuf_utf8)
 					{
-						ui_draw_text(container, szConvStrBuf_utf8, cx, 1.0f - line_height - nAdjustHeight);
-						cx += ui_get_string_width(machine, szConvStrBuf_utf8);
+						machine.ui().draw_text(container, szConvStrBuf_utf8, cx, 1.0f - line_height - nAdjustHeight);
+						cx += machine.ui().get_string_width(szConvStrBuf_utf8);
 					}
 
                     szCursor[0]    = Cursor[nIMEType];
                     szCursor[1]    = '\0';
                     nCursorDispPos = nStartPos + nStrLen;
-                    nCursorColor   = RGB_WHITE;
+                    nCursorColor   = rgb_t(0xff, 0xff, 0xff, 0xff);
                 }
             }
         }
 
-		ui_draw_text2(container, szCursor, cx, 1.0f - line_height - nAdjustHeight, nCursorColor);
+		machine.ui().draw_text2(container, szCursor, cx, 1.0f - line_height - nAdjustHeight, nCursorColor);
     }
     else if (ui_input_pressed(machine, IPT_UI_CHAT_CHANGE_MODE))
     {
@@ -771,11 +769,11 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
     else if (ui_input_pressed(machine, IPT_UI_CHAT_SHOW_LOG))
     {
         bShowLog = !bShowLog;
-        displaychatlog(machine, container, szChatLog);
+        machine.ui().displaychatlog(container, szChatLog);
     }
 
     if (bShowLog)
-        displaychatlog(machine, container, NULL);
+        machine.ui().displaychatlog(container, NULL);
 }
 
 void KailleraChateReceive(char *szText)

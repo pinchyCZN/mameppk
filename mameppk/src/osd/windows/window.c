@@ -49,8 +49,8 @@ extern int drawd3d_init(running_machine &machine, win_draw_callbacks *callbacks)
 #include <mmsystem.h>
 #include "Avi.h"
 #include "Wav.h"
-#include "uipal.h"			// for BUTTON_COLOR_PINK definition
-#include "ui.h"
+#include "ui/pal.h"			// for BUTTON_COLOR_PINK definition
+#include "ui/ui.h"
 
 static int					bAviCapture;      /* Capture AVI mode */	//kt
 int							bAviRun;          /* Capturing frames */	//kt
@@ -68,7 +68,6 @@ int							nAviAudioRecord;
 /* Implemented in video.c (DarkCoder) */
 //extern int osd_is_paused(void);		
 /* Implemented in usrintrf.c (DarkCoder) */
-extern int get_single_step(void);	
 #endif /* MAME_AVI */
 
 
@@ -1539,7 +1538,7 @@ int OnAVIRecord(void)
 
 void avi_info_view(running_machine &machine)
 {
-	#define ARGB_RED				MAKE_ARGB(0x80,0xff,0x00,0x00)
+	#define ARGB_RED				rgb_t(0x80,0xff,0x00,0x00)
 	const screen_device *screen = machine.first_screen();
 	render_container *container = &screen->container();
 
@@ -1573,7 +1572,7 @@ void avi_info_view(running_machine &machine)
 		}
 		if (counter < 50)
 		{
-			ui_draw_text2(container, buf, 0, 0, ARGB_RED);
+			machine.ui().draw_text2(container, buf, 0, 0, ARGB_RED);
 
 			if (nAviFrameCount>0)
 			{
@@ -1584,9 +1583,9 @@ void avi_info_view(running_machine &machine)
 				DWORD RemainingTime = (DWORD)((double)nAviFrameCountStart / ATTOSECONDS_TO_HZ(screen->refresh_attoseconds()) * scale);
 				LapsedTime		/= 1000;
 				sprintf(bf, "TotalTime: %lu:%.2lu:%.2lu", RemainingTime/(60*60),RemainingTime/60%60,RemainingTime%60);
-				ui_draw_text2(container, bf, 0, ui_get_line_height(machine)*1, ARGB_RED);
+				machine.ui().draw_text2(container, bf, 0, machine.ui().get_line_height()*1, ARGB_RED);
 				sprintf(bf, "Elapsed  : %lu:%.2lu:%.2lu", LapsedTime/(60*60),LapsedTime/60%60,LapsedTime%60);
-				ui_draw_text2(container, bf, 0, ui_get_line_height(machine)*2, ARGB_RED);
+				machine.ui().draw_text2(container, bf, 0, machine.ui().get_line_height()*2, ARGB_RED);
 
 			}
 		}
@@ -1599,9 +1598,8 @@ int avi_write_handler(running_machine &machine, emu_file *dummy, bitmap_t &bitma
     if (bAviRun)
 	{
 		//extern int osd_is_paused(void);		/* Implemented in video.c (DarkCoder) */
-		extern int get_single_step(void);	/* Implemented in usrintrf.c (DarkCoder) */
 
-		if ((!machine.paused()) || (machine.paused() && get_single_step()))
+		if ((!machine.paused()) || (machine.paused() && machine.ui().single_step()))
 		{
 			AviAddBitmap(machine, bitmap, NULL);
 			if (nAviFrameCountStart>0 && nAviFrameCount==0)

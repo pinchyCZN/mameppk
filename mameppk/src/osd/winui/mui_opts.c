@@ -2526,7 +2526,7 @@ static void set_folder_flag(f_flag *flag, const char *path, DWORD dwFlags)
 		flag->num += ALLOC_FOLDERFLAG;
 	}
 
-	flag->entry[i].name = mame_strdup(path);
+	flag->entry[i].name = core_strdup(path);
 	flag->entry[i].flags = dwFlags;
 }
 
@@ -3638,7 +3638,7 @@ static void GetGameOptionsFileName(char *filename, size_t filename_size)
 {
 	// copy INI directory
 	char *inidir = utf8_from_wstring(GetIniDir());
-	char *s = mame_strdup(GAMEINFO_INI_FILENAME);
+	char *s = core_strdup(GAMEINFO_INI_FILENAME);
 	_strlwr(s);
 	snprintf(filename, filename_size, "%s\\%s", inidir, s);
 	osd_free(inidir);
@@ -3649,7 +3649,7 @@ static void GetSettingsFileName(char *filename, size_t filename_size)
 {
 	// copy INI directory
 	char *inidir = utf8_from_wstring(GetIniDir());
-	char *s = mame_strdup(UI_INI_FILENAME);
+	char *s = core_strdup(UI_INI_FILENAME);
 	_strlwr(s);
 	snprintf(filename, filename_size, "%s\\%s", inidir, s);
 	osd_free(inidir);
@@ -3819,7 +3819,7 @@ void SaveDefaultOptions(void)
 {
 	char buffer[MAX_PATH];
 	GetGlobalOptionsFileName(buffer, ARRAY_LENGTH(buffer));
-	SaveSettingsFile(global, NULL, buffer);
+	//SaveSettingsFile(global, NULL, buffer);
 }
 
 const char * GetVersionString(void)
@@ -4056,7 +4056,7 @@ void save_options(OPTIONS_TYPE opt_type, windows_options &opts, int game_num)
 		// Don't try to save a null global options file,  or it will be erased.
 		//if (NULL == opts)
 			//return;
-		global = opts;
+		//global = opts;
 		filename.cpy(emulator_info::get_configname());
 	} else if (opt_type == OPTIONS_VECTOR)
 	{
