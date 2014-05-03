@@ -54,28 +54,29 @@ public:
 	// construction/destruction
 	segas16c_state(const machine_config &mconfig, device_type type, const char *tag)
 		: sega_16bit_common_base(mconfig, type, tag),
-		  m_mapper(*this, "mapper"),
-		  m_maincpu(*this, "maincpu"),
-		  m_soundcpu(*this, "soundcpu"),
-		  m_mcu(*this, "mcu"),
-		  m_ymsnd(*this, "ymsnd"),
-		  m_upd7759(*this, "upd"),
-		  m_multiplier(*this, "multiplier"),
-		  m_cmptimer_1(*this, "cmptimer_1"),
-		  m_cmptimer_2(*this, "cmptimer_2"),
-		  m_nvram(*this, "nvram"),
-		  m_sprites(*this, "sprites"),
-		  m_segaic16vid(*this, "segaic16vid"),
-		  m_workram(*this, "workram"),
-		  m_romboard(ROM_BOARD_INVALID),
-		  m_tilemap_type(SEGAIC16_TILEMAP_16B),
-		  m_disable_screen_blanking(false),
-		  m_i8751_initial_config(NULL),
-		  m_atomicp_sound_divisor(0),
-		  m_atomicp_sound_count(0),
-		  m_hwc_input_value(0),
-		  m_mj_input_num(0),
-		  m_mj_last_val(0)
+			m_mapper(*this, "mapper"),
+			m_maincpu(*this, "maincpu"),
+			m_soundcpu(*this, "soundcpu"),
+			m_mcu(*this, "mcu"),
+			m_ymsnd(*this, "ymsnd"),
+			m_upd7759(*this, "upd"),
+			m_multiplier(*this, "multiplier"),
+			m_cmptimer_1(*this, "cmptimer_1"),
+			m_cmptimer_2(*this, "cmptimer_2"),
+			m_nvram(*this, "nvram"),
+			m_sprites(*this, "sprites"),
+			m_segaic16vid(*this, "segaic16vid"),
+			m_workram(*this, "workram"),
+			m_romboard(ROM_BOARD_INVALID),
+			m_tilemap_type(SEGAIC16_TILEMAP_16B),
+			m_disable_screen_blanking(false),
+			m_i8751_initial_config(NULL),
+			m_atomicp_sound_divisor(0),
+			m_atomicp_sound_count(0),
+			m_hwc_input_value(0),
+			m_mj_input_num(0),
+			m_mj_last_val(0),
+			m_gfxdecode(*this, "gfxdecode")
 	{ }
 
 	// memory mapping
@@ -98,7 +99,7 @@ public:
 	DECLARE_READ8_MEMBER( upd7759_status_r );
 
 	// other callbacks
-	static void upd7759_generate_nmi(device_t *device, int state);
+	DECLARE_WRITE_LINE_MEMBER(upd7759_generate_nmi);
 	INTERRUPT_GEN_MEMBER( i8751_main_cpu_vblank );
 
 	// ROM board-specific driver init
@@ -110,8 +111,8 @@ public:
 	// video updates
 	UINT32 screen_update(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
 
-	DECLARE_WRITE16_HANDLER( sega_tileram_0_w ) { m_segaic16vid->segaic16_tileram_0_w(space,offset,data,mem_mask); };
-	DECLARE_WRITE16_HANDLER( sega_textram_0_w ) { m_segaic16vid->segaic16_textram_0_w(space,offset,data,mem_mask); };
+	DECLARE_WRITE16_MEMBER( sega_tileram_0_w ) { m_segaic16vid->segaic16_tileram_0_w(space,offset,data,mem_mask); };
+	DECLARE_WRITE16_MEMBER( sega_textram_0_w ) { m_segaic16vid->segaic16_textram_0_w(space,offset,data,mem_mask); };
 
 protected:
 	// internal types
@@ -173,4 +174,6 @@ protected:
 	UINT8				m_hwc_input_value;
 	UINT8				m_mj_input_num;
 	UINT8				m_mj_last_val;
+
+	required_device<gfxdecode_device> m_gfxdecode;
 };

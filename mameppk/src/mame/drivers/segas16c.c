@@ -318,11 +318,10 @@ READ8_MEMBER( segas16c_state::upd7759_status_r )
 //  NMI to the sound CPU
 //-------------------------------------------------
 
-void segas16c_state::upd7759_generate_nmi(device_t *device, int state)
+WRITE_LINE_MEMBER(segas16c_state::upd7759_generate_nmi)
 {
-	segas16c_state *driver = device->machine().driver_data<segas16c_state>();
 	if (state)
-		driver->m_soundcpu->set_input_line(INPUT_LINE_NMI, PULSE_LINE);
+		m_soundcpu->set_input_line(INPUT_LINE_NMI, PULSE_LINE);
 }
 
 
@@ -589,21 +588,8 @@ INPUT_PORTS_END
 
 
 //**************************************************************************
-//  SOUND CONFIGURATIONS
+//  GRAPHICS DECODING
 //**************************************************************************
-
-static const upd775x_interface upd7759_config =
-{
-	&segas16c_state::upd7759_generate_nmi
-};
-
-
-
-/*************************************
- *
- *  Graphics definitions
- *
- *************************************/
 
 static GFXDECODE_START( segas16c )
 	GFXDECODE_ENTRY( "gfx1", 0, gfx_8x8x3_planar,	0, 1024 )
@@ -611,11 +597,9 @@ GFXDECODE_END
 
 
 
-/*************************************
- *
- *  Generic machine drivers
- *
- *************************************/
+//**************************************************************************
+//  GENERIC MACHINE DRIVERS
+//**************************************************************************
 
 static MACHINE_CONFIG_START( system16c, segas16c_state )
 
@@ -633,14 +617,17 @@ static MACHINE_CONFIG_START( system16c, segas16c_state )
 	MCFG_SEGA_315_5195_MAPPER_ADD("mapper", "maincpu", segas16c_state, memory_mapper, mapper_sound_r, mapper_sound_w)
 
 	/* video hardware */
-	MCFG_GFXDECODE(segas16c)
-	MCFG_PALETTE_LENGTH(2048*3)
+	MCFG_GFXDECODE_ADD("gfxdecode", "palette", segas16c)
+	MCFG_PALETTE_ADD("palette", 2048*3)
 
 	MCFG_SCREEN_ADD("screen", RASTER)
 	MCFG_SCREEN_RAW_PARAMS(MASTER_CLOCK_25MHz/4, 400, 0, 320, 262, 0, 224)
 	MCFG_SCREEN_UPDATE_DRIVER(segas16c_state, screen_update)
+	MCFG_SCREEN_PALETTE("palette")
 
 	MCFG_SEGA_SYS16C_SPRITES_ADD("sprites")
+	MCFG_SEGAIC16VID_ADD("segaic16vid")
+	MCFG_SEGAIC16VID_GFXDECODE("gfxdecode")
 
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_MONO("mono")
@@ -649,7 +636,7 @@ static MACHINE_CONFIG_START( system16c, segas16c_state )
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.00)
 
 	MCFG_SOUND_ADD("upd", UPD7759, UPD7759_STANDARD_CLOCK)
-	MCFG_SOUND_CONFIG(upd7759_config)
+	MCFG_UPD7759_DRQ_CALLBACK(WRITELINE(segas16c_state,upd7759_generate_nmi))
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.00)
 MACHINE_CONFIG_END
 
