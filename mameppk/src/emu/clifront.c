@@ -115,17 +115,15 @@ cli_frontend::cli_frontend(cli_options &options, osd_interface &osd)
 
 cli_frontend::~cli_frontend()
 {
-#ifdef DRIVER_SWITCH
-	driver_switch::free_drivers();
-#endif /* DRIVER_SWITCH */
-
 	// nuke any device options since they will leak memory
 	m_options.remove_device_options();
 
 	// report any unfreed memory on clean exits
 	track_memory(false);
+#ifdef MAME_DEBUG
 	if (m_result == MAMERR_NONE)
 		dump_unfreed_mem(m_start_memory);
+#endif
 }
 
 
@@ -153,9 +151,6 @@ int cli_frontend::execute(int argc, char **argv)
 		}
 
 		setup_language(m_options);
-#if 0 //def DRIVER_SWITCH
-		driver_switch::init_assign_drivers();
-#endif /* DRIVER_SWITCH */
 
 		if (*(m_options.software_name()) != 0)
 		{
@@ -233,13 +228,6 @@ int cli_frontend::execute(int argc, char **argv)
 		}
 		if (option_errors)
 			printf(_("Error in command line:\n%s\n"), option_errors.trimspace().cstr());
-
-#if 0
-		//mamep: driver_config and language need the INIs parsed
-		m_options.parse_standard_inis(option_errors);
-		if (option_errors)
-			printf("%s\n", option_errors.cstr());
-#endif
 
 #ifdef DRIVER_SWITCH
 		driver_switch::assign_drivers(m_options);
@@ -1570,11 +1558,11 @@ void cli_frontend::romident(const char *filename)
 	if (ident.matches() == ident.total())
 		return;
 	else if (ident.matches() == ident.total() - ident.nonroms())
-		throw emu_fatalerror(MAMERR_IDENT_NONROMS, NULL);
+		throw emu_fatalerror(MAMERR_IDENT_NONROMS, "", NULL);
 	else if (ident.matches() > 0)
-		throw emu_fatalerror(MAMERR_IDENT_PARTIAL, NULL);
+		throw emu_fatalerror(MAMERR_IDENT_PARTIAL, "", NULL);
 	else
-		throw emu_fatalerror(MAMERR_IDENT_NONE, NULL);
+		throw emu_fatalerror(MAMERR_IDENT_NONE, "", NULL);
 }
 
 
@@ -1652,7 +1640,7 @@ void cli_frontend::listgames(const char *gamename)
 	if (count > 0)
 		return;
 	else
-		throw emu_fatalerror(MAMERR_NO_SUCH_GAME, NULL);
+		throw emu_fatalerror(MAMERR_NO_SUCH_GAME, "", NULL);
 }
 
 
