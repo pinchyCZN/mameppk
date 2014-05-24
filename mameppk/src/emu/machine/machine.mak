@@ -16,6 +16,56 @@ MACHINEOBJ = $(EMUOBJ)/machine
 
 #-------------------------------------------------
 #
+#@src/emu/machine/akiko.h,MACHINES += AKIKO
+#-------------------------------------------------
+
+ifneq ($(filter AKIKO,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/akiko.o
+endif
+
+
+#-------------------------------------------------
+#
+#@src/emu/machine/autoconfig.h,MACHINES += AUTOCONFIG
+#-------------------------------------------------
+
+ifneq ($(filter AUTOCONFIG,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/autoconfig.o
+endif
+
+
+#-------------------------------------------------
+#
+#@src/emu/machine/cr511b.h,MACHINES += CR511B
+#-------------------------------------------------
+
+ifneq ($(filter CR511B,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/cr511b.o
+endif
+
+
+#-------------------------------------------------
+#
+#@src/emu/machine/dmac.h,MACHINES += DMAC
+#-------------------------------------------------
+
+ifneq ($(filter DMAC,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/dmac.o
+endif
+
+
+#-------------------------------------------------
+#
+#@src/emu/machine/gayle.h,MACHINES += GAYLE
+#-------------------------------------------------
+
+ifneq ($(filter GAYLE,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/gayle.o
+endif
+
+
+#-------------------------------------------------
+#
 #@src/emu/machine/40105.h,MACHINES += CMOS40105
 #-------------------------------------------------
 
@@ -1591,6 +1641,15 @@ endif
 ifneq ($(filter WD33C93,$(MACHINES)),)
 MACHINES += SCSI
 MACHINEOBJS += $(MACHINEOBJ)/wd33c93.o
+endif
+
+#-------------------------------------------------
+#
+#@src/emu/machine/wd7600.h,MACHINES += WD7600
+#-------------------------------------------------
+
+ifneq ($(filter WD7600,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/wd7600.o
 endif
 
 #-------------------------------------------------

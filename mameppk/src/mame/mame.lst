@@ -696,6 +696,7 @@ pleiads         // (c) 1981 Tehkan
 pleiadsb2       // bootleg
 pleiadbl        // bootleg
 pleiadce        // (c) 1981 Centuri + Tehkan
+pleiadsi        // bootleg?
 capitol         // bootleg?
 survival        // (c) 1982 Rock-ola
 naughtyb        // (c) 1982 Jaleco
@@ -2981,6 +2982,7 @@ blktiger        //  8/1987 (c) 1987 (US)
 blktigera       //  8/1987 (c) 1987 (US)
 blktigerb1      // bootleg
 blktigerb2      // bootleg
+blktigerb3      // bootleg?
 blkdrgon        //  8/1987 (c) 1987 (Japan)
 blkdrgonb       // bootleg, hacked to say Black Tiger
 sf              //  8/1987 (c) 1987 (World)
@@ -5383,7 +5385,7 @@ manicpnc        // 2007.07 Manic Panic Ghosts!
 pokasuka        // 2007.07 Pokasuka Ghost!
 sl2007          // 2007.07 Shooting Love
 asndynmt        // 2007.07 Dynamite Deka EX - Asian dynamite
-				// 2007.09 Rhythm Tengoku
+rhytngk         // 2007.09 Rhythm Tengoku
 ausfache        // 2008.02 Akatsuki Denkou Senki Ausf.Achse
 illvelo         // 2008.06 Illvelo (Illmatic Envelope)
 mamonoro        // 2008.07 Mamoru-kun wa Norowarete Shimatta!
@@ -6493,6 +6495,7 @@ ggreats2        // 1994.03 GX218 (Japan)
 le2         // 1994.?? GX312 (Europe)
 le2u            // 1994.04 GX312 (US)
 le2j            // 1994.06 GX312 (Japan)
+crzcross        // 1994.?? GX315 (Europe)
 puzldama        // 1994.07 GX315 (Japan)
 gokuparo        // 1994.04 GX321 (Japan)
 fantjour        // 1994.?? GX321 (Euro)
@@ -8559,6 +8562,7 @@ crshrace        // (c) 1993 Video System Co.
 crshrace2       // (c) 1993 Video System Co.
 taotaido        // (c) 1993 Video System Co.
 taotaidoa       // (c) 1993 Video System Co.
+taotaido3       // (c) 1993 Video System Co.
 gstriker        // (c) [1993] Human
 gstrikera       // (c) [1993] Human
 gstrikerj       // (c) [1993] Human
@@ -9112,6 +9116,7 @@ pushmana        // (c) 1990 Comad
 pushmans        // (c) 1990 Comad + American Sammy license
 pushmant        // (c) 1990 Comad + Top Tronic license
 bballs          // (c) 1991 Comad
+bballsa         // (c) 1991 Comad
 zerozone        // (c) 1993 Comad
 lvgirl94        // (c) 1994 Comad
 hotpinbl        // (c) 1995 Comad & New Japan System
@@ -9385,6 +9390,7 @@ janptrsp        // 1997 Dynax
 sprtmtch        // "31" (c) 1989 Dynax + Fabtek license
 maya            // (c) 1994 Promat
 mayaa           // (c) 1994 Promat
+mayab           // (c) 1994 Promat
 inca            // (c) 199? ????
 blktouch        // (c) Yang Gi Co Ltd.
 mcnpshnt        // "33" Mahjong Campus Hunting 1990 Dynax
@@ -9919,7 +9925,7 @@ mquake          // (c) 1987
 upscope         // (c) 1986 Grand products
 
 // Cubo32 (Commodore CD32-based HW)
-cd32bios        // Base unit
+cubo            // Base unit
 cndypuzl        // (c) 1995
 haremchl        // (c) 1995
 lsrquiz         // (c) 1995
@@ -10950,9 +10956,26 @@ pepp0728        // (c) 1987 IGT - International Game Technology
 pepp0760        // (c) 1987 IGT - International Game Technology
 pepp0763        // (c) 1987 IGT - International Game Technology
 pepp0775        // (c) 1987 IGT - International Game Technology
+peip0028        // (c) 1987 IGT - International Game Technology
+peip0029        // (c) 1987 IGT - International Game Technology
+peip0031        // (c) 1987 IGT - International Game Technology
 peip0041        // (c) 1987 IGT - International Game Technology
+peip0051        // (c) 1987 IGT - International Game Technology
+peip0058        // (c) 1987 IGT - International Game Technology
+peip0062        // (c) 1987 IGT - International Game Technology
 peip0074        // (c) 1987 IGT - International Game Technology
 peip0079        // (c) 1987 IGT - International Game Technology
+peip0101        // (c) 1987 IGT - International Game Technology
+peip0103        // (c) 1987 IGT - International Game Technology
+peip0105        // (c) 1987 IGT - International Game Technology
+peip0108        // (c) 1987 IGT - International Game Technology
+peip0111        // (c) 1987 IGT - International Game Technology
+peip0112        // (c) 1987 IGT - International Game Technology
+peip0114        // (c) 1987 IGT - International Game Technology
+peip0115        // (c) 1987 IGT - International Game Technology
+peip0116        // (c) 1987 IGT - International Game Technology
+peip0118        // (c) 1987 IGT - International Game Technology
+peip0120        // (c) 1987 IGT - International Game Technology
 pebe0014        // (c) 1994 IGT - International Game Technology
 peke1012        // (c) 1994 IGT - International Game Technology
 peke1013        // (c) 1994 IGT - International Game Technology
@@ -11079,7 +11102,9 @@ pex2310p        // (c) 1995 IGT - International Game Technology
 pex2314p        // (c) 1995 IGT - International Game Technology
 pex2374p        // (c) 1995 IGT - International Game Technology
 pex2377p        // (c) 1995 IGT - International Game Technology
+pex2419p        // (c) 1995 IGT - International Game Technology
 pex2420p        // (c) 1995 IGT - International Game Technology
+pex2421p        // (c) 1995 IGT - International Game Technology
 pex2440p        // (c) 1995 IGT - International Game Technology
 pex2461p        // (c) 1995 IGT - International Game Technology
 pekoc766        // (c) 1997 IGT - International Game Technology
@@ -11105,6 +11130,7 @@ pexm006p        // (c) 1997 IGT - International Game Technology
 pexm007p        // (c) 1997 IGT - International Game Technology
 pexm008p        // (c) 1997 IGT - International Game Technology
 pexm009p        // (c) 1997 IGT - International Game Technology
+pexm013p        // (c) 1997 IGT - International Game Technology
 pexmp013        // (c) 1997 IGT - International Game Technology
 pexmp017        // (c) 1997 IGT - International Game Technology
 pexmp017a       // (c) 1997 IGT - International Game Technology
@@ -11129,8 +11155,10 @@ sureshot        // (c) 1985 SMS MFG CORP
 secondch        // (c) 1985 SMS MFG CORP
 skylncr         // (c) 1995 Bordun International
 butrfly         // (c) 1995 Bordun International
+mbutrfly        // (c) 1999 (Bordun International?)
 madzoo          // (c) 1995 Bordun International
 leader          // Bootleg?
+neraidou        // Bootleg?
 sstar97         // (c) 199? Bordun International
 livequiz        // (c) 1999 Andamiro
 hammer          // (c) 2000 Andamiro
@@ -31317,4 +31345,5 @@ gluck2     // 1992 Yung Yu / CYE
 fireball
 
 amusco     // 1987, Amusco.
+cocoloco   // 198?, Petaco S.A.
 #endif // !NCP
