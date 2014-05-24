@@ -305,6 +305,11 @@ public:
 	DECLARE_WRITE32_MEMBER( kov2p_arm_region_w );
 	DECLARE_READ32_MEMBER( ddp2_speedup_r );
 	DECLARE_READ16_MEMBER( ddp2_main_speedup_r );
+#ifdef KAILLERA
+	DECLARE_READ16_MEMBER( kov2_4p_dip_16_r );
+	DECLARE_READ16_MEMBER( kov2p4p_dip_16_r );
+	DECLARE_READ16_MEMBER( kov2p4p_secretchar_16_r );
+#endif /* KAILLERA */
 };
 
 

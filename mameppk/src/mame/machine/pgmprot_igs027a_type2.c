@@ -196,7 +196,7 @@ DRIVER_INIT_MEMBER(pgm_arm_type2_state,kov2p)
 }
 
 #ifdef KAILLERA
-static READ16_HANDLER( kov2_4p_dip_16_r )
+READ16_MEMBER( pgm_arm_type2_state::kov2_4p_dip_16_r )
 {
 	pgm_arm_type2_state *state = space.machine().driver_data<pgm_arm_type2_state>();
 	UINT16 mem = state->m_mainram[offset];
@@ -210,7 +210,7 @@ DRIVER_INIT_MEMBER(pgm_arm_type2_state,kov2_4p)
 
 	DRIVER_INIT_CALL( kov2 );
 
-	machine().device("maincpu")->memory().space(AS_PROGRAM).install_legacy_read_handler(0x803b84, 0x803b85, FUNC(kov2_4p_dip_16_r));
+	machine().device("maincpu")->memory().space(AS_PROGRAM).install_read_handler(0x803b84, 0x803b85, read16_delegate(FUNC(pgm_arm_type2_state::kov2_4p_dip_16_r),this));
 
 	// enable secret characters
 	mem[0x143714 >> 1] = 0x0002;
@@ -218,7 +218,7 @@ DRIVER_INIT_MEMBER(pgm_arm_type2_state,kov2_4p)
 	mem[0x143786 >> 1] = 0x0002;
 }
 
-static READ16_HANDLER( kov2p4p_dip_16_r )
+READ16_MEMBER( pgm_arm_type2_state::kov2p4p_dip_16_r )
 {
 	pgm_arm_type2_state *state = space.machine().driver_data<pgm_arm_type2_state>();
 	UINT16 mem = state->m_mainram[offset];
@@ -226,7 +226,7 @@ static READ16_HANDLER( kov2p4p_dip_16_r )
 	return (mem & 0xff00) | 0x00;
 }
 
-static READ16_HANDLER( kov2p4p_secretchar_16_r )
+READ16_MEMBER( pgm_arm_type2_state::kov2p4p_secretchar_16_r )
 {
 	pgm_arm_type2_state *state = space.machine().driver_data<pgm_arm_type2_state>();
 	UINT16 mem = state->m_mainram[offset];
@@ -238,10 +238,10 @@ DRIVER_INIT_MEMBER(pgm_arm_type2_state,kov2p4p)
 {
 	DRIVER_INIT_CALL( kov2p );
 
-	machine().device("maincpu")->memory().space(AS_PROGRAM).install_legacy_read_handler(0x803b84, 0x803b85, FUNC(kov2p4p_dip_16_r));
+	machine().device("maincpu")->memory().space(AS_PROGRAM).install_read_handler(0x803b84, 0x803b85, read16_delegate(FUNC(pgm_arm_type2_state::kov2p4p_dip_16_r),this));
 
 	// enable secret characters
-	machine().device("maincpu")->memory().space(AS_PROGRAM).install_legacy_read_handler(0x8139f4, 0x8139f5, FUNC(kov2p4p_secretchar_16_r));
+	machine().device("maincpu")->memory().space(AS_PROGRAM).install_read_handler(0x8139f4, 0x8139f5, read16_delegate(FUNC(pgm_arm_type2_state::kov2p4p_secretchar_16_r),this));
 }
 #endif /* KAILLERA */
 

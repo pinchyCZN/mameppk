@@ -570,7 +570,6 @@ void fromanc2_set_dispvram_w(int vram)
 
 UINT32 fromanc2_state::screen_update_fromanc2_k(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect)
 {
-	fromanc2_state *state = screen.machine().driver_data<fromanc2_state>();
 	int i;
 	int *scrollx = NULL;
 	int *scrolly = NULL;
@@ -578,15 +577,15 @@ UINT32 fromanc2_state::screen_update_fromanc2_k(screen_device &screen, bitmap_in
 
 	if (fromanc2_dispvram == 0)
 	{
-		tilemaps = state->m_tilemap[0];
-		scrollx = state->m_scrollx[0];
-		scrolly = state->m_scrolly[0];
+		tilemaps = m_tilemap[0];
+		scrollx = m_scrollx[0];
+		scrolly = m_scrolly[0];
 	}
 	else
 	{
-		tilemaps = state->m_tilemap[1];
-		scrollx = state->m_scrollx[1];
-		scrolly = state->m_scrolly[1];
+		tilemaps = m_tilemap[1];
+		scrollx = m_scrollx[1];
+		scrolly = m_scrolly[1];
 	}
 
 	for (i = 0; i < 4; i++)

@@ -27,7 +27,6 @@
 #include "ui_temp.h"
 extern int kPlay;
 extern int playernmb_get(int nmb);
-SCREEN_UPDATE_IND16( fromanc2_k );
 void fromanc2_set_dispvram_w(int vram);
 static int fromanc2_playerside;
 #endif /* KAILLERA */

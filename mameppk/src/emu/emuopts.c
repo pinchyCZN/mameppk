@@ -59,21 +59,17 @@ const options_entry emu_options::s_option_entries[] =
 	{ NULL,                                              NULL,        OPTION_HEADER,     "CORE OUTPUT DIRECTORY OPTIONS" },
 	{ OPTION_CFG_DIRECTORY,                              "cfg",       OPTION_STRING,     "directory to save configurations" },
 	{ OPTION_NVRAM_DIRECTORY,                            "nvram",     OPTION_STRING,     "directory to save nvram contents" },
-	{ OPTION_MEMCARD_DIRECTORY,                          "memcard",   OPTION_STRING,     "directory to save memory card contents" },
 	{ OPTION_INPUT_DIRECTORY,                            "inp",       OPTION_STRING,     "directory to save input device logs" },
 	{ OPTION_STATE_DIRECTORY,                            "sta",       OPTION_STRING,     "directory to save states" },
 	{ OPTION_SNAPSHOT_DIRECTORY,                         "snap",      OPTION_STRING,     "directory to save screenshots" },
 	{ OPTION_DIFF_DIRECTORY,                             "diff",      OPTION_STRING,     "directory to save hard drive image difference files" },
 	{ OPTION_COMMENT_DIRECTORY,                          "comments",  OPTION_STRING,     "directory to save debugger comments" },
-#ifdef USE_HISCORE
-	{ "hiscore_directory",                               "hi",        OPTION_STRING,     "directory to save hiscores" },
-#endif /* USE_HISCORE */
 #ifdef MAME_AVI
 	{ "avi_directory",                                   "avi",       OPTION_STRING,     "directory to save avi video file" },
 #endif /* MAME_AVI */
-
-	// filename options
-	{ NULL,                                              NULL,        OPTION_HEADER,     "CORE FILENAME OPTIONS" },
+#ifdef USE_HISCORE
+	{ "hiscore_directory",                               "hi",        OPTION_STRING,     "directory to save hiscores" },
+#endif /* USE_HISCORE */
 #ifdef CMD_LIST
 	{ OPTION_COMMAND_FILE,                               "command.dat",OPTION_STRING,    "command list database name" },
 #endif /* CMD_LIST */
@@ -559,6 +555,15 @@ void emu_options::parse_standard_inis(astring &error_string)
 	else
 		parse_one_ini("horizont", OPTION_PRIORITY_ORIENTATION_INI, &error_string);
 
+	if (cursystem->flags & GAME_TYPE_ARCADE)
+		parse_one_ini("arcade", OPTION_PRIORITY_SYSTYPE_INI, &error_string);
+	else if (cursystem->flags & GAME_TYPE_CONSOLE)
+		parse_one_ini("console", OPTION_PRIORITY_SYSTYPE_INI, &error_string);
+	else if (cursystem->flags & GAME_TYPE_COMPUTER)
+		parse_one_ini("computer", OPTION_PRIORITY_SYSTYPE_INI, &error_string);
+	else if (cursystem->flags & GAME_TYPE_OTHER)
+		parse_one_ini("othersys", OPTION_PRIORITY_SYSTYPE_INI, &error_string);
+
 	// parse "vector.ini" for vector games
 	{
 		machine_config config(*cursystem, *this);
@@ -677,7 +682,7 @@ bool emu_options::parse_one_ini(const char *basename, int priority, astring *err
 		return false;
 
 	// parse the file
-	mame_printf_verbose("Parsing %s.ini\n", basename);
+	osd_printf_verbose("Parsing %s.ini\n", basename);
 	astring error;
 	bool result = parse_ini_file(file, priority, OPTION_PRIORITY_DRIVER_INI, error);
 
