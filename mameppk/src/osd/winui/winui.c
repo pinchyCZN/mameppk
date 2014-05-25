@@ -1176,9 +1176,9 @@ static void override_options(windows_options &opts, void *param)
 	{
 		opts.set_value(OPTION_AUTOFRAMESKIP, TRUE, OPTION_PRIORITY_CMDLINE,error_string);
 		opts.set_value(OPTION_THROTTLE, TRUE, OPTION_PRIORITY_CMDLINE,error_string);
-		opts.set_value(WINOPTION_WAITVSYNC, 0, OPTION_PRIORITY_CMDLINE,error_string);
-		opts.set_value(WINOPTION_SYNCREFRESH, 0, OPTION_PRIORITY_CMDLINE,error_string);
-		opts.set_value(OPTION_SOUND, TRUE, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(OSDOPTION_WAITVSYNC, 0, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(OSDOPTION_SYNCREFRESH, 0, OPTION_PRIORITY_CMDLINE,error_string);
+		opts.set_value(OSDOPTION_SOUND, "auto", OPTION_PRIORITY_CMDLINE,error_string);
 		opts.set_value(OPTION_SAMPLERATE, 48000, OPTION_PRIORITY_CMDLINE,error_string);
 		opts.set_value(OPTION_SAMPLES, TRUE, OPTION_PRIORITY_CMDLINE,error_string);
 #if 0
@@ -1188,7 +1188,7 @@ static void override_options(windows_options &opts, void *param)
 #endif
 		opts.set_value(OPTION_BIOS, "0", OPTION_PRIORITY_CMDLINE,error_string);
 		opts.set_value(OPTION_CHEAT, 0, OPTION_PRIORITY_CMDLINE,error_string);
-		opts.set_value(WINOPTION_MULTITHREADING, 0, OPTION_PRIORITY_CMDLINE,error_string);
+//		opts.set_value(OSDOPTION_MULTITHREADING, 0, OPTION_PRIORITY_CMDLINE,error_string);
 		opts.set_value(OPTION_SPEED, 1.0f, OPTION_PRIORITY_CMDLINE,error_string);
 		opts.set_value(OPTION_REFRESHSPEED, 0, OPTION_PRIORITY_CMDLINE,error_string);
 	}
@@ -1247,6 +1247,7 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 	// Time the game run.
 	time(&start);
 	windows_osd_interface osd;
+	osd.register_options(mame_opts);
 	mame_execute(mame_opts, osd);
 	// Calc the duration
 	time(&end);
@@ -11639,7 +11640,12 @@ static void SetupAviStatus(int nGame)
 		AviStatus.avi_audio_samples_per_sec = mame_mixer_dstwfm.samplespersec;
 		AviStatus.avi_audio_bitrate			= mame_mixer_dstwfm.bitrate;
 
-		AviStatus.audio_type			= o.bool_value(OPTION_SOUND);
+		if (!core_stricmp(o.value(OSDOPTION_SOUND), "dsound")
+			|| !core_stricmp(o.value(OSDOPTION_SOUND), "auto"))
+			AviStatus.audio_type			= TRUE;
+		else
+			AviStatus.audio_type			= FALSE;
+
 		AviStatus.avi_audio_record_type	= (AviStatus.audio_type!=0) ? 2:0;
 	}
 
