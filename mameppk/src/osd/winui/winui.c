@@ -1208,7 +1208,7 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 
 	// Tell mame were to get the INIs
 	//mamep: we want parse MAME.ini in root directory with all INIs in inipath. not only parse inipath
-//	mame_opts.set_value(OPTION_INIPATH, GetIniDir(), OPTION_PRIORITY_CMDLINE,error_string);
+//	SetDirectories(mame_opts);
 
 	// add image specific device options
 	mame_opts.set_system_name(driver_list::driver(nGameIndex).name);
@@ -2909,7 +2909,8 @@ static void Win32UI_exit()
 	DirectDraw_Close();
 
 	SetSavedFolderID(GetCurrentFolderID());
-
+	SaveGameListOptions();
+	SaveDefaultOptions();
 	SaveOptions();
 
 	FreeFolders();
@@ -6477,6 +6478,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 								DirectoriesDialogProc);
 
 			SaveDefaultOptions();
+			SaveOptions();
 
 			bUpdateRoms    = ((nResult & DIRDLG_ROMS)	 == DIRDLG_ROMS)	? TRUE : FALSE;
 			bUpdateSamples = ((nResult & DIRDLG_SAMPLES) == DIRDLG_SAMPLES) ? TRUE : FALSE;
@@ -6503,6 +6505,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
         {
 			// these may have been changed
 			SaveDefaultOptions();
+			SaveOptions();
 			DestroyWindow(hwnd);
 			PostQuitMessage(0);
 		} else {
@@ -6515,6 +6518,7 @@ static BOOL MameCommand(HWND hwnd,int id, HWND hwndCtl, UINT codeNotify)
 		DialogBox(GetModuleHandle(NULL), MAKEINTRESOURCE(IDD_INTERFACE_OPTIONS),
 				  hMain, InterfaceDialogProc);
 		SaveDefaultOptions();
+		SaveOptions();
 
 		KillTimer(hMain, SCREENSHOT_TIMER);
 		if( GetCycleScreenshot() > 0)
