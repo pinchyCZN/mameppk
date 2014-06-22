@@ -1207,7 +1207,7 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 //	mame_opts = mame_options_init(mame_win_options);
 
 	// Tell mame were to get the INIs
-	//mamep: we want parse MAME.ini in root directory with all INIs in inipath. not only parse inipath
+	// mamep: we want parse MAME.ini in root directory with all INIs in inipath. not only parse inipath
 //	SetDirectories(mame_opts);
 
 	// add image specific device options
@@ -1248,7 +1248,9 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 	time(&start);
 	windows_osd_interface osd;
 	osd.register_options(mame_opts);
-	mame_execute(mame_opts, osd);
+	machine_manager *manager = machine_manager::instance(mame_opts, osd);
+	manager->execute();
+	global_free(manager);	
 	// Calc the duration
 	time(&end);
 	elapsedtime = end - start;
@@ -9927,9 +9929,9 @@ void WINAPI kChatCallback(char *nick, char *text)
 					//int flag;
 					WCHAR fname_src[MAX_PATH];
 					WCHAR fname_dest[MAX_PATH];
-					wsprintf(fname_dest, TEXT("%s/%s/%s-%s.sta"), GetStateDir(), _Unicode(get_global_machine().basename()), _Unicode(get_global_machine().system().name), _Unicode(name));
+					wsprintf(fname_dest, TEXT("%s/%s/%s-%s.sta"), GetStateDir(), _Unicode(machine_manager::instance()->machine()->basename()), _Unicode(machine_manager::instance()->machine()->system().name), _Unicode(name));
 					name[0] = '@';
-					wsprintf(fname_src, TEXT("%s/%s/%s-%s.sta"), GetStateDir(), _Unicode(get_global_machine().basename()), _Unicode(get_global_machine().system().name), _Unicode(name));
+					wsprintf(fname_src, TEXT("%s/%s/%s-%s.sta"), GetStateDir(), _Unicode(machine_manager::instance()->machine()->basename()), _Unicode(machine_manager::instance()->machine()->system().name), _Unicode(name));
 					CopyFileW(fname_src, fname_dest, FALSE);
 				}
 
@@ -10054,17 +10056,17 @@ void WINAPI kChatCallback(char *nick, char *text)
 					char filename[MAX_PATH];
 					char name[2];
 					name[0] = Kaillera_StateSave_file; name[1] = 0;
-					sprintf(filename, "%s%s%s-%s.sta", get_global_machine().basename(), PATH_SEPARATOR, get_global_machine().system().name, name);
-					emu_file file(get_global_machine().options().state_directory(), OPEN_FLAG_READ);
+					sprintf(filename, "%s%s%s-%s.sta", machine_manager::instance()->machine()->basename(), PATH_SEPARATOR, machine_manager::instance()->machine()->system().name, name);
+					emu_file file(machine_manager::instance()->machine()->options().state_directory(), OPEN_FLAG_READ);
 					filerr = file.open(filename);
 					if (filerr != FILERR_NONE)
 					{
-						emu_file file2(get_global_machine().options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+						emu_file file2(machine_manager::instance()->machine()->options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
 						filerr = file2.open(filename);
 						file2.close();
 					}
 					file.close();
-					checksum_file_crc32(get_global_machine().options().state_directory(), filename, NULL, &size, &crc);
+					checksum_file_crc32(machine_manager::instance()->machine()->options().state_directory(), filename, NULL, &size, &crc);
 				}
 
 				dat[0] = 0x0000000f;
@@ -10237,12 +10239,12 @@ void WINAPI kChatCallback(char *nick, char *text)
 				name[0] = Kaillera_StateSave_file;
 				name[1] = 0;
 				//int flag;
-				sprintf(fname, "%s/%s-%c.sta", get_global_machine().basename(), get_global_machine().system().name, name[0]);
-				emu_file file(get_global_machine().options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
+				sprintf(fname, "%s/%s-%c.sta", machine_manager::instance()->machine()->basename(), machine_manager::instance()->machine()->system().name, name[0]);
+				emu_file file(machine_manager::instance()->machine()->options().state_directory(), OPEN_FLAG_WRITE | OPEN_FLAG_CREATE | OPEN_FLAG_CREATE_PATHS);
 				filerr = file.open(fname);
 				file.write(temp, tst);
 				file.close();
-				popmessageW(_UIW(TEXT("Reception completed. %s-%c.sta successfully saved.")), _Unicode(get_global_machine().system().name), Kaillera_StateSave_file);
+				popmessageW(_UIW(TEXT("Reception completed. %s-%c.sta successfully saved.")), _Unicode(machine_manager::instance()->machine()->system().name), Kaillera_StateSave_file);
 			}
 			if( zl == Z_MEM_ERROR) popmessage("Z_MEM_ERROR" );
 			if( zl == Z_BUF_ERROR) popmessage("Z_BUF_ERROR" );

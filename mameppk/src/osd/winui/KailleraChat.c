@@ -561,7 +561,7 @@ void KailleraChatUpdate(running_machine &machine, render_container *container)
     {
         if (ui_input_pressed(machine, IPT_UI_CHAT_OPEN))
         {
-			get_global_machine().input().device_class(DEVICE_CLASS_KEYBOARD).enable(false);
+			machine_manager::instance()->machine()->input().device_class(DEVICE_CLASS_KEYBOARD).enable(false);
             if (bUseIME)
             {
                 if (_WINNLSEnableIME)
@@ -893,7 +893,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
                 switch (wParam)
                 {
                 case VK_RETURN:
-					ui_input_pressed(get_global_machine(), IPT_UI_SELECT); /* IPT_UI_SELECTの押下フラグをクリア */
+					ui_input_pressed(*machine_manager::instance()->machine(), IPT_UI_SELECT); /* IPT_UI_SELECTの押下フラグをクリア */
                     if (szInputBuf[0] == '\0')
 					{
 						KailleraChatCloseChat(); //kt
@@ -905,7 +905,7 @@ static LRESULT CALLBACK EditProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 
                 case VK_ESCAPE:
                     KailleraChatCloseChat();
-                    ui_input_pressed(get_global_machine(), IPT_UI_CANCEL); /* IPT_UI_CANCELの押下フラグをクリア */
+                    ui_input_pressed(*machine_manager::instance()->machine(), IPT_UI_CANCEL); /* IPT_UI_CANCELの押下フラグをクリア */
                     return TRUE;
 
 				case VK_HOME:
@@ -1174,7 +1174,7 @@ static void KailleraChatCloseChat(void)
 		szConvStrBuf_utf8 = NULL;
 	}
 
-	get_global_machine().input().device_class(DEVICE_CLASS_KEYBOARD).enable(true);
+	machine_manager::instance()->machine()->input().device_class(DEVICE_CLASS_KEYBOARD).enable(true);
 }
 
 void KailleraChatEnd(void)

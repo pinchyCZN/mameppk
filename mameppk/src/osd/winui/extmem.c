@@ -71,7 +71,7 @@ void __stdcall MemoryHackStateLoad_xmvsfregion4p(void)
 }
 void __stdcall MemoryHackUpdate_xmvsfregion4p(void)
 {
-	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = machine_manager::instance()->machine()->firstcpu->space(AS_PROGRAM);
 	unsigned short Player[2];
 	unsigned char Mode[2];
 	unsigned char Play[2];
@@ -123,7 +123,7 @@ void __stdcall MemoryHackUpdate_xmvsfregion4p(void)
 
 void __stdcall MemoryHackUpdate_mshvsfj4p(void)
 {
-	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = machine_manager::instance()->machine()->firstcpu->space(AS_PROGRAM);
 	unsigned short Player[2];
 	unsigned char Mode[2];
 	unsigned char Play[2];
@@ -183,7 +183,7 @@ void __stdcall MemoryHackUpdate_mshvsfj4p(void)
 // mvscj4p
 void __stdcall MemoryHackUpdate_mvscj4p(void)
 {
-	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = machine_manager::instance()->machine()->firstcpu->space(AS_PROGRAM);
 	unsigned short Player[2];
 	unsigned char Mode[2];
 	unsigned char Play[2];
@@ -248,7 +248,7 @@ void __stdcall MemoryHackStateLoad_kof98_6p(void)
 }
 void __stdcall MemoryHackUpdate_kof98_6p(void)
 {
-	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = machine_manager::instance()->machine()->firstcpu->space(AS_PROGRAM);
 	unsigned char Player[2];
 	unsigned char Play1[2];
 	unsigned char Play2[2];
@@ -330,7 +330,7 @@ void __stdcall MemoryHackUpdate_kof98_6p(void)
 // kof95_6p
 void __stdcall MemoryHackUpdate_kof95_6p(void)
 {
-	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = machine_manager::instance()->machine()->firstcpu->space(AS_PROGRAM);
 	unsigned char Player[2];
 	unsigned char Play1[2];
 	unsigned char Play2[2];
@@ -422,7 +422,7 @@ void __stdcall MemoryHackStateLoad_lbowling4p(void)
 }
 void __stdcall MemoryHackUpdate_lbowling4p(void)
 {
-	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = machine_manager::instance()->machine()->firstcpu->space(AS_PROGRAM);
 	unsigned char Player[2];
 
 	int i;
@@ -470,7 +470,7 @@ void __stdcall MemoryHackStateLoad_hyprolym4p(void)
 }
 void __stdcall MemoryHackUpdate_hyprolym4p(void)
 {
-	address_space &space = get_global_machine().firstcpu->space(AS_PROGRAM);
+	address_space &space = machine_manager::instance()->machine()->firstcpu->space(AS_PROGRAM);
 	unsigned char PlayerA, PlayerB;
 
 	unsigned char Name;
