@@ -54,6 +54,7 @@
 #include "nld_signal.h"
 #include "nld_system.h"
 
+#include "nld_4020.h"
 #include "nld_4066.h"
 #include "nld_7400.h"
 #include "nld_7402.h"
@@ -82,6 +83,8 @@
 
 #include "nld_ne555.h"
 
+#include "nld_r2r_dac.h"
+
 #include "nld_log.h"
 
 #include "../analog/nld_bjt.h"
@@ -89,6 +92,7 @@
 #include "../analog/nld_solver.h"
 #include "../analog/nld_switches.h"
 #include "../analog/nld_twoterm.h"
+#include "../analog/nld_opamps.h"
 
 #include "nld_legacy.h"
 

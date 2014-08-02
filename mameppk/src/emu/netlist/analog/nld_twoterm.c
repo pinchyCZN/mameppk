@@ -46,6 +46,13 @@ ATTR_COLD NETLIB_NAME(twoterm)::NETLIB_NAME(twoterm)(const family_t afamily)
 	m_N.m_otherterm = &m_P;
 }
 
+ATTR_COLD NETLIB_NAME(twoterm)::NETLIB_NAME(twoterm)()
+        : netlist_device_t(TWOTERM)
+{
+    m_P.m_otherterm = &m_N;
+    m_N.m_otherterm = &m_P;
+}
+
 NETLIB_START(twoterm)
 {
 }
@@ -60,9 +67,9 @@ NETLIB_UPDATE(twoterm)
 	/* only called if connected to a rail net ==> notify the solver to recalculate */
 	/* we only need to call the non-rail terminal */
 	if (!m_P.net().isRailNet())
-		m_P.net().as_analog().schedule_solve();
+		m_P.schedule_solve();
 	else
-		m_N.net().as_analog().schedule_solve();
+		m_N.schedule_solve();
 }
 
 // ----------------------------------------------------------------------------------------

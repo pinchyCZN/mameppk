@@ -76,7 +76,7 @@ static const translation_info gcc_translate[] =
 	{ 0,        "-fomit-frame-pointer",     "" },
 	{ 0,        "-Werror",                  "/WX" },
 	//{ VS7,        "-Wall",                    "/Wall /W3 /wd4003 /wd4018 /wd4146 /wd4242 /wd4244 /wd4619 /wd4702 /wd4706 /wd4710 /wd4711 /wd4738 /wd4826" },
-	{ VS7,      "-Wall",                    "/Wall /W4 /wd4003 /wd4018 /wd4146 /wd4242 /wd4244 /wd4619 /wd4702 /wd4706 /wd4710 /wd4711 /wd4738 /wd4826 /wd4820 /wd4514 /wd4668 /wd4127 /wd4625 /wd4626 /wd4512 /wd4100 /wd4310 /wd4571 /wd4061 /wd4131 /wd4255 /wd4510 /wd4610 /wd4505 /wd4324 /wd4611 /wd4201 /wd4189 /wd4296 /wd4986 /wd4347 /wd4987 /wd4250 /wd4435 /wd4150 /wd4805" },
+	{ VS7,      "-Wall",                    "/Wall /W4 /wd4003 /wd4018 /wd4146 /wd4242 /wd4244 /wd4619 /wd4702 /wd4706 /wd4710 /wd4711 /wd4738 /wd4826 /wd4820 /wd4514 /wd4668 /wd4127 /wd4625 /wd4626 /wd4512 /wd4100 /wd4310 /wd4571 /wd4061 /wd4131 /wd4255 /wd4510 /wd4610 /wd4505 /wd4324 /wd4611 /wd4201 /wd4189 /wd4296 /wd4986 /wd4347 /wd4987 /wd4250 /wd4435 /wd4150 /wd4805 /wd4141" },
 	{ 0,        "-Wall",                    "/W0" },
 	{ VS7,      "-Wno-unused",              "/wd4100 /wd4101 /wd4102 /wd4505" },
 	{ 0,        "-Wno-sign-compare",        "/wd4365 /wd4389 /wd4245 /wd4388" },
@@ -363,12 +363,19 @@ static void build_command_line(int argc, char *argv[])
 	}
 
 	// identify the version number of the EXE
-	if (!icl_compile) exe_version = get_exe_version(executable);
-	else exe_version = 0x00110000; // assume this for ICL
+	if (!icl_compile)
+		exe_version = get_exe_version(executable);
+	else 
+		exe_version = 0x00110000; // assume this for ICL
 
-	// special case
-	if (!strcmp(executable, "cl.exe") && (exe_version >= 0x00070000))
-		dst += sprintf(dst, "/wd4025 ");
+	// special cases
+	if (!icl_compile && !strcmp(executable, "cl.exe")) {
+		if (exe_version >= 0x00070000)
+			dst += sprintf(dst, "/wd4025 ");
+		// fixes -j compiles with VS2013
+		if (exe_version >= 0x000C0000)
+			dst += sprintf(dst, "/FS ");
+	}
 
 	// iterate over parameters
 	for (param = parampos; param < argc; param++)

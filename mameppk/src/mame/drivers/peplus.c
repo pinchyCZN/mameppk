@@ -126,7 +126,7 @@ Board type with program type
 
 Standard PE+
  Program Types:
-  BEnnnn Black Jack / 21 games
+  BEnnnn Blackjack / 21 games
   KEnnnn Keno
   PPnnnn Poker games. Several different types of poker require specific CG graphics + CAP color prom
   IPnnnn International Poker games. Several different types of poker require specific CG graphics + CAP color prom
@@ -153,7 +153,7 @@ The CG graphics + CAP color proms along with which program sets they belong to i
 
 NOTE:  Do NOT use the CG+CAP combos listed below as THE definitive absolute reference. There are other combos that
        worked to produce correct card graphics plus paytable information for many sets. So the combos listed below
-       are not the "official" combo and a better or more correct combo may exist.
+       may not always be the "official" combo and a better or more correct combo may exist.
 
 NOTE:  International PP0xxx sets support a Tournament mode.  You can toggle back and forth between standard and
        Tournament mode by pressing and holding Jackpot Reset (L key) and pressing Change Request (Y key)
@@ -4498,16 +4498,37 @@ PayTable   Js+  2PR  3K   STR  FL  FH  4K  SF  RF  (Bonus)
 	ROM_LOAD( "cap656.u50", 0x0000, 0x0100, CRC(038cabc6) SHA1(c6514b4f9dbed6ab2631f563f7e00648661ebdbb) )
 ROM_END
 
-ROM_START( pebe0014 ) /* Normal board : Blackjack (BE0014) */
-/* Known to exist:
-BE0013 508-544 (Non Double-up)
-BE0013 528-A22 (Non Double-up)
-BE0014 526-906
-BE0014 527-936
-BE0017 532-A22
+ROM_START( pebe0014 ) /* Normal board : Blackjack (BE0014) - Non-Progressive Jackpot - Payout 98.30% */
+/*
+Blackjack BE0014 game features / rules:
+
+Game Options:
+  Auto Bet
+  Double Up
+
+Deal: 1 Deck (52 cards) - Shuffled before each hand
+
+Game Rules:
+  1. Dealer stands on 17 or better or six (6) cards totaling 21 or less
+  2. Player wins on six (6) cards totaling 21 or less
+  3. All wins pay 2 for 1, including Blackjack
+  4. Bet returned on pushes
+
+In game features/Options:
+  Insurance offered
+  Surrender
+  Splits
+  Double Down
+
+Known to exist:
+ BE0013 508-544 (Non Double-up)
+ BE0013 528-A22 (Non Double-up)
+ BE0014 526-906
+ BE0014 527-936
+ BE0017 532-A22
 */
 	ROM_REGION( 0x10000, "maincpu", 0 )
-	ROM_LOAD( "be0014_522-a22.u68",   0x00000, 0x10000, CRC(232b32b7) SHA1(a3af9414577642fedc23b4c1911901cd31e9d6e0) ) /* Game Version: 528, Library Version: A22 */
+	ROM_LOAD( "be0014_528-a22.u68",   0x00000, 0x10000, CRC(232b32b7) SHA1(a3af9414577642fedc23b4c1911901cd31e9d6e0) ) /* Game Version: 528, Library Version: A22 */
 
 	ROM_REGION( 0x020000, "gfx1", 0 )
 	ROM_LOAD( "mro-cg2036.u72",  0x00000, 0x8000, CRC(0a168d06) SHA1(7ed4fb5c7bcacab077bcec030f0465c6eaf3ce1c) )
@@ -4519,9 +4540,9 @@ BE0017 532-A22
 	ROM_LOAD( "cap707.u50", 0x0000, 0x0100, CRC(9851ba36) SHA1(5a0a43c1e212ae8c173102ede9c57a3d95752f99) )
 ROM_END
 
-ROM_START( peke1012 ) /* Normal board : Keno 1-10 Spot (KE1012) */
+ROM_START( peke1012 ) /* Normal board : Keno 1-10 Spot (KE1012) - Payout 90.27% */
 	ROM_REGION( 0x10000, "maincpu", 0 )
-	ROM_LOAD( "ke1012_576-a3u.u68",   0x00000, 0x10000, CRC(470e8c10) SHA1(f8a65a3a73477e9e9d2f582eeefa93b470497dfa) )
+	ROM_LOAD( "ke1012_576-a3u.u68",   0x00000, 0x10000, CRC(470e8c10) SHA1(f8a65a3a73477e9e9d2f582eeefa93b470497dfa) ) /* Game Version: 576, Library Version: A3U */
 
 	ROM_REGION( 0x020000, "gfx1", 0 )
 	ROM_LOAD( "mro-cg1267.u72",  0x00000, 0x8000, CRC(16498b57) SHA1(9c22726299af7204c4be1c6d8afc4c1b512ad918) )
@@ -4533,9 +4554,9 @@ ROM_START( peke1012 ) /* Normal board : Keno 1-10 Spot (KE1012) */
 	ROM_LOAD( "cap1267.u50", 0x0000, 0x0100, CRC(7051db57) SHA1(76751a3cc47d506983205decb07e99ca0c178a42) )
 ROM_END
 
-ROM_START( peke1013 ) /* Normal board : Keno 2-10 Spot (KE1013) */
+ROM_START( peke1013 ) /* Normal board : Keno 2-10 Spot (KE1013) - Payout 91.97% */
 	ROM_REGION( 0x10000, "maincpu", 0 )
-	ROM_LOAD( "ke1013_590-a77.u68",   0x00000, 0x10000, CRC(3b178f94) SHA1(c601150a728d750b73f949ba6e2d2979c4c4be2e) )
+	ROM_LOAD( "ke1013_590-a77.u68",   0x00000, 0x10000, CRC(3b178f94) SHA1(c601150a728d750b73f949ba6e2d2979c4c4be2e) ) /* Game Version: 590, Library Version: A77 */
 
 	ROM_REGION( 0x020000, "gfx1", 0 )
 	ROM_LOAD( "mro-cg1267.u72",  0x00000, 0x8000, CRC(16498b57) SHA1(9c22726299af7204c4be1c6d8afc4c1b512ad918) )
@@ -6203,6 +6224,34 @@ Some call this a 4 of a Kind Bonus Poker with all 4K paying the same. Internally
 	ROM_LOAD( "capx1321.u43", 0x0000, 0x0200, CRC(4b57569f) SHA1(fa29c0f627e7ce79951ec6dadec114864144f37d) )
 ROM_END
 
+ROM_START( pex0550p ) /* Superboard : Joker Poker (X002461P+XP000055) */
+/*
+                                       w/J     w/oJ
+PayTable   2P  3K  STR  FL  FH  4K  SF  RF  5K  RF  (Bonus)
+-----------------------------------------------------------
+   NA       1   2   4    5   8  16 100 100 400 100    800
+  % Range: 93.2-95.2%  Optimum: 97.2%  Hit Frequency: 30.1%
+     Programs Available: X000550P
+
+Internally the program erroneously reports a 95.50% return. Superseded by X002338P
+
+*/
+	ROM_REGION( 0x10000, "maincpu", 0 )
+	ROM_LOAD( "xp000055.u67",   0x00000, 0x10000, CRC(339821e0) SHA1(127d4eff01136feaf1e3242d57433349afb7b6ca) )
+
+	ROM_REGION( 0x10000, "user1", 0 )
+	ROM_LOAD( "x000550p.u66",   0x00000, 0x10000, CRC(8a320403) SHA1(751a83ba25ffdae4b8d745bdec6ecdebf351efa0) ) /* Joker Poker */
+
+	ROM_REGION( 0x020000, "gfx1", 0 )
+	ROM_LOAD( "mro-cg2185.u77",  0x00000, 0x8000, CRC(7e64bd1a) SHA1(e988a380ee58078bf5bdc7747e83aed1393cfad8) ) /*  07/10/95   @ IGT  L95-1506  */
+	ROM_LOAD( "mgo-cg2185.u78",  0x08000, 0x8000, CRC(d4127893) SHA1(75039c45ba6fd171a66876c91abc3191c7feddfc) )
+	ROM_LOAD( "mbo-cg2185.u79",  0x10000, 0x8000, CRC(17dba955) SHA1(5f77379c88839b3a04e235e4fb0120c77e17b60e) )
+	ROM_LOAD( "mxo-cg2185.u80",  0x18000, 0x8000, CRC(583eb3b1) SHA1(4a2952424969917fb1594698a779fe5a1e99bff5) )
+
+	ROM_REGION( 0x200, "proms", 0 )
+	ROM_LOAD( "capx1321.u43", 0x0000, 0x0200, CRC(4b57569f) SHA1(fa29c0f627e7ce79951ec6dadec114864144f37d) )
+ROM_END
+
 ROM_START( pex0568p ) /* Superboard : Joker Poker (X000568P+XP000038) */
 /*
                                             w/J     w/oJ
@@ -6938,11 +6987,14 @@ ROM_END
 ROM_START( pex2172p ) /* Superboard : Ace$ Bonus Poker (X002172P+XP000112) */
 /*
                                       5-K 2-4
-PayTable   Js+  2PR  3K  STR  FL  FH  4K  4K  4A  SF  RF  (Bonus)
------------------------------------------------------------------
-  P903A     1    2    3   4    5   7  25  40  80  50 250    800
+PayTable   Js+  2PR  3K  STR  FL  FH  4K  4K  4A  SA$  SF  RF  (Bonus)
+----------------------------------------------------------------------
+  P903A     1    2    3   4    5   7  25  40  80  250  50 250    800
   % Range: 94.3-96.3%  Optimum: 98.3%  Hit Frequency: 45.7%
      Programs Available: X002172P
+
+SA$ - Sequential ACE$ pays the same as RF
+
 */
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "xp000112.u67",   0x00000, 0x10000, CRC(c1ae96ad) SHA1(da109602f0fbe9b225cdcd60be0613fd41014864) )
@@ -7084,11 +7136,15 @@ ROM_END
 
 ROM_START( pex2250p ) /* Superboard : Shockwave Poker (X002250P+XP000050) */
 /*
-PayTable   Js+  2PR  3K  STR  FL  FH  4K  SF  RF  (Bonus)
+PayTable   Js+  2PR  3K  STR  FL  FH  4K* SF  RF  (Bonus)
 ---------------------------------------------------------
  P598BA     1    1    3   5    8  11  25 100 250    800
   % Range: 94.5-96.5%  Optimum: 98.5%  Hit Frequency: 42.6%
      Programs Available: X002250P
+
+4K* - Getting a 4K hand sets the game in "Shockwave" mode for the next 10 dealt hands.
+      While in shockwave mode, 4K pays 250 per coin / credit.
+
 */
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "xp000050.u67",   0x00000, 0x10000, CRC(cf9e72d6) SHA1(fc5c679aae43df0bd563fbcc3e00a3274af1ed11) )
@@ -7108,11 +7164,15 @@ ROM_END
 
 ROM_START( pex2251p ) /* Superboard : Shockwave Poker (X002251P+XP000050) */
 /*
-PayTable   Js+  2PR  3K  STR  FL  FH  4K  SF  RF  (Bonus)
+PayTable   Js+  2PR  3K  STR  FL  FH  4K* SF  RF  (Bonus)
 ---------------------------------------------------------
   P719A     1    1    3   5    8  12  25 100 250    800
   % Range: 95.6-97.6%  Optimum: 99.6%  Hit Frequency: 42.6%
      Programs Available: X002251P
+
+4K* - Getting a 4K hand sets the game in "Shockwave" mode for the next 10 dealt hands.
+      While in shockwave mode, 4K pays 250 per coin / credit.
+
 */
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "xp000050.u67",   0x00000, 0x10000, CRC(cf9e72d6) SHA1(fc5c679aae43df0bd563fbcc3e00a3274af1ed11) )
@@ -7216,7 +7276,7 @@ ROM_START( pex2283p ) /* Superboard : Dealt Deuces Wild Bonus (X002283P+XP000057
                                    w/D 6-K 3-5         w/A w/oD
 PayTable   3K  STR  FL  FH  4K  SF  RF  5K  5K  5A  4D  4D  RF  (Bonus)
 -----------------------------------------------------------------------
-   ???      1   1    3   3   4  10  25  20  40  80 200 400 250    800
+  ????      1   1    3   3   4  10  25  20  40  80 200 400 250    800
   % Range: 94.6-96.6%  Optimum: 98.6%  Hit Frequency: ??.?%
      Programs Available: X002283P
 
@@ -7250,7 +7310,7 @@ ROM_START( pex2284p ) /* Superboard : Barbaric Decues Wild Bonus (X002284P+XP000
                                    w/D 6-K 3-5         w/A w/oD
 PayTable   3K  STR  FL  FH  4K  SF  RF  5K  5K  5A  4D  4D  RF  (Bonus)
 -----------------------------------------------------------------------
-   ???      1   1    2   3   4  12  25  20  40  80 200 400 250    800
+  ????      1   1    2   3   4  12  25  20  40  80 200 400 250    800
   % Range: 93.5-95.5%  Optimum: 97.5%  Hit Frequency: ??.?%
      Programs Available: X002284P
 
@@ -8569,6 +8629,7 @@ GAMEL(1995, pex0515p,  0,         peplus,  peplus_poker, peplus_state, peplussb,
 GAMEL(1995, pex0516p,  0,         peplus,  peplus_poker, peplus_state, peplussb, ROT0,  "IGT - International Game Technology", "Player's Edge Plus (X000516P+XP000038) Double Bonus Poker", 0, layout_pe_poker )
 GAMEL(1995, pex0536p,  0,         peplus,  peplus_poker, peplus_state, peplussb, ROT0,  "IGT - International Game Technology", "Player's Edge Plus (X000536P+XP000038) Joker Poker",        0, layout_pe_poker )
 GAMEL(1995, pex0537p,  0,         peplus,  peplus_poker, peplus_state, peplussb, ROT0,  "IGT - International Game Technology", "Player's Edge Plus (X000537P+XP000038) Standard Draw Poker", 0, layout_pe_poker )
+GAMEL(1995, pex0550p,  0,         peplus,  peplus_poker, peplus_state, peplussb, ROT0,  "IGT - International Game Technology", "Player's Edge Plus (X000550P+XP000055) Joker Poker (Two Pair or Better)", 0, layout_pe_poker )
 GAMEL(1995, pex0568p,  0,         peplus,  peplus_poker, peplus_state, peplussb, ROT0,  "IGT - International Game Technology", "Player's Edge Plus (X000568P+XP000038) Joker Poker",        0, layout_pe_poker )
 GAMEL(1995, pex0581p,  0,         peplus,  peplus_poker, peplus_state, peplussb, ROT0,  "IGT - International Game Technology", "Player's Edge Plus (X000581P+XP000038) 4 of a Kind Bonus Poker", 0, layout_pe_poker )
 GAMEL(1995, pex0588p,  0,         peplus,  peplus_poker, peplus_state, peplussb, ROT0,  "IGT - International Game Technology", "Player's Edge Plus (X000588P+XP000038) Joker Poker",        0, layout_pe_poker )

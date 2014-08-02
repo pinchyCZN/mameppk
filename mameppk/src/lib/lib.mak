@@ -145,6 +145,7 @@ FORMATSOBJS = \
 	$(LIBOBJ)/formats/esq16_dsk.o   \
 	$(LIBOBJ)/formats/fc100_cas.o   \
 	$(LIBOBJ)/formats/fdi_dsk.o     \
+	$(LIBOBJ)/formats/flex_dsk.o    \
 	$(LIBOBJ)/formats/fm7_cas.o     \
 	$(LIBOBJ)/formats/fmsx_cas.o    \
 	$(LIBOBJ)/formats/fmtowns_dsk.o \
@@ -185,6 +186,7 @@ FORMATSOBJS = \
 	$(LIBOBJ)/formats/pyldin_dsk.o  \
 	$(LIBOBJ)/formats/ql_dsk.o      \
 	$(LIBOBJ)/formats/rk_cas.o      \
+	$(LIBOBJ)/formats/rx50_dsk.o    \
 	$(LIBOBJ)/formats/sc3000_bit.o  \
 	$(LIBOBJ)/formats/sf7000_dsk.o  \
 	$(LIBOBJ)/formats/smx_dsk.o     \

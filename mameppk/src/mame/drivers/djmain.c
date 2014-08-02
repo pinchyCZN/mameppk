@@ -1335,19 +1335,6 @@ GFXDECODE_END
 
 /*************************************
  *
- *  Sound interfaces
- *
- *************************************/
-
-static const k054539_interface k054539_config =
-{
-	"shared"
-};
-
-
-
-/*************************************
- *
  *  Machine-specific init
  *
  *************************************/
@@ -1390,15 +1377,6 @@ void djmain_state::machine_reset()
  *
  *************************************/
 
-static const k056832_interface djmain_k056832_intf =
-{
-	"gfx2", 1,
-	K056832_BPP_4dj,
-	1, 1,
-	KONAMI_ROM_DEINTERLEAVE_NONE,
-	djmain_tile_callback, "none"
-};
-
 static MACHINE_CONFIG_START( djmain, djmain_state )
 
 	/* basic machine hardware */
@@ -1407,7 +1385,6 @@ static MACHINE_CONFIG_START( djmain, djmain_state )
 	MCFG_CPU_ADD("maincpu", M68EC020, 32000000/4)   /*  8.000 MHz!? */
 	MCFG_CPU_PROGRAM_MAP(memory_map)
 	MCFG_CPU_VBLANK_INT_DRIVER("screen", djmain_state,  vb_interrupt)
-
 
 	MCFG_ATA_INTERFACE_ADD("ata", ata_devices, "hdd", NULL, true)
 	MCFG_ATA_INTERFACE_IRQ_HANDLER(WRITELINE(djmain_state, ide_interrupt))
@@ -1423,21 +1400,24 @@ static MACHINE_CONFIG_START( djmain, djmain_state )
 	MCFG_PALETTE_ADD("palette", 0x4440/4)
 	MCFG_GFXDECODE_ADD("gfxdecode", "palette", djmain)
 
-	MCFG_K056832_ADD("k056832", djmain_k056832_intf)
+	MCFG_DEVICE_ADD("k056832", K056832, 0)
+	MCFG_K056832_CB(djmain_state, tile_callback)
+	MCFG_K056832_CONFIG("gfx2", 1, K056832_BPP_4dj, 1, 1, "none")
 	MCFG_K056832_GFXDECODE("gfxdecode")
 	MCFG_K056832_PALETTE("palette")
+
 	MCFG_K055555_ADD("k055555")
 
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_STEREO("lspeaker", "rspeaker")
 
-	MCFG_K054539_ADD("k054539_1", XTAL_18_432MHz, k054539_config)
-	MCFG_SOUND_CONFIG(k054539_config)
+	MCFG_DEVICE_ADD("k054539_1", K054539, XTAL_18_432MHz)
+	MCFG_K054539_REGION_OVERRRIDE("shared")
 	MCFG_SOUND_ROUTE(0, "lspeaker", 1.0)
 	MCFG_SOUND_ROUTE(1, "rspeaker", 1.0)
 
-	MCFG_K054539_ADD("k054539_2", XTAL_18_432MHz, k054539_config)
-	MCFG_SOUND_CONFIG(k054539_config)
+	MCFG_DEVICE_ADD("k054539_2", K054539, XTAL_18_432MHz)
+	MCFG_K054539_REGION_OVERRRIDE("shared")
 	MCFG_SOUND_ROUTE(0, "lspeaker", 1.0)
 	MCFG_SOUND_ROUTE(1, "rspeaker", 1.0)
 MACHINE_CONFIG_END
@@ -2180,12 +2160,10 @@ GAME( 2002, bmfinal,  0,        djmain,   bm6thmix, djmain_state, bmfinal,   ROT
 
 GAME( 1998, popn2,    0,        djmain,   popnmusic, djmain_state, beatmania, ROT0, "Konami", "Pop'n Music 2 (ver JA-A)", 0 )
 
-#if 0
 // for reference, these sets have not been verified
-GAME( 1998, bm3rdmxb, bm3rdmix, djmain,   bm3rdmix, djmain_state,  beatmania, ROT0, "Konami", "beatmania 3rd MIX (ver JA-B)", 0 )
+//GAME( 1998, bm3rdmxb, bm3rdmix, djmain,   bm3rdmix, djmain_state,  beatmania, ROT0, "Konami", "beatmania 3rd MIX (ver JA-B)", 0 )
 
-GAME( 1998, popn1,    0,        djmain,   popn1, djmain_state,     beatmania, ROT0, "Konami", "Pop'n Music 1 (ver JA-A)", 0 )
-GAME( 1999, popn3,    0,        djmain,   popnmusic, djmain_state, beatmania, ROT0, "Konami", "Pop'n Music 3 (ver JA-A)", 0 )
+//GAME( 1998, popn1,    0,        djmain,   popn1, djmain_state,     beatmania, ROT0, "Konami", "Pop'n Music 1 (ver JA-A)", 0 )
+//GAME( 1999, popn3,    0,        djmain,   popnmusic, djmain_state, beatmania, ROT0, "Konami", "Pop'n Music 3 (ver JA-A)", 0 )
 
-GAME( 1999, popnstex, 0,        djmain,   popnstex, djmain_state,  beatmania, ROT0, "Konami", "Pop'n Stage EX (ver JB-A)", 0 )
-#endif
+//GAME( 1999, popnstex, 0,        djmain,   popnstex, djmain_state,  beatmania, ROT0, "Konami", "Pop'n Stage EX (ver JB-A)", 0 )

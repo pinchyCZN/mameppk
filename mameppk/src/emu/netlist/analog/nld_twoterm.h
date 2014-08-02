@@ -88,6 +88,7 @@ class NETLIB_NAME(twoterm) : public netlist_device_t
 {
 public:
 	ATTR_COLD NETLIB_NAME(twoterm)(const family_t afamily);
+    ATTR_COLD NETLIB_NAME(twoterm)();
 
 	netlist_terminal_t m_P;
 	netlist_terminal_t m_N;
@@ -103,7 +104,7 @@ public:
 		m_N.set( G,  G, ( -V) * G + I);
 	}
 
-	ATTR_HOT inline double deltaV()
+	ATTR_HOT inline double deltaV() const
 	{
 	    return m_P.net().as_analog().Q_Analog() - m_N.net().as_analog().Q_Analog();
 	}
@@ -172,8 +173,8 @@ public:
 
 	ATTR_HOT void step_time(const double st)
 	{
-		double G = m_C.Value() / st;
-		double I = -G * deltaV();
+		const double G = m_C.Value() / st;
+		const double I = -G * deltaV();
 		set(G, 0.0, I);
 	}
 

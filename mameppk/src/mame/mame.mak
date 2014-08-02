@@ -406,9 +406,9 @@ MACHINES += DS2404
 MACHINES += DS75160A
 MACHINES += DS75161A
 MACHINES += E0516
+MACHINES += E05A03
 MACHINES += EEPROMDEV
 MACHINES += ER2055
-MACHINES += ER59256
 MACHINES += F3853
 #MACHINES += HD63450
 #MACHINES += HD64610
@@ -1044,6 +1044,7 @@ $(MAMEOBJ)/dataeast.a: \
 	$(DRIVERS)/deco_mlc.o $(VIDEO)/deco_mlc.o \
 	$(DRIVERS)/deco156.o $(MACHINE)/deco156.o \
 	$(DRIVERS)/deco32.o $(VIDEO)/deco32.o $(VIDEO)/dvi.o \
+	$(VIDEO)/deco_zoomspr.o \
 	$(DRIVERS)/decocass.o $(MACHINE)/decocass.o $(MACHINE)/decocass_tape.o $(VIDEO)/decocass.o \
 	$(DRIVERS)/deshoros.o \
 	$(DRIVERS)/dietgo.o $(VIDEO)/dietgo.o \
@@ -1524,6 +1525,7 @@ $(MAMEOBJ)/namco.a: \
 	$(DRIVERS)/toypop.o $(VIDEO)/toypop.o \
 	$(DRIVERS)/turrett.o $(AUDIO)/turrett.o $(VIDEO)/turrett.o \
 	$(DRIVERS)/warpwarp.o $(AUDIO)/geebee.o $(AUDIO)/warpwarp.o $(VIDEO)/warpwarp.o \
+	$(MACHINE)/c117.o \
 	$(MACHINE)/namcoio.o \
 	$(MACHINE)/namco06.o \
 	$(MACHINE)/namco50.o \
@@ -2076,6 +2078,7 @@ $(MAMEOBJ)/vsystem.a: \
 	$(DRIVERS)/fromance.o $(VIDEO)/fromance.o \
 	$(DRIVERS)/fromanc2.o $(VIDEO)/fromanc2.o \
 	$(DRIVERS)/gstriker.o $(VIDEO)/gstriker.o \
+	$(VIDEO)/mb60553.o $(VIDEO)/vs920a.o \
 	$(DRIVERS)/inufuku.o $(VIDEO)/inufuku.o \
 	$(DRIVERS)/ojankohs.o $(VIDEO)/ojankohs.o \
 	$(DRIVERS)/pipedrm.o \
@@ -2804,11 +2807,15 @@ $(DRIVERS)/sderby.o:    $(LAYOUT)/sderby.lh \
 
 $(DRIVERS)/seabattl.o:  $(LAYOUT)/seabattl.lh
 
+$(DRIVERS)/segajw.o:    $(LAYOUT)/segajw.lh
+
 $(DRIVERS)/segaorun.o:  $(LAYOUT)/outrun.lh
 
 $(DRIVERS)/segas32.o:   $(LAYOUT)/radr.lh
 
 $(DRIVERS)/segaybd.o:   $(LAYOUT)/pdrift.lh
+
+$(DRIVERS)/sigmab52.o:  $(LAYOUT)/sigmab52.lh
 
 $(DRIVERS)/skydiver.o:  $(LAYOUT)/skydiver.lh
 
