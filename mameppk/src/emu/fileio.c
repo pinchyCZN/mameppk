@@ -906,16 +906,13 @@ file_error emu_file::load__7zped_file()
 }
 
 #if defined(KAILLERA) || defined(MAME_AVI)
+#include <stdio.h>
 #include <sys/stat.h>
-#include <windows.h>
-#include "strconv.h"
 void delete_file(const char *filename)
 {
 	struct stat s;
-	TCHAR *t_name = tstring_from_utf8(filename);
 	if (stat(filename, &s) == 0)
-		DeleteFile(t_name);
-	osd_free(t_name);
+		remove(filename);
 }
 
 int checksum_file_crc32(const char *searchpath, const char *file, UINT8 **p, UINT64 *size, unsigned int *crc)
