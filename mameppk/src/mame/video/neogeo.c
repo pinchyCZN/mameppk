@@ -274,7 +274,6 @@ WRITE16_MEMBER(neogeo_state::neogeo_video_register_w)
 	}
 }
 
-
 #ifdef KAILLERA
 void neogeo_state::neogeo_init_video(void)
 {

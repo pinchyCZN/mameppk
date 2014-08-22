@@ -404,6 +404,8 @@ enum ioport_type
 		IPT_UI_PASTE,
 		IPT_UI_SAVE_STATE,
 		IPT_UI_LOAD_STATE,
+		IPT_UI_TAPE_START,
+		IPT_UI_TAPE_STOP,
 
 #ifdef MAME_AVI
 		IPT_UI_RECORD_AVI,
@@ -479,6 +481,11 @@ enum ioport_type
 	IPT_COUNT
 };
 DECLARE_ENUM_OPERATORS(ioport_type)
+// aliases for some types
+#define IPT_PADDLE_H        IPT_PADDLE
+#define IPT_PEDAL1          IPT_PEDAL
+#define IPT_POSITIONAL_H    IPT_POSITIONAL
+#define IPT_DIAL_H          IPT_DIAL
 
 
 // input type classes

@@ -145,7 +145,7 @@ const device_type Z80DMA = &device_creator<z80dma_device>;
 //-------------------------------------------------
 
 z80dma_device::z80dma_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
-	: device_t(mconfig, Z80DMA, "Z8410 DMA", tag, owner, clock, "z80dma", __FILE__),
+	: device_t(mconfig, Z80DMA, "Z80 DMA", tag, owner, clock, "z80dma", __FILE__),
 		device_z80daisy_interface(mconfig, *this),
 		m_out_busreq_cb(*this),
 		m_out_int_cb(*this),
@@ -595,8 +595,10 @@ UINT8 z80dma_device::read()
 
 	if(m_read_num_follow == 0) // special case: Legend of Kage on X1 Turbo
 		res = m_status;
-	else
+	else {
+		assert(m_read_cur_follow < ARRAY_LENGTH(m_read_regs_follow));
 		res = m_read_regs_follow[m_read_cur_follow];
+	}
 
 	m_read_cur_follow++;
 
@@ -686,6 +688,7 @@ void z80dma_device::write(UINT8 data)
 				case COMMAND_READ_STATUS_BYTE:
 					if (LOG) logerror("Z80DMA '%s' CMD Read status Byte\n", tag());
 					READ_MASK = 1;
+					assert(m_read_num_follow < ARRAY_LENGTH(m_read_regs_follow));
 					m_read_regs_follow[m_read_num_follow++] = m_status;
 					break;
 				case COMMAND_RESET_AND_DISABLE_INTERRUPTS:
