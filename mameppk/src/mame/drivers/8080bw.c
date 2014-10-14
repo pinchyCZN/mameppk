@@ -1059,7 +1059,9 @@ static MACHINE_CONFIG_DERIVED_CLASS( lrescue, mw8080bw_root, _8080bw_state )
 	/* sound hardware */
 	MCFG_SPEAKER_STANDARD_MONO("mono")
 
-	MCFG_SAMPLES_ADD("samples", lrescue_samples_interface)
+	MCFG_SOUND_ADD("samples", SAMPLES, 0)
+	MCFG_SAMPLES_CHANNELS(4)
+	MCFG_SAMPLES_NAMES(lrescue_sample_names)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.75)
 
 	/* extra audio channel */
@@ -1391,7 +1393,7 @@ static MACHINE_CONFIG_DERIVED_CLASS( schaser, mw8080bw_root, _8080bw_state )
 	MCFG_SOUND_ROUTE_EX(0, "discrete", 1.0, 0)
 
 	MCFG_SOUND_ADD("discrete", DISCRETE, 0)
-	MCFG_SOUND_CONFIG_DISCRETE(schaser)
+	MCFG_DISCRETE_INTF(schaser)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
 MACHINE_CONFIG_END
 
@@ -1663,11 +1665,13 @@ static MACHINE_CONFIG_DERIVED_CLASS( lupin3, mw8080bw_root, _8080bw_state )
 	MCFG_SOUND_CONFIG(lupin3_sn76477_interface)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.5)
 
-	MCFG_SAMPLES_ADD("samples", lupin3_samples_interface)
+	MCFG_SOUND_ADD("samples", SAMPLES, 0)
+	MCFG_SAMPLES_CHANNELS(4)
+	MCFG_SAMPLES_NAMES(lupin3_sample_names)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
 
 	MCFG_SOUND_ADD("discrete", DISCRETE, 0)
-	MCFG_SOUND_CONFIG_DISCRETE(indianbt)
+	MCFG_DISCRETE_INTF(indianbt)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
 MACHINE_CONFIG_END
 
@@ -1693,11 +1697,13 @@ static MACHINE_CONFIG_DERIVED_CLASS( lupin3a, mw8080bw_root, _8080bw_state )
 	MCFG_SOUND_CONFIG(lupin3_sn76477_interface)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.5)
 
-	MCFG_SAMPLES_ADD("samples", lupin3_samples_interface)
+	MCFG_SOUND_ADD("samples", SAMPLES, 0)
+	MCFG_SAMPLES_CHANNELS(4)
+	MCFG_SAMPLES_NAMES(lupin3_sample_names)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
 
 	MCFG_SOUND_ADD("discrete", DISCRETE, 0)
-	MCFG_SOUND_CONFIG_DISCRETE(indianbt)
+	MCFG_DISCRETE_INTF(indianbt)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
 MACHINE_CONFIG_END
 
@@ -1827,7 +1833,7 @@ static MACHINE_CONFIG_DERIVED_CLASS( polaris, mw8080bw_root, _8080bw_state )
 	MCFG_SPEAKER_STANDARD_MONO("mono")
 
 	MCFG_SOUND_ADD("discrete", DISCRETE, 0)
-	MCFG_SOUND_CONFIG_DISCRETE(polaris)
+	MCFG_DISCRETE_INTF(polaris)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
 MACHINE_CONFIG_END
 
@@ -1951,7 +1957,7 @@ static MACHINE_CONFIG_DERIVED_CLASS( ballbomb, mw8080bw_root, _8080bw_state )
 	MCFG_FRAGMENT_ADD(invaders_samples_audio)
 
 	MCFG_SOUND_ADD("discrete", DISCRETE, 0)
-	MCFG_SOUND_CONFIG_DISCRETE(ballbomb)
+	MCFG_DISCRETE_INTF(ballbomb)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 1.0)
 MACHINE_CONFIG_END
 
@@ -2192,7 +2198,7 @@ static MACHINE_CONFIG_DERIVED_CLASS( indianbt, mw8080bw_root, _8080bw_state )
 	MCFG_FRAGMENT_ADD(invaders_samples_audio)
 
 	MCFG_SOUND_ADD("discrete", DISCRETE, 0)
-	MCFG_SOUND_CONFIG_DISCRETE(indianbt)
+	MCFG_DISCRETE_INTF(indianbt)
 	MCFG_SOUND_ROUTE(ALL_OUTPUTS, "mono", 0.25)
 MACHINE_CONFIG_END
 
@@ -3186,14 +3192,23 @@ WRITE8_MEMBER(_8080bw_state::invmulti_eeprom_w)
 
 WRITE8_MEMBER(_8080bw_state::invmulti_bank_w)
 {
+	m_invmulti_bank = data; //needed to restore the bankswitch post load
+	
 	// d0, d4, d6: bank
 	int bank = (data & 1) | (data >> 3 & 2) | (data >> 4 & 4);
 	membank("bank1")->set_base(memregion("maincpu")->base() + bank * 0x4000 + 0x0000);
 	membank("bank2")->set_base(memregion("maincpu")->base() + bank * 0x4000 + 0x2000);
 }
 
+void _8080bw_state::invmulti_bankswitch_restore()
+{
+	invmulti_bank_w(m_maincpu->space(AS_PROGRAM), 0, m_invmulti_bank);
+}
+
 MACHINE_RESET_MEMBER(_8080bw_state,invmulti)
 {
+	m_invmulti_bank = 0;
+	
 	invmulti_bank_w(m_maincpu->space(AS_PROGRAM), 0, 0);
 
 	MACHINE_RESET_CALL_MEMBER(mw8080bw);
@@ -3219,6 +3234,9 @@ DRIVER_INIT_MEMBER(_8080bw_state,invmulti)
 	// decrypt rom
 	for (int i = 0; i < len; i++)
 		dest[i] = BITSWAP8(src[(i & 0x100ff) | (BITSWAP8(i >> 8 & 0xff, 7,3,4,5,0,6,1,2) << 8)],0,6,5,7,4,3,1,2);
+		
+	save_item(NAME(m_invmulti_bank));
+	machine().save().register_postload(save_prepost_delegate(FUNC(_8080bw_state::invmulti_bankswitch_restore), this));
 }
 
 

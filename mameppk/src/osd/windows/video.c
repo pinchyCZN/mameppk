@@ -98,7 +98,7 @@ bool windows_osd_interface::video_init()
 	init_monitors();
 
 	// initialize the window system so we can make windows
-	winwindow_init(machine());
+	window_init();
 
 #ifdef MAME_AVI
 	if (avi_filename)
@@ -110,7 +110,7 @@ bool windows_osd_interface::video_init()
 	for (index = 0; index < video_config.numscreens; index++)
 		winwindow_video_window_create(machine(), index, pick_monitor(options, index), &video_config.window[index]);
 	if (video_config.mode != VIDEO_MODE_NONE)
-		SetForegroundWindow(win_window_list->hwnd);
+		SetForegroundWindow(win_window_list->m_hwnd);
 
 	return true;
 }
@@ -133,6 +133,8 @@ void windows_osd_interface::video_exit()
 	}
 #endif /* MAME_AVI */
 
+	window_exit();
+	
 	// free all of our monitor information
 	while (win_monitor_list != NULL)
 	{
@@ -144,17 +146,30 @@ void windows_osd_interface::video_exit()
 
 
 
+win_monitor_info::win_monitor_info()
+	: next(NULL),
+	  handle(NULL),
+	  aspect(0.0f),
+	  reqwidth(0),
+	  reqheight(0)
+{
+}
+
+win_monitor_info::~win_monitor_info()
+{
+}
+
 //============================================================
 //  winvideo_monitor_refresh
 //============================================================
 
-void winvideo_monitor_refresh(win_monitor_info *monitor)
+void win_monitor_info::refresh()
 {
 	BOOL result;
 
 	// fetch the latest info about the monitor
-	monitor->info.cbSize = sizeof(monitor->info);
-	result = GetMonitorInfo(monitor->handle, (LPMONITORINFO)&monitor->info);
+	info.cbSize = sizeof(info);
+	result = GetMonitorInfo(handle, (LPMONITORINFO)&info);
 	assert(result);
 	(void)result; // to silence gcc 4.6
 }
@@ -165,16 +180,16 @@ void winvideo_monitor_refresh(win_monitor_info *monitor)
 //  winvideo_monitor_get_aspect
 //============================================================
 
-float winvideo_monitor_get_aspect(win_monitor_info *monitor)
+float win_monitor_info::get_aspect()
 {
 	// refresh the monitor information and compute the aspect
 	if (video_config.keepaspect)
 	{
 		int width, height;
-		winvideo_monitor_refresh(monitor);
-		width = rect_width(&monitor->info.rcMonitor);
-		height = rect_height(&monitor->info.rcMonitor);
-		return monitor->aspect / ((float)width / (float)height);
+		refresh();
+		width = rect_width(&info.rcMonitor);
+		height = rect_height(&info.rcMonitor);
+		return aspect / ((float)width / (float)height);
 	}
 	return 0.0f;
 }
@@ -221,8 +236,8 @@ void windows_osd_interface::update(bool skip_redraw)
 			cur_scale_ysize = scale_effect.ysize;
 		}
 #endif /* USE_SCALE_EFFECTS */
-		for (win_window_info *window = win_window_list; window != NULL; window = window->next)
-			winwindow_video_window_update(window);
+		for (win_window_info *window = win_window_list; window != NULL; window = window->m_next)
+			window->update();
 	}
 
 	// poll the joystick values here
@@ -284,14 +299,14 @@ static BOOL CALLBACK monitor_enum_callback(HMONITOR handle, HDC dc, LPRECT rect,
 	(void)result; // to silence gcc 4.6
 
 	// allocate a new monitor info
-	monitor = global_alloc_clear(win_monitor_info);
+	monitor = global_alloc(win_monitor_info);
 
 	// copy in the data
 	monitor->handle = handle;
 	monitor->info = info;
 
 	// guess the aspect ratio assuming square pixels
-	monitor->aspect = (float)(info.rcMonitor.right - info.rcMonitor.left) / (float)(info.rcMonitor.bottom - info.rcMonitor.top);
+	monitor->set_aspect((float)(info.rcMonitor.right - info.rcMonitor.left) / (float)(info.rcMonitor.bottom - info.rcMonitor.top));
 
 	// save the primary monitor handle
 	if (monitor->info.dwFlags & MONITORINFOF_PRIMARY)
@@ -359,7 +374,7 @@ static win_monitor_info *pick_monitor(windows_options &options, int index)
 
 finishit:
 	if (aspect != 0)
-		monitor->aspect = aspect;
+		monitor->set_aspect(aspect);
 	return monitor;
 }
 

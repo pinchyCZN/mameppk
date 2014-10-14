@@ -404,6 +404,12 @@ int running_machine::run(bool firstrun)
 		// perform a soft reset -- this takes us to the running phase
 		soft_reset();
 
+#ifdef MAME_DEBUG
+		g_tagmap_finds = 0;
+		if (strcmp(config().m_gamedrv.name, "___empty") != 0)
+			g_tagmap_counter_enabled = true;
+#endif
+
 		// run the CPUs until a reset or exit
 		m_hard_reset_pending = false;
 
@@ -421,6 +427,8 @@ int running_machine::run(bool firstrun)
 			js_set_main_loop(this);
 			#endif
 
+			manager().web()->serve();
+			
 			// execute CPUs if not paused
 			if (!m_paused)
 				m_scheduler.timeslice();
@@ -444,6 +452,15 @@ int running_machine::run(bool firstrun)
 		// and out via the exit phase
 		m_current_phase = MACHINE_PHASE_EXIT;
 
+#ifdef MAME_DEBUG
+		if (g_tagmap_counter_enabled)
+		{
+			g_tagmap_counter_enabled = false;
+			if (*(options().command()) == 0)
+				osd_printf_info("%d tagmap lookups\n", g_tagmap_finds);
+		}
+#endif
+
 		// save the NVRAM and configuration
 		sound().ui_mute(true);
 		nvram_save();
@@ -466,6 +483,11 @@ int running_machine::run(bool firstrun)
 	catch (binding_type_exception &btex)
 	{
 		osd_printf_error("Error performing a late bind of type %s to %s\n", btex.m_actual_type.name(), btex.m_target_type.name());
+		error = MAMERR_FATALERROR;
+	}
+	catch (add_exception &aex)
+	{
+		osd_printf_error("Tag '%s' already exists in tagged_list\n", aex.tag());
 		error = MAMERR_FATALERROR;
 	}
 	catch (std::exception &ex)

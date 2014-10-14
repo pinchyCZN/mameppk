@@ -157,6 +157,8 @@ CPUS += ES5510
 CPUS += SCUDSP
 CPUS += IE15
 CPUS += 8X300
+CPUS += ALTO2
+#CPUS += W65816
 
 #-------------------------------------------------
 # specify available sound cores
@@ -452,6 +454,7 @@ MACHINES += M6M80011AP
 MACHINES += MATSUCD
 MACHINES += MB14241
 MACHINES += MB3773
+MACHINES += MB8421
 MACHINES += MB87078
 #MACHINES += MB8795
 #MACHINES += MB89352
@@ -523,7 +526,6 @@ MACHINES += SATURN
 MACHINES += SCSI
 MACHINES += SCUDSP
 #MACHINES += SECFLASH
-MACHINES += SEIBU_COP
 MACHINES += SERFLASH
 MACHINES += SMC91C9X
 MACHINES += SMPC
@@ -1781,6 +1783,7 @@ $(MAMEOBJ)/seibu.a: \
 	$(DRIVERS)/panicr.o \
 	$(DRIVERS)/raiden.o $(VIDEO)/raiden.o \
 	$(DRIVERS)/raiden2.o $(MACHINE)/r2crypt.o \
+	$(MACHINE)/raiden2cop.o \
 	$(DRIVERS)/r2dx_v33.o \
 	$(DRIVERS)/seibuspi.o $(MACHINE)/seibuspi.o $(VIDEO)/seibuspi.o \
 	$(DRIVERS)/sengokmj.o \
@@ -2665,7 +2668,12 @@ $(DRIVERS)/igspoker.o:  $(LAYOUT)/igspoker.lh
 
 $(DRIVERS)/imolagp.o:   $(LAYOUT)/imolagp.lh
 
+$(DRIVERS)/inder.o:     $(LAYOUT)/inder.lh
+
 $(DRIVERS)/jankenmn.o:  $(LAYOUT)/jankenmn.lh
+
+$(DRIVERS)/jeutel.o:    $(LAYOUT)/jeutel.lh
+$(DRIVERS)/jp.o:        $(LAYOUT)/jp.lh
 
 $(DRIVERS)/jpmimpct.o:  $(LAYOUT)/jpmimpct.lh
 
@@ -2867,6 +2875,8 @@ $(DRIVERS)/subsino.o:   $(LAYOUT)/victor5.lh \
 $(DRIVERS)/superchs.o:  $(LAYOUT)/superchs.lh
 
 $(DRIVERS)/sfbonus.o:   $(LAYOUT)/pirpok2.lh
+
+$(DRIVERS)/taito.o:     $(LAYOUT)/taito.lh
 
 $(DRIVERS)/taito_z.o:   $(LAYOUT)/contcirc.lh \
 			$(LAYOUT)/dblaxle.lh

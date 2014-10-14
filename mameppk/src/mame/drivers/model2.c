@@ -143,7 +143,6 @@ bool model2_state::copro_fifoin_pop(device_t *device, UINT32 *result,UINT32 offs
 			return false;
 
 		fatalerror("Copro FIFOIN underflow (at %08X)\n", device->safe_pc());
-		return false;
 	}
 
 	r = m_copro_fifoin_data[m_copro_fifoin_rpos++];
@@ -203,7 +202,6 @@ void model2_state::copro_fifoin_push(device_t *device, UINT32 data, UINT32 offse
 	if (m_copro_fifoin_num == COPRO_FIFOIN_SIZE)
 	{
 		fatalerror("Copro FIFOIN overflow (at %08X)\n", device->safe_pc());
-		return;
 	}
 
 	//printf("COPRO FIFOIN at %08X, %08X, %f\n", device->safe_pc(), data, *(float*)&data);
@@ -272,7 +270,6 @@ void model2_state::copro_fifoout_push(device_t *device, UINT32 data,UINT32 offse
 	if (m_copro_fifoout_num == COPRO_FIFOOUT_SIZE)
 	{
 		fatalerror("Copro FIFOOUT overflow (at %08X)\n", device->safe_pc());
-		return;
 	}
 
 //  logerror("COPRO FIFOOUT PUSH %08X, %f, %d\n", data, *(float*)&data,state->m_copro_fifoout_num);
@@ -308,7 +305,6 @@ WRITE32_MEMBER(model2_state::copro_tgp_fifoout_push)
 	if (m_copro_fifoout_num == COPRO_FIFOOUT_SIZE)
 	{
 		fatalerror("Copro FIFOOUT overflow (at %08X)\n", m_tgp->pc());
-		return;
 	}
 
 //  logerror("COPRO FIFOOUT PUSH %08X, %f, %d\n", data, *(float*)&data,m_copro_fifoout_num);
@@ -5992,7 +5988,7 @@ GAME( 1993, daytonata, daytona, model2o, daytona, driver_device, 0,       ROT0, 
 GAME( 1993, daytonam,  daytona, model2o, daytona, model2_state,  daytonam,ROT0, "Sega",   "Daytona USA (Japan, To The MAXX)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS )
 GAME( 1994, desert,          0, model2o, desert,  driver_device, 0,       ROT0, "Sega / Martin Marietta", "Desert Tank", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS )
 GAME( 1994, vcop,            0, model2o, vcop,    driver_device, 0,       ROT0, "Sega",   "Virtua Cop (Revision B)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS )
-GAME( 1994, vcopa,           0, model2o, vcop,    driver_device, 0,       ROT0, "Sega",   "Virtua Cop (Revision A)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS )
+GAME( 1994, vcopa,        vcop, model2o, vcop,    driver_device, 0,       ROT0, "Sega",   "Virtua Cop (Revision A)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS )
 
 // Model 2A-CRX (TGPs, SCSP sound board)
 GAME( 1995, manxtt,          0, manxttdx,manxtt,  driver_device, 0, ROT0, "Sega", "Manx TT Superbike - DX (Revision D)", GAME_NOT_WORKING|GAME_IMPERFECT_GRAPHICS )

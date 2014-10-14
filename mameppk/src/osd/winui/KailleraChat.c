@@ -44,7 +44,7 @@
 #include "translate.h"
 
 #include "window.h"
-#define win_video_window		win_window_list->hwnd
+#define win_video_window		win_window_list->m_hwnd
 #include "video.h"
 #define win_window_mode video_config.windowed
 

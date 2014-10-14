@@ -299,6 +299,11 @@ int cli_frontend::execute(int argc, char **argv)
 		osd_printf_error(_("Caught unhandled emulator exception\n"));
 		m_result = MAMERR_FATALERROR;
 	}
+	catch (add_exception &aex)
+	{
+		osd_printf_error(_("Tag '%s' already exists in tagged_list\n"), aex.tag());
+		m_result = MAMERR_FATALERROR;
+	}
 	catch (std::exception &ex)
 	{
 		osd_printf_error(_("Caught unhandled %s exception: %s\n"), typeid(ex).name(), ex.what());
@@ -311,12 +316,6 @@ int cli_frontend::execute(int argc, char **argv)
 	}
 
 	_7z_file_cache_clear();
-
-#ifdef MAME_DEBUG
-	// TODO: this will only be printed when the executable is exited and not when selecting a new set via the internal UI - it needs to be placed somewhere else where it can be printed and reset after each run (check Average Speed location)
-	if (*(m_options.command()) == 0)
-		osd_printf_info("%d tagmap lookups\n", g_tagmap_finds);
-#endif
 
 	return m_result;
 }
@@ -1319,13 +1318,12 @@ void cli_frontend::listsoftware(const char *gamename)
 	{
 		software_list_device_iterator iter(drivlist.config().root_device());
 		for (software_list_device *swlistdev = iter.first(); swlistdev != NULL; swlistdev = iter.next())
-			if (swlistdev->list_type() == SOFTWARE_LIST_ORIGINAL_SYSTEM)
-				if (list_map.add(swlistdev->list_name(), 0, false) != TMERR_DUPLICATE)
-					if (swlistdev->first_software_info() != NULL)
-					{
-						if (isfirst) { fprintf(out, SOFTLIST_XML_BEGIN); isfirst = false; }
-						output_single_softlist(out, *swlistdev);
-					}
+			if (list_map.add(swlistdev->list_name(), 0, false) != TMERR_DUPLICATE)
+				if (swlistdev->first_software_info() != NULL)
+				{
+					if (isfirst) { fprintf(out, SOFTLIST_XML_BEGIN); isfirst = false; }
+					output_single_softlist(out, *swlistdev);
+				}
 	}
 
 	if (!isfirst)

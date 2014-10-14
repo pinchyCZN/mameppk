@@ -614,7 +614,7 @@ UINT32 floppy_image_device::find_position(attotime &base, const attotime &when)
 		base -= rev_time;
 	}
 
-	return (delta*floppy_ratio_1 + attotime::from_nsec(500)).as_ticks(1000000000/1000);
+	return (delta*floppy_ratio_1).as_ticks(1000000000/1000);
 }
 
 attotime floppy_image_device::get_next_transition(const attotime &from_when)
@@ -807,10 +807,12 @@ void floppy_image_device::write_zone(UINT32 *buf, int &cells, int &index, UINT32
 
 void floppy_image_device::set_write_splice(const attotime &when)
 {
-	image_dirty = true;
-	attotime base;
-	int splice_pos = find_position(base, when);
-	image->set_write_splice_position(cyl, ss, splice_pos);
+	if(image) {
+		image_dirty = true;
+		attotime base;
+		int splice_pos = find_position(base, when);
+		image->set_write_splice_position(cyl, ss, splice_pos);
+	}
 }
 
 UINT32 floppy_image_device::get_form_factor() const
@@ -899,11 +901,11 @@ void ui_menu_control_floppy_image::hook_load(astring filename, bool softlist)
 			bool has_crc = hash_collection(ROM_GETHASHDATA(romp)).crc(crc);
 
 			filename = try_file(astring(swlistdev->list_name()) + PATH_SEPARATOR + astring(swinfo_name), ROM_GETNAME(romp), has_crc, crc);
-			if(filename == "")
+			if(filename == "" && parentname)
 				filename = try_file(astring(swlist_name) + PATH_SEPARATOR + astring(parentname), ROM_GETNAME(romp), has_crc, crc);
 			if(filename == "")
 				filename = try_file(swinfo_name, ROM_GETNAME(romp), has_crc, crc);
-			if(filename == "")
+			if(filename == "" && parentname)
 				filename = try_file(parentname, ROM_GETNAME(romp), has_crc, crc);
 			if(filename != "")
 				break;

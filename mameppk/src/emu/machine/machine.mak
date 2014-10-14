@@ -890,6 +890,15 @@ endif
 
 #-------------------------------------------------
 #
+#@src/emu/machine/mb8421.h,MACHINES += MB8421
+#-------------------------------------------------
+
+ifneq ($(filter MB8421,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/mb8421.o
+endif
+
+#-------------------------------------------------
+#
 #@src/emu/machine/mb87078.h,MACHINES += MB87078
 #-------------------------------------------------
 
@@ -1398,15 +1407,6 @@ endif
 
 ifneq ($(filter SATURN,$(MACHINES)),)
 MACHINEOBJS += $(MACHINEOBJ)/saturn.o
-endif
-
-#-------------------------------------------------
-#
-#@src/emu/machine/seibu_cop.h,MACHINES += SEIBU_COP
-#-------------------------------------------------
-
-ifneq ($(filter SEIBU_COP,$(MACHINES)),)
-MACHINEOBJS += $(MACHINEOBJ)/seibu_cop.o
 endif
 
 #-------------------------------------------------

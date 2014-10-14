@@ -114,6 +114,7 @@ protected:
 	UINT8            m_reg[16];                  /* All the registers */
 	UINT8            m_status;                   /* Status register */
 	UINT8            m_pending_status;           /* Pending status flags */
+	UINT8            m_reg6copy;                 /* Internal copy of register 6 (Sprite Patterns) */
 	UINT8            m_reg8copy;                 /* Internal copy of register 8 (X-Scroll) */
 	UINT8            m_reg9copy;                 /* Internal copy of register 9 (Y-Scroll) */
 	UINT8            m_addrmode;                 /* Type of VDP action */
@@ -160,6 +161,7 @@ protected:
 	emu_timer        *m_draw_timer;
 	emu_timer        *m_lborder_timer;
 	emu_timer        *m_rborder_timer;
+	emu_timer        *m_pending_flags_timer;
 
 	const address_space_config  m_space_config;
 
@@ -171,6 +173,7 @@ protected:
 	static const device_timer_id TIMER_HINT = 4;
 	static const device_timer_id TIMER_VINT = 5;
 	static const device_timer_id TIMER_NMI = 6;
+	static const device_timer_id TIMER_FLAGS = 7;
 
 	required_device<palette_device> m_palette;
 };

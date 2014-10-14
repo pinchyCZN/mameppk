@@ -36,6 +36,9 @@
  Mr Kicker is also known to exist (not dumped) on the F-E1-16-010 PCB that
    Semicom also used for Toy Land Adventure & SemiComDate Quiz Go Go Episode 2 game.
 
+ Mr Kicker: Doesn't boot without a valid default eeprom, but no longer seems to fail
+            after you get a high score (since eeprom rewrite).
+
  Boong-Ga Boong-Ga: the test mode is usable with a standard input configuration like the "common" one
 
  The Semicom boards (at least) have a strange visible area, with the display output cutting off 4 lines
@@ -160,6 +163,12 @@ public:
 	DECLARE_WRITE32_MEMBER(wyvernwg_snd_w);
 	DECLARE_WRITE16_MEMBER(misncrft_snd_w);
 
+	DECLARE_READ32_MEMBER(yorizori_1c_r);
+	DECLARE_WRITE32_MEMBER(yorizori_1c_w);
+	DECLARE_READ32_MEMBER(yorizori_10_r);
+
+
+
 	DECLARE_READ8_MEMBER(qs1000_p1_r);
 	DECLARE_WRITE8_MEMBER(qs1000_p3_w);
 	DECLARE_DRIVER_INIT(vamphalf);
@@ -180,6 +189,7 @@ public:
 	DECLARE_DRIVER_INIT(misncrft);
 	DECLARE_DRIVER_INIT(boonggab);
 	DECLARE_DRIVER_INIT(wyvernwg);
+	DECLARE_DRIVER_INIT(yorizori);
 	UINT32 screen_update_common(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
 	UINT32 screen_update_aoh(screen_device &screen, bitmap_ind16 &bitmap, const rectangle &cliprect);
 };
@@ -366,7 +376,20 @@ WRITE16_MEMBER(vamphalf_state::boonggab_lamps_w)
 	}
 }
 
-
+READ32_MEMBER(vamphalf_state::yorizori_10_r)
+{
+	printf("yorizori_10_r %08x\n", space.device().safe_pc());
+	return 0xffffffff;
+}
+READ32_MEMBER(vamphalf_state::yorizori_1c_r)
+{
+//	printf("yorizori_1c_r %08x\n", space.device().safe_pc());
+	return 0x00;// 0xaa;
+}
+WRITE32_MEMBER(vamphalf_state::yorizori_1c_w)
+{
+//	printf("yorizori_1c_w %08x %08x\n", space.device().safe_pc(), data);
+}
 
 WRITE32_MEMBER( vamphalf_state::wyvernwg_snd_w )
 {
@@ -408,6 +431,13 @@ static ADDRESS_MAP_START( common_32bit_map, AS_PROGRAM, 32, vamphalf_state )
 	AM_RANGE(0x40000000, 0x4003ffff) AM_RAM AM_SHARE("tiles32")
 	AM_RANGE(0x80000000, 0x8000ffff) AM_RAM_DEVWRITE("palette", palette_device, write) AM_SHARE("palette")
 	AM_RANGE(0xfff00000, 0xffffffff) AM_ROM AM_REGION("user1",0)
+ADDRESS_MAP_END
+
+static ADDRESS_MAP_START( yorizori_32bit_map, AS_PROGRAM, 32, vamphalf_state )
+	AM_RANGE(0x00000000, 0x001fffff) AM_RAM AM_SHARE("wram32")
+	AM_RANGE(0x40000000, 0x4003ffff) AM_RAM AM_SHARE("tiles32")
+	AM_RANGE(0x80000000, 0x8000ffff) AM_RAM_DEVWRITE("palette", palette_device, write) AM_SHARE("palette")
+	AM_RANGE(0xffe00000, 0xffffffff) AM_ROM AM_REGION("user1",0)
 ADDRESS_MAP_END
 
 static ADDRESS_MAP_START( vamphalf_io, AS_IO, 16, vamphalf_state )
@@ -550,6 +580,12 @@ static ADDRESS_MAP_START( boonggab_io, AS_IO, 16, vamphalf_state )
 	AM_RANGE(0x702, 0x703) AM_DEVREADWRITE8("oki", okim6295_device, read, write, 0x00ff)
 	AM_RANGE(0x740, 0x743) AM_DEVWRITE8("ymsnd", ym2151_device, register_w, 0x00ff)
 	AM_RANGE(0x744, 0x747) AM_DEVREADWRITE8("ymsnd", ym2151_device, status_r, data_w, 0x00ff)
+ADDRESS_MAP_END
+
+
+static ADDRESS_MAP_START( yorizori_io, AS_IO, 32, vamphalf_state )
+	AM_RANGE(0x010, 0x013) AM_READ(yorizori_10_r)
+	AM_RANGE(0x01c, 0x01f) AM_READWRITE(yorizori_1c_r,yorizori_1c_w)
 ADDRESS_MAP_END
 
 /*
@@ -1124,6 +1160,15 @@ static MACHINE_CONFIG_DERIVED( boonggab, common )
 	MCFG_CPU_IO_MAP(boonggab_io)
 
 	MCFG_FRAGMENT_ADD(sound_ym_oki)
+MACHINE_CONFIG_END
+
+static MACHINE_CONFIG_DERIVED( yorizori, common )
+	MCFG_CPU_REPLACE("maincpu", E132T, XTAL_50MHz)    /* 50 MHz */
+	MCFG_CPU_PROGRAM_MAP(yorizori_32bit_map)
+	MCFG_CPU_IO_MAP(yorizori_io)
+	MCFG_CPU_VBLANK_INT_DRIVER("screen", vamphalf_state,  irq1_line_hold)
+
+	MCFG_FRAGMENT_ADD(sound_qs1000)
 MACHINE_CONFIG_END
 
 /*
@@ -1958,6 +2003,101 @@ ROM_END
 
 /*
 
+Yori Zori Kuk Kuk
+
+
+PCB Layout
+----------
+
+GOLDEN BELL-002
++----------------------------------------------+
+|                  CON6* CON7*                 |
+|VR1  24MHz         16C550*    7.3728MHz*      |
+|      QS1000 QS1001A SND2              27MHz  |
+|                           MEM1L +----------+ |
+|   SND5                          |QuickLogic| |
+|                           MEM1U | 0152 BA  | |
+|J                                | QL12X16B | |
+|A                                |  XPL84C  | |
+|M                           MEM2 +----------+ |
+|M        CRAM2                   +----------+ |
+|A        CRAM1              MEM3 |QuickLogic| |
+|                                 | 0152 BA  | |
+|      DRAM1                 MEM6 | QL12X16B | |
+|      DRAM2  E1-32T              |  XPL84C  | |
+|                            MEM7 +----------+ |
+|P2 P1                93C46                    |
+|              PRG1    ROML00 ROML01 L02* L03* |
+|          GAL1                                |
+|CON2 CON3 CON1* 50MHz ROMH00 ROMH01 H02* H03* |
++----------------------------------------------+
+
+* Denotes unpopulated component
+
+Notes:
+CPU - Hyperstone E1-32T @ 50.000MHz
+
+OSC - 50MHz, 27MHz, 24MHz & 7.3728MHz (unpopulated)
+
+QDSP QS1000 @ 24MHz (silkscreened as SND1)
+     QS1001A Sample rom (silkscreened as SND3)
+     SND2 Additional sound samples
+     SND5 8052 CPU code for QS1000?
+
+EEPROM - Atmel 93C46 at U6
+
+DRAM1 - Hynix GM71C18163CJ5 1M x16 EDO DRAM (SOJ44)
+CRAMx - M61C256J-15 32K x8 SRAM (SOJ28)
+MEMx  - M61C256J-15 32K x8 SRAM (SOJ28)
+
+ P1 - Reset push button
+ P2 - Setup push button
+VR1 - Volume adjust pot
+
+16C550 - Asynchronous Comm Element with Autoflow Conrol (all components related to the 16C500 are unpopulated)
+         7.3728MHz OSC connected to XIN & XOUT of 16C550
+         CON6 & CON7 connected to 16C550
+
+CON1 - 20 pin connector (unpopulated)
+CON2 - 7 pin connector silkscreened GIFT
+CON3 - 6 pin connector silkscreened HOPPER
+CON6 - 4 pin connector silkscreened IN (unpopulated)
+CON7 - 4 pin connector silkscreened OUT (unpopulated)
+
+ROMs:
+    PRG1            - ST M27C160 16MBit DIP42 EPROM
+    SND2            - ST M27C160 16MBit DIP42 EPROM
+    SND5            - ST M27C1001 1MBit DIP32 EPROM
+    ROML00 & ROMH00 - Macronix MX29F1610MC-12 SOP44 16MBit FlashROM
+    ROML01 & ROMH01 - Macronix MX29F1610MC-12 SOP44 16MBit FlashROM
+    ROML02 & ROMH02 - Unpopulated
+    ROML03 & ROMH03 - Unpopulated
+
+*/
+
+ROM_START( yorizori )
+	ROM_REGION32_BE( 0x200000, "user1", ROMREGION_ERASE00 ) /* Hyperstone CPU Code */
+	ROM_LOAD( "prg1", 0x000000, 0x200000, CRC(0e04eb40) SHA1(0cec9dc91aaf9cf7c459c7baac200cf0fcfddc18) )
+	
+	ROM_REGION( 0x080000, "qs1000:cpu", 0 ) /* QDSP (8052) Code */
+	ROM_LOAD( "snd5", 0x00000, 0x20000, CRC(79067367) SHA1(a8f0c02dd616ff8c5fb49dea1a116fea2aced19c) )
+	ROM_RELOAD(      0x20000, 0x20000 )
+	ROM_RELOAD(      0x40000, 0x20000 )
+	ROM_RELOAD(      0x60000, 0x20000 )
+
+	ROM_REGION( 0x800000, "gfx1", 0 )
+	ROM_LOAD32_WORD( "roml00", 0x000000, 0x200000, NO_DUMP )
+	ROM_LOAD32_WORD( "romh00", 0x000002, 0x200000, NO_DUMP )
+	ROM_LOAD32_WORD( "roml01", 0x400000, 0x200000, NO_DUMP )
+	ROM_LOAD32_WORD( "romh01", 0x400002, 0x200000, NO_DUMP )
+
+	ROM_REGION( 0x1000000, "qs1000", 0 )
+	ROM_LOAD( "snd2", 0x000000, 0x200000, CRC(8d9a8795) SHA1(482acb3beafc9baa43284c54ac36086c57098465) )
+	ROM_LOAD( "qs1001a.snd3",  0x200000, 0x80000, CRC(d13c6407) SHA1(57b14f97c7d4f9b5d9745d3571a0b7115fbe3176) )
+ROM_END
+
+/*
+
 Final Godori (c) SemiCom
 
 SEMICOM-003a
@@ -2624,6 +2764,27 @@ DRIVER_INIT_MEMBER(vamphalf_state,wyvernwg)
 	membank("qs1000:data")->configure_entries(0, 16, memregion("qs1000:cpu")->base()+0x100, 0x8000-0x100);
 }
 
+DRIVER_INIT_MEMBER(vamphalf_state,yorizori)
+{
+	// seesm close to Final Godori in terms of port mappings, possibly a SemiCom game?
+
+	m_palshift = 0;
+	m_flip_bit = 1;
+
+	m_semicom_prot_idx = 8;
+	m_semicom_prot_data[0] = 2;
+	m_semicom_prot_data[1] = 1;
+
+	UINT8 *romx = (UINT8 *)memregion("user1")->base();
+	// prevent code dying after a trap 33 by patching it out, why?
+	romx[BYTE4_XOR_BE(0x8ff0)] = 3;
+	romx[BYTE4_XOR_BE(0x8ff1)] = 0;
+
+	// Configure the QS1000 ROM banking. Care must be taken not to overlap the 256b internal RAM
+	machine().device("qs1000:cpu")->memory().space(AS_IO).install_read_bank(0x0100, 0xffff, "data");
+	membank("qs1000:data")->configure_entries(0, 16, memregion("qs1000:cpu")->base()+0x100, 0x8000-0x100);
+}
+
 DRIVER_INIT_MEMBER(vamphalf_state,finalgdr)
 {
 	m_finalgdr_backupram_bank = 1;
@@ -2714,25 +2875,26 @@ DRIVER_INIT_MEMBER(vamphalf_state,boonggab)
 	m_flip_bit = 1;
 }
 
-GAME( 1999, coolmini, 0,        coolmini, common, vamphalf_state,   coolmini, ROT0,   "SemiCom",           "Cool Minigame Collection", 0 )
-GAME( 1999, jmpbreak, 0,        jmpbreak, common, vamphalf_state,   jmpbreak, ROT0,   "F2 System",         "Jumping Break" , 0 )
-GAME( 1999, suplup,   0,        suplup,   common, vamphalf_state,   suplup,   ROT0,   "Omega System",      "Super Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 4.0 / 990518)" , 0 )
-GAME( 1999, luplup,   suplup,   suplup,   common, vamphalf_state,   luplup,   ROT0,   "Omega System",      "Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 3.0 / 990128)", 0 )
-GAME( 1999, luplup29, suplup,   suplup,   common, vamphalf_state,   luplup29, ROT0,   "Omega System",      "Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 2.9 / 990108)", 0 )
-GAME( 1999, puzlbang, suplup,   suplup,   common, vamphalf_state,   puzlbang, ROT0,   "Omega System",      "Puzzle Bang Bang (Korea, version 2.9 / 990108)", 0 )
-GAME( 1999, puzlbanga,suplup,   suplup,   common, vamphalf_state,   puzlbang, ROT0,   "Omega System",      "Puzzle Bang Bang (Korea, version 2.8 / 990106)", 0 )
-GAME( 1999, vamphalf, 0,        vamphalf, common, vamphalf_state,   vamphalf, ROT0,   "Danbi / F2 System", "Vamf x1/2 (Europe)", 0 )
-GAME( 1999, vamphalfk,vamphalf, vamphalf, common, vamphalf_state,   vamphafk, ROT0,   "Danbi / F2 System", "Vamp x1/2 (Korea)", 0 )
-GAME( 2000, dquizgo2, 0,        coolmini, common, vamphalf_state,   dquizgo2, ROT0,   "SemiCom",           "Date Quiz Go Go Episode 2" , 0)
-GAME( 2000, misncrft, 0,        misncrft, common, vamphalf_state,   misncrft, ROT90,  "Sun",               "Mission Craft (version 2.7)", GAME_IMPERFECT_SOUND )
-GAME( 2000, misncrfta,misncrft, misncrft, common, vamphalf_state,   misncrft, ROT90,  "Sun",               "Mission Craft (version 2.4)", GAME_IMPERFECT_SOUND )
-GAME( 2000, mrdig,    0,        mrdig,    common, vamphalf_state,   mrdig,    ROT0,   "Sun",               "Mr. Dig", 0 )
-GAME( 2001, dtfamily, 0,        coolmini, common, vamphalf_state,   dtfamily, ROT0,   "SemiCom",           "Diet Family", 0 )
-GAME( 2001, finalgdr, 0,        finalgdr, finalgdr, vamphalf_state, finalgdr, ROT0,   "SemiCom",           "Final Godori (Korea, version 2.20.5915)", 0 )
-GAME( 2001, mrkicker, 0,        mrkicker, finalgdr, vamphalf_state, mrkicker, ROT0,   "SemiCom",           "Mr. Kicker", 0 ) // game still doesn't boot without a default valid eeprom, but no longer seems to fail after you get a high score (since eeprom rewrite)
-GAME( 2001, toyland,  0,        coolmini, common, vamphalf_state,   toyland,  ROT0,   "SemiCom",           "Toy Land Adventure", 0 )
-GAME( 2001, wivernwg, 0,        wyvernwg, common, vamphalf_state,   wyvernwg, ROT270, "SemiCom",            "Wivern Wings", GAME_IMPERFECT_SOUND )
-GAME( 2001, wyvernwg, wivernwg, wyvernwg, common, vamphalf_state,   wyvernwg, ROT270, "SemiCom (Game Vision license)", "Wyvern Wings (set 1)", GAME_IMPERFECT_SOUND )
-GAME( 2001, wyvernwga,wivernwg, wyvernwg, common, vamphalf_state,   wyvernwg, ROT270, "SemiCom (Game Vision license)", "Wyvern Wings (set 2)", GAME_IMPERFECT_SOUND )
-GAME( 2001, aoh,      0,        aoh,      aoh, vamphalf_state,      aoh,      ROT0,   "Unico",             "Age Of Heroes - Silkroad 2 (v0.63 - 2001/02/07)", 0 )
-GAME( 2001, boonggab, 0,        boonggab, boonggab, vamphalf_state, boonggab, ROT270, "Taff System",       "Boong-Ga Boong-Ga (Spank'em!)", 0 )
+GAME( 1999, coolmini,  0,        coolmini, common,   vamphalf_state, coolmini, ROT0,   "SemiCom",           "Cool Minigame Collection", 0 )
+GAME( 1999, jmpbreak,  0,        jmpbreak, common,   vamphalf_state, jmpbreak, ROT0,   "F2 System",         "Jumping Break" , 0 )
+GAME( 1999, suplup,    0,        suplup,   common,   vamphalf_state, suplup,   ROT0,   "Omega System",      "Super Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 4.0 / 990518)" , 0 )
+GAME( 1999, luplup,    suplup,   suplup,   common,   vamphalf_state, luplup,   ROT0,   "Omega System",      "Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 3.0 / 990128)", 0 )
+GAME( 1999, luplup29,  suplup,   suplup,   common,   vamphalf_state, luplup29, ROT0,   "Omega System",      "Lup Lup Puzzle / Zhuan Zhuan Puzzle (version 2.9 / 990108)", 0 )
+GAME( 1999, puzlbang,  suplup,   suplup,   common,   vamphalf_state, puzlbang, ROT0,   "Omega System",      "Puzzle Bang Bang (Korea, version 2.9 / 990108)", 0 )
+GAME( 1999, puzlbanga, suplup,   suplup,   common,   vamphalf_state, puzlbang, ROT0,   "Omega System",      "Puzzle Bang Bang (Korea, version 2.8 / 990106)", 0 )
+GAME( 1999, vamphalf,  0,        vamphalf, common,   vamphalf_state, vamphalf, ROT0,   "Danbi / F2 System", "Vamf x1/2 (Europe)", 0 )
+GAME( 1999, vamphalfk, vamphalf, vamphalf, common,   vamphalf_state, vamphafk, ROT0,   "Danbi / F2 System", "Vamp x1/2 (Korea)", 0 )
+GAME( 2000, dquizgo2,  0,        coolmini, common,   vamphalf_state, dquizgo2, ROT0,   "SemiCom",           "Date Quiz Go Go Episode 2" , 0)
+GAME( 2000, misncrft,  0,        misncrft, common,   vamphalf_state, misncrft, ROT90,  "Sun",               "Mission Craft (version 2.7)", GAME_IMPERFECT_SOUND )
+GAME( 2000, misncrfta, misncrft, misncrft, common,   vamphalf_state, misncrft, ROT90,  "Sun",               "Mission Craft (version 2.4)", GAME_IMPERFECT_SOUND )
+GAME( 2000, mrdig,     0,        mrdig,    common,   vamphalf_state, mrdig,    ROT0,   "Sun",               "Mr. Dig", 0 )
+GAME( 2001, dtfamily,  0,        coolmini, common,   vamphalf_state, dtfamily, ROT0,   "SemiCom",           "Diet Family", 0 )
+GAME( 2001, finalgdr,  0,        finalgdr, finalgdr, vamphalf_state, finalgdr, ROT0,   "SemiCom",           "Final Godori (Korea, version 2.20.5915)", 0 )
+GAME( 2001, mrkicker,  0,        mrkicker, finalgdr, vamphalf_state, mrkicker, ROT0,   "SemiCom",           "Mr. Kicker", 0 )
+GAME( 2001, toyland,   0,        coolmini, common,   vamphalf_state, toyland,  ROT0,   "SemiCom",           "Toy Land Adventure", 0 )
+GAME( 2001, wivernwg,  0,        wyvernwg, common,   vamphalf_state, wyvernwg, ROT270, "SemiCom",           "Wivern Wings", GAME_IMPERFECT_SOUND )
+GAME( 2001, wyvernwg,  wivernwg, wyvernwg, common,   vamphalf_state, wyvernwg, ROT270, "SemiCom (Game Vision license)", "Wyvern Wings (set 1)", GAME_IMPERFECT_SOUND )
+GAME( 2001, wyvernwga, wivernwg, wyvernwg, common,   vamphalf_state, wyvernwg, ROT270, "SemiCom (Game Vision license)", "Wyvern Wings (set 2)", GAME_IMPERFECT_SOUND )
+GAME( 2001, aoh,       0,        aoh,      aoh,      vamphalf_state, aoh,      ROT0,   "Unico",             "Age Of Heroes - Silkroad 2 (v0.63 - 2001/02/07)", 0 )
+GAME( 2001, boonggab,  0,        boonggab, boonggab, vamphalf_state, boonggab, ROT270, "Taff System",       "Boong-Ga Boong-Ga (Spank'em!)", 0 )
+GAME( 199?, yorizori,  0,        yorizori, common,   vamphalf_state, yorizori, ROT0,   "<unknown>",         "Yori Zori Kuk Kuk", GAME_NOT_WORKING | GAME_IMPERFECT_SOUND )
