@@ -268,7 +268,7 @@ BUILD_MIDILIB = 1
 # USE_NETWORK = 1
 
 # uncomment to enable SSE2 optimized code and SSE2 code generation (implicitly enabled by 64-bit compilers)
-SSE2 = 1
+# SSE2 = 1
 
 # uncomment to enable OpenMP optimized code
 # OPENMP = 1
