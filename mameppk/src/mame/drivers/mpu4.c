@@ -277,6 +277,7 @@ ROM_END
 ROM_START( m4c9c )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "cncs.p1", 0x0000, 0x010000, CRC(10f15e2a) SHA1(c17ab13764d74302246984245485cb7692913b44) )
+	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) // should this set have an OKI?
 ROM_END
 
 
@@ -1745,16 +1746,19 @@ ROM_END
 ROM_START( m4dnj )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "d.n.j 1-02", 0x0000, 0x010000, CRC(5750843d) SHA1(b87923e84071ea4a1af7566a7f413f8e30e208e9) )
+	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) // should this set have an OKI?
 ROM_END
 
 ROM_START( m4dnja )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "d.n.j 1-03", 0x0000, 0x010000, CRC(7b805255) SHA1(f62765bfa66e2422ac0a71ebaff27f1ccd470fe2) )
+	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) // should this set have an OKI?
 ROM_END
 
 ROM_START( m4dnjb )
 	ROM_REGION( 0x10000, "maincpu", 0 )
 	ROM_LOAD( "d.n.j 1-06", 0x0000, 0x010000, CRC(aab770c7) SHA1(f24fff8346915017bc43fef9fac356a067676d86) )
+	ROM_REGION( 0x100000, "msm6376", ROMREGION_ERASE00 ) // should this set have an OKI?
 ROM_END
 
 
@@ -2501,9 +2505,9 @@ GAME(199?, m4wildtm ,0          ,mod4oki    ,mpu4               , mpu4_state,m4a
 
 GAME(199?, m4frtgm  ,0          ,mod4oki    ,mpu4               , mpu4_state,m4altreels         ,ROT0,   "Barcrest","Fruit Game (Barcrest) (MPU4)",GAME_FLAGS ) // SAMPLE EEPROM ALARM (and has a weird sample rom..)
 GAME(199?, m4reeltm ,0          ,mod4oki    ,mpu4               , mpu4_state,m4altreels         ,ROT0,   "Barcrest","Reel Timer (Barcrest) (MPU4) (DWT)",GAME_FLAGS ) // SAMPLE EEPROM ALARM
-GAME(199?, m4fortcb     ,0                  ,mod4oki    ,mpu4               , mpu4_state,m4altreels         ,ROT0,   "Barcrest","Fortune Club (Barcrest) (MPU4) (set 1)",GAME_FLAGS ) // INVALID ALARM
-GAME(199?, m4fortcba    ,m4fortcb           ,mod4oki    ,mpu4               , mpu4_state,m4altreels         ,ROT0,   "Barcrest","Fortune Club (Barcrest) (MPU4) (set 2)",GAME_FLAGS ) // INVALID ALARM
-GAME(199?, m4fortcbb    ,m4fortcb           ,mod4oki    ,mpu4               , mpu4_state,m4altreels         ,ROT0,   "Barcrest","Fortune Club (Barcrest) (MPU4) (set 3)",GAME_FLAGS ) // INVALID ALARM
+GAME(199?, m4fortcb ,0          ,mod4oki    ,mpu4               , mpu4_state,m4altreels         ,ROT0,   "Barcrest","Fortune Club (Barcrest) (MPU4) (set 1)",GAME_FLAGS ) // INVALID ALARM
+GAME(199?, m4fortcba,m4fortcb   ,mod4oki    ,mpu4               , mpu4_state,m4altreels         ,ROT0,   "Barcrest","Fortune Club (Barcrest) (MPU4) (set 2)",GAME_FLAGS ) // INVALID ALARM
+GAME(199?, m4fortcbb,m4fortcb   ,mod4oki    ,mpu4               , mpu4_state,m4altreels         ,ROT0,   "Barcrest","Fortune Club (Barcrest) (MPU4) (set 3)",GAME_FLAGS ) // INVALID ALARM
 
 
 

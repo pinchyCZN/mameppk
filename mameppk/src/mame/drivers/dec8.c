@@ -1982,10 +1982,10 @@ void dec8_state::machine_reset()
 
 /* TODO: These are raw guesses, only to get ~57,41 Hz, assume to be the same as dec0 */
 #define DEC8_PIXEL_CLOCK XTAL_20MHz/4
-#define DEC8_HTOTAL 256+74
+#define DEC8_HTOTAL 320
 #define DEC8_HBEND 0
 #define DEC8_HBSTART 256
-#define DEC8_VTOTAL 264
+#define DEC8_VTOTAL 272
 #define DEC8_VBEND 8
 #define DEC8_VBSTART 256-8
 
@@ -3569,27 +3569,17 @@ DRIVER_INIT_MEMBER(dec8_state,garyoret)
 DRIVER_INIT_MEMBER(dec8_state,ghostb)
 {
 	UINT8 *ROM = memregion("maincpu")->base();
-	UINT8 *RAM = memregion("proms")->base();
-
-	/* Blank out unused garbage in colour prom to avoid colour overflow */
-	memset(RAM + 0x20, 0, 0xe0);
 
 	membank("bank1")->configure_entries(0, 16, &ROM[0x10000], 0x4000);
 	DRIVER_INIT_CALL(dec8);
-	m_palette->update();
 }
 
 DRIVER_INIT_MEMBER(dec8_state,meikyuh)
 {
 	UINT8 *ROM = memregion("maincpu")->base();
-	UINT8 *RAM = memregion("proms")->base();
-
-	/* Blank out unused garbage in colour prom to avoid colour overflow */
-	memset(RAM + 0x20, 0, 0xe0);
 
 	membank("bank1")->configure_entries(0, 12, &ROM[0x10000], 0x4000);
 	DRIVER_INIT_CALL(dec8);
-	m_palette->update();
 }
 
 DRIVER_INIT_MEMBER(dec8_state,csilver)

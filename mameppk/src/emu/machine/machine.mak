@@ -521,6 +521,15 @@ endif
 
 #-------------------------------------------------
 #
+#@src/emu/machine/e05a30.h,MACHINES += E05A30
+#-------------------------------------------------
+
+ifneq ($(filter E05A30,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/e05a30.o
+endif
+
+#-------------------------------------------------
+#
 #@src/emu/machine/eeprom.h,MACHINES += EEPROMDEV
 #@src/emu/machine/eepromser.h,MACHINES += EEPROMDEV
 #@src/emu/machine/eeprompar.h,MACHINES += EEPROMDEV
@@ -1212,6 +1221,15 @@ endif
 
 #-------------------------------------------------
 #
+#@src/emu/machine/omti5100.h,MACHINES += OMTI5100
+#-------------------------------------------------
+
+ifneq ($(filter OMTI5100,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/omti5100.o
+endif
+
+#-------------------------------------------------
+#
 #@src/emu/machine/pcf8593.h,MACHINES += PCF8593
 #-------------------------------------------------
 
@@ -1221,11 +1239,30 @@ endif
 
 #-------------------------------------------------
 #
+#@src/emu/machine/lpci.h,MACHINES += LPCI
+#-------------------------------------------------
+
+ifneq ($(filter LPCI,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/lpci.o
+endif
+
+#-------------------------------------------------
+#
 #@src/emu/machine/pci.h,MACHINES += PCI
 #-------------------------------------------------
 
 ifneq ($(filter PCI,$(MACHINES)),)
 MACHINEOBJS += $(MACHINEOBJ)/pci.o
+MACHINEOBJS += $(MACHINEOBJ)/pci-usb.o
+MACHINEOBJS += $(MACHINEOBJ)/pci-sata.o
+MACHINEOBJS += $(MACHINEOBJ)/pci-apic.o
+MACHINEOBJS += $(MACHINEOBJ)/pci-smbus.o
+MACHINEOBJS += $(MACHINEOBJ)/i82541.o
+MACHINEOBJS += $(MACHINEOBJ)/i82875p.o
+MACHINEOBJS += $(MACHINEOBJ)/i6300esb.o
+MACHINEOBJS += $(MACHINEOBJ)/lpc.o
+MACHINEOBJS += $(MACHINEOBJ)/lpc-acpi.o
+MACHINEOBJS += $(MACHINEOBJ)/lpc-rtc.o
 endif
 
 #-------------------------------------------------
@@ -1872,6 +1909,15 @@ endif
 
 ifneq ($(filter STRATA,$(MACHINES)),)
 MACHINEOBJS += $(MACHINEOBJ)/strata.o
+endif
+
+#-------------------------------------------------
+#
+#@src/emu/machine/steppers.h,MACHINES += STEPPERS
+#-------------------------------------------------
+
+ifneq ($(filter STEPPERS,$(MACHINES)),)
+MACHINEOBJS += $(MACHINEOBJ)/steppers.o
 endif
 
 #-------------------------------------------------

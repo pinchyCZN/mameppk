@@ -16,6 +16,7 @@
 #include "formats/mfi_dsk.h"
 #include "formats/td0_dsk.h"
 #include "formats/cqm_dsk.h"
+#include "formats/dsk_dsk.h"
 #include "ui/imgcntrl.h"
 
 #define MCFG_FLOPPY_DRIVE_ADD(_tag, _slot_intf, _def_slot, _formats)  \
@@ -38,6 +39,7 @@
 		FLOPPY_MFM_FORMAT, \
 		FLOPPY_TD0_FORMAT, \
 		FLOPPY_CQM_FORMAT, \
+		FLOPPY_DSK_FORMAT, \
 		NULL };
 
 
@@ -239,6 +241,8 @@ DECLARE_FLOPPY_IMAGE_DEVICE(epson_sd_321, "floppy_5_25")
 DECLARE_FLOPPY_IMAGE_DEVICE(sony_oa_d31v, "floppy_3_5")
 DECLARE_FLOPPY_IMAGE_DEVICE(sony_oa_d32w, "floppy_3_5")
 DECLARE_FLOPPY_IMAGE_DEVICE(sony_oa_d32v, "floppy_3_5")
+DECLARE_FLOPPY_IMAGE_DEVICE(teac_fd_55f, "floppy_5_25")
+DECLARE_FLOPPY_IMAGE_DEVICE(teac_fd_55g, "floppy_5_25")
 DECLARE_FLOPPY_IMAGE_DEVICE(alps_3255190x, "floppy_5_25")
 
 
@@ -288,6 +292,8 @@ extern const device_type EPSON_SD_321;
 extern const device_type SONY_OA_D31V;
 extern const device_type SONY_OA_D32W;
 extern const device_type SONY_OA_D32V;
+extern const device_type TEAC_FD_55F;
+extern const device_type TEAC_FD_55G;
 extern const device_type ALPS_3255190x;
 
 #endif /* FLOPPY_H */

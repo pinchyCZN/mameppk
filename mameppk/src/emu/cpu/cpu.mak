@@ -1174,7 +1174,7 @@ $(CPUOBJ)/mips/mips3drc.o:  $(CPUSRC)/mips/mips3drc.c \
 
 ifneq ($(filter PSX,$(CPUS)),)
 OBJDIRS += $(CPUOBJ)/psx
-CPUOBJS += $(CPUOBJ)/psx/psx.o $(CPUOBJ)/psx/gte.o $(CPUOBJ)/psx/dma.o $(CPUOBJ)/psx/irq.o $(CPUOBJ)/psx/mdec.o $(CPUOBJ)/psx/rcnt.o $(CPUOBJ)/psx/sio.o $(CPUOBJ)/psx/siodev.o
+CPUOBJS += $(CPUOBJ)/psx/psx.o $(CPUOBJ)/psx/gte.o $(CPUOBJ)/psx/dma.o $(CPUOBJ)/psx/irq.o $(CPUOBJ)/psx/mdec.o $(CPUOBJ)/psx/rcnt.o $(CPUOBJ)/psx/sio.o
 DASMOBJS += $(CPUOBJ)/psx/psxdasm.o
 endif
 
@@ -1814,17 +1814,33 @@ $(CPUOBJ)/minx/minx.o:      $(CPUSRC)/minx/minx.c \
 
 ifneq ($(filter RSP,$(CPUS)),)
 OBJDIRS += $(CPUOBJ)/rsp
-CPUOBJS += $(CPUOBJ)/rsp/rsp.o $(CPUOBJ)/rsp/rspdrc.o $(CPUOBJ)/rsp/rspfe.o $(DRCOBJ)
+CPUOBJS += $(CPUOBJ)/rsp/rsp.o $(CPUOBJ)/rsp/rspdrc.o $(CPUOBJ)/rsp/rspfe.o  $(CPUOBJ)/rsp/rspcp2.o $(CPUOBJ)/rsp/rspcp2d.o $(DRCOBJ)
 DASMOBJS += $(CPUOBJ)/rsp/rsp_dasm.o
 endif
 
 $(CPUOBJ)/rsp/rsp.o:    $(CPUSRC)/rsp/rsp.c \
-				$(CPUSRC)/rsp/rsp.h
+			$(CPUSRC)/rsp/rsp.h \
+			$(CPUSRC)/rsp/rspcp2.c \
+			$(CPUSRC)/rsp/rspcp2.h
 
 $(CPUOBJ)/rsp/rspdrc.o: $(CPUSRC)/rsp/rspdrc.c \
 			$(CPUSRC)/rsp/rsp.h \
 			$(CPUSRC)/rsp/rspfe.h \
 			$(DRCDEPS)
+
+$(CPUOBJ)/rsp/rspcp2.o: $(CPUSRC)/rsp/rspcp2.c \
+			$(CPUSRC)/rsp/rspcp2.h \
+			$(CPUSRC)/rsp/rspdrc.c \
+			$(CPUSRC)/rsp/rsp.c \
+			$(CPUSRC)/rsp/rsp.h
+
+$(CPUOBJ)/rsp/rspcp2d.o: $(CPUSRC)/rsp/rspcp2d.c \
+			$(CPUSRC)/rsp/rspcp2d.h \
+			$(CPUSRC)/rsp/rspcp2.c \
+			$(CPUSRC)/rsp/rspcp2.h \
+			$(CPUSRC)/rsp/rspdrc.c \
+			$(CPUSRC)/rsp/rsp.c \
+			$(CPUSRC)/rsp/rsp.h
 
 $(CPUOBJ)/rsp/rspfe.o:  $(CPUSRC)/rsp/rspfe.c \
 			$(CPUSRC)/rsp/rspfe.h

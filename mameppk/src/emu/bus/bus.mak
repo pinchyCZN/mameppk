@@ -122,6 +122,20 @@ endif
 
 #-------------------------------------------------
 #
+#@src/emu/bus/astrocde/slot.h,BUSES += ASTROCADE
+#-------------------------------------------------
+
+ifneq ($(filter ASTROCADE,$(BUSES)),)
+OBJDIRS += $(BUSOBJ)/astrocde
+BUSOBJS += $(BUSOBJ)/astrocde/slot.o
+BUSOBJS += $(BUSOBJ)/astrocde/rom.o
+BUSOBJS += $(BUSOBJ)/astrocde/exp.o
+BUSOBJS += $(BUSOBJ)/astrocde/ram.o
+endif
+
+
+#-------------------------------------------------
+#
 #@src/emu/bus/bw2/exp.h,BUSES += BW2
 #-------------------------------------------------
 
@@ -316,9 +330,12 @@ endif
 ifneq ($(filter DMV,$(BUSES)),)
 OBJDIRS += $(BUSOBJ)/dmv
 BUSOBJS += $(BUSOBJ)/dmv/dmvbus.o
+BUSOBJS += $(BUSOBJ)/dmv/k210.o
 BUSOBJS += $(BUSOBJ)/dmv/k220.o
 BUSOBJS += $(BUSOBJ)/dmv/k230.o
 BUSOBJS += $(BUSOBJ)/dmv/k233.o
+BUSOBJS += $(BUSOBJ)/dmv/k801.o
+BUSOBJS += $(BUSOBJ)/dmv/k803.o
 BUSOBJS += $(BUSOBJ)/dmv/k806.o
 BUSOBJS += $(BUSOBJ)/dmv/ram.o
 endif
@@ -496,6 +513,7 @@ BUSOBJS += $(BUSOBJ)/isa/xsu_cards.o
 BUSOBJS += $(BUSOBJ)/isa/sc499.o
 BUSOBJS += $(BUSOBJ)/isa/aga.o
 BUSOBJS += $(BUSOBJ)/isa/svga_trident.o
+BUSOBJS += $(BUSOBJ)/isa/num9rev.o
 endif
 
 #-------------------------------------------------
@@ -628,6 +646,7 @@ BUSOBJS += $(BUSOBJ)/pet/c2n.o
 BUSOBJS += $(BUSOBJ)/pet/diag264_lb_tape.o
 BUSOBJS += $(BUSOBJ)/pet/exp.o
 BUSOBJS += $(BUSOBJ)/pet/64k.o
+BUSOBJS += $(BUSOBJ)/pet/hsg.o
 BUSOBJS += $(BUSOBJ)/pet/superpet.o
 BUSOBJS += $(BUSOBJ)/pet/user.o
 BUSOBJS += $(BUSOBJ)/pet/diag.o
@@ -667,6 +686,19 @@ BUSOBJS += $(BUSOBJ)/s100/mm65k16s.o
 BUSOBJS += $(BUSOBJ)/s100/nsmdsa.o
 BUSOBJS += $(BUSOBJ)/s100/nsmdsad.o
 BUSOBJS += $(BUSOBJ)/s100/wunderbus.o
+endif
+
+
+#-------------------------------------------------
+#
+#@src/emu/bus/spc1000/exp.h,BUSES += SPC1000
+#-------------------------------------------------
+
+ifneq ($(filter SPC1000,$(BUSES)),)
+OBJDIRS += $(BUSOBJ)/spc1000
+BUSOBJS += $(BUSOBJ)/spc1000/exp.o
+BUSOBJS += $(BUSOBJ)/spc1000/fdd.o
+BUSOBJS += $(BUSOBJ)/spc1000/vdp.o
 endif
 
 
@@ -884,6 +916,8 @@ BUSOBJS += $(BUSOBJ)/a2bus/timemasterho.o
 BUSOBJS += $(BUSOBJ)/a2bus/mouse.o
 BUSOBJS += $(BUSOBJ)/a2bus/corvfdc01.o
 BUSOBJS += $(BUSOBJ)/a2bus/corvfdc02.o
+BUSOBJS += $(BUSOBJ)/a2bus/ramcard16k.o
+BUSOBJS += $(BUSOBJ)/a2bus/ramcard128k.o
 endif
 
 #-------------------------------------------------
@@ -925,10 +959,12 @@ BUSOBJS += $(BUSOBJ)/centronics/covox.o
 BUSOBJS += $(BUSOBJ)/centronics/dsjoy.o
 BUSOBJS += $(BUSOBJ)/centronics/epson_ex800.o
 BUSOBJS += $(BUSOBJ)/centronics/epson_lx800.o
+BUSOBJS += $(BUSOBJ)/centronics/epson_lx810l.o
 BUSOBJS += $(BUSOBJ)/centronics/printer.o
 BUSOBJS += $(BUSOBJ)/centronics/digiblst.o
 $(BUSOBJ)/centronics/epson_ex800.o:    $(EMUOBJ)/layout/ex800.lh
 $(BUSOBJ)/centronics/epson_lx800.o:    $(EMUOBJ)/layout/lx800.lh
+$(BUSOBJ)/centronics/epson_lx810l.o:   $(EMUOBJ)/layout/lx800.lh
 endif
 
 #-------------------------------------------------
@@ -962,19 +998,19 @@ endif
 
 #-------------------------------------------------
 #
-#@src/emu/bus/pci/pci.h,BUSES += PCI
+#@src/emu/bus/lpci/pci.h,BUSES += LPCI
 #-------------------------------------------------
 
-ifneq ($(filter PCI,$(BUSES)),)
-OBJDIRS += $(BUSOBJ)/pci
-BUSOBJS += $(BUSOBJ)/pci/pci.o
-BUSOBJS += $(BUSOBJ)/pci/cirrus.o
-BUSOBJS += $(BUSOBJ)/pci/i82371ab.o
-BUSOBJS += $(BUSOBJ)/pci/i82371sb.o
-BUSOBJS += $(BUSOBJ)/pci/i82439tx.o
-BUSOBJS += $(BUSOBJ)/pci/northbridge.o
-BUSOBJS += $(BUSOBJ)/pci/southbridge.o
-BUSOBJS += $(BUSOBJ)/pci/mpc105.o
+ifneq ($(filter LPCI,$(BUSES)),)
+OBJDIRS += $(BUSOBJ)/lpci
+BUSOBJS += $(BUSOBJ)/lpci/pci.o
+BUSOBJS += $(BUSOBJ)/lpci/cirrus.o
+BUSOBJS += $(BUSOBJ)/lpci/i82371ab.o
+BUSOBJS += $(BUSOBJ)/lpci/i82371sb.o
+BUSOBJS += $(BUSOBJ)/lpci/i82439tx.o
+BUSOBJS += $(BUSOBJ)/lpci/northbridge.o
+BUSOBJS += $(BUSOBJ)/lpci/southbridge.o
+BUSOBJS += $(BUSOBJ)/lpci/mpc105.o
 endif
 
 #-------------------------------------------------
@@ -1267,6 +1303,7 @@ BUSOBJS += $(BUSOBJ)/cpc/cpc_rs232.o
 BUSOBJS += $(BUSOBJ)/cpc/mface2.o
 BUSOBJS += $(BUSOBJ)/cpc/symbfac2.o
 BUSOBJS += $(BUSOBJ)/cpc/amdrum.o
+BUSOBJS += $(BUSOBJ)/cpc/playcity.o
 endif
 
 #-------------------------------------------------

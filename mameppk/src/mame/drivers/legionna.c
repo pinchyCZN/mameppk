@@ -1183,7 +1183,7 @@ static const gfx_layout cupsocsb_tilelayout =
 
 static GFXDECODE_START( heatbrl_csb )
 	GFXDECODE_ENTRY( "gfx1", 0, cupsocsb_8x8_tilelayout,    48*16, 16 )
-	GFXDECODE_ENTRY( "gfx3", 0, cupsocsb_tilelayout,        0*16, 16 )
+	GFXDECODE_ENTRY( "gfx3", 0, cupsocsb_tilelayout,        0*16, 32 )
 	GFXDECODE_ENTRY( "gfx4", 0, cupsocsb_tilelayout,        32*16, 16 ) /* unused */
 	GFXDECODE_ENTRY( "gfx2", 0, cupsocsb_spritelayout,      0*16, 8*16 )
 	GFXDECODE_ENTRY( "gfx5", 0, cupsocsb_tilelayout,        32*16, 16 )
@@ -1293,7 +1293,7 @@ static MACHINE_CONFIG_START( godzilla, legionna_state )
 //  MCFG_SCREEN_VBLANK_TIME(ATTOSECONDS_IN_USEC(2500))
 //  MCFG_SCREEN_SIZE(42*8, 36*8)
 //  MCFG_SCREEN_VISIBLE_AREA(0*8, 40*8-1, 0*8, 28*8-1)
-	MCFG_SCREEN_RAW_PARAMS(14318180/2,442,0,320,262,0,224) // ~61 Hz
+	MCFG_SCREEN_RAW_PARAMS(14318180/2,455,0,320,258,0,224) // ~61 Hz
 	MCFG_SCREEN_UPDATE_DRIVER(legionna_state, screen_update_godzilla)
 	MCFG_SCREEN_PALETTE("palette")
 

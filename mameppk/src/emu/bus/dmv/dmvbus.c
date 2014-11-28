@@ -199,6 +199,7 @@ dmvcart_slot_device::dmvcart_slot_device(const machine_config &mconfig, const ch
 		device_slot_interface(mconfig, *this),
 		m_prog_read_cb(*this),
 		m_prog_write_cb(*this),
+		m_out_int_cb(*this),
 		m_out_irq_cb(*this),
 		m_out_thold_cb(*this)
 {
@@ -224,6 +225,7 @@ void dmvcart_slot_device::device_start()
 	// resolve callbacks
 	m_prog_read_cb.resolve_safe(0);
 	m_prog_write_cb.resolve_safe();
+	m_out_int_cb.resolve_safe();
 	m_out_irq_cb.resolve_safe();
 	m_out_thold_cb.resolve_safe();
 }
@@ -318,22 +320,40 @@ void dmvcart_slot_device::switch16_w(int state)
 		m_cart->switch16_w(state);
 }
 
-void dmvcart_slot_device::irq0_w(int state)
+void dmvcart_slot_device::timint_w(int state)
 {
 	if (m_cart)
-		m_cart->irq0_w(state);
+		m_cart->timint_w(state);
 }
 
-void dmvcart_slot_device::irq1_w(int state)
+void dmvcart_slot_device::keyint_w(int state)
 {
 	if (m_cart)
-		m_cart->irq1_w(state);
+		m_cart->keyint_w(state);
+}
+
+void dmvcart_slot_device::busint_w(int state)
+{
+	if (m_cart)
+		m_cart->busint_w(state);
+}
+
+void dmvcart_slot_device::flexint_w(int state)
+{
+	if (m_cart)
+		m_cart->flexint_w(state);
 }
 
 void dmvcart_slot_device::irq2_w(int state)
 {
 	if (m_cart)
 		m_cart->irq2_w(state);
+}
+
+void dmvcart_slot_device::irq2a_w(int state)
+{
+	if (m_cart)
+		m_cart->irq2a_w(state);
 }
 
 void dmvcart_slot_device::irq3_w(int state)
@@ -358,10 +378,4 @@ void dmvcart_slot_device::irq6_w(int state)
 {
 	if (m_cart)
 		m_cart->irq6_w(state);
-}
-
-void dmvcart_slot_device::irq7_w(int state)
-{
-	if (m_cart)
-		m_cart->irq7_w(state);
 }
