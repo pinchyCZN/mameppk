@@ -73,8 +73,8 @@ void segas16c_state::memory_mapper(sega_315_5195_mapper_device &mapper, UINT8 in
 			break;
 
 		case 5:	// 64k of tileram + 4k of textram
-			mapper.map_as_ram(0x00000, 0x10000, 0xfe0000, "tileram", write16_delegate(FUNC(segas16c_state::sega_tileram_0_w), this));
-			mapper.map_as_ram(0x10000, 0x01000, 0xfef000, "textram", write16_delegate(FUNC(segas16c_state::sega_textram_0_w), this));
+			mapper.map_as_ram(0x00000, 0x10000, 0xfe0000, "tileram", write16_delegate(FUNC(segas16c_state::tileram_w), this));
+			mapper.map_as_ram(0x10000, 0x01000, 0xfef000, "textram", write16_delegate(FUNC(segas16c_state::textram_w), this));
 			break;
 
 		case 4:	// 2k of spriteram
@@ -149,7 +149,7 @@ void segas16c_state::mapper_sound_w(UINT8 data)
 WRITE16_MEMBER( segas16c_state::rom_5704_bank_w )
 {
 	if (ACCESSING_BITS_0_7)
-		m_segaic16vid->segaic16_tilemap_set_bank(0, offset & 1, data & 7);
+		m_segaic16vid->tilemap_set_bank(0, offset & 1, data & 7);
 }
 
 
@@ -196,10 +196,10 @@ WRITE16_MEMBER( segas16c_state::standard_io_w )
             //  D1 : (Output to coin counter 2?)
             //  D0 : Output to coin counter 1
             //
-			m_segaic16vid->segaic16_tilemap_set_flip(0, data & 0x40);
+			m_segaic16vid->tilemap_set_flip(0, data & 0x40);
 			m_sprites->set_flip(data & 0x40);
 			if (!m_disable_screen_blanking)
-				m_segaic16vid->segaic16_set_display_enable(data & 0x20);
+				m_segaic16vid->set_display_enable(data & 0x20);
 			set_led_status(machine(), 1, data & 0x08);
 			set_led_status(machine(), 0, data & 0x04);
 			coin_counter_w(machine(), 1, data & 0x02);
@@ -229,10 +229,6 @@ void segas16c_state::init_generic(segas16c_rom_board rom_board)
 	// create default read/write handlers
 	m_custom_io_r = read16_delegate(FUNC(segas16c_state::standard_io_r), this);
 	m_custom_io_w = write16_delegate(FUNC(segas16c_state::standard_io_w), this);
-
-	// point globals to allocated memory regions
-	m_segaic16vid->segaic16_tileram_0 = reinterpret_cast<UINT16 *>(memshare("tileram")->ptr());
-	m_segaic16vid->segaic16_textram_0 = reinterpret_cast<UINT16 *>(memshare("textram")->ptr());
 
 	// save state
 	save_item(NAME(m_atomicp_sound_count));
@@ -356,7 +352,7 @@ void segas16c_state::machine_reset()
 	synchronize(TID_INIT_I8751);
 
 	// reset tilemap state
-	m_segaic16vid->segaic16_tilemap_reset(*m_screen);
+	m_segaic16vid->tilemap_reset(*m_screen);
 
 	// configure sprite banks
 	static const UINT8 default_banklist[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
