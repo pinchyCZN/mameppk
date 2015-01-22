@@ -439,6 +439,9 @@ endif
 # all sources are under the src/ directory
 SRC = src
 
+# all 3rd party sources are under the 3rdparty/ directory
+3RDPARTY = 3rdparty
+
 # build the targets in different object dirs, so they can co-exist
 OBJ = obj/$(OSD)/$(FULLNAME)
 
@@ -516,6 +519,9 @@ endif
 ifdef FASTDEBUG
 DEFS += -DMAME_DEBUG_FAST
 endif
+
+# To support casting in Lua 5.3
+DEFS += -DLUA_COMPAT_APIINTCASTS
 
 ifneq ($(USE_UI_COLOR_DISPLAY),)
 DEFS += -DUI_COLOR_DISPLAY
@@ -622,7 +628,7 @@ CPPONLYFLAGS =
 
 # CFLAGS is defined based on C or C++ targets
 # (remember, expansion only happens when used, so doing it here is ok)
-CFLAGS = $(CCOMFLAGS) $(CPPONLYFLAGS)
+CFLAGS = $(CCOMFLAGS) $(CPPONLYFLAGS) $(INCPATH)
 
 # we compile C-only to C89 standard with GNU extensions
 # we compile C++ code to C++98 standard with GNU extensions
@@ -757,6 +763,8 @@ INCPATH += \
 	-I$(OBJ)/emu/layout \
 	-I$(SRC)/lib/util \
 	-I$(SRC)/lib \
+	-I$(3RDPARTY) \
+	-I$(3RDPARTY)/lua/src \
 	-I$(SRC)/osd \
 	-I$(SRC)/osd/winui \
 	-I$(SRC)/osd/$(OSD) \
@@ -836,7 +844,7 @@ endif
 # this variable
 #-------------------------------------------------
 
-OBJDIRS = $(OBJ)
+OBJDIRS = $(OBJ) $(OBJ)/$(TARGET)/$(SUBTARGET)
 
 
 #-------------------------------------------------
@@ -868,7 +876,7 @@ LIBS =
 
 # add expat XML library
 ifeq ($(BUILD_EXPAT),1)
-INCPATH += -I$(SRC)/lib/expat
+INCPATH += -I$(3RDPARTY)/expat/lib
 EXPAT = $(OBJ)/libexpat.a
 else
 LIBS += -lexpat
@@ -877,7 +885,7 @@ endif
 
 # add ZLIB compression library
 ifeq ($(BUILD_ZLIB),1)
-INCPATH += -I$(SRC)/lib/zlib
+INCPATH += -I$(3RDPARTY)/zlib
 ZLIB = $(OBJ)/libz.a
 else
 LIBS += -lz
@@ -896,7 +904,7 @@ endif
 
 # add jpeglib image library
 ifeq ($(BUILD_JPEGLIB),1)
-INCPATH += -I$(SRC)/lib/libjpeg
+INCPATH += -I$(3RDPARTY)/libjpeg
 JPEG_LIB = $(OBJ)/libjpeg.a
 else
 LIBS += -ljpeg
@@ -999,7 +1007,6 @@ include $(SRC)/tools/tools.mak
 include $(SRC)/regtests/regtests.mak
 
 # combine the various definitions to one
-CCOMFLAGS += $(INCPATH)
 CDEFS = $(DEFS)
 
 # TODO: -x c++ should not be hard-coded
@@ -1170,11 +1177,11 @@ endif
 
 $(OBJ)/%.lh: $(SRC)/%.lay $(SRC)/build/file2str.py
 	@echo Converting $<...
-	@$(PYTHON) $(SRC)/build/file2str.py $< $@ layout_$(basename $(notdir $<))
+	$(PYTHON) $(SRC)/build/file2str.py $< $@ layout_$(basename $(notdir $<))
 
 $(OBJ)/%.fh: $(OBJ)/%.bdc $(SRC)/build/file2str.py
 	@echo Converting $<...
-	@$(PYTHON) $(SRC)/build/file2str.py $< $@ font_$(basename $(notdir $<)) UINT8
+	$(PYTHON) $(SRC)/build/file2str.py $< $@ font_$(basename $(notdir $<)) UINT8
 
 $(DRIVLISTOBJ): $(DRIVLISTSRC)
 	@echo Compiling $<...
@@ -1195,7 +1202,7 @@ $(OBJ)/%.a:
 ifeq ($(TARGETOS),macosx)
 $(OBJ)/%.o: $(SRC)/%.m | $(OSPREBUILD)
 	@echo Objective-C compiling $<...
-	$(CC) $(CDEFS) $(COBJFLAGS) $(CCOMFLAGS) -c $< -o $@
+	$(CC) $(CDEFS) $(COBJFLAGS) $(CCOMFLAGS) $(INCPATH) -c $< -o $@
 endif
 
 

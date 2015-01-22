@@ -330,7 +330,7 @@ joshi Vollyball set.
 const device_type JOSVOLLY8741_4PACK = &device_creator<josvolly8741_4pack_device>;
 
 josvolly8741_4pack_device::josvolly8741_4pack_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
-	: device_t(mconfig, JOSVOLLY8741_4PACK, "Joshi Volleyball 8741 MCU Simulation", tag, owner, clock, "josvolly8741_4pack", __FILE__),
+	: device_t(mconfig, JOSVOLLY8741_4PACK, "I8741 MCU Simulation (Joshi Volleyball)", tag, owner, clock, "josvolly8741_4pack", __FILE__),
 	m_port_handler_0_r(*this),
 	m_port_handler_1_r(*this),
 	m_port_handler_2_r(*this),
