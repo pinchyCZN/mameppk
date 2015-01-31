@@ -108,6 +108,8 @@
 #include "rendfont.h"
 #endif /* USE_SHOW_INPUT_LOG */
 
+#include "osdepend.h"
+
 #include <ctype.h>
 #include <time.h>
 

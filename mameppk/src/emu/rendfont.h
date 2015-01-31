@@ -13,6 +13,8 @@
 
 #include "render.h"
 
+// forward instead of include
+class osd_font;
 
 //**************************************************************************
 //  TYPE DEFINITIONS
@@ -102,7 +104,7 @@ private:
 	dynamic_array<glyph> m_glyphs[256];     // array of glyph subtables
 	dynamic_array<char> m_rawdata;          // pointer to the raw data for the font
 	UINT64              m_rawsize;          // size of the raw font data
-	osd_font            m_osdfont;          // handle to the OSD font
+	osd_font            *m_osdfont;          // handle to the OSD font
 	//mamep: for command glyph
 	int                 m_height_cmd;       // height of the font, from ascent to descent
 	int                 m_yoffs_cmd;        // y offset from baseline to descent

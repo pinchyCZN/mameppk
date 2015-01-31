@@ -147,22 +147,23 @@ def renderFontSaveCached(font, filename, hash32):
         fp.write('o')
         fp.write('n')
         fp.write('t')
-        fp.write(bytearray([hash32 >> 24 & 0xff]))
-        fp.write(bytearray([hash32 >> 16 & 0xff]))
-        fp.write(bytearray([hash32 >> 8 & 0xff]))
-        fp.write(bytearray([hash32 >> 0 & 0xff]))
-        fp.write(bytearray([font.height >> 8 & 0xff]))
-        fp.write(bytearray([font.height >> 0 & 0xff]))
-        fp.write(bytearray([font.yOffs >> 8 & 0xff]))
-        fp.write(bytearray([font.yOffs >> 0 & 0xff]))
-        fp.write(bytearray([g_totalNumChars >> 24 & 0xff]))
-        fp.write(bytearray([g_totalNumChars >> 16 & 0xff]))
-        fp.write(bytearray([g_totalNumChars >> 8 & 0xff]))
-        fp.write(bytearray([g_totalNumChars >> 0 & 0xff]))
+        fp.write(chr(hash32 >> 24 & 0xff))
+        fp.write(chr(hash32 >> 16 & 0xff))
+        fp.write(chr(hash32 >> 8 & 0xff))
+        fp.write(chr(hash32 >> 0 & 0xff))
+        fp.write(chr(font.height >> 8 & 0xff))
+        fp.write(chr(font.height >> 0 & 0xff))
+        fp.write(chr(font.yOffs >> 8 & 0xff))
+        fp.write(chr(font.yOffs >> 0 & 0xff))
+        fp.write(chr(g_totalNumChars >> 24 & 0xff))
+        fp.write(chr(g_totalNumChars >> 16 & 0xff))
+        fp.write(chr(g_totalNumChars >> 8 & 0xff))
+        fp.write(chr(g_totalNumChars >> 0 & 0xff))
         
         # Write a blank table at first (?)
         charTable = [0]*(g_totalNumChars * CACHED_CHAR_SIZE)
-        fp.write(bytearray(charTable))
+        for i in range(g_totalNumChars * CACHED_CHAR_SIZE):
+            fp.write(chr(charTable[i]))
         
         # Loop over all characters
         tableIndex = g_totalNumChars - numChars
@@ -197,10 +198,11 @@ def renderFontSaveCached(font, filename, hash32):
                     dBuffer.append(accum)
                 
                 # Write the data
-                tmp_fp.write(bytearray(dBuffer))
+                for j in range(len(dBuffer)):
+                    tmp_fp.write(chr(dBuffer[j]))
 
                 c.bitmap = None
-            
+
             destIndex = tableIndex * CACHED_CHAR_SIZE
             g_charTable[destIndex +  0] = i >> 8 & 0xff
             g_charTable[destIndex +  1] = i >> 0 & 0xff
@@ -222,7 +224,8 @@ def renderFontSaveCached(font, filename, hash32):
         fp.seek(CACHED_HEADER_SIZE, 0)
         for i in range(len(charTable)):
             charTable[i] = g_charTable[i]
-        fp.write(bytearray(charTable))
+        for i in range(g_totalNumChars * CACHED_CHAR_SIZE):
+            fp.write(chr(charTable[i]))
 
         # mamep:copy from temporary file
         tmp_fp.seek(0, 0)
