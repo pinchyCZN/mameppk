@@ -3223,9 +3223,9 @@ static void BuildDataMap(void)
 	datamap_add(properties_datamap, IDC_MOUSE,					DM_STRING,	OPTION_MOUSE_DEVICE);
 
 	// core debugging options
-	datamap_add(properties_datamap, IDC_LOG,					DM_BOOL,	OSDOPTION_LOG);
-	datamap_add(properties_datamap, IDC_DEBUG,					DM_BOOL,	OSDOPTION_DEBUG);
-	datamap_add(properties_datamap, IDC_VERBOSE,				DM_BOOL,	OSDOPTION_VERBOSE);
+	datamap_add(properties_datamap, IDC_LOG,					DM_BOOL,	OPTION_LOG);
+	datamap_add(properties_datamap, IDC_DEBUG,					DM_BOOL,	OPTION_DEBUG);
+	datamap_add(properties_datamap, IDC_VERBOSE,				DM_BOOL,	OPTION_VERBOSE);
 	datamap_add(properties_datamap, IDC_UPDATEINPAUSE,			DM_BOOL,	OPTION_UPDATEINPAUSE);
 	datamap_add(properties_datamap, IDC_DEBUGSCRIPT,			DM_STRING,	OPTION_DEBUGSCRIPT);
 
@@ -3243,7 +3243,7 @@ static void BuildDataMap(void)
 #endif /* TRANS_UI */
 
 	// windows debugging options
-	datamap_add(properties_datamap, IDC_OSLOG,					DM_BOOL,	OSDOPTION_OSLOG);
+	datamap_add(properties_datamap, IDC_OSLOG,					DM_BOOL,	OPTION_OSLOG);
 	// watchdog missing
 
 	// windows performance options

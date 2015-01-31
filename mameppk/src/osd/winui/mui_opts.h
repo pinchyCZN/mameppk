@@ -17,6 +17,7 @@
 #include "osdcomm.h"
 #include "options.h"
 #include "emu.h" /* for input_seq definition */
+#include "drivenum.h"
 #include <video.h> /* for MAX_SCREENS Definition*/
 #include "winmain.h"
 

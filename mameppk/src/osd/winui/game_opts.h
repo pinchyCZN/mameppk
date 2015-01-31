@@ -15,6 +15,7 @@
 #define __GAME_OPTS_H__
 
 #include <vector>
+#include "drivenum.h"
 #include "win_options.h"
 
 class game_options

@@ -16,7 +16,9 @@
 #define _WINDOWS(str)	lang_message(UI_MSG_OSD0, str)
 #endif
 
-#define _WIN32_WINNT 0x0501
+#ifndef _WIN32_WINNT
+#define _WIN32_WINNT 0x0501 // Windows XP
+#endif
 
 #ifdef _MSC_VER
 #include <assert.h>

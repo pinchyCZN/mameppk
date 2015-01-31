@@ -597,6 +597,8 @@ void *tia_sound_init(device_t *device, int clock, int sample_rate, int gain)
 		chip->P5[chan] = 0;
 		chip->P9[chan] = 0;
 	}
+	
+	tia_save_state(device, chip);
 
 	tia_save_state(device, chip);
 

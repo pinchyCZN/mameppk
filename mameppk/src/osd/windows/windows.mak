@@ -378,6 +378,7 @@ OSDOBJS = \
 	$(WINOBJ)/winmenu.o \
 	$(WINOBJ)/winmain.o \
 	$(OSDOBJ)/modules/midi/portmidi.o \
+	$(OSDOBJ)/modules/lib/osdobj_common.o  \
 
 ifdef USE_SDL
 OSDOBJS += \
@@ -450,7 +451,7 @@ endif
 #-------------------------------------------------
 # WinPCap
 #-------------------------------------------------
-INCPATH += -I$(SRC)/lib/winpcap
+INCPATH += -I$(3RDPARTY)/winpcap/Include
 
 #-------------------------------------------------
 # For building Scale Effects include scale.mak
