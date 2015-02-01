@@ -99,11 +99,11 @@ ATTR_COLD void terms_t::set_pointers()
 
 ATTR_COLD netlist_matrix_solver_t::netlist_matrix_solver_t(const eSolverType type, const netlist_solver_parameters_t &params)
 : m_stat_calculations(0),
-  m_stat_newton_raphson(0),
-  m_stat_vsolver_calls(0),
-  m_params(params),
-  m_cur_ts(0),
-  m_type(type)
+	m_stat_newton_raphson(0),
+	m_stat_vsolver_calls(0),
+	m_params(params),
+	m_cur_ts(0),
+	m_type(type)
 {
 }
 
@@ -438,7 +438,7 @@ netlist_matrix_solver_t * NETLIB_NAME(solver)::create_solver(int size, const int
 		return nl_alloc(netlist_matrix_solver_direct2_t, m_params);
 	else
 	{
-	    typedef netlist_matrix_solver_gauss_seidel_t<m_N,_storage_N> solver_N;
+		typedef netlist_matrix_solver_gauss_seidel_t<m_N,_storage_N> solver_N;
 		if (size >= gs_threshold)
 			return nl_alloc(solver_N, m_params, size);
 		else

@@ -173,16 +173,16 @@ render_font::render_font(render_manager &manager, const char *filename)
 		m_osdfont = manager.machine().osd().font_alloc();
 		if (m_osdfont != NULL)
 		{
-		    if (m_osdfont->open(manager.machine().options().font_path(), filename, m_height))
-		    {
-	            m_scale = 1.0f / (float)m_height;
-	            m_format = FF_OSD;
+			if (m_osdfont->open(manager.machine().options().font_path(), filename, m_height))
+			{
+				m_scale = 1.0f / (float)m_height;
+				m_format = FF_OSD;
 				//mamep: allocate command glyph font
 				render_font_command_glyph();
-	            return;
-		    }
-		    global_free(m_osdfont);
-		    m_osdfont = NULL;
+				return;
+			}
+			global_free(m_osdfont);
+			m_osdfont = NULL;
 		}
 	}
 
@@ -263,8 +263,8 @@ render_font::~render_font()
 	// release the OSD font
 	if (m_osdfont != NULL)
 	{
-        m_osdfont->close();
-        global_free(m_osdfont);
+		m_osdfont->close();
+		global_free(m_osdfont);
 	}
 }
 

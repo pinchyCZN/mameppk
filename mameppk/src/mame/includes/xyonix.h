@@ -9,9 +9,9 @@ public:
 
 	required_device<cpu_device> m_maincpu;
 	required_device<gfxdecode_device> m_gfxdecode;
-	
+
 	required_shared_ptr<UINT8> m_vidram;
-	
+
 	tilemap_t *m_tilemap;
 
 	int m_e0_data;

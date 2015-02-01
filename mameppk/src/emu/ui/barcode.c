@@ -51,7 +51,7 @@ ui_menu_barcode_reader::~ui_menu_barcode_reader()
 void ui_menu_barcode_reader::populate()
 {
 	if (current_device())
-	{		
+	{
 		astring buffer;
 		const char *new_barcode;
 
@@ -103,7 +103,7 @@ void ui_menu_barcode_reader::handle()
 				if (event->itemref == ITEMREF_SELECT_READER)
 					previous();
 				break;
-				
+
 			case IPT_UI_RIGHT:
 				if (event->itemref == ITEMREF_SELECT_READER)
 					next();

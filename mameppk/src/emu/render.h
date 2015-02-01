@@ -213,26 +213,26 @@ struct render_quad_texuv
 
 struct render_palette_copy
 {
-    int ref_count;
-    dynamic_array<rgb_t> palette;
+	int ref_count;
+	dynamic_array<rgb_t> palette;
 };
 
 class render_texinfo
 {
 public:
-    render_texinfo()
-    : base(NULL), rowpixels(0), width(0), height(0),
-      seqid(0), osddata(0), m_palette(NULL)
-    {}
+	render_texinfo()
+	: base(NULL), rowpixels(0), width(0), height(0),
+		seqid(0), osddata(0), m_palette(NULL)
+	{}
 
-    render_texinfo(const render_texinfo &src);
+	render_texinfo(const render_texinfo &src);
 
-    ~render_texinfo()
-    {
-        free_palette();
-    }
+	~render_texinfo()
+	{
+		free_palette();
+	}
 
-    render_texinfo &operator=(const render_texinfo &src);
+	render_texinfo &operator=(const render_texinfo &src);
 
 	void *              base;               // base of the data
 	UINT32              rowpixels;          // pixels per row

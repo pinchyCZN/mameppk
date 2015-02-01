@@ -36,7 +36,7 @@ public:
 	required_shared_ptr<UINT16> m_mhigh_scrollram;
 	required_shared_ptr<UINT16> m_vidattrram;
 	required_shared_ptr<UINT16> m_spriteram;
-	
+
 	tilemap_t *m_bg_tilemap;
 	tilemap_t *m_mlow_tilemap;
 	tilemap_t *m_mhigh_tilemap;

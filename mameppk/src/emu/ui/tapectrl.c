@@ -67,7 +67,7 @@ void ui_menu_tape_control::populate()
 			double t0 = current_device()->get_position();
 			double t1 = current_device()->get_length();
 			UINT32 tapeflags = 0;
-			
+
 			// state
 			if (t1 > 0)
 			{
@@ -76,16 +76,16 @@ void ui_menu_tape_control::populate()
 				if (t0 < t1)
 					tapeflags |= MENU_FLAG_RIGHT_ARROW;
 			}
-			
+
 			get_time_string(timepos, current_device(), NULL, NULL);
 			state = current_device()->get_state();
 			item_append(
 						(state & CASSETTE_MASK_UISTATE) == CASSETTE_STOPPED
 						?   _("stopped")
 						:   ((state & CASSETTE_MASK_UISTATE) == CASSETTE_PLAY
-							 ? ((state & CASSETTE_MASK_MOTOR) == CASSETTE_MOTOR_ENABLED ? _("playing") : _("(playing)"))
-							 : ((state & CASSETTE_MASK_MOTOR) == CASSETTE_MOTOR_ENABLED ? _("recording") : _("(recording)"))
-							 ),
+								? ((state & CASSETTE_MASK_MOTOR) == CASSETTE_MOTOR_ENABLED ? _("playing") : _("(playing)"))
+								: ((state & CASSETTE_MASK_MOTOR) == CASSETTE_MOTOR_ENABLED ? _("recording") : _("(recording)"))
+								),
 						timepos,
 						tapeflags,
 						TAPECMD_SLIDER);

@@ -1268,13 +1268,13 @@ ATTR_HOT inline netlist_logic_net_t & RESTRICT netlist_net_t::as_logic()
 
 ATTR_HOT inline const netlist_logic_net_t & RESTRICT netlist_net_t::as_logic() const
 {
-    nl_assert(family() == LOGIC);
+	nl_assert(family() == LOGIC);
 	return static_cast<const netlist_logic_net_t &>(*this);
 }
 
 ATTR_HOT inline netlist_analog_net_t & RESTRICT netlist_net_t::as_analog()
 {
-    nl_assert(family() == ANALOG);
+	nl_assert(family() == ANALOG);
 	return static_cast<netlist_analog_net_t &>(*this);
 }
 

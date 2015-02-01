@@ -148,4 +148,3 @@ void nl_initialize_factory(netlist_factory_t &factory)
 	ENTRY(SN74LS629_dip,        SN74LS629_DIP,          "1.CAP1,2.CAP2")
 	ENTRY(NE555_dip,            NE555_DIP,              "-")
 }
-

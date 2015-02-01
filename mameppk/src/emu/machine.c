@@ -122,7 +122,7 @@ static char giant_string_buffer[65536] = { 0 };
 
 osd_interface &running_machine::osd() const
 {
-    return m_manager.osd();
+	return m_manager.osd();
 }
 
 //-------------------------------------------------
@@ -156,6 +156,7 @@ running_machine::running_machine(const machine_config &_config, machine_manager 
 		m_save(*this),
 		m_memory(*this),
 		m_ioport(*this),
+		m_parameters(*this),
 		m_scheduler(*this)
 {
 	memset(&m_base_time, 0, sizeof(m_base_time));

@@ -176,7 +176,6 @@ file_error osd_open(const char *path, UINT32 openflags, osd_file **file, UINT64 
 	// does path start with an environment variable?
 	if (tmpstr[0] == '$')
 	{
-		char *envval;
 		envstr = (char *) osd_malloc_array(strlen(tmpstr)+1);
 
 		strcpy(envstr, tmpstr);
@@ -189,7 +188,7 @@ file_error osd_open(const char *path, UINT32 openflags, osd_file **file, UINT64 
 
 		envstr[i] = '\0';
 
-		envval = osd_getenv(&envstr[1]);
+		const char *envval = osd_getenv(&envstr[1]);
 		if (envval != NULL)
 		{
 			j = strlen(envval) + strlen(tmpstr) + 1;
@@ -508,17 +507,17 @@ osd_directory_entry *osd_stat(const char *path)
 {
 	int err;
 	osd_directory_entry *result = NULL;
-#if defined(SDLMAME_NO64BITIO) || defined(SDLMAME_BSD) || defined(SDLMAME_DARWIN)
+	#if defined(SDLMAME_NO64BITIO) || defined(SDLMAME_BSD) || defined(SDLMAME_DARWIN)
 	struct stat st;
-#else
+	#else
 	struct stat64 st;
-#endif
+	#endif
 
-#if defined(SDLMAME_NO64BITIO) || defined(SDLMAME_BSD) || defined(SDLMAME_DARWIN)
+	#if defined(SDLMAME_NO64BITIO) || defined(SDLMAME_BSD) || defined(SDLMAME_DARWIN)
 	err = stat(path, &st);
-#else
+	#else
 	err = stat64(path, &st);
-#endif
+	#endif
 
 	if( err == -1) return NULL;
 
@@ -573,8 +572,8 @@ file_error osd_get_full_path(char **dst, const char *path)
 
 const char *osd_get_volume_name(int idx)
 {
-    if (idx!=0) return NULL;
-    return "/";
+	if (idx!=0) return NULL;
+	return "/";
 }
 
 #endif

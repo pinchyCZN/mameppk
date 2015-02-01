@@ -58,7 +58,7 @@ public:
 	// game specific initialization
 	int m_is_senjyo;
 	int m_scrollhack;
-	
+
 	UINT8 m_sound_cmd;
 	int m_single_volume;
 	int m_sound_state;
@@ -87,13 +87,13 @@ public:
 	DECLARE_DRIVER_INIT(senjyo);
 	DECLARE_DRIVER_INIT(starfore);
 	DECLARE_DRIVER_INIT(starforc);
-	
+
 	TILE_GET_INFO_MEMBER(get_fg_tile_info);
 	TILE_GET_INFO_MEMBER(senjyo_bg1_tile_info);
 	TILE_GET_INFO_MEMBER(starforc_bg1_tile_info);
 	TILE_GET_INFO_MEMBER(get_bg2_tile_info);
 	TILE_GET_INFO_MEMBER(get_bg3_tile_info);
-	
+
 	virtual void machine_start();
 	virtual void machine_reset();
 	virtual void video_start();

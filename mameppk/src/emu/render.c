@@ -208,62 +208,62 @@ inline item_layer get_layer_and_blendmode(const layout_view &view, int index, in
 
 render_texinfo &render_texinfo::operator=(const render_texinfo &src)
 {
-    free_palette();
-    base = src.base;
-    rowpixels = src.rowpixels;
-    width = src.width;
-    height = src.height;
-    seqid = src.seqid;
-    osddata = src.osddata;
-    m_palette = src.m_palette;
-    if (m_palette != NULL)
-    {
-        m_palette->ref_count++;
-    }
-    return *this;
+	free_palette();
+	base = src.base;
+	rowpixels = src.rowpixels;
+	width = src.width;
+	height = src.height;
+	seqid = src.seqid;
+	osddata = src.osddata;
+	m_palette = src.m_palette;
+	if (m_palette != NULL)
+	{
+		m_palette->ref_count++;
+	}
+	return *this;
 }
 
 render_texinfo::render_texinfo(const render_texinfo &src)
 {
-    base = src.base;
-    rowpixels = src.rowpixels;
-    width = src.width;
-    height = src.height;
-    seqid = src.seqid;
-    osddata = src.osddata;
-    m_palette = src.m_palette;
-    if (m_palette != NULL)
-    {
-        m_palette->ref_count++;
-    }
+	base = src.base;
+	rowpixels = src.rowpixels;
+	width = src.width;
+	height = src.height;
+	seqid = src.seqid;
+	osddata = src.osddata;
+	m_palette = src.m_palette;
+	if (m_palette != NULL)
+	{
+		m_palette->ref_count++;
+	}
 }
 
 void render_texinfo::set_palette(const dynamic_array<rgb_t> *source)
 {
-    free_palette();
-    if (source != NULL)
-    {
-        m_palette = global_alloc(render_palette_copy);
-        m_palette->palette.copyfrom(*source);
-        m_palette->ref_count = 1;
-    }
-    else
-    {
-        m_palette = NULL;
-    }
+	free_palette();
+	if (source != NULL)
+	{
+		m_palette = global_alloc(render_palette_copy);
+		m_palette->palette.copyfrom(*source);
+		m_palette->ref_count = 1;
+	}
+	else
+	{
+		m_palette = NULL;
+	}
 }
 
 void render_texinfo::free_palette()
 {
-    if (m_palette != NULL)
-    {
-        m_palette->ref_count--;
-        if (m_palette->ref_count == 0)
-        {
-            global_free(m_palette);
-        }
-    }
-    m_palette = NULL;
+	if (m_palette != NULL)
+	{
+		m_palette->ref_count--;
+		if (m_palette->ref_count == 0)
+		{
+			global_free(m_palette);
+		}
+	}
+	m_palette = NULL;
 }
 
 
@@ -278,31 +278,31 @@ void render_texinfo::free_palette()
 
 void render_primitive::reset()
 {
-    // public state
-    type = INVALID;
-    bounds.x0 = 0;
-    bounds.y0 = 0;
-    bounds.x1 = 0;
-    bounds.y1 = 0;
-    color.a = 0;
-    color.r = 0;
-    color.g = 0;
-    color.b = 0;
-    flags = 0;
-    width = 0.0f;
-    texture.set_palette(NULL);
-    texture = render_texinfo();
-    texcoords.bl.u = 0.0f;
-    texcoords.bl.v = 0.0f;
-    texcoords.br.u = 0.0f;
-    texcoords.br.v = 0.0f;
-    texcoords.tl.u = 0.0f;
-    texcoords.tl.v = 0.0f;
-    texcoords.tr.u = 0.0f;
-    texcoords.tr.v = 0.0f;
+	// public state
+	type = INVALID;
+	bounds.x0 = 0;
+	bounds.y0 = 0;
+	bounds.x1 = 0;
+	bounds.y1 = 0;
+	color.a = 0;
+	color.r = 0;
+	color.g = 0;
+	color.b = 0;
+	flags = 0;
+	width = 0.0f;
+	texture.set_palette(NULL);
+	texture = render_texinfo();
+	texcoords.bl.u = 0.0f;
+	texcoords.bl.v = 0.0f;
+	texcoords.br.u = 0.0f;
+	texcoords.br.v = 0.0f;
+	texcoords.tl.u = 0.0f;
+	texcoords.tl.v = 0.0f;
+	texcoords.tr.u = 0.0f;
+	texcoords.tr.v = 0.0f;
 
-    // do not clear m_next!
-    // memset(&type, 0, FPTR(&texcoords + 1) - FPTR(&type));
+	// do not clear m_next!
+	// memset(&type, 0, FPTR(&texcoords + 1) - FPTR(&type));
 }
 
 
@@ -584,10 +584,10 @@ void render_texture::get_scaled(UINT32 dwidth, UINT32 dheight, render_texinfo &t
 			int lowest = -1;
 
 			// didn't find one -- take the entry with the lowest seqnum
-				for (scalenum = 0; scalenum < ARRAY_LENGTH(m_scaled); scalenum++)
+			for (scalenum = 0; scalenum < ARRAY_LENGTH(m_scaled); scalenum++)
 				if ((lowest == -1 || m_scaled[scalenum].seqid < m_scaled[lowest].seqid) && !primlist.has_reference(m_scaled[scalenum].bitmap))
 					lowest = scalenum;
-				assert_always(lowest != -1, "Too many live texture instances!");
+			assert_always(lowest != -1, "Too many live texture instances!");
 
 			// throw out any existing entries
 			scaled = &m_scaled[lowest];
@@ -605,15 +605,15 @@ void render_texture::get_scaled(UINT32 dwidth, UINT32 dheight, render_texinfo &t
 			(*m_scaler)(*scaled->bitmap, srcbitmap, m_sbounds, m_param);
 		}
 
-        // finally fill out the new info
-        primlist.add_reference(scaled->bitmap);
-        texinfo.base = &scaled->bitmap->pix32(0);
-        texinfo.rowpixels = scaled->bitmap->rowpixels();
-        texinfo.width = dwidth;
-        texinfo.height = dheight;
-        // will be set later
-        texinfo.set_palette(NULL);
-        texinfo.seqid = scaled->seqid;
+		// finally fill out the new info
+		primlist.add_reference(scaled->bitmap);
+		texinfo.base = &scaled->bitmap->pix32(0);
+		texinfo.rowpixels = scaled->bitmap->rowpixels();
+		texinfo.width = dwidth;
+		texinfo.height = dheight;
+		// will be set later
+		texinfo.set_palette(NULL);
+		texinfo.seqid = scaled->seqid;
 	}
 }
 
@@ -1937,11 +1937,11 @@ void render_target::add_container_primitives(render_primitive_list &list, const 
 
 		// set the flags and add it to the list
 		prim->flags = PRIMFLAG_TEXORIENT(container_xform.orientation) |
-			PRIMFLAG_BLENDMODE(BLENDMODE_RGB_MULTIPLY) |
-			PRIMFLAG_TEXFORMAT(container.overlay()->format()) |
-			PRIMFLAG_TEXSHADE(1);
+						PRIMFLAG_BLENDMODE(BLENDMODE_RGB_MULTIPLY) |
+						PRIMFLAG_TEXFORMAT(container.overlay()->format()) |
+						PRIMFLAG_TEXSHADE(1);
 
-        list.append_or_return(*prim, false);
+		list.append_or_return(*prim, false);
 	}
 }
 

@@ -6,15 +6,16 @@
 //
 //============================================================
 
-// standard windows headers
+#if defined(SDLMAME_WIN32) || defined(OSD_WINDOWS)
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#endif
 
 // MAMEOS headers
 #include "strconv.h"
 #include "unicode.h"
 
-
+#if defined(SDLMAME_WIN32) || defined(OSD_WINDOWS)
 //============================================================
 //  LOCAL VARIABLES
 //============================================================
@@ -132,3 +133,41 @@ char *utf8_from_wstring(const WCHAR *wstring)
 
 	return result;
 }
+
+//============================================================
+//  osd_uchar_from_osdchar
+//============================================================
+
+int osd_uchar_from_osdchar(UINT32 *uchar, const char *osdchar, size_t count)
+{
+	UINT acp = get_osdcore_acp();
+	WCHAR wch;
+
+	count = MIN(count, IsDBCSLeadByte(*osdchar) ? 2 : 1);
+	if (MultiByteToWideChar(acp, 0, osdchar, (DWORD)count, &wch, 1) != 0)
+		*uchar = wch;
+	else
+		*uchar = 0;
+	return (int) count;
+}
+
+#else
+
+//============================================================
+//  osd_uchar_from_osdchar
+//============================================================
+
+int osd_uchar_from_osdchar(unicode_char *uchar, const char *osdchar, size_t count)
+{
+	wchar_t wch;
+
+	count = mbstowcs(&wch, (char *)osdchar, 1);
+	if (count != -1)
+		*uchar = wch;
+	else
+		*uchar = 0;
+
+	return count;
+}
+
+#endif

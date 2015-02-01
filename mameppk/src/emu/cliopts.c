@@ -61,6 +61,5 @@ const options_entry cli_options::s_option_entries[] =
 cli_options::cli_options()
 : emu_options()
 {
-    add_entries(cli_options::s_option_entries);
+	add_entries(cli_options::s_option_entries);
 }
-

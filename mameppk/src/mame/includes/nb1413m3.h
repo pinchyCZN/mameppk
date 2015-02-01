@@ -129,7 +129,7 @@ public:
 
 	// (static) configuration helpers
 	static void set_type(device_t &device, int type) { downcast<nb1413m3_device &>(device).m_nb1413m3_type = type; }
-	
+
 	enum
 	{
 		TIMER_CB

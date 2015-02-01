@@ -197,8 +197,8 @@ public:
 
 	enum eSolverType
 	{
-	    GAUSSIAN_ELIMINATION,
-	    GAUSS_SEIDEL
+		GAUSSIAN_ELIMINATION,
+		GAUSS_SEIDEL
 	};
 
 	ATTR_COLD netlist_matrix_solver_t(const eSolverType type, const netlist_solver_parameters_t &params);

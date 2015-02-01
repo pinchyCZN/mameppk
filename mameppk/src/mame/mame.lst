@@ -210,6 +210,7 @@ batman2         // bootleg
 warofbug        // (c) 1981 Armenia
 warofbugu       // (c) 1981 Armenia
 warofbugg       // German Version
+spactrai        //
 redufo          // (c) Artic
 redufob         // bootleg
 exodus          // Subelectro - bootleg?
@@ -2679,7 +2680,7 @@ snowbrosj       // MIN16-02 (c) 1990 Toaplan
 snowbrosd       // MIN16-02 (c) 1990 Toaplan + Dooyong license
 wintbob         // bootleg
 snowbroswb      //
-toto			//
+toto            //
 // modified snowbros 'clone' hardware
 honeydol        // (c) 1995 Barko Corp
 twinadv         // (c) 1995 Barko Corp
@@ -3232,6 +3233,7 @@ sf2mdta         // bootleg
 sf2mdtb         // bootleg
 sf2b            // bootleg
 cworld2j        // 11/06/1992 (c) 1992 (Japan)
+cworld2ja       // 11/06/1992 (c) 1992 (Japan)
 varth           // 14/07/1992 (c) 1992 (World)
 varthr1         // 12/06/1992 (c) 1992 (World)
 varthu          // 12/06/1992 (c) 1992 (USA)
@@ -5382,7 +5384,7 @@ wwfroyal        // 2000.11 WWF Royal Rumble
 sprtjam         // 2000.11.13 Sports Jam
 pjustic         // 2000.12 Moero Justice Gakuen / Project Justice
 samba2k         // 2000.12 Samba de Amigo Ver.2000
-shaktam	        // 2000.12.28 Shakatto Tambourine (Rev B)
+shaktam         // 2000.12.28 Shakatto Tambourine (Rev B)
 				// 2000.?? Boat Race Ocean Heats
 csmash          // 2000.?? Cosmic Smash
 csmasho         // 2000.?? Cosmic Smash (original)
@@ -11222,6 +11224,9 @@ peps0296        // (c) 1996 IGT - International Game Technology
 peps0298        // (c) 1996 IGT - International Game Technology
 peps0308        // (c) 1996 IGT - International Game Technology
 peps0364        // (c) 1996 IGT - International Game Technology
+peps0366        // (c) 1996 IGT - International Game Technology
+peps0372        // (c) 1996 IGT - International Game Technology
+peps0373        // (c) 1996 IGT - International Game Technology
 peps0426        // (c) 1996 IGT - International Game Technology
 peps0581        // (c) 1996 IGT - International Game Technology
 peps0615        // (c) 1996 IGT - International Game Technology
