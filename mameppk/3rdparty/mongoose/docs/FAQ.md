@@ -13,7 +13,7 @@ Please make sure Javascript is enabled in your browser, and that the
 antivirus software is not blocking the download.
 
 
-## MacOS message: "Mongoose.app is damaged and can‚Äôt be opened. You should move it to the Trash"
+## MacOS message: "Mongoose.app is damaged and canÅft be opened. You should move it to the Trash"
 
 This happens on newer MacOS systems. The reason for the message
 is the fact Mongoose.app is not digitally signed.
