@@ -371,7 +371,6 @@ RM = @rm -f
 OBJDUMP = @objdump
 PYTHON = @python
 
-
 #-------------------------------------------------
 # form the name of the executable
 #-------------------------------------------------
@@ -426,7 +425,7 @@ NAME = $(TARGET)$(SUBTARGET)$(EXTRA_SUFFIX)
 endif
 
 # fullname is prefix+name+suffix+suffix64+suffixdebug
-FULLNAME ?= $(PREFIX)$(PREFIXSDL)$(NAME)$(SUFFIX)$(SUFFIX64)$(SUFFIXDEBUG)$(SUFFIXPROFILE)
+FULLNAME ?= $(BIN)$(PREFIX)$(PREFIXSDL)$(NAME)$(SUFFIX)$(SUFFIX64)$(SUFFIXDEBUG)$(SUFFIXPROFILE)
 ifneq ($(WINUI),)
 MAMEUINAME = $(NAME)
 MAMEUIEXE = $(PREFIX)$(PREFIXSDL)$(MAMEUINAME)$(SUFFIX)$(SUFFIX64)$(SUFFIXDEBUG)$(SUFFIXPROFILE)$(EXE)
@@ -769,9 +768,6 @@ ifeq ($(COMMAND_MODE),"legacy")
 ARFLAGS = -crs
 endif
 endif
-ifeq ($(TARGETOS),emscripten)
-ARFLAGS = cr
-endif
 
 
 #-------------------------------------------------
@@ -830,7 +826,7 @@ endif
 # this variable
 #-------------------------------------------------
 
-OBJDIRS = $(OBJ) $(OBJ)/$(TARGET)/$(SUBTARGET)
+OBJDIRS += $(OBJ) $(OBJ)/$(TARGET)/$(SUBTARGET)
 
 
 #-------------------------------------------------
@@ -875,6 +871,7 @@ INCPATH += -I$(3RDPARTY)/zlib
 ZLIB = $(OBJ)/libz.a
 else
 LIBS += -lz
+BASELIBS += -lz
 ZLIB =
 endif
 
@@ -885,6 +882,7 @@ FLAC_LIB = $(OBJ)/libflac.a
 # $(OBJ)/libflac++.a
 else
 LIBS += -lFLAC
+BASELIBS += -lFLAC
 FLAC_LIB =
 endif
 
@@ -934,6 +932,9 @@ else
 LIBS += -lsqlite3
 SQLITE3_LIB =
 endif
+
+# add BGFX library - this is one in sdl.mak / windows.mak
+# BGFX_LIB = $(OBJ)/libbgfx.a
 
 # add PortMidi MIDI library
 ifeq ($(BUILD_MIDILIB),1)
@@ -1067,21 +1068,26 @@ $(sort $(OBJDIRS)):
 
 ifndef EXECUTABLE_DEFINED
 
-# always recompile the version string
-$(VERSIONOBJ): $(EMUINFOOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBUTIL) $(EXPAT) $(ZLIB) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(LUA_LIB) $(SQLITE3_LIB) $(FORMATS_LIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE)
+EMULATOROBJLIST = $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(SQLITE3_LIB) $(WEB_LIB) $(BGFX_LIB) $(ZLIB) $(MIDI_LIB)
 
-$(EMULATOR): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(SQLITE3_LIB) $(WEB_LIB) $(ZLIB) $(LIBOCORE) $(MIDI_LIB) $(RESFILE) $(CLIRESFILE)
+ifeq ($(TARGETOS),emscripten)
+EMULATOROBJ = $(EMULATOROBJLIST:.a=.bc)
+else
+EMULATOROBJ = $(EMULATOROBJLIST)
+endif
+
+$(EMULATOR): $(EMULATOROBJ) $(LIBOCORE) $(CLIRESFILE)
 	$(CC) $(CDEFS) $(CFLAGS) -c $(SRC)/version.c -o $(VERSIONOBJ)
 	@echo Linking $@...
 ifeq ($(TARGETOS),emscripten)
-# Emscripten's linker seems to be stricter about the ordering of .a files
+# Emscripten's linker seems to be stricter about the ordering of files
 	$(LD) $(LDFLAGS) $(LDFLAGSEMULATOR) -mconsole $(VERSIONOBJ) -Wl,--start-group $^ -Wl,--end-group $(LIBS) -o $@
 else
 	$(LD) $(LDFLAGS) $(LDFLAGSEMULATOR) -mconsole $(VERSIONOBJ) $^ $(LIBS) -o $@
 endif
 
 ifneq ($(WINUI),)
-$(MAMEUIEXE): $(EMUINFOOBJ) $(DRIVLISTOBJ) $(DRVLIBS) $(LIBOSD) $(LIBBUS) $(LIBOPTIONAL) $(LIBEMU) $(LIBDASM) $(LIBUTIL) $(EXPAT) $(SOFTFLOAT) $(JPEG_LIB) $(FLAC_LIB) $(7Z_LIB) $(FORMATS_LIB) $(LUA_LIB) $(SQLITE3_LIB) $(WEB_LIB) $(ZLIB) $(LIBOCORE_NOMAIN) $(MIDI_LIB) $(RESFILE) $(GUIRESFILE)
+$(MAMEUIEXE): $(EMULATOROBJ) $(LIBOCORE_NOMAIN) $(GUIRESFILE)
 	$(CC) $(CDEFS) $(CFLAGS) -c $(SRC)/version.c -o $(VERSIONOBJ)
 	@echo Linking $@...
 	$(LD) $(LDFLAGS) $(LDFLAGSEMULATOR) -mwindows $(VERSIONOBJ) $^ $(LIBS) -o $@
@@ -1180,10 +1186,20 @@ $(DRIVLISTSRC): $(DRVLIST) $(MAKELIST_TARGET)
 	@echo Building driver list $<...
 	@$(MAKELIST) $^ >$@
 
+ifeq ($(TARGETOS),emscripten)
+# Avoid using .a files with Emscripten, link to bitcode instead
+$(OBJ)/%.a:
+	@echo Linking $@...
+	$(RM) $@
+	$(LD) $^ -o $@
+$(OBJ)/%.bc: $(OBJ)/%.a
+	@cp $< $@
+else
 $(OBJ)/%.a:
 	@echo Archiving $@...
 	$(RM) $@
 	$(AR) $(ARFLAGS) $@ $^
+endif
 
 ifeq ($(TARGETOS),macosx)
 $(OBJ)/%.o: $(SRC)/%.m | $(OSPREBUILD)

@@ -43,6 +43,7 @@ extern int drawnone_init(running_machine &machine, win_draw_callbacks *callbacks
 extern int drawgdi_init(running_machine &machine, win_draw_callbacks *callbacks);
 extern int drawdd_init(running_machine &machine, win_draw_callbacks *callbacks);
 extern int drawd3d_init(running_machine &machine, win_draw_callbacks *callbacks);
+extern int drawbgfx_init(running_machine &machine, win_draw_callbacks *callbacks);
 
 #ifdef MAME_AVI
 #include <mmsystem.h>
@@ -274,6 +275,8 @@ bool windows_osd_interface::window_init()
 	}
 	if (video_config.mode == VIDEO_MODE_GDI)
 		drawgdi_init(machine(), &draw);
+	if (video_config.mode == VIDEO_MODE_BGFX)
+		drawbgfx_init(machine(), &draw);
 	if (video_config.mode == VIDEO_MODE_NONE)
 		drawnone_init(machine(), &draw);
 

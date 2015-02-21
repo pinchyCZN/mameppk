@@ -80,6 +80,10 @@ SDL_FRAMEWORK_PATH = /Library/Frameworks/
 # uncomment to use SDL1.2 (depracated)
 # SDL_LIBVER = sdl
 
+# uncomment to use BGFX
+
+# USE_BGFX = 1
+
 ###########################################################################
 ##################   END USER-CONFIGURABLE OPTIONS   ######################
 ###########################################################################
@@ -210,7 +214,6 @@ ifeq ($(TARGETOS),linux)
 BASE_TARGETOS = unix
 SYNC_IMPLEMENTATION = tc
 SDL_NETWORK = taptun
-#SDL_NETWORK = pcap
 
 ifndef NO_USE_MIDI
 INCPATH += `pkg-config --cflags alsa`
@@ -242,6 +245,7 @@ BASE_TARGETOS = unix
 SYNC_IMPLEMENTATION = ntc
 LIBS += -lutil
 NO_USE_MIDI = 1
+SDL_NETWORK = pcap
 endif
 
 ifeq ($(TARGETOS),solaris)
@@ -402,6 +406,7 @@ OBJDIRS += $(SDLOBJ) \
 	$(OSDOBJ)/modules/lib \
 	$(OSDOBJ)/modules/midi \
 	$(OSDOBJ)/modules/font \
+	$(OSDOBJ)/modules/netdev \
 
 #-------------------------------------------------
 # OSD core library
@@ -444,15 +449,14 @@ OSDOBJS = \
 	$(OSDOBJ)/modules/font/font_windows.o \
 	$(OSDOBJ)/modules/font/font_osx.o \
 	$(OSDOBJ)/modules/font/font_none.o \
+	$(OSDOBJ)/modules/netdev/taptun.o \
+	$(OSDOBJ)/modules/netdev/pcap.o \
+	$(OSDOBJ)/modules/midi/portmidi.o \
+	$(OSDOBJ)/modules/midi/none.o \
 
 ifdef NO_USE_MIDI
-	OSDOBJS += $(OSDOBJ)/modules/midi/none.o
+	DEFS += -DNO_USE_MIDI
 else
-	OSDOBJS += $(OSDOBJ)/modules/midi/portmidi.o
-endif
-
-ifeq ($(BASE_TARGETOS),win32)
-	OSDOBJS += $(OSDOBJ)/modules/sound/direct_sound.o
 endif
 
 # Add SDL2.0 support
@@ -463,12 +467,6 @@ endif
 
 # add an ARCH define
 DEFS += -DSDLMAME_ARCH="$(ARCHOPTS)" -DSYNC_IMPLEMENTATION=$(SYNC_IMPLEMENTATION)
-
-# Add JavaScript sound module for Emscripten compiles
-
-ifeq ($(TARGETOS),emscripten)
-OSDOBJS += $(OSDOBJ)/modules/sound/js_sound.o
-endif
 
 #-------------------------------------------------
 # Generic defines and additions
@@ -756,6 +754,17 @@ OSDOBJS += \
 	$(OSDOBJ)/modules/debugger/debugwin.o \
 	$(OSDOBJ)/modules/debugger/debugqt.o \
 
+#-------------------------------------------------
+# BGFX
+#-------------------------------------------------
+
+ifdef USE_BGFX
+DEFS += -DUSE_BGFX
+OSDOBJS += $(SDLOBJ)/drawbgfx.o 
+INCPATH += -I$(3RDPARTY)/bgfx/include -I$(3RDPARTY)/bx/include
+USE_DISPATCH_GL = 0
+BGFX_LIB = $(OBJ)/libbgfx.a
+endif
 
 #-------------------------------------------------
 # OPENGL
@@ -827,29 +836,21 @@ endif # USE_XINPUT
 # Network (TAP/TUN)
 #-------------------------------------------------
 
-OSDOBJS += $(SDLOBJ)/netdev.o
-
 ifndef DONT_USE_NETWORK
 
 ifeq ($(SDL_NETWORK),taptun)
-OSDOBJS += $(SDLOBJ)/netdev_tap.o
 
-DEFS += -DSDLMAME_NETWORK -DSDLMAME_NET_TAPTUN
+DEFS += -DSDLMAME_NET_TAPTUN
 endif
 
 ifeq ($(SDL_NETWORK),pcap)
 
-ifeq ($(TARGETOS),macosx)
-OSDOBJS += $(SDLOBJ)/netdev_pcap_osx.o
-else
-OSDOBJS += $(SDLOBJ)/netdev_pcap.o
-endif
+DEFS += -DSDLMAME_NET_PCAP
 
-DEFS += -DSDLMAME_NETWORK -DSDLMAME_NET_PCAP
-
-ifneq ($(TARGETOS),win32)
-LIBS += -lpcap
-endif
+# dynamically linked ...
+#ifneq ($(TARGETOS),win32)
+#LIBS += -lpcap
+#endif
 
 endif # ifeq ($(SDL_NETWORK),pcap)
 
