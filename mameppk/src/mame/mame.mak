@@ -162,6 +162,7 @@ CPUS += ALTO2
 CPUS += ARC
 CPUS += ARCOMPACT
 CPUS += AMIS2000
+CPUS += UCOM4
 
 #-------------------------------------------------
 # specify available sound cores
@@ -337,6 +338,7 @@ VIDEOS += PSX
 VIDEOS += RAMDAC
 #VIDEOS += S2636
 VIDEOS += SAA5050
+VIDEOS += SCN2674
 #VIDEOS += SED1200
 #VIDEOS += SED1330
 #VIDEOS += SED1520
@@ -976,7 +978,6 @@ $(MAMEOBJ)/barcrest.a: \
 	$(DRIVERS)/mpu4crystal.o \
 	$(DRIVERS)/mpu4bwb.o \
 	$(DRIVERS)/mpu4misc.o \
-	$(VIDEO)/scn2674.o \
 	$(DRIVERS)/mpu5hw.o $(DRIVERS)/mpu5.o \
 	$(VIDEO)/awpvid.o \
 	$(MACHINE)/meters.o \

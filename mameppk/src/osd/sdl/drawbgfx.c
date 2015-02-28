@@ -73,21 +73,29 @@ static void drawbgfx_exit(void);
 class sdl_info_bgfx : public osd_renderer
 {
 public:
-    sdl_info_bgfx(sdl_window_info *w)
-    : osd_renderer(w), m_blittimer(0), m_renderer(NULL),
+    sdl_info_bgfx(osd_window *w)
+    : osd_renderer(w, FLAG_NONE), m_blittimer(0), m_renderer(NULL),
+      m_blitwidth(0), m_blitheight(0),
       m_last_hofs(0), m_last_vofs(0),
-      m_resize_pending(0), m_resize_width(0), m_resize_height(0),
       m_last_blit_time(0), m_last_blit_pixels(0)
     {}
 
-	/* virtual */ int create(int width, int height);
-	/* virtual */ void resize(int width, int height);
-	/* virtual */ int draw(UINT32 dc, int update);
-	/* virtual */ void set_target_bounds();
-	/* virtual */ int xy_to_render_target(int x, int y, int *xt, int *yt);
-	/* virtual */ void destroy_all_textures();
+	/* virtual */ int create();
+	/* virtual */ int draw(const UINT32 dc, const int update);
+	/* virtual */ int xy_to_render_target(const int x, const int y, int *xt, int *yt);
 	/* virtual */ void destroy();
-	/* virtual */ void clear();
+	/* virtual */ render_primitive_list *get_primitives()
+	{
+		int nw = 0; int nh = 0;
+		window().blit_surface_size(nw, nh);
+		if (nw != m_blitwidth || nh != m_blitheight)
+		{
+			m_blitwidth = nw; m_blitheight = nh;
+			notify_changed();
+		}
+		window().target()->set_bounds(m_blitwidth, m_blitheight, window().aspect());
+		return &window().target()->get_primitives();
+	}
 
    // void render_quad(texture_info *texture, const render_primitive *prim, const int x, const int y);
 
@@ -99,14 +107,10 @@ public:
 	SDL_Renderer *  m_renderer;
 	//simple_list<texture_info>  m_texlist;                // list of active textures
 
+	int				m_blitwidth;
+	int				m_blitheight;
 	float           m_last_hofs;
 	float           m_last_vofs;
-
-	// resize information
-
-	UINT8           m_resize_pending;
-	UINT32          m_resize_width;
-	UINT32          m_resize_height;
 
 	// Stats
 	INT64           m_last_blit_time;
@@ -124,13 +128,13 @@ public:
 //  drawbgfx_init
 //============================================================
 
-static osd_renderer *drawbgfx_create(sdl_window_info *window)
+static osd_renderer *drawbgfx_create(osd_window *window)
 {
 	return global_alloc(sdl_info_bgfx(window));
 }
 
 
-int drawbgfx_init(running_machine &machine, sdl_draw_info *callbacks)
+int drawbgfx_init(running_machine &machine, osd_draw_callbacks *callbacks)
 {
 	// fill in the callbacks
 	callbacks->exit = drawbgfx_exit;
@@ -143,99 +147,23 @@ int drawbgfx_init(running_machine &machine, sdl_draw_info *callbacks)
 //  sdl_info_bgfx::create
 //============================================================
 
-int sdl_info_bgfx::create(int width, int height)
+int sdl_info_bgfx::create()
 {
-	/* FIXME: On Ubuntu and potentially other Linux OS you should use
-	 * to disable panning. This has to be done before every invocation of mame.
-	 *
-	 * xrandr --output HDMI-0 --panning 0x0+0+0 --fb 0x0
-	 *
-	 */
-
-	osd_printf_verbose("Enter drawsdl2_window_create\n");
-
-	UINT32 extra_flags = (window().fullscreen() ?
-			SDL_WINDOW_BORDERLESS | SDL_WINDOW_INPUT_FOCUS | SDL_WINDOW_FULLSCREEN : SDL_WINDOW_RESIZABLE);
-
-#if defined(SDLMAME_WIN32)
-	SDL_SetHint(SDL_HINT_VIDEO_MINIMIZE_ON_FOCUS_LOSS, "0");
-#endif
-	// create the SDL window
-	window().m_sdl_window = SDL_CreateWindow(window().m_title,
-			window().monitor()->position_size().x, window().monitor()->position_size().y,
-			width, height, extra_flags);
-
-	if (window().fullscreen() && video_config.switchres)
-	{
-		SDL_DisplayMode mode;
-		//SDL_GetCurrentDisplayMode(window().monitor()->handle, &mode);
-		SDL_GetWindowDisplayMode(window().m_sdl_window, &mode);
-		m_original_mode = mode;
-		mode.w = width;
-		mode.h = height;
-		if (window().m_refresh)
-			mode.refresh_rate = window().m_refresh;
-
-		SDL_SetWindowDisplayMode(window().m_sdl_window, &mode);    // Try to set mode
-#ifndef SDLMAME_WIN32
-		/* FIXME: Warp the mouse to 0,0 in case a virtual desktop resolution
-		 * is in place after the mode switch - which will most likely be the case
-		 * This is a hack to work around a deficiency in SDL2
-		 */
-		SDL_WarpMouseInWindow(window().m_sdl_window, 1, 1);
-#endif
-	}
-	else
-	{
-		//SDL_SetWindowDisplayMode(window().m_sdl_window, NULL); // Use desktop
-	}
 	// create renderer
 
-	if (video_config.waitvsync)
-		m_renderer = SDL_CreateRenderer(window().m_sdl_window, -1, SDL_RENDERER_PRESENTVSYNC | SDL_RENDERER_ACCELERATED);
-	else
-		m_renderer = SDL_CreateRenderer(window().m_sdl_window, -1, SDL_RENDERER_ACCELERATED);
+	int width = 0; int height = 0;
 
-	if (!m_renderer)
-	{
-		fatalerror("Error on creating renderer: %s\n", SDL_GetError());
-	}
-
-	//SDL_SelectRenderer(window().m_sdl_window);
-	SDL_ShowWindow(window().m_sdl_window);
-	//SDL_SetWindowFullscreen(window().window_id, window().fullscreen);
-	SDL_RaiseWindow(window().m_sdl_window);
-
-	SDL_GetWindowSize(window().m_sdl_window, &window().m_width, &window().m_height);
-
+	window().get_size(width, height);
 	m_blittimer = 3;
 
-	SDL_RenderPresent(m_renderer);
-	
-	bgfx::sdlSetWindow(window().m_sdl_window);
+	bgfx::sdlSetWindow(window().sdl_window());
 	bgfx::init();
-	bgfx::reset(window().m_width, window().m_height, BGFX_RESET_VSYNC);
+	bgfx::reset(width, height, BGFX_RESET_VSYNC);
 	
 	// Enable debug text.
 	bgfx::setDebug(BGFX_DEBUG_STATS);// BGFX_DEBUG_TEXT);
 	osd_printf_verbose("Leave drawsdl2_window_create\n");
 	return 0;
-}
-
-//============================================================
-//  sdl_info_bgfx::resize
-//============================================================
-
-void sdl_info_bgfx::resize(int width, int height)
-{
-	m_resize_pending = 1;
-	m_resize_height = height;
-	m_resize_width = width;
-
-	window().m_width = width;
-	window().m_height = height;
-
-	m_blittimer = 3;
 }
 
 //============================================================
@@ -246,20 +174,11 @@ int sdl_info_bgfx::xy_to_render_target(int x, int y, int *xt, int *yt)
 {
 	*xt = x - m_last_hofs;
 	*yt = y - m_last_vofs;
-	if (*xt<0 || *xt >= window().m_blitwidth)
+	if (*xt<0 || *xt >= m_blitwidth)
 		return 0;
-	if (*yt<0 || *yt >= window().m_blitheight)
+	if (*yt<0 || *yt >= m_blitheight)
 		return 0;
 	return 1;
-}
-
-//============================================================
-//  sdl_info_bgfx::get_primitives
-//============================================================
-
-void sdl_info_bgfx::set_target_bounds()
-{
-	window().m_target->set_bounds(window().m_blitwidth, window().m_blitheight, window().monitor()->aspect());
 }
 
 //============================================================
@@ -268,6 +187,11 @@ void sdl_info_bgfx::set_target_bounds()
 
 int sdl_info_bgfx::draw(UINT32 dc, int update)
 {
+
+	//if (has_flags(FI_CHANGED) || (window().width() != m_last_width) || (window().height() != m_last_height))
+		// do something
+	//clear_flags(FI_CHANGED);
+
 	bgfx::setViewClear(0
 		, BGFX_CLEAR_COLOR|BGFX_CLEAR_DEPTH
 		, 0x000000ff
@@ -275,7 +199,7 @@ int sdl_info_bgfx::draw(UINT32 dc, int update)
 		, 0
 		);
 	// Set view 0 default viewport.
-	bgfx::setViewRect(0, 0, 0, window().m_blitwidth, window().m_blitheight);
+	bgfx::setViewRect(0, 0, 0, m_blitwidth, m_blitheight);
 
 	// This dummy draw call is here to make sure that view 0 is cleared
 	// if no other draw calls are submitted to view 0.
@@ -306,30 +230,8 @@ void sdl_info_bgfx::destroy()
 {
 	// free the memory in the window
 
-	destroy_all_textures();
+	// destroy_all_textures();
 
-	if (window().fullscreen() && video_config.switchres)
-	{
-		SDL_SetWindowFullscreen(window().m_sdl_window, 0);    // Try to set mode
-		SDL_SetWindowDisplayMode(window().m_sdl_window, &m_original_mode);    // Try to set mode
-		SDL_SetWindowFullscreen(window().m_sdl_window, SDL_WINDOW_FULLSCREEN);    // Try to set mode
-	}
-
-	SDL_DestroyWindow(window().m_sdl_window);
-	
 	// Shutdown bgfx.
 	bgfx::shutdown();
-}
-
-void sdl_info_bgfx::destroy_all_textures()
-{
-}
-
-//============================================================
-//  TEXCOPY FUNCS
-//============================================================
-
-void sdl_info_bgfx::clear()
-{
-	m_blittimer = 2;
 }

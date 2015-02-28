@@ -149,14 +149,17 @@ void windows_osd_interface::video_exit()
 win_monitor_info::win_monitor_info()
 	: next(NULL),
 		handle(NULL),
-		aspect(0.0f),
+		m_aspect(0.0f),
 		reqwidth(0),
-		reqheight(0)
+		reqheight(0),
+		m_name(NULL)
 {
 }
 
 win_monitor_info::~win_monitor_info()
 {
+	if (m_name != NULL)
+		osd_free(m_name);
 }
 
 //============================================================
@@ -171,6 +174,9 @@ void win_monitor_info::refresh()
 	info.cbSize = sizeof(info);
 	result = GetMonitorInfo(handle, (LPMONITORINFO)&info);
 	assert(result);
+	if (m_name != NULL)
+		osd_free(m_name);
+	m_name = utf8_from_tstring(info.szDevice);
 	(void)result; // to silence gcc 4.6
 }
 
@@ -180,7 +186,7 @@ void win_monitor_info::refresh()
 //  winvideo_monitor_get_aspect
 //============================================================
 
-float win_monitor_info::get_aspect()
+float win_monitor_info::aspect()
 {
 	// refresh the monitor information and compute the aspect
 	if (video_config.keepaspect)
@@ -189,7 +195,7 @@ float win_monitor_info::get_aspect()
 		refresh();
 		width = rect_width(&info.rcMonitor);
 		height = rect_height(&info.rcMonitor);
-		return aspect / ((float)width / (float)height);
+		return m_aspect / ((float)width / (float)height);
 	}
 	return 0.0f;
 }
@@ -269,12 +275,7 @@ static void init_monitors(void)
 		win_monitor_info *monitor;
 		for (monitor = win_monitor_list; monitor != NULL; monitor = monitor->next)
 		{
-			char *utf8_device = utf8_from_tstring(monitor->info.szDevice);
-			if (utf8_device != NULL)
-			{
-				osd_printf_verbose(_WINDOWS("Video: Monitor %p = \"%s\" %s\n"), monitor->handle, utf8_device, (monitor == primary_monitor) ? _WINDOWS("(primary)") : "");
-				osd_free(utf8_device);
-			}
+			osd_printf_verbose(_WINDOWS("Video: Monitor %p = \"%s\" %s\n"), monitor->handle, monitor->devicename(), (monitor == primary_monitor) ? _WINDOWS("(primary)") : "");
 		}
 	}
 }
@@ -348,17 +349,12 @@ static win_monitor_info *pick_monitor(windows_options &options, int index)
 	if (scrname[0] != 0)
 		for (monitor = win_monitor_list; monitor != NULL; monitor = monitor->next)
 		{
-			char *utf8_device;
 			int rc = 1;
 
 			moncount++;
 
-			utf8_device = utf8_from_tstring(monitor->info.szDevice);
-			if (utf8_device != NULL)
-			{
-				rc = strcmp(scrname, utf8_device);
-				osd_free(utf8_device);
-			}
+			rc = strcmp(scrname, monitor->devicename());
+
 			if (rc == 0)
 				goto finishit;
 		}

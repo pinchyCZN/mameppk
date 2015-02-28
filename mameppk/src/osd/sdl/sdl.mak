@@ -93,14 +93,10 @@ OSDOBJ = $(OBJ)/osd
 # add a define identifying the target osd
 DEFS += -DOSD_SDL
 
-# default to SDL2 for non-OS/2, non-Emscripten builds now
+# default to SDL2 for non-OS/2 builds now
 ifndef SDL_LIBVER
 ifneq ($(TARGETOS),os2)
-ifneq ($(TARGETOS),emscripten)
 SDL_LIBVER = sdl2
-else
-SDL_LIBVER = sdl
-endif
 else
 SDL_LIBVER = sdl
 endif
@@ -288,7 +284,28 @@ LIBS += -framework CoreAudio -framework CoreMIDI
 endif
 
 ifdef NO_USE_QTDEBUG
-DEBUGOBJS = $(OSDOBJ)/modules/debugger/debugosx.o
+
+OBJDIRS += $(OSDOBJ)/modules/debugger/osx
+
+DEBUGOBJS = \
+	$(OSDOBJ)/modules/debugger/debugosx.o \
+	$(OSDOBJ)/modules/debugger/osx/breakpointsview.o \
+	$(OSDOBJ)/modules/debugger/osx/consoleview.o \
+	$(OSDOBJ)/modules/debugger/osx/debugcommandhistory.o \
+	$(OSDOBJ)/modules/debugger/osx/debugconsole.o \
+	$(OSDOBJ)/modules/debugger/osx/debugview.o \
+	$(OSDOBJ)/modules/debugger/osx/debugwindowhandler.o \
+	$(OSDOBJ)/modules/debugger/osx/devicesviewer.o \
+	$(OSDOBJ)/modules/debugger/osx/disassemblyview.o \
+	$(OSDOBJ)/modules/debugger/osx/disassemblyviewer.o \
+	$(OSDOBJ)/modules/debugger/osx/errorlogview.o \
+	$(OSDOBJ)/modules/debugger/osx/errorlogviewer.o \
+	$(OSDOBJ)/modules/debugger/osx/memoryview.o \
+	$(OSDOBJ)/modules/debugger/osx/memoryviewer.o \
+	$(OSDOBJ)/modules/debugger/osx/pointsviewer.o \
+	$(OSDOBJ)/modules/debugger/osx/registersview.o \
+	$(OSDOBJ)/modules/debugger/osx/watchpointsview.o
+
 endif
 
 SYNC_IMPLEMENTATION = ntc
@@ -344,8 +361,8 @@ SDL_NETWORK = pcap
 INCPATH += -I$(3RDPARTY)/winpcap/Include
 
 # enable UNICODE
-DEFS += -Dmain=utf8_main -DUNICODE -D_UNICODE
-LDFLAGS += -municode
+DEFS += -Dmain=utf8_main -DUNICODE -D_UNICODE 
+LDFLAGS += -municode 
 
 # Qt
 ifndef NO_USE_QTDEBUG
@@ -451,6 +468,7 @@ OSDOBJS = \
 	$(OSDOBJ)/modules/font/font_none.o \
 	$(OSDOBJ)/modules/netdev/taptun.o \
 	$(OSDOBJ)/modules/netdev/pcap.o \
+	$(OSDOBJ)/modules/netdev/none.o \
 	$(OSDOBJ)/modules/midi/portmidi.o \
 	$(OSDOBJ)/modules/midi/none.o \
 
@@ -579,10 +597,7 @@ ifeq ($(NO_X11),1)
 NO_DEBUGGER = 1
 endif
 
-# Don't pull in the system includes if we are compiling for Emscripten, which has its own headers
-ifneq ($(TARGETOS),emscripten)
 INCPATH += `$(SDL_CONFIG) --cflags  | sed -e 's:/SDL[2]*::' -e 's:\(-D[^ ]*\)::g'`
-endif
 CCOMFLAGS += `$(SDL_CONFIG) --cflags  | sed -e 's:/SDL[2]*::' -e 's:\(-I[^ ]*\)::g'`
 
 BASELIBS += `$(SDL_CONFIG) --libs`
@@ -663,9 +678,7 @@ ifeq ($(BASE_TARGETOS),win32)
 OSDCOREOBJS += $(SDLMAIN)
 
 ifdef SDL_INSTALL_ROOT
-ifneq ($(TARGETOS),emscripten)
 INCPATH += -I$(SDL_INSTALL_ROOT)/include
-endif
 LIBS += -L$(SDL_INSTALL_ROOT)/lib
 #-Wl,-rpath,$(SDL_INSTALL_ROOT)/lib
 endif
@@ -716,24 +729,24 @@ $(OSDOBJ)/%.moc.c: $(OSDSRC)/%.h
 	$(MOC) $(MOCINCPATH) $(DEFS) $< -o $@
 
 DEBUGOBJS = \
-	$(OSDOBJ)/modules/debugger/qt/debugqtview.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtwindow.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtlogwindow.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtdasmwindow.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtmainwindow.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtmemorywindow.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtbreakpointswindow.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtdeviceswindow.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtdeviceinformationwindow.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtview.moc.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtwindow.moc.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtlogwindow.moc.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtdasmwindow.moc.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtmainwindow.moc.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtmemorywindow.moc.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtbreakpointswindow.moc.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtdeviceswindow.moc.o \
-	$(OSDOBJ)/modules/debugger/qt/debugqtdeviceinformationwindow.moc.o
+	$(OSDOBJ)/modules/debugger/qt/debuggerview.o \
+	$(OSDOBJ)/modules/debugger/qt/windowqt.o \
+	$(OSDOBJ)/modules/debugger/qt/logwindow.o \
+	$(OSDOBJ)/modules/debugger/qt/dasmwindow.o \
+	$(OSDOBJ)/modules/debugger/qt/mainwindow.o \
+	$(OSDOBJ)/modules/debugger/qt/memorywindow.o \
+	$(OSDOBJ)/modules/debugger/qt/breakpointswindow.o \
+	$(OSDOBJ)/modules/debugger/qt/deviceswindow.o \
+	$(OSDOBJ)/modules/debugger/qt/deviceinformationwindow.o \
+	$(OSDOBJ)/modules/debugger/qt/debuggerview.moc.o \
+	$(OSDOBJ)/modules/debugger/qt/windowqt.moc.o \
+	$(OSDOBJ)/modules/debugger/qt/logwindow.moc.o \
+	$(OSDOBJ)/modules/debugger/qt/dasmwindow.moc.o \
+	$(OSDOBJ)/modules/debugger/qt/mainwindow.moc.o \
+	$(OSDOBJ)/modules/debugger/qt/memorywindow.moc.o \
+	$(OSDOBJ)/modules/debugger/qt/breakpointswindow.moc.o \
+	$(OSDOBJ)/modules/debugger/qt/deviceswindow.moc.o \
+	$(OSDOBJ)/modules/debugger/qt/deviceinformationwindow.moc.o
 
 DEFS += -DUSE_QTDEBUG=1
 
@@ -894,7 +907,7 @@ $(LIBOSD): $(OSDOBJS)
 #-------------------------------------------------
 
 TOOLS += \
-	testkeys$(EXE)
+	$(BIN)testkeys$(EXE)
 
 $(SDLOBJ)/testkeys.o: $(SDLSRC)/testkeys.c
 	@echo Compiling $<...
@@ -903,7 +916,7 @@ $(SDLOBJ)/testkeys.o: $(SDLSRC)/testkeys.c
 TESTKEYSOBJS = \
 	$(SDLOBJ)/testkeys.o \
 
-testkeys$(EXE): $(TESTKEYSOBJS) $(LIBUTIL) $(LIBOCORE) $(SDLUTILMAIN)
+$(BIN)testkeys$(EXE): $(TESTKEYSOBJS) $(LIBUTIL) $(LIBOCORE) $(SDLUTILMAIN)
 	@echo Linking $@...
 	$(LD) $(LDFLAGS) $^ $(BASELIBS) -o $@
 

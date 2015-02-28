@@ -392,6 +392,7 @@ OSDOBJS = \
 	$(OSDOBJ)/modules/font/font_none.o \
 	$(OSDOBJ)/modules/netdev/pcap.o \
 	$(OSDOBJ)/modules/netdev/taptun.o \
+	$(OSDOBJ)/modules/netdev/none.o \
 
 ifdef USE_SDL
 DEFS += -DUSE_SDL_SOUND
@@ -517,9 +518,9 @@ $(WINOBJ)/%.res: $(WINSRC)/%.rc | $(OSPREBUILD)
 $(CLIRESFILE): $(WINSRC)/mame.rc $(WINOBJ)/mamevers.rc
 $(VERSIONRES): $(WINOBJ)/mamevers.rc
 
-$(WINOBJ)/mamevers.rc: $(BUILDOUT)/verinfo$(BUILD_EXE) $(SRC)/version.c
+$(WINOBJ)/mamevers.rc: $(SRC)/build/verinfo.py $(SRC)/version.c
 	@echo Emitting $@...
-	@"$(BUILDOUT)/verinfo$(BUILD_EXE)" -b mame $(SRC)/version.c > $@
+	$(PYTHON) $(SRC)/build/verinfo.py -b mame $(SRC)/version.c > $@
 
 
 

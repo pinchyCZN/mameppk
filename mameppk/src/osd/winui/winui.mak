@@ -169,9 +169,9 @@ $(GUIRESFILE): $(UISRC)/mameui.rc $(UIOBJ)/mamevers.rc
 # rules for resource file
 #-------------------------------------------------
 
-$(UIOBJ)/mamevers.rc: $(OBJ)/build/verinfo$(EXE) $(SRC)/version.c
+$(UIOBJ)/mamevers.rc: $(SRC)/build/verinfo.py $(SRC)/version.c
 	@echo Emitting $@...
-	@"$(OBJ)/build/verinfo$(EXE)" -b mame $(SRC)/version.c > $@
+	$(PYTHON) $(SRC)/build/verinfo.py -b mame $(SRC)/version.c > $@
 
 
 

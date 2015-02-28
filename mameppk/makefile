@@ -283,6 +283,9 @@ BUILD_MIDILIB = 1
 # uncomment to enable OpenMP optimized code
 # OPENMP = 1
 
+# uncomment to compile c++ code as C++11
+# CPP11 = 1
+
 # specify optimization level or leave commented to use the default
 # (default is OPTIMIZE = 3 normally, or OPTIMIZE = 0 with symbols)
 # OPTIMIZE = 3
@@ -581,6 +584,9 @@ endif
 
 ifneq ($(USE_DRIVER_SWITCH),)
 DEFS += -DDRIVER_SWITCH
+DRIVER_SWITCH = 1
+else
+DRIVER_SWITCH = 0
 endif
 
 ifneq ($(USE_CMD_LIST),)
@@ -641,7 +647,11 @@ CFLAGS = $(CCOMFLAGS) $(CPPONLYFLAGS) $(INCPATH)
 # we compile C-only to C89 standard with GNU extensions
 # we compile C++ code to C++98 standard with GNU extensions
 CONLYFLAGS += -std=gnu89
+ifdef CPP11
+CPPONLYFLAGS += -x c++ -std=gnu++11
+else
 CPPONLYFLAGS += -x c++ -std=gnu++98
+endif
 COBJFLAGS += -x objective-c++
 
 # this speeds it up a bit by piping between the preprocessor/compiler/assembler
@@ -1182,9 +1192,9 @@ ifdef CPPCHECK
 	@$(CPPCHECK) $(CPPCHECKFLAGS) $<
 endif
 
-$(DRIVLISTSRC): $(DRVLIST) $(MAKELIST_TARGET)
+$(DRIVLISTSRC): $(DRVLIST) $(SRC)/build/makelist.py
 	@echo Building driver list $<...
-	@$(MAKELIST) $^ >$@
+	$(PYTHON) $(SRC)/build/makelist.py $(DRIVER_SWITCH) $^ >$@
 
 ifeq ($(TARGETOS),emscripten)
 # Avoid using .a files with Emscripten, link to bitcode instead

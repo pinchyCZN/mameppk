@@ -142,13 +142,15 @@ const osd_directory_entry *file_enumerator::next()
 emu_file::emu_file(UINT32 openflags)
 	: m_file(NULL),
 		m_iterator(""),
+		m_mediapaths(""),
 		m_crc(0),
 		m_openflags(openflags),
 		m_zipfile(NULL),
 		m_ziplength(0),
 		m__7zfile(NULL),
 		m__7zlength(0),
-		m_remove_on_close(false)
+		m_remove_on_close(false),
+		m_restrict_to_mediapath(false)
 {
 	// sanity check the open flags
 	if ((m_openflags & OPEN_FLAG_HAS_CRC) && (m_openflags & OPEN_FLAG_WRITE))
@@ -158,13 +160,15 @@ emu_file::emu_file(UINT32 openflags)
 emu_file::emu_file(const char *searchpath, UINT32 openflags)
 	: m_file(NULL),
 		m_iterator(searchpath),
+		m_mediapaths(searchpath),
 		m_crc(0),
 		m_openflags(openflags),
 		m_zipfile(NULL),
 		m_ziplength(0),
 		m__7zfile(NULL),
 		m__7zlength(0),
-		m_remove_on_close(false)
+		m_remove_on_close(false),
+		m_restrict_to_mediapath(false)
 {
 	// sanity check the open flags
 	if ((m_openflags & OPEN_FLAG_HAS_CRC) && (m_openflags & OPEN_FLAG_WRITE))
@@ -355,38 +359,15 @@ file_error emu_file::open_next()
 		{
 			astring tempfullpath = m_fullpath;
 
-			filerr = attempt__7zped();
+			filerr = attempt_zipped();
 			if (filerr == FILERR_NONE)
 				break;
 
 			m_fullpath = tempfullpath;
 
-			filerr = attempt_zipped();
+			filerr = attempt__7zped();
 			if (filerr == FILERR_NONE)
 				break;
-
-//FIXME
-#if 0
-			// mamep: load zipped inp file
-			{
-				astring zipped_fullname;
-				int offset = 0;
-				int n = m_filename.rchr(offset, '.');
-    
-				if (n > 0)
-					offset = n;
-    
-				zipped_fullname.cpy(m_filename, offset);
-				zipped_fullname.cat(PATH_SEPARATOR);
-				zipped_fullname.cat(m_filename);
-    
-				filerr = fopen_attempt_zipped(m_filename, crc, openflags, &m_file);
-
-				if (filerr == FILERR_NONE)
-					break;
-			}
-#endif
-
 		}
 	}
 	return filerr;
@@ -672,6 +653,21 @@ int emu_file::vprintf(const char *fmt, va_list va)
 }
 
 
+//-------------------------------------------------
+//  part_of_mediapath - checks if 'path' is part of
+//  any media path
+//-------------------------------------------------
+
+bool emu_file::part_of_mediapath(astring path)
+{
+	bool result = false;
+	astring mediapath;
+	m_mediapaths.reset();
+	while (m_mediapaths.next(mediapath, NULL) && !result)
+		if (path.cmpsubstr(mediapath, 0, mediapath.len()))
+			result = true;
+	return result;
+}
 
 //-------------------------------------------------
 //  attempt_zipped - attempt to open a ZIPped file
@@ -688,6 +684,10 @@ file_error emu_file::attempt_zipped()
 		int dirsep = m_fullpath.rchr(0, PATH_SEPARATOR[0]);
 		if (dirsep == -1)
 			return FILERR_NOT_FOUND;
+
+		if (restrict_to_mediapath())
+			if ( !part_of_mediapath(m_fullpath) )
+				return FILERR_NOT_FOUND;
 
 		// insert the part from the right of the separator into the head of the filename
 		if (filename.len() > 0)
@@ -819,6 +819,10 @@ file_error emu_file::attempt__7zped()
 		int dirsep = m_fullpath.rchr(0, PATH_SEPARATOR[0]);
 		if (dirsep == -1)
 			return FILERR_NOT_FOUND;
+
+		if (restrict_to_mediapath())
+			if ( !part_of_mediapath(m_fullpath) )
+				return FILERR_NOT_FOUND;
 
 		// insert the part from the right of the separator into the head of the filename
 		if (filename.len() > 0)
