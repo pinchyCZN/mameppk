@@ -44,6 +44,9 @@ extern int drawgdi_init(running_machine &machine, osd_draw_callbacks *callbacks)
 extern int drawdd_init(running_machine &machine, osd_draw_callbacks *callbacks);
 extern int drawd3d_init(running_machine &machine, osd_draw_callbacks *callbacks);
 extern int drawbgfx_init(running_machine &machine, osd_draw_callbacks *callbacks);
+#if (USE_OPENGL)
+extern int drawogl_init(running_machine &machine, osd_draw_callbacks *callbacks);
+#endif
 
 #ifdef MAME_AVI
 #include <mmsystem.h>
@@ -153,7 +156,6 @@ static HANDLE window_thread_ready_event;
 //============================================================
 
 static void winwindow_video_window_destroy(win_window_info *window);
-static void draw_video_contents(win_window_info *window, HDC dc, int update);
 
 static unsigned __stdcall thread_entry(void *param);
 static int complete_create(win_window_info *window);
@@ -279,7 +281,10 @@ bool windows_osd_interface::window_init()
 		drawbgfx_init(machine(), &draw);
 	if (video_config.mode == VIDEO_MODE_NONE)
 		drawnone_init(machine(), &draw);
-
+#if (USE_OPENGL)
+	if (video_config.mode == VIDEO_MODE_OPENGL)
+		drawogl_init(machine(), &draw);
+#endif
 	// set up the window list
 	last_window_ptr = &win_window_list;
 
@@ -695,7 +700,7 @@ void winwindow_update_cursor_state(running_machine &machine)
 //  (main thread)
 //============================================================
 
-void winwindow_video_window_create(running_machine &machine, int index, win_monitor_info *monitor, const win_window_config *config)
+void winwindow_video_window_create(running_machine &machine, int index, win_monitor_info *monitor, const osd_window_config *config)
 {
 	win_window_info *window, *win;
 
@@ -704,9 +709,7 @@ void winwindow_video_window_create(running_machine &machine, int index, win_moni
 	// allocate a new window object
 	window = global_alloc(win_window_info(machine));
 	//printf("%d, %d\n", config->width, config->height);
-	window->m_maxwidth = config->width;
-	window->m_maxheight = config->height;
-	window->m_refresh = config->refresh;
+	window->m_win_config = *config;
 	window->m_monitor = monitor;
 	window->m_fullscreen = !video_config.windowed;
 
@@ -1230,7 +1233,7 @@ static int complete_create(win_window_info *window)
 	assert(GetCurrentThreadId() == window_threadid);
 
 	// get the monitor bounds
-	monitorbounds = window->m_monitor->info.rcMonitor;
+	monitorbounds = window->m_monitor->position_size();
 
 	// create the window menu if needed
 	if (downcast<windows_options &>(window->machine().options()).menu())
@@ -1265,8 +1268,8 @@ static int complete_create(win_window_info *window)
 		return 0;
 
 	// adjust the window position to the initial width/height
-	tempwidth = (window->m_maxwidth != 0) ? window->m_maxwidth : 640;
-	tempheight = (window->m_maxheight != 0) ? window->m_maxheight : 480;
+	tempwidth = (window->m_win_config.width != 0) ? window->m_win_config.width : 640;
+	tempheight = (window->m_win_config.height != 0) ? window->m_win_config.height : 480;
 	SetWindowPos(window->m_hwnd, NULL, monitorbounds.left + 20, monitorbounds.top + 20,
 			monitorbounds.left + tempwidth + wnd_extra_width(window),
 			monitorbounds.top + tempheight + wnd_extra_height(window),
@@ -1304,7 +1307,7 @@ static int complete_create(win_window_info *window)
 //  (window thread)
 //============================================================
 
-LRESULT CALLBACK winwindow_video_window_proc(HWND wnd, UINT message, WPARAM wparam, LPARAM lparam)
+LRESULT CALLBACK win_window_info::video_window_proc(HWND wnd, UINT message, WPARAM wparam, LPARAM lparam)
 {
 	LONG_PTR ptr = GetWindowLongPtr(wnd, GWLP_USERDATA);
 	win_window_info *window = (win_window_info *)ptr;
@@ -1324,7 +1327,7 @@ LRESULT CALLBACK winwindow_video_window_proc(HWND wnd, UINT message, WPARAM wpar
 		{
 			PAINTSTRUCT pstruct;
 			HDC hdc = BeginPaint(wnd, &pstruct);
-			draw_video_contents(window, hdc, TRUE);
+			window->draw_video_contents(hdc, TRUE);
 			if (window->win_has_menu())
 				DrawMenuBar(window->m_hwnd);
 			EndPaint(wnd, &pstruct);
@@ -1464,9 +1467,12 @@ LRESULT CALLBACK winwindow_video_window_proc(HWND wnd, UINT message, WPARAM wpar
 
 		// destroy: clean up all attached rendering bits and NULL out our hwnd
 		case WM_DESTROY:
-			window->m_renderer->destroy();
-			global_free(window->m_renderer);
-			window->m_renderer = NULL;
+			if (!(window->m_renderer == NULL))
+			{
+				window->m_renderer->destroy();
+				global_free(window->m_renderer);
+				window->m_renderer = NULL;
+			}
 			window->m_hwnd = NULL;
 			return DefWindowProc(wnd, message, wparam, lparam);
 
@@ -1477,7 +1483,7 @@ LRESULT CALLBACK winwindow_video_window_proc(HWND wnd, UINT message, WPARAM wpar
 
 			mtlog_add("winwindow_video_window_proc: WM_USER_REDRAW begin");
 			window->m_primlist = (render_primitive_list *)lparam;
-			draw_video_contents(window, hdc, FALSE);
+			window->draw_video_contents(hdc, FALSE);
 			mtlog_add("winwindow_video_window_proc: WM_USER_REDRAW end");
 
 			ReleaseDC(wnd, hdc);
@@ -1526,157 +1532,38 @@ LRESULT CALLBACK winwindow_video_window_proc(HWND wnd, UINT message, WPARAM wpar
 //  (window thread)
 //============================================================
 
-#ifdef MAME_AVI
-int OnAVIRecord(void)
-{
-    if (bAviCapture)
-    {
-		extern int mame_mixer_wave_loging;
-        nAviShowMessage = 120; /* show message for 120 frames */
-        bAviRun = !bAviRun;    /* toggle capture on/off */
-
-		if (bAviRun)
-		{
-			nAviFrameCount = nAviFrameCountStart;
-			{
-				nAviStartTime = timeGetTime();
-			}
-			if (nAviAudioRecord > 0)
-			{
-				if (nAviAudioRecord == 1)	wav_append_log_wave();
-				mame_mixer_wave_loging = nAviAudioRecord; //1;
-			}
-
-		} 
-		else
-		{
-			if (nAviAudioRecord > 0)
-			{
-				if (nAviAudioRecord == 1)	wav_stop_log_wave();
-				mame_mixer_wave_loging = 0;
-			}
-		}
-		return 1;
-    }
-
-	return 0;
-}
-
-void avi_info_view(running_machine &machine)
-{
-	#define ARGB_RED				rgb_t(0x80,0xff,0x00,0x00)
-	const screen_device *screen = machine.first_screen();
-	render_container *container = &screen->container();
-
-	{	/* INFO VIEW */
-		static int counter = 59;
-		static char buf[64];
-
-		counter++;
-		if (counter == 60)
-		{
-			const char *ch;
-
-			counter = 0;
-			switch (nAviAudioRecord)
-			{
-			default:
-			case 0:	ch = "AVI";			break;
-			case 1:	ch = "AVI/WAV Rec";	break;
-			case 2:	ch = "AVI Rec";		break;
-			}
-
-			if (nAviFrameCount>0)
-			{
-				const unsigned int sec = ((double)nAviFrameCount / ATTOSECONDS_TO_HZ(screen->refresh_attoseconds()));
-				sprintf(buf, "%s %.2d:%.2d:%.2d", _WINDOWS(ch), sec/(60*60),sec/60%60,sec%60);
-			} 
-			else
-			{
-				sprintf(buf, "%s", _WINDOWS(ch));
-			}
-		}
-		if (counter < 50)
-		{
-			machine.ui().draw_text2(container, buf, 0, 0, ARGB_RED);
-
-			if (nAviFrameCount>0)
-			{
-				char bf[64];
-				DWORD LapsedTime	= timeGetTime() - nAviStartTime;
-				double tt = (double)(nAviFrameCountStart - nAviFrameCount) / ATTOSECONDS_TO_HZ(screen->refresh_attoseconds());
-				double scale = (double)LapsedTime / 1000 / tt;
-				DWORD RemainingTime = (DWORD)((double)nAviFrameCountStart / ATTOSECONDS_TO_HZ(screen->refresh_attoseconds()) * scale);
-				LapsedTime		/= 1000;
-				sprintf(bf, "TotalTime: %lu:%.2lu:%.2lu", RemainingTime/(60*60),RemainingTime/60%60,RemainingTime%60);
-				machine.ui().draw_text2(container, bf, 0, machine.ui().get_line_height()*1, ARGB_RED);
-				sprintf(bf, "Elapsed  : %lu:%.2lu:%.2lu", LapsedTime/(60*60),LapsedTime/60%60,LapsedTime%60);
-				machine.ui().draw_text2(container, bf, 0, machine.ui().get_line_height()*2, ARGB_RED);
-
-			}
-		}
-
-	}	/* INFO VIEW */
-}
-
-int avi_write_handler(running_machine &machine, emu_file *dummy, bitmap_t &bitmap)
-{
-    if (bAviRun)
-	{
-		//extern int osd_is_paused(void);		/* Implemented in video.c (DarkCoder) */
-
-		if ((!machine.paused()) || (machine.paused() && machine.ui().single_step()))
-		{
-			AviAddBitmap(machine, bitmap, NULL);
-			if (nAviFrameCountStart>0 && nAviFrameCount==0)
-			{
-			    //nAviShowMessage = 120; /* show message for 120 frames */
-				bAviRun = 0;    /* toggle capture off */
-
-				if (nAviAudioRecord > 0)
-				{
-					extern int mame_mixer_wave_loging;
-					if (nAviAudioRecord == 1)	wav_stop_log_wave();
-					mame_mixer_wave_loging = 0;
-				}
-			}
-			//avi_info_view();
-		}
-	}
-	return 0;
-}
-#endif /* MAME_AVI */
-
-static void draw_video_contents(win_window_info *window, HDC dc, int update)
+void win_window_info::draw_video_contents(HDC dc, int update)
 {
 	assert(GetCurrentThreadId() == window_threadid);
 
 	mtlog_add("draw_video_contents: begin");
 
 	mtlog_add("draw_video_contents: render lock acquire");
-	osd_lock_acquire(window->m_render_lock);
+	osd_lock_acquire(m_render_lock);
 	mtlog_add("draw_video_contents: render lock acquired");
 
 	// if we're iconic, don't bother
-	if (window->m_hwnd != NULL && !IsIconic(window->m_hwnd))
+	if (m_hwnd != NULL && !IsIconic(m_hwnd))
 	{
 		// if no bitmap, just fill
-		if (window->m_primlist == NULL)
+		if (m_primlist == NULL)
 		{
 			RECT fill;
-			GetClientRect(window->m_hwnd, &fill);
+			GetClientRect(m_hwnd, &fill);
 			FillRect(dc, &fill, (HBRUSH)GetStockObject(BLACK_BRUSH));
 		}
 
 		// otherwise, render with our drawing system
 		else
 		{
-			window->m_renderer->draw(dc, update);
+			// update DC
+			m_dc = dc;
+			m_renderer->draw(update);
 			mtlog_add("draw_video_contents: drawing finished");
 		}
 	}
 
-	osd_lock_release(window->m_render_lock);
+	osd_lock_release(m_render_lock);
 	mtlog_add("draw_video_contents: render lock released");
 
 	mtlog_add("draw_video_contents: end");
@@ -1743,19 +1630,19 @@ static void constrain_to_aspect_ratio(win_window_info *window, RECT *rect, int a
 	// clamp against the maximum (fit on one screen for full screen mode)
 	if (window->m_fullscreen)
 	{
-		maxwidth = rect_width(&monitor->info.rcMonitor) - extrawidth;
-		maxheight = rect_height(&monitor->info.rcMonitor) - extraheight;
+		maxwidth = rect_width(&monitor->position_size()) - extrawidth;
+		maxheight = rect_height(&monitor->position_size()) - extraheight;
 	}
 	else
 	{
-		maxwidth = rect_width(&monitor->info.rcWork) - extrawidth;
-		maxheight = rect_height(&monitor->info.rcWork) - extraheight;
+		maxwidth = rect_width(&monitor->usuable_position_size()) - extrawidth;
+		maxheight = rect_height(&monitor->usuable_position_size()) - extraheight;
 
 		// further clamp to the maximum width/height in the window
-		if (window->m_maxwidth != 0)
-			maxwidth = MIN(maxwidth, window->m_maxwidth + extrawidth);
-		if (window->m_maxheight != 0)
-			maxheight = MIN(maxheight, window->m_maxheight + extraheight);
+		if (window->m_win_config.width != 0)
+			maxwidth = MIN(maxwidth, window->m_win_config.width + extrawidth);
+		if (window->m_win_config.height != 0)
+			maxheight = MIN(maxheight, window->m_win_config.height + extraheight);
 	}
 
 	// clamp to the maximum
@@ -1885,18 +1772,18 @@ static void get_max_bounds(win_window_info *window, RECT *bounds, int constrain)
 
 	// compute the maximum client area
 	window->m_monitor->refresh();
-	maximum = window->m_monitor->info.rcWork;
+	maximum = window->m_monitor->usuable_position_size();
 
 	// clamp to the window's max
-	if (window->m_maxwidth != 0)
+	if (window->m_win_config.width != 0)
 	{
-		int temp = window->m_maxwidth + wnd_extra_width(window);
+		int temp = window->m_win_config.width + wnd_extra_width(window);
 		if (temp < rect_width(&maximum))
 			maximum.right = maximum.left + temp;
 	}
-	if (window->m_maxheight != 0)
+	if (window->m_win_config.height != 0)
 	{
-		int temp = window->m_maxheight + wnd_extra_height(window);
+		int temp = window->m_win_config.height + wnd_extra_height(window);
 		if (temp < rect_height(&maximum))
 			maximum.bottom = maximum.top + temp;
 	}
@@ -1911,8 +1798,9 @@ static void get_max_bounds(win_window_info *window, RECT *bounds, int constrain)
 	}
 
 	// center within the work area
-	bounds->left = window->m_monitor->info.rcWork.left + (rect_width(&window->m_monitor->info.rcWork) - rect_width(&maximum)) / 2;
-	bounds->top = window->m_monitor->info.rcWork.top + (rect_height(&window->m_monitor->info.rcWork) - rect_height(&maximum)) / 2;
+	RECT work = window->m_monitor->usuable_position_size();
+	bounds->left = work.left + (rect_width(&work) - rect_width(&maximum)) / 2;
+	bounds->top = work.top + (rect_height(&work) - rect_height(&maximum)) / 2;
 	bounds->right = bounds->left + rect_width(&maximum);
 	bounds->bottom = bounds->top + rect_height(&maximum);
 }
@@ -2013,7 +1901,7 @@ static void adjust_window_position_after_major_change(win_window_info *window)
 	else
 	{
 		win_monitor_info *monitor = window->winwindow_video_window_monitor(NULL);
-		newrect = monitor->info.rcMonitor;
+		newrect = monitor->position_size();
 	}
 
 	// adjust the position if different
@@ -2134,3 +2022,124 @@ bool winwindow_qt_filter(void *message)
 	return false;
 }
 #endif
+
+#ifdef MAME_AVI
+int OnAVIRecord(void)
+{
+    if (bAviCapture)
+    {
+		extern int mame_mixer_wave_loging;
+        nAviShowMessage = 120; /* show message for 120 frames */
+        bAviRun = !bAviRun;    /* toggle capture on/off */
+
+		if (bAviRun)
+		{
+			nAviFrameCount = nAviFrameCountStart;
+			{
+				nAviStartTime = timeGetTime();
+			}
+			if (nAviAudioRecord > 0)
+			{
+				if (nAviAudioRecord == 1)	wav_append_log_wave();
+				mame_mixer_wave_loging = nAviAudioRecord; //1;
+			}
+
+		} 
+		else
+		{
+			if (nAviAudioRecord > 0)
+			{
+				if (nAviAudioRecord == 1)	wav_stop_log_wave();
+				mame_mixer_wave_loging = 0;
+			}
+		}
+		return 1;
+    }
+
+	return 0;
+}
+
+void avi_info_view(running_machine &machine)
+{
+	#define ARGB_RED				rgb_t(0x80,0xff,0x00,0x00)
+	const screen_device *screen = machine.first_screen();
+	render_container *container = &screen->container();
+
+	{	/* INFO VIEW */
+		static int counter = 59;
+		static char buf[64];
+
+		counter++;
+		if (counter == 60)
+		{
+			const char *ch;
+
+			counter = 0;
+			switch (nAviAudioRecord)
+			{
+			default:
+			case 0:	ch = "AVI";			break;
+			case 1:	ch = "AVI/WAV Rec";	break;
+			case 2:	ch = "AVI Rec";		break;
+			}
+
+			if (nAviFrameCount>0)
+			{
+				const unsigned int sec = ((double)nAviFrameCount / ATTOSECONDS_TO_HZ(screen->refresh_attoseconds()));
+				sprintf(buf, "%s %.2d:%.2d:%.2d", _WINDOWS(ch), sec/(60*60),sec/60%60,sec%60);
+			} 
+			else
+			{
+				sprintf(buf, "%s", _WINDOWS(ch));
+			}
+		}
+		if (counter < 50)
+		{
+			machine.ui().draw_text2(container, buf, 0, 0, ARGB_RED);
+
+			if (nAviFrameCount>0)
+			{
+				char bf[64];
+				DWORD LapsedTime	= timeGetTime() - nAviStartTime;
+				double tt = (double)(nAviFrameCountStart - nAviFrameCount) / ATTOSECONDS_TO_HZ(screen->refresh_attoseconds());
+				double scale = (double)LapsedTime / 1000 / tt;
+				DWORD RemainingTime = (DWORD)((double)nAviFrameCountStart / ATTOSECONDS_TO_HZ(screen->refresh_attoseconds()) * scale);
+				LapsedTime		/= 1000;
+				sprintf(bf, "TotalTime: %lu:%.2lu:%.2lu", RemainingTime/(60*60),RemainingTime/60%60,RemainingTime%60);
+				machine.ui().draw_text2(container, bf, 0, machine.ui().get_line_height()*1, ARGB_RED);
+				sprintf(bf, "Elapsed  : %lu:%.2lu:%.2lu", LapsedTime/(60*60),LapsedTime/60%60,LapsedTime%60);
+				machine.ui().draw_text2(container, bf, 0, machine.ui().get_line_height()*2, ARGB_RED);
+
+			}
+		}
+
+	}	/* INFO VIEW */
+}
+
+int avi_write_handler(running_machine &machine, emu_file *dummy, bitmap_t &bitmap)
+{
+    if (bAviRun)
+	{
+		//extern int osd_is_paused(void);		/* Implemented in video.c (DarkCoder) */
+
+		if ((!machine.paused()) || (machine.paused() && machine.ui().single_step()))
+		{
+			AviAddBitmap(machine, bitmap, NULL);
+			if (nAviFrameCountStart>0 && nAviFrameCount==0)
+			{
+			    //nAviShowMessage = 120; /* show message for 120 frames */
+				bAviRun = 0;    /* toggle capture off */
+
+				if (nAviAudioRecord > 0)
+				{
+					extern int mame_mixer_wave_loging;
+					if (nAviAudioRecord == 1)	wav_stop_log_wave();
+					mame_mixer_wave_loging = 0;
+				}
+			}
+			//avi_info_view();
+		}
+	}
+	return 0;
+}
+#endif /* MAME_AVI */

@@ -62,14 +62,14 @@ public:
 		//ddcaps(0),
 		//helcaps(0),
 		membuffer(NULL),
-		membuffersize(NULL)
+		membuffersize(0)
 	{ }
 
 	virtual ~renderer_dd() { }
 
 	virtual int create();
 	virtual render_primitive_list *get_primitives();
-	virtual int draw(HDC dc, int update);
+	virtual int draw(const int update);
 	virtual void save() {};
 	virtual void record() {};
 	virtual void toggle_fsfx() {};
@@ -144,8 +144,8 @@ struct monitor_enum_info
 /* mode_enum_info holds information during a display mode enumeration */
 struct mode_enum_info
 {
-	renderer_dd *			renderer;
-	osd_window  *			window;
+	renderer_dd *           renderer;
+	osd_window  *           window;
 	INT32                   minimum_width, minimum_height;
 	INT32                   target_width, target_height;
 	double                  target_refresh;
@@ -314,7 +314,7 @@ render_primitive_list *renderer_dd::get_primitives()
 //  drawdd_window_draw
 //============================================================
 
-int renderer_dd::draw(HDC dc, int update)
+int renderer_dd::draw(const int update)
 {
 	render_primitive *prim;
 	int usemembuffer = FALSE;
@@ -968,10 +968,11 @@ void renderer_dd::blit_to_primary(int srcwidth, int srcheight)
 		ClientToScreen(window().m_hwnd, &((LPPOINT)&outer)[1]);
 
 		// adjust to be relative to the monitor
-		outer.left -= monitor->info.rcMonitor.left;
-		outer.right -= monitor->info.rcMonitor.left;
-		outer.top -= monitor->info.rcMonitor.top;
-		outer.bottom -= monitor->info.rcMonitor.top;
+		RECT pos = monitor->position_size();
+		outer.left -= pos.left;
+		outer.right -= pos.left;
+		outer.top -= pos.top;
+		outer.bottom -= pos.top;
 	}
 
 	// compute outer rect -- full screen version
@@ -1164,7 +1165,7 @@ static BOOL WINAPI monitor_enum_callback(GUID FAR *guid, LPSTR description, LPST
 	monitor_enum_info *einfo = (monitor_enum_info *)context;
 
 	// do we match the desired monitor?
-	if (hmonitor == einfo->monitor->handle || (hmonitor == NULL && (einfo->monitor->info.dwFlags & MONITORINFOF_PRIMARY) != 0))
+	if (hmonitor == einfo->monitor->handle() || (hmonitor == NULL && einfo->monitor->is_primary()))
 	{
 		einfo->guid_ptr = (guid != NULL) ? &einfo->guid : NULL;
 		if (guid != NULL)
@@ -1229,7 +1230,7 @@ static HRESULT WINAPI enum_modes_callback(LPDDSURFACEDESC2 desc, LPVOID context)
 		size_score *= 0.1f;
 
 	// if we're looking for a particular mode, that's a winner
-	if (desc->dwWidth == einfo->window->m_maxwidth && desc->dwHeight == einfo->window->m_maxheight)
+	if (desc->dwWidth == einfo->window->m_win_config.width && desc->dwHeight == einfo->window->m_win_config.height)
 		size_score = 2.0f;
 
 	// compute refresh score
@@ -1240,7 +1241,7 @@ static HRESULT WINAPI enum_modes_callback(LPDDSURFACEDESC2 desc, LPVOID context)
 		refresh_score *= 0.1f;
 
 	// if we're looking for a particular refresh, make sure it matches
-	if (desc->dwRefreshRate == einfo->window->m_refresh)
+	if (desc->dwRefreshRate == einfo->window->m_win_config.refresh)
 		refresh_score = 2.0f;
 
 	// weight size and refresh equally

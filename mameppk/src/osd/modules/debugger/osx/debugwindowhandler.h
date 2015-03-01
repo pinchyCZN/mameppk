@@ -12,6 +12,7 @@
 #import "debugosx.h"
 
 #include "emu.h"
+#include "debug/debugcpu.h"
 
 #import <Cocoa/Cocoa.h>
 
@@ -27,12 +28,14 @@ extern NSString *const MAMEAuxiliaryDebugWindowWillCloseNotification;
 
 @interface MAMEDebugWindowHandler : NSObject <NSWindowDelegate>
 {
-	NSWindow		*window;
-	running_machine	*machine;
+	NSWindow        *window;
+	running_machine *machine;
 }
 
 + (void)addCommonActionItems:(NSMenu *)menu;
 + (NSPopUpButton *)newActionButtonWithFrame:(NSRect)frame;
+
++ (device_debug::breakpoint *)findBreakpointAtAddress:(offs_t)address forDevice:(device_t &)device;
 
 - (id)initWithMachine:(running_machine &)m title:(NSString *)t;
 
@@ -61,7 +64,7 @@ extern NSString *const MAMEAuxiliaryDebugWindowWillCloseNotification;
 
 @interface MAMEAuxiliaryDebugWindowHandler : MAMEDebugWindowHandler
 {
-	MAMEDebugConsole	*console;
+	MAMEDebugConsole    *console;
 }
 
 + (void)cascadeWindow:(NSWindow *)window;
@@ -83,8 +86,8 @@ extern NSString *const MAMEAuxiliaryDebugWindowWillCloseNotification;
 
 @interface MAMEExpressionAuxiliaryDebugWindowHandler : MAMEAuxiliaryDebugWindowHandler <NSTextFieldDelegate>
 {
-	MAMEDebugCommandHistory	*history;
-	NSTextField				*expressionField;
+	MAMEDebugCommandHistory *history;
+	NSTextField             *expressionField;
 }
 
 - (id)initWithMachine:(running_machine &)m title:(NSString *)t console:(MAMEDebugConsole *)c;

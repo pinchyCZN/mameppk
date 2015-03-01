@@ -598,7 +598,7 @@ endif
 
 $(LIBOBJ)/sqlite3/sqlite3.o: $(3RDPARTY)/sqlite3/sqlite3.c | $(OSPREBUILD)
 	@echo Compiling $<...
-	$(CC) $(CDEFS) $(CONLYFLAGS) -Wno-bad-function-cast -I$(3RDPARTY)/sqlite3 $(SQLITE3_FLAGS) -c $< -o $@
+	$(CC) $(CDEFS) $(CCOMFLAGS) $(CONLYFLAGS) -Wno-bad-function-cast -Wno-undef -I$(3RDPARTY)/sqlite3 $(SQLITE3_FLAGS) -c $< -o $@
 
 #-------------------------------------------------
 # BGFX library objects
@@ -629,17 +629,17 @@ BGFXOBJS = \
 	$(LIBOBJ)/bgfx/common/imgui/imgui.o \
 	$(LIBOBJ)/bgfx/common/nanovg/nanovg.o \
 	$(LIBOBJ)/bgfx/common/nanovg/nanovg_bgfx.o \
-#	$(LIBOBJ)/bgfx/common/entry/cmd.o \
-#	$(LIBOBJ)/bgfx/common/entry/dbg.o \
-#	$(LIBOBJ)/bgfx/common/entry/entry.o \
-#	$(LIBOBJ)/bgfx/common/entry/entry_android.o \
-#	$(LIBOBJ)/bgfx/common/entry/entry_asmjs.o \
-#	$(LIBOBJ)/bgfx/common/entry/entry_linux.o \
-#	$(LIBOBJ)/bgfx/common/entry/entry_nacl.o \
-#	$(LIBOBJ)/bgfx/common/entry/entry_qnx.o \
-#	$(LIBOBJ)/bgfx/common/entry/entry_sdl.o \
-#	$(LIBOBJ)/bgfx/common/entry/entry_windows.o \
-#	$(LIBOBJ)/bgfx/common/entry/input.o \
+#   $(LIBOBJ)/bgfx/common/entry/cmd.o \
+#   $(LIBOBJ)/bgfx/common/entry/dbg.o \
+#   $(LIBOBJ)/bgfx/common/entry/entry.o \
+#   $(LIBOBJ)/bgfx/common/entry/entry_android.o \
+#   $(LIBOBJ)/bgfx/common/entry/entry_asmjs.o \
+#   $(LIBOBJ)/bgfx/common/entry/entry_linux.o \
+#   $(LIBOBJ)/bgfx/common/entry/entry_nacl.o \
+#   $(LIBOBJ)/bgfx/common/entry/entry_qnx.o \
+#   $(LIBOBJ)/bgfx/common/entry/entry_sdl.o \
+#   $(LIBOBJ)/bgfx/common/entry/entry_windows.o \
+#   $(LIBOBJ)/bgfx/common/entry/input.o \
 
 ifeq ($(TARGETOS),macosx)
 	BGFXOBJS += $(LIBOBJ)/bgfx/glcontext_eagl.o

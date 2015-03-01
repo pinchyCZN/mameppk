@@ -6,6 +6,9 @@
 //
 //============================================================
 
+#ifndef __WINDOWS_WINMAIN_H__
+#define __WINDOWS_WINMAIN_H__
+
 #include "clifront.h"
 #include "osdepend.h"
 #include "modules/lib/osdobj_common.h"
@@ -281,8 +284,13 @@ public:
 	virtual void input_exit();
 	virtual void output_exit();
 
+	void extract_video_config();
+
+	windows_options &options() { return m_options; }
+
 private:
 	void osd_exit();
+	windows_options &m_options;
 
 	static const int DEFAULT_FONT_HEIGHT = 200;
 };
@@ -307,3 +315,5 @@ extern int osd_num_processors;
 // use this to ping the watchdog
 void winmain_watchdog_ping(void);
 void winmain_dump_stack();
+
+#endif

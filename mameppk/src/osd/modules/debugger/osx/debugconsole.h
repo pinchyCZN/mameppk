@@ -22,13 +22,13 @@
 
 @interface MAMEDebugConsole : MAMEDebugWindowHandler <NSTextFieldDelegate, NSSplitViewDelegate>
 {
-	MAMEDebugCommandHistory	*history;
-	NSMutableArray			*auxiliaryWindows;
+	MAMEDebugCommandHistory *history;
+	NSMutableArray          *auxiliaryWindows;
 
-	MAMERegistersView		*regView;
-	MAMEDisassemblyView		*dasmView;
-	MAMEDebugView			*consoleView;
-	NSTextField				*commandField;
+	MAMERegistersView       *regView;
+	MAMEDisassemblyView     *dasmView;
+	MAMEDebugView           *consoleView;
+	NSTextField             *commandField;
 }
 
 - (id)initWithMachine:(running_machine &)m;
@@ -36,6 +36,10 @@
 - (void)setCPU:(device_t *)device;
 
 - (IBAction)doCommand:(id)sender;
+
+- (IBAction)debugToggleBreakpoint:(id)sender;
+- (IBAction)debugToggleBreakpointEnable:(id)sender;
+- (IBAction)debugRunToCursor:(id)sender;
 
 - (IBAction)debugNewMemoryWindow:(id)sender;
 - (IBAction)debugNewDisassemblyWindow:(id)sender;
@@ -45,6 +49,7 @@
 
 - (void)debugNewMemoryWindowForSpace:(address_space *)space device:(device_t *)device expression:(NSString *)expression;
 - (void)debugNewDisassemblyWindowForSpace:(address_space *)space device:(device_t *)device expression:(NSString *)expression;
+- (void)debugNewInfoWindowForDevice:(device_t &)device;
 
 - (void)showDebugger:(NSNotification *)notification;
 - (void)auxiliaryWindowWillClose:(NSNotification *)notification;

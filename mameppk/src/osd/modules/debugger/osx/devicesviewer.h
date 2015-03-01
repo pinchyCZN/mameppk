@@ -22,10 +22,12 @@
 
 @interface MAMEDevicesViewer : MAMEAuxiliaryDebugWindowHandler <NSOutlineViewDataSource>
 {
-	MAMEDeviceWrapper	*root;
-	NSOutlineView		*devicesView;
+	MAMEDeviceWrapper   *root;
+	NSOutlineView       *devicesView;
 }
 
 - (id)initWithMachine:(running_machine &)m console:(MAMEDebugConsole *)c;
+
+- (IBAction)showDeviceDetail:(id)sender;
 
 @end
