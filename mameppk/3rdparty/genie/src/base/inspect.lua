@@ -1,4 +1,4 @@
--- Copyright (c) 2013 Enrique Garc’La Cota
+-- Copyright (c) 2013 Enrique GarcÃ­a Cota
 --
 -- Permission is hereby granted, free of charge, to any person obtaining a
 -- copy of this software and associated documentation files (the
@@ -283,7 +283,9 @@ function inspect(rootObject, options)
 end
 
 function printtable(name, table)
-	print("--- " .. name)
-	print(inspect(table))
-	print("---")
+	print("table: ", name, inspect(table), "\n")
+end
+
+function printstack()
+	print(debug.traceback(), "\n")
 end

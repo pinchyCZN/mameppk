@@ -71,7 +71,7 @@
 #line 1 "src/glsl/glsl_parser.yy" /* yacc.c:339  */
 
 /*
- * Copyright ‘§ 2008, 2009 Intel Corporation
+ * Copyright Â© 2008, 2009 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),

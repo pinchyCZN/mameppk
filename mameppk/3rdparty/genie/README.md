@@ -14,7 +14,7 @@ Supported project generators:
 Download (stable)
 -----------------
 
-	version 181 (commit 6b59593a0a812fea6c5caaf6a50772076a6e5637)
+	version 242 (commit ce8f85701187fa48521ef0a6d38ac0f13726ae7b)
 
 Linux:  
 https://github.com/bkaradzic/bx/raw/master/tools/bin/linux/genie
@@ -35,7 +35,7 @@ Building (dev)
 Documentation
 -------------
 
-[Scripting Reference](https://github.com/bkaradzic/genie/blob/master/scripting-reference.md)
+[Scripting Reference](https://github.com/bkaradzic/genie/blob/master/docs/scripting-reference.md#scripting-reference)
 
 History
 -------
@@ -61,15 +61,23 @@ intention to keep it compatible with it.
  - Added ability to configure Visual Studio toolset from GENie script.
  - Added `UnsignedChar` flag to force char to be unsigned.
  - Removed vs2002, vs2003, vs2005, Solaris, and Haiku support.
- - Allow source files in the same project to have the same name.
+ - Allow source files in the same project to have the same name. Added 
+   `SingleOutputDir` flag to use single output directory (original behaviour).
  - Added WinRT support.
  - Added `removeflags`, `removelinks`.
  - Added vs2015 support.
  - Added `targetsubdir`.
  - Added support for solution folders `group`.
- - Added `options` section (and `ForceCpp` to enforce C++ compile even if extension is for C files)
- - Added `msgcompile`, `msgresource`, `msglinking` and `msgarchiving` as overrides for make messages
- - Added `messageskip` list to disable some of compiler messages
+ - Added `options` section (and `ForceCpp` to enforce C++ compile even if
+   extension is for C files)
+ - Added `msgcompile`, `msgresource`, `msglinking` and `msgarchiving` as
+   overrides for make messages.
+ - Added `messageskip` list to disable some of compiler messages.
+ - Added `buildoptions_c`, `buildoptions_cpp`, `buildoptions_objc` for
+   configuring language specific build options.
+ - Split functionality of `excludes` in `removefiles` and `excludes`. With VS
+   `excludes` will exclude files from build but files will be added to project
+   file. `removefiles` removes files completely from project.
 
 ## Why fork?
 
@@ -93,7 +101,7 @@ This long period between releases where multiple versions are in flight cause
 confusion for users who are not familiar with Premake, and they just need to
 use Premake to generate project files for project they are interested in.
 
-I've been using Premake for [a while](https://carbongames.com/2011/08/Premake/),
+I've been using Premake for [a while](https://web.archive.org/web/20120119020903/http://carbongames.com/2011/08/Premake),
 I really like it's simplicity, and that it does one thing really well.
 
 I was considering replacing Premake with other build systems that also could

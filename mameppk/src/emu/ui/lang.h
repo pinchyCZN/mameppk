@@ -16,7 +16,7 @@
 #define _LST(str)	lang_message(UI_MSG_LIST, str)
 #define _READINGS(str)	lang_message(UI_MSG_READINGS, str)
 #define _MANUFACT(str)	lang_message(UI_MSG_MANUFACTURE, str)
-#define _OSD0(str)		lang_message(UI_MSG_OSD0, str)
+#define _OSD0(str)	lang_message(UI_MSG_OSD0, str)
 
 class emu_options;
 

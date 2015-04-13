@@ -12,6 +12,7 @@
 #endif
 
 // MAMEOS headers
+#include <assert.h>
 #include "strconv.h"
 #include "unicode.h"
 

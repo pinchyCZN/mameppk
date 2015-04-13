@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright ‘§ 2014 Unity Technologies
+ * Copyright Â© 2014 Unity Technologies
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),

@@ -21,7 +21,6 @@
 #endif
 
 #ifdef _MSC_VER
-#include <assert.h>
 #include <malloc.h>
 #if _MSC_VER < 1900 // < VS2015
 #define snprintf _snprintf

@@ -1,6 +1,6 @@
 /*
- * Copyright ‘§ 2009,2012 Intel Corporation
- * Copyright ‘§ 1988-2004 Keith Packard and Bart Massey.
+ * Copyright Â© 2009,2012 Intel Corporation
+ * Copyright Â© 1988-2004 Keith Packard and Bart Massey.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),

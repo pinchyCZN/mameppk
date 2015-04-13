@@ -2,6 +2,9 @@ CCOMFLAGS += \
 	-Wno-cast-align \
 	-Wno-tautological-compare
 
+# caused by dynamic_array being generally awful
+CCOMFLAGS += -Wno-dynamic-class-memaccess
+
 # caused by obj/sdl64d/emu/cpu/tms57002/tms57002.inc
 CCOMFLAGS += -Wno-self-assign-field
 
@@ -65,6 +68,19 @@ CCOMFLAGS += -Wno-inline-new-delete
 
 # caused by src/mess/drivers/x07.c, src/osd/sdl/window.c, src/emu/sound/disc_mth.inc, src/mame/video/chihiro.c
 CCOMFLAGS += -Wno-absolute-value
+
+ifneq (,$(findstring undefined,$(SANITIZE)))
+# clang takes forever to compile src/emu/cpu/tms57002/tms57002.c when this isn't disabled
+CCOMFLAGS += -fno-sanitize=shift
+# clang takes forever to compile src/emu/cpu/tms57002/tms57002.c, src/emu/cpu/m6809/hd6309.c when this isn't disabled
+CCOMFLAGS += -fno-sanitize=object-size
+# clang takes forever to compile src/emu/cpu/tms57002/tms57002.c, src/emu/cpu/m6809/konami.c, src/emu/cpu/m6809/hd6309.c, src/emu/video/psx.c when this isn't disabled
+CCOMFLAGS += -fno-sanitize=vptr
+# clang takes forever to compile src/emu/video/psx.c when this isn't disabled
+CCOMFLAGS += -fno-sanitize=null
+# clang takes forever to compile src/emu/cpu/tms57002/tms57002.c when this isn't disabled
+CCOMFLAGS += -fno-sanitize=signed-integer-overflow
+endif
 endif
 
 ifeq ($(TARGETOS),emscripten)

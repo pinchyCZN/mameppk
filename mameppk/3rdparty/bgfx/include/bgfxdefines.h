@@ -81,16 +81,16 @@
 					| BGFX_STATE_MSAA \
 					)
 
-#define BGFX_STATE_ALPHA_REF(_ref) ( (uint64_t(_ref)<<BGFX_STATE_ALPHA_REF_SHIFT)&BGFX_STATE_ALPHA_REF_MASK)
-#define BGFX_STATE_POINT_SIZE(_size) ( (uint64_t(_size)<<BGFX_STATE_POINT_SIZE_SHIFT)&BGFX_STATE_POINT_SIZE_MASK)
+#define BGFX_STATE_ALPHA_REF(_ref)   ( ( (uint64_t)(_ref )<<BGFX_STATE_ALPHA_REF_SHIFT )&BGFX_STATE_ALPHA_REF_MASK)
+#define BGFX_STATE_POINT_SIZE(_size) ( ( (uint64_t)(_size)<<BGFX_STATE_POINT_SIZE_SHIFT)&BGFX_STATE_POINT_SIZE_MASK)
 
 ///
-#define BGFX_STATE_BLEND_FUNC_SEPARATE(_srcRGB, _dstRGB, _srcA, _dstA) (0 \
-					| ( (uint64_t(_srcRGB)|(uint64_t(_dstRGB)<<4) )   ) \
-					| ( (uint64_t(_srcA  )|(uint64_t(_dstA  )<<4) )<<8) \
+#define BGFX_STATE_BLEND_FUNC_SEPARATE(_srcRGB, _dstRGB, _srcA, _dstA) (UINT64_C(0) \
+					| ( ( (uint64_t)(_srcRGB)|( (uint64_t)(_dstRGB)<<4) )   ) \
+					| ( ( (uint64_t)(_srcA  )|( (uint64_t)(_dstA  )<<4) )<<8) \
 					)
 
-#define BGFX_STATE_BLEND_EQUATION_SEPARATE(_rgb, _a) (uint64_t(_rgb)|(uint64_t(_a)<<3) )
+#define BGFX_STATE_BLEND_EQUATION_SEPARATE(_rgb, _a) ( (uint64_t)(_rgb)|( (uint64_t)(_a)<<3) )
 
 ///
 #define BGFX_STATE_BLEND_FUNC(_src, _dst)    BGFX_STATE_BLEND_FUNC_SEPARATE(_src, _dst, _src, _dst)
@@ -316,6 +316,12 @@
 #define BGFX_CAPS_FRAGMENT_ORDERING      UINT64_C(0x0000000000000200)
 #define BGFX_CAPS_SWAP_CHAIN             UINT64_C(0x0000000000000400)
 #define BGFX_CAPS_HMD                    UINT64_C(0x0000000000000800)
+
+///
+#define BGFX_CAPS_FORMAT_TEXTURE_NONE     UINT8_C(0x00)
+#define BGFX_CAPS_FORMAT_TEXTURE_COLOR    UINT8_C(0x01)
+#define BGFX_CAPS_FORMAT_TEXTURE_EMULATED UINT8_C(0x02)
+#define BGFX_CAPS_FORMAT_TEXTURE_VERTEX   UINT8_C(0x04)
 
 ///
 #define BGFX_VIEW_NONE   UINT8_C(0x00)

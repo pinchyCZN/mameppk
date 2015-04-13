@@ -12,7 +12,7 @@ def parse_file(srcfile):
     try:
         fp = open(srcfile, 'rb')
     except IOError:
-        print("Unable to open source file '%s'" % srcfile)
+        sys.stderr.write("Unable to open source file '%s'\n" % srcfile)
         return 1
     in_comment = 0
     linenum = 0
@@ -28,16 +28,16 @@ def parse_file(srcfile):
                     srcptr+=1
                 continue
             if c==' ':
-                continue;
+                continue
             if in_comment==1 and c=='*' and line[srcptr]=='/' :
                 srcptr+=1
-                in_comment = 0;
+                in_comment = 0
                 continue
-            if (in_comment):
+            if in_comment:
                 continue
             if c=='/' and line[srcptr]=='*' :
                 srcptr+=1
-                in_comment = 1;
+                in_comment = 1
                 continue
             if c=='/' and line[srcptr]=='/' :
                 break
@@ -45,7 +45,7 @@ def parse_file(srcfile):
                 break
             drivname += c
         drivname = drivname.strip()
-        if (len(drivname)>0):
+        if len(drivname)>0:
             if drivname[0]=='#':
                sys.stderr.write("Importing drivers from '%s'\n" % drivname[1:])
                parse_file(drivname[1:])
@@ -59,19 +59,22 @@ def parse_file(srcfile):
     return 0
 
 
-if (len(sys.argv) < 3) :
+if len(sys.argv) < 3:
     print('Usage:')
     print('  makelist <is_driver_switch> <source.lst>')
     sys.exit(0)
 
 header_outputed = False
-is_driver_switch = sys.argv[1]
+if sys.argv[1].isdigit() :
+    is_driver_switch = int(sys.argv[1])
+else:
+    is_driver_switch = 0
 for i in range(2, len(sys.argv)-1):
     filename = sys.argv[i]
     name, ext = os.path.splitext(os.path.basename(filename))
     extra_drivlist = []
     sys.stderr.write("%s\n" % filename)
-    if (parse_file(filename)) :
+    if parse_file(filename) :
         sys.exit(1)
 
     if is_driver_switch != 0 :
@@ -104,7 +107,7 @@ for i in range(2, len(sys.argv)-1):
         print("");
 
 # output a count
-if (len(drivlist)==0) :
+if len(drivlist)==0 :
     sys.stderr.write("No drivers found\n")
     sys.exit(1)
 
@@ -115,8 +118,8 @@ drivlist.append("___empty")
 
 # start with a header
 if not header_outputed :
-    print('#include "emu.h"\n');
-    print('#include "drivenum.h"\n');
+    print('#include "emu.h"\n')
+    print('#include "drivenum.h"\n')
     header_outputed = True
 
 #output the list of externs first
@@ -132,8 +135,8 @@ else:
 print("{")
 for drv in sorted(drivlist):
     print("\t&GAME_NAME(%s)," % drv)
-print("};");
-print("");
+print("};")
+print("")
 
 # also output a global count
 print("int driver_list::s_driver_count = %d;\n" % len(drivlist))

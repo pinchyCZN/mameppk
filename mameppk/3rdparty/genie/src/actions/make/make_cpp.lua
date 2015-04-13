@@ -5,6 +5,7 @@
 --
 
 	premake.make.cpp = { }
+	premake.make.override = { }
 	local cpp = premake.make.cpp
 	local make = premake.make
 
@@ -72,30 +73,32 @@
 			_p('endef')
 			_p('')
 		end
-		
+
 		-- target build rule
 		_p('$(TARGET): $(GCH) $(OBJECTS) $(LDDEPS) $(RESOURCES)')
-		
-		if prj.kind == "StaticLib" then		
+
+		if prj.kind == "StaticLib" then
 			if prj.msgarchiving then
 				_p('\t@echo ' .. prj.msgarchiving)
 			else
 				_p('\t@echo Archiving %s', prj.name)
-			end		
-			if (not prj.archivesplit_size) then 
+			end
+			if (not prj.archivesplit_size) then
 				prj.archivesplit_size=200
 			end
-			if (not prj.options.ArchiveSplit) then		
+			if (not prj.options.ArchiveSplit) then
 				_p('\t$(SILENT) $(LINKCMD) $(OBJECTS)')
 			else
+				_p('\t$(call RM,$(TARGET))')
 				_p('\t@$(call max_args,$(LINKCMD),'.. prj.archivesplit_size ..',$(OBJECTS))')
-		end
+				_p('\t$(SILENT) $(LINKCMD_NDX)')
+			end
 		else
 			if prj.msglinking then
 				_p('\t@echo ' .. prj.msglinking)
 			else
 				_p('\t@echo Linking %s', prj.name)
-			end		
+			end
 			_p('\t$(SILENT) $(LINKCMD)')
 		end
 		_p('\t$(POSTBUILDCMDS)')
@@ -106,14 +109,18 @@
 		_p('$(TARGETDIR):')
 		premake.make_mkdirrule("$(TARGETDIR)")
 
-		_p('$(OBJDIRS):')
 		if (not prj.solution.messageskip) or (not table.contains(prj.solution.messageskip, "SkipCreatingMessage")) then
-			_p('\t@echo Creating $(OBJDIR)')
+		_p('objdirmessage:')
+		_p('\t@echo Creating $(OBJDIR)')
+		_p('')
 		end
-		_p('\t-$(call MKDIR,$(OBJDIR))')
-		for dir, _ in pairs(objdirs) do
-			_p('\t-$(call MKDIR,$(OBJDIR)/%s)', dir)
+
+		if (not prj.solution.messageskip) or (not table.contains(prj.solution.messageskip, "SkipCreatingMessage")) then
+		_p('$(OBJDIRS): objdirmessage')
+		else
+		_p('$(OBJDIRS):')
 		end
+		_p('\t-$(call MKDIR,$@)')
 		_p('')
 
 		-- Mac OS X specific targets
@@ -192,9 +199,11 @@
 		_p('ifeq (posix,$(SHELLTYPE))')
 		_p('  MKDIR = $(SILENT) mkdir -p "$(1)"')
 		_p('  COPY  = $(SILENT) cp -fR "$(1)" "$(2)"')
+		_p('  RM	= $(SILENT) rm -f "$(1)"')
 		_p('else')
 		_p('  MKDIR = $(SILENT) mkdir "$(subst /,\\\\,$(1))" 2> nul || exit 0')
 		_p('  COPY  = $(SILENT) copy /Y "$(subst /,\\\\,$(1))" "$(subst /,\\\\,$(2))"')
+		_p('  RM    = $(SILENT) del /F "$(subst /,\\\\,$(1))" 2> nul || exit 0')
 		_p('endif')
 		_p('')
 
@@ -224,9 +233,9 @@
 		-- if this platform requires a special compiler or linker, list it here
 		cpp.platformtools(cfg, cc)
 
-		_p('  OBJDIR     = %s', _MAKE.esc(cfg.objectsdir))
-		_p('  TARGETDIR  = %s', _MAKE.esc(cfg.buildtarget.directory))
-		_p('  TARGET     = $(TARGETDIR)/%s', _MAKE.esc(cfg.buildtarget.name))
+		_p('  ' .. (table.contains(premake.make.override,"OBJDIR") and "override " or "") ..    'OBJDIR     = %s', _MAKE.esc(cfg.objectsdir))
+		_p('  ' .. (table.contains(premake.make.override,"TARGETDIR") and "override " or "") .. 'TARGETDIR  = %s', _MAKE.esc(cfg.buildtarget.directory))
+		_p('  ' .. (table.contains(premake.make.override,"TARGET") and "override " or "") ..    'TARGET     = $(TARGETDIR)/%s', _MAKE.esc(cfg.buildtarget.name))
 		_p('  DEFINES   +=%s', make.list(cc.getdefines(cfg.defines)))
 		_p('  INCLUDES  +=%s', make.list(cc.getincludedirs(cfg.includedirs)))
 
@@ -237,21 +246,15 @@
 		cpp.flags(cfg, cc)
 
 		-- write out libraries, linker flags, and the link command
-		cpp.linker(cfg, cc)
+		cpp.linker(prj, cfg, cc)
 
 		-- add objects for compilation, and remove any that are excluded per config.
 		_p('  OBJECTS := \\')
 		for _, file in ipairs(prj.files) do
 			if path.iscppfile(file) then
 				-- check if file is excluded.
-				local excluded = false
-				for _, exclude in ipairs(cfg.excludes) do
-					excluded = (exclude == file)
-					if (excluded) then break end
-				end
-				
-				-- if not excluded, add it.
-				if excluded == false then
+				if not table.icontains(cfg.excludes, file) then
+					-- if not excluded, add it.
 					_p('\t$(OBJDIR)/%s.o \\'
 						, _MAKE.esc(path.trimdots(path.removeext(file)))
 						)
@@ -324,8 +327,9 @@
 
 		_p('  ALL_CPPFLAGS  += $(CPPFLAGS) %s $(DEFINES) $(INCLUDES)', table.concat(cc.getcppflags(cfg), " "))
 
-		_p('  ALL_CFLAGS    += $(CFLAGS) $(ALL_CPPFLAGS) $(ARCH)%s', make.list(table.join(cc.getcflags(cfg), cfg.buildoptions)))
-		_p('  ALL_CXXFLAGS  += $(CXXFLAGS) $(ALL_CFLAGS)%s', make.list(table.join(cc.getcxxflags(cfg), cfg.buildoptions_cpp)))
+		_p('  ALL_CFLAGS    += $(CFLAGS) $(ALL_CPPFLAGS) $(ARCH)%s', make.list(table.join(cc.getcflags(cfg), cfg.buildoptions, cfg.buildoptions_c)))
+		_p('  ALL_CXXFLAGS  += $(CXXFLAGS) $(CFLAGS) $(ALL_CPPFLAGS) $(ARCH)%s', make.list(table.join(cc.getcflags(cfg), cc.getcxxflags(cfg), cfg.buildoptions, cfg.buildoptions_cpp)))
+		_p('  ALL_OBJCFLAGS += $(CXXFLAGS) $(CFLAGS) $(ALL_CPPFLAGS) $(ARCH)%s', make.list(table.join(cc.getcflags(cfg), cc.getcxxflags(cfg), cfg.buildoptions, cfg.buildoptions_objc)))
 
 		_p('  ALL_RESFLAGS  += $(RESFLAGS) $(DEFINES) $(INCLUDES)%s',
 		        make.list(table.join(cc.getdefines(cfg.resdefines),
@@ -338,7 +342,7 @@
 -- and the linker command.
 --
 
-	function cpp.linker(cfg, cc)
+	function cpp.linker(prj, cfg, cc)
 		-- Patch #3401184 changed the order
 		_p('  ALL_LDFLAGS   += $(LDFLAGS)%s', make.list(table.join(cc.getlibdirflags(cfg), cc.getldflags(cfg), cfg.linkoptions)))
 
@@ -349,10 +353,20 @@
 			if cfg.platform:startswith("Universal") then
 				_p('  LINKCMD    = libtool -o $(TARGET)')
 			else
-				if cc.llvm then
-					_p('  LINKCMD    = $(AR) rcs $(TARGET)')
+				if (not prj.options.ArchiveSplit) then
+					if cc.llvm then
+						_p('  LINKCMD    = $(AR) rcs $(TARGET)')
+					else
+						_p('  LINKCMD    = $(AR) -rcs $(TARGET)')
+					end
 				else
-					_p('  LINKCMD    = $(AR) -rcs $(TARGET)')
+					if cc.llvm then
+						_p('  LINKCMD    = $(AR) qc $(TARGET)')
+						_p('  LINKCMD_NDX= $(AR) cs $(TARGET)')
+					else
+						_p('  LINKCMD    = $(AR) -qc $(TARGET)')
+						_p('  LINKCMD_NDX= $(AR) -cs $(TARGET)')
+					end
 				end
 			end
 		else
@@ -435,12 +449,18 @@
 					, _MAKE.esc(path.trimdots(path.removeext(file)))
 					, _MAKE.esc(file)
 					)
-				if prj.msgcompile then
+				if (path.isobjcfile(file) and prj.msgcompile_objc) then
+					_p('\t@echo ' .. prj.msgcompile_objc)
+				elseif prj.msgcompile then
 					_p('\t@echo ' .. prj.msgcompile)
 				else
 					_p('\t@echo $(notdir $<)')
 				end
-				cpp.buildcommand(path.iscfile(file) and not prj.options.ForceCPP, "o")
+				if (path.isobjcfile(file)) then
+					_p('\t$(SILENT) $(CXX) $(ALL_OBJCFLAGS) $(FORCE_INCLUDE) -o "$@" -MF $(@:%%.o=%%.d) -c "$<"')
+				else
+					cpp.buildcommand(path.iscfile(file) and not prj.options.ForceCPP, "o")
+				end
 				_p('')
 			elseif (path.getextension(file) == ".rc") then
 				_p('$(OBJDIR)/%s.res: %s', _MAKE.esc(path.getbasename(file)), _MAKE.esc(file))

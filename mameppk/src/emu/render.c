@@ -2560,6 +2560,7 @@ float render_manager::ui_aspect()
 		aspect = 0.66f;
 	if (aspect > 1.5f)
 		aspect = 1.5f;
+
 	return aspect;
 }
 

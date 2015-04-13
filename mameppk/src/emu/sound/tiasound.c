@@ -600,8 +600,6 @@ void *tia_sound_init(device_t *device, int clock, int sample_rate, int gain)
 
 	tia_save_state(device, chip);
 
-	tia_save_state(device, chip);
-
 	return chip;
 }
 

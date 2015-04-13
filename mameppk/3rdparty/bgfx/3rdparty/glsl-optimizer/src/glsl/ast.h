@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright c 2009 Intel Corporation
+ * Copyright ¬© 2009 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -379,7 +379,7 @@ public:
  *
  * This is done as a define instead of as an additional value in the enum so
  * that the compiler won't generate spurious messages like "warning:
- * enumeration value Åeast_num_operatorsÅf not handled in switch"
+ * enumeration value ‚Äòast_num_operators‚Äô not handled in switch"
  */
 #define AST_NUM_OPERATORS (ast_sequence + 1)
 

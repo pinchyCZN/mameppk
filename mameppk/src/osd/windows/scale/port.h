@@ -19,6 +19,7 @@
 #endif
 
 #include <sys/types.h>
+#include <assert.h>
 #include "osdcore.h"
 
 /* #define PIXEL_FORMAT RGB565 */

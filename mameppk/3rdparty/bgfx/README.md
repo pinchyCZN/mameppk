@@ -4,7 +4,8 @@
 What is it?
 -----------
 
-Cross-platform rendering library.
+Cross-platform, graphics API agnostic, "Bring Your Own Engine/Framework" style
+rendering library.
 
 Supported rendering backends:
 
@@ -69,9 +70,17 @@ very early development and primary focusing on Mac as primary target. This is
 how it currently looks.  
 ![mac_screenshot](https://raw.githubusercontent.com/emoon/ProDBG/master/data/screens/mac_screenshot.png)
 
-
 http://www.dogbytegames.com/ Dogbyte Games is an indie mobile developer studio
-focusing on racing games.
+focusing on racing games.  
+![ios](http://www.dogbytegames.com/bgfx/offroadlegends2_bgfx_ipad2.jpg)
+
+https://github.com/andr3wmac/Torque6 Torque 6 is an MIT licensed 3D engine
+loosely based on Torque2D. Being neither Torque2D or Torque3D it is the 6th
+derivative of the original Torque Engine.
+
+https://github.com/cgbystrom/twinkle GPU-accelerated UI framework powered by
+JavaScript for desktop/mobile apps. Idea is to combine the fast workflow and
+deployment model of web with the performance of native code and GPU acceleration.
 
 Examples
 --------
@@ -311,18 +320,27 @@ Building
 Steps bellow are for default build system inside bgfx repository. There is
 alterative way to build bgfx and examples with [fips](https://github.com/floooh/fips-bgfx/#fips-bgfx).
 
-### Prerequisites
-
-Windows users download GnuWin32 utilities from:  
-[http://gnuwin32.sourceforge.net/packages/make.htm](http://gnuwin32.sourceforge.net/packages/make.htm)  
-[http://gnuwin32.sourceforge.net/packages/coreutils.htm](http://gnuwin32.sourceforge.net/packages/coreutils.htm)  
-[http://gnuwin32.sourceforge.net/packages/libiconv.htm](http://gnuwin32.sourceforge.net/packages/libiconv.htm)  
-[http://gnuwin32.sourceforge.net/packages/libintl.htm](http://gnuwin32.sourceforge.net/packages/libintl.htm)
-
 ### Getting source
 
 	git clone git://github.com/bkaradzic/bx.git
 	git clone git://github.com/bkaradzic/bgfx.git
+
+### Quick start (Windows with Visual Studio)
+
+Enter bgfx directory:
+
+	cd bgfx
+
+Generate Visual Studio 2013 project files:
+
+	..\bx\tools\bin\windows\genie vs2013
+
+Open bgfx solution in Visual Studio 2013:
+
+	start .build\projects\vs2013\bgfx.sln
+
+### Generating project files for all targets
+
 	cd bgfx
 	make
 
@@ -352,6 +370,12 @@ Download Native Client SDK from:
 	setx NACL_SDK_ROOT <path to Native Client SDK directory>
 
 ### Prerequisites for Windows
+
+Windows users download GnuWin32 utilities from:  
+[http://gnuwin32.sourceforge.net/packages/make.htm](http://gnuwin32.sourceforge.net/packages/make.htm)  
+[http://gnuwin32.sourceforge.net/packages/coreutils.htm](http://gnuwin32.sourceforge.net/packages/coreutils.htm)  
+[http://gnuwin32.sourceforge.net/packages/libiconv.htm](http://gnuwin32.sourceforge.net/packages/libiconv.htm)  
+[http://gnuwin32.sourceforge.net/packages/libintl.htm](http://gnuwin32.sourceforge.net/packages/libintl.htm)
 
 When building on Windows, you have to set DXSDK_DIR environment variable to
 point to DirectX SDK directory.
@@ -407,6 +431,13 @@ Configuration is `<platform>-<debug/release>[32/64]`. For example:
 
 	linux-release32, nacl-debug64, nacl-arm-debug, pnacl-release, 
 	android-release, etc.
+
+Amalgamated build
+-----------------
+
+For ease of integration to other build system bgfx library can be built with
+single .cpp file. It's only necessary to build [src/amalgamated.cpp](https://github.com/bkaradzic/bgfx/blob/master/src/amalgamated.cpp)
+inside different build system.
 
 OculusVR integration
 --------------------
@@ -544,6 +575,11 @@ with examples:
 
 	genie --with-sdl vs2012
 
+**NOTE** Special care is necessary to make custom windowing to work with
+multithreaded renderer. Each platform has rules about where renderer can be and
+how multithreading interacts with context/device. To disable multithreaded
+render use `BGFX_CONFIG_MULTITHREDED=0` preprocessor define.
+
 Tools
 -----
 
@@ -593,6 +629,7 @@ Todo
  - Animated mesh example.
  - Direct3D 12 renderer backend.
  - Metal renderer backend.
+ - Vulkan renderer backend.
 
 Contact
 -------

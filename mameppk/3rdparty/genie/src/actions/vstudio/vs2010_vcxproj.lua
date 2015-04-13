@@ -262,20 +262,20 @@
 
 	local function compile_language(cfg)
 		if cfg.options.ForceCPP then
-			_p(3,'<CompileAs>CompileAsCpp</CompileAs>')	
+			_p(3,'<CompileAs>CompileAsCpp</CompileAs>')
 		else
 			if cfg.language == "C" then
 				_p(3,'<CompileAs>CompileAsC</CompileAs>')
 			end
 		end
 	end
-	
+
 	local function forcedinclude_files(indent,cfg)
 		if #cfg.forcedincludes > 0 then
 			_p(indent,'<ForcedIncludeFiles>%s</ForcedIncludeFiles>'
 					,premake.esc(path.translate(table.concat(cfg.forcedincludes, ";"), '\\')))
 		end
-	end	
+	end
 
 	local function vs10_clcompile(cfg)
 		_p(2,'<ClCompile>')
@@ -343,7 +343,7 @@
 		end
 
 		compile_language(cfg)
-		
+
 		forcedinclude_files(3,cfg);
 		_p(2,'</ClCompile>')
 	end
@@ -477,11 +477,8 @@
 				vc2010.link(cfg)
 				event_hooks(cfg)
 			_p(1,'</ItemDefinitionGroup>')
-
-
 		end
 	end
-
 
 
 --
@@ -497,7 +494,7 @@
 				ClInclude = {},
 				None = {},
 				ResourceCompile = {},
-                AppxManifest = {}
+				AppxManifest = {}
 			}
 
 			local foundAppxManifest = false
@@ -505,17 +502,19 @@
 				if path.iscppfile(file.name) then
 					table.insert(sortedfiles.ClCompile, file)
 				elseif path.iscppheader(file.name) then
-					table.insert(sortedfiles.ClInclude, file)
+					if not table.icontains(prj.removefiles, file) then
+						table.insert(sortedfiles.ClInclude, file)
+					end
 				elseif path.isresourcefile(file.name) then
 					table.insert(sortedfiles.ResourceCompile, file)
 				else
-                    local ext = path.getextension(file.name):lower()
-                    if ext == ".appxmanifest" then
+					local ext = path.getextension(file.name):lower()
+					if ext == ".appxmanifest" then
 						foundAppxManifest = true
-                        table.insert(sortedfiles.AppxManifest, file)
-                    else
-					    table.insert(sortedfiles.None, file)
-                    end
+						table.insert(sortedfiles.AppxManifest, file)
+					else
+						table.insert(sortedfiles.None, file)
+					end
 				end
 			end
 
@@ -546,7 +545,7 @@
 		vc2010.compilerfilesgroup(prj)
 		vc2010.simplefilesgroup(prj, "None")
 		vc2010.simplefilesgroup(prj, "ResourceCompile")
-        vc2010.simplefilesgroup(prj, "AppxManifest")
+		vc2010.simplefilesgroup(prj, "AppxManifest")
 	end
 
 
@@ -555,13 +554,13 @@
 		if #files > 0  then
 			_p(1,'<ItemGroup>')
 			for _, file in ipairs(files) do
-                if subtype then
-                    _p(2,'<%s Include=\"%s\">', section, path.translate(file.name, "\\"))
-                    _p(3,'<SubType>%s</SubType>', subtype)
-                    _p(2,'</%s>', section)
-                else
-				    _p(2,'<%s Include=\"%s\" />', section, path.translate(file.name, "\\"))
-                end
+				if subtype then
+					_p(2,'<%s Include=\"%s\">', section, path.translate(file.name, "\\"))
+					_p(3,'<SubType>%s</SubType>', subtype)
+					_p(2,'</%s>', section)
+				else
+					_p(2,'<%s Include=\"%s\" />', section, path.translate(file.name, "\\"))
+				end
 			end
 			_p(1,'</ItemGroup>')
 		end
@@ -594,14 +593,15 @@
 					end
 				end
 
-				-- Per configuration excludes
+				local excluded = table.icontains(prj.excludes, file.name)
 				for _, vsconfig in ipairs(configs) do
 					local cfg = premake.getconfig(prj, vsconfig.src_buildcfg, vsconfig.src_platform)
-					for _, exclude in ipairs(cfg.excludes) do
-
-						if exclude == file.name then
-							_p(3, '<ExcludedFromBuild ' .. if_config_and_platform() .. '>true</ExcludedFromBuild>', premake.esc(vsconfig.name))
-						end
+					if excluded or table.icontains(cfg.excludes, file.name) then
+						_p(3, '<ExcludedFromBuild '
+							.. if_config_and_platform()
+							.. '>true</ExcludedFromBuild>'
+							, premake.esc(vsconfig.name)
+							)
 					end
 				end
 
@@ -739,7 +739,7 @@
 		io.eol = "\r\n"
 		_p('<?xml version="1.0" encoding="utf-8"?>')
 		_p('<Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">')
-		
+
 		_p(1,'<Identity Name="' .. prj.uuid .. '"')
 		_p(2,'Publisher="CN=Unknown"')
 		_p(2,'Version="1.0.0.0" />')
