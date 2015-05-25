@@ -40,12 +40,12 @@
 #include <stdlib.h>
 
 // MAMEUI headers
+#include "winui.h"
 #include "bitmask.h"
 #include "treeview.h"
 #include "resource.h"
 #include "mui_opts.h"
 #include "help.h"
-#include "winui.h"
 #include "properties.h"  // For GetHelpIDs
 
 // MAME headers

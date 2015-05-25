@@ -167,9 +167,8 @@ static void load_options_ex(windows_options &opts, OPTIONS_TYPE opt_type, int ga
 {
 	load_options(opts, opt_type, game_num);
 
-	astring error_string;
+	std::string error_string;
 	opts.set_value(OPTION_IPS, "", OPTION_PRIORITY_CMDLINE, error_string);
-	assert(!error_string);
 }
 
 //mamep: keep ips setting
@@ -191,9 +190,8 @@ static void save_options_ex(OPTIONS_TYPE opt_type, windows_options &opts, int ga
 
 //	if (opts)
 	{
-		astring error_string;
+		std::string error_string;
 		opts.set_value(OPTION_IPS, ips, OPTION_PRIORITY_CMDLINE, error_string);
-		assert(!error_string);
 	}
 
 //	options_free(orig);
@@ -2084,7 +2082,7 @@ static void PropToOptions(HWND hWnd, windows_options &o)
 	HWND hCtrl;
 	HWND hCtrl2;
 	HWND hCtrl3;
-	astring error_string;
+	std::string error_string;
 
 	// It appears these are here to clear the global struct we are removing!
 	// FIXME
@@ -2646,13 +2644,12 @@ static BOOL RotateReadControl(datamap *map, HWND dialog, HWND control, windows_o
 	if (selected_index != original_selection)
 	{
 		// Set the options based on the new selection.
-		astring error_string;
+		std::string error_string;
 		opts->set_value(OPTION_ROR,		selected_index == 1, OPTION_PRIORITY_CMDLINE,error_string);
 		opts->set_value(OPTION_ROL,		selected_index == 2, OPTION_PRIORITY_CMDLINE,error_string);
 		opts->set_value(OPTION_ROTATE,	selected_index != 3, OPTION_PRIORITY_CMDLINE,error_string);
 		opts->set_value(OPTION_AUTOROR,	selected_index == 4, OPTION_PRIORITY_CMDLINE,error_string);
 		opts->set_value(OPTION_AUTOROL,	selected_index == 5, OPTION_PRIORITY_CMDLINE,error_string);
-		assert(!error_string);
 		return TRUE;
 	}
 
@@ -2700,7 +2697,7 @@ static BOOL ScreenReadControl(datamap *map, HWND dialog, HWND control, windows_o
 	int selected_screen;
 	int screen_option_index;
 	char *op_val;
-	astring error_string;
+	std::string error_string;
 
 	selected_screen = GetSelectedScreen(dialog);
 	screen_option_index = ComboBox_GetCurSel(control);
@@ -2708,7 +2705,6 @@ static BOOL ScreenReadControl(datamap *map, HWND dialog, HWND control, windows_o
 	ScreenSetOptionName(map, dialog, control, screen_option_name, ARRAY_LENGTH(screen_option_name));
 	op_val = utf8_from_tstring(screen_option_value);
 	opts->set_value(screen_option_name, op_val, OPTION_PRIORITY_CMDLINE,error_string);
-	assert(!error_string);
 	osd_free(op_val);
 	return FALSE;
 }
@@ -2818,13 +2814,12 @@ static BOOL DefaultInputReadControl(datamap *map, HWND dialog, HWND control, win
 	const char *input_option_value;
 	int input_option_index;
 	//char *op_val = NULL;
-	astring error_string;
+	std::string error_string;
 
 	input_option_index = ComboBox_GetCurSel(control);
 	input_option_value = (const char *) ComboBox_GetItemData(control, input_option_index);
 	//op_val = utf8_from_tstring(input_option_value);
 	opts->set_value(OPTION_CTRLR, input_option_value, OPTION_PRIORITY_CMDLINE,error_string);
-	assert(!error_string);
 	//osd_free(op_val);
 	return FALSE;
 }
@@ -2938,7 +2933,7 @@ static BOOL ResolutionReadControl(datamap *map, HWND dialog, HWND control, windo
 	int refresh_index, refresh_value, width, height;
 	char option_value[256];
 	TCHAR buffer[256];
-	astring error_string;
+	std::string error_string;
 
 	if (refresh_control && sizes_control)
 	{
@@ -2954,7 +2949,6 @@ static BOOL ResolutionReadControl(datamap *map, HWND dialog, HWND control, windo
 			snprintf(option_value, ARRAY_LENGTH(option_value), "auto");
 		}
 		opts->set_value(option_name, option_value, OPTION_PRIORITY_CMDLINE,error_string);
-		assert(!error_string);
 	}
 	return FALSE;
 }
@@ -3063,7 +3057,7 @@ static BOOL DriverConfigReadControl(datamap *map, HWND dialog, HWND control, win
 	BOOL all = TRUE;
 	BOOL found = FALSE;
 	int i;
-	astring error_string;
+	std::string error_string;
 
 	buf[0] = '\0';
 
@@ -3098,7 +3092,6 @@ static BOOL DriverConfigReadControl(datamap *map, HWND dialog, HWND control, win
 		return FALSE;
 
 	opts->set_value(OPTION_DRIVER_CONFIG, buf, OPTION_PRIORITY_CMDLINE,error_string);
-	assert(!error_string);
 
 	return TRUE;
 }
@@ -3123,9 +3116,8 @@ static void ResetDataMap(HWND hWnd)
 	screen_option_value = pCurrentOpts.value(screen_option);
 	if (screen_option_value == NULL || *screen_option_value == '\0')
 	{
-		astring error_string;
+		std::string error_string;
 		pCurrentOpts.set_value(screen_option, "auto", OPTION_PRIORITY_CMDLINE,error_string);
-		assert(!error_string);
 	}
 }
 

@@ -551,7 +551,7 @@ static void read_control(datamap *map, HWND control, windows_options *opts, data
 	const char *string_value;
 	int selected_index;
 	int trackbar_pos;
-	astring error;
+	std::string error;
 
 	// use default read value behavior
 	switch(get_control_type(control))
@@ -560,7 +560,6 @@ static void read_control(datamap *map, HWND control, windows_options *opts, data
 			assert(entry->type == DM_BOOL);
 			bool_value = Button_GetCheck(control);
 			opts->set_value(option_name, bool_value, OPTION_PRIORITY_CMDLINE, error);
-			assert(!error);
 			break;
 
 		case CT_COMBOBOX:
@@ -572,13 +571,11 @@ static void read_control(datamap *map, HWND control, windows_options *opts, data
 					case DM_INT:
 						int_value = (int) ComboBox_GetItemData(control, selected_index);
 						opts->set_value(option_name, int_value, OPTION_PRIORITY_CMDLINE, error);
-						assert(!error);
 						break;
 
 					case DM_STRING:
 						string_value = (const char *) ComboBox_GetItemData(control, selected_index);
 						opts->set_value(option_name, string_value ? string_value : "", OPTION_PRIORITY_CMDLINE, error);
-						assert(!error);
 						break;
 
 					default:
@@ -597,7 +594,6 @@ static void read_control(datamap *map, HWND control, windows_options *opts, data
 					int_value = (int) float_value;
 					if (int_value != opts->int_value(option_name)) {
 						opts->set_value(option_name, int_value, OPTION_PRIORITY_CMDLINE, error);
-						assert(!error);
 					}
 					break;
 
@@ -605,7 +601,6 @@ static void read_control(datamap *map, HWND control, windows_options *opts, data
 					// Use tztrim(float_value) or we get trailing zero's that break options_equal().
 					if (float_value != opts->float_value(option_name)) {
 						opts->set_value(option_name, tztrim(float_value), OPTION_PRIORITY_CMDLINE, error);
-						assert(!error);
 					}
 					break;
 

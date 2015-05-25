@@ -30,8 +30,8 @@
 
 // MAME/MAMEUI headers
 #include "resource.h"
-#include "mui_opts.h"
 #include "winui.h"
+#include "mui_opts.h"
 #include "translate.h"
 
 // Returns TRUE if successful
@@ -39,8 +39,8 @@ static int DoExchangeItem(HWND hFrom, HWND hTo, int nMinItem)
 {
 	LV_ITEM lvi;
 	TCHAR	buf[80];
-	//int 	nFrom, nTo;
-	BOOL 	b_res;
+	//int   nFrom, nTo;
+	BOOL	b_res;
 
 	//nFrom = ListView_GetItemCount(hFrom);
 	//nTo   = ListView_GetItemCount(hTo);
@@ -77,7 +77,7 @@ static void DoMoveItem( HWND hWnd, BOOL bDown)
 	LV_ITEM lvi;
 	TCHAR	buf[80];
 	int 	nMaxpos;
-	BOOL 	b_res;
+	BOOL	b_res;
 
 	lvi.iItem = ListView_GetNextItem(hWnd, -1, LVIS_SELECTED | LVIS_FOCUSED);
 	nMaxpos = ListView_GetItemCount(hWnd);
@@ -129,7 +129,7 @@ INT_PTR InternalColumnDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 	int         nAvail;
 	int         i, nCount = 0;
 	LV_ITEM     lvi;
-	DWORD dwShowStyle, dwAvailableStyle, dwView;
+	DWORD           dwShowStyle, dwAvailableStyle, dwView;
 	BOOL		b_res;
 
 	switch (Msg)

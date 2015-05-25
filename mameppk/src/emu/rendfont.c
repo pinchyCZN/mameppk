@@ -74,13 +74,13 @@ inline render_font::glyph &render_font::get_char(unicode_char chnum)
 	static glyph dummy_glyph;
 
 	// grab the table; if none, return the dummy character
-	if (m_glyphs[chnum / 256].count() == 0 && m_format == FF_OSD)
-		m_glyphs[chnum / 256].resize(256);
-	if (m_glyphs[chnum / 256].count() == 0)
+	if (!m_glyphs[chnum / 256] && m_format == FF_OSD)
+		m_glyphs[chnum / 256] = new glyph[256];
+	if (!m_glyphs[chnum / 256])
 	{
 		//mamep: make table for command glyph
 		if (chnum >= COMMAND_UNICODE && chnum < COMMAND_UNICODE + MAX_GLYPH_FONT)
-			m_glyphs[chnum / 256].resize(256);
+			m_glyphs[chnum / 256] = new glyph[256];
 		else
 			return dummy_glyph;
 	}
@@ -167,6 +167,9 @@ render_font::render_font(render_manager &manager, const char *filename)
 		m_height_cmd(0),
 		m_yoffs_cmd(0)
 {
+	memset(m_glyphs, 0, sizeof(m_glyphs));
+	memset(m_glyphs_cmd, 0, sizeof(m_glyphs_cmd));
+
 	// if this is an OSD font, we're done
 	if (filename != NULL)
 	{
@@ -194,10 +197,10 @@ render_font::render_font(render_manager &manager, const char *filename)
 	if (filename != NULL)
 	{
 		int loaded = 0;
-		astring filename_local(ui_lang_info[lang_get_langcode()].name, PATH_SEPARATOR, filename);
+		std::string filename_local = std::string(ui_lang_info[lang_get_langcode()].name).append(PATH_SEPARATOR).append(filename);
 //		osd_printf_warning("%s\n", filename_local);
 
-	 	if (filename_local.len() > 0 && load_cached_bdf(filename_local))
+	 	if (filename_local.length() > 0 && load_cached_bdf(filename_local.c_str()))
 			loaded++;
 		else
 		{
@@ -246,18 +249,26 @@ render_font::~render_font()
 {
 	// free all the subtables
 	for (int tablenum = 0; tablenum < 256; tablenum++)
-		for (int charnum = 0; charnum < m_glyphs[tablenum].count(); charnum++)
+		if (m_glyphs[tablenum])
 		{
-			glyph &gl = m_glyphs[tablenum][charnum];
-			m_manager.texture_free(gl.texture);
+			for (unsigned int charnum = 0; charnum < 256; charnum++)
+			{
+				glyph &gl = m_glyphs[tablenum][charnum];
+				m_manager.texture_free(gl.texture);
+			}
+			delete[] m_glyphs[tablenum];
 		}
 
 	//mamep: free command glyph font
 	for (int tablenum = 0; tablenum < 256; tablenum++)
-		for (int charnum = 0; charnum < m_glyphs_cmd[tablenum].count(); charnum++)
+		if (m_glyphs_cmd[tablenum])
 		{
-			glyph &gl = m_glyphs_cmd[tablenum][charnum];
-			m_manager.texture_free(gl.texture);
+			for (unsigned int charnum = 0; charnum < 256; charnum++)
+			{
+				glyph &gl = m_glyphs_cmd[tablenum][charnum];
+				m_manager.texture_free(gl.texture);
+			}
+			delete[] m_glyphs_cmd[tablenum];
 		}
 
 	// release the OSD font
@@ -553,7 +564,7 @@ bool render_font::load_cached_bdf(const char *filename)
 	m_rawdata.resize(m_rawsize + 1);
 
 	// read the first chunk
-	UINT32 bytes = file.read(m_rawdata, MIN(CACHED_BDF_HASH_SIZE, m_rawsize));
+	UINT32 bytes = file.read(&m_rawdata[0], MIN(CACHED_BDF_HASH_SIZE, m_rawsize));
 	if (bytes != MIN(CACHED_BDF_HASH_SIZE, m_rawsize))
 		return false;
 
@@ -561,13 +572,13 @@ bool render_font::load_cached_bdf(const char *filename)
 	UINT32 hash = crc32(0, (const UINT8 *)&m_rawdata[0], bytes) ^ (UINT32)m_rawsize;
 
 	// create the cached filename, changing the 'F' to a 'C' on the extension
-	astring cachedname(filename);
-	cachedname.del(cachedname.len() - 3, 3).cat("bdc");
+	std::string cachedname(filename);
+	cachedname.erase(cachedname.length() - 3, 3).append("bdc");
 
 	// attempt to open the cached version of the font
 	{
 		emu_file cachefile(manager().machine().options().font_path(), OPEN_FLAG_READ);
-		filerr = cachefile.open(cachedname);
+		filerr = cachefile.open(cachedname.c_str());
 		if (filerr == FILERR_NONE)
 		{
 			// if we have a cached version, load it
@@ -586,10 +597,10 @@ bool render_font::load_cached_bdf(const char *filename)
 	// read in the rest of the font
 	if (bytes < m_rawsize)
 	{
-		UINT32 read = file.read(m_rawdata + bytes, m_rawsize - bytes);
+		UINT32 read = file.read(&m_rawdata[bytes], m_rawsize - bytes);
 		if (read != m_rawsize - bytes)
 		{
-			m_rawdata.reset();
+			m_rawdata.clear();
 			return false;
 		}
 	}
@@ -602,7 +613,7 @@ bool render_font::load_cached_bdf(const char *filename)
 
 	// if we loaded okay, create a cached one
 	if (result)
-		save_cached(cachedname, hash);
+		save_cached(cachedname.c_str(), hash);
 
 	// close the file
 	return result;
@@ -620,7 +631,7 @@ bool render_font::load_bdf()
 
 	// first find the FONTBOUNDINGBOX tag
 	const char *ptr;
-	for (ptr = m_rawdata; ptr != NULL; ptr = next_line(ptr))
+	for (ptr = &m_rawdata[0]; ptr != NULL; ptr = next_line(ptr))
 	{
 		// we only care about a tiny few fields
 		if (strncmp(ptr, "FONTBOUNDINGBOX ", 16) == 0)
@@ -689,8 +700,8 @@ bool render_font::load_bdf()
 			if (charnum >= 0 && charnum < 65536 && rawdata != NULL && bmwidth >= 0 && bmheight >= 0)
 			{
 				// if we don't have a subtable yet, make one
-				if (m_glyphs[charnum / 256].count() == 0)
-					m_glyphs[charnum / 256].resize(256);
+				if (!m_glyphs[charnum / 256])
+					m_glyphs[charnum / 256] = new glyph[256];
 
 				// fill in the entry
 				glyph &gl = m_glyphs[charnum / 256][charnum % 256];
@@ -709,7 +720,7 @@ bool render_font::load_bdf()
 	}
 
 	// make sure all the numbers are the same width
-	if (m_glyphs[0].count() > '9')
+	if (m_glyphs[0])
 	{
 		int maxwidth = 0;
 		for (int ch = '0'; ch <= '9'; ch++)
@@ -752,10 +763,10 @@ bool render_font::load_cached(emu_file &file, UINT32 hash)
 
 	// now read the rest of the data
 	m_rawdata.resize(filesize - CACHED_HEADER_SIZE);
-	bytes_read = file.read(m_rawdata, filesize - CACHED_HEADER_SIZE);
+	bytes_read = file.read(&m_rawdata[0], filesize - CACHED_HEADER_SIZE);
 	if (bytes_read != filesize - CACHED_HEADER_SIZE)
 	{
-		m_rawdata.reset();
+		m_rawdata.clear();
 		return false;
 	}
 
@@ -767,8 +778,8 @@ bool render_font::load_cached(emu_file &file, UINT32 hash)
 		int chnum = (info[0] << 8) | info[1];
 
 		// if we don't have a subtable yet, make one
-		if (m_glyphs[chnum / 256].count() == 0)
-			m_glyphs[chnum / 256].resize(256);
+		if (!m_glyphs[chnum / 256])
+			m_glyphs[chnum / 256] = new glyph[256];
 
 		// fill in the entry
 		glyph &gl = m_glyphs[chnum / 256][chnum % 256];
@@ -777,13 +788,13 @@ bool render_font::load_cached(emu_file &file, UINT32 hash)
 		gl.yoffs = (INT16)((info[6] << 8) | info[7]);
 		gl.bmwidth = (info[8] << 8) | info[9];
 		gl.bmheight = (info[10] << 8) | info[11];
-		gl.rawdata = (char *)m_rawdata + offset;
+		gl.rawdata = &m_rawdata[offset];
 
 		// advance the offset past the character
 		offset += (gl.bmwidth * gl.bmheight + 7) / 8;
 		if (offset > filesize - CACHED_HEADER_SIZE)
 		{
-			m_rawdata.reset();
+			m_rawdata.clear();
 			return false;
 		}
 	}
@@ -797,7 +808,7 @@ bool render_font::load_cached_cmd(emu_file &file, UINT32 hash)
 {
 #ifdef UI_COLOR_DISPLAY
 	//mamep: color glyph
-	#include "cmdtable.c"
+	#include "cmdtable.inc"
 #endif /* UI_COLOR_DISPLAY */
 	// get the file size
 	UINT64 filesize = file.size();
@@ -822,10 +833,10 @@ bool render_font::load_cached_cmd(emu_file &file, UINT32 hash)
 
 	// now read the rest of the data
 	m_rawdata_cmd.resize(filesize - CACHED_HEADER_SIZE);
-	bytes_read = file.read(m_rawdata_cmd, filesize - CACHED_HEADER_SIZE);
+	bytes_read = file.read(&m_rawdata_cmd[0], filesize - CACHED_HEADER_SIZE);
 	if (bytes_read != filesize - CACHED_HEADER_SIZE)
 	{
-		m_rawdata_cmd.reset();
+		m_rawdata_cmd.clear();
 		return false;
 	}
 
@@ -837,8 +848,8 @@ bool render_font::load_cached_cmd(emu_file &file, UINT32 hash)
 		int chnum = (info[0] << 8) | info[1];
 
 		// if we don't have a subtable yet, make one
-		if (m_glyphs_cmd[chnum / 256].count() == 0)
-			m_glyphs_cmd[chnum / 256].resize(256);
+		if (!m_glyphs_cmd[chnum / 256])
+			m_glyphs_cmd[chnum / 256] = new glyph[256];
 
 		// fill in the entry
 		glyph &gl = m_glyphs_cmd[chnum / 256][chnum % 256];
@@ -852,13 +863,13 @@ bool render_font::load_cached_cmd(emu_file &file, UINT32 hash)
 		gl.yoffs = (INT16)((info[6] << 8) | info[7]);
 		gl.bmwidth = (info[8] << 8) | info[9];
 		gl.bmheight = (info[10] << 8) | info[11];
-		gl.rawdata = (char *)m_rawdata_cmd + offset;
+		gl.rawdata = &m_rawdata_cmd[offset];
 
 		// advance the offset past the character
 		offset += (gl.bmwidth * gl.bmheight + 7) / 8;
 		if (offset > filesize - CACHED_HEADER_SIZE)
 		{
-			m_rawdata_cmd.reset();
+			m_rawdata_cmd.clear();
 			return false;
 		}
 	}
@@ -887,7 +898,7 @@ bool render_font::save_cached(const char *filename, UINT32 hash)
 	int numchars = 0;
 	for (int chnum = 0; chnum < 65536; chnum++)
 	{
-		if (m_glyphs[chnum / 256].count() > 0)
+		if (m_glyphs[chnum / 256])
 		{
 			glyph &gl = m_glyphs[chnum / 256][chnum % 256];
 			if (gl.width > 0)
@@ -904,7 +915,7 @@ bool render_font::save_cached(const char *filename, UINT32 hash)
 		dynamic_buffer tempbuffer(65536);
 
 		// write the header
-		UINT8 *dest = tempbuffer;
+		UINT8 *dest = &tempbuffer[0];
 		*dest++ = 'f';
 		*dest++ = 'o';
 		*dest++ = 'n';
@@ -921,13 +932,13 @@ bool render_font::save_cached(const char *filename, UINT32 hash)
 		*dest++ = numchars >> 16;
 		*dest++ = numchars >> 8;
 		*dest++ = numchars & 0xff;
-		assert(dest - tempbuffer == CACHED_HEADER_SIZE);
-		UINT32 bytes_written = file.write(tempbuffer, dest - tempbuffer);
-		if (bytes_written != dest - tempbuffer)
+		assert(dest == &tempbuffer[CACHED_HEADER_SIZE]);
+		UINT32 bytes_written = file.write(&tempbuffer[0], CACHED_HEADER_SIZE);
+		if (bytes_written != dest - &tempbuffer[0])
 			throw emu_fatalerror("Error writing cached file");
 
 		// write the empty table to the beginning of the file
-		bytes_written = file.write(chartable, numchars * CACHED_CHAR_SIZE);
+		bytes_written = file.write(&chartable[0], numchars * CACHED_CHAR_SIZE);
 		if (bytes_written != numchars * CACHED_CHAR_SIZE)
 			throw emu_fatalerror("Error writing cached file");
 
@@ -942,7 +953,7 @@ bool render_font::save_cached(const char *filename, UINT32 hash)
 				if (gl.bitmap.valid())
 				{
 					// write the data to the tempbuffer
-					dest = tempbuffer;
+					dest = &tempbuffer[0];
 					UINT8 accum = 0;
 					UINT8 accbit = 7;
 
@@ -969,8 +980,8 @@ bool render_font::save_cached(const char *filename, UINT32 hash)
 						*dest++ = accum;
 
 					// write the data
-					bytes_written = file.write(tempbuffer, dest - tempbuffer);
-					if (bytes_written != dest - tempbuffer)
+					bytes_written = file.write(&tempbuffer[0], dest - &tempbuffer[0]);
+					if (bytes_written != dest - &tempbuffer[0])
 						throw emu_fatalerror("Error writing cached file");
 
 					// free the bitmap and texture
@@ -998,7 +1009,7 @@ bool render_font::save_cached(const char *filename, UINT32 hash)
 
 		// seek back to the beginning and rewrite the table
 		file.seek(CACHED_HEADER_SIZE, SEEK_SET);
-		bytes_written = file.write(chartable, numchars * CACHED_CHAR_SIZE);
+		bytes_written = file.write(&chartable[0], numchars * CACHED_CHAR_SIZE);
 		if (bytes_written != numchars * CACHED_CHAR_SIZE)
 			throw emu_fatalerror("Error writing cached file");
 		return true;

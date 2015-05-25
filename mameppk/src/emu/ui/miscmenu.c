@@ -127,16 +127,16 @@ void ui_menu_bios_selection::handle()
 			if (val>cnt) val=1;
 			dev->set_system_bios(val);
 			if (strcmp(dev->tag(),":")==0) {
-				astring error;
+				std::string error;
 				machine().options().set_value("bios", val-1, OPTION_PRIORITY_CMDLINE, error);
-				assert(!error);
+				assert(error.empty());
 			} else {
-				astring error;
-				astring value;
-				astring temp;
-				value.printf("%s,bios=%d",machine().options().main_value(temp,dev->owner()->tag()+1),val-1);
-				machine().options().set_value(dev->owner()->tag()+1, value.cstr(), OPTION_PRIORITY_CMDLINE, error);
-				assert(!error);
+				std::string error;
+				std::string value;
+				std::string temp;
+				strprintf(value,"%s,bios=%d",machine().options().main_value(temp,dev->owner()->tag()+1),val-1);
+				machine().options().set_value(dev->owner()->tag()+1, value.c_str(), OPTION_PRIORITY_CMDLINE, error);
+				assert(error.empty());
 			}
 			reset(UI_MENU_RESET_REMEMBER_REF);
 		}
@@ -240,18 +240,18 @@ ui_menu_bookkeeping::~ui_menu_bookkeeping()
 void ui_menu_bookkeeping::populate()
 {
 	int tickets = get_dispensed_tickets(machine());
-	astring tempstring;
+	std::string tempstring;
 	int ctrnum;
 
 	/* show total time first */
 	if (prevtime.seconds >= 60 * 60)
-		tempstring.catprintf(_("Uptime: %d:%02d:%02d\n\n"), prevtime.seconds / (60*60), (prevtime.seconds / 60) % 60, prevtime.seconds % 60);
+		strcatprintf(tempstring, _("Uptime: %d:%02d:%02d\n\n"), prevtime.seconds / (60 * 60), (prevtime.seconds / 60) % 60, prevtime.seconds % 60);
 	else
-		tempstring.catprintf(_("Uptime: %d:%02d\n\n"), (prevtime.seconds / 60) % 60, prevtime.seconds % 60);
+		strcatprintf(tempstring,_("Uptime: %d:%02d\n\n"), (prevtime.seconds / 60) % 60, prevtime.seconds % 60);
 
 	/* show tickets at the top */
 	if (tickets > 0)
-		tempstring.catprintf(_("Tickets dispensed: %d\n\n"), tickets);
+		strcatprintf(tempstring,_("Tickets dispensed: %d\n\n"), tickets);
 
 	/* loop over coin counters */
 	for (ctrnum = 0; ctrnum < COIN_COUNTERS; ctrnum++)
@@ -259,22 +259,22 @@ void ui_menu_bookkeeping::populate()
 		int count = coin_counter_get_count(machine(), ctrnum);
 
 		/* display the coin counter number */
-		tempstring.catprintf(_("Coin %c: "), ctrnum + 'A');
+		strcatprintf(tempstring,_("Coin %c: "), ctrnum + 'A');
 
 		/* display how many coins */
 		if (count == 0)
-			tempstring.cat(_("NA"));
+			tempstring.append(_("NA"));
 		else
-			tempstring.catprintf("%d", count);
+			strcatprintf(tempstring, "%d", count);
 
 		/* display whether or not we are locked out */
 		if (coin_lockout_get_state(machine(), ctrnum))
-			tempstring.cat(_(" (locked)"));
-		tempstring.cat("\n");
+			tempstring.append(_(" (locked)"));
+		tempstring.append("\n");
 	}
 
 	/* append the single item */
-	item_append(tempstring, NULL, MENU_FLAG_MULTILINE, NULL);
+	item_append(tempstring.c_str(), NULL, MENU_FLAG_MULTILINE, NULL);
 }
 
 /*-------------------------------------------------
@@ -695,8 +695,8 @@ void ui_menu_autofire::handle()
 
 void ui_menu_autofire::populate()
 {
-	astring subtext;
-	astring text;
+	std::string subtext;
+	std::string text;
 	ioport_field *field;
 	ioport_port *port;
 	int players = 0;
@@ -725,22 +725,22 @@ void ui_menu_autofire::populate()
 				/* add an autofire item */
 				switch (settings.autofire)
 				{
-					case 0:	subtext.cpy(_("Off"));	break;
-					case 1:	subtext.cpy(_("On"));		break;
-					case 2:	subtext.cpy(_("Toggle"));	break;
+					case 0:	subtext.assign(_("Off"));	break;
+					case 1:	subtext.assign(_("On"));		break;
+					case 2:	subtext.assign(_("Toggle"));	break;
 				}
-				item_append(_(field->name()), subtext, MENU_FLAG_LEFT_ARROW | MENU_FLAG_RIGHT_ARROW, (void *)field);
+				item_append(_(field->name()), subtext.c_str(), MENU_FLAG_LEFT_ARROW | MENU_FLAG_RIGHT_ARROW, (void *)field);
 			}
 		}
 	
 	/* add autofire delay items */
 	for (i = 0; i < players; i++)
 	{
-		text.printf(_("P%d %s"), i + 1, _("Autofire Delay"));
-		subtext.printf("%d", machine().ioport().get_autofiredelay(i));
+		strprintf(text, _("P%d %s"), i + 1, _("Autofire Delay"));
+		strprintf(subtext, "%d", machine().ioport().get_autofiredelay(i));
 
 		/* append a menu item */
-		item_append(text, subtext, MENU_FLAG_LEFT_ARROW | MENU_FLAG_RIGHT_ARROW, (void *)(i + AUTOFIRE_ITEM_P1_DELAY));
+		item_append(text.c_str(), subtext.c_str(), MENU_FLAG_LEFT_ARROW | MENU_FLAG_RIGHT_ARROW, (void *)(i + AUTOFIRE_ITEM_P1_DELAY));
 	}
 }
 #undef AUTOFIRE_ITEM_P1_DELAY
@@ -818,8 +818,8 @@ void ui_menu_custom_button::handle()
 
 void ui_menu_custom_button::populate()
 {
-	astring subtext;
-	astring text;
+	std::string subtext;
+	std::string text;
 	ioport_field *field;
 	ioport_port *port;
 	int menu_items = 0;
@@ -845,18 +845,18 @@ void ui_menu_custom_button::populate()
 				static char commandbuf[256];
 
 				type -= IPT_CUSTOM1;
-				subtext.cpy("");
+				subtext.assign("");
 
 				//unpack the custom button value
 				for (i = 0; i < MAX_NORMAL_BUTTONS; i++, n <<= 1)
 					if (machine().ioport().m_custom_button[player][type] & n)
 					{
-						if (subtext.len() > 0)
-							subtext.cat("_+");
-						subtext.catprintf("_%c", colorbutton1 + i);
+						if (subtext.length() > 0)
+							subtext.append("_+");
+						strcatprintf(subtext, "_%c", colorbutton1 + i);
 					}
 
-				strcpy(commandbuf, subtext);
+				strcpy(commandbuf, subtext.c_str());
 				convert_command_glyph(commandbuf, ARRAY_LENGTH(commandbuf));
 				item_append(_(name), commandbuf, 0, (void *)(FPTR)&machine().ioport().m_custom_button[player][type]);
 

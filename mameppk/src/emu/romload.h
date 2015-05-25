@@ -148,14 +148,14 @@ public:
 			m_region(region) { }
 
 	open_chd *next() const { return m_next; }
-	const char *region() const { return m_region; }
+	const char *region() const { return m_region.c_str(); }
 	chd_file &chd() { return m_diffchd.opened() ? m_diffchd : m_origchd; }
 	chd_file &orig_chd() { return m_origchd; }
 	chd_file &diff_chd() { return m_diffchd; }
 
 private:
 	open_chd *          m_next;                 /* pointer to next in the list */
-	astring             m_region;               /* disk region we came from */
+	std::string         m_region;               /* disk region we came from */
 	chd_file            m_origchd;              /* handle to the original CHD */
 	chd_file            m_diffchd;              /* handle to the diff CHD */
 };
@@ -184,8 +184,8 @@ struct romload_private
 
 	memory_region * region;             /* info about current region */
 
-	astring         errorstring;        /* error string */
-	astring         softwarningstring;  /* software warning string */
+	std::string     errorstring;        /* error string */
+	std::string     softwarningstring;  /* software warning string */
 };
 
 
@@ -321,7 +321,7 @@ void rom_init(running_machine &machine);
 
 /* return the number of warnings we generated */
 int rom_load_warnings(running_machine &machine);
-astring& software_load_warnings_message(running_machine &machine);
+std::string& software_load_warnings_message(running_machine &machine);
 
 /* return the number of BAD_DUMP/NO_DUMP warnings we generated */
 int rom_load_knownbad(running_machine &machine);
@@ -350,7 +350,7 @@ const rom_entry *rom_next_file(const rom_entry *romp);
 UINT32 rom_file_size(const rom_entry *romp);
 
 /* return the appropriate name for a rom region */
-astring &rom_region_name(astring &result, const device_t &device, const rom_entry *romp);
+std::string rom_region_name(const device_t &device, const rom_entry *romp);
 
 /* return pointer to the first per-game parameter */
 const rom_entry *rom_first_parameter(const device_t &device);
@@ -359,10 +359,10 @@ const rom_entry *rom_first_parameter(const device_t &device);
 const rom_entry *rom_next_parameter(const rom_entry *romp);
 
 /* return the appropriate name for a per-game parameter */
-astring &rom_parameter_name(astring &result, const device_t &device, const rom_entry *romp);
+std::string rom_parameter_name(const device_t &device, const rom_entry *romp);
 
 /* return the value for a per-game parameter */
-astring rom_parameter_value(const rom_entry *romp);
+std::string rom_parameter_value(const rom_entry *romp);
 
 
 /* ----- disk handling ----- */

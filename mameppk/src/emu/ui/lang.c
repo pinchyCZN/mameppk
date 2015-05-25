@@ -155,9 +155,9 @@ static void load_mmo(int msgcat)
 	if (!mmo_config[msgcat].filename)
 		return;
 
-	astring fname(ui_lang_info[current_lang].name, PATH_SEPARATOR, mmo_config[msgcat].filename, ".mmo");
+	std::string fname = std::string(ui_lang_info[current_lang].name).append(PATH_SEPARATOR).append(mmo_config[msgcat].filename).append(".mmo");
 	emu_file file(lang_options->value(OPTION_LANGPATH), OPEN_FLAG_READ);
-	filerr = file.open(fname);
+	filerr = file.open(fname.c_str());
 
 	if (filerr != FILERR_NONE)
 		goto mmo_readerr;

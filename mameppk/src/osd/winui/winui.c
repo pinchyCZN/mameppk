@@ -80,7 +80,7 @@
 #include "dialogs.h"
 #include "directdraw.h"
 #include "directinput.h"
-#include "dijoystick.h"     /* For DIJoystick avalibility. */
+#include "dijoystick.h"     /* For DIJoystick availability. */
 #ifdef UI_COLOR_DISPLAY
 #include "paletteedit.h"
 #endif /* UI_COLOR_DISPLAY */
@@ -531,7 +531,7 @@ typedef struct
 typedef struct
 {
 	int         type;       /* Either RA_ID or RA_HWND, to indicate which member of u is used; or RA_END
-							   to signify last entry */
+                                   to signify last entry */
 	union                   /* Can identify a child window by control id or by handle */
 	{
 		int     id;         /* Window control id */
@@ -577,6 +577,31 @@ typedef struct
 	LPPROCESS_INFORMATION ProcessInfo;
 	HWND hwndFound;
 } FINDWINDOWHANDLE;
+
+//============================================================
+//  winui_output_error
+//============================================================
+
+class winui_output_error : public osd_output
+{
+public:
+	virtual void output_callback(osd_output_channel channel, const char *msg, va_list args)
+	{
+		if (channel == OSD_OUTPUT_CHANNEL_ERROR)
+		{
+			char buffer[1024];
+
+			// if we are in fullscreen mode, go to windowed mode
+			if ((video_config.windowed == 0) && (win_window_list != NULL))
+				winwindow_toggle_full_screen();
+
+			vsnprintf(buffer, ARRAY_LENGTH(buffer), msg, args);
+			win_message_box_utf8(win_window_list ? win_window_list->m_hwnd : NULL, buffer, emulator_info::get_appname(), MB_OK);
+		}
+		else
+			chain_output(channel, msg, args);
+	}
+};
 
 /***************************************************************************
     Internal variables
@@ -1000,6 +1025,8 @@ typedef struct
     int index;
 } driver_data_type;
 static driver_data_type *sorted_drivers;
+winui_output_error winerror;
+
 
 /***************************************************************************
     Global variables
@@ -1107,7 +1134,7 @@ static BOOL WaitWithMessageLoop(HANDLE hEvent)
 static void override_options(windows_options &opts, void *param)
 {
 	const play_options *playopts = (const play_options *)param;
-	astring error_string;
+	std::string error_string;
 
 #ifdef MAME_AVI
 	if (playopts->aviwrite2)
@@ -1202,9 +1229,9 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 	DWORD dwExitCode = 0;
 	int i;
 	windows_options mame_opts;
-	astring error_string;
+	std::string error_string;
 	// set up MAME options
-//	mame_opts = mame_options_init(mame_win_options);
+//  mame_opts = mame_options_init(mame_win_options);
 
 	// Tell mame were to get the INIs
 	// mamep: we want parse MAME.ini in root directory with all INIs in inipath. not only parse inipath
@@ -2340,18 +2367,6 @@ static void SetMainTitle(void)
 	SetWindowText(hMain, buffer);
 }
 
-static void winui_output_error(delegate_late_bind *__dummy, const char *format, va_list argptr)
-{
-	char buffer[1024];
-
-	// if we are in fullscreen mode, go to windowed mode
-	if ((video_config.windowed == 0) && (win_window_list != NULL))
-		winwindow_toggle_full_screen();
-
-	vsnprintf(buffer, ARRAY_LENGTH(buffer), format, argptr);
-	win_message_box_utf8(win_window_list ? win_window_list->m_hwnd : NULL, buffer, emulator_info::get_appname(), MB_OK);
-}
-
 static void memory_error(const char *message)
 {
 	win_message_box_utf8(hMain, message, emulator_info::get_appname(), MB_OK);
@@ -2386,7 +2401,7 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 	srand((unsigned)time(NULL));
 
 	// output errors to message boxes
-	osd_set_output_channel(OSD_OUTPUT_CHANNEL_ERROR, output_delegate(FUNC(winui_output_error), (delegate_late_bind *)0));
+	osd_output::push(&winerror);
 
 	//mamep: set up initial option system
 	CreateGameOptions(options, OPTIONS_TYPE_GLOBAL);
@@ -2402,7 +2417,7 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 		filerr = file.open(emulator_info::get_configname(), ".ini");
 		if (filerr == FILERR_NONE)
 		{
-			astring error;
+			std::string error;
 			options.parse_ini_file(file, OPTION_PRIORITY_CMDLINE, FALSE, error);
 			file.close();
 		}
@@ -2927,6 +2942,8 @@ static void Win32UI_exit()
 
 	//osd_free(g_mameinfo_filename);
 	//osd_free(g_history_filename);
+
+	osd_output::pop(&winerror);
 
 	pool_free_lib(mameui_pool);
 	mameui_pool = NULL;

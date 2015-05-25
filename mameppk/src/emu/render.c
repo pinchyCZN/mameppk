@@ -730,7 +730,7 @@ const rgb_t *render_container::bcg_lookup_table(int texformat, palette_t *palett
 				recompute_lookups();
 			}
 			assert (palette == &m_palclient->palette());
-			return m_bcglookup;
+			return &m_bcglookup[0];
 
 		case TEXFORMAT_RGB32:
 		case TEXFORMAT_ARGB32:
@@ -1133,7 +1133,7 @@ const char *render_target::translated_view_name(int viewindex)
 	const char *s = view_name(viewindex);
 	const char *idx[8];
 	const char **pp;
-	astring temp, res;
+	std::string temp, res;
 
 	if (!s)
 		return NULL;
@@ -1145,18 +1145,18 @@ const char *render_target::translated_view_name(int viewindex)
 		{
 			*pp++ = s;
 
-			temp.cat("%");
-			temp.cat("d");
+			temp.append("%");
+			temp.append("d");
 
 			for (s++; *s; s++)
 				if (!isdigit(*s))
 					break;
 		}
 		else
-			temp.cat(s++, 1);
+			temp.append(s++, 1);
 	}
 
-	s = _(temp);
+	s = _(temp.c_str());
 
 	pp = idx;
 	while (*s)
@@ -1166,14 +1166,14 @@ const char *render_target::translated_view_name(int viewindex)
 			s += 2;
 
 			while (isdigit(**pp))
-				res.cat((*pp)++, 1);
+				res.append((*pp)++, 1);
 			pp++;
 		}
 		else
-			res.cat(s++, 1);
+			res.append(s++, 1);
 	}
 
-	s = core_strdup(res);
+	s = core_strdup(res.c_str());
 
 	return s;
 }
@@ -1628,13 +1628,13 @@ bool render_target::load_layout_file(const char *dirname, const char *filename)
 	else
 	{
 		// build the path and optionally prepend the directory
-		astring fname(filename, ".lay");
+		std::string fname = std::string(filename).append(".lay");
 		if (dirname != NULL)
-			fname.ins(0, PATH_SEPARATOR).ins(0, dirname);
+			fname.insert(0, PATH_SEPARATOR).insert(0, dirname);
 
 		// attempt to open the file; bail if we can't
 		emu_file layoutfile(manager().machine().options().art_path(), OPEN_FLAG_READ);
-		file_error filerr = layoutfile.open(fname);
+		file_error filerr = layoutfile.open(fname.c_str());
 		if (filerr != FILERR_NONE)
 			return false;
 

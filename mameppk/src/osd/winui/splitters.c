@@ -30,10 +30,10 @@
 #include <stdlib.h>
 
 // MAME/MAMEUI headers
+#include "winui.h"
 #include "splitters.h"
 #include "mui_opts.h"
 #include "resource.h"
-#include "winui.h"
 
 /* Local Variables */
 static BOOL         bTracking = 0;

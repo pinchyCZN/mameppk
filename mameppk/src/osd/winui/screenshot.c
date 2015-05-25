@@ -240,15 +240,15 @@ static file_error OpenDIBFile(const char *dir_name, const char *zip_name, const 
 	*file = NULL;
 
 	// look for the raw file
-	astring fname(dir_name, PATH_SEPARATOR, filename);
-	filerr = core_fopen(fname, OPEN_FLAG_READ, file);
+	std::string fname = std::string(dir_name).append(PATH_SEPARATOR).append(filename);
+	filerr = core_fopen(fname.c_str(), OPEN_FLAG_READ, file);
 
 	// did the raw file not exist?
 	if (filerr != FILERR_NONE)
 	{
 		// look into zip file
-		astring fname(dir_name, PATH_SEPARATOR, zip_name, ".zip");
-		ziperr = zip_file_open(fname, &zip);
+		std::string fname = std::string(dir_name).append(PATH_SEPARATOR).append(zip_name).append(".zip");
+		ziperr = zip_file_open(fname.c_str(), &zip);
 		if (ziperr == ZIPERR_NONE)
 		{
 			zip_header = zip_file_seek_file(zip, filename);
@@ -333,31 +333,31 @@ BOOL LoadDIB(const WCHAR *filename, HGLOBAL *phDIB, HPALETTE *pPal, int pic_type
 
 	//Add handling for the displaying of all the different supported snapshot patterntypes
 	//%g
-	astring fname(utf8filename, ".png");
-	filerr = OpenDIBFile(utf8dir_name, utf8zip_name, fname, &file, &buffer);
+	std::string fname = std::string(utf8filename).append(".png");
+	filerr = OpenDIBFile(utf8dir_name, utf8zip_name, fname.c_str(), &file, &buffer);
 	if (filerr != FILERR_NONE)
 	{
 		//%g/%i
-		astring fname(utf8filename, PATH_SEPARATOR, "0000.png");
-		filerr = OpenDIBFile(utf8dir_name, utf8zip_name, fname, &file, &buffer);
+		std::string fname = std::string(utf8filename).append(PATH_SEPARATOR).append("0000.png");
+		filerr = OpenDIBFile(utf8dir_name, utf8zip_name, fname.c_str(), &file, &buffer);
 	}
 	if (filerr != FILERR_NONE)
 	{
 		//%g%i
-		astring fname(utf8filename, "0000.png");
-		filerr = OpenDIBFile(utf8dir_name, utf8zip_name, fname, &file, &buffer);
+		std::string fname = std::string(utf8filename).append("0000.png");
+		filerr = OpenDIBFile(utf8dir_name, utf8zip_name, fname.c_str(), &file, &buffer);
 	}
 	if (filerr != FILERR_NONE)
 	{
 		//%g/%g
-		astring fname(utf8filename, PATH_SEPARATOR, utf8filename, ".png");
-		filerr = OpenDIBFile(utf8dir_name, utf8zip_name, fname, &file, &buffer);
+		std::string fname = std::string(utf8filename).append(PATH_SEPARATOR).append(utf8filename).append(".png");
+		filerr = OpenDIBFile(utf8dir_name, utf8zip_name, fname.c_str(), &file, &buffer);
 	}
 	if (filerr != FILERR_NONE)
 	{
 		//%g/%g%i
-		astring fname(utf8filename, PATH_SEPARATOR, utf8filename, ".png");
-		filerr = OpenDIBFile(utf8dir_name, utf8zip_name, fname, &file, &buffer);
+		std::string fname = std::string(utf8filename).append(PATH_SEPARATOR).append(utf8filename).append(".png");
+		filerr = OpenDIBFile(utf8dir_name, utf8zip_name, fname.c_str(), &file, &buffer);
 	}
 
 	if (filerr == FILERR_NONE)
@@ -382,10 +382,10 @@ BOOL LoadDIB(const WCHAR *filename, HGLOBAL *phDIB, HPALETTE *pPal, int pic_type
 HBITMAP DIBToDDB(HDC hDC, HANDLE hDIB, LPMYBITMAPINFO desc)
 {
 	LPBITMAPINFOHEADER	lpbi;
-	HBITMAP 			hBM;
-	int 				nColors;
+	HBITMAP 		hBM;
+	int 			nColors;
 	BITMAPINFO *		bmInfo = (LPBITMAPINFO)hDIB;
-	LPVOID				lpDIBBits;
+	LPVOID			lpDIBBits;
 
 	if (hDIB == NULL)
 		return NULL;
@@ -408,12 +408,12 @@ HBITMAP DIBToDDB(HDC hDC, HANDLE hDIB, LPMYBITMAPINFO desc)
 		desc->bmColors = (nColors <= 256) ? nColors : 0;
 	}
 
-	hBM = CreateDIBitmap(hDC,					  /* handle to device context */
-						(LPBITMAPINFOHEADER)lpbi, /* pointer to bitmap info header	*/
-						(LONG)CBM_INIT, 		  /* initialization flag */
-						lpDIBBits,				  /* pointer to initialization data  */
-						(LPBITMAPINFO)lpbi, 	  /* pointer to bitmap info */
-						DIB_RGB_COLORS);		  /* color-data usage  */
+	hBM = CreateDIBitmap(hDC,	  /* handle to device context */
+		(LPBITMAPINFOHEADER)lpbi, /* pointer to bitmap info header  */
+		(LONG)CBM_INIT, 	  /* initialization flag */
+		lpDIBBits,		  /* pointer to initialization data  */
+		(LPBITMAPINFO)lpbi, 	  /* pointer to bitmap info */
+		DIB_RGB_COLORS);	  /* color-data usage  */
 
 	return hBM;
 }
@@ -435,25 +435,25 @@ static void store_pixels(UINT8 *buf, int len)
 
 BOOL AllocatePNG(png_info *p, HGLOBAL *phDIB, HPALETTE *pPal)
 {
-	int 				dibSize;
-	HGLOBAL 			hDIB;
+	int 			dibSize;
+	HGLOBAL 		hDIB;
 	BITMAPINFOHEADER	bi;
 	LPBITMAPINFOHEADER	lpbi;
 	LPBITMAPINFO		bmInfo;
-	LPVOID				lpDIBBits = 0;
-	int 				lineWidth = 0;
-	int 				nColors = 0;
-	RGBQUAD*			pRgb;
+	LPVOID			lpDIBBits = 0;
+	int 			lineWidth = 0;
+	int 			nColors = 0;
+	RGBQUAD*		pRgb;
 	copy_size = 0;
 	pixel_ptr = 0;
-	row 	  = p->height - 1;
+	row       = p->height - 1;
 	lineWidth = p->width;
 
 	if (p->color_type != 2 && p->num_palette <= 256)
 		nColors =  p->num_palette;
 
-	bi.biSize			= sizeof(BITMAPINFOHEADER);
-	bi.biWidth			= p->width;
+	bi.biSize		= sizeof(BITMAPINFOHEADER);
+	bi.biWidth		= p->width;
 	bi.biHeight 		= p->height;
 	bi.biPlanes 		= 1;
 	bi.biBitCount		= (p->color_type == 3) ? 8 : 24; /* bit_depth; */

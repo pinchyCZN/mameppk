@@ -84,14 +84,14 @@ static int load_ips_file(running_machine &machine, ips_chunk **p, const char *ip
 
 	osd_printf_verbose(_("IPS: loading ips \"%s/%s%s\"\n"), ips_dir, ips_name, IPS_EXT);
 
-	astring fname(ips_dir, PATH_SEPARATOR, ips_name, IPS_EXT);
+	std::string fname = std::string(ips_dir).append(PATH_SEPARATOR).append(ips_name).append(IPS_EXT);
 	emu_file file(machine.options().value(OPTION_IPSPATH), OPEN_FLAG_READ);
-	filerr = file.open(fname);
+	filerr = file.open(fname.c_str());
 
 	if (filerr != FILERR_NONE)
 	{
-		romdata->errorstring.catprintf(
-			_("ERROR: %s/%s: open fail\n"), ips_dir, ips_name);
+		strcatprintf(romdata->errorstring,
+			 _("ERROR: %s/%s: open fail\n"), ips_dir, ips_name);
 		romdata->warnings++;
 
 		return 0;
@@ -100,7 +100,7 @@ static int load_ips_file(running_machine &machine, ips_chunk **p, const char *ip
 	len = strlen(IPS_SIGNATURE);
 	if (file.read(buffer, len) != len || strncmp((const char *)buffer, IPS_SIGNATURE, len) != 0)
 	{
-		romdata->errorstring.catprintf(
+		strcatprintf(romdata->errorstring,
 			_("ERROR: %s/%s: incorrect IPS header\n"), ips_dir, ips_name);
 		goto load_ips_file_fail;
 	}
@@ -138,7 +138,7 @@ static int load_ips_file(running_machine &machine, ips_chunk **p, const char *ip
 
 		if (!*p || !(*p)->data)
 		{
-			romdata->errorstring.cat(_("ERROR: IPS is not enough memory\n"));
+			romdata->errorstring.append(_("ERROR: IPS is not enough memory\n"));
 			goto load_ips_file_fail;
 		}
 
@@ -165,7 +165,7 @@ static int load_ips_file(running_machine &machine, ips_chunk **p, const char *ip
 	return 1;
 
 load_ips_file_unexpected_eof:
-	romdata->errorstring.catprintf(
+	strcatprintf(romdata->errorstring,
 		_("ERROR: %s/%s: unexpected EOF\n"), ips_dir, ips_name);
 
 load_ips_file_fail:
@@ -214,13 +214,13 @@ static int parse_ips_patch(running_machine &machine, ips_entry **ips_p, const ch
 
 	osd_printf_verbose(_("IPS: parsing ips \"%s/%s%s\"\n"), machine.system().name, patch_name, INDEX_EXT);
 
-	astring fname(machine.system().name, PATH_SEPARATOR, patch_name, INDEX_EXT);
+	std::string fname = std::string(machine.system().name).append(PATH_SEPARATOR).append(patch_name).append(INDEX_EXT);
 	emu_file fpDat(machine.options().value(OPTION_IPSPATH), OPEN_FLAG_READ);
-	filerr = fpDat.open(fname);
+	filerr = fpDat.open(fname.c_str());
 
 	if (filerr != FILERR_NONE)
 	{
-		romdata->errorstring.catprintf(
+		strcatprintf(romdata->errorstring,
 			_("ERROR: %s: IPS file is not found\n"), patch_name);
 		romdata->warnings++;
 
@@ -253,7 +253,7 @@ static int parse_ips_patch(running_machine &machine, ips_entry **ips_p, const ch
 			current = find_rom_entry(romp, rom_name);
 			if (!current)
 			{
-				romdata->errorstring.catprintf(
+				strcatprintf(romdata->errorstring,
 					_("ERROR: ROM entry \"%s\" is not found for IPS file \"%s\"\n"), rom_name, patch_name);
 				goto parse_ips_patch_fail;
 			}
@@ -261,7 +261,7 @@ static int parse_ips_patch(running_machine &machine, ips_entry **ips_p, const ch
 			ips_name = strtok(NULL, " \t\r\n");
 			if (!ips_name)
 			{
-				romdata->errorstring.catprintf(
+				strcatprintf(romdata->errorstring,
 					_("ERROR: IPS file is not defined for ROM entry \"%s\"\n"), rom_name);
 				goto parse_ips_patch_fail;
 			}
@@ -271,7 +271,7 @@ static int parse_ips_patch(running_machine &machine, ips_entry **ips_p, const ch
 
 			if (crc && !check_crc(crc, ROM_GETHASHDATA(current)))
 			{
-				romdata->errorstring.catprintf(
+				strcatprintf(romdata->errorstring,
 					_("ERROR: wrong CRC for ROM entry \"%s\"\n"), rom_name);
 				goto parse_ips_patch_fail;
 			}
@@ -297,7 +297,7 @@ static int parse_ips_patch(running_machine &machine, ips_entry **ips_p, const ch
 			entry->ips_name = core_strdup(ips_name);
 			if (!entry->rom_name || !entry->ips_name)
 			{
-				romdata->errorstring.cat(_("ERROR: IPS is not enough memory\n"));
+				romdata->errorstring.append(_("ERROR: IPS is not enough memory\n"));
 				goto parse_ips_patch_fail;
 			}
 
@@ -306,7 +306,7 @@ static int parse_ips_patch(running_machine &machine, ips_entry **ips_p, const ch
 
 			if (entry->chunk == NULL)
 			{
-				romdata->errorstring.catprintf(
+				strcatprintf(romdata->errorstring,
 					_("ERROR: %s/%s: IPS data is empty\n"), ips_dir, entry->ips_name);
 				goto parse_ips_patch_fail;
 			}
@@ -357,7 +357,7 @@ int open_ips_entry(running_machine &machine, const char *patch_name, romload_pri
 
 	if (!result)
 	{
-		romdata->errorstring.catprintf(
+		strcatprintf(romdata->errorstring,
 			_("ERROR: %s: IPS file is not found\n"), patch_name);
 		romdata->warnings++;
 	}
@@ -378,7 +378,7 @@ int close_ips_entry(romload_private *romdata)
 
 		if (p->current.data)
 		{
-			romdata->errorstring.catprintf(
+			strcatprintf(romdata->errorstring,
 				_("ERROR: %s: IPS is not applied correctly to ROM entry \"%s\"\n"), p->ips_name, p->rom_name);
 			romdata->warnings++;
 

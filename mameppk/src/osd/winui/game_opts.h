@@ -14,9 +14,71 @@
 #ifndef __GAME_OPTS_H__
 #define __GAME_OPTS_H__
 
-#include <vector>
+#include "emu.h"
 #include "drivenum.h"
 #include "win_options.h"
+
+class string_iterator
+{
+public:
+	// simple construction/destruction
+	string_iterator() { copy(""); }
+	string_iterator(const char *str) { copy(str); }
+
+	// copy helpers
+	void copy(const char *str)
+	{
+		/* reset the structure */
+		m_str.clear();
+		m_base = (str != NULL) ? str : "";
+		m_cur = m_base;
+	}
+
+	// character searching helpers
+	int next(int separator, bool duplicate = false)
+	{
+		const char *semi;
+
+		/* if none left, return FALSE to indicate we are done */
+		if (m_index != 0 and *m_cur == 0)
+			return false;
+
+		/* ignore duplicates of the separator */
+		while (duplicate and m_index == 0 and *m_cur == separator)
+			m_cur++;
+
+		if (duplicate and *m_cur == 0)
+			return false;
+
+		/* copy up to the next separator */
+		semi = strchr(m_cur, separator);
+
+		if (semi == NULL)
+			semi = m_cur + strlen(m_cur);
+
+		m_str.assign(m_cur, semi - m_cur);
+		m_cur = (*semi == 0) ? semi : semi + 1;
+
+		/* ignore duplicates of the separator */
+		while (duplicate and *m_cur and *m_cur == separator)
+			m_cur++;
+
+		/* bump the index and return true */
+		m_index++;
+
+		return true;
+	}
+
+	// C string conversion operators and helpers
+	operator const char *() const { return m_str.c_str(); }
+	const char *c_str() const { return m_str.c_str(); }
+
+private:
+	std::string		m_str;
+	const char *	m_base;
+	const char *	m_cur;
+	int				m_index;
+};
 
 class game_options
 {
@@ -95,7 +157,7 @@ public:
 		file_error filerr = file.open(filename);
 		if (filerr == FILERR_NONE)
 		{
-			astring error_string;
+			std::string error_string;
 			m_info.parse_ini_file(file, OPTION_PRIORITY_CMDLINE, OPTION_PRIORITY_CMDLINE, error_string);
 		}
 
@@ -104,30 +166,30 @@ public:
 		return filerr;
 	}
 
-	void output_ini(astring &buffer, const char *header = NULL)
+	void output_ini(std::string &buffer, const char *header = NULL)
 	{
-		astring inibuffer;
-		inibuffer.expand(768*1024);
+		std::string inibuffer;
+		//inibuffer.expand(768*1024);
 
 		m_info.output_ini(inibuffer);
 
-		if (header != NULL && inibuffer)
+		if (header != NULL && !inibuffer.empty())
 		{
-			buffer.catprintf("#\n# %s\n#\n", header);
-			buffer.cat(inibuffer);
+			strcatprintf(buffer, "#\n# %s\n#\n", header);
+			buffer.append(inibuffer);
 		}
 	}
 
 	void load_settings(void)
 	{
-		astring value_str;
+		std::string value_str;
 
 		for (int i = 0; i < m_total; i++)
 		{
-			value_str.cpy(m_info.value(driver_list::driver(i).name));
+			value_str.assign(m_info.value(driver_list::driver(i).name));
 
-			if (value_str)
-				load_settings(value_str, i);
+			if (!value_str.empty())
+				load_settings(value_str.c_str(), i);
 		}
 	}
 
@@ -143,7 +205,7 @@ public:
 				if ( i == 2 )
 				{
 					int val[5];
-					if (value_str && (sscanf(value_str.cstr(), "%d@%d@%d@%d@%d@%d", &value_int, &val[0], &val[1], &val[2], &val[3], &val[4]) == 6))
+					if (value_str && (sscanf(value_str.c_str(), "%d@%d@%d@%d@%d@%d", &value_int, &val[0], &val[1], &val[2], &val[3], &val[4]) == 6))
 					{
 						m_list[index].cache          = value_int;
 						m_list[index].players        = val[0];
@@ -154,7 +216,7 @@ public:
 					}
 				}
 				else
-				if ( value_str && (sscanf(value_str.cstr(), "%d", &value_int) == 1) )
+				if ( value_str && (sscanf(value_str.c_str(), "%d", &value_int) == 1) )
 				{
 					switch (i)
 					{
@@ -175,30 +237,30 @@ public:
 
 	void save_settings(void)
 	{
-		astring value_str;
-		astring error_string;
+		std::string value_str;
+		std::string error_string;
 
 		for (int i = 0; i < m_total; i++)
 		{
-			value_str.printf("%d,%d,%d", m_list[i].rom, m_list[i].sample, m_list[i].cache);
-			value_str.catprintf("@%d@%d", m_list[i].players, m_list[i].buttons);
-			value_str.catprintf("@%d@%d@%d", m_list[i].parent_index, m_list[i].bios_index, m_list[i].uses_controler);
+			strprintf(value_str, "%d,%d,%d", m_list[i].rom, m_list[i].sample, m_list[i].cache);
+			strcatprintf(value_str, "@%d@%d", m_list[i].players, m_list[i].buttons);
+			strcatprintf(value_str, "@%d@%d@%d", m_list[i].parent_index, m_list[i].bios_index, m_list[i].uses_controler);
 			if ((m_list[i].play_count > 0) or (m_list[i].play_time > 0))
 			{
 				if (m_list[i].play_time > 0)
-					value_str.catprintf(",%d,%d", m_list[i].play_count, m_list[i].play_time);
+					strcatprintf(value_str, ",%d,%d", m_list[i].play_count, m_list[i].play_time);
 				else
-					value_str.catprintf(",%d", m_list[i].play_count);
+					strcatprintf(value_str, ",%d", m_list[i].play_count);
 			}
 
-			m_info.set_value(driver_list::driver(i).name, value_str.cstr(), OPTION_PRIORITY_CMDLINE, error_string);
+			m_info.set_value(driver_list::driver(i).name, value_str.c_str(), OPTION_PRIORITY_CMDLINE, error_string);
 		}
 	}
 
 	file_error save_file(const char *filename)
 	{
 		file_error filerr;
-		astring inistring;
+		std::string inistring;
 
 		save_settings();
 
@@ -210,7 +272,7 @@ public:
 		filerr = file.open(filename);
 		if (filerr == FILERR_NONE)
 		{
-			file.puts(inistring);
+			file.puts(inistring.c_str());
 		}
 
 		return filerr;

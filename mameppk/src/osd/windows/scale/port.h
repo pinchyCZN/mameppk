@@ -175,5 +175,9 @@ typedef UINT32 xbrz_uint32;
 #define bool BOOL
 #endif
 
+#ifdef __GNUC__
+#define restrict __restrict__
+#endif
+
 #endif
 

@@ -101,15 +101,15 @@ private:
 	int                 m_height;           // height of the font, from ascent to descent
 	int                 m_yoffs;            // y offset from baseline to descent
 	float               m_scale;            // 1 / height precomputed
-	dynamic_array<glyph> m_glyphs[256];     // array of glyph subtables
-	dynamic_array<char> m_rawdata;          // pointer to the raw data for the font
+	glyph               *m_glyphs[256];     // array of glyph subtables
+	std::vector<char>   m_rawdata;          // pointer to the raw data for the font
 	UINT64              m_rawsize;          // size of the raw font data
-	osd_font            *m_osdfont;          // handle to the OSD font
+	osd_font            *m_osdfont;         // handle to the OSD font
 	//mamep: for command glyph
 	int                 m_height_cmd;       // height of the font, from ascent to descent
 	int                 m_yoffs_cmd;        // y offset from baseline to descent
-	dynamic_array<glyph> m_glyphs_cmd[256]; // array of glyph subtables
-	dynamic_array<char> m_rawdata_cmd;      // pointer to the raw data for the font
+	glyph               *m_glyphs_cmd[256]; // array of glyph subtables
+	std::vector<char>   m_rawdata_cmd;      // pointer to the raw data for the font
 
 	//mamep: allocate command glyph font
 	void render_font_command_glyph();

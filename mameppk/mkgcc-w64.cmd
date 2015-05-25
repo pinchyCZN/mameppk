@@ -1,7 +1,9 @@
 @echo off
 
-set MINGW_ROOT=..\mingw\mingw64-w64
-set PATH=%MINGW_ROOT%\bin;%MINGW_ROOT%\opt\bin;%PATH%
+set BUILDTOOLS_ROOT=..\buildtools
+
+REM SET PROCESSOR_ARCHITECTURE=AMD64
+CALL "%BUILDTOOLS_ROOT%\vendor\env.bat"
 
 gcc -v
 

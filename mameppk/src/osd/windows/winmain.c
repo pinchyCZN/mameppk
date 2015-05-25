@@ -141,8 +141,8 @@ private:
 	// internal helpers
 	bool query_system_for_address(FPTR address);
 	void scan_file_for_address(FPTR address, bool create_cache);
-	bool parse_sym_line(const char *line, FPTR &address, astring &symbol);
-	bool parse_map_line(const char *line, FPTR &address, astring &symbol);
+	bool parse_sym_line(const char *line, FPTR &address, std::string &symbol);
+	bool parse_map_line(const char *line, FPTR &address, std::string &symbol);
 	void scan_cache_for_address(FPTR address);
 	void format_symbol(const char *name, UINT32 displacement, const char *filename = NULL, int linenumber = 0);
 
@@ -156,13 +156,13 @@ private:
 
 		cache_entry *   m_next;
 		FPTR            m_address;
-		astring         m_name;
+		std::string     m_name;
 	};
 	simple_list<cache_entry> m_cache;
 
-	astring         m_mapfile;
-	astring         m_symfile;
-	astring         m_buffer;
+	std::string     m_mapfile;
+	std::string     m_symfile;
+	std::string     m_buffer;
 	HANDLE          m_process;
 	FPTR            m_last_base;
 	FPTR            m_text_base;
@@ -199,9 +199,75 @@ private:
 
 	UINT8           m_stack_depth;
 	UINT8           m_entry_stride;
-	dynamic_array<FPTR> m_buffer;
+	std::vector<FPTR>    m_buffer;
 	FPTR *          m_buffer_ptr;
 	FPTR *          m_buffer_end;
+};
+
+//============================================================
+//  winui_output_error
+//============================================================
+
+class winui_output_error : public osd_output
+{
+public:
+	virtual void output_callback(osd_output_channel channel, const char *msg, va_list args)
+	{
+		if (channel == OSD_OUTPUT_CHANNEL_ERROR)
+		{
+			char buffer[1024];
+
+			// if we are in fullscreen mode, go to windowed mode
+			if ((video_config.windowed == 0) && (win_window_list != NULL))
+				winwindow_toggle_full_screen();
+
+			vsnprintf(buffer, ARRAY_LENGTH(buffer), msg, args);
+			win_message_box_utf8(win_window_list ? win_window_list->m_hwnd : NULL, buffer, emulator_info::get_appname(), MB_OK);
+		}
+		else
+			chain_output(channel, msg, args);
+	}
+};
+
+class win_mame_file_output_callback : public osd_output
+{
+public:
+	virtual void output_callback(osd_output_channel channel, const char *msg, va_list args)
+	{
+		FILE *fp = NULL;
+
+		switch (channel)
+		{
+			case OSD_OUTPUT_CHANNEL_ERROR:
+			case OSD_OUTPUT_CHANNEL_WARNING:
+				fp = stderr;
+				break;
+			case OSD_OUTPUT_CHANNEL_INFO:
+			case OSD_OUTPUT_CHANNEL_VERBOSE:
+			case OSD_OUTPUT_CHANNEL_LOG:
+				fp = stdout;
+				break;
+			case OSD_OUTPUT_CHANNEL_DEBUG:
+#ifdef MAME_DEBUG
+				fp = stdout;
+#endif
+				break;
+			default:
+				break;
+		}
+		if (fp != NULL)
+		{
+			char buffer[5000];
+			CHAR *s;
+
+			vsnprintf(buffer, ARRAY_LENGTH(buffer), msg, args);
+			s = astring_from_utf8(buffer);
+			fputs(s, fp);
+			osd_free(s);
+		}
+		else
+			chain_output(channel, msg, args);
+	}
 };
 
 
@@ -243,8 +309,6 @@ static BOOL WINAPI control_handler(DWORD type);
 static int is_double_click_start(int argc);
 static DWORD WINAPI watchdog_thread_entry(LPVOID lpParameter);
 static LONG WINAPI exception_filter(struct _EXCEPTION_POINTERS *info);
-static void win_mame_file_output_callback(delegate_late_bind *param, const char *format, va_list argptr);
-static void winui_output_error(delegate_late_bind *__dummy, const char *format, va_list argptr);
 
 
 
@@ -255,11 +319,6 @@ static void winui_output_error(delegate_late_bind *__dummy, const char *format, 
 // struct definitions
 const options_entry windows_options::s_option_entries[] =
 {
-	// debugging options
-	{ NULL,                                           NULL,       OPTION_HEADER,     "WINDOWS DEBUGGING OPTIONS" },
-	{ WINOPTION_DEBUGGER_FONT ";dfont",               "Lucida Console", OPTION_STRING,"specifies the font to use for debugging; defaults to Lucida Console" },
-	{ WINOPTION_DEBUGGER_FONT_SIZE ";dfontsize",      "9",        OPTION_FLOAT,      "specifies the font size to use for debugging; defaults to 9 pt" },
-
 	// performance options
 	{ NULL,                                           NULL,       OPTION_HEADER,     "WINDOWS PERFORMANCE OPTIONS" },
 	{ WINOPTION_PRIORITY "(-15-1)",                   "0",        OPTION_INTEGER,    "thread priority for the main game thread; range from -15 to 1" },
@@ -412,24 +471,6 @@ int main(int argc, char *argv[])
 	extern void (*s_debugger_stack_crawler)();
 	s_debugger_stack_crawler = winmain_dump_stack;
 
-	// if we're a GUI app, out errors to message boxes
-	if (win_is_gui_application() || is_double_click_start(argc))
-	{
-		// if we are a GUI app, output errors to message boxes
-		osd_set_output_channel(OSD_OUTPUT_CHANNEL_ERROR, output_delegate(FUNC(winui_output_error), (delegate_late_bind *)0));
-
-		// make sure any console window that opened on our behalf is nuked
-		FreeConsole();
-	}
-	else
-		osd_set_output_channel(OSD_OUTPUT_CHANNEL_ERROR, output_delegate(FUNC(win_mame_file_output_callback), (delegate_late_bind *)stderr));
-
-	osd_set_output_channel(OSD_OUTPUT_CHANNEL_WARNING, output_delegate(FUNC(win_mame_file_output_callback), (delegate_late_bind *)stderr));
-	osd_set_output_channel(OSD_OUTPUT_CHANNEL_INFO, output_delegate(FUNC(win_mame_file_output_callback), (delegate_late_bind *)stdout));
-	osd_set_output_channel(OSD_OUTPUT_CHANNEL_DEBUG, output_delegate(FUNC(win_mame_file_output_callback), (delegate_late_bind *)stdout));
-	osd_set_output_channel(OSD_OUTPUT_CHANNEL_VERBOSE, output_delegate(FUNC(win_mame_file_output_callback), (delegate_late_bind *)stdout));
-	osd_set_output_channel(OSD_OUTPUT_CHANNEL_LOG, output_delegate(FUNC(win_mame_file_output_callback), (delegate_late_bind *)stderr));
-
 	// set up language for windows
 	assign_msg_catategory(UI_MSG_OSD0, "windows");
 
@@ -438,9 +479,24 @@ int main(int argc, char *argv[])
 	{
 		windows_options options;
 		windows_osd_interface osd(options);
+		// if we're a GUI app, out errors to message boxes
+		// Initialize this after the osd interface so that we are first in the
+		// output order
+		win_mame_file_output_callback win_output;
+		osd_output::push(&win_output);
+		winui_output_error winerror;
+		if (win_is_gui_application() || is_double_click_start(argc))
+		{
+			// if we are a GUI app, output errors to message boxes
+			osd_output::push(&winerror);
+			// make sure any console window that opened on our behalf is nuked
+			FreeConsole();
+		}
 		osd.register_options();
 		cli_frontend frontend(options, osd);
 		result = frontend.execute(argc, argv);
+		osd_output::pop(&winerror);
+		osd_output::pop(&win_output);
 	}
 	// free symbols
 	symbols = NULL;
@@ -499,22 +555,6 @@ static BOOL WINAPI control_handler(DWORD type)
 	return TRUE;
 }
 
-
-//============================================================
-//  winui_output_error
-//============================================================
-
-static void winui_output_error(delegate_late_bind *param, const char *format, va_list argptr)
-{
-	char buffer[1024];
-
-	// if we are in fullscreen mode, go to windowed mode
-	if ((video_config.windowed == 0) && (win_window_list != NULL))
-		winwindow_toggle_full_screen();
-
-	vsnprintf(buffer, ARRAY_LENGTH(buffer), format, argptr);
-	win_message_box_utf8(win_window_list ? win_window_list->m_hwnd : NULL, buffer, emulator_info::get_appname(), MB_OK);
-}
 
 
 
@@ -575,14 +615,14 @@ void windows_osd_interface::init(running_machine &machine)
 
 	// determine if we are benchmarking, and adjust options appropriately
 	int bench = options.bench();
-	astring error_string;
+	std::string error_string;
 	if (bench > 0)
 	{
 		options.set_value(OPTION_THROTTLE, false, OPTION_PRIORITY_MAXIMUM, error_string);
 		options.set_value(OSDOPTION_SOUND, "none", OPTION_PRIORITY_MAXIMUM, error_string);
 		options.set_value(OSDOPTION_VIDEO, "none", OPTION_PRIORITY_MAXIMUM, error_string);
 		options.set_value(OPTION_SECONDS_TO_RUN, bench, OPTION_PRIORITY_MAXIMUM, error_string);
-		assert(!error_string);
+		assert(error_string.empty());
 	}
 
 	// determine if we are profiling, and adjust options appropriately
@@ -592,7 +632,7 @@ void windows_osd_interface::init(running_machine &machine)
 		options.set_value(OPTION_THROTTLE, false, OPTION_PRIORITY_MAXIMUM, error_string);
 		options.set_value(OSDOPTION_MULTITHREADING, false, OPTION_PRIORITY_MAXIMUM, error_string);
 		options.set_value(OSDOPTION_NUMPROCESSORS, 1, OPTION_PRIORITY_MAXIMUM, error_string);
-		assert(!error_string);
+		assert(error_string.empty());
 	}
 
 	// thread priority
@@ -618,11 +658,11 @@ void windows_osd_interface::init(running_machine &machine)
 	osd_common_t::init_subsystems();
 
 	// notify listeners of screen configuration
-	astring tempstring;
+	std::string tempstring;
 	for (win_window_info *info = win_window_list; info != NULL; info = info->m_next)
 	{
-		tempstring.printf("Orientation(%s)", info->m_monitor->devicename());
-		output_set_value(tempstring, info->m_targetorient);
+		strprintf(tempstring, "Orientation(%s)", info->m_monitor->devicename());
+		output_set_value(tempstring.c_str(), info->m_targetorient);
 	}
 
 	// hook up the debugger log
@@ -703,21 +743,6 @@ void windows_osd_interface::osd_exit()
 
 	// one last pass at events
 	winwindow_process_events(machine(), 0, 0);
-}
-
-//============================================================
-//  win_mame_file_output_callback
-//============================================================
-
-static void win_mame_file_output_callback(delegate_late_bind *param, const char *format, va_list argptr)
-{
-	char buf[5000];
-	CHAR *s;
-
-	vsnprintf(buf, ARRAY_LENGTH(buf), format, argptr);
-	s = astring_from_utf8(buf);
-	fputs(s, (FILE *)param);
-	osd_free(s);
 }
 
 //============================================================
@@ -1056,23 +1081,23 @@ symbol_manager::symbol_manager(const char *argv0)
 {
 #ifdef __GNUC__
 	// compute the name of the mapfile
-	int extoffs = m_mapfile.rchr(0, '.');
+	int extoffs = m_mapfile.find_last_of('.');
 	if (extoffs != -1)
 		m_mapfile.substr(0, extoffs);
-	m_mapfile.cat(".map");
+	m_mapfile.append(".map");
 
 	// and the name of the symfile
-	extoffs = m_symfile.rchr(0, '.');
+	extoffs = m_symfile.find_last_of('.');
 	if (extoffs != -1)
-		m_symfile.substr(0, extoffs);
-	m_symfile.cat(".sym");
+		m_symfile = m_symfile.substr(0, extoffs);
+	m_symfile.append(".sym");
 
 	// figure out the base of the .text section
 	m_text_base = get_text_section_base();
 #endif
 
 	// expand the buffer to be decently large up front
-	m_buffer.printf("%500s", "");
+	strprintf(m_buffer,"%500s", "");
 }
 
 
@@ -1094,7 +1119,7 @@ symbol_manager::~symbol_manager()
 const char *symbol_manager::symbol_for_address(FPTR address)
 {
 	// default the buffer
-	m_buffer.cpy(" (not found)");
+	m_buffer.assign(" (not found)");
 	m_last_base = 0;
 
 	// first try to do it using system APIs
@@ -1108,7 +1133,7 @@ const char *symbol_manager::symbol_for_address(FPTR address)
 		else
 			scan_file_for_address(address, false);
 	}
-	return m_buffer;
+	return m_buffer.c_str();
 }
 
 
@@ -1162,24 +1187,24 @@ void symbol_manager::scan_file_for_address(FPTR address, bool create_cache)
 
 #ifdef __GNUC__
 	// see if we have a symbol file (gcc only)
-	srcfile = fopen(m_symfile, "r");
+	srcfile = fopen(m_symfile.c_str(), "r");
 	is_symfile = (srcfile != NULL);
 #endif
 
 	// if not, see if we have a map file
 	if (srcfile == NULL)
-		srcfile = fopen(m_mapfile, "r");
+		srcfile = fopen(m_mapfile.c_str(), "r");
 
 	// if not, fail
 	if (srcfile == NULL)
 		return;
 
 	// reset the best info
-	astring best_symbol;
+	std::string best_symbol;
 	FPTR best_addr = 0;
 
 	// parse the file, looking for valid entries
-	astring symbol;
+	std::string symbol;
 	char line[1024];
 	while (fgets(line, sizeof(line) - 1, srcfile))
 	{
@@ -1199,7 +1224,7 @@ void symbol_manager::scan_file_for_address(FPTR address, bool create_cache)
 
 			// also create a cache entry if we can
 			if (create_cache)
-				m_cache.append(*global_alloc(cache_entry(addr, symbol)));
+				m_cache.append(*global_alloc(cache_entry(addr, symbol.c_str())));
 		}
 	}
 
@@ -1207,7 +1232,7 @@ void symbol_manager::scan_file_for_address(FPTR address, bool create_cache)
 	fclose(srcfile);
 
 	// format the symbol and remember the last base
-	format_symbol(best_symbol, address - best_addr);
+	format_symbol(best_symbol.c_str(), address - best_addr);
 	m_last_base = best_addr;
 }
 
@@ -1220,7 +1245,7 @@ void symbol_manager::scan_file_for_address(FPTR address, bool create_cache)
 void symbol_manager::scan_cache_for_address(FPTR address)
 {
 	// reset the best info
-	astring best_symbol;
+	std::string best_symbol;
 	FPTR best_addr = 0;
 
 	// walk the cache, looking for valid entries
@@ -1234,7 +1259,7 @@ void symbol_manager::scan_cache_for_address(FPTR address)
 		}
 
 	// format the symbol and remember the last base
-	format_symbol(best_symbol, address - best_addr);
+	format_symbol(best_symbol.c_str(), address - best_addr);
 	m_last_base = best_addr;
 }
 
@@ -1244,7 +1269,7 @@ void symbol_manager::scan_cache_for_address(FPTR address)
 //  which is just the output of objdump
 //-------------------------------------------------
 
-bool symbol_manager::parse_sym_line(const char *line, FPTR &address, astring &symbol)
+bool symbol_manager::parse_sym_line(const char *line, FPTR &address, std::string &symbol)
 {
 #ifdef __GNUC__
 /*
@@ -1284,8 +1309,8 @@ bool symbol_manager::parse_sym_line(const char *line, FPTR &address, astring &sy
 				chptr++;
 
 			// extract the symbol name
-			symbol.cpy(chptr).trimspace();
-			return (symbol.len() > 0);
+			strtrimspace(symbol.assign(chptr));
+			return (symbol.length() > 0);
 		}
 	}
 #endif
@@ -1298,7 +1323,7 @@ bool symbol_manager::parse_sym_line(const char *line, FPTR &address, astring &sy
 //  generated map file
 //-------------------------------------------------
 
-bool symbol_manager::parse_map_line(const char *line, FPTR &address, astring &symbol)
+bool symbol_manager::parse_map_line(const char *line, FPTR &address, std::string &symbol)
 {
 #ifdef __GNUC__
 /*
@@ -1324,8 +1349,8 @@ bool symbol_manager::parse_map_line(const char *line, FPTR &address, astring &sy
 			chptr++;
 
 		// extract the symbol name
-		symbol.cpy(chptr).trimspace();
-		return (symbol.len() > 0);
+		strtrimspace(symbol.assign(chptr));
+		return (symbol.length() > 0);
 	}
 #endif
 	return false;
@@ -1339,16 +1364,16 @@ bool symbol_manager::parse_map_line(const char *line, FPTR &address, astring &sy
 void symbol_manager::format_symbol(const char *name, UINT32 displacement, const char *filename, int linenumber)
 {
 	// start with the address and offset
-	m_buffer.printf(" (%s", name);
+	strprintf(m_buffer, " (%s", name);
 	if (displacement != 0)
-		m_buffer.catprintf("+0x%04x", (UINT32)displacement);
+		strcatprintf(m_buffer, "+0x%04x", (UINT32)displacement);
 
 	// append file/line if present
 	if (filename != NULL)
-		m_buffer.catprintf(", %s:%d", filename, linenumber);
+		strcatprintf(m_buffer, ", %s:%d", filename, linenumber);
 
 	// close up the string
-	m_buffer.cat(")");
+	m_buffer.append(")");
 }
 
 
@@ -1400,8 +1425,8 @@ sampling_profiler::sampling_profiler(UINT32 max_seconds, UINT8 stack_depth = 0)
 		m_stack_depth(stack_depth),
 		m_entry_stride(stack_depth + 2),
 		m_buffer(max_seconds * 1000 * m_entry_stride),
-		m_buffer_ptr(m_buffer),
-		m_buffer_end(m_buffer + max_seconds * 1000 * m_entry_stride)
+		m_buffer_ptr(&m_buffer[0]),
+		m_buffer_end(&m_buffer[0] + max_seconds * 1000 * m_entry_stride)
 {
 }
 
@@ -1501,7 +1526,7 @@ void sampling_profiler::print_results(symbol_manager &symbols)
 	symbols.cache_symbols();
 
 	// step 1: find the base of each entry
-	for (FPTR *current = m_buffer; current < m_buffer_ptr; current += m_entry_stride)
+	for (FPTR *current = &m_buffer[0]; current < m_buffer_ptr; current += m_entry_stride)
 	{
 		assert(current[0] >= 1 && current[0] < m_entry_stride);
 
@@ -1511,11 +1536,11 @@ void sampling_profiler::print_results(symbol_manager &symbols)
 	}
 
 	// step 2: sort the results
-	qsort(m_buffer, (m_buffer_ptr - m_buffer) / m_entry_stride, m_entry_stride * sizeof(FPTR), compare_address);
+	qsort(&m_buffer[0], (m_buffer_ptr - &m_buffer[0]) / m_entry_stride, m_entry_stride * sizeof(FPTR), compare_address);
 
 	// step 3: count and collapse unique entries
 	UINT32 total_count = 0;
-	for (FPTR *current = m_buffer; current < m_buffer_ptr; )
+	for (FPTR *current = &m_buffer[0]; current < m_buffer_ptr; )
 	{
 		int count = 1;
 		FPTR *scan;
@@ -1532,11 +1557,11 @@ void sampling_profiler::print_results(symbol_manager &symbols)
 	}
 
 	// step 4: sort the results again, this time by frequency
-	qsort(m_buffer, (m_buffer_ptr - m_buffer) / m_entry_stride, m_entry_stride * sizeof(FPTR), compare_frequency);
+	qsort(&m_buffer[0], (m_buffer_ptr - &m_buffer[0]) / m_entry_stride, m_entry_stride * sizeof(FPTR), compare_frequency);
 
 	// step 5: print the results
 	UINT32 num_printed = 0;
-	for (FPTR *current = m_buffer; current < m_buffer_ptr && num_printed < 30; current += m_entry_stride)
+	for (FPTR *current = &m_buffer[0]; current < m_buffer_ptr && num_printed < 30; current += m_entry_stride)
 	{
 		// once we hit 0 frequency, we're done
 		if (current[0] == 0)

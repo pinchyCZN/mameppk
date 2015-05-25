@@ -99,7 +99,7 @@ void AuditDialog(HWND hParent)
 	}
 	else
 	{
-	    MessageBox(GetMainWindow(), _UIW(TEXT("Unable to Load Riched32.dll")),TEXT("Error"),
+		MessageBox(GetMainWindow(), _UIW(TEXT("Unable to Load Riched32.dll")),TEXT("Error"),
 				   MB_OK | MB_ICONERROR);
 	}
 }
@@ -115,6 +115,7 @@ const WCHAR *GetAuditString(int audit_result)
 	{
 	case media_auditor::CORRECT :
 	case media_auditor::BEST_AVAILABLE :
+	case media_auditor::NONE_NEEDED :
 		return _UIW(TEXT("Yes"));
 
 	case media_auditor::NOTFOUND :
@@ -138,64 +139,21 @@ BOOL IsAuditResultKnown(int audit_result)
 
 BOOL IsAuditResultYes(int audit_result)
 {
-	return audit_result == media_auditor::CORRECT || audit_result == media_auditor::BEST_AVAILABLE;
+	return audit_result == media_auditor::CORRECT
+		|| audit_result == media_auditor::BEST_AVAILABLE
+		|| audit_result == media_auditor::NONE_NEEDED;
 }
 
 BOOL IsAuditResultNo(int audit_result)
 {
-	return audit_result == media_auditor::NOTFOUND || audit_result == media_auditor::INCORRECT;
+	return audit_result == media_auditor::NOTFOUND
+		|| audit_result == media_auditor::INCORRECT;
 }
 
 
 /***************************************************************************
     Internal functions
  ***************************************************************************/
-#ifdef UNUSED_FUNCTION
-static BOOL RomsetNotExist(int game)
-{
-	const game_driver *drv;
-	int cl;
-
-	// skip non cpu or chd
-	if (!DriverUsesRoms(game) || DriverIsHarddisk(game))
-		return FALSE;
-
-	// find the file
-	for (drv = &driver_list::driver(game); drv != NULL && ((cl = driver_list::clone(*drv)) != -1); drv = &driver_list::driver(cl))
-	{
-		file_error filerr;
-		astring *fname;
-
-		// open the file if we can
-		fname = astring_assemble_2(astring_alloc(), drv->name, ".zip");
-		emu_file file = emu_file(MameUIGlobal().media_path(), OPEN_FLAG_READ);
-		filerr = file.open(astring_c(fname));
-		astring_free(fname);
-		if (filerr == FILERR_NONE)
-		{
-			file.close();
-			return FALSE;
-		}
-
-#if 0 // enable it will decrease audit speed
-		mame_path *path;
-
-		// open the folder if we can
-		fname = astring_assemble_3(astring_alloc(), SEARCHPATH_ROM, PATH_SEPARATOR, drv->name);
-		path = mame_openpath(mame_options(), astring_c(fname));
-		astring_free(fname);
-		if (path != NULL)
-		{
-			mame_closepath(path);
-			return FALSE;
-		}
-#endif
-	}
-
-	return TRUE;
-}
-#endif
-
 // Verifies the ROM set while calling SetRomAuditResults
 int MameUIVerifyRomSet(int game, BOOL isComplete)
 {
@@ -216,9 +174,9 @@ int MameUIVerifyRomSet(int game, BOOL isComplete)
 
 	// output the summary of the audit
 	const game_driver *drv = &driver_list::driver(game);
-	astring summary_string;
+	std::string summary_string;
 	auditor.summarize(drv->name, &summary_string);
-	DetailsPrintf(TEXT("%s"), _UTF8Unicode(ConvertToWindowsNewlines(summary_string.cstr())));
+	DetailsPrintf(TEXT("%s"), _UTF8Unicode(ConvertToWindowsNewlines(summary_string.c_str())));
 
 	SetRomAuditResults(game, summary);
 	return summary;
@@ -232,11 +190,12 @@ int MameUIVerifySampleSet(int game, BOOL isComplete)
 	media_auditor auditor(enumerator);
 	media_auditor::summary summary = auditor.audit_samples();
 
+	std::string summary_string;
+
 	// output the summary of the audit
 	const game_driver *drv = &driver_list::driver(game);
-	astring summary_string;
 	auditor.summarize(drv->name, &summary_string);
-	DetailsPrintf(TEXT("%s"), _UTF8Unicode(ConvertToWindowsNewlines(summary_string.cstr())));
+	DetailsPrintf(TEXT("%s"), _UTF8Unicode(ConvertToWindowsNewlines(summary_string.c_str())));
 
 	SetSampleAuditResults(game, summary);
 	return summary;
