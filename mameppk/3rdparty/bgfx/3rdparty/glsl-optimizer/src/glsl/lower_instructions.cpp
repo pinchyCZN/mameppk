@@ -1,5 +1,5 @@
 /*
- * Copyright Â© 2010 Intel Corporation
+ * Copyright ‘§ 2010 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -413,7 +413,7 @@ lower_instructions_visitor::ldexp_to_arith(ir_expression *ir)
    i.insert_before(assign(resulting_biased_exp,
                           add(extracted_biased_exp, exp)));
 
-   /* Test if result is Â±0.0, subnormal, or underflow by checking if the
+   /* Test if result is ‘¯0.0, subnormal, or underflow by checking if the
     * resulting biased exponent would be less than 0x1. If so, the result is
     * 0.0 with the sign of x. (Actually, invert the conditions so that
     * immediate values are the second arguments, which is better for i965)

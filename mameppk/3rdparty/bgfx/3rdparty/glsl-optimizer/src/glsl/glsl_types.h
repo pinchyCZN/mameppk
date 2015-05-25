@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright Â© 2009 Intel Corporation
+ * Copyright ‘§ 2009 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -28,6 +28,7 @@
 
 #include <string.h>
 #include <assert.h>
+#include "c99_compat.h"
 #include "main/mtypes.h" /* for gl_texture_index, C++'s enum rules are broken */
 
 #ifdef __cplusplus

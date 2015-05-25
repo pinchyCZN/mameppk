@@ -1,5 +1,5 @@
 /*
- * Copyright Â© 2011 Intel Corporation
+ * Copyright ‘§ 2011 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -36,10 +36,9 @@
 
 
 void
-_mesa_reference_shader(struct gl_context *ctx, struct gl_shader **ptr,
+_mesa_reference_shader(struct gl_context *, struct gl_shader **ptr,
                        struct gl_shader *sh)
 {
-   (void) ctx;
    *ptr = sh;
 }
 

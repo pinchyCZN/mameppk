@@ -1,5 +1,5 @@
 /*
- * Copyright Â© 2008, 2009 Intel Corporation
+ * Copyright ‘§ 2008, 2009 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -40,11 +40,11 @@
 
 static int glsl_version = 330;
 
-extern "C" void
-_mesa_error_no_memory(const char *caller)
-{
-   fprintf(stderr, "Mesa error: out of memory in %s", caller);
-}
+//extern "C" void
+//_mesa_error_no_memory(const char *caller)
+//{
+//   fprintf(stderr, "Mesa error: out of memory in %s", caller);
+//}
 
 static void
 initialize_context(struct gl_context *ctx, gl_api api)

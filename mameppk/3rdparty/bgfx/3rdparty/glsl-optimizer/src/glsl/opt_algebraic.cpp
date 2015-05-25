@@ -1,5 +1,5 @@
 /*
- * Copyright Â© 2010 Intel Corporation
+ * Copyright ‘§ 2010 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -129,7 +129,7 @@ is_less_than_one(ir_constant *ir)
       return false;
 
    unsigned component = 0;
-   for (unsigned c = 0; c < ir->type->vector_elements; c++) {
+   for (int c = 0; c < ir->type->vector_elements; c++) {
       if (ir->get_float_component(c) < 1.0f)
          component++;
    }
@@ -144,7 +144,7 @@ is_greater_than_zero(ir_constant *ir)
       return false;
 
    unsigned component = 0;
-   for (unsigned c = 0; c < ir->type->vector_elements; c++) {
+   for (int c = 0; c < ir->type->vector_elements; c++) {
       if (ir->get_float_component(c) > 0.0f)
          component++;
    }

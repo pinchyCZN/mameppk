@@ -34,7 +34,7 @@ int os_uuid(lua_State* L)
 	
 	/* If a name argument is supplied, build the UUID from that. For speed we
 	 * are using a simple DBJ2 hashing function; if this isn't sufficient we
-	 * can switch to a full RFC 4122 ┬з4.3 implementation later. */
+	 * can switch to a full RFC 4122 Се4.3 implementation later. */
 	const char* name = luaL_optstring(L, 1, NULL);
 	if (name != NULL)
 	{

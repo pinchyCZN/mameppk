@@ -1,5 +1,5 @@
 /*
- * Copyright Â© 2013 Intel Corporation
+ * Copyright ‘§ 2013 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -53,7 +53,6 @@
  *    name and parameters.
  */
 
-#define _USE_MATH_DEFINES
 #include <stdarg.h>
 #include <stdio.h>
 #include "main/core.h" /* for struct gl_shader */

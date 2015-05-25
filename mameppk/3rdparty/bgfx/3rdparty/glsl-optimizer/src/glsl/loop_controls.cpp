@@ -1,5 +1,5 @@
 /*
- * Copyright Â© 2010 Intel Corporation
+ * Copyright ‘§ 2010 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -44,8 +44,9 @@
  * \c NULL if no initializer can be found.
  */
 ir_rvalue *
-find_initial_value(ir_loop *loop, ir_variable *var)
+find_initial_value(ir_loop *loop, ir_variable *var, ir_instruction **out_containing_ir)
 {
+   *out_containing_ir = NULL;
    ir_variable_refcount_visitor refs;
    
    for (exec_node *node = loop->prev;
@@ -74,7 +75,10 @@ find_initial_value(ir_loop *loop, ir_variable *var)
 	 ir_variable *assignee = assign->lhs->whole_variable_referenced();
 
 	 if (assignee == var)
+	 {
+	    *out_containing_ir = assign;
 	    return (assign->condition != NULL) ? NULL : assign->rhs;
+	 }
 
 	 break;
       }

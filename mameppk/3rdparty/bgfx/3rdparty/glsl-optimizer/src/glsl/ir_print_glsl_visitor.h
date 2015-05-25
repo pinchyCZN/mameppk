@@ -1,6 +1,6 @@
 /* -*- c++ -*- */
 /*
- * Copyright Â© 2010 Intel Corporation
+ * Copyright ‘§ 2010 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
@@ -97,6 +97,9 @@ private:
 	size_t m_Size;
 	size_t m_Capacity;
 };
+
+
+extern void print_float (string_buffer& buffer, float f);
 
 
 #endif /* IR_PRINT_GLSL_VISITOR_H */
