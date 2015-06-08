@@ -603,7 +603,7 @@ static yyconst flex_int16_t yy_chk[482] =
 #line 1 "src/glsl/glcpp/glcpp-lex.l"
 #line 2 "src/glsl/glcpp/glcpp-lex.l"
 /*
- * Copyright ‘§ 2010 Intel Corporation
+ * Copyright Â© 2010 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),

@@ -2,7 +2,7 @@
 # Provides sane project defaults and macros common to LuaDist CMake builds.
 # 
 # Copyright (C) 2007-2012 LuaDist.
-# by David Manura, Peter Drahoì@
+# by David Manura, Peter Draho≈°
 # Redistribution and use of this file is allowed according to the terms of the MIT license.
 # For details see the COPYRIGHT file distributed with LuaDist.
 # Please note that the package source code is licensed under its own license.

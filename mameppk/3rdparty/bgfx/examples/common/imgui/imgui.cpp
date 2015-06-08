@@ -77,7 +77,7 @@ void  imguiFree(void* _ptr, void*);
 #define IMGUI_CLAMP(_a, _min, _max) IMGUI_MIN(IMGUI_MAX(_a, _min), _max)
 
 BX_PRAGMA_DIAGNOSTIC_IGNORED_MSVC(4505); // error C4505: '' : unreferenced local function has been removed
-BX_PRAGMA_DIAGNOSTIC_IGNORED_CLANG_GCC("-Wunused-function"); // warning: Åeint rect_width_compare(const void*, const void*)Åf defined but not used
+BX_PRAGMA_DIAGNOSTIC_IGNORED_CLANG_GCC("-Wunused-function"); // warning: ‚Äòint rect_width_compare(const void*, const void*)‚Äô defined but not used
 BX_PRAGMA_DIAGNOSTIC_PUSH();
 BX_PRAGMA_DIAGNOSTIC_IGNORED_CLANG_GCC("-Wtype-limits"); // warning: comparison is always true due to limited range of data type
 #define STBTT_malloc(_size, _userData) imguiMalloc(_size, _userData)

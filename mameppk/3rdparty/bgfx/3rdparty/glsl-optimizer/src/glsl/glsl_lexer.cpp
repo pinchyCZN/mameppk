@@ -1095,7 +1095,7 @@ static yyconst flex_int16_t yy_chk[1453] =
 #line 1 "src/glsl/glsl_lexer.ll"
 #line 2 "src/glsl/glsl_lexer.ll"
 /*
- * Copyright ‘§ 2008, 2009 Intel Corporation
+ * Copyright Â© 2008, 2009 Intel Corporation
  *
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),

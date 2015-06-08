@@ -1,6 +1,6 @@
 /*
- * Based on work Copyright ‘§ 2010 Intel Corporation, vector splitting
- * implemented by Copyright ‘§ 2014 Unity Technologies
+ * Based on work Copyright Â© 2010 Intel Corporation, vector splitting
+ * implemented by Copyright Â© 2014 Unity Technologies
  * 
  * Permission is hereby granted, free of charge, to any person obtaining a
  * copy of this software and associated documentation files (the "Software"),
