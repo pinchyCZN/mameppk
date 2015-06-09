@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:Fabio Priuli, Wilbert Pol
 #ifndef __GB_MBC_H
 #define __GB_MBC_H
 
@@ -35,7 +37,7 @@ class gb_rom_mbc1_device : public gb_rom_mbc_device
 public:
 
 	enum {
-		MODE_16M_8k  = 0, /// 16Mbit ROM, 8kBit RAM
+		MODE_16M_64k = 0, /// 16Mbit ROM, 64kBit RAM
 		MODE_4M_256k = 1, /// 4Mbit ROM, 256kBit RAM
 	};
 
@@ -45,7 +47,7 @@ public:
 
 	// device-level overrides
 	virtual void device_start() { shared_start(); save_item(NAME(m_mode)); };
-	virtual void device_reset() { shared_reset(); m_mode = MODE_16M_8k; };
+	virtual void device_reset() { shared_reset(); m_mode = MODE_16M_64k; };
 	virtual void set_additional_wirings(UINT8 mask, int shift) { m_mask = mask; m_shift = shift; }  // these get set at cart loading
 
 	virtual DECLARE_READ8_MEMBER(read_rom);
@@ -189,14 +191,20 @@ public:
 	UINT8 m_bank_mask, m_bank, m_reg;
 };
 
-// ======================> gb_rom_sachen1_device
+// ======================> gb_rom_sachen_mmc1_device
 
-class gb_rom_sachen1_device : public gb_rom_mbc1_device
+class gb_rom_sachen_mmc1_device : public gb_rom_mbc_device
 {
 public:
 
+	enum {
+		MODE_LOCKED,
+		MODE_UNLOCKED
+	};
+
 	// construction/destruction
-	gb_rom_sachen1_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock);
+	gb_rom_sachen_mmc1_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock);
+	gb_rom_sachen_mmc1_device(const machine_config &mconfig, device_type type, const char *name, const char *tag, device_t *owner, UINT32 clock, const char *shortname, const char *source);
 
 	// device-level overrides
 	virtual void device_start();
@@ -207,7 +215,32 @@ public:
 	virtual DECLARE_READ8_MEMBER(read_ram) { return 0xff; }
 	virtual DECLARE_WRITE8_MEMBER(write_ram) { }
 
-	UINT8 m_base_bank, m_mask;
+	UINT8 m_base_bank, m_mask, m_mode, m_unlock_cnt;
+};
+
+// ======================> gb_rom_sachen_mmc2_device
+
+class gb_rom_sachen_mmc2_device : public gb_rom_sachen_mmc1_device
+{
+public:
+
+	enum {
+		MODE_LOCKED_DMG,
+		MODE_LOCKED_CGB,
+		MODE_UNLOCKED
+	};
+
+	// construction/destruction
+	gb_rom_sachen_mmc2_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock);
+
+	// device-level overrides
+	virtual void device_start();
+	virtual void device_reset();
+
+	virtual DECLARE_READ8_MEMBER(read_rom);
+	virtual DECLARE_READ8_MEMBER(read_ram);
+	virtual DECLARE_WRITE8_MEMBER(write_ram);
+
 };
 
 // ======================> gb_rom_188in1_device

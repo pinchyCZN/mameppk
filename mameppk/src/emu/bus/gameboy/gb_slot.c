@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:Fabio Priuli, Wilbert Pol
 /***********************************************************************************************************
 
 
@@ -436,7 +438,7 @@ bool megaduck_cart_slot_device::call_load()
 
 void base_gb_cart_slot_device::call_unload()
 {
-	if (m_cart && m_cart->get_ram_size() && m_cart->get_has_battery())
+	if (m_cart && m_cart->get_ram_base() && m_cart->get_ram_size() && m_cart->get_has_battery())
 		battery_save(m_cart->get_ram_base(), m_cart->get_ram_size());
 }
 

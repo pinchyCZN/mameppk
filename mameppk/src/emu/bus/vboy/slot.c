@@ -1,5 +1,5 @@
 // license:BSD-3-Clause
-// copyright-holders:etabeta
+// copyright-holders:Fabio Priuli
 /***********************************************************************************************************
 
     Nintendo Virtual Boy cart emulation
@@ -213,7 +213,7 @@ bool vboy_cart_slot_device::call_load()
 
 void vboy_cart_slot_device::call_unload()
 {
-	if (m_cart && m_cart->get_eeprom_size())
+	if (m_cart && m_cart->get_eeprom_base() && m_cart->get_eeprom_size())
 		battery_save(m_cart->get_eeprom_base(), m_cart->get_eeprom_size() * 4);
 }
 
