@@ -26,7 +26,6 @@
 #define MCFG_HMCS40_WRITE_D_CB(_devcb) \
 	hmcs40_cpu_device::set_write_d_callback(*device, DEVCB_##_devcb);
 
-
 enum
 {
 	HMCS40_PORT_R0X = 0,
@@ -37,6 +36,13 @@ enum
 	HMCS40_PORT_R5X,
 	HMCS40_PORT_R6X,
 	HMCS40_PORT_R7X
+};
+
+enum
+{
+	HMCS40_INPUT_LINE_INT0 = 0,
+	HMCS40_INPUT_LINE_INT1,
+	HMCS40_INPUT_LINE_HLT
 };
 
 
@@ -153,7 +159,7 @@ protected:
 	virtual void execute_run();
 
 	// device_memory_interface overrides
-	virtual const address_space_config *memory_space_config(address_spacenum spacenum = AS_0) const { return(spacenum == AS_PROGRAM) ? &m_program_config :((spacenum == AS_DATA) ? &m_data_config : NULL); }
+	virtual const address_space_config *memory_space_config(address_spacenum spacenum = AS_0) const { return(spacenum == AS_PROGRAM) ? &m_program_config : ((spacenum == AS_DATA) ? &m_data_config : NULL); }
 
 	// device_disasm_interface overrides
 	virtual UINT32 disasm_min_opcode_bytes() const { return 2; }
@@ -181,6 +187,8 @@ protected:
 	UINT8 m_i;          // 4-bit immediate opcode param
 	int m_eint_line;    // which input_line caused an interrupt
 	emu_timer *m_timer;
+	int m_halt;         // internal HLT state
+	attotime m_timer_halted_remain;
 	int m_icount;
 
 	UINT16 m_pc;        // Program Counter

@@ -1,5 +1,5 @@
-// license:MAME
-// copyright-holders: Ryan Holtz (Mooglyguy), Sandro Ronco, Felipe Sanches
+// license:BSD-3-Clause
+// copyright-holders:Ryan Holtz, Sandro Ronco, Felipe Sanches
 /***************************************************************************
 
     Atmel 8-bit AVR simulator
@@ -1158,7 +1158,7 @@ void avr8_device::timer_tick(int cycles)
 //TODO  UINT8 int0[2] = { AVR8_INTIDX_OCF0A, AVR8_INTIDX_OCF0B };
 
 #define LOG_TIMER_0 0
-#define LOG_TIMER_5 1
+#define LOG_TIMER_5 0
 // Timer 0 Handling
 void avr8_device::timer0_tick()
 {
@@ -1905,8 +1905,10 @@ void avr8_device::timer5_tick()
 	case WGM5_CTC_ICR:
 	case WGM5_FAST_PWM_ICR:
 	case WGM5_FAST_PWM_OCR:
-		printf("Unimplemented timer#5 waveform generation mode: WGMM5=0x%02X\n", AVR8_WGM5);
-		break;
+#if LOG_TIMER_5
+			printf("Unimplemented timer#5 waveform generation mode: AVR8_WGM5 = 0x%02X\n", AVR8_WGM5);
+#endif
+			break;
 
 		case WGM5_CTC_OCR:
 		//TODO: verify this! Can be very wrong!!!
@@ -2892,7 +2894,7 @@ READ8_MEMBER( avr8_device::regs_r )
 /* Two-wire registers: */
 		case AVR8_REGIDX_TWCR:
 		/*TODO: needed for Replicator 1
-		BLOQUEIA PROGRESSO DA EXECUCAO DO FIRMWARE no endereco 105EC*/
+		BLOQUEIA PROGRESSO DA EXECU??O DO FIRMWARE no endere?o 105EC*/
 			return m_r[offset];
 
 		case AVR8_REGIDX_TWSR:

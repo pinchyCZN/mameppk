@@ -1,4 +1,4 @@
-// license:MAME
+// license:BSD-3-Clause
 // copyright-holders:Angelo Salese, Mariusz Wojcieszek
 /*****************************************************************************
  *
@@ -6,17 +6,6 @@
  * Sega SCUDSP emulator version 1.00
  *
  * copyright Angelo Salese & Mariusz Wojcieszek, all rights reserved
- *
- *   - This source code is released as freeware for non-commercial purposes.
- *   - You are free to use and redistribute this code in modified or
- *     unmodified form, provided you list me in the credits.
- *   - If you modify this source code, you must add a notice to each modified
- *     source file that it has been changed.  If you're a nice person, you
- *     will clearly mark each change too.  :)
- *   - If you wish to use this for commercial purposes, please contact me at
- *     lordkale@libero.it or <insert_marusz_wojcieszek_mail_here>
- *   - This entire notice must remain in the source code.
- *
  *
  * Changelog:
  * 131010: Angelo Salese

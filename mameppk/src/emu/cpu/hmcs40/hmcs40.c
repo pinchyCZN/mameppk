@@ -215,6 +215,7 @@ void hmcs40_cpu_device::device_start()
 	m_prev_op = 0;
 	m_i = 0;
 	m_eint_line = 0;
+	m_halt = 0;
 	m_pc = 0;
 	m_prev_pc = 0;
 	m_page = 0;
@@ -242,6 +243,8 @@ void hmcs40_cpu_device::device_start()
 	save_item(NAME(m_prev_op));
 	save_item(NAME(m_i));
 	save_item(NAME(m_eint_line));
+	save_item(NAME(m_halt));
+	save_item(NAME(m_timer_halted_remain));
 	save_item(NAME(m_pc));
 	save_item(NAME(m_prev_pc));
 	save_item(NAME(m_page));
@@ -477,9 +480,25 @@ void hmcs40_cpu_device::do_interrupt()
 
 void hmcs40_cpu_device::execute_set_input(int line, int state)
 {
+	state = (state) ? 1 : 0;
+
+	// halt/unhalt mcu
+	if (line == HMCS40_INPUT_LINE_HLT && state != m_halt)
+	{
+		if (state)
+		{
+			m_timer_halted_remain = m_timer->remaining();
+			m_timer->reset();
+		}
+		else
+			m_timer->adjust(m_timer_halted_remain);
+		
+		m_halt = state;
+		return;
+	}
+	
 	if (line != 0 && line != 1)
 		return;
-	state = (state) ? 1 : 0;
 
 	// external interrupt request on rising edge
 	if (state && !m_int[line])
@@ -551,24 +570,34 @@ inline void hmcs40_cpu_device::increment_pc()
 
 void hmcs40_cpu_device::execute_run()
 {
+	// in HLT state, the internal clock is not running
+	if (m_halt)
+	{
+		m_icount = 0;
+		return;
+	}
+	
 	while (m_icount > 0)
 	{
-		m_icount--;
-
 		// LPU is handled 1 cycle later
 		if ((m_prev_op & 0x3e0) == 0x340)
 			m_pc = ((m_page << 6) | (m_pc & 0x3f)) & m_pcmask;
-
-		// check/handle interrupt, but not in the middle of a long jump
-		if (m_ie && (m_iri || m_irt) && (m_op & 0x3e0) != 0x340)
-			do_interrupt();
 
 		// remember previous state
 		m_prev_op = m_op;
 		m_prev_pc = m_pc;
 
+		// check/handle interrupt, but not in the middle of a long jump
+		if (m_ie && (m_iri || m_irt) && (m_prev_op & 0x3e0) != 0x340)
+		{
+			do_interrupt();
+			if (m_icount <= 0)
+				break;
+		}
+
 		// fetch next opcode
 		debugger_instruction_hook(this, m_pc);
+		m_icount--;
 		m_op = m_program->read_word(m_pc << 1) & 0x3ff;
 		m_i = BITSWAP8(m_op,7,6,5,4,0,1,2,3) & 0xf; // reversed bit-order for 4-bit immediate param (except for XAMR, REDD, SEDD)
 		increment_pc();
