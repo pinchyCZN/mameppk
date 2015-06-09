@@ -1,3 +1,5 @@
+// license:???
+// copyright-holders:Lee Taylor,John Clegg,Tomasz Slanina
 /****************************************************************************
 
 Traverse USA / Zippy Race  (c) 1983 Irem

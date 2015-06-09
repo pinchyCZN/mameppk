@@ -1,3 +1,5 @@
+// license:???
+// copyright-holders:Marc Lafontaine, Couriersud
 /***************************************************************************
 
 Popeye  (c) 1982 Nintendo
@@ -49,11 +51,14 @@ NETLIST_END()
 
 static NETLIST_START(nl_popeye)
 
+	/* register hard coded netlists */
+
+	LOCAL_SOURCE(nl_popeye_imp_changer)
+
 	/* Standard stuff */
 
 	SOLVER(Solver, 48000)
 	PARAM(Solver.ACCURACY, 1e-5)
-	PARAM(Solver.LTE,     5e-2) // Default is not enough for paddle control
 	ANALOG_INPUT(V5, 5)
 
 	/* AY 8910 internal resistors */

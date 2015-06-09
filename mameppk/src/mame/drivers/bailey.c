@@ -1,8 +1,13 @@
+// license:BSD-3-Clause
+// copyright-holders:Fabio Priuli
 /***************************************************************************
 
  Bailey International discrete hardware games
 
+ Fighter Squadron (1976)
  Fun Four (1976)
+ Missile Command (1976)
+ Sebring (1976)
 
 ***************************************************************************/
 

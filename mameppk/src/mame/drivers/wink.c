@@ -1,3 +1,5 @@
+// license:???
+// copyright-holders:HIGHWAYMAN, Nicola Salmoria, Pierpaolo Prazzoli
 /*
     Wink    -   (c) 1985 Midcoin
 

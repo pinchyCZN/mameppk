@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:Samuele Zannoli
 /*
 Chihiro is an Xbox-based arcade system from SEGA.
 
@@ -374,6 +376,7 @@ Thanks to Alex, Mr Mudkips, and Philip Burke for this info.
 #define LOG_PCI
 //#define LOG_OHCI
 //#define LOG_BASEBOARD
+//#define USB_ENABLED
 
 class chihiro_state : public driver_device
 {
@@ -382,6 +385,11 @@ public:
 		driver_device(mconfig, type, tag),
 		nvidia_nv2a(NULL),
 		debug_irq_active(false),
+		debug_irq_number(0),
+		dimm_board_memory(NULL),
+		dimm_board_memory_size(0),
+		usbhack_index(-1),
+		usbhack_counter(0),
 		m_maincpu(*this, "maincpu") { }
 
 	DECLARE_READ32_MEMBER(geforce_r);
@@ -403,6 +411,10 @@ public:
 	int smbus_pic16lc(int command, int rw, int data);
 	int smbus_cx25871(int command, int rw, int data);
 	int smbus_eeprom(int command, int rw, int data);
+	void usb_ohci_interrupts();
+	void usb_ohci_read_endpoint_descriptor(UINT32 address);
+	void usb_ohci_read_transfer_descriptor(UINT32 address);
+	void usb_ohci_read_isochronous_transfer_descriptor(UINT32 address);
 	void baseboard_ide_event(int type, UINT8 *read, UINT8 *write);
 	UINT8 *baseboard_ide_dimmboard(UINT32 lba);
 	void dword_write_le(UINT8 *addr, UINT32 d);
@@ -419,6 +431,7 @@ public:
 	DECLARE_WRITE_LINE_MEMBER(chihiro_pit8254_out2_changed);
 	IRQ_CALLBACK_MEMBER(irq_callback);
 	TIMER_CALLBACK_MEMBER(audio_apu_timer);
+	TIMER_CALLBACK_MEMBER(usb_ohci_timer);
 
 	struct chihiro_devices {
 		pic8259_device    *pic8259_1;
@@ -461,14 +474,102 @@ public:
 		UINT32 mixer_regs[0x80 / 4];
 		UINT32 controller_regs[0x38 / 4];
 	} ac97st;
+	struct ohci_state {
+		UINT32 hc_regs[255];
+		int ports[4 + 1];
+		emu_timer *timer;
+		int state;
+		UINT32 framenumber;
+		address_space *space;
+		struct {
+			int mps; // MaximumPacketSize
+			int f; // Format
+			int k; // sKip
+			int s; // Speed
+			int d; // Direction
+			int en; // EndpointNumber
+			int fa; // FunctionAddress
+			UINT32 tailp; // TDQueueTailPointer
+			UINT32 headp; // TDQueueHeadPointer
+			UINT32 nexted; // NextED
+			int c; // toggleCarry
+			int h; // Halted
+		} endpoint_descriptor;
+		struct {
+			int cc; // ConditionCode
+			int ec; // ErrorCount
+			int t; // DataToggle
+			int di; // DelayInterrupt
+			int dp; // Direction/PID
+			int r; // bufferRounding
+			UINT32 cbp; // CurrentBufferPointer
+			UINT32 nexttd; // NextTD
+			UINT32 be; // BufferEnd
+		} transfer_descriptor;
+		struct {
+			int cc; // ConditionCode
+			int fc; // FrameCount
+			int di; // DelayInterrupt
+			int sf; // StartingFrame
+			UINT32 bp0; // BufferPage0
+			UINT32 nexttd; // NextTD
+			UINT32 be; // BufferEnd
+			UINT32 offset[8]; // Offset/PacketStatusWord
+		} isochronous_transfer_descriptor;
+	} ohcist;
 	UINT8 pic16lc_buffer[0xff];
 	nv2a_renderer *nvidia_nv2a;
 	bool debug_irq_active;
 	int debug_irq_number;
 	UINT8 *dimm_board_memory;
 	UINT32 dimm_board_memory_size;
+	int usbhack_index;
 	int usbhack_counter;
 	required_device<cpu_device> m_maincpu;
+
+	enum OHCIRegisters {
+		HcRevision=0,
+		HcControl,
+		HcCommandStatus,
+		HcInterruptStatus,
+		HcInterruptEnable,
+		HcInterruptDisable,
+		HcHCCA,
+		HcPeriodCurrentED,
+		HcControlHeadED,
+		HcControlCurrentED,
+		HcBulkHeadED,
+		HcBulkCurrentED,
+		HcDoneHead,
+		HcFmInterval,
+		HcFmRemaining,
+		HcFmNumber,
+		HcPeriodicStart,
+		HcLSThreshold,
+		HcRhDescriptorA,
+		HcRhDescriptorB,
+		HcRhStatus,
+		HcRhPortStatus0
+	};
+
+	enum OHCIHostControllerFunctionalState {
+		UsbReset=0,
+		UsbResume,
+		UsbOperational,
+		UsbSuspend
+	};
+
+	enum OHCIInterrupt {
+		SchedulingOverrun=1,
+		WritebackDoneHead=2,
+		StartofFrame=4,
+		ResumeDetected=8,
+		UnrecoverableError=16,
+		FrameNumberOverflow=32,
+		RootHubStatusChange=64,
+		OwnershipChange=0x40000000,
+		MasterInterruptEnable=0x80000000
+	};
 };
 
 /* jamtable instructions for Chihiro (different from console)
@@ -713,6 +814,62 @@ static void dump_list_command(running_machine &machine, int ref, int params, con
 	}
 }
 
+static void dump_dpc_command(running_machine &machine, int ref, int params, const char **param)
+{
+	chihiro_state *state = machine.driver_data<chihiro_state>();
+	address_space &space = state->m_maincpu->space();
+	UINT64 addr;
+	offs_t address;
+
+	if (params < 1)
+		return;
+	if (!debug_command_parameter_number(machine, param[0], &addr))
+		return;
+	address = (offs_t)addr;
+	if (!debug_cpu_translate(space, TRANSLATE_READ_DEBUG, &address))
+	{
+		debug_console_printf(machine, "Address is unmapped.\n");
+		return;
+	}
+	debug_console_printf(machine, "Type %d word\n", space.read_word_unaligned(address));
+	debug_console_printf(machine, "Inserted %d byte\n", space.read_byte(address + 2));
+	debug_console_printf(machine, "Padding %d byte\n", space.read_byte(address + 3));
+	debug_console_printf(machine, "DpcListEntry {%08X,%08X} _LIST_ENTRY\n", space.read_dword_unaligned(address + 4), space.read_dword_unaligned(address + 8));
+	debug_console_printf(machine, "DeferredRoutine %08X dword\n", space.read_dword_unaligned(address + 12));
+	debug_console_printf(machine, "DeferredContext %08X dword\n", space.read_dword_unaligned(address + 16));
+	debug_console_printf(machine, "SystemArgument1 %08X dword\n", space.read_dword_unaligned(address + 20));
+	debug_console_printf(machine, "SystemArgument2 %08X dword\n", space.read_dword_unaligned(address + 24));
+}
+
+static void dump_timer_command(running_machine &machine, int ref, int params, const char **param)
+{
+	chihiro_state *state = machine.driver_data<chihiro_state>();
+	address_space &space = state->m_maincpu->space();
+	UINT64 addr;
+	offs_t address;
+
+	if (params < 1)
+		return;
+	if (!debug_command_parameter_number(machine, param[0], &addr))
+		return;
+	address = (offs_t)addr;
+	if (!debug_cpu_translate(space, TRANSLATE_READ_DEBUG, &address))
+	{
+		debug_console_printf(machine, "Address is unmapped.\n");
+		return;
+	}
+	debug_console_printf(machine, "Header.Type %d byte\n", space.read_byte(address));
+	debug_console_printf(machine, "Header.Absolute %d byte\n", space.read_byte(address + 1));
+	debug_console_printf(machine, "Header.Size %d byte\n", space.read_byte(address + 2));
+	debug_console_printf(machine, "Header.Inserted %d byte\n", space.read_byte(address + 3));
+	debug_console_printf(machine, "Header.SignalState %08X dword\n", space.read_dword_unaligned(address + 4));
+	debug_console_printf(machine, "Header.WaitListEntry {%08X,%08X} _LIST_ENTRY\n", space.read_dword_unaligned(address + 8), space.read_dword_unaligned(address + 12));
+	debug_console_printf(machine, "DueTime %" I64FMT "x qword\n", (INT64)space.read_qword_unaligned(address + 16));
+	debug_console_printf(machine, "TimerListEntry {%08X,%08X} _LIST_ENTRY\n", space.read_dword_unaligned(address + 24), space.read_dword_unaligned(address + 28));
+	debug_console_printf(machine, "Dpc %08X dword\n", space.read_dword_unaligned(address + 32));
+	debug_console_printf(machine, "Period %d dword\n", space.read_dword_unaligned(address + 36));
+}
+
 static void curthread_command(running_machine &machine, int ref, int params, const char **param)
 {
 	chihiro_state *state = machine.driver_data<chihiro_state>();
@@ -870,6 +1027,8 @@ static void help_command(running_machine &machine, int ref, int params, const ch
 	debug_console_printf(machine, "  chihiro dump_string,<address> -- Dump _STRING object at <address>\n");
 	debug_console_printf(machine, "  chihiro dump_process,<address> -- Dump _PROCESS object at <address>\n");
 	debug_console_printf(machine, "  chihiro dump_list,<address>[,<offset>] -- Dump _LIST_ENTRY chain starting at <address>\n");
+	debug_console_printf(machine, "  chihiro dump_dpc,<address> -- Dump _KDPC object at <address>\n");
+	debug_console_printf(machine, "  chihiro dump_timer,<address> -- Dump _KTIMER object at <address>\n");
 	debug_console_printf(machine, "  chihiro curthread -- Print information about current thread\n");
 	debug_console_printf(machine, "  chihiro irq,<number> -- Generate interrupt with irq number 0-15\n");
 	debug_console_printf(machine, "  chihiro nv2a_combiners -- Toggle use of register combiners\n");
@@ -892,6 +1051,10 @@ static void chihiro_debug_commands(running_machine &machine, int ref, int params
 		dump_process_command(machine, ref, params - 1, param + 1);
 	else if (strcmp("dump_list", param[0]) == 0)
 		dump_list_command(machine, ref, params - 1, param + 1);
+	else if (strcmp("dump_dpc", param[0]) == 0)
+		dump_dpc_command(machine, ref, params - 1, param + 1);
+	else if (strcmp("dump_timer", param[0]) == 0)
+		dump_timer_command(machine, ref, params - 1, param + 1);
 	else if (strcmp("curthread", param[0]) == 0)
 		curthread_command(machine, ref, params - 1, param + 1);
 	else if (strcmp("irq", param[0]) == 0)
@@ -1014,7 +1177,7 @@ static void geforce_pci_w(device_t *busdevice, device_t *device, int function, i
 }
 
 /*
- * ohci usb controller placeholder
+ * ohci usb controller (placeholder for now)
  */
 
 #ifdef LOG_OHCI
@@ -1044,56 +1207,230 @@ static const char *const usbregnames[] = {
 };
 #endif
 
+static const struct {
+	const char *game_name;
+	struct {
+		UINT32 address;
+		UINT8 write_byte;
+	} modify[16];
+} hacks[2] = { { "chihiro", { { 0x6a79f, 0x01 }, { 0x6a7a0, 0x00 }, { 0x6b575, 0x00 }, { 0x6b576, 0x00 }, { 0x6b5af, 0x75 }, { 0x6b78a, 0x75 }, { 0x6b7ca, 0x00 }, { 0x6b7b8, 0x00 }, { 0x8f5b2, 0x75 }, { 0x79a9e, 0x74 }, { 0x79b80, 0x74 }, { 0x79b97, 0x74 }, { 0, 0 } } },
+				{ "outr2", { { 0x12e4cf, 0x01 }, { 0x12e4d0, 0x00 }, { 0x4793e, 0x01 }, { 0x4793f, 0x00 }, { 0x47aa3, 0x01 }, { 0x47aa4, 0x00 }, { 0x14f2b6, 0x84 }, { 0x14f2d1, 0x75 }, { 0x8732f, 0x7d }, { 0x87384, 0x7d }, { 0x87388, 0xeb }, { 0, 0 } } } };
+
 READ32_MEMBER(chihiro_state::usbctrl_r)
 {
-	if (offset == 0) { /* hack needed until usb (and jvs) is implemented */
-		if (usbhack_counter == 0) {
-			m_maincpu->space(0).write_byte(0x6a79f, 0x01);
-			m_maincpu->space(0).write_byte(0x6a7a0, 0x00);
-			m_maincpu->space(0).write_byte(0x6b575, 0x00);
-			m_maincpu->space(0).write_byte(0x6b576, 0x00);
-			m_maincpu->space(0).write_byte(0x6b5af, 0x75);
-			m_maincpu->space(0).write_byte(0x6b78a, 0x75);
-			m_maincpu->space(0).write_byte(0x6b7ca, 0x00);
-			m_maincpu->space(0).write_byte(0x6b7b8, 0x00);
-			m_maincpu->space(0).write_byte(0x8f5b2, 0x75);
-			m_maincpu->space(0).write_byte(0x79a9e, 0x74);
-			m_maincpu->space(0).write_byte(0x79b80, 0x74);
-			m_maincpu->space(0).write_byte(0x79b97, 0x74);
-		}
-		// after game loaded
-		if (usbhack_counter == 1) {
-			m_maincpu->space(0).write_byte(0x12e4cf, 0x01);
-			m_maincpu->space(0).write_byte(0x12e4d0, 0x00);
-			m_maincpu->space(0).write_byte(0x4793e, 0x01);
-			m_maincpu->space(0).write_byte(0x4793f, 0x00);
-			m_maincpu->space(0).write_byte(0x47aa3, 0x01);
-			m_maincpu->space(0).write_byte(0x47aa4, 0x00);
-			m_maincpu->space(0).write_byte(0x14f2b6, 0x84);
-			m_maincpu->space(0).write_byte(0x14f2d1, 0x75);
-			m_maincpu->space(0).write_byte(0x8732f, 0x7d);
-			m_maincpu->space(0).write_byte(0x87384, 0x7d);
-			m_maincpu->space(0).write_byte(0x87388, 0xeb);
-		}
-		usbhack_counter++;
-	}
+	UINT32 ret;
+
 #ifdef LOG_OHCI
 	if (offset >= 0x54 / 4)
 		logerror("usb controller 0 register HcRhPortStatus[%d] read\n", (offset - 0x54 / 4) + 1);
 	else
 		logerror("usb controller 0 register %s read\n", usbregnames[offset]);
 #endif
-	return 0;
+	ret=ohcist.hc_regs[offset];
+	if (offset == 0) { /* hacks needed until usb (and jvs) is implemented */
+#ifdef USB_ENABLED
+#else
+		int p;
+
+		if (usbhack_counter == 0)
+			p = 0;
+		else if (usbhack_counter == 1) // after game loaded
+			p = usbhack_index;
+		else
+			p = -1;
+		if (p >= 0) {
+			for (int a = 0; a < 16; a++) {
+				if (hacks[p].modify[a].address == 0)
+					break;
+				m_maincpu->space(0).write_byte(hacks[p].modify[a].address, hacks[p].modify[a].write_byte);
+			}
+		}
+		usbhack_counter++;
+#endif
+	}
+	return ret;
 }
 
 WRITE32_MEMBER(chihiro_state::usbctrl_w)
 {
+#ifdef USB_ENABLED
+	UINT32 old = ohcist.hc_regs[offset];
+#endif
+
 #ifdef LOG_OHCI
 	if (offset >= 0x54 / 4)
 		logerror("usb controller 0 register HcRhPortStatus[%d] write %08X\n", (offset - 0x54 / 4) + 1, data);
 	else
 		logerror("usb controller 0 register %s write %08X\n", usbregnames[offset], data);
 #endif
+#ifdef USB_ENABLED
+	if (offset == HcRhStatus) {
+		if (data & 0x80000000)
+			ohcist.hc_regs[HcRhStatus] &= ~0x8000;
+		if (data & 0x00020000)
+			ohcist.hc_regs[HcRhStatus] &= ~0x0002;
+		if (data & 0x00010000)
+			ohcist.hc_regs[HcRhStatus] &= ~0x0001;
+		return;
+	}
+	if (offset == HcControl) {
+		int hcfs;
+
+		hcfs = (data >> 6) & 3;
+		if (hcfs == UsbOperational) {
+			ohcist.timer->enable();
+			ohcist.timer->adjust(attotime::from_msec(1), 0, attotime::from_msec(1));
+		}
+		else
+			ohcist.timer->enable(false);
+		ohcist.state = hcfs;
+	}
+	if (offset == HcCommandStatus) {
+		if (data & 1)
+			ohcist.hc_regs[HcControl] |= 3 << 6;
+	}
+	if (offset == HcInterruptStatus) {
+		ohcist.hc_regs[HcInterruptStatus] &= ~data;
+		usb_ohci_interrupts();
+		return;
+	}
+	if (offset == HcInterruptEnable) {
+		ohcist.hc_regs[HcInterruptEnable] |= data;
+		usb_ohci_interrupts();
+		return;
+	}
+	if (offset == HcInterruptDisable) {
+		ohcist.hc_regs[HcInterruptEnable] &= ~data;
+		usb_ohci_interrupts();
+		return;
+	}
+	if (offset >= HcRhPortStatus0) {
+		int port = offset - HcRhPortStatus0 + 1; // port 0 not used
+		// bit 0 ClearPortEnable: 1 clears PortEnableStatus
+		// bit 1 SetPortEnable: 1 sets PortEnableStatus
+		// bit 2 SetPortSuspend: 1 sets PortSuspendStatus
+		// bit 3 ClearSuspendStatus: 1 clears PortSuspendStatus
+		// bit 4 SetPortReset: 1 sets PortResetStatus
+		if (data & 0x10) {
+			ohcist.hc_regs[offset] |= 0x10;
+			// after 10ms set PortResetStatusChange and clear PortResetStatus and set PortEnableStatus
+			ohcist.ports[port] = 10;
+		}
+		// bit 8 SetPortPower: 1 sets PortPowerStatus
+		// bit 9 ClearPortPower: 1 clears PortPowerStatus
+		// bit 16 1 clears ConnectStatusChange
+		// bit 17 1 clears PortEnableStatusChange
+		// bit 18 1 clears PortSuspendStatusChange
+		// bit 19 1 clears PortOverCurrentIndicatorChange
+		// bit 20 1 clears PortResetStatusChange
+		if (ohcist.hc_regs[offset] != old)
+			ohcist.hc_regs[HcInterruptStatus] |= RootHubStatusChange;
+		usb_ohci_interrupts();
+		return;
+	}
+#endif
+	ohcist.hc_regs[offset] = data;
+}
+
+TIMER_CALLBACK_MEMBER(chihiro_state::usb_ohci_timer)
+{
+	UINT32 hcca;
+	int changed = 0;
+
+	if (ohcist.state == UsbOperational) {
+		ohcist.framenumber=(ohcist.framenumber+1) & 0xffff;
+		hcca = ohcist.hc_regs[HcHCCA];
+		ohcist.space->write_dword(hcca + 0x80, ohcist.framenumber);
+		ohcist.hc_regs[HcFmNumber] = ohcist.framenumber;
+	}
+	for (int p = 1; p <= 4; p++) {
+		if (ohcist.ports[p] > 0) {
+			ohcist.ports[p]--;
+			if (ohcist.ports[p] == 0) {
+				ohcist.hc_regs[HcRhPortStatus0 + p - 1] = (ohcist.hc_regs[HcRhPortStatus0 + p - 1] & ~(1 << 4)) | (1 << 20) | (1 << 1);
+				changed = 1;
+			}
+		}
+	}
+	if (ohcist.state == UsbOperational) {
+		if (ohcist.framenumber == 0)
+			ohcist.hc_regs[HcInterruptStatus] |= FrameNumberOverflow;
+		ohcist.hc_regs[HcInterruptStatus] |= StartofFrame;
+	}
+	if (changed != 0) {
+		ohcist.hc_regs[HcInterruptStatus] |= RootHubStatusChange;
+	}
+	usb_ohci_interrupts();
+}
+
+void chihiro_state::usb_ohci_interrupts()
+{
+	if (((ohcist.hc_regs[HcInterruptStatus] & ohcist.hc_regs[HcInterruptEnable]) != 0) && ((ohcist.hc_regs[HcInterruptEnable] & MasterInterruptEnable) != 0))
+		chihiro_devs.pic8259_1->ir1_w(1);
+	else
+		chihiro_devs.pic8259_1->ir1_w(0);
+}
+
+void chihiro_state::usb_ohci_read_endpoint_descriptor(UINT32 address)
+{
+	UINT32 w;
+
+	w = ohcist.space->read_dword(address);
+	ohcist.endpoint_descriptor.fa = w & 0x7f;
+	ohcist.endpoint_descriptor.en = (w >> 7) & 15;
+	ohcist.endpoint_descriptor.d = (w >> 11) & 3;
+	ohcist.endpoint_descriptor.s = (w >> 13) & 1;
+	ohcist.endpoint_descriptor.k = (w >> 14) & 1;
+	ohcist.endpoint_descriptor.f = (w >> 15) & 1;
+	ohcist.endpoint_descriptor.mps = (w >> 16) & 0x7ff;
+	ohcist.endpoint_descriptor.tailp = ohcist.space->read_dword(address + 4);
+	w = ohcist.space->read_dword(address + 8);
+	ohcist.endpoint_descriptor.headp = w & 0xfffffffc;
+	ohcist.endpoint_descriptor.h = w & 1;
+	ohcist.endpoint_descriptor.c = (w >> 1) & 1;
+	ohcist.endpoint_descriptor.nexted = ohcist.space->read_dword(address + 12);
+}
+
+void chihiro_state::usb_ohci_read_transfer_descriptor(UINT32 address)
+{
+	UINT32 w;
+
+	w = ohcist.space->read_dword(address);
+	ohcist.transfer_descriptor.cc = (w >> 28) & 15;
+	ohcist.transfer_descriptor.ec= (w >> 16) & 3;
+	ohcist.transfer_descriptor.t= (w >> 24) & 3;
+	ohcist.transfer_descriptor.di= (w >> 21) & 7;
+	ohcist.transfer_descriptor.dp= (w >> 19) & 3;
+	ohcist.transfer_descriptor.r = (w >> 18) & 1;
+	ohcist.transfer_descriptor.cbp = ohcist.space->read_dword(address + 4);
+	ohcist.transfer_descriptor.nexttd = ohcist.space->read_dword(address + 8);
+	ohcist.transfer_descriptor.be = ohcist.space->read_dword(address + 12);
+}
+
+void chihiro_state::usb_ohci_read_isochronous_transfer_descriptor(UINT32 address)
+{
+	UINT32 w;
+
+	w = ohcist.space->read_dword(address);
+	ohcist.isochronous_transfer_descriptor.cc = (w >> 28) & 15;
+	ohcist.isochronous_transfer_descriptor.fc = (w >> 24) & 7;
+	ohcist.isochronous_transfer_descriptor.di = (w >> 21) & 7;
+	ohcist.isochronous_transfer_descriptor.sf = w & 0xffff;
+	ohcist.isochronous_transfer_descriptor.bp0 = ohcist.space->read_dword(address + 4) & 0xfffff000;
+	ohcist.isochronous_transfer_descriptor.nexttd = ohcist.space->read_dword(address + 8);
+	ohcist.isochronous_transfer_descriptor.be = ohcist.space->read_dword(address + 12);
+	w = ohcist.space->read_dword(address + 16);
+	ohcist.isochronous_transfer_descriptor.offset[0] = w & 0xffff;
+	ohcist.isochronous_transfer_descriptor.offset[1] = (w >> 16) & 0xffff;
+	w = ohcist.space->read_dword(address + 20);
+	ohcist.isochronous_transfer_descriptor.offset[2] = w & 0xffff;
+	ohcist.isochronous_transfer_descriptor.offset[3] = (w >> 16) & 0xffff;
+	w = ohcist.space->read_dword(address + 24);
+	ohcist.isochronous_transfer_descriptor.offset[4] = w & 0xffff;
+	ohcist.isochronous_transfer_descriptor.offset[5] = (w >> 16) & 0xffff;
+	w = ohcist.space->read_dword(address + 28);
+	ohcist.isochronous_transfer_descriptor.offset[6] = w & 0xffff;
+	ohcist.isochronous_transfer_descriptor.offset[7] = (w >> 16) & 0xffff;
 }
 
 /*
@@ -1177,9 +1514,9 @@ WRITE32_MEMBER(chihiro_state::audio_apu_w)
 	}
 	if (offset == 0x2037c / 4) { // value related to sample rate
 		INT16 v = (INT16)(data >> 16); // upper 16 bits as a signed 16 bit value
-		float vv = ((float)v) / 4096.0; // divide by 4096
+		float vv = ((float)v) / 4096.0f; // divide by 4096
 		float vvv = powf(2, vv); // two to the vv
-		int f = vvv*48000.0; // sample rate
+		int f = vvv*48000.0f; // sample rate
 		apust.voices_frequency[apust.voice_number] = f;
 		return;
 	}
@@ -1788,6 +2125,23 @@ void chihiro_state::machine_start()
 	apust.timer->enable(false);
 	if (machine().debug_flags & DEBUG_FLAG_ENABLED)
 		debug_console_register_command(machine(), "chihiro", CMDFLAG_NONE, 0, 1, 4, chihiro_debug_commands);
+	memset(&ohcist, 0, sizeof(ohcist));
+#ifdef USB_ENABLED
+	ohcist.hc_regs[HcRevision] = 0x10;
+	ohcist.hc_regs[HcFmInterval] = 0x2edf;
+	ohcist.hc_regs[HcLSThreshold] = 0x628;
+	ohcist.hc_regs[HcRhDescriptorA] = 4;
+	ohcist.hc_regs[HcRhPortStatus0] = 1; // test connect
+	ohcist.space = &m_maincpu->space();
+	ohcist.timer = machine().scheduler().timer_alloc(timer_expired_delegate(FUNC(chihiro_state::usb_ohci_timer), this), (void *)"USB OHCI Timer");
+	ohcist.timer->enable(false);
+#endif
+	usbhack_index = -1;
+	for (int a = 1; a < 2; a++)
+		if (strcmp(machine().basename(), hacks[a].game_name) == 0) {
+			usbhack_index = a;
+			break;
+		}
 	usbhack_counter = 0;
 	// savestates
 	save_item(NAME(debug_irq_active));
@@ -1801,7 +2155,7 @@ void chihiro_state::machine_start()
 	save_item(NAME(smbusst.words));
 	save_item(NAME(pic16lc_buffer));
 	save_item(NAME(usbhack_counter));
-	nvidia_nv2a->start();
+	nvidia_nv2a->start(&m_maincpu->space());
 	nvidia_nv2a->savestate_items();
 }
 

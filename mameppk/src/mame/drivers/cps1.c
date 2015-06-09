@@ -1,3 +1,5 @@
+// license:???
+// copyright-holders:Paul Leaman
 /***************************************************************************
 
 Capcom System 1
@@ -12425,7 +12427,7 @@ DRIVER_INIT_MEMBER( cps_state, sf2m8 )
 {
 	// unscramble gfx
 	UINT8 *grom = memregion("gfx")->base()+0x480000;
-	std::vector<UINT8> dst( 0x180000 );
+	dynamic_buffer dst( 0x180000 );
 	int i;
 
 	memcpy(&dst[0],grom,0x180000);
