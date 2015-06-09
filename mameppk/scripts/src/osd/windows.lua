@@ -1,3 +1,6 @@
+-- license:BSD-3-Clause
+-- copyright-holders:MAMEdev Team
+
 dofile("modules.lua")
 
 
@@ -88,7 +91,7 @@ end
 if _OPTIONS["KAILLERA"] ~= "1" then
 project ("osd_" .. _OPTIONS["osd"])
 	uuid (os.uuid("osd_" .. _OPTIONS["osd"]))
-	kind "StaticLib"
+	kind (LIBTYPE)
 
 	dofile("windows_cfg.lua")
 	osdmodulesbuild()
@@ -154,7 +157,7 @@ project ("osd_" .. _OPTIONS["osd"])
 
 project ("ocore_" .. _OPTIONS["osd"])
 	uuid (os.uuid("ocore_" .. _OPTIONS["osd"]))
-	kind "StaticLib"
+	kind (LIBTYPE)
 
 	options {
 		"ForceCPP",

@@ -1,10 +1,13 @@
+-- license:BSD-3-Clause
+-- copyright-holders:MAMEdev Team
+
 function maintargetosdoptions(_target)
 end
 
 
 project ("osd_" .. _OPTIONS["osd"])
 	uuid (os.uuid("osd_" .. _OPTIONS["osd"]))
-	kind "StaticLib"
+	kind (LIBTYPE)
 
 	removeflags {
 		"SingleOutputDir",
@@ -51,7 +54,7 @@ project ("osd_" .. _OPTIONS["osd"])
 	
 project ("ocore_" .. _OPTIONS["osd"])
 	uuid (os.uuid("ocore_" .. _OPTIONS["osd"]))
-	kind "StaticLib"
+	kind (LIBTYPE)
 
 	options {
 		"ForceCPP",

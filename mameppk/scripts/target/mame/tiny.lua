@@ -1,3 +1,6 @@
+-- license:BSD-3-Clause
+-- copyright-holders:MAMEdev Team
+
 ---------------------------------------------------------------------------
 --
 --   tiny.lua
@@ -5,15 +8,12 @@
 --   Small driver-specific example makefile
 --   Use make SUBTARGET=tiny to build
 --
---   Copyright Nicola Salmoria and the MAME Team.
---   Visit  http://mamedev.org for licensing and usage restrictions.
---
 ---------------------------------------------------------------------------
 
 
 --------------------------------------------------
 -- Specify all the CPU cores necessary for the
--- drivers referenced in tiny.c.
+-- drivers referenced in tiny.lst.
 --------------------------------------------------
 
 CPUS["Z80"] = true
@@ -30,7 +30,7 @@ CPUS["SH4"] = true
 
 --------------------------------------------------
 -- Specify all the sound cores necessary for the
--- drivers referenced in tiny.c.
+-- drivers referenced in tiny.lst.
 --------------------------------------------------
 
 SOUNDS["SAMPLES"] = true
@@ -86,7 +86,7 @@ BUSES["CENTRONICS"] = true
 --------------------------------------------------
 -- This is the list of files that are necessary
 -- for building all of the drivers referenced
--- in tiny.c
+-- in tiny.lst
 --------------------------------------------------
 
 function createMAMEProjects(_target, _subtarget, _name)
@@ -114,7 +114,7 @@ end
 function createProjects_mame_tiny(_target, _subtarget)
 	project ("mame_tiny")
 	targetsubdir(_target .."_" .. _subtarget)
-	kind "StaticLib"
+	kind (LIBTYPE)
 	uuid (os.uuid("drv-mame-tiny"))
 	
 	options {

@@ -11,7 +11,7 @@
 #pragma once
 
 #ifndef __OSDOBJ_COMMON_H__
-#define __OSDOBJ_COMMON_H__
+#define __OSDOBJ_COMMON__
 
 #include "osdepend.h"
 #include "modules/osdmodule.h"

@@ -1,6 +1,10 @@
+-- license:BSD-3-Clause
+-- copyright-holders:MAMEdev Team
+
 project ("emu")
+targetsubdir(_OPTIONS["target"] .."_" .. _OPTIONS["subtarget"])
 uuid ("e6fa15e4-a354-4526-acef-13c8e80fcacf")
-kind "StaticLib"
+kind (LIBTYPE)
 options {
 	"ForceCPP",
 }
@@ -11,21 +15,25 @@ includedirs {
 	MAME_DIR .. "src/lib",
 	MAME_DIR .. "src/lib/util",
 	MAME_DIR .. "3rdparty",
-	MAME_DIR .. "3rdparty/expat/lib",
 	MAME_DIR .. "3rdparty/lua/src",
 	MAME_DIR .. "3rdparty/zlib",
 	GEN_DIR  .. "emu",
 	GEN_DIR  .. "emu/layout",
 }
+if _OPTIONS["with-bundled-expat"] then
+	includedirs {
+		MAME_DIR .. "3rdparty/expat/lib",
+	}
+end
 if _OPTIONS["KAILLERA"] == "1" then
-includedirs {
-	MAME_DIR .. "src/osd/winui",
-}
+	includedirs {
+		MAME_DIR .. "src/osd/winui",
+	}
 end
 if _OPTIONS["MAME_AVI"] == "1" then
-includedirs {
-	MAME_DIR .. "src/osd/windows",
-}
+	includedirs {
+		MAME_DIR .. "src/osd/windows",
+	}
 end
 
 files {
@@ -273,8 +281,6 @@ files {
 	MAME_DIR .. "src/emu/machine/laserdsc.h",
 	MAME_DIR .. "src/emu/machine/latch.c",
 	MAME_DIR .. "src/emu/machine/latch.h",
-	MAME_DIR .. "src/emu/machine/netlist.c",
-	MAME_DIR .. "src/emu/machine/netlist.h",
 	MAME_DIR .. "src/emu/machine/nvram.c",
 	MAME_DIR .. "src/emu/machine/nvram.h",
 	MAME_DIR .. "src/emu/machine/ram.c",
@@ -392,7 +398,7 @@ function emuProject(_target, _subtarget)
 
 	project ("optional")
 	uuid (os.uuid("optional-" .. _target .."_" .. _subtarget))
-	kind "StaticLib"
+	kind (LIBTYPE)
 	targetsubdir(_target .."_" .. _subtarget)
 	options {
 		"ForceCPP",
@@ -406,28 +412,33 @@ function emuProject(_target, _subtarget)
 		MAME_DIR .. "src/lib",
 		MAME_DIR .. "src/lib/util",
 		MAME_DIR .. "3rdparty",
-		MAME_DIR .. "3rdparty/expat/lib",
 		MAME_DIR .. "3rdparty/lua/src",
 		MAME_DIR .. "3rdparty/zlib",
 		GEN_DIR  .. "emu",
 		GEN_DIR  .. "emu/layout",
 		MAME_DIR .. "src/emu/cpu/m68000",
 	}
+	if _OPTIONS["with-bundled-expat"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/expat/lib",
+		}
+	end
 	
 	dofile(path.join("src", "cpu.lua"))
 
 	dofile(path.join("src", "sound.lua"))
 	
-	dofile(path.join("src", "netlist.lua"))
 	
 	dofile(path.join("src", "video.lua"))
 
 	dofile(path.join("src", "machine.lua"))
 
+	--	netlist now defines a project
+	dofile(path.join("src", "netlist.lua"))
 	
 	project ("bus")
 	uuid ("5d782c89-cf7e-4cfe-8f9f-0d4bfc16c91d")
-	kind "StaticLib"
+	kind (LIBTYPE)
 	targetsubdir(_target .."_" .. _subtarget)
 	options {
 		"ForceCPP",
@@ -440,7 +451,6 @@ function emuProject(_target, _subtarget)
 		MAME_DIR .. "src/lib",
 		MAME_DIR .. "src/lib/util",
 		MAME_DIR .. "3rdparty",
-		MAME_DIR .. "3rdparty/expat/lib",
 		MAME_DIR .. "3rdparty/lua/src",
 		MAME_DIR .. "3rdparty/zlib",
 		MAME_DIR .. "src/mess", -- some mess bus devices need this
@@ -448,13 +458,18 @@ function emuProject(_target, _subtarget)
 		GEN_DIR  .. "emu",
 		GEN_DIR  .. "emu/layout",
 	}
+	if _OPTIONS["with-bundled-expat"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/expat/lib",
+		}
+	end
 
 	dofile(path.join("src", "bus.lua"))
 	
 	
 	project ("dasm")
 	uuid ("f2d28b0a-6da5-4f78-b629-d834aa00429d")
-	kind "StaticLib"
+	kind (LIBTYPE)
 	targetsubdir(_target .."_" .. _subtarget)
 	options {
 		"ForceCPP",
@@ -466,11 +481,15 @@ function emuProject(_target, _subtarget)
 		MAME_DIR .. "src/lib",
 		MAME_DIR .. "src/lib/util",
 		MAME_DIR .. "3rdparty",
-		MAME_DIR .. "3rdparty/expat/lib",
 		MAME_DIR .. "3rdparty/lua/src",
 		MAME_DIR .. "3rdparty/zlib",
 		GEN_DIR  .. "emu",
 	}
+	if _OPTIONS["with-bundled-expat"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/expat/lib",
+		}
+	end
 	
 	files {
 		disasm_files

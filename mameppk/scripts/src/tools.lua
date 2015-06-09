@@ -1,3 +1,6 @@
+-- license:BSD-3-Clause
+-- copyright-holders:MAMEdev Team
+
 --------------------------------------------------
 -- romcmp
 --------------------------------------------------
@@ -440,20 +443,18 @@ links {
 	"flac",
 	"7z",
 	"ocore_" .. _OPTIONS["osd"],
+	"netlist",
 }
 
 includedirs {
 	MAME_DIR .. "src/osd",
 	MAME_DIR .. "src/lib/util",
-	MAME_DIR .. "src/emu",
+	MAME_DIR .. "src/emu/netlist",
 }
 
 files {
 	MAME_DIR .. "src/tools/nltool.c",
 }
-
-dofile("netlist.lua")
-
 
 if (_OPTIONS["target"]=="mess") then
 --------------------------------------------------

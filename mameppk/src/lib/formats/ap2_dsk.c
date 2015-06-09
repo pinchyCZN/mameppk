@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:Olivier Galibert, R. Belmont
 /*********************************************************************
 
     ap2_dsk.c
@@ -666,7 +668,7 @@ bool a2_16sect_format::load(io_generic *io, UINT32 form_factor, floppy_image *im
 		}
 
 		fpos += 256*16;
-		for(int i=0; i<51; i++)
+		for(int i=0; i<49; i++)
 			raw_w(track_data, 10, 0x3fc);
 		for(int i=0; i<16; i++) {
 			int sector;
@@ -696,6 +698,7 @@ bool a2_16sect_format::load(io_generic *io, UINT32 form_factor, floppy_image *im
 
 			raw_w(track_data,  9, 0x01fe);
 			raw_w(track_data, 24, 0xd5aaad);
+			raw_w(track_data,  1, 0);
 
 			UINT8 pval = 0x00;
 			for(int i=0; i<342; i++) {
@@ -719,7 +722,7 @@ bool a2_16sect_format::load(io_generic *io, UINT32 form_factor, floppy_image *im
 			raw_w(track_data, 8, translate6[pval]);
 			raw_w(track_data, 24, 0xdeaaeb);
 		}
-		raw_w(track_data, 4, 0xff);
+		raw_w(track_data, 8, 0xff);
 		assert(track_data.size() == 51090);
 
 		generate_track_from_levels(track, 0, track_data, 0, image);
@@ -996,10 +999,10 @@ const floppy_format_type FLOPPY_A216S_FORMAT = &floppy_image_format_creator<a2_1
    D5 9D <track> <sector> <checksum> AA FF FF <titlespecific sync> <0x400 nybbles which represent 768 bytes> <data checksum> D6
    Title-specific sync bytes are:
     Airheart: D4
-    Toy Shop: unknown
+    Toy Shop: A5
     Carmen USA: unknown (not all released versions used RWTS18)
     Wings of Fury: 96
-    Prince of Persia: unknown
+    Prince of Persia: A9
     And several others.
 */
 a2_rwts18_format::a2_rwts18_format() : floppy_image_format_t()

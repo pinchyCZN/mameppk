@@ -1,3 +1,6 @@
+-- license:BSD-3-Clause
+-- copyright-holders:MAMEdev Team
+
 function mainProject(_target, _subtarget)
 	if (_target == _subtarget) then
 		project (_target .. _OPTIONS["EXTRA_SUFFIX"])
@@ -80,6 +83,7 @@ function mainProject(_target, _subtarget)
 	links {
 		"osd_" .. _OPTIONS["osd"],
 		"bus",
+		"netlist",
 		"optional",
 		"emu",
 		"dasm",
@@ -97,7 +101,7 @@ function mainProject(_target, _subtarget)
 		"jsoncpp",
 		"mongoose",
 	}
-	if _OPTIONS["NO_USE_MIDI"]=="0" then
+	if _OPTIONS["NO_USE_MIDI"]~="1" then
 		links {
 			"portmidi",
 		}
@@ -298,6 +302,7 @@ function mainProject_with_ui(_target, _subtarget)
 	links {
 		"osd_winui",
 		"bus",
+		"netlist",
 		"optional",
 		"emu",
 		"dasm",

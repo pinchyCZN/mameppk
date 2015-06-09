@@ -204,6 +204,12 @@ bool wd177x_format::load(io_generic *io, UINT32 form_factor, floppy_image *image
 
 	for(int track=0; track < f.track_count; track++)
 		for(int head=0; head < f.head_count; head++) {
+
+			if (f.encoding == floppy_image::FM)
+				desc[14].p1 = get_track_dam_fm(f, head, track);
+			else
+				desc[16].p1 = get_track_dam_mfm(f, head, track);
+
 			io_generic_read(io, sectdata, get_image_offset(f, head, track), track_size);
 			generate_track(desc, track, head, sectors, f.sector_count, total_size, image);
 		}
@@ -234,7 +240,7 @@ bool wd177x_format::save(io_generic *io, floppy_image *image)
 	// Previously tested cell size
 	int min_cell_size = 0;
 	for(;;) {
-		// Build the list of all formats for the immediatly superior cell size
+		// Build the list of all formats for the immediately superior cell size
 		int cur_cell_size = 0;
 		candidates.clear();
 		for(int i=0; i != formats_count; i++) {
@@ -288,13 +294,10 @@ bool wd177x_format::save(io_generic *io, floppy_image *image)
 			else if(cc.head_count >= heads && cn.head_count < heads)
 				goto dont_change;
 
-			// Since we're limited to two heads, at that point head
-			// count is identical for both formats.
-
 			// Handling enough tracks is better than not
 			if(cn.track_count >= tracks && cc.track_count < tracks)
 				goto change;
-			else if(cn.track_count >= tracks && cc.track_count < tracks)
+			else if(cc.track_count >= tracks && cn.track_count < tracks)
 				goto dont_change;
 
 			// Both are on the same side of the track count, so closest is best
@@ -302,6 +305,11 @@ bool wd177x_format::save(io_generic *io, floppy_image *image)
 				goto change;
 			if(cc.track_count >= tracks && cn.track_count < cc.track_count)
 				goto change;
+
+			// Lower number of heads is better
+			if (cn.head_count < cc.head_count && cn.head_count <= heads)
+				goto change;
+
 			goto dont_change;
 
 		change:
@@ -341,6 +349,18 @@ bool wd177x_format::save(io_generic *io, floppy_image *image)
 int wd177x_format::get_image_offset(const format &f, int head, int track)
 {
 	return (track * f.head_count + head) * compute_track_size(f);
+}
+
+int wd177x_format::get_track_dam_fm(const format &f, int head, int track)
+{
+	// everything marked as data by default
+	return FM_DAM;
+}
+
+int wd177x_format::get_track_dam_mfm(const format &f, int head, int track)
+{
+	// everything marked as data by default
+	return MFM_DAM;
 }
 
 void wd177x_format::check_compatibility(floppy_image *image, std::vector<int> &candidates)

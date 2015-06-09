@@ -1,19 +1,26 @@
+-- license:BSD-3-Clause
+-- copyright-holders:MAMEdev Team
+
 project "utils"
+	targetsubdir(_OPTIONS["target"] .."_" .. _OPTIONS["subtarget"])
 	uuid "22489ad0-4cb2-4d91-ad81-24b0d80ca30a"
-	kind "StaticLib"
+	kind (LIBTYPE)
 
 	options {
 		"ForceCPP",
 	}
 
 	includedirs {
-		MAME_DIR .. "src/emu",
 		MAME_DIR .. "src/osd",
 		MAME_DIR .. "src/lib/util",
 		MAME_DIR .. "3rdparty",
-		MAME_DIR .. "3rdparty/expat/lib",
 		MAME_DIR .. "3rdparty/zlib",
 	}
+	if _OPTIONS["with-bundled-expat"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/expat/lib",
+		}
+	end
 
 	files {
 		MAME_DIR .. "src/lib/util/bitstream.h",
@@ -88,8 +95,9 @@ project "utils"
 
 
 project "formats"
+	targetsubdir(_OPTIONS["target"] .."_" .. _OPTIONS["subtarget"])
 	uuid "f69636b1-fcce-45ce-b09a-113e371a2d7a"
-	kind "StaticLib"
+	kind (LIBTYPE)
 
 	options {
 		"ForceCPP",
@@ -106,6 +114,8 @@ project "formats"
 	}
 
 	files {
+		MAME_DIR .. "src/lib/formats/2d_dsk.c",
+		MAME_DIR .. "src/lib/formats/2d_dsk.h",
 		MAME_DIR .. "src/lib/formats/cassimg.c",
 		MAME_DIR .. "src/lib/formats/cassimg.h",
 		MAME_DIR .. "src/lib/formats/flopimg.c",
@@ -152,6 +162,8 @@ project "formats"
 		MAME_DIR .. "src/lib/formats/atarist_dsk.h",
 		MAME_DIR .. "src/lib/formats/atom_tap.c",
 		MAME_DIR .. "src/lib/formats/atom_tap.h",
+		MAME_DIR .. "src/lib/formats/bbc_dsk.c",
+		MAME_DIR .. "src/lib/formats/bbc_dsk.h",
 		MAME_DIR .. "src/lib/formats/bw2_dsk.c",
 		MAME_DIR .. "src/lib/formats/bw2_dsk.h",
 		MAME_DIR .. "src/lib/formats/bw12_dsk.c",
@@ -162,6 +174,8 @@ project "formats"
 		MAME_DIR .. "src/lib/formats/c4040_dsk.h",
 		MAME_DIR .. "src/lib/formats/c8280_dsk.c",
 		MAME_DIR .. "src/lib/formats/c8280_dsk.h",
+		MAME_DIR .. "src/lib/formats/camplynx_cas.c",
+		MAME_DIR .. "src/lib/formats/camplynx_cas.h",
 		MAME_DIR .. "src/lib/formats/cbm_crt.c",
 		MAME_DIR .. "src/lib/formats/cbm_crt.h",
 		MAME_DIR .. "src/lib/formats/cbm_tap.c",
@@ -170,6 +184,8 @@ project "formats"
 		MAME_DIR .. "src/lib/formats/ccvf_dsk.h",
 		MAME_DIR .. "src/lib/formats/cgen_cas.c",
 		MAME_DIR .. "src/lib/formats/cgen_cas.h",
+		MAME_DIR .. "src/lib/formats/cgenie_dsk.c",
+		MAME_DIR .. "src/lib/formats/cgenie_dsk.h",
 		MAME_DIR .. "src/lib/formats/coco_cas.c",
 		MAME_DIR .. "src/lib/formats/coco_cas.h",
 		MAME_DIR .. "src/lib/formats/coco_dsk.c",
@@ -241,12 +257,16 @@ project "formats"
 		MAME_DIR .. "src/lib/formats/hect_dsk.h",
 		MAME_DIR .. "src/lib/formats/hect_tap.c",
 		MAME_DIR .. "src/lib/formats/hect_tap.h",
+		MAME_DIR .. "src/lib/formats/hector_minidisc.c",
+		MAME_DIR .. "src/lib/formats/hector_minidisc.h",
 		MAME_DIR .. "src/lib/formats/iq151_dsk.c",
 		MAME_DIR .. "src/lib/formats/iq151_dsk.h",
 		MAME_DIR .. "src/lib/formats/imd_dsk.c",
 		MAME_DIR .. "src/lib/formats/imd_dsk.h",
 		MAME_DIR .. "src/lib/formats/ipf_dsk.c",
 		MAME_DIR .. "src/lib/formats/ipf_dsk.h",
+		MAME_DIR .. "src/lib/formats/jvc_dsk.c",
+		MAME_DIR .. "src/lib/formats/jvc_dsk.h",
 		MAME_DIR .. "src/lib/formats/kaypro_dsk.c",
 		MAME_DIR .. "src/lib/formats/kaypro_dsk.h",
 		MAME_DIR .. "src/lib/formats/kc_cas.c",
@@ -273,6 +293,8 @@ project "formats"
 		MAME_DIR .. "src/lib/formats/mz_cas.h",
 		MAME_DIR .. "src/lib/formats/nanos_dsk.c",
 		MAME_DIR .. "src/lib/formats/nanos_dsk.h",
+		MAME_DIR .. "src/lib/formats/nascom_dsk.c",
+		MAME_DIR .. "src/lib/formats/nascom_dsk.h",
 		MAME_DIR .. "src/lib/formats/naslite_dsk.c",
 		MAME_DIR .. "src/lib/formats/naslite_dsk.h",
 		MAME_DIR .. "src/lib/formats/nes_dsk.c",
@@ -297,6 +319,8 @@ project "formats"
 		MAME_DIR .. "src/lib/formats/pc98fdi_dsk.h",
 		MAME_DIR .. "src/lib/formats/phc25_cas.c",
 		MAME_DIR .. "src/lib/formats/phc25_cas.h",
+		MAME_DIR .. "src/lib/formats/pk8020_dsk.c",
+		MAME_DIR .. "src/lib/formats/pk8020_dsk.h",
 		MAME_DIR .. "src/lib/formats/pmd_cas.c",
 		MAME_DIR .. "src/lib/formats/pmd_cas.h",
 		MAME_DIR .. "src/lib/formats/primoptp.c",
@@ -347,8 +371,8 @@ project "formats"
 		MAME_DIR .. "src/lib/formats/trd_dsk.h",
 		MAME_DIR .. "src/lib/formats/trs_cas.c",
 		MAME_DIR .. "src/lib/formats/trs_cas.h",
-		MAME_DIR .. "src/lib/formats/trs_dsk.c",
-		MAME_DIR .. "src/lib/formats/trs_dsk.h",
+		MAME_DIR .. "src/lib/formats/trs80_dsk.c",
+		MAME_DIR .. "src/lib/formats/trs80_dsk.h",
 		MAME_DIR .. "src/lib/formats/tvc_cas.c",
 		MAME_DIR .. "src/lib/formats/tvc_cas.h",
 		MAME_DIR .. "src/lib/formats/tvc_dsk.c",
@@ -359,6 +383,10 @@ project "formats"
 		MAME_DIR .. "src/lib/formats/uef_cas.h",
 		MAME_DIR .. "src/lib/formats/upd765_dsk.c",
 		MAME_DIR .. "src/lib/formats/upd765_dsk.h",
+		MAME_DIR .. "src/lib/formats/vdk_dsk.c",
+		MAME_DIR .. "src/lib/formats/vdk_dsk.h",
+		MAME_DIR .. "src/lib/formats/vector06_dsk.c",
+		MAME_DIR .. "src/lib/formats/vector06_dsk.h",
 		MAME_DIR .. "src/lib/formats/victor9k_dsk.c",
 		MAME_DIR .. "src/lib/formats/victor9k_dsk.h",
 		MAME_DIR .. "src/lib/formats/vg5k_cas.c",
@@ -379,8 +407,6 @@ project "formats"
 		MAME_DIR .. "src/lib/formats/x1_tap.h",
 		MAME_DIR .. "src/lib/formats/xdf_dsk.c",
 		MAME_DIR .. "src/lib/formats/xdf_dsk.h",
-		MAME_DIR .. "src/lib/formats/z80ne_dsk.c",
-		MAME_DIR .. "src/lib/formats/z80ne_dsk.h",
 		MAME_DIR .. "src/lib/formats/zx81_p.c",
 		MAME_DIR .. "src/lib/formats/zx81_p.h",
 		MAME_DIR .. "src/lib/formats/hxcmfm_dsk.c",

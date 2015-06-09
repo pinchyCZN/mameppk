@@ -1,11 +1,11 @@
+-- license:BSD-3-Clause
+-- copyright-holders:MAMEdev Team
+
 ---------------------------------------------------------------------------
 --
 --   ldplayer.lua
 --
 --   Small makefile to build a standalone laserdisc player
---
---   Copyright Nicola Salmoria and the MAME Team.
---   Visit http://mamedev.org for licensing and usage restrictions.
 --
 ---------------------------------------------------------------------------
 
@@ -54,7 +54,7 @@ BUSES["MIDI"] = true
 function createProjects_ldplayer_ldplayer(_target, _subtarget)
 	project ("drvldplayer")
 	targetsubdir(_target .."_" .. _subtarget)
-	kind "StaticLib"
+	kind (LIBTYPE)
 	uuid (os.uuid("drvldplayer"))
 	
 	options {
