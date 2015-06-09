@@ -1,3 +1,5 @@
+// license:???
+// copyright-holders:Bryan McPhail,Fuzz,Ernesto Corvi,Andrew Prime,Zsolt Vasvari
 /* NeoGeo sprites (and fixed text layer) */
 
 #include "emu.h"
@@ -409,7 +411,7 @@ void neosprite_base_device::draw_sprites( bitmap_rgb32 &bitmap, int scanline )
 
 			attr_and_code_offs = (sprite_number << 6) | (tile << 1);
 			attr = m_videoram_drawsource[attr_and_code_offs + 1];
-			code = ((attr << 12) & 0xf0000) | m_videoram_drawsource[attr_and_code_offs];
+			code = ((attr << 12) & 0x70000) | m_videoram_drawsource[attr_and_code_offs];
 
 			/* substitute auto animation bits */
 			if (!m_auto_animation_disabled)
