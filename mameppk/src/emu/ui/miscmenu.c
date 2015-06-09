@@ -1,11 +1,10 @@
+// license:BSD-3-Clause
+// copyright-holders:Nicola Salmoria, Aaron Giles, Nathan Woods
 /*********************************************************************
 
     miscmenu.c
 
     Internal MAME menus for the user interface.
-
-    Copyright Nicola Salmoria and the MAME Team.
-    Visit http://mamedev.org for licensing and usage restrictions.
 
 *********************************************************************/
 
@@ -245,13 +244,13 @@ void ui_menu_bookkeeping::populate()
 
 	/* show total time first */
 	if (prevtime.seconds >= 60 * 60)
-		strcatprintf(tempstring, _("Uptime: %d:%02d:%02d\n\n"), prevtime.seconds / (60 * 60), (prevtime.seconds / 60) % 60, prevtime.seconds % 60);
+		strcatprintf(tempstring, _("Uptime: %d:%02d:%02d\n\n"), prevtime.seconds / (60*60), (prevtime.seconds / 60) % 60, prevtime.seconds % 60);
 	else
-		strcatprintf(tempstring,_("Uptime: %d:%02d\n\n"), (prevtime.seconds / 60) % 60, prevtime.seconds % 60);
+		strcatprintf(tempstring, _("Uptime: %d:%02d\n\n"), (prevtime.seconds / 60) % 60, prevtime.seconds % 60);
 
 	/* show tickets at the top */
 	if (tickets > 0)
-		strcatprintf(tempstring,_("Tickets dispensed: %d\n\n"), tickets);
+		strcatprintf(tempstring, _("Tickets dispensed: %d\n\n"), tickets);
 
 	/* loop over coin counters */
 	for (ctrnum = 0; ctrnum < COIN_COUNTERS; ctrnum++)
@@ -259,7 +258,7 @@ void ui_menu_bookkeeping::populate()
 		int count = coin_counter_get_count(machine(), ctrnum);
 
 		/* display the coin counter number */
-		strcatprintf(tempstring,_("Coin %c: "), ctrnum + 'A');
+		strcatprintf(tempstring, _("Coin %c: "), ctrnum + 'A');
 
 		/* display how many coins */
 		if (count == 0)
@@ -726,7 +725,7 @@ void ui_menu_autofire::populate()
 				switch (settings.autofire)
 				{
 					case 0:	subtext.assign(_("Off"));	break;
-					case 1:	subtext.assign(_("On"));		break;
+					case 1:	subtext.assign(_("On"));	break;
 					case 2:	subtext.assign(_("Toggle"));	break;
 				}
 				item_append(_(field->name()), subtext.c_str(), MENU_FLAG_LEFT_ARROW | MENU_FLAG_RIGHT_ARROW, (void *)field);

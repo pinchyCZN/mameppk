@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:Nathan Woods, Peter Trauner, Angelo Salese
 /***************************************************************************
 
     pc_vga.h
@@ -206,6 +208,7 @@ protected:
 			UINT8 index, data[0x15]; int state;
 			UINT8 prot_bit;
 			UINT8 pel_shift;
+			UINT8 pel_shift_latch;
 		} attribute;
 
 
@@ -227,6 +230,7 @@ protected:
 
 	emu_timer *m_vblank_timer;
 	required_device<palette_device> m_palette;
+	required_device<screen_device> m_screen;
 };
 
 

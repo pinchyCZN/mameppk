@@ -1,3 +1,5 @@
+// license:???
+// copyright-holders:Nathan Woods, Raphael Nabet, Miodrag Milanovic
 /*********************************************************************
 
     harddriv.h

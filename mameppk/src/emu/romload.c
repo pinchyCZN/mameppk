@@ -1,12 +1,10 @@
+// license:BSD-3-Clause
+// copyright-holders:Nicola Salmoria,Paul Priest,Aaron Giles
 /*********************************************************************
 
     romload.c
 
     ROM loading functions.
-
-    Copyright Nicola Salmoria and the MAME Team.
-    Visit http://mamedev.org for licensing and usage restrictions.
-
 *********************************************************************/
 
 #include "emu.h"
@@ -449,13 +447,13 @@ static void handle_missing_file(romload_private *romdata, const rom_entry *romp,
 
 	bool is_chd_error = (is_chd && chderr != CHDERR_FILE_NOT_FOUND);
 	if (is_chd_error)
-		strcatprintf(romdata->errorstring, _("%s CHD ERROR: %s\n"), name.c_str(), chd_file::error_string(chderr));
+		strcatprintf(romdata->errorstring, "%s CHD ERROR: %s\n", name.c_str(), chd_file::error_string(chderr));
 
 	/* optional files are okay */
 	if (ROM_ISOPTIONAL(romp))
 	{
 		if (!is_chd_error)
-			strcatprintf(romdata->errorstring, _("OPTIONAL %s NOT FOUND%s\n"), name.c_str(), tried_file_names.c_str());
+			strcatprintf(romdata->errorstring, "OPTIONAL %s NOT FOUND%s\n", name.c_str(), tried_file_names.c_str());
 		romdata->warnings++;
 	}
 
@@ -463,7 +461,7 @@ static void handle_missing_file(romload_private *romdata, const rom_entry *romp,
 	else if (hash_collection(ROM_GETHASHDATA(romp)).flag(hash_collection::FLAG_NO_DUMP))
 	{
 		if (!is_chd_error)
-			strcatprintf(romdata->errorstring, _("%s NOT FOUND (NO GOOD DUMP KNOWN)%s\n"), name.c_str(), tried_file_names.c_str());
+			strcatprintf(romdata->errorstring, "%s NOT FOUND (NO GOOD DUMP KNOWN)%s\n", name.c_str(), tried_file_names.c_str());
 		romdata->knownbad++;
 	}
 
@@ -471,7 +469,7 @@ static void handle_missing_file(romload_private *romdata, const rom_entry *romp,
 	else
 	{
 		if (!is_chd_error)
-			strcatprintf(romdata->errorstring, _("%s NOT FOUND%s\n"), name.c_str(), tried_file_names.c_str());
+			strcatprintf(romdata->errorstring, "%s NOT FOUND%s\n", name.c_str(), tried_file_names.c_str());
 		romdata->errors++;
 	}
 }

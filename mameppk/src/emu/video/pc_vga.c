@@ -1,4 +1,4 @@
-// license:?
+// license:BSD-3-Clause
 // copyright-holders:Nathan Woods, Peter Trauner, Angelo Salese
 /***************************************************************************
 
@@ -127,13 +127,15 @@ const device_type MACH8 = &device_creator<mach8_device>;
 
 vga_device::vga_device(const machine_config &mconfig, device_type type, const char *name, const char *tag, device_t *owner, UINT32 clock, const char *shortname, const char *source)
 	: device_t(mconfig, type, name, tag, owner, clock, shortname, source),
-		m_palette(*this, "^palette")
+		m_palette(*this, "^palette"),
+		m_screen(*this,"^screen")
 {
 }
 
 vga_device::vga_device(const machine_config &mconfig, const char *tag, device_t *owner, UINT32 clock)
 	: device_t(mconfig, VGA, "VGA", tag, owner, clock, "vga", __FILE__),
-		m_palette(*this, "^palette")
+		m_palette(*this, "^palette"),
+		m_screen(*this,"^screen")
 {
 }
 
@@ -218,7 +220,8 @@ void svga_device::zero()
 TIMER_CALLBACK_MEMBER(vga_device::vblank_timer_cb)
 {
 	vga.crtc.start_addr = vga.crtc.start_addr_latch;
-	m_vblank_timer->adjust( machine().first_screen()->time_until_pos(vga.crtc.vert_blank_start) );
+	vga.attribute.pel_shift = vga.attribute.pel_shift_latch;
+	m_vblank_timer->adjust( machine().first_screen()->time_until_pos(vga.crtc.vert_blank_start + vga.crtc.vert_blank_end) );
 }
 
 void vga_device::device_start()
@@ -468,7 +471,10 @@ void vga_device::vga_vh_vga(bitmap_rgb32 &bitmap, const rectangle &cliprect)
 				if((line + yi) < (vga.crtc.line_compare & mask_comp))
 					curr_addr = addr;
 				if((line + yi) == (vga.crtc.line_compare & mask_comp))
+				{
 					curr_addr = 0;
+					pel_shift = 0;
+				}
 				bitmapline = &bitmap.pix32(line + yi);
 				for (pos=curr_addr, c=0, column=0; column<VGA_COLUMNS+1; column++, c+=8, pos++)
 				{
@@ -1262,7 +1268,7 @@ void vga_device::recompute_params_clock(int divisor, int xtal)
 	refresh  = HZ_TO_ATTOSECONDS(pixel_clock) * (hblank_period) * vblank_period;
 	machine().first_screen()->configure((hblank_period), (vblank_period), visarea, refresh );
 	//popmessage("%d %d\n",vga.crtc.horz_total * 8,vga.crtc.vert_total);
-	m_vblank_timer->adjust( machine().first_screen()->time_until_pos(vga.crtc.vert_blank_start) );
+	m_vblank_timer->adjust( machine().first_screen()->time_until_pos(vga.crtc.vert_blank_start + vga.crtc.vert_blank_end) );
 }
 
 void vga_device::recompute_params()
@@ -1765,7 +1771,7 @@ void vga_device::attribute_reg_write(UINT8 index, UINT8 data)
 			case 0x10: vga.attribute.data[0x10] = data; break;
 			case 0x11: vga.attribute.data[0x11] = data; break;
 			case 0x12: vga.attribute.data[0x12] = data; break;
-			case 0x13: vga.attribute.pel_shift = vga.attribute.data[0x13] = data; break;
+			case 0x13: vga.attribute.pel_shift_latch = vga.attribute.data[0x13] = data; break;
 			case 0x14: vga.attribute.data[0x14] = data; break;
 		}
 	}
@@ -2561,16 +2567,6 @@ UINT8 s3_vga_device::s3_crtc_reg_read(UINT8 index)
 				break;
 			case 0x36:  // Configuration register 1
 				res = s3.strapping & 0x000000ff;  // PCI (not really), Fast Page Mode DRAM
-				if(vga.svga_intf.vram_size == 0x80000)
-					res |= 0xe0;
-				else if(vga.svga_intf.vram_size == 0x100000)
-					res |= 0xc0;
-				else if(vga.svga_intf.vram_size == 0x200000)
-					res |= 0x80;
-				else if(vga.svga_intf.vram_size == 0x400000)
-					res |= 0x00;
-				else
-					res |= 0xe0;  // shouldn't get here...
 				break;
 			case 0x37:  // Configuration register 2
 				res = (s3.strapping & 0x0000ff00) >> 8;  // enable chipset, 64k BIOS size, internal DCLK/MCLK
@@ -2672,7 +2668,7 @@ void s3_vga_device::s3_define_video_mode()
 	if((vga.miscellaneous_output & 0xc) == 0x0c)
 	{
 		// DCLK calculation
-		freq = ((double)(s3.clk_pll_m+2) / (double)((s3.clk_pll_n+2)*(pow(2.0,s3.clk_pll_r)))) * 14.318f; // clock between XIN and XOUT
+		freq = ((double)(s3.clk_pll_m+2) / (double)((s3.clk_pll_n+2)*(pow(2.0,s3.clk_pll_r)))) * 14.318; // clock between XIN and XOUT
 		xtal = freq * 1000000;
 	}
 
@@ -2989,8 +2985,6 @@ bit    0  Vertical Total bit 10. Bit 10 of the Vertical Total register (3d4h
 			case 0x6a:
 				svga.bank_w = data & 0x3f;
 				svga.bank_r = svga.bank_w;
-				if(data & 0x60)
-					popmessage("TODO: s3 bank selects above 1M\n");
 				break;
 			case 0x6f:
 				if(s3.reg_lock2 == 0xa5)
@@ -4645,7 +4639,10 @@ READ8_MEMBER(s3_vga_device::mem_r)
 			return 0;
 		data = 0;
 		if(vga.sequencer.data[4] & 0x8)
-			data = vga.memory[(offset + (svga.bank_r*0x10000)) % vga.svga_intf.vram_size];
+		{
+			if((offset + (svga.bank_r*0x10000)) < vga.svga_intf.vram_size)
+				data = vga.memory[(offset + (svga.bank_r*0x10000))];
+		}
 		else
 		{
 			int i;
@@ -4653,12 +4650,18 @@ READ8_MEMBER(s3_vga_device::mem_r)
 			for(i=0;i<4;i++)
 			{
 				if(vga.sequencer.map_mask & 1 << i)
-					data |= vga.memory[(offset*4+i+(svga.bank_r*0x10000)) % vga.svga_intf.vram_size];
+				{
+					if((offset*4+i+(svga.bank_r*0x10000)) < vga.svga_intf.vram_size)
+						data |= vga.memory[(offset*4+i+(svga.bank_r*0x10000))];
+				}
 			}
 		}
 		return data;
 	}
-	return vga_device::mem_r(space,offset,mem_mask);
+	if((offset + (svga.bank_r*0x10000)) < vga.svga_intf.vram_size)
+		return vga_device::mem_r(space,offset,mem_mask);
+	else
+		return 0xff;
 }
 
 WRITE8_MEMBER(s3_vga_device::mem_w)
@@ -4906,20 +4909,27 @@ WRITE8_MEMBER(s3_vga_device::mem_w)
 		if(offset & 0x10000)
 			return;
 		if(vga.sequencer.data[4] & 0x8)
-			vga.memory[(offset + (svga.bank_w*0x10000)) % vga.svga_intf.vram_size] = data;
+		{
+			if((offset + (svga.bank_w*0x10000)) < vga.svga_intf.vram_size)
+				vga.memory[(offset + (svga.bank_w*0x10000))] = data;
+		}
 		else
 		{
 			int i;
 			for(i=0;i<4;i++)
 			{
 				if(vga.sequencer.map_mask & 1 << i)
-					vga.memory[(offset*4+i+(svga.bank_w*0x10000)) % vga.svga_intf.vram_size] = data;
+				{
+					if((offset*4+i+(svga.bank_w*0x10000)) < vga.svga_intf.vram_size)
+						vga.memory[(offset*4+i+(svga.bank_w*0x10000))] = data;
+				}
 			}
 		}
 		return;
 	}
 
-	vga_device::mem_w(space,offset,data,mem_mask);
+	if((offset + (svga.bank_w*0x10000)) < vga.svga_intf.vram_size)
+		vga_device::mem_w(space,offset,data,mem_mask);
 }
 
 /******************************************

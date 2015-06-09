@@ -1,11 +1,10 @@
+// license:BSD-3-Clause
+// copyright-holders:Nathan Woods
 /***************************************************************************
 
     ui/filesel.c
 
     MESS's clunky built-in file manager
-
-    Copyright Nicola Salmoria and the MAME Team.
-    Visit http://mamedev.org for licensing and usage restrictions.
 
     TODO
         - Support image creation arguments
@@ -568,7 +567,8 @@ void ui_menu_file_selector::populate()
 	if (m_has_softlist)
 	{
 		// add the "[software list]" entry
-		append_entry(SELECTOR_ENTRY_TYPE_SOFTWARE_LIST, NULL, NULL);
+		entry = append_entry(SELECTOR_ENTRY_TYPE_SOFTWARE_LIST, NULL, NULL);
+		selected_entry = entry;
 	}
 
 	// add the drives

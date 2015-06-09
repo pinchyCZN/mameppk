@@ -1,8 +1,10 @@
+// license:BSD-3-Clause
+// copyright-holders:Andrew Gardner
 /***************************************************************************
 
     okim9810.h
 
-    OKI MSM9810 ADCPM(2) sound chip.
+    OKI MSM9810 ADPCM(2) sound chip.
 
 ***************************************************************************/
 

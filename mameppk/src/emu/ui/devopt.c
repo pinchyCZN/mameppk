@@ -1,11 +1,10 @@
+// license:BSD-3-Clause
+// copyright-holders:Nathan Woods
 /*********************************************************************
 
     ui/devopt.c
 
     Internal menu for the device configuration.
-
-    Copyright Nicola Salmoria and the MAME Team.
-    Visit http://mamedev.org for licensing and usage restrictions.
 
 *********************************************************************/
 
@@ -176,7 +175,7 @@ void ui_menu_device_config::populate()
 		}
 
 		if (bios)
-			strcatprintf(str,"* BIOS settings:\n  %d options    [default: %s]\n", bios, bios_str.c_str());
+			strcatprintf(str,_("* BIOS settings:\n  %d options    [default: %s]\n"), bios, bios_str.c_str());
 	}
 
 	int input = 0, input_mj = 0, input_hana = 0, input_gamble = 0, input_analog = 0, input_adjust = 0;
@@ -215,7 +214,7 @@ void ui_menu_device_config::populate()
 				{
 					if (setting->value() == field->defvalue())
 					{
-						strcatprintf(dips_opt, "    [default: %s]\n", setting->name());
+						strcatprintf(dips_opt, _("    [default: %s]\n"), setting->name());
 						break;
 					}
 				}
@@ -254,9 +253,9 @@ void ui_menu_device_config::populate()
 	if (input_adjust)
 		strcatprintf(str,_("  Adjuster inputs    [%d inputs]\n"), input_adjust);
 	if (input_keypad)
-		strcatprintf(str,"  Keypad inputs    [%d inputs]\n", input_keypad);
+		strcatprintf(str,_("  Keypad inputs    [%d inputs]\n"), input_keypad);
 	if (input_keyboard)
-		strcatprintf(str,"  Keyboard inputs    [%d inputs]\n", input_keyboard);
+		strcatprintf(str,_("  Keyboard inputs    [%d inputs]\n"), input_keyboard);
 
 	image_interface_iterator imgiter(*dev);
 	if (imgiter.count() > 0)

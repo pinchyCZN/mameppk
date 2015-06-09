@@ -95,10 +95,8 @@ cli_frontend::~cli_frontend()
 
 	// report any unfreed memory on clean exits
 	track_memory(false);
-#ifdef MAME_DEBUG
 	if (m_result == MAMERR_NONE)
 		dump_unfreed_mem(m_start_memory);
-#endif
 }
 
 
@@ -2000,9 +1998,13 @@ void media_identifier::identify_data(const char *name, const UINT8 *data, int le
 //  of drivers by hash
 //-------------------------------------------------
 
+typedef tagmap_t<FPTR> slname_map;
+
 int media_identifier::find_by_hash(const hash_collection &hashes, int length)
 {
 	int found = 0;
+	slname_map listnames;
+	slname_map shortnames;
 
 	// iterate over drivers
 	m_drivlist.reset();
@@ -2011,43 +2013,51 @@ int media_identifier::find_by_hash(const hash_collection &hashes, int length)
 		// iterate over devices, regions and files within the region */
 		device_iterator deviter(m_drivlist.config().root_device());
 		for (device_t *device = deviter.first(); device != NULL; device = deviter.next())
-			for (const rom_entry *region = rom_first_region(*device); region != NULL; region = rom_next_region(region))
-				for (const rom_entry *rom = rom_first_file(region); rom != NULL; rom = rom_next_file(rom))
-				{
-					hash_collection romhashes(ROM_GETHASHDATA(rom));
-					if (!romhashes.flag(hash_collection::FLAG_NO_DUMP) && hashes == romhashes)
+		{
+			if (shortnames.add(device->shortname(), 0, FALSE) != TMERR_DUPLICATE)
+			{
+				for (const rom_entry *region = rom_first_region(*device); region != NULL; region = rom_next_region(region))
+					for (const rom_entry *rom = rom_first_file(region); rom != NULL; rom = rom_next_file(rom))
 					{
-						bool baddump = romhashes.flag(hash_collection::FLAG_BAD_DUMP);
+						hash_collection romhashes(ROM_GETHASHDATA(rom));
+						if (!romhashes.flag(hash_collection::FLAG_NO_DUMP) && hashes == romhashes)
+						{
+							bool baddump = romhashes.flag(hash_collection::FLAG_BAD_DUMP);
 
-						// output information about the match
-						if (found)
-							osd_printf_info("                    ");
-						osd_printf_info("= %s%-20s  %-10s %s\n", baddump ? _("(BAD) ") : "", ROM_GETNAME(rom), m_drivlist.driver().name, _LST(m_drivlist.driver().description));
-						found++;
+							// output information about the match
+							if (found)
+								osd_printf_info("                    ");
+							osd_printf_info("= %s%-20s  %-10s %s\n", baddump ? _("(BAD) ") : "", ROM_GETNAME(rom), m_drivlist.driver().name, _LST(m_drivlist.driver().description));
+							found++;
+						}
 					}
-				}
+			}
+		}
 
 		// next iterate over softlists
 		software_list_device_iterator iter(m_drivlist.config().root_device());
 		for (software_list_device *swlistdev = iter.first(); swlistdev != NULL; swlistdev = iter.next())
 		{
-			for (software_info *swinfo = swlistdev->first_software_info(); swinfo != NULL; swinfo = swinfo->next())
-				for (software_part *part = swinfo->first_part(); part != NULL; part = part->next())
-					for (const rom_entry *region = part->romdata(); region != NULL; region = rom_next_region(region))
-						for (const rom_entry *rom = rom_first_file(region); rom != NULL; rom = rom_next_file(rom))
-						{
-							hash_collection romhashes(ROM_GETHASHDATA(rom));
-							if (hashes == romhashes)
+			if (listnames.add(swlistdev->list_name(), 0, FALSE) != TMERR_DUPLICATE)
+			{
+				for (software_info *swinfo = swlistdev->first_software_info(); swinfo != NULL; swinfo = swinfo->next())
+					for (software_part *part = swinfo->first_part(); part != NULL; part = part->next())
+						for (const rom_entry *region = part->romdata(); region != NULL; region = rom_next_region(region))
+							for (const rom_entry *rom = rom_first_file(region); rom != NULL; rom = rom_next_file(rom))
 							{
-								bool baddump = romhashes.flag(hash_collection::FLAG_BAD_DUMP);
+								hash_collection romhashes(ROM_GETHASHDATA(rom));
+								if (hashes == romhashes)
+								{
+									bool baddump = romhashes.flag(hash_collection::FLAG_BAD_DUMP);
 
-								// output information about the match
-								if (found)
-									osd_printf_info("                    ");
-								osd_printf_info("= %s%-20s  %s:%s %s\n", baddump ? _("(BAD) ") : "", ROM_GETNAME(rom), swlistdev->list_name(), swinfo->shortname(), swinfo->longname());
-								found++;
+									// output information about the match
+									if (found)
+										osd_printf_info("                    ");
+									osd_printf_info("= %s%-20s  %s:%s %s\n", baddump ? _("(BAD) ") : "", ROM_GETNAME(rom), swlistdev->list_name(), swinfo->shortname(), swinfo->longname());
+									found++;
+								}
 							}
-						}
+			}
 		}
 	}
 

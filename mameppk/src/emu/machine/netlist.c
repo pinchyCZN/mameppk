@@ -1,46 +1,10 @@
+// license:GPL-2.0+
+// copyright-holders:Couriersud
 /***************************************************************************
 
     netlist.c
 
     Discrete netlist implementation.
-
-****************************************************************************
-
-    Couriersud reserves the right to license the code under a less restrictive
-    license going forward.
-
-    Copyright Nicola Salmoria and the MAME team
-    All rights reserved.
-
-    Redistribution and use of this code or any derivative works are permitted
-    provided that the following conditions are met:
-
-    * Redistributions may not be sold, nor may they be used in a commercial
-    product or activity.
-
-    * Redistributions that are modified from the original source must include the
-    complete source code, including the source code for all components used by a
-    binary built from the modified sources. However, as a special exception, the
-    source code distributed need not include anything that is normally distributed
-    (in either source or binary form) with the major components (compiler, kernel,
-    and so on) of the operating system on which the executable runs, unless that
-    component itself accompanies the executable.
-
-    * Redistributions must reproduce the above copyright notice, this list of
-    conditions and the following disclaimer in the documentation and/or other
-    materials provided with the distribution.
-
-    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
-    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-    POSSIBILITY OF SUCH DAMAGE.
 
 ****************************************************************************/
 
@@ -49,6 +13,7 @@
 #include "netlist/nl_base.h"
 #include "netlist/nl_setup.h"
 #include "netlist/nl_factory.h"
+#include "netlist/nl_parser.h"
 #include "netlist/devices/net_lib.h"
 #include "debugger.h"
 
@@ -330,7 +295,7 @@ void netlist_mame_device_t::device_start()
 	//printf("clock is %d\n", clock());
 
 	m_netlist = global_alloc_clear(netlist_mame_t(*this));
-	m_setup = global_alloc_clear(netlist_setup_t(*m_netlist));
+	m_setup = global_alloc_clear(netlist_setup_t(m_netlist));
 	netlist().init_object(*m_netlist, "netlist");
 	m_setup->init();
 
@@ -389,6 +354,8 @@ void netlist_mame_device_t::device_stop()
 	LOG_DEV_CALLS(("device_stop\n"));
 	m_setup->print_stats();
 
+	m_netlist->stop();
+
 	global_free(m_setup);
 	m_setup = NULL;
 	global_free(m_netlist);
@@ -429,9 +396,9 @@ ATTR_HOT ATTR_ALIGN void netlist_mame_device_t::check_mame_abort_slice()
 
 ATTR_COLD void netlist_mame_device_t::save_state()
 {
-	for (pstate_entry_t * const *p = netlist().save_list().first(); p != NULL; p = netlist().save_list().next(p))
+	for (int i=0; i< netlist().save_list().size(); i++)
 	{
-		pstate_entry_t *s = *p;
+		pstate_entry_t *s = netlist().save_list()[i];
 		NL_VERBOSE_OUT(("saving state for %s\n", s->m_name.cstr()));
 		switch (s->m_dt)
 		{
@@ -498,7 +465,7 @@ void netlist_mame_cpu_device_t::device_start()
 
 	state_add(STATE_GENPC, "curpc", m_genPC).noshow();
 
-	for (int i=0; i < netlist().m_nets.count(); i++)
+	for (int i=0; i < netlist().m_nets.size(); i++)
 	{
 		netlist_net_t *n = netlist().m_nets[i];
 		if (n->isFamily(netlist_object_t::LOGIC))
@@ -592,11 +559,11 @@ void netlist_mame_sound_device_t::device_start()
 
 	// Configure outputs
 
-	plinearlist_t<nld_sound_out *> outdevs = netlist().get_device_list<nld_sound_out>();
-	if (outdevs.count() == 0)
+	plist_t<nld_sound_out *> outdevs = netlist().get_device_list<nld_sound_out>();
+	if (outdevs.size() == 0)
 		fatalerror("No output devices");
 
-	m_num_outputs = outdevs.count();
+	m_num_outputs = outdevs.size();
 
 	/* resort channels */
 	for (int i=0; i < MAX_OUT; i++) m_out[i] = NULL;
@@ -606,7 +573,7 @@ void netlist_mame_sound_device_t::device_start()
 
 		netlist().log("Output %d on channel %d", i, chan);
 
-		if (chan < 0 || chan >= MAX_OUT || chan >= outdevs.count())
+		if (chan < 0 || chan >= MAX_OUT || chan >= outdevs.size())
 			fatalerror("illegal channel number");
 		m_out[chan] = outdevs[i];
 		m_out[chan]->m_sample = netlist_time::from_hz(clock());
@@ -618,10 +585,10 @@ void netlist_mame_sound_device_t::device_start()
 	m_num_inputs = 0;
 	m_in = NULL;
 
-	plinearlist_t<nld_sound_in *> indevs = netlist().get_device_list<nld_sound_in>();
-	if (indevs.count() > 1)
+	plist_t<nld_sound_in *> indevs = netlist().get_device_list<nld_sound_in>();
+	if (indevs.size() > 1)
 		fatalerror("A maximum of one input device is allowed!");
-	if (indevs.count() == 1)
+	if (indevs.size() == 1)
 	{
 		m_in = indevs[0];
 		m_num_inputs = m_in->resolve();
@@ -666,4 +633,15 @@ void netlist_mame_sound_device_t::sound_stream_update(sound_stream &stream, stre
 		m_out[i]->sound_update(cur);
 		m_out[i]->buffer_reset(cur);
 	}
+}
+
+// ----------------------------------------------------------------------------------------
+// memregion source support
+// ----------------------------------------------------------------------------------------
+
+bool netlist_source_memregion_t::parse(netlist_setup_t *setup, const pstring name)
+{
+	const char *mem = (const char *)downcast<netlist_mame_t &>(setup->netlist()).machine().root_device().memregion(m_name.cstr())->base();
+	netlist_parser p(*setup);
+	return p.parse(mem, name);
 }

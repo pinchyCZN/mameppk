@@ -1,11 +1,10 @@
+// license:BSD-3-Clause
+// copyright-holders:Nicola Salmoria, Aaron Giles, Nathan Woods
 /***************************************************************************
 
     ui/selgame.c
 
     Game selector
-
-    Copyright Nicola Salmoria and the MAME Team.
-    Visit http://mamedev.org for licensing and usage restrictions.
 
 ***************************************************************************/
 
@@ -288,7 +287,7 @@ void ui_menu_select_game::custom_render(void *selectedref, float top, float bott
 
 	// display the current typeahead
 	if (m_search[0] != 0)
-		strprintf(tempbuf[0], "Type name or select: %s_", m_search);
+		strprintf(tempbuf[0],_("Type name or select: %s_"), m_search);
 	else
 		strprintf(tempbuf[0],_("Type name or select: (random)"));
 

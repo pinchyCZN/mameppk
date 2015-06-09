@@ -2202,7 +2202,7 @@ void ioport_field::frame_update(ioport_value &result, bool mouse_down)
 
 void ioport_field::crosshair_position(float &x, float &y, bool &gotx, bool &goty)
 {
-	float value = m_live->analog->crosshair_read();
+	double value = m_live->analog->crosshair_read();
 
 	// apply the scale and offset
 	if (m_crosshair_scale < 0)
@@ -2723,7 +2723,7 @@ time_t ioport_manager::initialize()
 		m_portlist.append(*device, errors);
 #endif /* USE_CUSTOM_BUTTON */
 		if (!errors.empty())
-			osd_printf_error(_("Input port errors:\n%s"), errors.c_str());
+			osd_printf_error("Input port errors:\n%s", errors.c_str());
 	}
 
 	// renumber player numbers for controller ports

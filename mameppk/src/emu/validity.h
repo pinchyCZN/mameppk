@@ -104,6 +104,7 @@ private:
 	const char *            m_current_ioport;
 	int_map                 m_region_map;
 	tagmap_t<UINT8>         m_already_checked;
+
 };
 
 #endif

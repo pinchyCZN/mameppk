@@ -1,11 +1,10 @@
+// license:BSD-3-Clause
+// copyright-holders:Nicola Salmoria, Aaron Giles, Nathan Woods
 /*********************************************************************
 
     ui/inputmap.c
 
     Internal menus for input mappings.
-
-    Copyright Nicola Salmoria and the MAME Team.
-    Visit http://mamedev.org for licensing and usage restrictions.
 
 *********************************************************************/
 
@@ -26,7 +25,7 @@
 
 /* DIP switch rendering parameters */
 #define DIP_SWITCH_HEIGHT       0.05f
-#define DIP_SWITCH_SPACING      0.01
+#define DIP_SWITCH_SPACING      0.01f
 #define SINGLE_TOGGLE_SWITCH_FIELD_WIDTH 0.025f
 #define SINGLE_TOGGLE_SWITCH_WIDTH 0.020f
 /* make the switch 80% of the width space and 1/2 of the switch height */
@@ -442,7 +441,7 @@ void ui_menu_input::populate_and_sort(input_item_data *itemlist)
 		}
 
 		/* add the item */
-		item_append(text.c_str(), _OSD0(subtext.c_str()), flags, item);
+		item_append(_OSD0(_(text.c_str())), _OSD0(_(subtext.c_str())), flags, item);
 	}
 }
 
@@ -938,7 +937,7 @@ void ui_menu_analog::populate()
 							flags |= MENU_FLAG_RIGHT_ARROW;
 
 						/* append a menu item */
-						item_append(_(text.c_str()), subtext.c_str(), flags, data);
+						item_append(_(text.c_str()), _(subtext.c_str()), flags, data);
 					}
 			}
 }

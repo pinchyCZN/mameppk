@@ -1,6 +1,8 @@
+// license:BSD-3-Clause
+// copyright-holders:Mirko Buffoni,Aaron Giles
 /***************************************************************************
 
-    okim6295.c
+    okim6295.h
 
     OKIM 6295 ADCPM sound chip.
 

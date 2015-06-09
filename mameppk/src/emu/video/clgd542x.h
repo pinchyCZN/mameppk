@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:Barry Rodewald
 /*
 
     Cirrus Logic GD542x/3x video chipsets
@@ -39,6 +41,8 @@ protected:
 	UINT8 gc_bank_1;
 	bool gc_locked;
 	UINT8 m_lock_reg;
+	UINT8 m_gr10;  // high byte of background colour (in 15/16bpp)
+	UINT8 m_gr11;  // high byte of foreground colour (in 15/16bpp)
 
 	UINT8 m_cr19;
 	UINT8 m_cr1a;
@@ -64,6 +68,14 @@ protected:
 	UINT16 m_blt_width;
 	UINT32 m_blt_source_current;
 	UINT32 m_blt_dest_current;
+	UINT16 m_blt_trans_colour;
+	UINT16 m_blt_trans_colour_mask;
+
+	bool m_blt_system_transfer;  // blit from system memory
+	UINT8 m_blt_system_count;
+	UINT32 m_blt_system_buffer;
+	UINT16 m_blt_pixel_count;
+	UINT16 m_blt_scan_count;
 
 	UINT8 m_scratchpad1;
 	UINT8 m_scratchpad2;
@@ -82,7 +94,11 @@ private:
 	void cirrus_crtc_reg_write(UINT8 index, UINT8 data);
 
 	void start_bitblt();
-	void copy_pixel();
+	void start_reverse_bitblt();
+	void start_system_bitblt();
+	void blit_dword();
+	void blit_byte();  // used for colour expanded system-to-vram bitblts
+	void copy_pixel(UINT8 src, UINT8 dst);
 };
 
 class cirrus_gd5430_device :  public cirrus_gd5428_device

@@ -91,7 +91,7 @@ static int load_ips_file(running_machine &machine, ips_chunk **p, const char *ip
 	if (filerr != FILERR_NONE)
 	{
 		strcatprintf(romdata->errorstring,
-			 _("ERROR: %s/%s: open fail\n"), ips_dir, ips_name);
+			_("ERROR: %s/%s: open fail\n"), ips_dir, ips_name);
 		romdata->warnings++;
 
 		return 0;
@@ -220,8 +220,7 @@ static int parse_ips_patch(running_machine &machine, ips_entry **ips_p, const ch
 
 	if (filerr != FILERR_NONE)
 	{
-		strcatprintf(romdata->errorstring,
-			_("ERROR: %s: IPS file is not found\n"), patch_name);
+		strcatprintf(romdata->errorstring,_("ERROR: %s: IPS file is not found\n"), patch_name);
 		romdata->warnings++;
 
 		return 0;
