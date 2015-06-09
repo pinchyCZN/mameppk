@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:Aaron Giles
 /******************************************************************************
 
     mame.lst
@@ -5,38 +7,10 @@
     List of all enabled drivers in the system. This file is parsed by
     makelist.exe, sorted, and output as C code describing the drivers.
 
-****************************************************************************
-
-    Copyright Aaron Giles
-    All rights reserved.
-
-    Redistribution and use in source and binary forms, with or without
-    modification, are permitted provided that the following conditions are
-    met:
-
-        * Redistributions of source code must retain the above copyright
-          notice, this list of conditions and the following disclaimer.
-        * Redistributions in binary form must reproduce the above copyright
-          notice, this list of conditions and the following disclaimer in
-          the documentation and/or other materials provided with the
-          distribution.
-        * Neither the name 'MAME' nor the names of its contributors may be
-          used to endorse or promote products derived from this software
-          without specific prior written permission.
-
-    THIS SOFTWARE IS PROVIDED BY AARON GILES ''AS IS'' AND ANY EXPRESS OR
-    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-    DISCLAIMED. IN NO EVENT SHALL AARON GILES BE LIABLE FOR ANY DIRECT,
-    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-    (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-    SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
-    HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
-    STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
-    IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-    POSSIBILITY OF SUCH DAMAGE.
-
 ******************************************************************************/
+
+// #../../../../../src/mame/arcade.lst
+// #../../../../../src/mame/mess.lst
 
 #ifndef NCP
 
@@ -1817,12 +1791,14 @@ spelunk2        // (c) 1986 licensed from Broderbund
 horizon         // (c) 1985
 youjyudn        // (c) 1986 (Japan)
 
-vigilant        // (c) 1988 (World)
-vigilantb       // (c) 1988 (World)
-vigilant1       // (c) 1988 (World)
-vigilantu       // (c) 1988 (US)
-vigilantu2      // (c) 1988 (US)
-vigilantj       // (c) 1988 (Japan)
+vigilant        // (c) 1988 (World Rev E)
+vigilanta       // (c) 1988 (World Rev A)
+vigilantb       // (c) 1988 (US Rev B)
+vigilantc       // (c) 1988 (World Rev C)
+vigilantd       // (c) 1988 (Japan Rev D)
+vigilantg       // (c) 1988 (US Rev G)
+vigilano        // (c) 1988 (US)
+vigilanbl       // bootleg
 kikcubic        // (c) 1988 (Japan)
 kikcubicb       // bootleg
 buccanrs        // (c) 1989 Duintronic
@@ -3040,13 +3016,15 @@ sidearms        // 12/1986 (c) 1986 (World)
 sidearmsu       // 12/1986 (c) 1986 + Romstar license (US)
 sidearmsur1     // 12/1986 (c) 1986 + Romstar license (US)
 sidearmsj       // 12/1986 (c) 1986 (Japan)
-turtship        // (c) 1988 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
-turtshipj       // (c) 1988 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
-turtshipk       // (c) 1988 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
-dyger           // (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
-dygera          // (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
+turtship        // (c) 1988 Philko (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
+turtshipj       // (c) 1988 Philko (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
+turtshipk       // (c) 1988 Philko (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
+turtshipko      // (c) 1988 Philko (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
+turtshipkn      // (c) 1989 Philko (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
+dyger           // (c) 1989 Philko (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
+dygera          // (c) 1989 Philko (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
 twinfalc        // (c) 1989 Philko (Poara Enterprises license) (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
-whizz           // (c) 1989 Philco (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
+whizz           // (c) 1989 Philko (NOT A CAPCOM GAME but runs on modified Sidearms hardware)
 avengers        //  2/1987 (c) 1987 (US)
 avengers2       //  2/1987 (c) 1987 (US)
 buraiken        //  2/1987 (c) 1987 (Japan)
@@ -3160,7 +3138,7 @@ cawingj         // 12/10/1990 (c) 1990 (Japan)
 cawingbl        // bootleg
 cawingb2        // bootleg
 nemo            // 30/11/1990 (c) 1990 (World)
-nemor1		// 09/11/1990 (c) 1990 (World)
+nemor1          // 09/11/1990 (c) 1990 (World)
 nemoj           // 20/11/1990 (c) 1990 (Japan)
 sf2             // 22/05/1991 (c) 1991 (World)
 sf2eb           // 14/02/1991 (c) 1991 (World)
@@ -4239,15 +4217,26 @@ gt2kp100        // (c) 2000 Incredible Technologies
 gt2ks100        // (c) 2000 Incredible Technologies
 gt2kt500        // (c) 2000 Incredible Technologies
 gtsupreme       // (c) 2000 Incredible Technologies
-iteagle         // (c) 2000 Incredible Technologies
 gtclassc        // (c) 2001 Incredible Technologies
 gtclasscp       // (c) 2001 Incredible Technologies
 gtclasscs       // (c) 2001 Incredible Technologies
-gtfore02        // (c) 2001 Incredible Technologies
-carnking        // (c) 2002 Incredible Technologies
-gtfore04        // (c) 2003 Incredible Technologies
-gtfore05        // (c) 2004 Incredible Technologies
-gtfore06        // (c) 2005 Incredible Technologies
+
+iteagle         // (c) 2000 Incredible Technologies
+virtpool
+carnking
+gtfore01
+gtfore02
+gtfore03
+gtfore03a
+gtfore04
+gtfore04a
+gtfore05
+gtfore05a
+gtfore05b
+gtfore05c
+gtfore06
+bbhsc
+bbhcotw
 
 // Leland games
 cerberus        // (c) 1985 Cinematronics
@@ -4811,7 +4800,8 @@ pdrift          // 1988.?? Power Drift (World)
 pdrifta         // 1988.?? Power Drift (World)
 pdrifte         // 1988.?? Power Drift (World)
 pdriftl
-gloc            // 1990.04 G-LOC Air Battle (US)
+gloc            // 1990.?? G-LOC Air Battle (World)
+glocu           // 1990.04 G-LOC Air Battle (US)
 				// 1990.05 G-LOC Air Battle (Japan)
 glocr360        // 1990.?? G-LOC (R360, World?)
 strkfgtr        // 1991.06 Strike Fighter (World)
@@ -6367,6 +6357,7 @@ ddribble        // GX690 (c) 1986
 ddribblep       // GX690 (c) 1986
 contra          // GX633 (c) 1987
 contra1         // GX633 (c) 1987
+contrae         // GX633 (c) 1987
 contraj         // GX633 (c) 1987 (Japan)
 contraj1        // GX633 (c) 1987 (Japan)
 gryzor          // GX633 (c) 1987
@@ -6654,6 +6645,7 @@ overdriva       // GX789 (c) 1990
 overdrivb       // GX789 (c) 1990
 gradius3        // GX945 (c) 1989 (World)
 gradius3j       // GX945 (c) 1989 (Japan)
+gradius3js      // GX945 (c) 1989 (Japan, split)
 gradius3a       // GX945 (c) 1989 (Asia)
 
 // Konami 68020 games
@@ -8620,6 +8612,7 @@ cupsocsb2       // bootleg
 cupsocsb3       // bootleg
 olysoc92        // (c) 1992 Seibu
 olysoc92a       // (c) 1992 Seibu
+olysoc92b       // (c) 1992 Seibu
 goal92          // bootleg
 
 // Jaleco games
@@ -9387,6 +9380,7 @@ missmw96        // (c) 1996 Comad
 smissw          //
 fantsia2        // (c) 1997 Comad
 fantsia2a       // (c) 1997 Comad
+fantsia2n       // (c) 1998 Comad
 wownfant        // (c) 2002 Comad
 pgalvip         // (c) 1996 ACE International (Afega stickers on ROMs)
 pgalvipa        //
@@ -9496,7 +9490,9 @@ skybump         // (c) 1982 Venture Line
 suprridr        // (c) 1983 Venture Line + Taito license
 
 // Yun Sung games
-paradise        // (c) >1994 Yun Sung
+paradise        // (c) 1994 Yun Sung
+paradisea       // (c) 1994 Yun Sung
+paradisee       // (c) 1994 Yun Sung (Escape license)
 paradlx         // (c) >1994 Yun Sung
 para2dx         // (c) >1994 Yun Sung
 penky           // (c) 1995 Yun Sung
@@ -10922,8 +10918,10 @@ wheelfir        // (c) 199? TCH
 littlerb        // (c) 1993 TCH
 tattack         // (c) 198? Shonan
 mosaicf2        // (c) 1999 F2 System
+royalpk2        //
 finalgdr        // (c) 2001 Semicom
 mrkicker        // (c) 2001 Semicom
+mrkickera       // (c) 2001 Semicom
 wivernwg        // (c) 2001 Semicom
 wyvernwg        // (c) 2001 Semicom / Game Vision
 wyvernwga       // (c) 2001 Semicom / Game Vision
@@ -11444,6 +11442,7 @@ pex2275p        // (c) 1995 IGT - International Game Technology
 pex2276p        // (c) 1995 IGT - International Game Technology
 pex2283p        // (c) 1995 IGT - International Game Technology
 pex2284p        // (c) 1995 IGT - International Game Technology
+pex2297p        // (c) 1995 IGT - International Game Technology
 pex2302p        // (c) 1995 IGT - International Game Technology
 pex2303p        // (c) 1995 IGT - International Game Technology
 pex2306p        // (c) 1995 IGT - International Game Technology
@@ -11493,6 +11492,7 @@ pexmp017a       // (c) 1997 IGT - International Game Technology
 pexmp017b       // (c) 1997 IGT - International Game Technology
 pexmp026        // (c) 1997 IGT - International Game Technology
 pexmp030        // (c) 1997 IGT - International Game Technology
+pexmp030a       // (c) 1997 IGT - International Game Technology
 
 elgrande        // (c) 1982 Tuni Electro Service / E.T. Marketing
 jjpoker         // (c) 1983 Enter-Tech
@@ -11532,7 +11532,6 @@ x2222           // (c) 2000, Oriental Soft
 x2222o          // (c) 2000, Oriental Soft
 miniboy7        // (c) 1983, Bonanza Enterprises
 miniboy7a       // (c) 1983, Bonanza Enterprises
-miniboy7b       // (c) 1983, Bonanza Enterprises
 4in1a           // MAME based bootleg
 4in1b           // MAME based bootleg
 19in1           // MAME based bootleg
@@ -11693,6 +11692,9 @@ supjolly        // (c) 200? unknown
 x5jokers        // (c) 200? Electronic Projects
 queenotg        //
 ejollyx9        //
+
+// Sealy
+crzyddz         // (c) 2004? Sealy
 
 // Astro Corp.
 showhand        // (c) 2000  Astro Corp.
@@ -12711,33 +12713,35 @@ tajmah      // Tajmahal
 3wishrd     // Three Wishes Red
 
 
-// WMS (Russian)
+// WMS 360 / 550
 
 wms         // Set Chips
 wmsa        //
 wmsb        //
 
-btippers    // Big Tippers (Russia)
-wmsboom     // Boom (Russia)
-cashcrop    // Cash Crop (Russia)
-filthyr     // Filthy Rich (Russia)
-hottop      // Hot Toppings (Russia)
-inwinner    // In Winner (Russia)
-jptparty    // Jackpot Party (Russia)
-leprgld     // Leprecorns Gold (Russia)
-lol         // Life of Luxury (Russia)
-lovewin     // Love To Win (Russia)
-mtburn      // Money To Burn (Russia)
-otchart     // Off The Charts (Russia)
-perfect     // Perfect Game (Russia)
-reelemin    // Reel 'Em In (Russia)
-sonoth      // Sum Of Nothing (Russia)
-swingin     // Swingin' Green (Russia)
-wmstopb     // Top Banana (Russia)
-wdun        // Who Dunnit (Russia)
-winbid      // Winning Bid (Russia)
-wldstrek    // Wild Streak (Russia)
-yukongld    // Yukon Gold (Russia)
+btippers    // Big Tippers (Russian)
+wmsboom     // Boom (Russian)
+cashcrop    // Cash Crop (Russian)
+filthyr     // Filthy Rich (Russian)
+hottop      // Hot Toppings (English)
+hottopa     // Hot Toppings (Russian?)
+inwinner    // In Winner (Russian)
+jptparty    // Jackpot Party (Russian)
+leprgld     // Leprecorns Gold (Russian)
+leprglds    // Leprecorns Gold (Spanish)
+lol         // Life of Luxury (Russian)
+lovewin     // Love To Win (Russian)
+mtburn      // Money To Burn (Russian)
+otchart     // Off The Charts (Russian)
+perfect     // Perfect Game (Russian)
+reelemin    // Reel 'Em In (Russian)
+sonoth      // Sum Of Nothing (Russian)
+swingin     // Swingin' Green (Russian)
+wmstopb     // Top Banana (Russian)
+wdun        // Who Dunnit (Russian)
+winbid      // Winning Bid (Russian)
+wldstrek    // Wild Streak (Russian)
+yukongld    // Yukon Gold (Russian)
 
 // Extrema (Russian)
 

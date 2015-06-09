@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:Couriersud
 #include "emu.h"
 #include "cpu/z80/z80.h"
 #include "cpu/mcs48/mcs48.h"
@@ -191,7 +193,9 @@ NETLIST_END()
 
 static NETLIST_START(nl_mario)
 
-	/* Standard stuff */
+	LOCAL_SOURCE(nl_mario_snd0)
+	LOCAL_SOURCE(nl_mario_snd7)
+	LOCAL_SOURCE(nl_mario_dac)
 
 	SOLVER(Solver, 48000)
 	PARAM(Solver.ACCURACY, 1e-8)

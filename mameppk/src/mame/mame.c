@@ -1,11 +1,10 @@
+// license:BSD-3-Clause
+// copyright-holders:Aaron Giles
 /***************************************************************************
 
     mame.c
 
     Specific (per target) constants
-
-    Copyright Nicola Salmoria and the MAME Team.
-    Visit http://mamedev.org for licensing and usage restrictions.
 
 ****************************************************************************/
 
@@ -16,23 +15,18 @@
 #define CONFIGNAME              "mame"
 #define APPLONGNAME             "M.A.M.E."
 #define FULLLONGNAME            _("Multiple Arcade Machine Emulator")
-#define CAPGAMENOUN             _("GAME")
-#define CAPSTARTGAMENOUN        _("Game")
-#define GAMENOUN                _("game")
-#define GAMESNOUN               _("games")
+#define CAPGAMENOUN             _("MACHINE")
+#define CAPSTARTGAMENOUN        _("Machine")
+#define GAMENOUN                _("machine")
+#define GAMESNOUN               _("machines")
 #define COPYRIGHT               _("Copyright Nicola Salmoria\nand the MAME team\nhttp://mamedev.org")
 #define COPYRIGHT_INFO          _("Copyright Nicola Salmoria and the MAME team")
-#define DISCLAIMER              _("MAME is an emulator: it reproduces, more or less faithfully, the behaviour of\n" \
-								"several arcade machines. But hardware is useless without software, so an image\n" \
-								"of the ROMs which run on that hardware is required. Such ROMs, like any other\n" \
-								"commercial software, are copyrighted material and it is therefore illegal to\n" \
-								"use them if you don't own the original arcade machine. Needless to say, ROMs\n" \
-								"are not distributed together with MAME. Distribution of MAME together with ROM\n" \
-								"images is a violation of copyright law and should be promptly reported to the\n" \
-								"authors so that appropriate legal action can be taken.\n")
-#define USAGE                   _("Usage:  %s [%s] [options]")
+#define DISCLAIMER              _("This software reproduces, more or less faithfully, the behaviour of a wide range\n" \
+								"of machines. But hardware is useless without software, so images of the ROMs and\n" \
+								"other media which run on that hardware are also required.\n")
+#define USAGE                   _("Usage:  %s [%s] [media] [software] [options]")
 #define XML_ROOT                "mame"
-#define XML_TOP                 "game"
+#define XML_TOP                 "machine"
 #define STATE_MAGIC_NUM         "MAMESAVE"
 
 const char * emulator_info::get_appname() { return APPNAME;}
