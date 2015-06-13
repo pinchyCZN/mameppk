@@ -756,9 +756,6 @@ function linkProjects_mame_arcade(_target, _subtarget)
 		"pinball",
 		"shared",
 	}
-	if (_OPTIONS["MAMEMESS"]=="1") then
-		findfunction("linkProjects_" .. _target .. "_" .. _subtarget .. "mess")(_target, _subtarget)
-	end
 end
 
 function createMAMEProjects(_target, _subtarget, _name)
@@ -3592,8 +3589,4 @@ files {
 	MAME_DIR .. "src/mame/drivers/xyonix.c",
 	MAME_DIR .. "src/mame/video/xyonix.c",
 }
-
-if (_OPTIONS["MAMEMESS"]=="1") then
-	findfunction("createProjects_" .. _target .. "_" .. _subtarget .. "mess")(_target, _subtarget)
-end
 end

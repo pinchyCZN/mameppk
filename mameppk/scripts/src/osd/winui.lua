@@ -115,7 +115,7 @@ project ("ocore_winui")
 		"ForceCPP",
 	}
 	removeflags {
-		"SingleOutputDir",	
+		"SingleOutputDir",
 	}
 
 	dofile("windows_cfg.lua")

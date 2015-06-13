@@ -174,7 +174,7 @@ function mainProject(_target, _subtarget)
 	}
 
 	--FIXME
-	make_drivlist(_target,_subtarget)
+	make_drivlist(_target, _subtarget)
 	
 	configuration { "mingw*" }
 		custombuildtask {	
@@ -372,7 +372,7 @@ function mainProject_with_ui(_target, _subtarget)
 	}
 
 	--FIXME
-	make_drivlist(_target,_subtarget)
+	make_drivlist(_target, _subtarget)
 
 	configuration { "mingw*" }
 		custombuildtask {	
@@ -394,28 +394,25 @@ function mainProject_with_ui(_target, _subtarget)
 end
 
 function make_drivlist(_target, _subtarget)
-	if _subtarget=="mame" or _subtarget=="ncp" then
+	if _subtarget=="mame" or _subtarget=="arcade" or _subtarget=="ncp" then
+		DRVLIST = {}
 		if _subtarget=="mame" and _OPTIONS["MAMEMESS"]=="1" then
-			custombuildtask {
-				{ MAME_DIR .. "src/".._target .."/%.lst" ,  GEN_DIR  .. _target .. "/" .. _subtarget .."/%.lst",    {  MAME_DIR .. "src/build/makelist.py" }, {"@echo Generating $@...", "@echo #include \"$<\" > $@.h", "$(CC) $(DEFINES) -I. -E $@.h -o $@" }},
-				{ MAME_DIR .. "src/mess/mess.lst" ,  GEN_DIR  .. _target .. "/" .. _subtarget .."/mess.lst",    {  MAME_DIR .. "src/build/makelist.py" }, {"@echo Generating $@...", "@echo #include \"$<\" > $@.h", "$(CC) $(DEFINES) -I. -E $@.h -o $@" }},
-				{ GEN_DIR .. _target .. "/" .. _subtarget .."/mame.lst",  GEN_DIR  .. _target .. "/" .. _subtarget .."/drivlist.c",
-					{ GEN_DIR .. _target .. "/" .. _subtarget .."/mamedecrypted.lst",
+			DRVLIST = { GEN_DIR .. _target .. "/" .. _subtarget .."/mamedecrypted.lst",
 					  GEN_DIR .. _target .. "/" .. _subtarget .."/mamehb.lst",
 					  GEN_DIR .. _target .. "/" .. _subtarget .."/mameplus.lst",
 					  GEN_DIR .. _target .. "/" .. _subtarget .."/mess.lst",
-					  MAME_DIR .. "src/build/makelist.py" }, {"@echo Building driver list...",    "echo " .. PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@",PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@" }},
-			}
+					  MAME_DIR .. "src/build/makelist.py" }
 		else
-			custombuildtask {
-				{ MAME_DIR .. "src/".._target .."/%.lst" ,  GEN_DIR  .. _target .. "/" .. _subtarget .."/%.lst",    {  MAME_DIR .. "src/build/makelist.py" }, {"@echo Generating $@...", "@echo #include \"$<\" > $@.h", "$(CC) $(DEFINES) -I. -E $@.h -o $@" }},
-				{ GEN_DIR .. _target .. "/" .. _subtarget .."/mame.lst",  GEN_DIR  .. _target .. "/" .. _subtarget .."/drivlist.c",
-					{ GEN_DIR .. _target .. "/" .. _subtarget .."/mamedecrypted.lst",
+			DRVLIST = { GEN_DIR .. _target .. "/" .. _subtarget .."/mamedecrypted.lst",
 					  GEN_DIR .. _target .. "/" .. _subtarget .."/mamehb.lst",
 					  GEN_DIR .. _target .. "/" .. _subtarget .."/mameplus.lst",
-					  MAME_DIR .. "src/build/makelist.py" }, {"@echo Building driver list...",    "echo " .. PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@",PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@" }},
-			}
+					  MAME_DIR .. "src/build/makelist.py" }
 		end
+		custombuildtask {
+			{ MAME_DIR .. "src/".._target .."/%.lst" ,  GEN_DIR  .. _target .. "/" .. _subtarget .."/%.lst",    {  MAME_DIR .. "src/build/makelist.py" }, {"@echo Generating $@...", "@echo #include \"$<\" > $@.h", "$(CC) $(DEFINES) -I. -E $@.h -o $@" }},
+			{ GEN_DIR .. _target .. "/" .. _subtarget .."/mame.lst",  GEN_DIR  .. _target .. "/" .. _subtarget .."/drivlist.c",
+				DRVLIST, {"@echo Building driver list...",    "echo " .. PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@",PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@" }},
+		}
 	else
 		custombuildtask {
 			{ MAME_DIR .. "src/".._target .."/" .. _subtarget ..".lst" ,  GEN_DIR  .. _target .. "/" .. _subtarget .."/" .. _subtarget ..".lst",    {  MAME_DIR .. "src/build/makelist.py" }, {"@echo Generating $@...", "@echo #include \"$<\" > $@.h", "$(CC) -I. -E $@.h -o $@" }},

@@ -34,13 +34,15 @@ SOUNDS["YM2151"] = true
 SOUNDS["YM2203"] = true
 SOUNDS["YM2608"] = true
 SOUNDS["YM2610"] = true
-SOUNDS["VLM5030"] = true
 SOUNDS["MSM5205"] = true
 SOUNDS["OKIM6295"] = true
 SOUNDS["QSOUND"] = true
 SOUNDS["CDDA"] = true
 SOUNDS["ICS2115"] = true
 SOUNDS["YMZ770"] = true
+if _OPTIONS["WINUI"] == "1" then
+SOUNDS["VLM5030"] = true
+end
 
 --------------------------------------------------
 -- specify available video cores
@@ -158,9 +160,7 @@ files {
 	MAME_DIR .. "src/mame/video/neogeo.c",
 	MAME_DIR .. "src/mame/drivers/neogeo_noslot.c",
 	MAME_DIR .. "src/mame/video/neogeo_spr.c",
-	MAME_DIR .. "src/mame/machine/neoboot.c",
 	MAME_DIR .. "src/mame/machine/neocrypt.c",
-	MAME_DIR .. "src/mame/machine/neoprot.c",
 	MAME_DIR .. "src/mame/machine/ng_memcard.c",
 }
 

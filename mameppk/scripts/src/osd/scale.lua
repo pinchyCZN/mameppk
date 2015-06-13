@@ -1,8 +1,9 @@
-if _OPTIONS["ARCHITECTURE"]~="_x64" then
+configuration { "x32" }
 	defines {
 		"USE_MMX_INTERP_SCALE",
 	}
-end
+
+configuration { }
 
 includedirs {
 	MAME_DIR .. "src/osd/windows/scale",

@@ -14,169 +14,6 @@ function backtick(cmd)
 	return result
 end
 
-function plus_additional_defs()
-	if _OPTIONS["USE_SCALE_EFFECTS"]=="1" then
-		defines {
-			"USE_SCALE_EFFECTS",
-		}
-	end
-	if _OPTIONS["USE_UI_COLOR_DISPLAY"]=="1" then
-		defines {
-			"UI_COLOR_DISPLAY",
-		}
-	end
-	if _OPTIONS["USE_TRANS_UI"]=="1" then
-		defines {
-			"TRANS_UI",
-		}
-	end
-	if _OPTIONS["USE_JOYSTICK_ID"]=="1" then
-		defines {
-			"JOYSTICK_ID",
-		}
-	end
-	if _OPTIONS["USE_AUTOFIRE"]=="1" then
-		defines {
-			"USE_AUTOFIRE",
-		}
-	end
-	if _OPTIONS["USE_CUSTOM_BUTTON"]=="1" then
-		defines {
-			"USE_CUSTOM_BUTTON",
-		}
-	end
-	if _OPTIONS["USE_INP_CAPTION"]=="1" then
-		defines {
-			"DINP_CAPTION",
-		}
-	end
-	if _OPTIONS["USE_SHOW_TIME"]=="1" then
-		defines {
-			"USE_SHOW_TIME",
-		}
-	end
-	if _OPTIONS["USE_SHOW_INPUT_LOG"]=="1" then
-		defines {
-			"USE_SHOW_INPUT_LOG",
-		}
-	end
-	if _OPTIONS["USE_PLAYBACK_END_PAUSE"]=="1" then
-		defines {
-			"USE_PLAYBACK_END_PAUSE",
-		}
-	end
-	if _OPTIONS["USE_AUDIO_SYNC"]=="1" then
-		defines {
-			"USE_AUDIO_SYNC",
-		}
-	end
-	if _OPTIONS["USE_IPS"]=="1" then
-		defines {
-			"USE_IPS",
-		}
-	end
-	if _OPTIONS["USE_DRIVER_SWITCH"]=="1" then
-		defines {
-			"DRIVER_SWITCH",
-		}
-	end
-	if _OPTIONS["USE_CMD_LIST"]=="1" then
-		defines {
-			"CMD_LIST",
-		}
-	end
-	if _OPTIONS["USE_HISCORE"]=="1" then
-		defines {
-			"USE_HISCORE",
-		}
-	end
-	if _OPTIONS["MAMEMESS"]=="1" then
-		defines {
-			"MAMEMESS",
-		}
-	end
-	if _OPTIONS["WINUI"]=="1" then
-		defines {
-			"WINUI",
-		}
-	end
-	if _OPTIONS["USE_MORE_FOLDER_INFO"]=="1" then
-		defines {
-			"USE_MORE_FOLDER_INFO",
-		}
-	end
-	if _OPTIONS["USE_STORY_DATAFILE"]=="1" then
-		defines {
-			"USE_STORY_DATAFILE",
-		}
-	end
-	if _OPTIONS["USE_SHOW_SPLASH_SCREEN"]=="1" then
-		defines {
-			"USE_SHOW_SPLASH_SCREEN",
-		}
-	end
-	if _OPTIONS["USE_VIEW_PCBINFO"]=="1" then
-		defines {
-			"USE_VIEW_PCBINFO",
-		}
-	end
-	if _OPTIONS["USE_TREE_SHEET"]=="1" then
-		defines {
-			"USE_TREE_SHEET",
-		}
-	end
-	if _OPTIONS["USE_EXPORT_GAMELIST"]=="1" then
-		defines {
-			"USE_EXPORT_GAMELIST",
-		}
-	end
-	if _OPTIONS["USE_SHOW_UNAVAILABLE_FOLDER"]=="1" then
-		defines {
-			"USE_SHOW_UNAVAILABLE_FOLDER",
-		}
-	end
-	if _OPTIONS["USE_VOLUME_AUTO_ADJUST"]=="1" then
-		defines {
-			"USE_VOLUME_AUTO_ADJUST",
-		}
-	end
-	if _OPTIONS["KAILLERA"]=="1" then
-		defines {
-			"KAILLERA",
-		}
-	end
-	if _OPTIONS["KSERVER"]=="1" then
-		defines {
-			"KSERVER",
-		}
-	end
-	if _OPTIONS["MAMEUIPLUSPLUS"]=="1" then
-		defines {
-			"MAMEUIPLUSPLUS",
-		}
-	end
-	if _OPTIONS["JAPANESE"]=="1" then
-		defines {
-			"JAPANESE",
-		}
-	end
-	if _OPTIONS["MAME_AVI"]=="1" then
-		defines {
-			"MAME_AVI",
-		}
-	end
-	if _OPTIONS["subtarget"]=="tiny" then
-		defines {
-			"TINY_BUILD",
-		}
-	end
-	if _OPTIONS["subtarget"]=="ncp" then
-		defines {
-			"NCP",
-		}
-	end
-end
-
 function str_to_version(str)
 	local val = 0
 	if (str == nil or str == '') then
@@ -484,12 +321,6 @@ newoption {
 }
 
 newoption {
-	trigger = "ARCHITECTURE",
-	description = "Processer architecture",
-	value = "",
-}
-
-newoption {
 	trigger = "EXTRA_SUFFIX",
 	description = "Execute file suffix",
 	value = "",
@@ -780,9 +611,6 @@ if (not os.isfile(path.join("target", _OPTIONS["target"],_OPTIONS["subtarget"] .
 	error("File definition for TARGET=" .. _OPTIONS["target"] .. " SUBTARGET=" .. _OPTIONS["subtarget"] .. " does not exist")
 end
 dofile (path.join("target", _OPTIONS["target"],_OPTIONS["subtarget"] .. ".lua"))
-if (_OPTIONS["subtarget"]=="mame" and _OPTIONS["MAMEMESS"]=="1") then
-	dofile (path.join("target", _OPTIONS["target"],_OPTIONS["subtarget"] .. "mess.lua"))
-end
 
 configuration { "gmake" }
 	flags {
@@ -1132,6 +960,168 @@ if _OPTIONS["MAP"] then
 	end
 end
 
+-- mamep additional defines
+if _OPTIONS["USE_SCALE_EFFECTS"]=="1" then
+	defines {
+		"USE_SCALE_EFFECTS",
+	}
+end
+if _OPTIONS["USE_UI_COLOR_DISPLAY"]=="1" then
+	defines {
+		"UI_COLOR_DISPLAY",
+	}
+end
+if _OPTIONS["USE_TRANS_UI"]=="1" then
+	defines {
+		"TRANS_UI",
+	}
+end
+if _OPTIONS["USE_JOYSTICK_ID"]=="1" then
+	defines {
+		"JOYSTICK_ID",
+	}
+end
+if _OPTIONS["USE_AUTOFIRE"]=="1" then
+	defines {
+		"USE_AUTOFIRE",
+	}
+end
+if _OPTIONS["USE_CUSTOM_BUTTON"]=="1" then
+	defines {
+		"USE_CUSTOM_BUTTON",
+	}
+end
+if _OPTIONS["USE_INP_CAPTION"]=="1" then
+	defines {
+		"DINP_CAPTION",
+	}
+end
+if _OPTIONS["USE_SHOW_TIME"]=="1" then
+	defines {
+		"USE_SHOW_TIME",
+	}
+end
+if _OPTIONS["USE_SHOW_INPUT_LOG"]=="1" then
+	defines {
+		"USE_SHOW_INPUT_LOG",
+	}
+end
+if _OPTIONS["USE_PLAYBACK_END_PAUSE"]=="1" then
+	defines {
+		"USE_PLAYBACK_END_PAUSE",
+	}
+end
+if _OPTIONS["USE_AUDIO_SYNC"]=="1" then
+	defines {
+		"USE_AUDIO_SYNC",
+	}
+end
+if _OPTIONS["USE_IPS"]=="1" then
+	defines {
+		"USE_IPS",
+	}
+end
+if _OPTIONS["USE_DRIVER_SWITCH"]=="1" then
+	defines {
+		"DRIVER_SWITCH",
+	}
+end
+if _OPTIONS["USE_CMD_LIST"]=="1" then
+	defines {
+		"CMD_LIST",
+	}
+end
+if _OPTIONS["USE_HISCORE"]=="1" then
+	defines {
+		"USE_HISCORE",
+	}
+end
+if _OPTIONS["MAMEMESS"]=="1" then
+	defines {
+		"MAMEMESS",
+	}
+end
+if _OPTIONS["WINUI"]=="1" then
+	defines {
+		"WINUI",
+	}
+end
+if _OPTIONS["USE_MORE_FOLDER_INFO"]=="1" then
+	defines {
+		"USE_MORE_FOLDER_INFO",
+	}
+end
+if _OPTIONS["USE_STORY_DATAFILE"]=="1" then
+	defines {
+		"USE_STORY_DATAFILE",
+	}
+end
+if _OPTIONS["USE_SHOW_SPLASH_SCREEN"]=="1" then
+	defines {
+		"USE_SHOW_SPLASH_SCREEN",
+	}
+end
+if _OPTIONS["USE_VIEW_PCBINFO"]=="1" then
+	defines {
+		"USE_VIEW_PCBINFO",
+	}
+end
+if _OPTIONS["USE_TREE_SHEET"]=="1" then
+	defines {
+		"USE_TREE_SHEET",
+	}
+end
+if _OPTIONS["USE_EXPORT_GAMELIST"]=="1" then
+	defines {
+		"USE_EXPORT_GAMELIST",
+	}
+end
+if _OPTIONS["USE_SHOW_UNAVAILABLE_FOLDER"]=="1" then
+	defines {
+		"USE_SHOW_UNAVAILABLE_FOLDER",
+	}
+end
+if _OPTIONS["subtarget"]=="tiny" then
+	defines {
+		"TINY_BUILD",
+	}
+end
+if _OPTIONS["subtarget"]=="ncp" then
+	defines {
+		"NCP",
+	}
+end
+if _OPTIONS["USE_VOLUME_AUTO_ADJUST"]=="1" then
+	defines {
+		"USE_VOLUME_AUTO_ADJUST",
+	}
+end
+if _OPTIONS["KAILLERA"]=="1" then
+	defines {
+		"KAILLERA",
+	}
+end
+if _OPTIONS["KSERVER"]=="1" then
+	defines {
+		"KSERVER",
+	}
+end
+if _OPTIONS["MAMEUIPLUSPLUS"]=="1" then
+	defines {
+		"MAMEUIPLUSPLUS",
+	}
+end
+if _OPTIONS["JAPANESE"]=="1" then
+	defines {
+		"JAPANESE",
+	}
+end
+if _OPTIONS["MAME_AVI"]=="1" then
+	defines {
+		"MAME_AVI",
+	}
+end
+
 
 -- add a basic set of warnings
 	buildoptions {
@@ -1303,7 +1293,6 @@ configuration { "osx*" }
 		}
 
 configuration { "mingw*" }
-		plus_additional_defs()
 		buildoptions {
 			"-Wno-format-security",
 			"-Wno-unused-but-set-variable",
@@ -1330,7 +1319,6 @@ configuration { "vs*" }
 			"_CRT_NONSTDC_NO_DEPRECATE",
 			"_CRT_SECURE_NO_DEPRECATE",
 		}
-		plus_additional_defs()
 		links {
 			"user32",
 			"winmm",

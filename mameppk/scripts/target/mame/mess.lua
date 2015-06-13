@@ -53,7 +53,7 @@ BUSES["WSWAN"] = true
 -- comprise MESS plus messdriv.*", which contains
 -- the list of drivers
 --------------------------------------------------
-function linkProjects_mame_mamemess(_target, _subtarget)
+function linkProjects_mame_mess(_target, _subtarget)
 	links {
 		"ascii",
 		"atari",
@@ -70,7 +70,7 @@ end
 function createMESSProjects(_target, _subtarget, _name)
 	project (_name)
 	targetsubdir(_target .."_" .. _subtarget)
-	kind "StaticLib"
+	kind (LIBTYPE)
 	uuid (os.uuid("drv-" .. _target .."_" .. _subtarget .. "_" .._name))
 	
 	options {
@@ -96,7 +96,7 @@ function createMESSProjects(_target, _subtarget, _name)
 	}
 end
 	
-function createProjects_mame_mamemess(_target, _subtarget)
+function createProjects_mame_mess(_target, _subtarget)
 
 createMESSProjects(_target, _subtarget, "ascii")
 files {             

@@ -51,6 +51,9 @@ SOUNDS["YMZ280B"] = true
 SOUNDS["YM2610"] = true
 SOUNDS["YM2203"] = true
 SOUNDS["YM2608"] = true
+if _OPTIONS["WINUI"] == "1" then
+SOUNDS["VLM5030"] = true
+end
 
 --------------------------------------------------
 -- specify available video cores
