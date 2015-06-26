@@ -29,6 +29,7 @@ include config.def
 # USE_DISPATCH_GL = 0
 # DIRECTINPUT = 7
 # USE_SDL = 1
+# SDL_INI_PATH = .;$HOME/.mame/;ini;
 # SDL2_MULTIAPI = 1
 # NO_USE_MIDI = 1
 # DONT_USE_NETWORK = 1
@@ -51,9 +52,16 @@ include config.def
 # MAP = 1
 # PROFILE = 1
 # ARCHOPTS =
+# OPT_FLAGS =
 # LDOPTS =
 
 # USE_SYSTEM_LIB_EXPAT = 1
+# USE_SYSTEM_LIB_ZLIB = 1
+# USE_SYSTEM_LIB_JPEG = 1
+# USE_SYSTEM_LIB_FLAC = 1
+# USE_SYSTEM_LIB_LUA = 1
+# USE_SYSTEM_LIB_SQLITE3 = 1
+# USE_SYSTEM_LIB_PORTMIDI = 1
 
 # MESA_INSTALL_ROOT = /opt/mesa
 # SDL_INSTALL_ROOT = /opt/sdl2
@@ -82,6 +90,8 @@ include config.def
 # STRIP_SYMBOLS = 0
 
 # QT_HOME = /usr/lib64/qt48/
+
+# DRIVERS = src/mame/drivers/1942.c,src/mame/drivers/cops.c
 
 -include useroptions.mak
 
@@ -236,6 +246,15 @@ ifndef NOASM
 endif
 endif
 
+# Emscripten
+ifeq ($(findstring emcc,$(CC)),emcc)
+TARGETOS := asmjs
+ARCHITECTURE :=
+ifndef NOASM
+	NOASM := 1
+endif
+endif
+
 # Autodetect BIGENDIAN
 # MacOSX
 ifndef BIGENDIAN
@@ -293,6 +312,30 @@ endif
 #-------------------------------------------------
 ifndef USE_SYSTEM_LIB_EXPAT
 PARAMS += --with-bundled-expat
+endif
+
+ifndef USE_SYSTEM_LIB_ZLIB
+PARAMS += --with-bundled-zlib
+endif
+
+ifndef USE_SYSTEM_LIB_JPEG
+PARAMS += --with-bundled-jpeg
+endif
+
+ifndef USE_SYSTEM_LIB_FLAC
+PARAMS += --with-bundled-flac
+endif
+
+ifndef USE_SYSTEM_LIB_LUA
+PARAMS += --with-bundled-lua
+endif
+
+ifndef USE_SYSTEM_LIB_SQLITE3
+PARAMS += --with-bundled-sqlite3
+endif
+
+ifndef USE_SYSTEM_LIB_PORTMIDI
+PARAMS += --with-bundled-portmidi
 endif
 
 #-------------------------------------------------
@@ -403,6 +446,10 @@ ifdef ARCHOPTS
 PARAMS += --ARCHOPTS='$(ARCHOPTS)'
 endif
 
+ifdef OPT_FLAGS
+PARAMS += --OPT_FLAGS='$(OPT_FLAGS)'
+endif
+
 ifdef MAP
 PARAMS += --MAP='$(MAP)'
 endif
@@ -469,6 +516,10 @@ endif
 
 ifdef USE_SDL
 PARAMS += --USE_SDL='$(USE_SDL)'
+endif
+
+ifdef SDL_INI_PATH
+PARAMS += --SDL_INI_PATH='$(SDL_INI_PATH)'
 endif
 
 ifdef CYGWIN_BUILD
@@ -557,6 +608,10 @@ endif
 
 ifdef QT_HOME
 PARAMS += --QT_HOME='$(QT_HOME)'
+endif
+
+ifdef DRIVERS
+PARAMS += --DRIVERS='$(DRIVERS)'
 endif
 
 ifneq ($(EXTRA_SUFFIX),)
@@ -710,9 +765,13 @@ SCRIPTS = scripts/genie.lua \
 	scripts/src/netlist.lua \
 	scripts/toolchain.lua \
 	scripts/src/osd/modules.lua \
-	scripts/target/$(TARGET)/$(SUBTARGET).lua \
 	$(wildcard src/osd/$(OSD)/$(OSD).mak) \
 	$(wildcard src/$(TARGET)/$(SUBTARGET).mak)
+
+ifndef DRIVERS
+SCRIPTS += scripts/target/$(TARGET)/$(SUBTARGET).lua
+endif
+
 ifdef REGENIE
 SCRIPTS+= regenie
 endif
@@ -1095,8 +1154,8 @@ ifneq (,$(wildcard src/osd/$(OSD)/$(OSD).mak))
 include src/osd/$(OSD)/$(OSD).mak
 endif
 
-ifneq (,$(wildcard src/$(TARGET)/$(SUBTARGET).mak))
-include src/$(TARGET)/$(SUBTARGET).mak
+ifneq (,$(wildcard src/$(TARGET)/$(TARGET).mak))
+include src/$(TARGET)/$(TARGET).mak
 endif
 
 $(GEN_FOLDERS):
@@ -1174,8 +1233,12 @@ CPPCHECK_PARAMS += -Isrc/osd/modules/render
 CPPCHECK_PARAMS += -Isrc/osd/windows
 CPPCHECK_PARAMS += -Isrc/emu/cpu/m68000
 CPPCHECK_PARAMS += -I3rdparty
+ifndef USE_SYSTEM_LIB_LUA
 CPPCHECK_PARAMS += -I3rdparty/lua/src
+endif
+ifndef USE_SYSTEM_LIB_ZLIB
 CPPCHECK_PARAMS += -I3rdparty/zlib 
+endif
 CPPCHECK_PARAMS += -I3rdparty/bgfx/include
 CPPCHECK_PARAMS += -I3rdparty/bx/include
 CPPCHECK_PARAMS += -Ibuild/generated/emu 
@@ -1188,7 +1251,9 @@ CPPCHECK_PARAMS += -DMAME_DEBUG
 CPPCHECK_PARAMS += -DMAME_PROFILER
 CPPCHECK_PARAMS += -DCRLF=3
 CPPCHECK_PARAMS += -DLSB_FIRST
+ifndef USE_SYSTEM_LIB_FLAC
 CPPCHECK_PARAMS += -DFLAC__NO_DLL
+endif
 CPPCHECK_PARAMS += -DNATIVE_DRC=drcbe_x64
 CPPCHECK_PARAMS += -DLUA_COMPAT_APIINTCASTS
 CPPCHECK_PARAMS += -DWIN32

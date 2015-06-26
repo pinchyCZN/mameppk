@@ -15,14 +15,22 @@ includedirs {
 	MAME_DIR .. "src/lib",
 	MAME_DIR .. "src/lib/util",
 	MAME_DIR .. "3rdparty",
-	MAME_DIR .. "3rdparty/lua/src",
-	MAME_DIR .. "3rdparty/zlib",
 	GEN_DIR  .. "emu",
 	GEN_DIR  .. "emu/layout",
 }
 if _OPTIONS["with-bundled-expat"] then
 	includedirs {
 		MAME_DIR .. "3rdparty/expat/lib",
+	}
+end
+if _OPTIONS["with-bundled-zlib"] then
+	includedirs {
+		MAME_DIR .. "3rdparty/zlib",
+	}
+end
+if _OPTIONS["with-bundled-lua"] then
+	includedirs {
+		MAME_DIR .. "3rdparty/lua/src",
 	}
 end
 if _OPTIONS["KAILLERA"] == "1" then
@@ -317,8 +325,11 @@ files {
 	MAME_DIR .. "src/emu/video/resnet.h",
 	MAME_DIR .. "src/emu/video/rgbutil.c",
 	MAME_DIR .. "src/emu/video/rgbutil.h",
+	MAME_DIR .. "src/emu/video/rgbgen.c",
 	MAME_DIR .. "src/emu/video/rgbgen.h",
+	MAME_DIR .. "src/emu/video/rgbsse.c",
 	MAME_DIR .. "src/emu/video/rgbsse.h",
+	MAME_DIR .. "src/emu/video/rgbvmx.c",
 	MAME_DIR .. "src/emu/video/rgbvmx.h",
 	MAME_DIR .. "src/emu/video/vector.c",
 	MAME_DIR .. "src/emu/video/vector.h",
@@ -412,8 +423,6 @@ function emuProject(_target, _subtarget)
 		MAME_DIR .. "src/lib",
 		MAME_DIR .. "src/lib/util",
 		MAME_DIR .. "3rdparty",
-		MAME_DIR .. "3rdparty/lua/src",
-		MAME_DIR .. "3rdparty/zlib",
 		GEN_DIR  .. "emu",
 		GEN_DIR  .. "emu/layout",
 		MAME_DIR .. "src/emu/cpu/m68000",
@@ -421,6 +430,16 @@ function emuProject(_target, _subtarget)
 	if _OPTIONS["with-bundled-expat"] then
 		includedirs {
 			MAME_DIR .. "3rdparty/expat/lib",
+		}
+	end
+	if _OPTIONS["with-bundled-zlib"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/zlib",
+		}
+	end
+	if _OPTIONS["with-bundled-lua"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/lua/src",
 		}
 	end
 	
@@ -433,9 +452,7 @@ function emuProject(_target, _subtarget)
 
 	dofile(path.join("src", "machine.lua"))
 
-	--	netlist now defines a project
-	dofile(path.join("src", "netlist.lua"))
-	
+if (_OPTIONS["DRIVERS"] == nil) then 
 	project ("bus")
 	uuid ("5d782c89-cf7e-4cfe-8f9f-0d4bfc16c91d")
 	kind (LIBTYPE)
@@ -451,8 +468,6 @@ function emuProject(_target, _subtarget)
 		MAME_DIR .. "src/lib",
 		MAME_DIR .. "src/lib/util",
 		MAME_DIR .. "3rdparty",
-		MAME_DIR .. "3rdparty/lua/src",
-		MAME_DIR .. "3rdparty/zlib",
 		MAME_DIR .. "src/mess", -- some mess bus devices need this
 		MAME_DIR .. "src/mame", -- used for nes bus devices
 		GEN_DIR  .. "emu",
@@ -463,9 +478,25 @@ function emuProject(_target, _subtarget)
 			MAME_DIR .. "3rdparty/expat/lib",
 		}
 	end
+	if _OPTIONS["with-bundled-zlib"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/zlib",
+		}
+	end
+	if _OPTIONS["with-bundled-lua"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/lua/src",
+		}
+	end
 
 	dofile(path.join("src", "bus.lua"))
+else
+	dofile(path.join("src", "bus.lua"))
+end
 	
+	--	netlist now defines a project
+	dofile(path.join("src", "netlist.lua"))
+
 	
 	project ("dasm")
 	uuid ("f2d28b0a-6da5-4f78-b629-d834aa00429d")
@@ -481,13 +512,21 @@ function emuProject(_target, _subtarget)
 		MAME_DIR .. "src/lib",
 		MAME_DIR .. "src/lib/util",
 		MAME_DIR .. "3rdparty",
-		MAME_DIR .. "3rdparty/lua/src",
-		MAME_DIR .. "3rdparty/zlib",
 		GEN_DIR  .. "emu",
 	}
 	if _OPTIONS["with-bundled-expat"] then
 		includedirs {
 			MAME_DIR .. "3rdparty/expat/lib",
+		}
+	end
+	if _OPTIONS["with-bundled-zlib"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/zlib",
+		}
+	end
+	if _OPTIONS["with-bundled-lua"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/lua/src",
 		}
 	end
 	

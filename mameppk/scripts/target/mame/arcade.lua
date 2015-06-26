@@ -535,7 +535,6 @@ MACHINES["UPD765"] = true
 MACHINES["V3021"] = true
 MACHINES["WD_FDC"] = true
 MACHINES["WD11C00_17"] = true
-MACHINES["WD17XX"] = true
 MACHINES["WD2010"] = true
 MACHINES["WD33C93"] = true
 MACHINES["X2212"] = true
@@ -775,15 +774,21 @@ function createMAMEProjects(_target, _subtarget, _name)
 		MAME_DIR .. "src/lib",
 		MAME_DIR .. "src/lib/util",
 		MAME_DIR .. "3rdparty",
-		MAME_DIR .. "3rdparty/zlib",
 		GEN_DIR  .. "mame/layout",
 	}
+
+	if _OPTIONS["with-bundled-zlib"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/zlib",
+		}
 
 	if _OPTIONS["KAILLERA"]=="1" then
 		includedirs {
 			MAME_DIR .. "src/osd/winui",
 		}
 	end
+
+end
 end
 	
 function createProjects_mame_arcade(_target, _subtarget)
@@ -1245,7 +1250,6 @@ files {
 	MAME_DIR .. "src/mame/audio/astrof.c",
 	MAME_DIR .. "src/mame/drivers/backfire.c",
 	MAME_DIR .. "src/mame/drivers/battlera.c",
-	MAME_DIR .. "src/mame/video/battlera.c",
 	MAME_DIR .. "src/mame/drivers/boogwing.c",
 	MAME_DIR .. "src/mame/video/boogwing.c",
 	MAME_DIR .. "src/mame/drivers/brkthru.c",
@@ -2428,6 +2432,7 @@ files {
 	MAME_DIR .. "src/mame/drivers/model1.c",
 	MAME_DIR .. "src/mame/machine/model1.c",
 	MAME_DIR .. "src/mame/video/model1.c",
+	MAME_DIR .. "src/mame/machine/m1comm.c",
 	MAME_DIR .. "src/mame/audio/dsbz80.c",
 	MAME_DIR .. "src/mame/drivers/model2.c",
 	MAME_DIR .. "src/mame/video/model2.c",
@@ -2483,6 +2488,7 @@ files {
 	MAME_DIR .. "src/mame/video/segas18.c",
 	MAME_DIR .. "src/mame/drivers/segas24.c",
 	MAME_DIR .. "src/mame/video/segas24.c",
+	MAME_DIR .. "src/mame/drivers/segam1.c",
 	MAME_DIR .. "src/mame/drivers/segas32.c",
 	MAME_DIR .. "src/mame/machine/segas32.c",
 	MAME_DIR .. "src/mame/video/segas32.c",

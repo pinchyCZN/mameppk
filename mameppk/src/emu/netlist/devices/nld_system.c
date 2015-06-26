@@ -5,8 +5,10 @@
  *
  */
 
+#include <solver/nld_solver.h>
 #include "nld_system.h"
-#include "../analog/nld_solver.h"
+
+NETLIB_NAMESPACE_DEVICES_START()
 
 // ----------------------------------------------------------------------------------------
 // netlistparams
@@ -189,13 +191,17 @@ void nld_d_to_a_proxy::start()
 	register_subalias("Q", m_RV.m_P);
 
 	connect(m_RV.m_N, m_Q);
-	m_Q.initial(0.0);
+
+	save(NLNAME(m_last_state));
 }
 
 void nld_d_to_a_proxy::reset()
 {
+	m_Q.initial(0.0);
+	m_last_state = -1;
 	m_RV.do_reset();
 	m_is_timestep = m_RV.m_P.net().as_analog().solver()->is_timestep();
+	m_RV.set(NL_FCONST(1.0) / logic_family().m_R_low, logic_family().m_low_V, 0.0);
 }
 
 ATTR_HOT void nld_d_to_a_proxy::update()
@@ -269,3 +275,5 @@ NETLIB_UPDATE_PARAM(res_sw)
 {
 	// nothing, not intended to be called
 }
+
+NETLIB_NAMESPACE_DEVICES_END()

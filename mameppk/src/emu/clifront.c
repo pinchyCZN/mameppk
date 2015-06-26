@@ -115,6 +115,8 @@ int cli_frontend::execute(int argc, char **argv)
 		std::string option_errors;
 		m_options.parse_command_line(argc, argv, option_errors);
 
+		m_options.parse_standard_inis(option_errors);
+
 		// We need to preprocess the config files once to determine the web server's configuration
 		// and file locations
 		if (m_options.read_config())
@@ -193,7 +195,6 @@ int cli_frontend::execute(int argc, char **argv)
 			}
 		}
 
-		m_options.parse_standard_inis(option_errors);
 		// parse the command line, adding any system-specific options
 		if (!m_options.parse_command_line(argc, argv, option_errors))
 		{

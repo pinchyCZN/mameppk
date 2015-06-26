@@ -30,7 +30,7 @@ function mainProject(_target, _subtarget)
 	flags {
 		"Unicode",
 	}
-
+if (_OPTIONS["DRIVERS"] == nil) then 
 	configuration { "x64", "Release" }
 		targetsuffix "64"
 		if _OPTIONS["PROFILE"] then
@@ -66,7 +66,7 @@ function mainProject(_target, _subtarget)
 		if _OPTIONS["PROFILE"] then
 			targetsuffix "dp"
 		end
-
+end
 	configuration { "mingw*" or "vs*" }
 		targetextension ".exe"
 
@@ -82,25 +82,59 @@ function mainProject(_target, _subtarget)
 	findfunction("linkProjects_" .. _OPTIONS["target"] .. "_" .. _OPTIONS["subtarget"])(_OPTIONS["target"], _OPTIONS["subtarget"])
 	links {
 		"osd_" .. _OPTIONS["osd"],
-		"bus",
+	}
+	if (_OPTIONS["DRIVERS"] == nil) then 
+		links {
+			"bus",
+		}
+	end
+	links {
 		"netlist",
 		"optional",
 		"emu",
+		"formats",
 		"dasm",
 		"utils",
 		"expat",
 		"softfloat",
 		"jpeg",
-		"flac",
 		"7z",
-		"formats",
 		"lua",
 		"lsqlite3",
-		"sqllite3",
-		"zlib",
 		"jsoncpp",
 		"mongoose",
 	}
+
+	if _OPTIONS["with-bundled-zlib"] then
+		links {
+			"zlib",
+		}
+	else
+		links {
+			"z",
+		}
+	end
+
+	if _OPTIONS["with-bundled-flac"] then
+		links {
+			"flac",
+		}
+	else
+		links {
+			"FLAC",
+		}
+	end
+
+	if _OPTIONS["with-bundled-sqlite3"] then
+		links {
+			"sqllite3",
+		}
+	else
+		links {
+			"sqlite3",
+		}
+	end
+
 	if _OPTIONS["NO_USE_MIDI"]~="1" then
 		links {
 			"portmidi",
@@ -126,10 +160,15 @@ function mainProject(_target, _subtarget)
 		MAME_DIR .. "src/lib",
 		MAME_DIR .. "src/lib/util",
 		MAME_DIR .. "3rdparty",
-		MAME_DIR .. "3rdparty/zlib",
 		GEN_DIR  .. _target .. "/layout",
 		GEN_DIR  .. "resource",
 	}
+
+	if _OPTIONS["with-bundled-zlib"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/zlib",
+		}
+	end
 
 	if _OPTIONS["targetos"]=="macosx" and (not override_resources) then
 		linkoptions {
@@ -299,9 +338,13 @@ function mainProject_with_ui(_target, _subtarget)
 	end
 
 	findfunction("linkProjects_" .. _OPTIONS["target"] .. "_" .. _OPTIONS["subtarget"])(_OPTIONS["target"], _OPTIONS["subtarget"])
+	if (_OPTIONS["DRIVERS"] == nil) then 
+		links {
+			"bus",
+		}
+	end
 	links {
 		"osd_winui",
-		"bus",
 		"netlist",
 		"optional",
 		"emu",
@@ -310,13 +353,11 @@ function mainProject_with_ui(_target, _subtarget)
 		"expat",
 		"softfloat",
 		"jpeg",
-		"flac",
 		"7z",
 		"formats",
 		"lua",
 		"lsqlite3",
 		"sqllite3",
-		"zlib",
 		"jsoncpp",
 		"mongoose",
 	}
@@ -333,7 +374,26 @@ function mainProject_with_ui(_target, _subtarget)
 	links{
 		"ocore_winui",
 	}
+	if _OPTIONS["with-bundled-zlib"] then
+		links {
+			"zlib",
+		}
+	else
+		links {
+			"z",
+		}
+	end
 	
+	if _OPTIONS["with-bundled-flac"] then
+		links {
+			"flac",
+		}
+	else
+		links {
+			"FLAC",
+		}
+	end
+
 	override_resources = false;
 	
 	maintargetosdoptions(_target)
@@ -345,10 +405,14 @@ function mainProject_with_ui(_target, _subtarget)
 		MAME_DIR .. "src/lib",
 		MAME_DIR .. "src/lib/util",
 		MAME_DIR .. "3rdparty",
-		MAME_DIR .. "3rdparty/zlib",
 		GEN_DIR  .. _target .. "/layout",
 		GEN_DIR  .. "resource",
 	}
+	if _OPTIONS["with-bundled-zlib"] then
+		includedirs {
+			MAME_DIR .. "3rdparty/zlib",
+		}
+	end
 
 	override_resources = true;
 	local rcfile = MAME_DIR .. "src/osd/winui/" .. _target .. "ui.rc"
@@ -373,6 +437,12 @@ function mainProject_with_ui(_target, _subtarget)
 
 	--FIXME
 	make_drivlist(_target, _subtarget)
+
+	configuration { "gmake" }
+		dependency {
+			{ ".PHONY", ".FORCE", true },
+			{ "$(OBJDIR)/src/version.o", ".FORCE", true },
+		}
 
 	configuration { "mingw*" }
 		custombuildtask {	

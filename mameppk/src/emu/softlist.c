@@ -563,7 +563,7 @@ void software_list_device::internal_validity_check(validity_checker &valid)
 			osd_printf_error("%s: %s has no part\n", filename(), swinfo->shortname());
 			break;
 		}
-        
+
 		// Second, since the xml is fine, run additional checks:
 
 		// check for duplicate names
