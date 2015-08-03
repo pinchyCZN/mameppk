@@ -387,7 +387,8 @@ int close_ips_entry(romload_private *romdata)
 		for (chunk = p->chunk; chunk; chunk = next_chunk)
 		{
 			next_chunk = chunk->next;
-			global_free(chunk);
+			global_free_array(chunk->data);
+			global_free_array(chunk);
 		}
 
 		if (p->ips_name)
@@ -397,7 +398,7 @@ int close_ips_entry(romload_private *romdata)
 			osd_free(p->rom_name);
 
 		next = p->next;
-		global_free(p);
+		global_free_array(p);
 	}
 
 	ips_list = NULL;

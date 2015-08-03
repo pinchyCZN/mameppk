@@ -1656,7 +1656,9 @@ void cli_frontend::execute_commands(const char *exename)
 		driver_switch::assign_drivers(m_options);
 #endif /* DRIVER_SWITCH */
 		validity_checker valid(m_options);
-		valid.check_all();
+		bool result = valid.check_all();
+		if (!result)
+			throw emu_fatalerror(MAMERR_FAILED_VALIDITY, "Validity check failed!\n");
 		return;
 	}
 

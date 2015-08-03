@@ -56,7 +56,7 @@ private:
 #endif /* CMD_LIST */
 		SELECT_GAME,
 		BIOS_SELECTION,
-		BARCODE_READ,
+		BARCODE_READ
 	};
 };
 

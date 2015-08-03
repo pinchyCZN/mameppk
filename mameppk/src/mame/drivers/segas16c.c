@@ -96,7 +96,7 @@ void segas16c_state::memory_mapper(sega_315_5195_mapper_device &mapper, UINT8 in
 		case 1:	// 2nd ROM base, banking & math, or sound for Korean games
 			switch (m_romboard)
 			{
-				case ROM_BOARD_171_5704:		mapper.map_as_rom(0x00000, 0x40000, 0xfc0000, "rom1base", 0x40000, write16_delegate());	break;
+				case ROM_BOARD_171_5704:		mapper.map_as_rom(0x00000, 0x40000, 0xfc0000, "rom1base", "decrypted_rom2base", 0x40000, write16_delegate());	break;
 				default:						assert(false);
 			}
 			break;
@@ -104,7 +104,7 @@ void segas16c_state::memory_mapper(sega_315_5195_mapper_device &mapper, UINT8 in
 		case 0:	// 1st ROM base
 			switch (m_romboard)
 			{
-				case ROM_BOARD_171_5704:		mapper.map_as_rom(0x00000, 0x40000, 0xfc0000, "rom0base", 0000000, write16_delegate());	break;
+				case ROM_BOARD_171_5704:		mapper.map_as_rom(0x00000, 0x40000, 0xfc0000, "rom0base", "decrypted_rom2base", 0000000, write16_delegate());	break;
 				default:						assert(false);
 			}
 			break;

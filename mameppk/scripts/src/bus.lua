@@ -240,6 +240,8 @@ if (BUSES["C64"]~=null) then
 		MAME_DIR .. "src/emu/bus/c64/exp.h",
 		MAME_DIR .. "src/emu/bus/c64/c128_comal80.c",
 		MAME_DIR .. "src/emu/bus/c64/c128_comal80.h",
+		MAME_DIR .. "src/emu/bus/c64/c128_partner.c",
+		MAME_DIR .. "src/emu/bus/c64/c128_partner.h",
 		MAME_DIR .. "src/emu/bus/c64/comal80.c",
 		MAME_DIR .. "src/emu/bus/c64/comal80.h",
 		MAME_DIR .. "src/emu/bus/c64/cpm.c",
@@ -431,6 +433,12 @@ if (BUSES["CBMIEC"]~=null) then
 		MAME_DIR .. "src/emu/bus/cbmiec/interpod.h",
 		MAME_DIR .. "src/emu/bus/cbmiec/serialbox.c",
 		MAME_DIR .. "src/emu/bus/cbmiec/serialbox.h",
+		MAME_DIR .. "src/emu/bus/cbmiec/vic1515.c",
+		MAME_DIR .. "src/emu/bus/cbmiec/vic1515.h",
+		MAME_DIR .. "src/emu/bus/cbmiec/vic1520.c",
+		MAME_DIR .. "src/emu/bus/cbmiec/vic1520.h",
+		MAME_DIR .. "src/emu/bus/cbmiec/c1526.c",
+		MAME_DIR .. "src/emu/bus/cbmiec/c1526.h",
 	}
 end
 
@@ -890,6 +898,8 @@ if (BUSES["MSX_SLOT"]~=null) then
 		MAME_DIR .. "src/emu/bus/msx_cart/korean.h",
 		MAME_DIR .. "src/emu/bus/msx_cart/majutsushi.c",
 		MAME_DIR .. "src/emu/bus/msx_cart/majutsushi.h",
+		MAME_DIR .. "src/emu/bus/msx_cart/moonsound.h",
+		MAME_DIR .. "src/emu/bus/msx_cart/moonsound.c",
 		MAME_DIR .. "src/emu/bus/msx_cart/msx_audio.c",
 		MAME_DIR .. "src/emu/bus/msx_cart/msx_audio.h",
 		MAME_DIR .. "src/emu/bus/msx_cart/msx_audio_kb.c",
@@ -2134,6 +2144,8 @@ if (BUSES["CPC"]~=null) then
 		MAME_DIR .. "src/emu/bus/cpc/brunword4.h",
 		MAME_DIR .. "src/emu/bus/cpc/hd20.c",
 		MAME_DIR .. "src/emu/bus/cpc/hd20.h",
+		MAME_DIR .. "src/emu/bus/cpc/ddi1.c",
+		MAME_DIR .. "src/emu/bus/cpc/ddi1.h",
 	}
 end
 

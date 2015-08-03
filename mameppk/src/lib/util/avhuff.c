@@ -143,7 +143,6 @@ inline void avhuff_encoder::deltarle_encoder::encode_one(bitstream_out &bitbuf, 
 //-------------------------------------------------
 //  decode_one - decode data
 //-------------------------------------------------
-
 inline UINT32 avhuff_decoder::deltarle_decoder::decode_one(bitstream_in &bitbuf)
 {
 	// return RLE data if we still have some

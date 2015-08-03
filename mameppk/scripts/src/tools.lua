@@ -618,6 +618,42 @@ files {
 	MAME_DIR .. "src/tools/nltool.c",
 }
 
+--------------------------------------------------
+-- nlwav
+--------------------------------------------------
+
+project("nlwav")
+uuid ("7c5396d1-2a1a-4c93-bed6-6b8fa182054a")
+kind "ConsoleApp" 
+
+options {
+  "ForceCPP",
+}
+
+flags {
+  "Symbols", -- always include minimum symbols for executables  
+}
+
+if _OPTIONS["SEPARATE_BIN"]~="1" then 
+  targetdir(MAME_DIR)
+end
+
+links {
+  "utils",
+  "ocore_" .. _OPTIONS["osd"],
+  "netlist",
+}
+
+includedirs {
+  MAME_DIR .. "src/osd",
+  MAME_DIR .. "src/lib/util",
+  MAME_DIR .. "src/emu/netlist",
+}
+
+files {
+  MAME_DIR .. "src/tools/nlwav.c",
+}
+
 if (_OPTIONS["target"]=="mess") then
 --------------------------------------------------
 -- castool
@@ -806,6 +842,10 @@ files {
 	MAME_DIR .. "src/mess/tools/imgtool/imgterrs.c",
 	MAME_DIR .. "src/mess/tools/imgtool/imghd.c", 
 	MAME_DIR .. "src/mess/tools/imgtool/charconv.c",
+	MAME_DIR .. "src/mess/tools/imgtool/formats/vt_dsk.c",
+	MAME_DIR .. "src/mess/tools/imgtool/formats/vt_dsk.h",
+	MAME_DIR .. "src/mess/tools/imgtool/formats/coco_dsk.c",
+	MAME_DIR .. "src/mess/tools/imgtool/formats/coco_dsk.h",	
 	MAME_DIR .. "src/mess/tools/imgtool/modules/amiga.c",
 	MAME_DIR .. "src/mess/tools/imgtool/modules/macbin.c",
 	MAME_DIR .. "src/mess/tools/imgtool/modules/rsdos.c",
