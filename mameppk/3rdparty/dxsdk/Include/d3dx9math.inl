@@ -1581,7 +1581,7 @@ D3DXINLINE FLOAT D3DXVec2Length
         return 0.0f;
 #endif
 
-#ifdef __cplusplus
+#ifdef __cplusplus123
     return sqrtf(pV->x * pV->x + pV->y * pV->y);
 #else
     return (FLOAT) sqrt(pV->x * pV->x + pV->y * pV->y);

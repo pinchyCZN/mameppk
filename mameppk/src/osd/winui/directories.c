@@ -764,6 +764,7 @@ BOOL BrowseForDirectory(HWND hwnd, LPCTSTR pStartDir, TCHAR* pResult)
 			_sntprintf(pResult, MAX_PATH, TEXT("%s"), buf);
 			bResult = TRUE;
 		}
+		//piMalloc->Free(pItemIDList);
 		IMalloc_Free(piMalloc, pItemIDList);
 	}
 	else
@@ -772,6 +773,8 @@ BOOL BrowseForDirectory(HWND hwnd, LPCTSTR pStartDir, TCHAR* pResult)
 	}
 
 	IMalloc_Release(piMalloc);
+	//piMalloc->Release();
+	
 	return bResult;
 }
 

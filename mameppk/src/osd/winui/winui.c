@@ -36,6 +36,7 @@
 
 // standard C headers
 #include <stdio.h>
+#include <stdlib.h>
 #include <ctype.h>
 #include <io.h>
 #include <fcntl.h>
@@ -135,6 +136,8 @@ static void MKInpDir(void);
 
 #ifdef _MSC_VER
 #define snprintf _snprintf
+#define snwprintf _snwprintf
+#define vsnwprintf _vsnwprintf
 #endif
 
 #ifndef LVS_EX_LABELTIP
@@ -1298,7 +1301,9 @@ static DWORD RunMAME(int nGameIndex, const play_options *playopts)
 
 	return dwExitCode;
 }
-
+#ifndef __targv
+#define __targv __wargv
+#endif
 int MameUIMain(HINSTANCE    hInstance,
                    LPWSTR        lpCmdLine,
                    int          nCmdShow)
@@ -2858,8 +2863,10 @@ static BOOL Win32UI_init(HINSTANCE hInstance, LPWSTR lpCmdLine, int nCmdShow)
 #if !defined(KAILLERA) && !defined(MAMEUIPLUSPLUS)
 	if (validity_failed)
 	{
-		MessageBox(hMain, _UIW(TEXT(MAMENAME " has failed its validity checks.  The GUI will "
-			"still work, but emulations will fail to execute")), TEXT(MAMENAME), MB_OK);
+		MessageBox(hMain, _UIW(
+			TEXT(MAMENAME)
+			TEXT(" has failed its validity checks.  The GUI will ")
+			TEXT("still work, but emulations will fail to execute")), TEXT(MAMENAME), MB_OK);
 	}
 #endif
 
@@ -7853,7 +7860,7 @@ ext:
 		case 3:
 			wsprintf(buf,   _UIW(TEXT("Since environment differs from the time of creation, it may not reappear well.\nIs replay reproduction carried out?\ntrcversion %d\nmame version %s\nPlay Count %d\n"))
 							, (int)inpsub_header->trcversion, _Unicode(inpsub_header->version), (int)inpsub_header->playcount+1);
-			if( MessageBox(hMain, buf, TEXT(MAMEUINAME "++"), MB_OKCANCEL | MB_ICONEXCLAMATION) == IDCANCEL)
+			if( MessageBox(hMain, buf, TEXT(MAMEUINAME) TEXT("++"), MB_OKCANCEL | MB_ICONEXCLAMATION) == IDCANCEL)
 			{
 				return 0;
 			}
@@ -7872,7 +7879,7 @@ static void CLIB_DECL MameMessageBox(LPCTSTR fmt, ...)
 	va_start(va, fmt);
 	_vstprintf(buf, fmt, va);
 #ifdef KAILLERA
-	MessageBox(GetMainWindow(), buf, TEXT(MAMEUINAME "++"), MB_OK | MB_ICONERROR);
+	MessageBox(GetMainWindow(), buf, TEXT(MAMEUINAME) TEXT("++"), MB_OK | MB_ICONERROR);
 #else
 	MessageBox(GetMainWindow(), buf, TEXT(MAMEUINAME), MB_OK | MB_ICONERROR);
 #endif /* KAILLERA */
@@ -7887,7 +7894,7 @@ static void CLIB_DECL MameMessageBoxI(LPCTSTR fmt, ...)
 	va_start(va, fmt);
 	_vstprintf(buf, fmt, va);
 #ifdef KAILLERA
-	MessageBox(GetMainWindow(), buf, TEXT(MAMEUINAME "++"), MB_OK | MB_ICONINFORMATION);
+	MessageBox(GetMainWindow(), buf, TEXT(MAMEUINAME) TEXT("++"), MB_OK | MB_ICONINFORMATION);
 #else
 	MessageBox(GetMainWindow(), buf, TEXT(MAMEUINAME), MB_OK | MB_ICONINFORMATION);
 #endif /* KAILLERA */

@@ -18,7 +18,9 @@ project ("osd_winui")
 			"DIRECTINPUT_VERSION=0x0700",
 		}
 	end
-
+	buildoptions {
+		"-fpermissive",
+	}
 	includedirs {
 		MAME_DIR .. "src/emu",
 		MAME_DIR .. "src/osd",
@@ -31,6 +33,9 @@ project ("osd_winui")
 
 	includedirs {
 		MAME_DIR .. "src/osd/windows",
+		MAME_DIR .. "3rdparty/dxsdk/Include",
+		MAME_DIR .. "extravc/include",
+		MAME_DIR .. "3rdparty/zlib",
 	}
 
 	files {
@@ -134,6 +139,8 @@ project ("ocore_winui")
 
 	includedirs {
 		MAME_DIR .. "src/osd/windows",
+		MAME_DIR .. "3rdparty/dxsdk/Include",
+		MAME_DIR .. "extravc/include",
 		MAME_DIR .. "src/lib/winpcap",
 	}
 

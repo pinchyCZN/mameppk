@@ -22,6 +22,9 @@
   Japanese IMM Functions Created 15/5/2001  by NJ.
 
 ***************************************************************************/
+#ifndef KAILLERA
+#define KAILLERA
+#endif
 
 #define WIN32_LEAN_AND_MEAN
 #undef _UNICODE
@@ -75,7 +78,6 @@
 
 typedef BOOL (WINAPI *ime_proc)(HWND hWnd, BOOL bflag);
 
-#ifdef KAILLERA
 #define UI_COLOR_NORMAL			0		/* white on black text */
 #define UI_COLOR_INVERSE		1		/* black on white text */
 #define UI_COLOR_TRANS			0x02	/* white text only */
@@ -96,7 +98,6 @@ typedef BOOL (WINAPI *ime_proc)(HWND hWnd, BOOL bflag);
 #define UI_UNDERLINE_INVERSE      (UI_UNDERLINE | UI_COLOR_INVERSE)
 #define UI_UNDERLINE_DOT_INVERSE  (UI_UNDERLINE_DOT | UI_COLOR_INVERSE)
 #define UI_UNDERLINE_BOLD_INVERSE (UI_UNDERLINE_BOLD | UI_COLOR_INVERSE)
-#endif /* KAILLERA */
 
 /***************************************************************************
     Function prototypes

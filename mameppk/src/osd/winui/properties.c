@@ -150,6 +150,7 @@ b) Exit the dialog.
 
 #ifdef _MSC_VER
 #define snprintf _snprintf
+#define snwprintf _snwprintf
 #endif
 
 #include "directdraw.h" /* has to be after samples.h */

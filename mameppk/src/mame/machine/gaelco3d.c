@@ -27,12 +27,6 @@
     f) Have fun
 
 ***************************************************************************/
-
-#include "emu.h"
-#include "gaelco3d.h"
-
-//#define SHARED_MEM_DRIVER      (1)
-
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
@@ -46,6 +40,11 @@
 #ifdef SHARED_MEM_DRIVER
 #include <sys/mman.h>
 #endif
+
+#include "emu.h"
+#include "gaelco3d.h"
+
+//#define SHARED_MEM_DRIVER      (1)
 
 #define VERBOSE     (0)
 #if VERBOSE

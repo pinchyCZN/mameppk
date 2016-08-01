@@ -585,6 +585,7 @@ project "bgfx"
 		}
 	configuration { "mingw*" }
 		includedirs {
+			MAME_DIR .. "3rdparty/dxsdk/Include",
 			MAME_DIR .. "3rdparty/bx/include/compat/mingw",
 		}
 
@@ -733,6 +734,8 @@ project "portaudio"
 		}	
 		includedirs {
 			MAME_DIR .. "3rdparty/portaudio/src/os/win",
+			MAME_DIR .. "3rdparty/dxsdk/Include",
+			MAME_DIR .. "3rdparty/portaudio/src/hostapi/wasapi/mingw-include",
 		}
 
 		configuration { }			

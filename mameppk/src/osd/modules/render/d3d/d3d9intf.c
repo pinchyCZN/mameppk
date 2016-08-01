@@ -9,6 +9,7 @@
 // standard windows headers
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <math.h>
 #include <d3d9.h>
 #include <d3dx9.h>
 #undef interface

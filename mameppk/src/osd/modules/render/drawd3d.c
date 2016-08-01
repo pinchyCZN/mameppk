@@ -19,9 +19,9 @@
 #include <windows.h>
 #include <tchar.h>
 #include <mmsystem.h>
+#include <math.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-#include <math.h>
 #undef interface
 
 // MAME headers

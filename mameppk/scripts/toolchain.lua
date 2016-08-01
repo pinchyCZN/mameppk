@@ -192,8 +192,8 @@ function toolchain(_buildDir, _subDir)
 			if not os.getenv("MINGW32") or not os.getenv("MINGW32") then
 				print("Set MINGW32 envrionment variable.")
 			end		
-			premake.gcc.cc  = "$(MINGW32)/bin/i686-w64-mingw32-gcc"
-			premake.gcc.cxx = "$(MINGW32)/bin/i686-w64-mingw32-g++"
+			premake.gcc.cc  = "$(MINGW32)/bin/mingw32-gcc"
+			premake.gcc.cxx = "$(MINGW32)/bin/mingw32-g++"
 			premake.gcc.ar  = "$(MINGW32)/bin/ar"
 -- lto docs say to use gcc-ar so that plugin is completely setup, but this doesn't work in windows with the current build tools' copy of gcc-ar.exe
 --			premake.gcc.ar  = "$(MINGW32)/bin/gcc-ar"
@@ -446,7 +446,10 @@ function toolchain(_buildDir, _subDir)
 		}
 
 	configuration { "mingw*" }
-		defines { "WIN32" }
+		defines { 
+			"WIN32",
+			"_WIN32_IE=0x600"
+		}
 
 	configuration { "x32", "mingw32-gcc" }
 		objdir (_buildDir .. "mingw-gcc" .. "/obj")

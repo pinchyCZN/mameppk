@@ -35,11 +35,11 @@
 
 #ifndef SIZE_MAX
 # ifndef SIZE_T_MAX
-#  ifdef _MSC_VER
+//#  ifdef _MSC_VER
 #   define SIZE_T_MAX UINT_MAX
-#  else
-#   error
-#  endif
+//#  else
+//#   error
+//#  endif
 # endif
 # define SIZE_MAX SIZE_T_MAX
 #endif

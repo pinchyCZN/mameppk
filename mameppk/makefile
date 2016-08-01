@@ -16,7 +16,7 @@ include config.def
 
 # REGENIE = 1
 # VERBOSE = 1
-# NOWERROR = 1
+NOWERROR = 1
 
 # TARGET = mame
 # SUBTARGET = tiny
@@ -25,9 +25,9 @@ include config.def
 # OSD = sdl
 
 # USE_BGFX = 1
-# NO_OPENGL = 1
+NO_OPENGL = 1
 # USE_DISPATCH_GL = 0
-# DIRECTINPUT = 7
+DIRECTINPUT = 7
 # USE_SDL = 1
 # SDL_INI_PATH = .;$HOME/.mame/;ini;
 # SDL2_MULTIAPI = 1
@@ -56,13 +56,13 @@ include config.def
 # LDOPTS =
 
 # USE_SYSTEM_LIB_EXPAT = 1
-# USE_SYSTEM_LIB_ZLIB = 1
-# USE_SYSTEM_LIB_JPEG = 1
+#USE_SYSTEM_LIB_ZLIB = 1
+#USE_SYSTEM_LIB_JPEG = 1
 # USE_SYSTEM_LIB_FLAC = 1
-# USE_SYSTEM_LIB_LUA = 1
+#USE_SYSTEM_LIB_LUA = 1
 # USE_SYSTEM_LIB_SQLITE3 = 1
 # USE_SYSTEM_LIB_PORTMIDI = 1
-# USE_SYSTEM_LIB_PORTAUDIO = 1
+#USE_SYSTEM_LIB_PORTAUDIO = 1
 
 # MESA_INSTALL_ROOT = /opt/mesa
 # SDL_INSTALL_ROOT = /opt/sdl2
@@ -93,6 +93,10 @@ include config.def
 # QT_HOME = /usr/lib64/qt48/
 
 # DRIVERS = src/mame/drivers/1942.c,src/mame/drivers/cops.c
+
+TARGETOS = windows
+ARCHITECTURE = _x86
+MINGW32 = E:/DEV/MinGW
 
 -include useroptions.mak
 
@@ -237,7 +241,7 @@ else
 ifeq ($(ARCHITECTURE),_x64)
 WINDRES  := x86_64-w64-mingw32-windres
 else
-WINDRES  := i686-w64-mingw32-windres
+WINDRES  := mingw32-windres
 endif
 endif
 
@@ -768,7 +772,7 @@ SCRIPTS = scripts/genie.lua \
 	scripts/src/osd/modules.lua \
 	$(wildcard scripts/src/osd/$(OSD)*.lua) \
 	scripts/src/sound.lua \
-	scripts/src/tools.lua \
+#	scripts/src/tools.lua \
 	scripts/src/tests.lua \
 	scripts/src/video.lua \
 	scripts/src/bus.lua \
@@ -906,9 +910,9 @@ ifndef CLANG
 endif
 	$(SILENT) $(GENIE) $(PARAMS) --gcc=mingw-clang --gcc_version=$(CLANG_VERSION) gmake
 
-.PHONY: windows_x64_clang
-windows_x64_clang: generate $(PROJECTDIR)/gmake-mingw-clang/Makefile
-	$(SILENT) $(MAKE) $(MAKEPARAMS) -C $(PROJECTDIR)/gmake-mingw-clang config=$(CONFIG)64 WINDRES=$(WINDRES)
+#.PHONY: windows_x64_clang
+#windows_x64_clang: generate $(PROJECTDIR)/gmake-mingw-clang/Makefile
+#	$(SILENT) $(MAKE) $(MAKEPARAMS) -C $(PROJECTDIR)/gmake-mingw-clang config=$(CONFIG)64 WINDRES=$(WINDRES)
 
 .PHONY: windows_x86_clang
 windows_x86_clang: generate $(PROJECTDIR)/gmake-mingw-clang/Makefile

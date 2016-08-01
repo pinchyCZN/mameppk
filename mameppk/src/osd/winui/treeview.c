@@ -56,6 +56,7 @@
 
 #ifdef _MSC_VER
 #define snprintf _snprintf
+#define snwprintf _snwprintf
 #endif
 
 #define MAX_EXTRA_FOLDERS 256
@@ -3412,7 +3413,7 @@ LPTREEFOLDER GetFavoritesFolderID(void)
 
 static BOOL RegistExtraFolder(const TCHAR *name, LPEXFOLDERDATA *fExData, int msgcat, int icon, int subicon)
 {
-	TCHAR *ext = wcsrchr(name, '.');
+	TCHAR *ext = (TCHAR*) wcsrchr(name, '.');
 
 	if (ext && !wcsicmp(ext, TEXT(".ini")))
 	{

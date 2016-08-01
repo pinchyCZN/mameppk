@@ -133,17 +133,19 @@ public:
 	std::string parameter(const char *tag) const;
 
 	// interface helpers
+	
 	device_interface *first_interface() const { return m_interface_list; }
-	template<class _DeviceClass> bool interface(_DeviceClass *&intf) { intf = dynamic_cast<_DeviceClass *>(this); return (intf != NULL); }
-	template<class _DeviceClass> bool interface(_DeviceClass *&intf) const { intf = dynamic_cast<const _DeviceClass *>(this); return (intf != NULL); }
+#undef interface	
+	template<class _DeviceClass> bool interface(_DeviceClass * &intf) { intf = dynamic_cast<_DeviceClass *>(this); return (intf != NULL); }
+	template<class _DeviceClass> bool interface(_DeviceClass * &intf) const { intf = dynamic_cast<const _DeviceClass *>(this); return (intf != NULL); }
 
 	// specialized helpers for common core interfaces
-	bool interface(device_execute_interface *&intf) { intf = m_execute; return (intf != NULL); }
-	bool interface(device_execute_interface *&intf) const { intf = m_execute; return (intf != NULL); }
-	bool interface(device_memory_interface *&intf) { intf = m_memory; return (intf != NULL); }
-	bool interface(device_memory_interface *&intf) const { intf = m_memory; return (intf != NULL); }
-	bool interface(device_state_interface *&intf) { intf = m_state; return (intf != NULL); }
-	bool interface(device_state_interface *&intf) const { intf = m_state; return (intf != NULL); }
+	bool interface(device_execute_interface * &intf) { intf = m_execute; return (intf != NULL); }
+	bool interface(device_execute_interface * &intf) const { intf = m_execute; return (intf != NULL); }
+	bool interface(device_memory_interface * &intf) { intf = m_memory; return (intf != NULL); }
+	bool interface(device_memory_interface * &intf) const { intf = m_memory; return (intf != NULL); }
+	bool interface(device_state_interface * &intf) { intf = m_state; return (intf != NULL); }
+	bool interface(device_state_interface * &intf) const { intf = m_state; return (intf != NULL); }
 	device_execute_interface &execute() const { assert(m_execute != NULL); return *m_execute; }
 	device_memory_interface &memory() const { assert(m_memory != NULL); return *m_memory; }
 	device_state_interface &state() const { assert(m_state != NULL); return *m_state; }

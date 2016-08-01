@@ -129,7 +129,7 @@ typedef void (*delegate_generic_function)();
 // ======================> generic_class
 
 // define a dummy generic class that is just straight single-inheritance
-#ifdef _MSC_VER
+#ifdef _MSC_VER_FIX
 class __single_inheritance generic_class;
 class delegate_generic_class { };
 #else

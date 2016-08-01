@@ -9,7 +9,8 @@ function maintargetosdoptions(_target)
 
 	configuration { "mingw*-gcc" }
 		linkoptions {
-			"-municode",
+			--"-municode",
+			"-mwindows",
 		}
 
 	configuration { }
@@ -122,6 +123,8 @@ project ("osd_" .. _OPTIONS["osd"])
 
 	includedirs {
 		MAME_DIR .. "src/osd/windows",
+		MAME_DIR .. "3rdparty/dxsdk/Include",
+		MAME_DIR .. "extravc/include",
 	}
 
 	files {
@@ -182,6 +185,8 @@ project ("ocore_" .. _OPTIONS["osd"])
 
 	includedirs {
 		MAME_DIR .. "src/osd/windows",
+		MAME_DIR .. "3rdparty/dxsdk/Include",
+		MAME_DIR .. "extravc/include",
 		MAME_DIR .. "src/lib/winpcap",
 	}
 

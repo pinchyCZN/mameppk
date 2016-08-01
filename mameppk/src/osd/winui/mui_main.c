@@ -33,3 +33,13 @@ int WINAPI wWinMain(HINSTANCE    hInstance,
 {
 	return MameUIMain(hInstance, lpCmdLine, nCmdShow);
 }
+
+int WINAPI WinMain(HINSTANCE    hInstance,
+                   HINSTANCE    hPrevInstance,
+                   LPSTR       lpCmdLine,
+                   int          nCmdShow)
+{
+	WCHAR tmp[1024]={0};
+	
+	return wWinMain(hInstance, hPrevInstance,tmp, nCmdShow);
+}

@@ -40,14 +40,14 @@ public:
 		const char *semi;
 
 		/* if none left, return FALSE to indicate we are done */
-		if (m_index != 0 and *m_cur == 0)
+		if (m_index != 0 && *m_cur == 0)
 			return false;
 
 		/* ignore duplicates of the separator */
-		while (duplicate and m_index == 0 and *m_cur == separator)
+		while (duplicate && m_index == 0 && *m_cur == separator)
 			m_cur++;
 
-		if (duplicate and *m_cur == 0)
+		if (duplicate && *m_cur == 0)
 			return false;
 
 		/* copy up to the next separator */
@@ -60,10 +60,10 @@ public:
 		m_cur = (*semi == 0) ? semi : semi + 1;
 
 		/* ignore duplicates of the separator */
-		while (duplicate and *m_cur and *m_cur == separator)
+		while (duplicate && *m_cur && *m_cur == separator)
 			m_cur++;
 
-		/* bump the index and return true */
+		/* bump the index && return true */
 		m_index++;
 
 		return true;
@@ -245,7 +245,7 @@ public:
 			strprintf(value_str, "%d,%d,%d", m_list[i].rom, m_list[i].sample, m_list[i].cache);
 			strcatprintf(value_str, "@%d@%d", m_list[i].players, m_list[i].buttons);
 			strcatprintf(value_str, "@%d@%d@%d", m_list[i].parent_index, m_list[i].bios_index, m_list[i].uses_controler);
-			if ((m_list[i].play_count > 0) or (m_list[i].play_time > 0))
+			if ((m_list[i].play_count > 0) || (m_list[i].play_time > 0))
 			{
 				if (m_list[i].play_time > 0)
 					strcatprintf(value_str, ",%d,%d", m_list[i].play_count, m_list[i].play_time);

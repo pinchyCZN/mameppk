@@ -261,7 +261,8 @@ function mainProject_with_ui(_target, _subtarget)
 
 	configuration { "mingw*-gcc" }
 		linkoptions {
-			"-municode",
+			--"-municode",
+			"-mwindows",
 			"-lmingw32",
 			"-Wl,--allow-multiple-definition",
 		}
@@ -464,6 +465,9 @@ function mainProject_with_ui(_target, _subtarget)
 end
 
 function make_drivlist(_target, _subtarget)
+	print(string.format("targ=%s sub=%s\n",_target,_subtarget))
+	print(string.format("mameidr=%s gendir=%s\n",MAME_DIR,GEN_DIR))
+	print("shit=".."/%.lst")
 	if _subtarget=="mame" or _subtarget=="arcade" or _subtarget=="ncp" then
 		DRVLIST = {}
 		if _subtarget=="mame" and _OPTIONS["MAMEMESS"]=="1" then
@@ -478,14 +482,35 @@ function make_drivlist(_target, _subtarget)
 					  GEN_DIR .. _target .. "/" .. _subtarget .."/mameplus.lst",
 					  MAME_DIR .. "src/build/makelist.py" }
 		end
+-- _input_file_ - source file that should be "compiled" with custom task
+-- _output_file_ - generated file name
+-- _dependency_ - additional dependencies, that can be used as parameters to commands
+-- _command_ - command list, special functions in commands are :
+		-- $(<) - input file
+		-- $(@) - output file
+		-- $(1) - $(9) - additional dependencies		
 		custombuildtask {
-			{ MAME_DIR .. "src/".._target .."/%.lst" ,  GEN_DIR  .. _target .. "/" .. _subtarget .."/%.lst",    {  MAME_DIR .. "src/build/makelist.py" }, {"@echo Generating $@...", "@echo #include \"$<\" > $@.h", "$(CC) $(DEFINES) -I. -E $@.h -o $@" }},
-			{ GEN_DIR .. _target .. "/" .. _subtarget .."/mame.lst",  GEN_DIR  .. _target .. "/" .. _subtarget .."/drivlist.c",
-				DRVLIST, {"@echo Building driver list...",    "echo " .. PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@",PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@" }},
+			{ 	MAME_DIR .. "src/".._target .."/%.lst" ,
+				GEN_DIR  .. _target .. "/" .. _subtarget .."/%.lst",
+				{  MAME_DIR .. "src/build/makelist.py" },
+				{"@echo Generating $@...",
+				"@echo shit123=\"$<\"  \"$@.h\"",
+				"pwd",
+				"@echo '#include \"$<\"' > \"$@.h\"", "$(CC) $(DEFINES) -I. -E \"$@.h\" -o \"$@\"" }
+			},
+			{ 	GEN_DIR .. _target .. "/" .. _subtarget .."/mame.lst",
+				GEN_DIR  .. _target .. "/" .. _subtarget .."/drivlist.c",
+				DRVLIST, {"@echo Building driver list...",    
+				"echo " .. PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@",
+				PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@" }},
 		}
 	else
 		custombuildtask {
-			{ MAME_DIR .. "src/".._target .."/" .. _subtarget ..".lst" ,  GEN_DIR  .. _target .. "/" .. _subtarget .."/" .. _subtarget ..".lst",    {  MAME_DIR .. "src/build/makelist.py" }, {"@echo Generating $@...", "@echo #include \"$<\" > $@.h", "$(CC) -I. -E $@.h -o $@" }},
+			{ 	MAME_DIR .. "src/".._target .."/" .. _subtarget ..".lst" ,
+				GEN_DIR  .. _target .. "/" .. _subtarget .."/" .. _subtarget ..".lst",
+				{  MAME_DIR .. "src/build/makelist.py" },
+				{"@echo Generating $@...", "@echo #include \"$<\" > $@.h", "$(CC) -I. -E $@.h -o $@" }
+				},
 			{ GEN_DIR .. _target .."/" .. _subtarget .."/" .. _subtarget ..".lst" ,  GEN_DIR  .. _target .. "/" .. _subtarget .."/drivlist.c",    {  MAME_DIR .. "src/build/makelist.py" }, {"@echo Building driver list...",    PYTHON .. " " .. MAME_DIR .. "src/build/makelist.py" .. " " .. _OPTIONS["USE_DRIVER_SWITCH"] .. " $^ > $@" }},
 		}
 	end

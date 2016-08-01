@@ -67,6 +67,7 @@
 
 #ifdef _MSC_VER
 #define snprintf _snprintf
+#define snwprintf _snwprintf
 #endif
 
 #undef malloc
@@ -607,7 +608,7 @@ static const char *const image_tabs_short_name[MAX_TAB_TYPES] =
 
 static HANDLE hOptsMutex = NULL;
 
-#define MUTEX_STR TEXT(MAMEUINAME "PLUS_OPTION_MUTEX")
+#define MUTEX_STR TEXT(MAMEUINAME) TEXT("PLUS_OPTION_MUTEX")
 
 /***************************************************************************
     External functions

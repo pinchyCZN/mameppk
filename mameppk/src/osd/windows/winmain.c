@@ -18,6 +18,7 @@
 #include <ctype.h>
 #include <stdarg.h>
 #include <psapi.h>
+#define _MSC_VER 100
 #include <dbghelp.h>
 
 // MAME headers

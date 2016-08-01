@@ -58,7 +58,8 @@ function maintargetosdoptions(_target)
 
 		configuration { "mingw*-gcc" }
 			linkoptions{
-				"-municode",
+				--"-municode",
+				"-mwindows",
 			}
 		configuration { "vs*" }
 			flags {
@@ -465,7 +466,7 @@ if _OPTIONS["with-tools"] then
 				}
 			end
 			linkoptions{
-				"-municode",
+				--"-municode",
 			}
 			files {
 				MAME_DIR .. "src/osd/sdl/main.c",

@@ -1829,7 +1829,6 @@ typedef enum _D3DDEBUGMONITORTOKENS {
 } D3DDEBUGMONITORTOKENS;
 
 // Async feedback
-
 typedef enum _D3DQUERYTYPE {
     D3DQUERYTYPE_VCACHE                 = 4, /* D3DISSUE_END */
     D3DQUERYTYPE_RESOURCEMANAGER        = 5, /* D3DISSUE_END */

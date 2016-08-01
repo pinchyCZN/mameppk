@@ -463,17 +463,17 @@ typedef const DSBPOSITIONNOTIFY *LPCDSBPOSITIONNOTIFY;
 typedef BOOL (CALLBACK *LPDSENUMCALLBACKA)(LPGUID, LPCSTR, LPCSTR, LPVOID);
 typedef BOOL (CALLBACK *LPDSENUMCALLBACKW)(LPGUID, LPCWSTR, LPCWSTR, LPVOID);
 
-extern HRESULT WINAPI DirectSoundCreate(__in_opt LPCGUID pcGuidDevice, __deref_out LPDIRECTSOUND *ppDS, __null LPUNKNOWN pUnkOuter);
+extern HRESULT WINAPI DirectSoundCreate(__in_opt LPCGUID pcGuidDevice, __deref_out LPDIRECTSOUND *ppDS, LPUNKNOWN pUnkOuter);
 extern HRESULT WINAPI DirectSoundEnumerateA(__in LPDSENUMCALLBACKA pDSEnumCallback, __in_opt LPVOID pContext);
 extern HRESULT WINAPI DirectSoundEnumerateW(__in LPDSENUMCALLBACKW pDSEnumCallback, __in_opt LPVOID pContext);
 
-extern HRESULT WINAPI DirectSoundCaptureCreate(__in_opt LPCGUID pcGuidDevice, __deref_out LPDIRECTSOUNDCAPTURE *ppDSC, __null LPUNKNOWN pUnkOuter);
+extern HRESULT WINAPI DirectSoundCaptureCreate(__in_opt LPCGUID pcGuidDevice, __deref_out LPDIRECTSOUNDCAPTURE *ppDSC, LPUNKNOWN pUnkOuter);
 extern HRESULT WINAPI DirectSoundCaptureEnumerateA(__in LPDSENUMCALLBACKA pDSEnumCallback, __in_opt LPVOID pContext);
 extern HRESULT WINAPI DirectSoundCaptureEnumerateW(__in LPDSENUMCALLBACKW pDSEnumCallback, __in_opt LPVOID pContext);
 
 #if DIRECTSOUND_VERSION >= 0x0800
-extern HRESULT WINAPI DirectSoundCreate8(__in_opt LPCGUID pcGuidDevice, __deref_out LPDIRECTSOUND8 *ppDS8, __null LPUNKNOWN pUnkOuter);
-extern HRESULT WINAPI DirectSoundCaptureCreate8(__in_opt LPCGUID pcGuidDevice, __deref_out LPDIRECTSOUNDCAPTURE8 *ppDSC8, __null LPUNKNOWN pUnkOuter);
+extern HRESULT WINAPI DirectSoundCreate8(__in_opt LPCGUID pcGuidDevice, __deref_out LPDIRECTSOUND8 *ppDS8, LPUNKNOWN pUnkOuter);
+extern HRESULT WINAPI DirectSoundCaptureCreate8(__in_opt LPCGUID pcGuidDevice, __deref_out LPDIRECTSOUNDCAPTURE8 *ppDSC8, LPUNKNOWN pUnkOuter);
 extern HRESULT WINAPI DirectSoundFullDuplexCreate
 (
     __in_opt LPCGUID pcGuidCaptureDevice,
@@ -485,7 +485,7 @@ extern HRESULT WINAPI DirectSoundFullDuplexCreate
     __deref_out LPDIRECTSOUNDFULLDUPLEX* ppDSFD,
     __deref_out LPDIRECTSOUNDCAPTUREBUFFER8 *ppDSCBuffer8,
     __deref_out LPDIRECTSOUNDBUFFER8 *ppDSBuffer8,
-    __null LPUNKNOWN pUnkOuter
+    LPUNKNOWN pUnkOuter
 );
 #define DirectSoundFullDuplexCreate8 DirectSoundFullDuplexCreate
 
@@ -594,7 +594,7 @@ DECLARE_INTERFACE_(IDirectSound, IUnknown)
     STDMETHOD_(ULONG,Release)       (THIS) PURE;
 
     // IDirectSound methods
-    STDMETHOD(CreateSoundBuffer)    (THIS_ __in LPCDSBUFFERDESC pcDSBufferDesc, __deref_out LPDIRECTSOUNDBUFFER *ppDSBuffer, __null LPUNKNOWN pUnkOuter) PURE;
+    STDMETHOD(CreateSoundBuffer)    (THIS_ __in LPCDSBUFFERDESC pcDSBufferDesc, __deref_out LPDIRECTSOUNDBUFFER *ppDSBuffer, LPUNKNOWN pUnkOuter) PURE;
     STDMETHOD(GetCaps)              (THIS_ __out LPDSCAPS pDSCaps) PURE;
     STDMETHOD(DuplicateSoundBuffer) (THIS_ __in LPDIRECTSOUNDBUFFER pDSBufferOriginal, __deref_out LPDIRECTSOUNDBUFFER *ppDSBufferDuplicate) PURE;
     STDMETHOD(SetCooperativeLevel)  (THIS_ HWND hwnd, DWORD dwLevel) PURE;
@@ -647,7 +647,7 @@ DECLARE_INTERFACE_(IDirectSound8, IDirectSound)
     STDMETHOD_(ULONG,Release)       (THIS) PURE;
 
     // IDirectSound methods
-    STDMETHOD(CreateSoundBuffer)    (THIS_ __in LPCDSBUFFERDESC pcDSBufferDesc, __out LPDIRECTSOUNDBUFFER *ppDSBuffer, __null LPUNKNOWN pUnkOuter) PURE;
+    STDMETHOD(CreateSoundBuffer)    (THIS_ __in LPCDSBUFFERDESC pcDSBufferDesc, __out LPDIRECTSOUNDBUFFER *ppDSBuffer, LPUNKNOWN pUnkOuter) PURE;
     STDMETHOD(GetCaps)              (THIS_ __out LPDSCAPS pDSCaps) PURE;
     STDMETHOD(DuplicateSoundBuffer) (THIS_ __in LPDIRECTSOUNDBUFFER pDSBufferOriginal, __out LPDIRECTSOUNDBUFFER *ppDSBufferDuplicate) PURE;
     STDMETHOD(SetCooperativeLevel)  (THIS_ HWND hwnd, DWORD dwLevel) PURE;
@@ -1020,7 +1020,7 @@ DECLARE_INTERFACE_(IDirectSoundCapture, IUnknown)
     STDMETHOD_(ULONG,Release)       (THIS) PURE;
 
     // IDirectSoundCapture methods
-    STDMETHOD(CreateCaptureBuffer)  (THIS_ __in LPCDSCBUFFERDESC pcDSCBufferDesc, __deref_out LPDIRECTSOUNDCAPTUREBUFFER *ppDSCBuffer, __null LPUNKNOWN pUnkOuter) PURE;
+    STDMETHOD(CreateCaptureBuffer)  (THIS_ __in LPCDSCBUFFERDESC pcDSCBufferDesc, __deref_out LPDIRECTSOUNDCAPTUREBUFFER *ppDSCBuffer, LPUNKNOWN pUnkOuter) PURE;
     STDMETHOD(GetCaps)              (THIS_ __out LPDSCCAPS pDSCCaps) PURE;
     STDMETHOD(Initialize)           (THIS_ __in_opt LPCGUID pcGuidDevice) PURE;
 };

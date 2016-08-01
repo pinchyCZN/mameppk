@@ -63,6 +63,7 @@ function osdmodulesbuild()
 	if _OPTIONS["targetos"]=="windows" then
 		includedirs {
 			MAME_DIR .. "3rdparty/winpcap/Include",
+			MAME_DIR .. "3rdparty/portaudio/src/hostapi/wasapi/mingw-include",
 		}
 	end
 
